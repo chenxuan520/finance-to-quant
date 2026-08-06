@@ -1,0 +1,71 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build book
+        run: python3 docs/finance-book/tools/build_book.py
+
+      - name: Validate structure and links
+        run: |
+          python3 docs/finance-book/tools/check_structure.py
+          python3 docs/finance-book/tools/check_links.py
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/finance-book
+
+  deploy-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  deploy-cloudflare:
+    needs: build
+    runs-on: ubuntu-latest
+    # 仅当配置了 Cloudflare secrets 时才部署
+    if: ${{ vars.ENABLE_CLOUDFLARE == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build book
+        run: python3 docs/finance-book/tools/build_book.py
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy docs/finance-book --project-name=finance-to-quant --branch=main

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 29 章 · 最终清单:动手前必须真正懂的事 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="用检查清单复盘金融基础、市场制度、资产风险、产品费用和个人边界。 / 用清单复盘数据、因子、回测、模型、组合、交易、风控、报告和模拟盘的最低标准。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="29">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第七部分 · 路线、复盘与检查清单 · 第 29 章</p>
+        <h1>最终清单:动手前必须真正懂的事</h1>
+        <p class="lead">在真正动手做量化之前,有些事必须先真正弄懂,而不是“好像知道”。这一章给你两份清单:第一份是从金融小白走到量化之前,必须真正理解的金融常识;第二份是着手做量化项目之前,必须真正做到的准备。把这两份清单当成过关检查,任何一条答不上来,就说明前面某一章还需要回去补。</p>
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>进入量化前,金融基础必须落到现金流、权利、风险、价格和交易制度上。</li>
+            <li>能读懂产品报告、收益风险指标和 A 股交易规则,才有资格判断量化回测是否真实。</li>
+            <li>量化项目的最低标准是流程可信: 数据、时间、股票池、交易规则、成本、因子、模型、组合、报告和模拟盘都要过关。</li>
+            <li>复杂模型不能替代基础检查;很多假收益来自地基错误,不是模型不够高级。</li>
+          </ul>
+        </section>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="第 29 章流程图: 最终清单:动手前必须真正懂的事">
+            <defs>
+              <linearGradient id="mapGrad29" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+              </linearGradient>
+              <filter id="softShadow29" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
+              </filter>
+            </defs>
+            <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
+            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">第 29 章概念路径</text>
+            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad29)" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+            
+            <g filter="url(#softShadow29)">
+              <rect x="38" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">1</text>
+              <text x="136" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="137">能解释钱和财富的</tspan><tspan x="136" y="157">区别</tspan></text>
+            </g>
+            <g filter="url(#softShadow29)">
+              <rect x="253" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">2</text>
+              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="147">能区分股票和债券</tspan></text>
+            </g>
+            <g filter="url(#softShadow29)">
+              <rect x="468" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">3</text>
+              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="137">能说清A股交易规</tspan><tspan x="566" y="157">则</tspan></text>
+            </g>
+            <g filter="url(#softShadow29)">
+              <rect x="683" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">4</text>
+              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="137">能解释有效市场和</tspan><tspan x="781" y="157">行为偏差</tspan></text>
+            </g>
+            <g filter="url(#softShadow29)">
+              <rect x="38" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">5</text>
+              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="307">做量化项目前必须</tspan><tspan x="136" y="327">真正做到的事</tspan></text>
+            </g>
+            <g filter="url(#softShadow29)">
+              <rect x="253" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">6</text>
+              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="317">时间线必须正确</tspan></text>
+            </g>
+            <g filter="url(#softShadow29)">
+              <rect x="468" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">7</text>
+              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="307">交易规则必须进入</tspan><tspan x="566" y="327">回测</tspan></text>
+            </g>
+            <g filter="url(#softShadow29)">
+              <rect x="683" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">8</text>
+              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="307">模拟盘必须先于实</tspan><tspan x="781" y="327">盘</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">本图从“能解释钱和财富的区别”走到“模拟盘必须先于实盘”,用于先看第 29 章的关键路径,再回到正文补细节。</p>
+        </div>
+
+        <h2>1. 能解释钱和财富的区别</h2>
+<p>你应该能说清楚: 钱不是财富本身,真实财富是商品、服务和生产能力。货币数量增加不必然让社会变富,如果真实产出没有增加,更多货币可能只是推高价格。</p><p>这个问题看似基础,但它决定你如何看通胀、央行、资产价格和泡沫。如果你把账户数字上涨等同于真实财富增加,后面很容易误读金融市场。</p><p>自测方式很简单: 试着用小岛捕鱼、鱼票和渔网的故事,给一个没学过金融的人讲清储蓄、投资和资本。</p>
+<p>银行不是保险柜,而是信用和期限转换系统。它把短期存款转成长期贷款,让经济能提前投资,也因此面对挤兑和流动性风险。</p><p>你应该能说清银行资产负债表: 贷款是银行资产,存款是银行负债。储户以为钱随时可取,但银行资产很多是长期贷款。</p><p>如果你能解释为什么银行需要资本、准备金、央行和存款保险,说明这部分地基基本稳了。</p>
+
+        <h2>2. 能区分股票和债券</h2>
+<p>股票是剩余收益权,债券是合同索取权。股东承担更高不确定性,有机会分享公司长期增长;债权人优先拿本息,但收益上限更明确。</p><p>股票风险主要来自盈利、估值、流动性和市场情绪。债券风险主要来自利率、信用、流动性和通胀。债券稳不稳,要看久期、发行人和市场利率。</p><p>如果你能解释为什么利率上升会让旧债价格下跌,也能解释为什么股票估值受折现率影响,就说明你开始把资产定价连起来了。</p>
+<p>基金是集合投资载体,有管理人、托管人、份额、净值、费用和申赎规则。ETF 是能在交易所买卖的基金份额,既有净值也有交易价格。</p><p>你应该能看懂基金月报: 产品类型、基准、净值、回撤、费用、持仓、归因、规模和风险提示。不要只看近一年收益排名。</p><p>如果你能解释 ETF 为什么会折价或溢价,以及流动性差的 ETF 为什么买卖成本高,说明你已经不只是在背产品名字。</p>
+
+        <h2>3. 能说清 A 股交易规则</h2>
+<p>A 股不是全天随便交易。它有交易日、集合竞价、连续竞价、涨跌幅、T+1、停牌、ST、退市、交易单位和费用。</p><p>你应该能解释今天买入为什么通常今天不能卖,为什么涨停不一定买得到,跌停不一定卖得出,为什么卖出股票会有税费和交收时间。</p><p>这些规则直接进入回测。一个不懂交易规则的量化回测,很可能只是漂亮幻觉。</p>
+<p>你应该能手算简单收益率,理解复利,知道年化不是预测,知道波动率衡量颠簸,最大回撤衡量从高点跌到低点的痛感。</p><p>夏普不是万能,高夏普也可能隐藏尾部风险。信息比率用于看相对基准的超额质量。胜率高不代表赚钱,盈亏比和成本同样重要。</p><p>如果你看一条收益曲线,能主动问基准、回撤、成本、样本长度和风险来源,说明你已经不是只看收益的新手。</p>
+
+        <h2>4. 能解释有效市场和行为偏差</h2>
+<p>有效市场不是说价格永远正确,而是提醒你公开信息很难被轻易反复赚钱。随机游走不是说价格没有原因,而是说新信息难预测。</p><p>行为偏差说明人会过度自信、追涨杀跌、损失厌恶、锚定成本价。但知道别人有偏差,不等于你能免费赚钱。</p><p>这一点会让你对策略更谦逊。任何优势都要解释来源,并接受竞争会侵蚀收益。</p>
+<p>金融基础不只是概念,还包括知道什么钱不能拿去冒险。生活钱、应急钱、短期要用的钱,不应放进高波动策略。</p><p>你应该能写出自己的最大可承受亏损、单策略仓位上限、是否使用杠杆、什么时候停止、什么时候复盘。</p><p>如果这些问题答不上来,就算你会写模型,也还没准备好实盘。</p>
+
+        <h2>5. 做量化项目前必须真正做到的事</h2>
+<p>这一章是给准备动手做量化项目的你。不要因为会 Python、会机器学习、能画净值曲线,就以为自己已经能做量化。真正的最低标准不是模型名字,而是流程可信。下面每一项都不是装饰,而是防止你把错误结果当成投资能力。</p>
+<p>你要知道每个字段来自哪里,什么时候下载,是什么口径,是否复权,是否点时,是否会修正。一个因子值异常时,你应该能追到原始数据和处理脚本。</p><p>如果你的数据来自临时 CSV、手工复制、来源不明接口,或者下载后被随手改过,回测结果就很难相信。数据可追溯是量化项目第一条底线。</p><p>最低标准是: 原始数据不手改,处理脚本可重复,数据检查自动运行,异常有日志。</p>
+
+        <h2>6. 时间线必须正确</h2>
+<p>每个特征都要在交易决策前可见。财报按公告日,宏观按公布日,指数成分按生效日,行情按实际交易时点。任何晚于决策时点的数据都不能用。</p><p>时间线错误会制造最漂亮的假收益。模型一旦偷看未来,后面所有机器学习和优化都没有意义。</p><p>最低标准是: 每个数据表都有可用日期,每个标签都在特征之后,回测里信号生成和成交时间分开。</p>
+<p>回测某个历史日期,只能使用当时存在、当时可交易、当时属于股票池的资产。不能用现在还活着的股票回填过去,也不能用当前指数成分回测历史。</p><p>股票池错误会带来幸存者偏差和成分回填偏差。它会悄悄删除失败样本,让策略看起来更稳。</p><p>最低标准是: 保留退市样本,按历史成分调仓,明确 ST、停牌、新股和低流动性股票过滤规则。</p>
+
+        <h2>7. 交易规则必须进入回测</h2>
+<p>A 股有 T+1、涨跌停、停牌、交易单位、费用和交易时段。期货有保证金、换月、涨跌停和夜盘。ETF 有折溢价和流动性。不同品种规则不同。</p><p>回测忽略规则,就会买入真实买不到的涨停股,卖出真实卖不出的跌停股,或者当天买当天卖。这样的收益不能实盘。</p><p>最低标准是: 交易日历正确,成交时点明确,涨跌停停牌处理明确,费用和滑点保守估计。</p>
+<p>交易成本不是一个小数。佣金、印花税、过户费、买卖价差、滑点、冲击、融资、融券、展期,都会影响净收益。</p><p>一个策略如果成本翻倍就从赚钱变亏钱,说明边际很薄。你可以继续研究,但不能把它当成强策略。</p><p>最低标准是: 报告同时展示无成本、正常成本、两倍成本、三倍成本下的结果。</p>
+
+        <h2>8. 因子必须有单独报告</h2>
+<p>不要把一堆因子直接喂给模型,然后只看最终净值。每个重要因子都应该单独看覆盖率、IC、RankIC、分层收益、换手、行业和市值暴露。</p><p>单因子报告能告诉你模型输入是否有基本意义。没有单因子审查,复杂模型可能只是在混合噪声。</p><p>最低标准是: 每个核心因子有定义、方向、数据口径、统计表现和失效阶段说明。</p>
+<p>复杂模型必须和简单基线比较。等权、指数持有、单因子、线性模型、树模型,都可以是基线。没有基线,你不知道复杂模型到底增加了什么。</p><p>如果深度学习模型只比简单动量因子好一点点,但成本更高、解释更差、样本外更不稳,它未必值得用。</p><p>最低标准是: 任何复杂模型都要报告相对简单基线的增量收益、增量风险和增量成本。</p>
+
+        <h2>9. 组合必须有约束</h2>
+<p>预测分数不能直接变仓位。组合要有单票上限、行业限制、风格暴露、现金比例、换手限制、流动性过滤和风险预算。</p><p>没有约束的组合可能重仓少数股票、押单一行业、买入流动性很差的资产。回测好看,实盘危险。</p><p>最低标准是: 报告持仓数量、最大单票、行业分布、换手、成交额参与率和相对基准暴露。</p>
+<p>一份策略报告应该能由代码重新生成。图表、指标、配置、数据版本都要能追溯。手工截图和复制粘贴很容易制造不一致。</p><p>可复现报告能让你一个月后回来看懂当时做了什么,也能让别人审查你的结果。</p><p>最低标准是: 一条命令或一个脚本能重新生成主要报告,报告里包含配置和数据版本。</p>
+
+        <h2>10. 模拟盘必须先于实盘</h2>
+<p>模拟盘验证真实时间流程。数据是否按时来,信号是否生成,订单是否合理,未成交如何处理,盘后是否对账,这些都不是历史回测能完全验证的。</p><p>没有模拟盘,你第一次遇到数据延迟、空信号、订单异常和对账差异,就会发生在真实资金里。</p><p>最低标准是: 模拟盘运行一段时间,有日志、报告、异常记录和修复记录,再考虑小资金实盘。</p>
+
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 29 章小结图: 最终清单:动手前必须真正懂的事">
+            <defs>
+              <linearGradient id="sumGrad29" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.75" />
+              </linearGradient>
+            </defs>
+            <rect x="18" y="18" width="864" height="324" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(105,179,162,0.28)" />
+            <text x="450" y="68" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">本章留下的三件事</text>
+            <path d="M295 220 H335 M565 220 H605" fill="none" stroke="url(#sumGrad29)" stroke-width="7" stroke-linecap="round" />
+            
+            <g>
+              <rect x="65" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M115 190 L158 190 L158 178 L240 220 L158 262 L158 250 L115 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="180" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 1</text>
+              <text x="180" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="180" y="234">进入量化前,金融</tspan><tspan x="180" y="254">基础必须先过关</tspan></text>
+            </g>
+            <g>
+              <rect x="335" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M385 190 L428 190 L428 178 L510 220 L428 262 L428 250 L385 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="450" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 2</text>
+              <text x="450" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="450" y="224">能读懂产品报告、</tspan><tspan x="450" y="244">收益风险指标和A</tspan><tspan x="450" y="264">股交易规则</tspan></text>
+            </g>
+            <g>
+              <rect x="605" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M655 190 L698 190 L698 178 L780 220 L698 262 L698 250 L655 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="720" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 3</text>
+              <text x="720" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="720" y="214">量化项目的最低标</tspan><tspan x="720" y="234">准是流程可信:数</tspan><tspan x="720" y="254">据、时间、股票池</tspan><tspan x="720" y="274">要检查</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">读完第 29 章后,至少要能复述“进入量化前,金融基础必须先过关”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
+        </div>
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>进入量化前,金融基础必须落到现金流、权利、风险、价格和交易制度上。</li>
+            <li>能读懂产品报告、收益风险指标和 A 股交易规则,才有资格判断量化回测是否真实。</li>
+            <li>量化项目的最低标准是流程可信: 数据、时间、股票池、交易规则、成本、因子、模型、组合、报告和模拟盘都要过关。</li>
+            <li>复杂模型不能替代基础检查;很多假收益来自地基错误,不是模型不够高级。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 能解释钱和财富的区别</li>
+            <li><strong>2.</strong> 能区分股票和债券</li>
+            <li><strong>3.</strong> 能说清 A 股交易规则</li>
+            <li><strong>4.</strong> 能解释有效市场和行为偏差</li>
+            <li><strong>5.</strong> 做量化项目前必须真正做到的事</li>
+            <li><strong>6.</strong> 时间线必须正确</li>
+            <li><strong>7.</strong> 交易规则必须进入回测</li>
+            <li><strong>8.</strong> 因子必须有单独报告</li>
+            <li><strong>9.</strong> 组合必须有约束</li>
+            <li><strong>10.</strong> 模拟盘必须先于实盘</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么金融小白要先理解钱和财富的区别?</summary>
+            <p>因为这决定你能否正确理解通胀、资产价格和真实经济增长。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么 A 股交易规则是量化基础?</summary>
+            <p>因为 T+1、涨跌停、停牌、费用和交易单位会直接影响回测和实盘。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么数据可追溯是第一底线?</summary>
+            <p>因为任何异常结果都必须能回到原始数据和处理脚本检查,否则无法判断真假。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么复杂模型必须有基线?</summary>
+            <p>没有简单基线就不知道复杂模型提供了什么增量,也无法判断复杂度是否值得。</p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

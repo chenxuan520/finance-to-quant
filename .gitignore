@@ -1,0 +1,11 @@
+# 原始 PDF 作为 GitHub Release 附件发布,不进 git 仓库(避免大文件污染历史)
+*.pdf
+
+# 开发过程中的内部草稿/复盘,不公开
+docs/finance-book/reviews/
+docs/finance-book/notes/
+
+# Python / 构建缓存
+__pycache__/
+*.pyc
+.DS_Store

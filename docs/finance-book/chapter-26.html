@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 26 章 · 场景练习:开户软件和基金月报 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="用真实操作视角带读者看懂账户资产、可用资金、持仓、盈亏、委托、成交和风险提示。 / 用投资者视角拆解净值、基准、持仓、回撤、归因、费用和风险提示。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="26">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第七部分 · 路线、复盘与检查清单 · 第 26 章</p>
+        <h1>场景练习:开户软件和基金月报</h1>
+        <p class="lead">概念懂了,真正上手时还是会被界面和文件里的术语绊住。这一章用两个真实场景带你练一遍:第一次开户后,交易软件里每一个数字、每一个按钮到底在说什么;第一次拿到基金月报和产品报告,又该重点看哪些栏目、警惕哪些说法。把抽象概念落到你真会遇到的屏幕和纸面上,才算真的学会。</p>
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>交易软件里的总资产、可用资金、可取资金、持仓市值和可卖数量是不同口径。</li>
+            <li>委托不等于成交,成交后还要更新资金、持仓、费用和可卖状态。</li>
+            <li>读产品报告要先确认策略类型和基准,再看净值、风险、持仓、归因、费用和申赎。</li>
+            <li>收益必须和回撤、波动、样本长度、规模变化一起看,不能只看排名。</li>
+          </ul>
+        </section>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="第 26 章流程图: 场景练习:开户软件和基金月报">
+            <defs>
+              <linearGradient id="mapGrad26" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+              </linearGradient>
+              <filter id="softShadow26" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
+              </filter>
+            </defs>
+            <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
+            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">第 26 章概念路径</text>
+            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad26)" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+            
+            <g filter="url(#softShadow26)">
+              <rect x="38" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">1</text>
+              <text x="136" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="137">总资产不是可花的</tspan><tspan x="136" y="157">钱</tspan></text>
+            </g>
+            <g filter="url(#softShadow26)">
+              <rect x="253" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">2</text>
+              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="147">持仓市值和成本价</tspan></text>
+            </g>
+            <g filter="url(#softShadow26)">
+              <rect x="468" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">3</text>
+              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="147">可卖数量</tspan></text>
+            </g>
+            <g filter="url(#softShadow26)">
+              <rect x="683" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">4</text>
+              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="147">买一卖一和盘口</tspan></text>
+            </g>
+            <g filter="url(#softShadow26)">
+              <rect x="38" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">5</text>
+              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="307">银证转账和交易时</tspan><tspan x="136" y="327">间</tspan></text>
+            </g>
+            <g filter="url(#softShadow26)">
+              <rect x="253" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">6</text>
+              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="307">第一次读基金月报</tspan><tspan x="351" y="327">和产品报告</tspan></text>
+            </g>
+            <g filter="url(#softShadow26)">
+              <rect x="468" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">7</text>
+              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="307">看净值曲线和基准</tspan><tspan x="566" y="327">曲线</tspan></text>
+            </g>
+            <g filter="url(#softShadow26)">
+              <rect x="683" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">8</text>
+              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="307">写一页自己的产品</tspan><tspan x="781" y="327">笔记</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">本图从“总资产不是可花的钱”走到“写一页自己的产品笔记”,用于先看第 26 章的关键路径,再回到正文补细节。</p>
+        </div>
+
+        <h2>1. 总资产不是可花的钱</h2>
+<p>总资产通常包括现金、股票市值、基金市值、债券市值以及其他资产估值。它表示账户按当前价格估算值多少钱,但不等于你现在能立刻拿出来花的钱。</p><p>如果你持有股票,总资产会随市场价格波动。股票涨,总资产上升;股票跌,总资产下降。你没有卖出之前,盈亏只是浮动盈亏。</p><p>可用资金才是当前可以用于买入或转出的资金口径之一,但也要看银证转账时间、资金交收和券商规则。总资产、可用资金、可取资金不是同一个数字。</p>
+<p>可用资金表示可以用来买证券的钱。可取资金表示可以从证券账户转回银行卡的钱。两者可能不同,因为卖出证券后的资金可能当天可用来继续买,但不一定当天可取。</p><p>比如你今天卖出股票,资金可能可以继续买股票,但要到下一个交易日才能转出。这和清算交收规则有关。不同品种规则可能不同。</p><p>量化系统也要区分这些概念。回测如果假设卖出后资金立刻可取、可用、可跨市场使用,可能和真实账户不一致。</p>
+
+        <h2>2. 持仓市值和成本价</h2>
+<p>持仓市值是当前持有证券按当前价格估算的价值。成本价通常是你买入成本加费用后的平均成本口径,但不同软件计算方式可能略有差异。</p><p>成本价不是市场必须记住的价格。你 10 元买入,市场不会因为你成本 10 元就支持它不跌破。成本价只对你的盈亏计算有意义,不是资产真实价值锚。</p><p>新手很容易被成本价绑架。跌到成本价下方就不愿卖,涨回成本价就急着卖。投资决策应看未来风险收益,不是只看自己买入价。</p>
+<p>浮动盈亏是当前价格相对成本的账面变化。你还没卖出,这个盈亏会继续变。已实现盈亏是卖出后真正锁定的盈亏。</p><p>浮盈不是已经到手的钱。股票今天涨 10%,明天可能跌回去。浮亏也不是最终亏损,但它代表你当前退出会发生的结果。</p><p>量化报告里的净值通常按每日市值估算,里面包含浮动盈亏。实盘对账时,要区分已实现交易损益和持仓浮动损益。</p>
+
+        <h2>3. 可卖数量</h2>
+<p>A 股普通股票有 T+1 规则,今天买入的股票通常今天不能卖。因此持仓数量和可卖数量可能不同。你账户里看见 1000 股,不代表现在 1000 股都能卖。</p><p>如果你昨天已有 1000 股,今天又买 500 股,当天可卖的通常是昨天那 1000 股。今天买的 500 股要到下一个交易日才可卖。</p><p>这对量化很关键。策略不能只记录 position,还要记录 sellable_position。否则回测里当天买当天卖,实盘会被规则挡住。</p>
+<p>委托是你发出的买卖请求,成交是市场真的撮合成功。委托不等于成交。限价单可能一直挂着,部分成交,也可能撤单。</p><p>委托列表会显示已报、已成、部成、已撤、废单等状态。废单可能来自价格越界、资金不足、数量不合法、权限不足或交易时间不对。</p><p>量化实盘必须读取成交回报,不能自己假设委托成功。订单状态是交易系统的核心。</p>
+
+        <h2>4. 买一卖一和盘口</h2>
+<p>行情界面里的买一卖一表示当前最优买价和最优卖价。买一是有人愿意买的最高价,卖一是有人愿意卖的最低价。两者差距就是买卖价差。</p><p>如果你想马上买,通常要打到卖一;想马上卖,通常要打到买一。挂在买一或卖一等待,不保证成交,因为前面有队列。</p><p>看盘口能帮助理解成交成本。价格图上看起来只差一分钱,但大资金交易时,盘口深度不够会导致成交均价明显变差。</p>
+<p>交易软件会显示涨跌幅、涨停价、跌停价、风险警示、停牌状态等。涨跌幅限制不是保护你不亏,只是限制当日交易价格范围。</p><p>跌停时你想卖,可能没有足够买盘;涨停时你想买,可能排不到。停牌时无法正常交易。ST 和退市风险提示也不能忽略。</p><p>新手看到涨停容易兴奋,看到跌停容易恐慌。真正要问的是: 这个价格能不能成交,风险发生了什么变化,自己是否理解原因。</p>
+
+        <h2>5. 银证转账和交易时间</h2>
+<p>证券账户和银行卡之间通过银证转账连接。转账通常有时间限制,不是任何时刻都能转。交易时间、转账时间和清算时间不是同一件事。</p><p>你晚上看到新闻想买股票,可以先提交委托或计划,但交易所不在连续交易时段就不会立刻撮合。中午休市时也是类似。</p><p>量化系统要有交易日历和交易时段。不能用自然日和 24 小时逻辑处理 A 股普通股票。</p>
+<p>第一次真实交易不要追求赚钱,而是观察流程。买一手流动性好的 ETF 或股票,记录下单时间、委托状态、成交价格、费用、持仓变化、可卖数量和第二天资金状态。</p><p>这次操作相当于学习市场接口。你会看到书里讲的 T+1、费用、成交、持仓、可用资金都不是抽象概念。</p><p>小额体验比空想有用,但前提是你知道自己在学习流程,不是用真实账户测试运气。</p>
+
+        <h2>6. 第一次读基金月报和产品报告</h2>
+<p>很多人买基金或量化产品时,只看近一年收益排名。月报和产品报告里其实有更多关键信息: 它和什么基准比,这段时间为什么赚钱或亏钱,持仓集中在哪里,回撤多大,费用怎么收,规模有没有变化。学会读报告,比听别人推荐更可靠。</p>
+<p>报告第一页通常会写产品名称、策略类型、管理人、托管人、成立日期、规模和风险等级。先确认它到底是什么产品。是股票多头、指数增强、市场中性、CTA、债券,还是多策略?</p><p>策略类型决定你该用什么眼光看它。指数增强要看超额收益和跟踪误差,市场中性要看绝对收益和市场相关性,CTA 要看多品种趋势和回撤,债券产品要看久期和信用风险。</p><p>如果你不知道产品类型,后面的收益数字没有意义。拿市场中性和沪深 300 比涨幅,或者拿股票多头和货币基金比稳定性,都是错位比较。</p>
+
+        <h2>7. 看净值曲线和基准曲线</h2>
+<p>净值曲线展示产品从成立以来或某段时间的价值变化。基准曲线展示参照对象的表现。两条曲线放在一起,才能看出产品是跟着市场走,还是有自己的超额。</p><p>如果产品涨了 10%,基准涨了 20%,说明绝对赚钱但相对落后。如果产品跌了 5%,基准跌了 20%,说明绝对亏钱但防守较好。</p><p>看曲线时不要只看终点。看中间有没有深回撤,有没有长时间不创新高,有没有某一段突然大幅偏离基准。路径就是投资体验。</p>
+<p>月报常列近一个月、近三个月、今年以来、成立以来收益。短期收益容易受市场环境影响,长期收益更能看出策略稳定性,但长期也可能包含早期小规模或特殊环境。</p><p>年化收益要配合样本长度。成立三个月的产品年化收益很高,参考意义有限。成立多年、经历多轮市场的收益更有说服力。</p><p>还要看超额收益。如果是指数增强,绝对收益只是第一层,相对基准多赚多少才是核心。</p>
+
+        <h2>8. 看风险指标</h2>
+<p>报告里常见风险指标包括最大回撤、波动率、夏普比率、卡玛比率、跟踪误差、信息比率。不要被指标名吓住,它们都在问收益过程稳不稳、相对基准偏离多不多。</p><p>最大回撤尤其重要。一个产品历史最高到 1.5,后来跌到 1.2,回撤就是 20%。你要问自己,如果真实账户这样波动,能不能拿住。</p><p>风险指标也要结合策略类型。CTA 回撤形态和股票指数增强不同,市场中性波动应相对低一些,股票多头则要接受更高市场波动。</p>
+<p>公募基金通常披露前十大持仓和行业配置,私募披露可能更有限。能看到持仓时,要看集中度和行业暴露。前十大持仓占比很高,说明产品更依赖少数判断。</p><p>行业配置能看产品偏向哪里。一个声称均衡的产品如果长期重仓单一行业,风险就和宣传不同。指数增强还要看行业相对基准偏离。</p><p>有些报告会披露风格暴露,比如市值、价值、成长、动量、波动。读不懂也没关系,先知道这些暴露会影响产品表现。</p>
+
+        <h2>9. 看归因解释</h2>
+<p>好的月报会解释本期收益来源。比如市场上涨贡献多少,行业配置贡献多少,选股贡献多少,期货基差影响多少,交易成本影响多少。</p><p>如果产品亏损,也应解释亏在哪里。是市场整体下跌,还是风格逆风,还是模型失效,还是对冲成本上升。解释不代表一定正确,但比完全不解释更透明。</p><p>警惕只在赚钱时讲能力、亏钱时只说市场波动的报告。真正可信的管理人会在坏月份也说明问题。</p>
+<p>产品规模会影响策略。规模快速上升可能带来容量压力,规模快速下降可能来自赎回,也可能迫使管理人卖出持仓。</p><p>对于量化小盘策略,规模尤其关键。资金太大后,原本能交易的小机会可能不够用,滑点和冲击会上升。</p><p>月报里如果有规模数据,要和业绩一起看。过去收益是在小规模下取得,现在规模大很多,未来表现可能不同。</p>
+
+        <h2>10. 看费用和申赎</h2>
+<p>费用会影响实际收益。管理费、托管费、销售费、申赎费、业绩报酬,都要看。私募产品尤其要看业绩报酬如何计提,是否有高水位。</p><p>申赎安排决定流动性。开放日多久一次,赎回多久确认,是否有封闭期,是否有赎回费,巨额赎回如何处理。</p><p>如果你这笔钱半年后要用,就不要买一年封闭或流动性差的产品。产品收益再好,也不能违背你的资金用途。</p>
+<p>风险提示不是没用的小字。里面会写市场风险、流动性风险、信用风险、衍生品风险、模型风险、操作风险、管理人风险。</p><p>如果产品能用期货、期权、融资融券或其他衍生品,风险提示会更重要。衍生品可能放大收益,也可能放大亏损和流动性压力。</p><p>读风险提示时,不要只想“这是法律模板”。你要问: 如果这个风险真的发生,我的账户会怎样,我能不能承受。</p>
+
+        <h2>11. 写一页自己的产品笔记</h2>
+<p>读完月报后,最好写一页自己的笔记。内容包括产品类型、基准、收益、回撤、费用、持仓、主要风险、你看不懂的地方、是否适合自己的资金用途。</p><p>写笔记能防止被销售话术带走。你把信息写成自己的语言,就会发现很多问题: 基准不清楚,费用没看懂,回撤不能承受,持仓和自己已有资产高度重合。</p><p>投资不是收集产品名字,而是把产品放进自己的资产配置和风险承受力里。</p>
+
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 26 章小结图: 场景练习:开户软件和基金月报">
+            <defs>
+              <linearGradient id="sumGrad26" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.75" />
+              </linearGradient>
+            </defs>
+            <rect x="18" y="18" width="864" height="324" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(105,179,162,0.28)" />
+            <text x="450" y="68" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">本章留下的三件事</text>
+            <path d="M295 220 H335 M565 220 H605" fill="none" stroke="url(#sumGrad26)" stroke-width="7" stroke-linecap="round" />
+            
+            <g>
+              <rect x="65" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M115 190 L158 190 L158 178 L240 220 L158 262 L158 250 L115 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="180" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 1</text>
+              <text x="180" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="180" y="214">交易软件里的总资</tspan><tspan x="180" y="234">产、可用资金、可</tspan><tspan x="180" y="254">取资金、持仓市值</tspan><tspan x="180" y="274">要检查</tspan></text>
+            </g>
+            <g>
+              <rect x="335" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M385 190 L428 190 L428 178 L510 220 L428 262 L428 250 L385 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="450" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 2</text>
+              <text x="450" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="450" y="214">委托不等于成交,</tspan><tspan x="450" y="234">成交后还要更新资</tspan><tspan x="450" y="254">金、持仓、费用和</tspan><tspan x="450" y="274">可卖状态</tspan></text>
+            </g>
+            <g>
+              <rect x="605" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M655 190 L698 190 L698 178 L780 220 L698 262 L698 250 L655 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="720" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 3</text>
+              <text x="720" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="720" y="234">读产品报告要先确</tspan><tspan x="720" y="254">认策略类型和基准</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">读完第 26 章后,至少要能复述“交易软件里的总资产、可用资金、可取资金、持仓市值要检查”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
+        </div>
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>交易软件里的总资产、可用资金、可取资金、持仓市值和可卖数量是不同口径。</li>
+            <li>委托不等于成交,成交后还要更新资金、持仓、费用和可卖状态。</li>
+            <li>读产品报告要先确认策略类型和基准,再看净值、风险、持仓、归因、费用和申赎。</li>
+            <li>收益必须和回撤、波动、样本长度、规模变化一起看,不能只看排名。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 总资产不是可花的钱</li>
+            <li><strong>2.</strong> 持仓市值和成本价</li>
+            <li><strong>3.</strong> 可卖数量</li>
+            <li><strong>4.</strong> 买一卖一和盘口</li>
+            <li><strong>5.</strong> 银证转账和交易时间</li>
+            <li><strong>6.</strong> 第一次读基金月报和产品报告</li>
+            <li><strong>7.</strong> 看净值曲线和基准曲线</li>
+            <li><strong>8.</strong> 看风险指标</li>
+            <li><strong>9.</strong> 看归因解释</li>
+            <li><strong>10.</strong> 看费用和申赎</li>
+            <li><strong>11.</strong> 写一页自己的产品笔记</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>总资产为什么不等于可花的钱?</summary>
+            <p>总资产包含持仓市值等估算价值,可用和可取资金还受交易和交收规则影响。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么持仓数量不一定等于可卖数量?</summary>
+            <p>A 股普通股票有 T+1,今天买入的部分通常当天不可卖。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么读月报先看产品类型?</summary>
+            <p>因为不同策略评价标准不同,没有类型就不知道该和什么比较。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>净值曲线为什么要和基准一起看?</summary>
+            <p>这样才能区分市场本身的涨跌和产品相对基准的表现。</p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

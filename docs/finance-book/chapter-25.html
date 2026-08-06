@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 25 章 · 术语复盘:用人话再讲一遍 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="把货币、信用、利率、通胀、股票、债券、基金、期货、期权等基础术语重新用生活语言解释。 / 把 Alpha、Beta、因子、IC、回测、滑点、容量、风控、归因等量化高频词重新解释。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="25">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第七部分 · 路线、复盘与检查清单 · 第 25 章</p>
+        <h1>术语复盘:用人话再讲一遍</h1>
+        <p class="lead">全书出现了大量术语,这一章把它们集中起来,用最朴素的人话再讲一遍,方便你随时回来查。前半部分复盘金融基础词汇:货币、信用、股票、债券、基金这些概念到底在说什么;后半部分复盘量化词汇:因子、回测、夏普、中性、滑点又分别指什么。不追求严谨定义,只求你一看就想起它对应的那件真实的事。</p>
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>基础术语都可以放回现金流、权利、风险和价格四个问题里理解。</li>
+            <li>货币、信用、利率和通胀是金融地基;股票、债券、基金、衍生品是不同权利和风险的包装。</li>
+            <li>量化术语都在回答收益来源、预测能力、交易可行性和风险来源这些朴素问题。</li>
+            <li>Alpha 要扣掉 Beta 和常见风险暴露后再谈;因子要经过 IC、分层、成本和样本外检验。</li>
+          </ul>
+        </section>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="第 25 章流程图: 术语复盘:用人话再讲一遍">
+            <defs>
+              <linearGradient id="mapGrad25" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+              </linearGradient>
+              <filter id="softShadow25" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
+              </filter>
+            </defs>
+            <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
+            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">第 25 章概念路径</text>
+            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad25)" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+            
+            <g filter="url(#softShadow25)">
+              <rect x="38" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">1</text>
+              <text x="136" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="147">货币</tspan></text>
+            </g>
+            <g filter="url(#softShadow25)">
+              <rect x="253" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">2</text>
+              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="147">利率</tspan></text>
+            </g>
+            <g filter="url(#softShadow25)">
+              <rect x="468" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">3</text>
+              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="147">股票</tspan></text>
+            </g>
+            <g filter="url(#softShadow25)">
+              <rect x="683" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">4</text>
+              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="147">基金</tspan></text>
+            </g>
+            <g filter="url(#softShadow25)">
+              <rect x="38" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">5</text>
+              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="317">期货</tspan></text>
+            </g>
+            <g filter="url(#softShadow25)">
+              <rect x="253" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">6</text>
+              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="307">量化词汇用人话再</tspan><tspan x="351" y="327">讲一遍</tspan></text>
+            </g>
+            <g filter="url(#softShadow25)">
+              <rect x="468" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">7</text>
+              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="317">Beta</tspan></text>
+            </g>
+            <g filter="url(#softShadow25)">
+              <rect x="683" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">8</text>
+              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="317">风控</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">本图从“货币”走到“风控”,用于先看第 25 章的关键路径,再回到正文补细节。</p>
+        </div>
+
+        <h2>1. 货币</h2>
+<p>货币不是财富本身,而是交换和记账工具。它让人不用拿鱼换鞋、拿鞋换药,而是用统一单位表示价值。货币好用,是因为大家相信它能继续被别人接受。</p><p>货币有三个基本功能: 交易媒介、记账单位、价值储藏。交易媒介让买卖方便,记账单位让价格可比较,价值储藏让今天的购买力能留到未来。</p><p>学金融时,不要把货币数量和真实财富混在一起。真实财富是商品、服务和生产力;货币只是表示和转移这些财富的工具。</p>
+<p>信用是今天先拿资源,未来再按承诺偿还。贷款、债券、赊账、信用卡,本质上都依赖信用。信用让经济可以提前做事,比如企业今天借钱建厂,未来用收入还钱。</p><p>信用能提高效率,也会制造风险。未来收入如果没有兑现,债务就会变成违约。金融系统很大一部分工作,就是评估谁值得信任、信任到什么程度、要收多少利息补偿风险。</p><p>信用扩张时,经济看起来更活跃;信用收缩时,融资变难,资产价格和企业现金流都可能承压。</p>
+
+        <h2>2. 利率</h2>
+<p>利率是钱的时间价格,也是风险补偿的一部分。今天借 100 元,一年后还 105 元,那 5 元就是借用资金一年的价格。</p><p>利率影响很多资产。债券价格会随市场利率变化,股票估值会受折现率影响,房贷和企业融资成本也受利率影响。</p><p>不要只记一个利率。市场有短端利率、长端利率、贷款利率、存款利率、国债收益率、信用债收益率。不同利率代表不同期限和风险。</p>
+<p>通胀是整体价格水平上升,也就是同样的钱能买到的东西变少。你账户里还是 100 元,但如果所有东西都涨价,实际购买力就下降。</p><p>通胀会影响利率、工资、企业成本、消费和资产估值。温和通胀可能和经济扩张一起出现,高通胀会侵蚀购买力并迫使政策收紧。</p><p>投资看的是实际收益。名义收益 5%,通胀 4%,实际收益大约只有 1%。</p>
+
+        <h2>3. 股票</h2>
+<p>股票代表公司股权。你买股票,不是买一串代码,而是买公司未来剩余收益的一部分。公司先付员工、供应商、债权人和税费,剩下的才归股东。</p><p>股票风险高,因为股东排在债权人后面,公司利润也不确定。但如果公司长期变强,股东能分享增长。</p><p>股价短期受情绪、流动性和消息影响,长期很难脱离盈利、现金流和估值。</p>
+<p>债券是标准化借条。发行人借钱,承诺按规则付利息和还本金。债券投资者不是公司老板,而是债权人。</p><p>债券看起来比股票稳,但不等于无风险。它有利率风险、信用风险、流动性风险和通胀风险。长期债对利率很敏感,信用债可能违约。</p><p>债券价格和收益率反向变动。市场要求收益率上升,旧债价格通常下跌。</p>
+
+        <h2>4. 基金</h2>
+<p>基金是把很多投资者的钱集合起来,交给管理人按合同投资。投资者拿到基金份额,基金资产由托管人保管。</p><p>基金不是保本工具。基金投什么,你就承担什么风险。股票基金有股票风险,债券基金有利率和信用风险,量化基金有模型、交易和市场风险。</p><p>看基金要看净值、基准、费用、回撤、持仓、策略和申赎规则。不要只看历史收益。</p>
+<p>ETF 是在交易所买卖的基金份额,常用来追踪指数。它既像基金,因为背后有一篮子资产;又像股票,因为盘中可以交易。</p><p>ETF 有净值和交易价格。二者通常接近,但可能出现折价或溢价。流动性差、跨境、底层停牌或市场剧烈波动时,偏离可能更明显。</p><p>个人用 ETF 做配置很方便,但也要看成交额、买卖价差、跟踪误差和费用。</p>
+
+        <h2>5. 期货</h2>
+<p>期货是约定未来按规则买卖标的的标准化合约。它用保证金交易,所以自带杠杆。</p><p>期货可以做多也可以做空,可以用于套保、投机和套利。商品、股指、国债都可以有期货。</p><p>期货要处理合约到期、换月、保证金、涨跌停和强平风险。不要把它当成普通股票。</p>
+<p>期权是权利。看涨期权给你未来按约定价格买入的权利,看跌期权给你未来按约定价格卖出的权利。买方有权利,卖方有义务。</p><p>期权的特别之处是不对称。买期权最多亏期权费,但可能有较大上行;卖期权经常收小钱,但可能承担大风险。</p><p>期权价格受标的价格、行权价、到期时间、波动率、利率和分红影响。新手不要把高胜率卖期权误认为低风险。</p>
+
+        <h2>6. 量化词汇用人话再讲一遍</h2>
+<p>量化行业有一套自己的语言。刚开始听到 Alpha、Beta、IC、RankIC、回测、滑点、容量、跟踪误差、归因,很容易觉得每个词都像黑话。其实这些词都在回答朴素问题: 你赚的是市场的钱还是能力的钱,信号有没有排序能力,历史排练是否真实,交易能不能做出来,风险从哪里来。</p>
+<p>Alpha 通常指扣除市场、行业、风格等常见风险暴露后,仍然多出来的收益。简单说,如果市场本来就涨了,你赚钱不一定是能力;如果你在合适基准之上还多赚,那部分才可能叫 Alpha。</p><p>Alpha 不是账户里所有收益。一个满仓股票组合在牛市赚钱,里面很大部分是市场 Beta。要判断 Alpha,必须先选基准,再做风险归因。</p><p>量化研究的目标常常是寻找可重复的 Alpha。但 Alpha 会被竞争、成本、容量和市场变化侵蚀,不是找到一次就永久有效。</p>
+
+        <h2>7. Beta</h2>
+<p>Beta 是对市场或某类风险暴露的敏感度。股票组合 Beta 接近 1,表示它大体跟市场同涨同跌;Beta 接近 0,表示市场方向影响较小。</p><p>Beta 不一定坏。买指数基金就是主动拿市场 Beta。问题在于,你要知道自己拿了多少 Beta,不要把 Beta 收益误认为 Alpha。</p><p>量化产品常会管理 Beta。指数增强接受一定 Beta,市场中性试图降低 Beta,多资产配置会在不同 Beta 之间分配风险。</p>
+<p>因子是一列描述资产特征、风险暴露或预测信息的数字。估值、动量、质量、波动率、流动性、市值都可以是因子。</p><p>因子不是天然能赚钱。它可能只是解释风险,也可能是噪声。研究因子要看经济解释、IC、分层收益、成本、容量和样本外。</p><p>因子最重要的是口径。用什么数据,何时可见,如何处理缺失和极端值,在哪个股票池使用,这些都决定结果。</p>
+
+        <h2>8. IC 和 RankIC</h2>
+<p>IC 衡量因子值和未来收益之间的相关性。RankIC 看排序关系,也就是高分股票未来是否真的更靠前。</p><p>IC 很少很大。金融市场噪声强,一个长期稳定的小 IC 也可能有价值。关键是稳定、可交易、低成本、容量足够。</p><p>IC 只能说明排序信息,不能直接说明策略能赚钱。还要看组合构建、换手、成本和风险暴露。</p>
+<p>回测是在历史数据中模拟策略。如果当时按这个规则交易,可能会发生什么。它是排练,不是未来承诺。</p><p>好回测必须按当时可见数据、真实交易规则和合理成本执行。坏回测常常偷看未来、删掉失败样本、假设理想成交。</p><p>看回测时,先看假设,再看收益。假设不真实,曲线再漂亮也没意义。</p>
+
+        <h2>9. 滑点</h2>
+<p>滑点是预期成交价和实际成交价之间的差。你以为能 10 元买入,实际 10.03 元成交,多出来的 0.03 元就是成本。</p><p>滑点来自买卖价差、盘口深度、订单冲击、行情延迟和执行方式。交易越频繁、流动性越差、订单越大,滑点越重要。</p><p>量化策略如果不算滑点,很容易把纸面小优势当成真实利润。</p>
+<p>容量是策略能容纳多少资金。小资金能做的机会,大资金不一定做得了。资金越大,越容易推高买入价、压低卖出价。</p><p>容量和成交额、持仓分散、换手率、市场冲击有关。一个低流动性小盘策略,可能只适合小资金。</p><p>看策略时要问: 这个收益是在多大资金规模下还能实现? 如果规模扩大十倍,成本和冲击会怎样?</p>
+
+        <h2>10. 跟踪误差</h2>
+<p>跟踪误差衡量组合相对基准的偏离波动。指数增强产品会用它表示离指数有多远。</p><p>跟踪误差低,产品更像指数,但超额空间可能小。跟踪误差高,产品自由度大,但跑输基准的风险也更大。</p><p>跟踪误差要和超额收益一起看,所以才有信息比率。</p>
+<p>归因是把收益拆开,看看钱从哪里来。市场涨了多少,行业贡献多少,风格贡献多少,选股贡献多少,交易成本扣了多少。</p><p>没有归因,你只知道赚了或亏了,不知道原因。策略亏损时,归因能帮助判断是模型失效、风格逆风、行业暴露还是执行成本。</p><p>归因让策略从神秘曲线变成可解释系统。</p>
+
+        <h2>11. 风控</h2>
+<p>风控不是预测明天会不会跌,而是限制损失扩大,让异常状态可见、可处理。</p><p>风控包括仓位、杠杆、个股上限、行业上限、回撤、VaR、压力测试、数据监控、模型监控、订单限额和灾难开关。</p><p>好的风控不是让策略不亏,而是让策略在亏损和异常时不失控。</p>
+
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 25 章小结图: 术语复盘:用人话再讲一遍">
+            <defs>
+              <linearGradient id="sumGrad25" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.75" />
+              </linearGradient>
+            </defs>
+            <rect x="18" y="18" width="864" height="324" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(105,179,162,0.28)" />
+            <text x="450" y="68" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">本章留下的三件事</text>
+            <path d="M295 220 H335 M565 220 H605" fill="none" stroke="url(#sumGrad25)" stroke-width="7" stroke-linecap="round" />
+            
+            <g>
+              <rect x="65" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M115 190 L158 190 L158 178 L240 220 L158 262 L158 250 L115 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="180" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 1</text>
+              <text x="180" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="180" y="214">基础术语都可以放</tspan><tspan x="180" y="234">回现金流、权利、</tspan><tspan x="180" y="254">风险和价格四个问</tspan><tspan x="180" y="274">题里理解</tspan></text>
+            </g>
+            <g>
+              <rect x="335" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M385 190 L428 190 L428 178 L510 220 L428 262 L428 250 L385 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="450" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 2</text>
+              <text x="450" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="450" y="234">货币、信用、利率</tspan><tspan x="450" y="254">和通胀是金融地基</tspan></text>
+            </g>
+            <g>
+              <rect x="605" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M655 190 L698 190 L698 178 L780 220 L698 262 L698 250 L655 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="720" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 3</text>
+              <text x="720" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="720" y="214">量化术语都在回答</tspan><tspan x="720" y="234">收益来源、预测能</tspan><tspan x="720" y="254">力、交易可行性和</tspan><tspan x="720" y="274">要检查</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">读完第 25 章后,至少要能复述“基础术语都可以放回现金流、权利、风险和价格四个问题里理解”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
+        </div>
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>基础术语都可以放回现金流、权利、风险和价格四个问题里理解。</li>
+            <li>货币、信用、利率和通胀是金融地基;股票、债券、基金、衍生品是不同权利和风险的包装。</li>
+            <li>量化术语都在回答收益来源、预测能力、交易可行性和风险来源这些朴素问题。</li>
+            <li>Alpha 要扣掉 Beta 和常见风险暴露后再谈;因子要经过 IC、分层、成本和样本外检验。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 货币</li>
+            <li><strong>2.</strong> 利率</li>
+            <li><strong>3.</strong> 股票</li>
+            <li><strong>4.</strong> 基金</li>
+            <li><strong>5.</strong> 期货</li>
+            <li><strong>6.</strong> 量化词汇用人话再讲一遍</li>
+            <li><strong>7.</strong> Beta</li>
+            <li><strong>8.</strong> IC 和 RankIC</li>
+            <li><strong>9.</strong> 滑点</li>
+            <li><strong>10.</strong> 跟踪误差</li>
+            <li><strong>11.</strong> 风控</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么钱不是财富本身?</summary>
+            <p>因为真实财富是商品、服务和生产力,钱只是交换、记账和储藏价值的工具。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>债券为什么不等于无风险?</summary>
+            <p>它有利率、信用、流动性和通胀风险。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>Alpha 和 Beta 最大区别是什么?</summary>
+            <p>Beta 是市场或风格暴露带来的收益,Alpha 是扣除这些暴露后仍然多出来的部分。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么 IC 好不等于策略能赚钱?</summary>
+            <p>还要经过组合、成本、换手、容量和风险约束。</p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

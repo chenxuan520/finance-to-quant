@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 1 章 · 信用、利率与银行体系 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="从借鱼讲到信用、利率、贷款、债券和违约风险。 / 讲清银行资产负债表、贷款创造存款、挤兑、央行和货币政策传导。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="1">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第一部分 · 金融世界的底层结构 · 第 1 章</p>
+        <h1>信用、利率与银行体系</h1>
+        <p class="lead">上一章的小岛出现了“借一条鱼”的行为,这一章从这里继续。有人今天有多余资源,有人有能提高未来产出的计划,把两者接起来就是信用;只要有等待和风险,就会出现利率。理解了这一点,再看银行怎么把存款变成贷款、央行为什么能影响整个经济的钱是松还是紧,就不再是背名词,而是看清一套环环相扣的机制。</p>
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>信用是今天获得资源、未来履行承诺。</li>
+            <li>利息补偿等待、违约风险和流动性不便。</li>
+            <li>银行不是保险柜,而是一张连接存款、贷款和资本的资产负债表。</li>
+            <li>贷款会创造存款,但银行受资本、流动性、监管和坏账风险约束。</li>
+          </ul>
+        </section>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="第 1 章流程图: 信用、利率与银行体系">
+            <defs>
+              <linearGradient id="mapGrad1" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+              </linearGradient>
+              <filter id="softShadow1" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
+              </filter>
+            </defs>
+            <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
+            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">第 1 章概念路径</text>
+            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad1)" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+            
+            <g filter="url(#softShadow1)">
+              <rect x="38" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">1</text>
+              <text x="136" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="137">借鱼这件事到底发</tspan><tspan x="136" y="157">生了什么</tspan></text>
+            </g>
+            <g filter="url(#softShadow1)">
+              <rect x="253" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">2</text>
+              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="137">利息不是凭空冒出</tspan><tspan x="351" y="157">来的</tspan></text>
+            </g>
+            <g filter="url(#softShadow1)">
+              <rect x="468" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">3</text>
+              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="147">好债和坏债的区别</tspan></text>
+            </g>
+            <g filter="url(#softShadow1)">
+              <rect x="683" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">4</text>
+              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="137">债券就是标准化借</tspan><tspan x="781" y="157">条</tspan></text>
+            </g>
+            <g filter="url(#softShadow1)">
+              <rect x="38" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">5</text>
+              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="307">为什么利率上升,</tspan><tspan x="136" y="327">老债会跌</tspan></text>
+            </g>
+            <g filter="url(#softShadow1)">
+              <rect x="253" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">6</text>
+              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="307">国债、公司债和信</tspan><tspan x="351" y="327">用利差</tspan></text>
+            </g>
+            <g filter="url(#softShadow1)">
+              <rect x="468" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">7</text>
+              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="307">钱不是都躺在保险</tspan><tspan x="566" y="327">柜里</tspan></text>
+            </g>
+            <g filter="url(#softShadow1)">
+              <rect x="683" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">8</text>
+              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="307">为什么量化也要懂</tspan><tspan x="781" y="327">银行和央行</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">本图从“借鱼这件事到底发生了什么”走到“为什么量化也要懂银行和央行”,用于先看第 1 章的关键路径,再回到正文补细节。</p>
+        </div>
+
+        <h2>1. 借鱼这件事到底发生了什么</h2>
+<p>回到小岛。甲今天多抓了一条鱼,暂时吃不完。乙想编网,但他明天如果不下海抓鱼就会挨饿。甲可以把一条鱼借给乙,乙承诺以后还两条。</p><p>注意,这件事没有让岛上立刻多出一条鱼。岛上的鱼只是从甲手里转到乙手里。真正发生变化的是时间:甲放弃了今天吃鱼的权利,换来乙未来还鱼的承诺。</p><p>这就是信用最朴素的样子。信用不是凭空创造真实财富,而是把今天的资源交给一个未来承诺。如果乙用这条鱼撑过一天,成功编出网,以后能抓更多鱼,这笔信用就帮助小岛提高了生产力。如果乙只是把鱼吃掉,明天什么也没变,还鱼就会变难。</p>
+
+        <h2>2. 利息不是凭空冒出来的</h2>
+<p>甲为什么要让乙以后还两条,而不是只还一条?这不是因为甲会背金融公式,而是因为甲承担了几件事。</p><p>第一,甲要等待。今天的一条鱼可以今天吃,也可以拿去做别的事。甲把鱼借出去,就失去了今天使用它的机会。第二,乙可能失败。网可能没编好,乙也可能抓不到更多鱼。第三,甲中途可能自己需要鱼,但鱼已经借出去了。</p><p>利息就是对这些事情的补偿。等待越久,风险越高,中途越不方便,利息通常越高。反过来,如果借款人可靠、期限短、随时能转让这张借条,利息就可以低一些。</p><div class="callout callout--note reveal"><span class="callout__title">把利息讲成人话</span><p>利息是资金跨时间使用的价格,也是对违约风险、等待时间和流动性不便的补偿。</p></div>
+
+        <h2>3. 好债和坏债的区别</h2>
+<p>借钱本身不是坏事。借鱼去编网,未来产量提高,这是好债。借鱼去造船、修码头、学习更好的捕鱼技术,只要未来产出真的提高,债务就有现金流支撑。</p><p>但如果乙借鱼只是为了办宴会,今天大家吃得很开心,明天没有更多鱼,还债就会困难。现代社会也一样。企业借钱建厂、研发、提高效率,项目成功后可以用未来收入还本付息。企业借钱填旧窟窿、炒资产、维持亏损,如果没有新增现金流,债务会越滚越重。</p><p>所以分析债务时,不要只问“借了多少”,还要问“借来的钱用来做什么”。同样是负债,生产性债务和消耗性债务的含义完全不同。</p>
+
+        <h2>4. 债券就是标准化借条</h2>
+<p>如果甲和乙的借鱼约定写在纸上,注明借多少、什么时候还、还多少、还不上怎么办,这就是借条。现代金融里,债券可以理解成一张标准化、可以交易的借条。</p><p>比如一家公司发行债券:你今天借给它一百元,它每年付你五元利息,三年后还你一百元本金。这里的五元叫票息,三年后还本金叫到期偿还。你拿到的是一串未来现金流。</p><p>债券之所以可以交易,是因为别人也可以买下这张未来现金流的权利。如果你中途急需用钱,可以把债券卖给另一个投资者。卖多少钱,取决于市场现在要求多少回报,也取决于大家觉得这家公司靠不靠谱。</p>
+
+        <h2>5. 为什么利率上升,老债会跌</h2>
+<p>这是很多人第一次学债券时最困惑的地方。我们用最小数字算一遍。</p><p>假设一年后你确定能拿到一百零五元。如果市场上大家只要求百分之五回报,那今天付一百元是合理的,因为一百元一年后变一百零五元。</p><p>但如果市场上新的投资机会都能给百分之十回报,那同样一年后拿一百零五元,今天就不值一百元了。因为你今天拿一百元去别处,一年后能拿一百一十元。为了让这张老债也有吸引力,它今天的价格必须降到大约九十五点四五元。</p><p>所以债券价格和市场利率通常反着走。未来现金流固定,市场要求回报越高,今天价格越低。刚才这个“把一年后的 105 元换算成今天值多少钱”的动作,就叫折现;你换算时用的那个回报率(这里是 10%),就叫折现率。一句话记住:折现就是把未来的钱打个折算回今天,越远、越不确定、要求回报越高,打的折就越狠。这个逻辑以后会反复出现:股票估值、房地产价格、长期资产,都受折现率影响。</p>
+
+        <h2>6. 国债、公司债和信用利差</h2>
+<p>并不是所有债都一样。国债通常被认为信用风险较低,因为政府有税收和货币体系支持。公司债要看公司经营情况,公司可能赚钱,也可能亏损,甚至违约。</p><p>如果同样三年期,国债收益率是百分之三,某家公司债收益率是百分之六,中间多出来的三个百分点,很大一部分就是市场要求的信用补偿。它叫信用利差。</p><p>信用利差扩大,往往说明市场更担心违约或流动性;信用利差收窄,说明市场更愿意承担信用风险。量化债券策略、信用策略、宏观策略都会盯这个数字。</p>
+<p>债券看起来比股票稳定,但债券市场是量化研究的重要战场。利率曲线、信用利差、久期、凸性、违约概率、流动性,都可以变成数据和模型。</p><p>如果你做股票量化,也不能忽略利率。利率上升时,未来现金流折现回来更少,成长股估值可能承压。利率下降时,债券价格可能上涨,股票估值也可能受支撑。但这些都不是机械规则,还要看盈利和风险偏好。</p><p>所以这一章不是债券投资者专属。它教你理解金融里最重要的一条线:未来承诺如何变成今天价格。</p>
+
+        <h2>7. 钱不是都躺在保险柜里</h2>
+<p>很多人第一次理解银行,会把银行想成一个巨大的保险柜:大家把钱放进去,银行替大家保管。这个想象只对了一小部分。现代银行更像一张资产负债表:它一边欠储户钱,一边把钱贷给别人;一边提供支付便利,一边承担信用和流动性风险。央行也不是遥控所有资产涨跌的按钮,它更像金融系统的水位调节器。</p>
+<p>假设岛上出现了一个仓库。岛民把鱼存进去,仓库给他们开鱼票。最简单的仓库只是保管鱼:你存一条,仓库就留一条;你拿票来取,仓库把鱼还给你。如果银行只是这样,它确实像保险柜。</p><p>但现代银行不是这样运转的。你把钱存进银行,银行不会把每一张纸币都贴上你的名字锁在柜子里。银行会留下部分流动资金,同时把大量资金贷给企业、居民或买入债券。银行对你有还款义务,你对银行有一笔存款债权;借款人对银行有还款义务,银行拥有贷款资产。</p><p>所以从银行角度看,客户存款是负债,因为银行欠客户;贷款是资产,因为借款人未来要还银行。这和普通人的视角刚好相反。你看银行存款是自己的资产,银行看同一笔存款是自己的负债。</p><div class="callout callout--note reveal"><span class="callout__title">换一个视角</span><p>理解银行的第一步,是站到银行资产负债表上看:谁欠银行钱,银行又欠谁钱。</p></div>
+
+        <h2>8. 一张极简资产负债表</h2>
+<p>先看一个极简银行。它有一百元资产,其中二十元是现金和准备金,八十元是贷款。它的负债是九十元客户存款,资本是十元股东投入。</p><p>资产这一边说明银行的钱用到哪里了:现金能应付提款,贷款能产生利息。负债和资本这一边说明钱从哪里来:存款是客户借给银行的资金,资本是股东承担第一层损失的垫子。</p><p>如果八十元贷款里有五元坏账,银行资本从十元变成五元,客户存款暂时还安全。如果坏账变成十二元,资本被打穿,银行就会出大问题。资本的作用,就是在损失先打到储户之前,先由股东承担一层。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 290" role="img" aria-label="银行资产负债表:左边资产以贷款为主,右边负债以存款为主,两侧金额相等">
+            <text x="450" y="34" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">银行资产负债表:钱不是躺在保险柜里</text>
+            <!-- 资产侧 -->
+            <rect x="70" y="70" width="330" height="200" rx="14" fill="rgba(105,179,162,0.10)" stroke="#69b3a2" stroke-width="2"/>
+            <text x="235" y="98" text-anchor="middle" fill="#8ef0d1" font-size="16" font-weight="800">资产(钱用到哪去了)</text>
+            <rect x="92" y="116" width="286" height="52" rx="8" fill="rgba(105,179,162,0.18)"/>
+            <text x="104" y="148" fill="#eef4ff" font-size="15">发放的贷款(最大一块,不在柜里)</text>
+            <rect x="92" y="176" width="286" height="34" rx="8" fill="rgba(105,179,162,0.14)"/>
+            <text x="104" y="198" fill="#eef4ff" font-size="14">债券等投资</text>
+            <rect x="92" y="218" width="286" height="34" rx="8" fill="rgba(105,179,162,0.14)"/>
+            <text x="104" y="240" fill="#eef4ff" font-size="14">准备金/现金(只留一小部分)</text>
+            <!-- 负债侧 -->
+            <rect x="500" y="70" width="330" height="200" rx="14" fill="rgba(240,201,106,0.10)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="665" y="98" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">负债+资本(钱从哪来的)</text>
+            <rect x="522" y="116" width="286" height="76" rx="8" fill="rgba(240,201,106,0.16)"/>
+            <text x="534" y="150" fill="#eef4ff" font-size="15">储户存款(你以为随时能全取)</text>
+            <text x="534" y="174" fill="#c9d4e8" font-size="13">这其实是银行欠你的钱</text>
+            <rect x="522" y="200" width="286" height="52" rx="8" fill="rgba(240,201,106,0.12)"/>
+            <text x="534" y="232" fill="#eef4ff" font-size="14">银行自有资本(缓冲垫)</text>
+            <text x="450" y="70" text-anchor="middle" fill="#c9d4e8" font-size="13">左右恒等</text>
+          </svg>
+          <p class="figure__cap">银行把大部分存款放成了贷款和投资,柜里只留一小部分准备金。存款是银行欠储户的钱,所以“钱躺在保险柜里”是错觉。</p>
+        </div>
+        <h2>9. 贷款为什么会创造存款</h2>
+<p>这一点最容易让人困惑。假设银行批准一家小店贷款一百万元。很多人以为银行一定是从某个储户账户里搬出一百万元给小店。现实中,银行常见的记账方式是:资产端增加一笔一百万元贷款,负债端给小店账户增加一百万元存款。</p><p>也就是说,贷款发放的同时,银行体系里的存款增加了。小店拿这笔钱去支付装修公司,装修公司的账户可能在另一家银行。于是银行之间还要用准备金清算。</p><p>这并不等于银行可以无限创造钱。银行会受到资本充足率、流动性、准备金、监管、借款人信用、贷款需求和坏账风险约束。如果银行乱放贷款,未来收不回来,损失会吞掉资本,严重时会引发危机。</p>
+
+        <h2>10. 银行靠什么赚钱,又怕什么</h2>
+<p>传统银行最直观的收入来自利差。它以较低成本吸收存款,再以较高利率放出贷款或买入债券。假设存款平均成本是百分之二,贷款平均收益是百分之五,中间三个百分点就是利差来源。</p><p>但这只是表面。银行还要承担坏账损失、运营成本、资本成本和监管成本。短期利率上升时,存款成本可能上升,但早年发出去的长期贷款利率未必立刻上升,银行利差会被压缩。经济下行时,借款人还不上钱,银行还要计提损失。</p><p>银行最怕两类事一起发生:资产端收不回来,负债端大家又急着取钱。前者是信用风险,后者是流动性风险。很多银行危机,都是这两件事互相放大的结果。</p>
+
+        <h2>11. 信心为什么这么重要</h2>
+<p>银行的负债很多是短期的,客户觉得随时能取。银行的资产很多是长期的,比如三年、五年、十年的贷款。平时这没有问题,因为不是所有人都会同时取钱。</p><p>但如果大家突然不信任银行,同时跑去取款,银行就算长期资产最终能收回来,短期也可能拿不出足够现金。这叫挤兑。挤兑的可怕之处在于,它会把“也许没问题”的银行迅速推向“马上有问题”。</p><p>这不是教科书里的假想。2008 年全球金融危机中,拥有 150 多年历史的华尔街巨头雷曼兄弟轰然倒闭;更早在 2007 年,英国北岩银行门口排起了长队,储户冒雨挤在一起只为把钱取出来——那是英国上百年来第一次大规模银行挤兑的画面。这些机构不是一夜之间资产全变成了零,而是当所有人同时想拿回现金、又没人敢再借钱给它时,再大的银行也会瞬间断气。信心一旦崩塌,速度快得吓人。</p><p>存款保险、央行流动性支持、资本监管、流动性覆盖率这些制度,都是为了降低这种恐慌传染。它们不能让坏贷款变好,但能给系统争取时间,防止所有人同时往门口挤。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 275" role="img" aria-label="挤兑示意:正常时准备金够付,所有人同时取钱时准备金瞬间见底">
+            <text x="450" y="34" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">挤兑:为什么信心一崩,好银行也会倒</text>
+            <text x="230" y="72" text-anchor="middle" fill="#8ef0d1" font-size="16" font-weight="800">正常时</text>
+            <rect x="120" y="90" width="220" height="120" rx="12" fill="rgba(105,179,162,0.12)" stroke="#69b3a2" stroke-width="2"/>
+            <text x="230" y="120" text-anchor="middle" fill="#eef4ff" font-size="14">少数人来取钱</text>
+            <text x="230" y="150" text-anchor="middle" fill="#eef4ff" font-size="14">准备金够付</text>
+            <text x="230" y="184" text-anchor="middle" fill="#8ef0d1" font-size="15" font-weight="800">银行照常运转</text>
+            <text x="670" y="72" text-anchor="middle" fill="#ffb4b4" font-size="16" font-weight="800">恐慌时</text>
+            <rect x="560" y="90" width="220" height="120" rx="12" fill="rgba(232,120,120,0.12)" stroke="#e88" stroke-width="2"/>
+            <text x="670" y="118" text-anchor="middle" fill="#eef4ff" font-size="14">所有人同时来取钱</text>
+            <text x="670" y="146" text-anchor="middle" fill="#eef4ff" font-size="14">贷款一时收不回</text>
+            <text x="670" y="180" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">准备金瞬间见底</text>
+            <path d="M 355 150 L 545 150" fill="none" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#runarrow)"/>
+            <defs><marker id="runarrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
+            <text x="450" y="140" text-anchor="middle" fill="#c9d4e8" font-size="13">信心消失</text>
+            <text x="450" y="250" text-anchor="middle" fill="#f6f0df" font-size="15">部分准备金制度下,银行本就没留够全额现金;挤兑是信心问题,不只是资产问题</text>
+          </svg>
+          <p class="figure__cap">银行只留部分准备金,平时够用;一旦所有人同时来取,贷款收不回、准备金见底,连经营正常的银行也可能倒下。这就是存款保险和央行存在的原因之一。</p>
+        </div>
+        <h2>12. 央行像金融系统的水位调节器</h2>
+<p>央行不是普通银行。它不以给普通人办存款贷款为主要业务。央行管理基础货币、影响短端利率、维护支付清算和金融稳定。你可以把它想成金融系统的水位调节器。</p><p>当央行降低政策利率或投放流动性时,金融系统水位上升,银行和机构融资可能更容易,债券收益率可能下降,股票估值也可能受到支撑。当央行收紧时,融资成本上升,高杠杆资产会更难受(杠杆就是借钱放大仓位:自己有 10 万、再借 90 万去买 100 万的资产,涨 10% 你赚的是自有本金的 100%,跌 10% 也可能瞬间亏光本金。借得越多,杠杆越高,融资一贵就越难受)。</p><p>但央行不能凭空创造真实生产率。水位高一点,能让船暂时浮起来;船本身破了,货物卖不出去,水位再高也不能让它变成好船。货币政策能影响金融条件,不能替代企业经营、技术进步和真实需求。</p>
+
+        <h2>13. 为什么量化也要懂银行和央行</h2>
+<p>量化不只是看股票价格。利率、信用、银行资产负债表、流动性,都会进入市场。银行体系紧张时,信用利差可能扩大,股票风险偏好可能下降,货币市场利率可能异常,高杠杆策略可能被迫减仓。</p><p>做债券策略,必须懂久期、信用和央行政策。做股票策略,也要懂利率为什么会影响估值。做多资产配置,更要看信用周期和流动性。</p><p>如果一个模型只看历史价格,却完全不知道当时利率环境、信用环境和流动性状态,它可能在平稳年份看起来很好,在金融条件突然变化时失效。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>信用是今天获得资源、未来履行承诺。</li>
+            <li>利息补偿等待、违约风险和流动性不便。</li>
+            <li>银行不是保险柜,而是一张连接存款、贷款和资本的资产负债表。</li>
+            <li>贷款会创造存款,但银行受资本、流动性、监管和坏账风险约束。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 借鱼这件事到底发生了什么</li>
+            <li><strong>2.</strong> 利息不是凭空冒出来的</li>
+            <li><strong>3.</strong> 好债和坏债的区别</li>
+            <li><strong>4.</strong> 债券就是标准化借条</li>
+            <li><strong>5.</strong> 为什么利率上升,老债会跌</li>
+            <li><strong>6.</strong> 国债、公司债和信用利差</li>
+            <li><strong>7.</strong> 钱不是都躺在保险柜里</li>
+            <li><strong>8.</strong> 一张极简资产负债表</li>
+            <li><strong>9.</strong> 贷款为什么会创造存款</li>
+            <li><strong>10.</strong> 银行靠什么赚钱,又怕什么</li>
+            <li><strong>11.</strong> 信心为什么这么重要</li>
+            <li><strong>12.</strong> 央行像金融系统的水位调节器</li>
+            <li><strong>13.</strong> 为什么量化也要懂银行和央行</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么借钱要付利息?</summary>
+            <p>因为出借人要等待,承担违约风险,还失去中途使用资金的灵活性。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>债券为什么像标准化借条?</summary>
+            <p>因为它写清本金、利息、期限和偿付方式,并且可以在市场上转让。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么存款对银行来说是负债?</summary>
+            <p>因为银行欠储户这笔钱,储户有权要求银行兑付。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>贷款为什么会创造存款?</summary>
+            <p>银行发放贷款时,会在借款人账户上记入存款,同时资产端增加贷款。</p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

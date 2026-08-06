@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 2 章 · 金融系统地图:钱和风险怎么流动 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="把居民、企业、银行、券商、基金、保险、交易所和监管者放进一张图里。 / 讲清发行、交易、成交、清算、交收、登记和托管。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="2">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第一部分 · 金融世界的底层结构 · 第 2 章</p>
+        <h1>金融系统地图:钱和风险怎么流动</h1>
+        <p class="lead">现代金融不是一条直线,而是一张网络:有人有钱,有人缺钱;有人要确定性,有人愿担风险;还有人负责撮合、托管和监管。这一章先把这张地图画出来,弄清钱和风险到底怎么在其中流动;再区分公司第一次拿钱的一级市场,和投资者互相换手的二级市场。看懂地图,后面的股票、债券、基金、量化机构才不会散成一堆孤立名词。</p>
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>金融系统是一张网络,不只是买方和卖方两个人。</li>
+            <li>风险不会凭空消失,只会被转移、拆分、延后或隐藏。</li>
+            <li>一级市场是证券发行融资,二级市场是存量证券换手交易。</li>
+            <li>成交之后还有清算、交收、登记和托管。</li>
+          </ul>
+        </section>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="第 2 章流程图: 金融系统地图:钱和风险怎么流动">
+            <defs>
+              <linearGradient id="mapGrad2" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+              </linearGradient>
+              <filter id="softShadow2" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
+              </filter>
+            </defs>
+            <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
+            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">第 2 章概念路径</text>
+            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad2)" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+            
+            <g filter="url(#softShadow2)">
+              <rect x="38" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">1</text>
+              <text x="136" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="147">先看四类人</tspan></text>
+            </g>
+            <g filter="url(#softShadow2)">
+              <rect x="253" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">2</text>
+              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="127">钱不是直接从一个</tspan><tspan x="351" y="147">人手里飞到另一个</tspan><tspan x="351" y="167">人手里</tspan></text>
+            </g>
+            <g filter="url(#softShadow2)">
+              <rect x="468" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">3</text>
+              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="137">风险不会消失,只</tspan><tspan x="566" y="157">会转移或隐藏</tspan></text>
+            </g>
+            <g filter="url(#softShadow2)">
+              <rect x="683" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">4</text>
+              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="137">为什么需要审计、</tspan><tspan x="781" y="157">披露和监管</tspan></text>
+            </g>
+            <g filter="url(#softShadow2)">
+              <rect x="38" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">5</text>
+              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="307">为什么一个地方出</tspan><tspan x="136" y="327">事会传到别处</tspan></text>
+            </g>
+            <g filter="url(#softShadow2)">
+              <rect x="253" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">6</text>
+              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="307">这张地图和量化有</tspan><tspan x="351" y="327">什么关系</tspan></text>
+            </g>
+            <g filter="url(#softShadow2)">
+              <rect x="468" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">7</text>
+              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="307">证券第一次被卖出</tspan><tspan x="566" y="327">去</tspan></text>
+            </g>
+            <g filter="url(#softShadow2)">
+              <rect x="683" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">8</text>
+              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="307">金融系统地图怎样</tspan><tspan x="781" y="327">帮助建模</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">本图从“先看四类人”走到“金融系统地图怎样帮助建模”,用于先看第 2 章的关键路径,再回到正文补细节。</p>
+        </div>
+
+        <h2>1. 先看四类人</h2>
+<p>金融系统里最基本的角色,可以先分成四类。第一类是资金盈余方,也就是暂时有多余钱的人或机构。比如居民存款、企业现金、养老金、保险资金。第二类是资金需求方,也就是需要钱的人或机构。比如要扩张的企业、要修路的政府、要买房的居民。</p><p>第三类是金融中介,它们帮助钱从盈余方流向需求方。银行、券商、基金公司、保险公司、信托公司、期货公司,都属于这一类。第四类是基础设施和监管者,包括央行、证监会、交易所、登记结算机构、托管机构。它们负责规则、账户、清算、监督和系统稳定。</p><p>你可以把金融系统想成一个城市。资金盈余方像有水的人,资金需求方像需要水的工厂和家庭,金融中介像管道和水厂,基础设施和监管者像水表、阀门、质量检测和应急系统。</p>
+
+        <h2>2. 钱不是直接从一个人手里飞到另一个人手里</h2>
+<p>现实里的钱流动通常经过很多层。你买一只基金,钱先进入基金账户,基金管理人按合同买股票或债券,资产由托管人保管,交易通过券商进入交易所,成交后由登记结算机构完成资金和证券交收。</p><p>如果你买银行理财,链条又不一样。银行或理财公司募集资金,投向债券、非标资产、存款、基金等。你看到的是一个产品名称,背后其实是很多资产和合同。</p><p>所以看金融产品,不能只看包装。你要问:钱最终去了哪里?买了什么资产?谁负责管理?谁托管?谁承担亏损?什么时候能赎回?这些问题比产品名字更重要。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 290" role="img" aria-label="金融系统资金流示意:资金从盈余方经中介流向需求方,收益和风险反向流回">
+            <text x="450" y="32" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">钱和风险怎么在金融系统里流动</text>
+            <!-- 左:资金盈余方 -->
+            <rect x="40" y="90" width="170" height="130" rx="14" fill="rgba(105,179,162,0.12)" stroke="#69b3a2" stroke-width="2"/>
+            <text x="125" y="128" text-anchor="middle" fill="#8ef0d1" font-size="15" font-weight="800">有钱的人</text>
+            <text x="125" y="156" text-anchor="middle" fill="#c9d4e8" font-size="13">储户、投资者</text>
+            <text x="125" y="182" text-anchor="middle" fill="#c9d4e8" font-size="13">想让钱增值</text>
+            <!-- 中:金融中介 -->
+            <rect x="330" y="72" width="240" height="166" rx="16" fill="rgba(240,201,106,0.12)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="450" y="104" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">金融中介与市场</text>
+            <text x="450" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12.5">银行 · 券商 · 基金</text>
+            <text x="450" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12.5">交易所 · 托管</text>
+            <text x="450" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12.5">撮合 · 定价 · 监管</text>
+            <text x="450" y="212" text-anchor="middle" fill="#8499bd" font-size="12">把钱和风险重新分配</text>
+            <!-- 右:资金需求方 -->
+            <rect x="690" y="90" width="170" height="130" rx="14" fill="rgba(105,179,162,0.12)" stroke="#69b3a2" stroke-width="2"/>
+            <text x="775" y="128" text-anchor="middle" fill="#8ef0d1" font-size="15" font-weight="800">缺钱的人</text>
+            <text x="775" y="156" text-anchor="middle" fill="#c9d4e8" font-size="13">企业、政府</text>
+            <text x="775" y="182" text-anchor="middle" fill="#c9d4e8" font-size="13">想融资办事</text>
+            <!-- 箭头:资金右流,收益权左流 -->
+            <path d="M 214 130 L 326 130" fill="none" stroke="#8ef0d1" stroke-width="3" marker-end="url(#mfa)"/>
+            <text x="270" y="120" text-anchor="middle" fill="#8ef0d1" font-size="12">资金</text>
+            <path d="M 570 130 L 686 130" fill="none" stroke="#8ef0d1" stroke-width="3" marker-end="url(#mfa)"/>
+            <text x="628" y="120" text-anchor="middle" fill="#8ef0d1" font-size="12">资金</text>
+            <path d="M 686 200 L 570 200" fill="none" stroke="#f0c96a" stroke-width="3" marker-end="url(#mfb)"/>
+            <path d="M 326 200 L 214 200" fill="none" stroke="#f0c96a" stroke-width="3" marker-end="url(#mfb)"/>
+            <text x="450" y="272" text-anchor="middle" fill="#c9d4e8" font-size="13">钱从盈余方流向需求方;股权、债权和利息等“收益和风险”反向流回</text>
+            <defs>
+              <marker id="mfa" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8ef0d1"/></marker>
+              <marker id="mfb" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker>
+            </defs>
+          </svg>
+          <p class="figure__cap">金融系统的核心就是这张图:把有钱但暂时不用的人,和缺钱但能创造价值的人对接起来。中间的银行、券商、基金、交易所负责撮合、定价、托管和分配风险。</p>
+        </div>
+        <h2>3. 风险不会消失,只会转移或隐藏</h2>
+<p>很多金融产品会说自己在管理风险。管理风险不等于消灭风险。航空公司担心油价上涨,可以买一份“将来能按今天约定价买油”的合约(燃油期货)来对冲;这样航空公司少承担油价上涨风险,但期货市场里的另一方承担了相反风险。这就是对冲的本质:再做一笔方向相反的交易,用一边的盈利抵消另一边的亏损,把不想承担的那部分风险转移出去。</p><p>银行把很多贷款打包成资产,基金把很多股票做成组合,保险公司把很多人的风险放在一起,这些都能分散风险。但分散不是消失。极端情况下,相关性会一起上升,很多看似分散的东西会同时出问题。</p><p>金融工程最危险的地方,就是让风险看起来不见了。其实它可能只是被拆小、换名、延后,或者藏到了别人看不见的角落。</p>
+
+        <h2>4. 为什么需要审计、披露和监管</h2>
+<p>借钱的人通常比贷款人更了解自己能不能还钱。公司管理层通常比外部股东更了解公司真实经营。基金经理比普通投资者更了解自己到底怎么投。这叫信息不对称。</p><p>信息不对称会带来两个问题。第一个是逆向选择:越危险的人越想借钱,越差的项目越想融资。第二个是道德风险:拿到钱以后,管理人可能做出对自己有利、对投资者不利的选择。</p><p>所以金融系统需要审计、信息披露、评级、抵押、托管、估值、投资者适当性和监管。它们不是形式主义,而是为了让陌生人之间可以更低成本地建立信任。</p>
+
+        <h2>5. 为什么一个地方出事会传到别处</h2>
+<p>如果一个小店经营失败,只影响店主和少数债权人,这叫个体风险。但如果很多机构借了类似的钱、买了类似的资产、用了类似的杠杆,一个价格下跌就可能触发连锁反应。</p><p>比如资产价格下跌,机构需要追加保证金(用借来的钱买资产时,要先交一笔押金做担保,叫保证金;资产一跌,押金不够了,对方就要求你再补钱,这叫追加保证金),为了筹钱被迫卖资产;卖出又让价格继续下跌;价格下跌又触发更多保证金。这种反馈会让本来局部的问题变成系统问题。</p><p>量化策略也可能有系统性风险。很多产品使用相似因子(因子先粗略理解成“挑股票时看的某个指标”,比如“便不便宜”“涨势强不强”,后面第四部分会专门讲)、相似风控、相似交易规则,平时看起来分散,压力时可能同时卖出同类资产,导致拥挤踩踏。</p>
+
+        <h2>6. 这张地图和量化有什么关系</h2>
+<p>量化研究不是只拿价格表跑模型。你要知道价格来自哪个市场,成交通过什么机制,数据由谁披露,资金由谁托管,产品受什么规则约束。</p><p>如果模型使用基金净值,你要知道净值怎么估算。使用财务数据,你要知道披露时间。使用成交量,你要知道是否停牌、是否涨跌停。使用融资融券数据,你要知道规则和券源限制。</p><p>这就是为什么金融系统地图是量化前置知识。没有这张地图,模型很容易把制度差异、数据口径和交易限制当成可预测规律。</p>
+<p>很多人第一次买股票,会以为自己买入时,钱就进了上市公司账户。多数时候不是这样。公司发行证券拿钱,和你在交易软件里买卖证券,是两件不同的事。这一章要把一级市场、二级市场、交易、清算、交收和托管讲清楚。</p>
+
+        <h2>7. 证券第一次被卖出去</h2>
+<p>一家公司想扩张,需要钱。它可以向银行贷款,也可以发行股票或债券。发行股票、发行债券这类“新证券第一次卖给投资者”的地方,叫一级市场。</p><p>在一级市场里,钱会流向发行人。公司首次公开发行股票,也就是 IPO,投资者买的是新发行的股份,公司因此获得资金。公司发行债券,投资者把钱借给公司,公司承诺未来付息还本。</p><p>一级市场不是随便摆摊卖东西。券商可能担任保荐人和承销商,会计师审财务,律师看法律文件,交易所和监管机构看是否符合规则。因为这是证券被创造出来的环节,信息披露和合规要求非常重。</p>
+
+        <h2>8. 已经发行的证券在投资者之间换手</h2>
+<p>公司上市以后,你在交易软件里买它的股票,通常是在二级市场买。二级市场里,你买入时,钱一般是付给卖出股票的投资者,不是直接付给上市公司。</p><p>这并不代表二级市场不重要。恰恰相反,如果没有二级市场,投资者买了股票就很难退出,他们在一级市场买新股时就会要求更高补偿,公司融资也会更难。</p><p>二级市场的作用,是让存量证券可以持续交易、持续定价、持续转移风险。它像一个大型二手市场,但这个二手市场的价格会反过来影响公司再融资、股权激励、并购、声誉和投资者信心。</p>
+
+        <h2>9. 成交不是终点,后面还有清算和交收</h2>
+<p>你点买入按钮,交易所撮合成功,这叫成交。成交说明买卖双方在某个价格和数量上达成交易。但成交之后,系统还要计算谁该付多少钱,谁该收多少证券。这个计算过程叫清算。</p><p>清算之后,资金和证券要真正完成转移,这叫交收。交收完成后,你的账户里才正式更新持仓和资金。证券权属的记录,由登记结算体系维护。基金、机构资产还会有托管人保管和核对资产。</p><p>这几个词听起来像后台细节,但对量化很重要。一个交易系统不能只知道“我想买一万股”,还要知道订单是否成交、成交多少、资金何时扣、证券何时可卖、费用如何记账、券商记录和内部记录是否一致。</p>
+
+        <h2>10. 券商、交易所、登记结算、托管分别做什么</h2>
+<p>券商是投资者进入市场的通道。它给你开户,接收你的委托,检查资金、持仓、权限和风控,再把合规订单送到交易所。</p><p>交易所负责制定交易规则、接收订单、撮合买卖、监控异常交易。交易所不是你的银行账户,也不是上市公司财务部。它更像一个规则化的撮合系统。</p><p>登记结算机构负责成交后的清算、交收和证券权属登记。托管人负责保管基金或机构资产,核对估值和资金划转。它们让市场里陌生人之间的交易可以可信完成。</p>
+<p>我们把流程串起来。第一步,你在券商 App 输入买入指令。第二步,券商检查你有没有足够资金、是否有交易权限、价格是否合规。第三步,订单进入交易所。第四步,交易所按照价格优先、时间优先撮合。第五步,成交回报返回券商和你的账户。第六步,清算和交收系统完成资金和证券变化。</p><p>普通投资者看到的是几秒钟的界面变化,但量化交易系统必须处理每一步。订单可能被拒绝,可能部分成交,可能撤单,可能成交回报延迟,也可能券商账户和内部账户不一致。</p><p>所以成熟交易系统一定要有订单状态机和对账。它不能只用一句 buy(symbol, amount) 就结束。</p>
+
+        <h2>11. 金融系统地图怎样帮助建模</h2>
+<p>量化回测如果不理解一级市场、二级市场和清算交收,很容易写出无法实盘的策略。比如它假设当天买入后当天卖出普通 A 股,但 A 股有 T+1 约束;它假设成交后资金立刻可无限使用,但真实账户有交收和冻结。</p><p>量化开发也必须懂券商接口、订单状态、成交回报、对账和托管数据。很多实盘事故不是模型方向错,而是订单、账户、清算、数据同步出了问题。</p><p>这一章的核心不是让你背后台术语,而是让你知道:交易是一条链,不是一个按钮。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>金融系统是一张网络,不只是买方和卖方两个人。</li>
+            <li>风险不会凭空消失,只会被转移、拆分、延后或隐藏。</li>
+            <li>一级市场是证券发行融资,二级市场是存量证券换手交易。</li>
+            <li>成交之后还有清算、交收、登记和托管。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 先看四类人</li>
+            <li><strong>2.</strong> 钱不是直接从一个人手里飞到另一个人手里</li>
+            <li><strong>3.</strong> 风险不会消失,只会转移或隐藏</li>
+            <li><strong>4.</strong> 为什么需要审计、披露和监管</li>
+            <li><strong>5.</strong> 为什么一个地方出事会传到别处</li>
+            <li><strong>6.</strong> 这张地图和量化有什么关系</li>
+            <li><strong>7.</strong> 证券第一次被卖出去</li>
+            <li><strong>8.</strong> 已经发行的证券在投资者之间换手</li>
+            <li><strong>9.</strong> 成交不是终点,后面还有清算和交收</li>
+            <li><strong>10.</strong> 券商、交易所、登记结算、托管分别做什么</li>
+            <li><strong>11.</strong> 金融系统地图怎样帮助建模</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>金融系统里最基本的四类角色是什么?</summary>
+            <p>资金盈余方、资金需求方、金融中介、基础设施和监管者。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>风险管理是不是消灭风险?</summary>
+            <p>不是。风险通常只是被转移、分散、拆分或延后。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>你在二级市场买股票,钱通常直接进上市公司账户吗?</summary>
+            <p>通常不是,钱付给卖出股票的投资者。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>成交和交收有什么区别?</summary>
+            <p>成交只是价格和数量撮合成功,交收才是钱和证券按清算结果真正过户。</p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

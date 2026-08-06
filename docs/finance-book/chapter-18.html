@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 18 章 · 量化项目的工程骨架与速查 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="用工程视角讲清数据层、因子层、回测层、模型层、报告层和配置管理。 / 把收益率、年化、波动、回撤、夏普、IC、跟踪误差、久期和估值公式统一解释。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="18">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第六部分 · 项目实战与工程化 · 第 18 章</p>
+        <h1>量化项目的工程骨架与速查</h1>
+        <p class="lead">计算机背景的读者最容易把量化项目写成一个越拉越长的 notebook,几周后连自己都理不清哪个单元格先跑、哪个文件才是最终结果。这一章先讲怎么像正经工程项目那样组织一个量化项目:数据来源清楚、配置可重复、实验有记录、回测可复现、报告能自动生成;再给一份公式和指标速查,帮你在“别死背公式,要知道它在问什么”之间找到平衡。</p>
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>量化项目要按数据、因子、回测、模型、报告和日志分层组织,避免所有逻辑塞进 notebook。</li>
+            <li>配置、版本、交易记录和自动报告是可复现研究的核心。</li>
+            <li>公式的作用是把收益、风险、基准和估值问题算清楚,不是为了背诵。</li>
+            <li>同一个指标都有适用边界,夏普、VaR、PE、IC 都不能单独决定策略好坏。</li>
+          </ul>
+        </section>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="第 18 章流程图: 量化项目的工程骨架与速查">
+            <defs>
+              <linearGradient id="mapGrad18" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+              </linearGradient>
+              <filter id="softShadow18" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
+              </filter>
+            </defs>
+            <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
+            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">第 18 章概念路径</text>
+            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad18)" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+            
+            <g filter="url(#softShadow18)">
+              <rect x="38" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">1</text>
+              <text x="136" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="147">目录结构先分层</tspan></text>
+            </g>
+            <g filter="url(#softShadow18)">
+              <rect x="253" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">2</text>
+              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="137">配置文件比硬编码</tspan><tspan x="351" y="157">可靠</tspan></text>
+            </g>
+            <g filter="url(#softShadow18)">
+              <rect x="468" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">3</text>
+              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="137">原始、清洗和特征</tspan><tspan x="566" y="157">分开</tspan></text>
+            </g>
+            <g filter="url(#softShadow18)">
+              <rect x="683" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">4</text>
+              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="137">每个因子都要有定</tspan><tspan x="781" y="157">义</tspan></text>
+            </g>
+            <g filter="url(#softShadow18)">
+              <rect x="38" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">5</text>
+              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="307">训练、预测和回测</tspan><tspan x="136" y="327">不要混</tspan></text>
+            </g>
+            <g filter="url(#softShadow18)">
+              <rect x="253" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">6</text>
+              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="307">记录失败比记录成</tspan><tspan x="351" y="327">功更重要</tspan></text>
+            </g>
+            <g filter="url(#softShadow18)">
+              <rect x="468" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">7</text>
+              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="307">从教学项目到生产</tspan><tspan x="566" y="327">系统</tspan></text>
+            </g>
+            <g filter="url(#softShadow18)">
+              <rect x="683" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">8</text>
+              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="307">PE、PB和股息</tspan><tspan x="781" y="327">率</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">本图从“目录结构先分层”走到“PE、PB 和股息率”,用于先看第 18 章的关键路径,再回到正文补细节。</p>
+        </div>
+
+        <h2>1. 目录结构先分层</h2>
+<p>一个最小量化项目可以分成几层。data 保存原始数据和处理后数据,features 保存因子构造,backtest 保存回测逻辑,models 保存训练和预测,reports 保存图表和结论,configs 保存参数,logs 保存运行记录。</p><p>目录不是为了好看,而是为了隔离责任。原始数据不要被实验脚本随手改掉;因子计算不要和回测撮合写在一起;报告不要手工复制结果。每层边界清楚,错误才容易定位。</p><p>入门时不必上复杂框架,但要避免所有东西都塞进一个脚本。量化研究会反复试错,如果结构混乱,你很快就分不清收益变化来自模型改进、数据变化还是手工操作错误。</p>
+                <pre><code>quant_project/
+  configs/base.yaml
+  data/raw/              # 原始下载,不手改
+  data/processed/        # 清洗后的价格、成分、财务
+  features/              # 因子计算脚本
+  backtest/              # 账户、订单、撮合、指标
+  models/                # 训练、预测、模型版本
+  reports/               # 自动生成的图表和结论
+  tests/                 # 数据、因子、回测状态测试
+  logs/                  # 每次实验和模拟盘日志</code></pre>
+                <p>这棵目录树不是唯一标准,但它给了第一版项目一个可以照着搭的形状。你可以先只实现 `configs`、`data`、`features`、`backtest`、`reports` 五层,等模拟盘阶段再补 `models`、`logs` 和更完整的测试。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 315" role="img" aria-label="量化项目分层结构示意:data、factors、backtest、config、reports 各司其职">
+            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">量化项目要分层,别塞进一个大 notebook</text>
+            <!-- 分层结构 -->
+            <rect x="120" y="60" width="660" height="40" rx="8" fill="rgba(105,179,162,0.20)" stroke="#8ef0d1" stroke-width="1.5"/>
+            <text x="140" y="85" fill="#eef4ff" font-size="14">data/  原始与清洗后的数据,来源和口径清楚</text>
+            <rect x="120" y="106" width="660" height="40" rx="8" fill="rgba(105,179,162,0.16)" stroke="#69b3a2" stroke-width="1.5"/>
+            <text x="140" y="131" fill="#eef4ff" font-size="14">factors/  因子计算,每个因子一个可复现脚本</text>
+            <rect x="120" y="152" width="660" height="40" rx="8" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="140" y="177" fill="#eef4ff" font-size="14">backtest/  回测引擎与成交、成本、约束假设</text>
+            <rect x="120" y="198" width="660" height="40" rx="8" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="140" y="223" fill="#eef4ff" font-size="14">config/  参数与实验配置,可重复、可追溯</text>
+            <rect x="120" y="244" width="660" height="40" rx="8" fill="rgba(105,179,162,0.16)" stroke="#69b3a2" stroke-width="1.5"/>
+            <text x="140" y="269" fill="#eef4ff" font-size="14">reports/  自动生成的净值、指标和归因报告</text>
+            <text x="450" y="300" text-anchor="middle" fill="#8499bd" font-size="12.5">每层职责单一,换人接手也能看懂,几周后自己也不会迷路</text>
+          </svg>
+          <p class="figure__cap">把项目按职责拆成清晰的几层,而不是全写进一个越拉越长的 notebook。数据、因子、回测、配置、报告各归各位,几周后你和接手的人都还能看懂。</p>
+        </div>
+        <h2>2. 配置文件比硬编码可靠</h2>
+<p>股票池、回测区间、调仓频率、交易成本、滑点、因子列表、模型参数,都应放进配置文件或明确参数里。不要把日期和路径散落在代码各处。</p><p>配置的价值是让实验可重复。你今天跑了一个中证 500 月频低估值策略,一个月后应该能用同一份配置跑出同样结果。如果结果不同,要知道是数据更新了、代码改了,还是依赖环境变了。</p><p>配置还方便对比实验。你可以只改一个参数,例如交易成本从 0.1% 改到 0.2%,观察结果变化。如果参数散在代码里,实验对比会变成手工记忆。</p>
+                <pre><code>universe: csi500
+start_date: 2016-01-01
+end_date: 2024-12-31
+rebalance: monthly
+trade_price: next_open
+cost:
+  buy_bps: 8
+  sell_bps: 13
+constraints:
+  max_weight: 0.03
+  min_avg_amount: 20000000
+factors:
+  - value_bp
+  - momentum_60
+  - quality_roe</code></pre>
+                <p>这份配置写的是研究边界。以后报告里只要引用配置文件,读者就能知道股票池、日期、调仓、成本、约束和因子是什么。配置越清楚,越不容易事后偷偷改规则。</p>
+
+        <h2>3. 原始、清洗和特征分开</h2>
+<p>数据层至少要区分 raw、processed 和 feature。raw 是原始下载或导入的数据,尽量不改;processed 是清洗后的标准表,比如统一代码、日期、复权和停牌字段;feature 是从 processed 计算出的因子和模型输入。</p><p>每一步都要可追溯。某个因子值异常时,你要能回到原始价格、财务字段和处理脚本。否则模型输出错了,你只能猜。</p><p>数据检查脚本应独立存在。缺失率、重复日期、异常价格、停牌状态、复权跳变、财报发布日期、指数成分变化,都应能自动检查。数据检查不是一次性任务,每次更新都要跑。</p>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>表</th><th>关键字段</th><th>用途</th></tr></thead>
+                    <tbody>
+                      <tr><td>prices</td><td>date, code, open, close, volume, amount, adj_factor, paused, limit_up, limit_down</td><td>行情、成交限制、收益计算</td></tr>
+                      <tr><td>universe</td><td>date, code, index_code, weight</td><td>点时股票池和基准权重</td></tr>
+                      <tr><td>features</td><td>date, code, factor_name, value, available_at</td><td>因子矩阵和可见时间</td></tr>
+                      <tr><td>orders</td><td>date, code, side, qty, limit_price, status</td><td>回测和模拟盘订单状态</td></tr>
+                      <tr><td>positions</td><td>date, code, qty, sellable_qty, market_value</td><td>持仓、T+1 和风险暴露</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>有了这些最小字段,你就能把研究从散乱 DataFrame 变成可检查的数据层。字段不必一开始很全,但每个字段都要有含义和口径。</p>
+
+        <h2>4. 每个因子都要有定义</h2>
+<p>因子代码要写清楚输入、输出和时间口径。比如 momentum_20 使用过去 20 个交易日复权收益,是否跳过最近 1 天,是否行业中性,是否做极端值处理,缺失值如何填充。</p><p>每个因子最好有文档和小测试。给一段很小的假数据,能算出预期结果。这样重构代码时,你不会不小心把 shift 方向改错。</p><p>因子层还要保存中间结果。模型训练时不要每次临时重新算全部因子,否则实验慢且难复现。可以按日期和股票保存因子矩阵,并记录生成版本。</p>
+<p>回测层至少有三个概念: 策略生成目标仓位,撮合模块模拟成交,账户模块更新现金和持仓。不要让策略函数直接修改净值,否则你很难加入成本、停牌、T+1 和部分成交。</p><p>指标计算也应独立。年化、回撤、夏普、换手、超额、跟踪误差、信息比率、行业暴露,都可以从净值、持仓和交易记录计算。指标独立后,不同策略可以用同一套评价。</p><p>交易记录必须保存。只保存净值曲线不够。你要知道每次买卖什么、数量多少、价格多少、费用多少、是否失败。交易记录是回测复盘的证据。</p>
+                <pre><code>for date in trading_calendar:
+    data = load_point_in_time_data(date)
+    if is_rebalance_day(date):
+        score = compute_score(data.features)
+        target = build_target_portfolio(score, constraints)
+        orders = diff_to_orders(account.positions, target)
+    orders = risk_check(orders, account, market_rules)
+    fills = match_orders(orders, data.next_bar, cost_model)
+    account.update(fills, data.close_price)
+    recorder.save(date, account, orders, fills)</code></pre>
+                <p>这段伪代码表达的是顺序: 先取当时可见数据,再算分数和目标组合,再生成订单,再风控,再撮合,最后更新账户和记录。只要顺序乱了,就可能出现未来函数或账户状态错误。</p>
+
+        <h2>5. 训练、预测和回测不要混</h2>
+<p>机器学习项目里,训练脚本负责用训练区间拟合模型,预测脚本负责在指定日期输出分数,回测脚本负责把分数变成组合。三者混在一起,很容易发生样本泄漏。</p><p>模型文件要带版本。使用了哪些特征、训练日期、参数、随机种子、代码版本,都应记录。实盘或模拟盘里某天的预测,必须能追溯到当时的模型。</p><p>预测结果也要落盘。不要每次回测都重新训练然后直接交易。真实流程里,每天会先生成预测文件,然后组合和交易系统读取。这样更接近生产,也便于检查。</p>
+<p>报告应尽量自动生成。回测结束后,脚本自动输出净值图、回撤图、年度收益、月度收益、IC、分层、换手、持仓、行业暴露和成本敏感性。</p><p>手工截图容易挑好看的图,也容易漏掉不利结果。自动报告把固定指标都摆出来,逼你面对策略真实样子。</p><p>报告里还要保留配置和数据版本。别人看到一张曲线,应该能知道它来自哪个实验、哪个参数、哪个数据版本。没有元信息的图,复盘价值很低。</p>
+
+        <h2>6. 记录失败比记录成功更重要</h2>
+<p>量化研究大多数想法会失败。如果不记录失败,你会反复试同样方向,或者只记得成功样本,产生幸存者偏差。实验日志应记录日期、想法、配置、结果、结论和下一步。</p><p>日志不需要很长,但要诚实。比如: 尝试 60 日动量,样本内有效,2021 年后失效,换手高,扣成本后超额为负,暂不加入组合。这样的记录以后很有用。</p><p>记录失败也能训练研究判断。你会慢慢知道哪些方向常因成本失败,哪些因子只是市值暴露,哪些模型对参数太敏感。</p>
+<p>量化代码也需要测试。至少要有数据测试、因子测试、回测状态测试和指标测试。比如收益率计算是否正确,复权是否合理,持仓是否不会变成负数,现金是否和交易记录一致。</p><p>断言可以挡住低级错误。比如禁止使用未来日期数据,禁止下单数量不是交易单位整数,禁止组合权重超过上限,禁止净值出现非数字,禁止成交发生在停牌日。</p><p>这些测试看起来不像金融研究,但它们会救你。很多漂亮回测来自 bug,不是来自 Alpha。测试越早写,越少被假收益欺骗。</p>
+                <pre><code>def test_momentum_uses_only_past_prices():
+    prices = [10, 11, 12, 13]
+    # 3 日动量在第 4 天只能使用前 3 天到当天之前的可见价格
+    assert momentum(prices, asof=3, window=2) == 12 / 10 - 1
+
+def test_no_trade_when_limit_up():
+    order = Buy(code="000001", qty=100)
+    bar = Bar(open=10.0, limit_up=10.0, sell_volume=0)
+    assert match(order, bar).filled_qty == 0</code></pre>
+                <p>测试样例要小到一眼能算出来。它们不追求覆盖所有金融现实,而是挡住最常见的方向错误、未来数据和非法成交。</p>
+
+        <h2>7. 从教学项目到生产系统</h2>
+<p>教学项目可以本地运行,生产系统要面对调度、监控、权限、容错、备份、日志、告警和人工接管。不要一开始就做复杂生产系统,但要知道未来会需要这些。</p><p>一个合理过渡路线是: 本地脚本跑通,配置化;每日定时生成报告;模拟盘自动更新;小资金半自动下单;最后再考虑全自动。每一步都要比上一阶段多一个真实约束。</p><p>工程化不是为了炫技术,而是为了让策略在时间里可维护。量化项目会持续迭代,没有结构和记录,几个月后就会变成没人敢碰的黑箱。</p>
+<p>金融公式容易让小白紧张。其实大部分入门公式都在问朴素问题: 赚了多少,承担多大波动,从高点跌了多少,有没有跑赢基准,价格相对利润贵不贵,债券对利率多敏感。公式不是为了显得专业,而是为了把问题说清楚、算清楚、比较清楚。</p>
+
+        <h2>8. 收益率</h2>
+<p>单期收益率等于结束价值除以开始价值再减一。100 元变成 105 元,收益率是 5%。100 元变成 95 元,收益率是 -5%。收益率的意义是把不同本金规模放到同一把尺子上比较。</p><p>多期收益不能简单相加,要按复利相乘。第一期赚 10%,第二期亏 10%,最终是 1.1 × 0.9 - 1 = -1%。这说明涨跌幅对称时,长期结果并不对称。</p><p>量化代码里最容易犯的错是价格口径不清。用未复权价格算长期收益会把分红除权当成下跌;用复权价格模拟真实成交又可能不对应当时市场价格。收益公式简单,数据口径不简单。</p>
+<p>年化收益把不同长度的投资结果换算成一年口径。若 3 个月收益 5%,复利年化大约是 1.05 的 4 次方减一。年化方便比较,但样本越短越不稳定。</p><p>年化不是预测。一个策略一周赚 2%,不能简单相信它一年会赚很多。短期收益可能来自运气、市场风格或一次事件,年化后会显得非常夸张。</p><p>看年化时一定配合回撤、波动和样本长度。没有风险指标的年化收益,就像只告诉你车能跑多快,不告诉你刹车是否可靠。</p>
+
+        <h2>9. 波动率</h2>
+<p>波动率通常是收益率标准差。它衡量收益围绕平均值上下摆动的程度。日收益很稳定,波动率低;大涨大跌频繁,波动率高。</p><p>日波动率常用乘以交易日数量平方根的方式年化。A 股严谨回测可以按实际交易日数,行业报告也常统一用 252 作为近似。这个公式来自独立同分布近似,现实市场并不完美满足,但作为粗略比较工具很常用。</p><p>波动率把上涨和下跌都算成波动,所以它不是风险的全部。投资者通常不讨厌上涨波动,真正害怕的是下跌、回撤和尾部亏损。</p>
+<p>最大回撤等于净值从历史高点跌到之后低点的最大跌幅。净值从 1.5 跌到 1.2,回撤是 1.2 / 1.5 - 1 = -20%。</p><p>最大回撤贴近投资体验。你不是从起点看账户,而是会记得曾经最高点。净值从高点跌下来,心理压力很大,很多人会在回撤中赎回或停止策略。</p><p>回撤还有恢复问题。跌 50% 要涨 100% 才回本。策略控制回撤不是为了曲线好看,而是为了复利不被深亏打断。</p>
+
+        <h2>10. 夏普比率</h2>
+<p>夏普比率大致等于超出无风险收益的部分除以收益波动率。它问的是: 每承担一份波动,换来多少超额收益。</p><p>如果策略年化收益 15%,无风险收益 3%,年化波动 12%,夏普约为 1。另一个策略年化收益 25%,波动 44%,夏普约 0.5。后者赚得多,但单位波动质量更差。</p><p>夏普会低估小赚大亏策略的风险。卖期权、加杠杆、吃流动性尾部风险的策略,平时夏普可能很好,但一次极端亏损会暴露问题。</p>
+<p>信息比率等于年化超额收益除以年化跟踪误差。它用于评价相对基准的主动管理能力,尤其适合指数增强。</p><p>超额收益是组合收益减基准收益。跟踪误差是超额收益的波动。信息比率高,表示每承担一份相对基准偏离,得到更多超额。</p><p>信息比率也要看样本长度和稳定性。一个产品短期超额很高,但跟踪误差也高、超额回撤很深,不一定比稳定小超额更好。</p>
+
+        <h2>11. IC 和 RankIC</h2>
+<p>IC 衡量因子值和未来收益之间的相关性。RankIC 用排序相关,更关注因子排名和未来收益排名是否一致。</p><p>股票横截面噪声很大,IC 通常不会很高。长期平均 RankIC 只有 0.02 或 0.03,如果稳定、成本低、容量大,也可能有价值。</p><p>IC 只是第一层检验。一个因子 IC 好,还要看分层收益、换手、成本、行业暴露、样本外和组合边际贡献。</p>
+<p>跟踪误差衡量组合相对基准收益的波动。指数基金希望跟踪误差尽量低,指数增强允许一定跟踪误差来争取超额。</p><p>跟踪误差不是坏东西,它是主动管理自由度的代价。完全不偏离基准,就很难产生超额;偏离太大,客户拿到的风险就可能不像承诺的产品。</p><p>看指数增强时,跟踪误差要和超额收益一起看。只看超额高,可能忽略它承担了过多偏离风险。</p>
+
+        <h2>12. 久期</h2>
+<p>久期可以粗略理解为债券价格对利率变化的敏感度。久期为 7 的债券,收益率上升 1 个百分点,价格大约下跌 7%。这是近似,但非常有用。</p><p>久期越长,债券越怕利率上升,也越受益于利率下降。长期国债没有信用违约风险的直觉很强,但它有明显利率风险。</p><p>债券基金报告里如果写久期较长,你就要知道它对利率变化敏感。不要把债券基金简单理解成不会跌的产品。</p>
+<p>VaR 是在险价值,用来回答在某个置信水平和期限下,正常情况下可能亏多少。比如 1 日 95% VaR 为 100 万,意思是模型估计 95% 的日子里单日亏损不超过 100 万。</p><p>VaR 有历史模拟、参数法、蒙特卡洛等口径,不同方法对分布和尾部的假设不同。它适合做风险沟通,但不能告诉你超过 VaR 后会亏多惨。</p><p>所以 VaR 必须和压力测试、最大回撤、尾部损失、杠杆和流动性一起看。只给一个 VaR 数字,不能说明风险已经被充分控制。</p>
+
+        <h2>13. PE、PB 和股息率</h2>
+<p>PE 是市值除以净利润,问的是市场愿意为一元利润付多少钱。PB 是市值除以净资产,问的是市场愿意为一元账面净资产付多少钱。股息率是分红除以价格,问的是按当前价格分红回报大约多少。</p><p>低 PE、低 PB、高股息率常被看作便宜,但不能机械使用。低估值可能来自真实风险,高股息可能不可持续,PB 对轻资产公司解释力有限。</p><p>估值指标最适合和行业、质量、成长、现金流一起看。量化里常做行业中性和极端值处理,避免把行业差异当成股票便宜。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>量化项目要按数据、因子、回测、模型、报告和日志分层组织,避免所有逻辑塞进 notebook。</li>
+            <li>配置、版本、交易记录和自动报告是可复现研究的核心。</li>
+            <li>公式的作用是把收益、风险、基准和估值问题算清楚,不是为了背诵。</li>
+            <li>同一个指标都有适用边界,夏普、VaR、PE、IC 都不能单独决定策略好坏。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 目录结构先分层</li>
+            <li><strong>2.</strong> 配置文件比硬编码可靠</li>
+            <li><strong>3.</strong> 原始、清洗和特征分开</li>
+            <li><strong>4.</strong> 每个因子都要有定义</li>
+            <li><strong>5.</strong> 训练、预测和回测不要混</li>
+            <li><strong>6.</strong> 记录失败比记录成功更重要</li>
+            <li><strong>7.</strong> 从教学项目到生产系统</li>
+            <li><strong>8.</strong> 收益率</li>
+            <li><strong>9.</strong> 波动率</li>
+            <li><strong>10.</strong> 夏普比率</li>
+            <li><strong>11.</strong> IC 和 RankIC</li>
+            <li><strong>12.</strong> 久期</li>
+            <li><strong>13.</strong> PE、PB 和股息率</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么不建议把量化项目写成一个长 notebook?</summary>
+            <p>因为运行顺序、临时文件和手工操作难以复现,很容易分不清结果来自哪里。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>回测为什么要保存交易记录?</summary>
+            <p>净值只能看结果,交易记录能复盘每次买卖、费用、失败和持仓变化。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么收益率多期要用乘法而不是简单加法?</summary>
+            <p>因为每期收益作用在变化后的新本金上,投资过程是复利链条。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>夏普比率为什么不能单独判断策略好坏?</summary>
+            <p>它用波动代表风险,可能低估尾部亏损、杠杆和小赚大亏结构。</p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

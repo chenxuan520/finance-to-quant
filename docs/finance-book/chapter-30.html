@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 30 章 · 自检判断题与一个反面案例 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="用十个容易误判的问题复盘金融和量化核心直觉。 / 用反面故事总结技术自信、金融短板、回测幻觉、杠杆和执行失控如何叠加成亏损。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="30">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第七部分 · 路线、复盘与检查清单 · 第 30 章</p>
+        <h1>自检判断题与一个反面案例</h1>
+        <p class="lead">这一章用两种方式帮你检验自己是不是真的理解了。先是十个判断题,每一个都对应书里的一个关键直觉,答错说明那块地基还没打牢;再是一个反面案例,完整讲一个程序员是怎样凭着扎实的编程能力,却在量化里一步步亏钱的。别人踩过的坑,是最便宜的学费。</p>
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>金融和量化里的大多数判断都不是绝对句,要看条件、口径和风险来源。</li>
+            <li>看到看似确定的结论,要追问数据、成本、基准、交易制度和适用场景。</li>
+            <li>计算机能力是量化优势,但不能替代金融口径、交易制度和风险纪律。</li>
+            <li>多数严重亏损来自多个小错误叠加: 未来函数、成本低估、过拟合、加仓过快和无停止规则。</li>
+          </ul>
+        </section>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="第 30 章流程图: 自检判断题与一个反面案例">
+            <defs>
+              <linearGradient id="mapGrad30" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+              </linearGradient>
+              <filter id="softShadow30" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
+              </filter>
+            </defs>
+            <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
+            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">第 30 章概念路径</text>
+            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad30)" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+            
+            <g filter="url(#softShadow30)">
+              <rect x="38" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">1</text>
+              <text x="136" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="137">钱越多,社会越富</tspan><tspan x="136" y="157">吗</tspan></text>
+            </g>
+            <g filter="url(#softShadow30)">
+              <rect x="253" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">2</text>
+              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="137">指数基金一定适合</tspan><tspan x="351" y="157">所有人吗</tspan></text>
+            </g>
+            <g filter="url(#softShadow30)">
+              <rect x="468" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">3</text>
+              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="147">回测好就能实盘吗</tspan></text>
+            </g>
+            <g filter="url(#softShadow30)">
+              <rect x="683" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">4</text>
+              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="137">高胜率策略一定好</tspan><tspan x="781" y="157">吗</tspan></text>
+            </g>
+            <g filter="url(#softShadow30)">
+              <rect x="38" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">5</text>
+              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="307">个人量化最重要的</tspan><tspan x="136" y="327">是找到神奇因子吗</tspan></text>
+            </g>
+            <g filter="url(#softShadow30)">
+              <rect x="253" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">6</text>
+              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="307">一个程序员为什么</tspan><tspan x="351" y="327">会在量化里亏钱</tspan></text>
+            </g>
+            <g filter="url(#softShadow30)">
+              <rect x="468" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">7</text>
+              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="317">他忽略时间线</tspan></text>
+            </g>
+            <g filter="url(#softShadow30)">
+              <rect x="683" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">8</text>
+              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="307">这个故事想提醒什</tspan><tspan x="781" y="327">么</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">本图从“钱越多,社会越富吗”走到“这个故事想提醒什么”,用于先看第 30 章的关键路径,再回到正文补细节。</p>
+        </div>
+
+        <h2>1. 钱越多,社会越富吗</h2>
+<p>不一定。社会真正变富,要看真实商品、服务和生产力是否增加。如果只是货币数量变多,真实产出没有增加,价格可能上涨,购买力未必提高。</p><p>这不是说货币政策不重要。流动性会影响信用、需求和资产价格。但货币不能替代生产率。金融市场上涨,也不等于每个人真实生活变好。</p><p>判断这句话时,要把名义数字和真实财富分开。这是全书第一章的地基。</p>
+<p>不一定。高质量短久期债券通常比股票波动低,但长期债会受利率大幅影响,低信用债会违约,流动性差的债券可能卖不出去。</p><p>股票风险来自剩余收益不确定,债券风险来自利率、信用、流动性和通胀。风险类型不同,不能用一个安全标签概括。</p><p>如果有人说债券不会亏,你要问久期多长、发行人是谁、能否随时卖、收益率为什么这么高。</p>
+
+        <h2>2. 指数基金一定适合所有人吗</h2>
+<p>也不一定。宽基指数基金低成本、分散、透明,适合很多长期投资者,但它仍然有市场波动和回撤。买指数不代表不会亏。</p><p>指数基金适不适合,取决于资金期限、风险承受力、资产配置和买入价格。短期要用的钱,即使买指数也可能遇到回撤。</p><p>《漫步华尔街》给普通人的重要启发是低成本指数化很有价值,不是说任何时候满仓任何指数都无风险。</p>
+<p>不是。有效市场提醒你,公开、简单、人人都知道的信息很难反复赚钱。它让研究更严肃,不是让研究停止。</p><p>市场会犯错,但从市场会错到你能赚钱,中间需要数据、成本、工具、时间和风险承受力。</p><p>有效市场最有用的态度是谦逊。看到一个机会,先问为什么它没有被别人拿走,而不是立刻相信自己发现秘密。</p>
+
+        <h2>3. 回测好就能实盘吗</h2>
+<p>不能。回测只是历史排练,实盘有数据延迟、滑点、部分成交、拒单、停牌、涨跌停、心理压力和系统故障。</p><p>回测要先检查未来函数、幸存者偏差、成本、容量、样本外和参数稳定性。检查后还要模拟盘和小资金实盘验证流程。</p><p>真正能实盘的不是一条曲线,而是一套能处理异常的系统。</p>
+<p>不是。金融数据噪声大、分布漂移强、样本相关高。复杂模型更容易过拟合,也更难解释风险暴露。</p><p>复杂模型只有在相对简单基线提供稳定增量时才有价值。否则,它只是让错误更难发现。</p><p>量化机器学习的重点不是模型炫技,而是预测目标、数据口径、样本外、成本、组合和监控。</p>
+
+        <h2>4. 高胜率策略一定好吗</h2>
+<p>不一定。高胜率可能来自小赚大亏。卖期权式策略平时经常赚钱,但一次极端亏损可能抹掉长期收益。</p><p>评价策略要看期望值、盈亏比、回撤、尾部风险和杠杆。胜率只是一个维度。</p><p>很多优秀趋势策略胜率不高,但靠少数大趋势赚钱。不要把舒服的胜率误认为稳健。</p>
+<p>不是。市场中性只是试图降低大盘方向暴露,不代表没有行业、风格、基差、融资、流动性和模型风险。</p><p>多头可能跑输空头,期货对冲可能受基差影响,融券可能借不到,保证金可能带来压力。</p><p>看到中性两个字,要问中性了什么,还剩什么风险,对冲成本多少。</p>
+
+        <h2>5. 个人量化最重要的是找到神奇因子吗</h2>
+<p>不是。个人量化最重要的是建立可信流程。数据、回测、成本、风险、报告、模拟盘和资金边界,比某个神奇因子更重要。</p><p>因子会失效,模型会衰减,市场会变化。流程能帮助你发现问题、停止错误、继续迭代。</p><p>如果流程不可信,好因子也会被错误执行毁掉;如果流程可信,普通想法也能变成学习材料。</p>
+<p>不一定。任何策略都有正常回撤。关键是亏损是否在预期范围内,是否能由市场环境、风险暴露或成本解释。</p><p>但也不能用正常回撤当借口。数据异常、模型 IC 长期反向、成本突然升高、暴露越界、对账错误,都可能说明策略或系统真的出了问题。</p><p>所以要有停用和复盘规则。亏损不是自动证明错,也不是自动证明该坚持。要看证据。</p>
+
+        <h2>6. 一个程序员为什么会在量化里亏钱</h2>
+<p>这一章写一个虚构人物。小林是很强的后端工程师,会 Python,会机器学习,也读过一些交易文章。他进入量化时最大的优势是动手快,最大的危险也是动手太快。他不是因为不会写代码亏钱,而是因为把金融市场当成普通工程问题,以为只要模型跑通,收益就会到来。</p>
+<p>小林一开始就想用深度学习预测股票。他下载日线数据,把过去 60 天价格喂给模型,标签设成未来 5 天收益。模型很快训练起来,回测曲线也不错。</p><p>问题是,他没有先定义金融问题。股票池是什么,交易频率是什么,买入卖出在哪里成交,成本多少,基准是谁,这些都没写清楚。模型先跑起来了,但策略边界还不存在。</p><p>工程里先做原型很常见,金融里也可以原型,但原型不能直接变成投资判断。没有问题定义的模型,只是一个会输出数字的程序。</p>
+
+        <h2>7. 他忽略时间线</h2>
+<p>小林用财务字段做特征,但只按报告期合并,没有按公告日。模型在一月就看到了三月才发布的年报。回测表现很好,因为它提前知道了答案。</p><p>他一开始没意识到这是未来函数,还以为财务数据确实有强预测力。直到把公告日对齐后,收益掉了一大半。</p><p>这件事说明,金融数据不是普通表格。每个字段都要问当时是否可见。时间线错了,模型越强,错得越彻底。</p>
+<p>修正时间线后,小林为了提高收益,把策略调成每周换仓。回测毛收益又上去了。他只扣了很低佣金,没有滑点和冲击。</p><p>实盘小额测试后发现,策略买的小盘股价差不小,成交经常偏离预期。加上印花税和滑点后,很多交易根本没有净收益。</p><p>程序员容易把交易看成数据库更新,但市场交易有摩擦。每次买卖都有人在另一边,价格和数量不是你想要就有。</p>
+
+        <h2>8. 他相信最佳参数</h2>
+<p>小林试了很多窗口长度、模型层数、特征组合和调仓频率。最后选出历史最好的参数,写进报告。样本内非常漂亮,样本外却很普通。</p><p>他犯的不是不会调参,而是调参太自由。每一次试错都在向历史数据要答案。试得越多,越容易找到偶然适合历史的一组。</p><p>量化研究要记录所有实验,看参数稳定性,保留真正样本外。只展示最佳结果,等于把失败样本藏起来。</p>
+<p>小实盘前两周赚钱,小林觉得策略通过验证,把资金放大了五倍。第三周市场风格反转,策略回撤超出预期。因为仓位变大,心理压力也变大。</p><p>他开始手动干预,卖掉一些模型仍看好的持仓,又追买当天强势股。结果系统不再是原策略,也没有记录清楚人工操作。</p><p>盈利后加仓是常见错误。加仓应该依据流程稳定、成本验证和风险承受力,不是依据短期好运。</p>
+
+        <h2>9. 他没有停止规则</h2>
+<p>回撤扩大后,小林不知道该坚持还是停用。继续跑怕亏更多,停掉又怕错过反弹。因为事前没有停用规则,所有决定都变成临场情绪。</p><p>如果他提前写好规则,比如回撤超过历史 95% 分位降仓,滚动 IC 连续为负暂停,数据异常停止,就不会在压力最大时临时拍脑袋。</p><p>策略会亏损,人会焦虑。规则的作用就是在焦虑时保护你不做最冲动的决定。</p>
+<p>亏损后,小林没有继续加模型,而是从头复盘。他列出错误: 数据时间线、成本、参数过拟合、仓位过快、人工干预无记录、没有停用规则。</p><p>然后他重做项目: 先建立数据检查,再做简单因子,保留样本外,加入成本敏感性,用模拟盘跑三个月,小实盘只用极小资金。收益不再惊艳,但流程可信。</p><p>这个变化才是量化入门。不是从亏损变成稳赚,而是从被曲线牵着走,变成能审查自己的系统。</p>
+
+        <h2>10. 这个故事想提醒什么</h2>
+<p>技术能力很重要,但金融市场不会因为你代码写得好就送钱。量化需要工程,也需要金融直觉、统计纪律、交易规则和风险控制。</p><p>亏钱的原因往往不是单点错误,而是一串小错误叠加。时间线错一点,成本少算一点,参数多试一点,仓位加快一点,最后就从研究问题变成账户亏损。</p><p>如果你能在小钱和模拟阶段发现这些错误,它们就是学费;如果你用大钱和杠杆发现,它们就可能变成灾难。</p>
+
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 30 章小结图: 自检判断题与一个反面案例">
+            <defs>
+              <linearGradient id="sumGrad30" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.75" />
+              </linearGradient>
+            </defs>
+            <rect x="18" y="18" width="864" height="324" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(105,179,162,0.28)" />
+            <text x="450" y="68" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">本章留下的三件事</text>
+            <path d="M295 220 H335 M565 220 H605" fill="none" stroke="url(#sumGrad30)" stroke-width="7" stroke-linecap="round" />
+            
+            <g>
+              <rect x="65" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M115 190 L158 190 L158 178 L240 220 L158 262 L158 250 L115 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="180" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 1</text>
+              <text x="180" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="180" y="224">金融和量化里的大</tspan><tspan x="180" y="244">多数判断都不是绝</tspan><tspan x="180" y="264">对句</tspan></text>
+            </g>
+            <g>
+              <rect x="335" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M385 190 L428 190 L428 178 L510 220 L428 262 L428 250 L385 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="450" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 2</text>
+              <text x="450" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="450" y="234">看到看似确定的结</tspan><tspan x="450" y="254">论</tspan></text>
+            </g>
+            <g>
+              <rect x="605" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M655 190 L698 190 L698 178 L780 220 L698 262 L698 250 L655 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="720" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 3</text>
+              <text x="720" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="720" y="234">计算机能力是量化</tspan><tspan x="720" y="254">优势</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">读完第 30 章后,至少要能复述“金融和量化里的大多数判断都不是绝对句”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
+        </div>
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>金融和量化里的大多数判断都不是绝对句,要看条件、口径和风险来源。</li>
+            <li>看到看似确定的结论,要追问数据、成本、基准、交易制度和适用场景。</li>
+            <li>计算机能力是量化优势,但不能替代金融口径、交易制度和风险纪律。</li>
+            <li>多数严重亏损来自多个小错误叠加: 未来函数、成本低估、过拟合、加仓过快和无停止规则。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 钱越多,社会越富吗</li>
+            <li><strong>2.</strong> 指数基金一定适合所有人吗</li>
+            <li><strong>3.</strong> 回测好就能实盘吗</li>
+            <li><strong>4.</strong> 高胜率策略一定好吗</li>
+            <li><strong>5.</strong> 个人量化最重要的是找到神奇因子吗</li>
+            <li><strong>6.</strong> 一个程序员为什么会在量化里亏钱</li>
+            <li><strong>7.</strong> 他忽略时间线</li>
+            <li><strong>8.</strong> 他相信最佳参数</li>
+            <li><strong>9.</strong> 他没有停止规则</li>
+            <li><strong>10.</strong> 这个故事想提醒什么</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么很多金融判断不能用绝对句?</summary>
+            <p>因为资产、策略和市场都依赖条件、期限、成本、风险和投资者目标。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>回测好为什么还不能直接实盘?</summary>
+            <p>因为回测不能完全覆盖真实交易、系统异常、心理压力和未来市场变化。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>小林最早的根本错误是什么?</summary>
+            <p>先找复杂模型,后定义金融问题和交易边界。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么短期赚钱后加仓危险?</summary>
+            <p>短期盈利可能来自运气或顺风,仓位放大会放大未验证风险和心理压力。</p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

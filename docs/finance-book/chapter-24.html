@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 24 章 · 职业路线与长期学习 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="把量化研究、量化开发、数据工程、交易系统、风控和产品岗位的能力要求讲清楚,并给出作品集路线。 / 把金融、统计、编程、机器学习、交易系统和投资心理安排成长期学习计划。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="24">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第七部分 · 路线、复盘与检查清单 · 第 24 章</p>
+        <h1>职业路线与长期学习</h1>
+        <p class="lead">如果你想把兴趣变成职业,这一章讲两件事。一是计算机背景的人怎样进入量化:该积累什么能力、怎么攒一个能证明自己的作品集、面试和岗位大致看什么;二是一条能长期走下去的学习路线——读什么、做什么、又怎么定期复盘。量化是一条需要耐心的路,走得远比一开始跑得快更重要。</p>
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>计算机背景进入量化的核心是把工程、数据和模型能力接到金融问题上。</li>
+            <li>作品集应展示数据口径、回测规则、风险指标、交易成本和复盘,而不是只展示高收益曲线。</li>
+            <li>长期学习要按金融语言、统计、数据工程、回测、因子模型、组合风控、模拟实盘逐层推进。</li>
+            <li>每个阶段都要有产出: 笔记、数据检查、回测报告、因子报告、组合报告、模拟盘日志。</li>
+          </ul>
+        </section>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="第 24 章流程图: 职业路线与长期学习">
+            <defs>
+              <linearGradient id="mapGrad24" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+              </linearGradient>
+              <filter id="softShadow24" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
+              </filter>
+            </defs>
+            <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
+            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">第 24 章概念路径</text>
+            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad24)" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+            
+            <g filter="url(#softShadow24)">
+              <rect x="38" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">1</text>
+              <text x="136" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="147">先分清岗位</tspan></text>
+            </g>
+            <g filter="url(#softShadow24)">
+              <rect x="253" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">2</text>
+              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="147">计算机背景的优势</tspan></text>
+            </g>
+            <g filter="url(#softShadow24)">
+              <rect x="468" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">3</text>
+              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="147">指数增强回测</tspan></text>
+            </g>
+            <g filter="url(#softShadow24)">
+              <rect x="683" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">4</text>
+              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="137">模拟盘和交易状态</tspan><tspan x="781" y="157">机</tspan></text>
+            </g>
+            <g filter="url(#softShadow24)">
+              <rect x="38" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">5</text>
+              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="317">面试常问什么</tspan></text>
+            </g>
+            <g filter="url(#softShadow24)">
+              <rect x="253" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">6</text>
+              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="317">长期学习路线</tspan></text>
+            </g>
+            <g filter="url(#softShadow24)">
+              <rect x="468" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">7</text>
+              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="317">金融语言</tspan></text>
+            </g>
+            <g filter="url(#softShadow24)">
+              <rect x="683" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">8</text>
+              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="317">复盘节奏</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">本图从“先分清岗位”走到“复盘节奏”,用于先看第 24 章的关键路径,再回到正文补细节。</p>
+        </div>
+
+        <h2>1. 先分清岗位</h2>
+<p>量化研究员更偏策略和模型,需要统计、机器学习、金融假设、回测和报告能力。量化开发更偏工程平台和实盘系统,需要高质量代码、数据管道、性能、稳定性和交易业务理解。数据工程师负责数据接入、清洗、存储和质量。交易系统工程师负责订单、接口、低延迟、状态机和风控。</p><p>风控岗位关注暴露、限额、回撤、压力测试、模型监控和产品风险。产品和运营岗位关注客户、合同、估值、净值、申赎、披露和合规。不同岗位都在量化行业里,但日常工作完全不同。</p><p>求职前先问自己想做哪类问题。你喜欢提出信号和检验假设,偏研究;喜欢搭系统和保证稳定,偏开发;喜欢处理数据质量和管道,偏数据;喜欢订单和交易细节,偏交易系统。方向清楚,作品集才有针对性。</p>
+
+        <h2>2. 计算机背景的优势</h2>
+<p>计算机背景最大的优势是能把想法落成系统。很多金融想法停在表格和报告里,你可以把它变成数据管道、回测框架、自动报告和模拟盘。这是很强的竞争力。</p><p>工程能力还体现在可复现和可靠性。你知道版本控制、测试、配置、日志、监控、性能和代码审查。这些能力在量化里非常重要,因为策略一旦实盘,错误会直接变成钱。</p><p>机器学习基础也是优势,但要放对位置。金融不是简单监督学习比赛。你需要把模型能力接到数据可见性、交易成本、组合约束和风险监控上。</p>
+<p>第一是资产概念。股票、债券、基金、期货、期权、ETF、可转债分别是什么权利,现金流和风险在哪里。第二是交易制度。A 股 T+1、涨跌停、停牌、费用、订单簿、清算交收。第三是产品和基准。指数增强、市场中性、CTA、基金净值和费用。</p><p>第四是风险指标。年化、回撤、波动、夏普、跟踪误差、信息比率、VaR、压力测试。第五是数据口径。复权、公告日、点时数据、幸存者偏差、样本外。</p><p>这些短板不补,你会写出技术上漂亮、金融上错误的系统。面试官经常不是看你会不会写模型,而是看你知不知道模型在哪里会骗人。</p>
+
+        <h2>3. 指数增强回测</h2>
+<p>第一个作品集建议做教学版指数增强。它能展示你理解股票池、基准、因子、回测、成本和风险。项目不用追求高收益,要追求流程正确。</p><p>README 里写清楚: 数据来源,股票池,基准,回测区间,因子定义,调仓频率,成本假设,主要结果和失败阶段。报告里给净值、超额、回撤、IC、分层、换手、行业暴露和成本敏感性。</p><p>这个项目最好有自动化脚本。命令一跑,能重新生成数据检查、回测和报告。面试时,这比一张漂亮曲线更有说服力。</p>
+<p>第二个作品集可以专门做数据质量。比如构建一个小型 A 股日线和财务数据检查器,检查缺失、重复、复权跳变、停牌、涨跌停、公告日和指数成分变化。</p><p>很多候选人会写模型,但很少有人能系统讲清数据坑。你如果能展示点时数据、公告日对齐、成分股历史版本、复权和真实成交价格分离,会显得非常专业。</p><p>这个项目的价值在于证明你知道量化不是调包训练,而是从数据地基开始。对于量化开发和数据工程岗位尤其有用。</p>
+
+        <h2>4. 模拟盘和交易状态机</h2>
+<p>如果你偏工程,可以做一个模拟盘。它不需要真实下单,但要有订单状态机: 生成目标仓位,创建订单,模拟部分成交、拒单、撤单,更新现金和持仓,输出盘后对账。</p><p>这个项目能展示你理解实盘系统。订单不是一个函数返回值,而是有状态、有回报、有异常的对象。你可以故意设计停牌、涨停、资金不足、重复订单等场景,看系统是否正确处理。</p><p>面试量化开发时,这样的项目比单纯展示一个机器学习模型更能体现岗位相关性。</p>
+<p>简历不要只写熟悉机器学习、熟悉量化。要写具体项目和可验证结果。例如: 构建月频指数增强回测框架,支持点时股票池、交易成本、涨跌停和行业暴露分析;完成 2016-2024 年样本外测试,自动生成风险报告。</p><p>也不要只写年化收益。写清楚你解决了什么工程或研究问题。比如处理财报公告日避免未来函数,实现成本敏感性测试,加入换手约束降低交易成本,实现盘后对账检查。</p><p>如果项目没有赚钱,也可以写。一个严谨的失败项目,比一个说不清来源的高收益项目更可信。量化行业的人知道大多数研究会失败。</p>
+
+        <h2>5. 面试常问什么</h2>
+<p>研究岗常问: 因子为什么有效,如何防止未来函数,IC 和 RankIC 怎么看,分层回测怎么做,如何处理行业和市值暴露,样本外如何划分,策略失效怎么办。</p><p>开发岗常问: 如何设计回测框架,订单状态机怎么写,如何处理并发和幂等,数据如何校验,系统异常怎么告警,实盘和回测如何保持一致。</p><p>无论岗位,都会看你是否能把技术和金融连接起来。只会讲模型结构,不会讲交易成本和风险,会显得不完整。</p>
+<p>讲项目时按四步。第一,问题: 我研究什么策略或系统。第二,约束: 数据、股票池、交易规则和风险边界。第三,方法: 因子、模型、回测、系统设计。第四,结果: 收益、风险、失败阶段和下一步。</p><p>不要上来就讲代码细节。先让对方知道你解决的金融问题是什么。然后再讲你怎样用工程方法把它做出来。</p><p>好的项目讲法会主动暴露局限。比如: 这个项目还没有真实期货基差,成本模型较粗,数据源不是点时商业库,所以我把它定位为教学回测。知道边界是专业表现。</p>
+
+        <h2>6. 长期学习路线</h2>
+<p>第一年目标是打地基: 金融概念、A 股规则、Python 数据处理、回测、因子、风险指标。第二阶段做项目: 指数增强、数据检查、模拟盘、报告生成。第三阶段再深入: 组合优化、机器学习、交易系统、期货和期权。</p><p>不要每天换方向。今天看高频,明天看期权,后天看深度学习,最后每个都半懂。先把一个低频股票项目做完整,再扩展。完整比炫更重要。</p><p>学习量化最好的证据不是收藏了多少资料,而是你能否拿一个想法,写出数据、回测、报告和复盘。</p>
+<p>量化学习不是刷完一份书单就结束。你需要同时补金融、统计、编程、数据、机器学习、交易制度和风险管理。最容易失败的学习方式是今天看宏观,明天看高频,后天看深度学习,每个都只停留在兴奋阶段。更稳的方式是分阶段: 每一阶段读一点、做一个项目、写一份复盘。</p>
+
+        <h2>7. 金融语言</h2>
+<p>第一阶段目标是听懂市场语言。你要能解释货币、通胀、银行、股票、债券、基金、ETF、期货、期权、指数、基准、A 股规则。不是背定义,而是能说清它解决什么问题、谁承担风险、价格怎么形成。</p><p>这一阶段可以读通俗金融书,也可以看交易所和基金公司的基础材料。重点是建立地图。遇到术语就问四件事: 现金流是什么,权利是什么,风险是什么,价格在哪里。</p><p>产出是一篇自己的金融地图笔记。如果你不能用自己的话讲给另一个小白听,就说明还没真正理解。</p>
+<p>量化离不开统计。你要理解均值、方差、标准差、相关性、回归、假设检验、置信区间、过拟合、样本外、时间序列和非独立样本。</p><p>统计学习不要只看公式。你要知道每个工具在问什么。相关性问两个变量是否一起动,回归问一个变量变化能解释另一个变量多少,假设检验问观察到的结果是否可能只是噪声。</p><p>产出可以是一个小 notebook: 用模拟数据展示过拟合、样本外失效、相关不等于因果、交易成本如何吃掉小优势。这个练习会让你以后看策略更谨慎。</p>
+
+        <h2>8. Python 和数据工程</h2>
+<p>Python 不是量化的全部,但它是个人学习最实用的工具。你要熟悉 pandas、numpy、matplotlib 或 plotly,能处理时间序列、分组、滚动窗口、缺失值和多索引数据。</p><p>更重要的是数据工程习惯。原始数据和处理数据分开,脚本可重复运行,配置可追踪,结果自动生成,日志能复盘。不要把量化项目写成只在你电脑某个 notebook 里能跑的临时东西。</p><p>产出是一个干净的数据仓库和检查脚本。哪怕只有日线价格和指数成分,也要做到能自动检查缺失、重复、异常价格、停牌和复权。</p>
+<p>这一阶段目标是写出第一个可信回测。策略可以很简单,比如低估值或动量。重点是处理交易日历、股票池、复权、成交时点、交易成本、停牌、涨跌停和基准。</p><p>报告要自动生成,包括净值、基准、超额、回撤、年化、波动、夏普、换手、成本、年度收益、月度收益和持仓暴露。没有报告,你会只盯最后收益。</p><p>产出是一份完整回测报告和复盘。报告里要写策略哪里有效、哪里失效、哪些假设最敏感、下一步是否值得继续。</p>
+
+        <h2>9. 因子和机器学习</h2>
+<p>因子阶段要学习 IC、RankIC、分层回测、中性化、风格暴露、组合边际贡献。机器学习阶段从线性模型和树模型开始,再考虑深度学习。</p><p>不要一上来就 Transformer。金融数据低信噪比、分布漂移、样本相关、成本敏感。复杂模型如果没有强基线和严格样本外,很容易只是更复杂地过拟合。</p><p>产出是一份多因子报告: 因子定义、数据口径、IC、分层、成本、暴露、样本外、模型对比和失败阶段。</p>
+<p>模型给分后,你要学习组合构建。单票上限、行业约束、风格暴露、跟踪误差、换手限制、成本模型、风险预算和归因,决定信号如何变成仓位。</p><p>风控不是最后加一层止损。它包括数据监控、模型监控、暴露监控、交易成本、压力测试、回撤、VaR、限额、停用规则。</p><p>产出是一个组合报告: 同样的预测分数,在不同约束下收益、风险和换手如何变化。你会理解优化器不是魔法,而是取舍机器。</p>
+
+        <h2>10. 模拟盘和实盘边界</h2>
+<p>模拟盘让策略按真实时间运行。每天或每月固定时间取数据、生成信号、模拟订单、记录成交、更新净值、输出报告。它检验流程,不只是检验收益。</p><p>小资金实盘只用于验证真实交易链路,不是赚大钱。你要确认券商费用、滑点、订单状态、对账、日志、告警都能跑通。</p><p>产出是模拟盘日志和实盘检查清单。没有稳定模拟盘,不要直接全自动实盘。</p>
+<p>资料分四类。第一类是基础书,帮你建立金融和投资直觉。第二类是官方资料,包括交易所规则、基金说明、监管文件。第三类是研究资料,包括论文和券商研报。第四类是代码和开源项目。</p><p>不要迷信任何单一资料。通俗书让你入门,官方资料给规则,论文给方法,代码给实践。每类资料都有边界。产品宣传不能当研究证明,论文结果也不一定能实盘。</p><p>读资料时永远问: 它解决什么问题,假设是什么,数据从哪来,成本如何,是否可复现,和我的项目有什么关系。</p>
+
+        <h2>11. 复盘节奏</h2>
+<p>每周复盘学习内容,每月复盘项目进度,每个策略结束后写研究复盘。复盘不要只写今天做了什么,要写学到什么、哪里错了、下一步怎么验证。</p><p>复盘模板可以固定: 背景、假设、数据、方法、结果、问题、下一步。长期坚持后,你会积累自己的研究数据库。</p><p>量化成长不是靠一次顿悟,而是靠反复把错误变成规则,把规则变成系统。</p>
+<p>AI、强化学习、高频、期权、另类数据都很吸引人,但如果基础没打好,热点只会让你分心。每个高级方向都建立在数据、回测、成本和风险之上。</p><p>学习路线应当像建楼。地基是金融和统计,一层是数据和回测,二层是因子和模型,三层是组合和交易,上面才是复杂策略。地基没打好,上层越高越危险。</p><p>你可以保留好奇心,但项目推进要克制。先做完一个完整项目,再开新方向。</p>
+
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 24 章小结图: 职业路线与长期学习">
+            <defs>
+              <linearGradient id="sumGrad24" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.75" />
+              </linearGradient>
+            </defs>
+            <rect x="18" y="18" width="864" height="324" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(105,179,162,0.28)" />
+            <text x="450" y="68" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">本章留下的三件事</text>
+            <path d="M295 220 H335 M565 220 H605" fill="none" stroke="url(#sumGrad24)" stroke-width="7" stroke-linecap="round" />
+            
+            <g>
+              <rect x="65" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M115 190 L158 190 L158 178 L240 220 L158 262 L158 250 L115 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="180" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 1</text>
+              <text x="180" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="180" y="214">计算机背景进入量</tspan><tspan x="180" y="234">化的核心是把工程</tspan><tspan x="180" y="254">、数据和模型能力</tspan><tspan x="180" y="274">要检查</tspan></text>
+            </g>
+            <g>
+              <rect x="335" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M385 190 L428 190 L428 178 L510 220 L428 262 L428 250 L385 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="450" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 2</text>
+              <text x="450" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="450" y="214">作品集应展示数据</tspan><tspan x="450" y="234">口径、回测规则、</tspan><tspan x="450" y="254">风险指标、交易成</tspan><tspan x="450" y="274">本和复盘</tspan></text>
+            </g>
+            <g>
+              <rect x="605" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M655 190 L698 190 L698 178 L780 220 L698 262 L698 250 L655 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="720" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 3</text>
+              <text x="720" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="720" y="214">长期学习要按金融</tspan><tspan x="720" y="234">语言、统计、数据</tspan><tspan x="720" y="254">工程、回测、因子</tspan><tspan x="720" y="274">要检查</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">读完第 24 章后,至少要能复述“计算机背景进入量化的核心是把工程、数据和模型能力要检查”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
+        </div>
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>计算机背景进入量化的核心是把工程、数据和模型能力接到金融问题上。</li>
+            <li>作品集应展示数据口径、回测规则、风险指标、交易成本和复盘,而不是只展示高收益曲线。</li>
+            <li>长期学习要按金融语言、统计、数据工程、回测、因子模型、组合风控、模拟实盘逐层推进。</li>
+            <li>每个阶段都要有产出: 笔记、数据检查、回测报告、因子报告、组合报告、模拟盘日志。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 先分清岗位</li>
+            <li><strong>2.</strong> 计算机背景的优势</li>
+            <li><strong>3.</strong> 指数增强回测</li>
+            <li><strong>4.</strong> 模拟盘和交易状态机</li>
+            <li><strong>5.</strong> 面试常问什么</li>
+            <li><strong>6.</strong> 长期学习路线</li>
+            <li><strong>7.</strong> 金融语言</li>
+            <li><strong>8.</strong> Python 和数据工程</li>
+            <li><strong>9.</strong> 因子和机器学习</li>
+            <li><strong>10.</strong> 模拟盘和实盘边界</li>
+            <li><strong>11.</strong> 复盘节奏</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>计算机背景进入量化的最大优势是什么?</summary>
+            <p>能把数据、模型、回测、报告和交易流程做成可复现、可维护的系统。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么作品集不应只展示年化收益?</summary>
+            <p>高收益可能来自错误假设,更重要的是展示数据口径、成本、风险和复盘能力。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么学习量化不能每天换方向?</summary>
+            <p>因为每个方向都需要金融、数据、回测和风险基础,频繁切换会停留在表面兴奋。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>第一个完整项目比复杂模型更重要在哪里?</summary>
+            <p>它训练数据口径、交易规则、成本、报告和复盘这些真实量化能力。</p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

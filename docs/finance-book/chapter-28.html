@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 28 章 · 场景练习:第一次小资金实盘 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清小资金实盘的目标、仓位、下单、记录、复盘和停止规则,避免把验证流程变成赌博。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="28">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第七部分 · 路线、复盘与检查清单 · 第 28 章</p>
+        <h1>场景练习:第一次小资金实盘</h1>
+        <p class="lead">小资金实盘不是为了证明自己能很快赚钱,而是为了验证真实的交易链路。这一章带你走一遍第一次小实盘:先把资金上限定在“全亏掉也不影响生活”的水平,再观察订单、成交、费用、滑点、持仓、对账和自己的情绪反应。这一步最重要的从来不是收益,而是知道真实市场会怎样改变你的系统和你的心态。</p>
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>第一次小资金实盘的目标是验证真实交易链路,不是追求收益。</li>
+            <li>资金上限、半自动执行、交易记录、盘后对账和停止规则是小实盘的核心。</li>
+          </ul>
+        </section>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="第 28 章流程图: 场景练习:第一次小资金实盘">
+            <defs>
+              <linearGradient id="mapGrad28" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+              </linearGradient>
+              <filter id="softShadow28" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
+              </filter>
+            </defs>
+            <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
+            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">第 28 章概念路径</text>
+            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad28)" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+            
+            <g filter="url(#softShadow28)">
+              <rect x="38" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">1</text>
+              <text x="136" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="147">先定资金上限</tspan></text>
+            </g>
+            <g filter="url(#softShadow28)">
+              <rect x="253" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">2</text>
+              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="137">半自动比全自动更</tspan><tspan x="351" y="157">适合第一步</tspan></text>
+            </g>
+            <g filter="url(#softShadow28)">
+              <rect x="468" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">3</text>
+              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="147">每天盘后对账</tspan></text>
+            </g>
+            <g filter="url(#softShadow28)">
+              <rect x="683" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">4</text>
+              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="147">什么时候停止</tspan></text>
+            </g>
+            <g filter="url(#softShadow28)">
+              <rect x="38" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">5</text>
+              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="287">第一次小资金实盘</tspan><tspan x="136" y="307">的目标是验证真实</tspan><tspan x="136" y="327">交易链路,不是追</tspan><tspan x="136" y="347">求收益。</tspan></text>
+            </g>
+            <g filter="url(#softShadow28)">
+              <rect x="253" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">6</text>
+              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="287">资金上限、半自动</tspan><tspan x="351" y="307">执行、交易记录、</tspan><tspan x="351" y="327">盘后对账和停止规</tspan><tspan x="351" y="347">则是小实盘的核心</tspan></text>
+            </g>
+            <g filter="url(#softShadow28)">
+              <rect x="468" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">7</text>
+              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="287">第一次小资金实盘</tspan><tspan x="566" y="307">的目标是验证真实</tspan><tspan x="566" y="327">交易链路,不是追</tspan><tspan x="566" y="347">求收益。</tspan></text>
+            </g>
+            <g filter="url(#softShadow28)">
+              <rect x="683" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">8</text>
+              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="287">资金上限、半自动</tspan><tspan x="781" y="307">执行、交易记录、</tspan><tspan x="781" y="327">盘后对账和停止规</tspan><tspan x="781" y="347">则是小实盘的核心</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">本图从“先定资金上限”走到“资金上限、半自动执行、交易记录、盘后对账和停止规则是小实盘的核心。”,用于先看第 28 章的关键路径,再回到正文补细节。</p>
+        </div>
+
+        <h2>1. 先定资金上限</h2>
+<p>小资金实盘要先定总金额。这个金额应该小到即使全部亏掉,也不影响生活和学习。它是学费上限,不是发财本金。</p><p>很多人说小资金没意义,因为赚不到多少钱。这个想法错了。小资金阶段的目标是验证流程,不是追求收益。你用小钱能发现的问题,用大钱发现会更痛。</p><p>写下资金上限后,不要因为第一周顺利就随手加钱。加仓要有规则,比如模拟盘稳定三个月、小实盘稳定三个月、对账无误、成本符合预期。</p>
+<p>第一次小实盘应选流动性好、规则简单、费用清楚的品种。宽基 ETF 或大盘股票更适合观察流程。不要第一次就做期权、期货、高频或低流动性小票。</p><p>你要观察下单、成交、费用、持仓、可卖数量、资金变化和第二天交收。复杂品种会引入太多变量,让你分不清问题来自哪里。</p><p>简单不是低级。专业系统上线也会先选低风险路径验证链路。先证明基础流程正确,再增加复杂度。</p>
+
+        <h2>2. 半自动比全自动更适合第一步</h2>
+<p>第一次小实盘可以半自动: 系统生成信号和订单清单,你人工检查后手动下单。这样能减少自动化错误,也能训练你理解每笔交易。</p><p>全自动要求更高: 风控、权限、日志、异常停止、券商接口、对账都要成熟。个人一开始直接全自动,很容易因为一个 bug 重复下单或下错方向。</p><p>半自动不是倒退,而是灰度上线。等你连续多次确认订单清单和实际下单一致,再考虑进一步自动化。</p>
+<p>小实盘必须记录每一笔交易。记录信号时间、目标股票、目标数量、委托价格、成交价格、成交数量、费用、滑点、未成交原因和人工备注。</p><p>这些记录以后会非常有用。你能看到回测假设和真实成交差多少,哪类股票滑点大,哪些订单经常买不到,哪些人工操作不稳定。</p><p>没有记录的小实盘,最后只剩账户盈亏。盈亏不能告诉你系统哪里好、哪里坏。</p>
+
+        <h2>3. 每天盘后对账</h2>
+<p>小实盘每天盘后都要对账。内部记录的现金、持仓、成交和费用,要和券商账户一致。差异必须解释。</p><p>对账还能暴露费用口径问题。你以为佣金多少,实际券商如何收,印花税和过户费如何体现,都要看真实账户。</p><p>如果对账不一致,第二天不要继续按自动信号交易。先修账,再交易。</p>
+<p>小实盘会让你第一次感受到真实盈亏。即使金额很小,你也可能因为亏损焦虑,因为盈利兴奋。这些反应要记录。</p><p>如果小钱波动都让你忍不住改策略,大钱只会更严重。心理承受力不是想象出来的,要在真实波动里观察。</p><p>写下每次想手动干预的原因。是规则真的失效,还是你只是害怕? 这个区分很重要。</p>
+
+        <h2>4. 什么时候停止</h2>
+<p>小实盘也要有停止规则。比如数据异常停止,对账不一致停止,连续交易错误停止,亏损超过预设上限停止,策略逻辑和实盘差异过大停止。</p><p>停止不是失败,而是保护。小实盘本来就是找问题的阶段。发现问题及时停,说明流程有效。</p><p>停止后要写复盘: 问题是什么,影响多大,是否修复,是否需要回到模拟盘。不要停止一天后什么都没改又重新开始。</p>
+<p>小实盘运行一段时间后,不要只看赚亏。看信号是否按时生成,订单是否按计划执行,成本是否接近预期,未成交比例多少,对账是否稳定,人工干预是否频繁。</p><p>如果流程稳定但策略亏损,说明系统可用但策略需要研究。如果策略赚钱但流程混乱,不能贸然放大资金。流程混乱的盈利可能只是运气。</p><p>只有流程稳定、风险可控、成本符合预期、你能按规则执行,小实盘才算通过。</p>
+
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 28 章小结图: 场景练习:第一次小资金实盘">
+            <defs>
+              <linearGradient id="sumGrad28" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.75" />
+              </linearGradient>
+            </defs>
+            <rect x="18" y="18" width="864" height="324" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(105,179,162,0.28)" />
+            <text x="450" y="68" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">本章留下的三件事</text>
+            <path d="M295 220 H335 M565 220 H605" fill="none" stroke="url(#sumGrad28)" stroke-width="7" stroke-linecap="round" />
+            
+            <g>
+              <rect x="65" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M115 190 L158 190 L158 178 L240 220 L158 262 L158 250 L115 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="180" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 1</text>
+              <text x="180" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="180" y="234">个人量化应分阶段</tspan><tspan x="180" y="254">推进</tspan></text>
+            </g>
+            <g>
+              <rect x="335" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M385 190 L428 190 L428 178 L510 220 L428 262 L428 250 L385 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="450" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 2</text>
+              <text x="450" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="450" y="234">每阶段都要有可检</tspan><tspan x="450" y="254">查产出</tspan></text>
+            </g>
+            <g>
+              <rect x="605" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
+              <path d="M655 190 L698 190 L698 178 L780 220 L698 262 L698 250 L655 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
+              <text x="720" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 3</text>
+              <text x="720" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="720" y="234">场景练习:第一次</tspan><tspan x="720" y="254">小资金实盘</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">读完第 28 章后,至少要能复述“个人量化应分阶段推进”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
+        </div>
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>第一次小资金实盘的目标是验证真实交易链路,不是追求收益。</li>
+            <li>资金上限、半自动执行、交易记录、盘后对账和停止规则是小实盘的核心。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 先定资金上限</li>
+            <li><strong>2.</strong> 半自动比全自动更适合第一步</li>
+            <li><strong>3.</strong> 每天盘后对账</li>
+            <li><strong>4.</strong> 什么时候停止</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>小资金实盘为什么不是为了赚钱?</summary>
+            <p>因为它主要验证订单、成交、费用、对账和心理承受力,收益不是第一目标。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么第一次更适合半自动?</summary>
+            <p>人工确认能降低自动化错误,也能训练你理解每笔真实交易。</p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 4 章 · 债券与基金:把钱借出去或交给别人管 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清债券字段、票息、到期收益率、久期、信用利差和可转债。 / 讲清基金份额、净值、指数基金、ETF、公募、私募、对冲和指数增强。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="4">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第一部分 · 金融世界的底层结构 · 第 4 章</p>
+        <h1>债券与基金:把钱借出去或交给别人管</h1>
+        <p class="lead">股票讲的是公司剩余收益,债券讲的是白纸黑字的合同现金流:什么时候付息、什么时候还本都写得清清楚楚。但确定性更强不等于没有风险,利率、信用和流动性都会让债券价格波动。这一章先把债券从一张借条讲到利率和信用风险,再转向另一条路径——基金、ETF、指数和私募,看清“把钱交给别人管理”到底意味着什么。</p>
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>债券是一串合同现金流,不是绝对无风险资产。</li>
+            <li>票面利率是合同利息,到期收益率是按当前价格买入后的回报。</li>
+            <li>基金是集合投资结构,不是单一策略。</li>
+            <li>指数基金和 ETF 的核心优势是低成本、透明和分散,但不保本。</li>
+          </ul>
+        </section>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="第 4 章流程图: 债券与基金:把钱借出去或交给别人管">
+            <defs>
+              <linearGradient id="mapGrad4" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+              </linearGradient>
+              <filter id="softShadow4" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
+              </filter>
+            </defs>
+            <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
+            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">第 4 章概念路径</text>
+            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad4)" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+            
+            <g filter="url(#softShadow4)">
+              <rect x="38" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">1</text>
+              <text x="136" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="137">债券先当作一张标</tspan><tspan x="136" y="157">准化借条</tspan></text>
+            </g>
+            <g filter="url(#softShadow4)">
+              <rect x="253" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">2</text>
+              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="137">为什么利率上升,</tspan><tspan x="351" y="157">债券价格下跌</tspan></text>
+            </g>
+            <g filter="url(#softShadow4)">
+              <rect x="468" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">3</text>
+              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="147">利率风险的温度计</tspan></text>
+            </g>
+            <g filter="url(#softShadow4)">
+              <rect x="683" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">4</text>
+              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="147">可转债为什么复杂</tspan></text>
+            </g>
+            <g filter="url(#softShadow4)">
+              <rect x="38" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="60" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="60" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">5</text>
+              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="307">把钱交给别人管理</tspan><tspan x="136" y="327">意味着什么</tspan></text>
+            </g>
+            <g filter="url(#softShadow4)">
+              <rect x="253" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="275" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="275" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">6</text>
+              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="317">基金净值怎么理解</tspan></text>
+            </g>
+            <g filter="url(#softShadow4)">
+              <rect x="468" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="490" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="490" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">7</text>
+              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="317">ETF为什么重要</tspan></text>
+            </g>
+            <g filter="url(#softShadow4)">
+              <rect x="683" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
+              <circle cx="705" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
+              <text x="705" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">8</text>
+              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="307">指数增强和市场中</tspan><tspan x="781" y="327">性</tspan></text>
+            </g>
+          </svg>
+          <p class="figure__cap">本图从“债券先当作一张标准化借条”走到“指数增强和市场中性”,用于先看第 4 章的关键路径,再回到正文补细节。</p>
+        </div>
+
+        <h2>1. 债券先当作一张标准化借条</h2>
+<p>你可以先把债券想成一张标准化借条。借款人写清楚:我今天向你借多少钱,每年给你多少利息,几年后还本金,如果提前还或还不上怎么办。</p><p>比如一张三年期债券,面值一百元,票面利率百分之五,每年付息一次。你持有它,第一年拿五元利息,第二年拿五元利息,第三年拿五元利息加一百元本金。</p><p>这和股票很不一样。股票没有承诺每年一定给你多少钱,它给你的是剩余收益的一小份。债券给你的是合同写好的现金流,所以它的确定性更强。</p>
+<p>债券最容易混的两个词,是票面利率和到期收益率。票面利率是合同写好的利息比例。面值一百元、票面利率百分之五,每年票息就是五元。</p><p>到期收益率是另一个东西。它回答的是:如果你按当前市场价格买入这张债,一直持有到到期,大约能获得多少年化回报。</p><p>假设这张债未来一年后确定还一百零五元。如果今天价格是一百元,收益率是百分之五。如果今天价格跌到九十五点四五元,你一年后拿一百零五元,收益率就接近百分之十。票息没变,市场价格变了,到期收益率就变了。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 290" role="img" aria-label="债券现金流时间轴:买入时付出100,每年收5,到期收回105">
+            <text x="450" y="34" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">一张 3 年期债券的现金流(面值 100,票息 5%)</text>
+            <line x1="70" y1="180" x2="830" y2="180" stroke="#46587a" stroke-width="2" marker-end="url(#tarrow)"/>
+            <defs><marker id="tarrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
+            <text x="828" y="205" text-anchor="end" fill="#8499bd" font-size="13">时间</text>
+            <!-- 买入:现金流出 -->
+            <line x1="130" y1="180" x2="130" y2="250" stroke="#e88" stroke-width="3"/>
+            <path d="M 130 250 L 124 238 M 130 250 L 136 238" stroke="#e88" stroke-width="3" fill="none"/>
+            <text x="130" y="272" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">-100</text>
+            <text x="130" y="150" text-anchor="middle" fill="#c9d4e8" font-size="13">买入</text>
+            <!-- 每年票息:现金流入 -->
+            <line x1="320" y1="180" x2="320" y2="130" stroke="#8ef0d1" stroke-width="3"/>
+            <path d="M 320 130 L 314 142 M 320 130 L 326 142" stroke="#8ef0d1" stroke-width="3" fill="none"/>
+            <text x="320" y="118" text-anchor="middle" fill="#8ef0d1" font-size="14" font-weight="800">+5</text>
+            <text x="320" y="205" text-anchor="middle" fill="#8499bd" font-size="13">第1年</text>
+            <line x1="510" y1="180" x2="510" y2="130" stroke="#8ef0d1" stroke-width="3"/>
+            <path d="M 510 130 L 504 142 M 510 130 L 516 142" stroke="#8ef0d1" stroke-width="3" fill="none"/>
+            <text x="510" y="118" text-anchor="middle" fill="#8ef0d1" font-size="14" font-weight="800">+5</text>
+            <text x="510" y="205" text-anchor="middle" fill="#8499bd" font-size="13">第2年</text>
+            <!-- 到期:票息+本金 -->
+            <line x1="700" y1="180" x2="700" y2="88" stroke="#f0c96a" stroke-width="3"/>
+            <path d="M 700 88 L 694 100 M 700 88 L 706 100" stroke="#f0c96a" stroke-width="3" fill="none"/>
+            <text x="700" y="76" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">+105</text>
+            <text x="700" y="205" text-anchor="middle" fill="#8499bd" font-size="13">第3年到期</text>
+            <text x="450" y="252" text-anchor="middle" fill="#c9d4e8" font-size="13">先付出本金,之后按期收票息,到期收回本金+最后一期票息</text>
+          </svg>
+          <p class="figure__cap">债券的现金流写在合同里:今天付出本金,之后每年收固定票息,到期收回本金。把这些未来现金流按利率折算到今天,就是债券的价格。</p>
+        </div>
+        <h2>2. 为什么利率上升,债券价格下跌</h2>
+<p>这个逻辑很重要,值得再讲一遍。债券未来现金流相对固定。市场利率上升时,新发行的债券能给更高收益,老债如果还按原来票息付钱,吸引力就下降。</p><p>为了让老债也能提供市场要求的新回报,它的价格必须下降。价格下降以后,同样的未来利息和本金,相对于你今天付出的价格,收益率就提高了。</p><p>所以不要把债券理解成价格不会动的东西。长期债尤其怕利率上升,因为越远的现金流,受折现率变化影响越大。</p><p>用数字感受一下就很直观。同样是“将来能拿到 100 元”,如果市场要求的回报率从 3% 升到 4%:1 年后那 100 元,今天的价值从约 97.1 元只降到约 96.2 元,几乎没怎么变;但 10 年后那 100 元,今天的价值会从约 74.4 元降到约 67.6 元,足足少了近 7 元。同样加息 1%,越远的钱缩水越狠。这就是为什么加息时,10 年、30 年的长期债券,比 1 年内到期的短债跌得多。</p>
+
+        <h2>3. 利率风险的温度计</h2>
+<p>久期可以先粗略理解成债券对利率变化有多敏感。久期越长,利率动一点,债券价格动得越明显。</p><p>比如一只债券久期约为七。如果市场收益率上升一个百分点,它的价格大致可能下跌七个百分点。这个只是近似,真实债券还要看凸性、票息、到期时间等因素,但用来建立直觉已经够了。</p><p>很多人以为买长期国债很安全,因为国债信用风险低。但长期国债仍然有利率风险。信用风险低,不等于价格波动低。</p>
+<p>国债通常被看作信用风险较低,因为政府有税收和货币体系支持。公司债则要看公司经营和偿债能力。公司赚钱稳定、负债不高,市场要求的信用补偿低;公司经营差、负债高,市场要求的补偿就高。</p><p>同样期限下,公司债收益率高于国债收益率的部分,可以先理解成信用利差。比如三年期国债收益率百分之三,某公司三年期债券收益率百分之六,中间三个百分点很大程度上是信用和流动性补偿。</p><p>信用利差扩大,说明市场更担心违约或流动性;信用利差收窄,说明市场更愿意承担信用风险。信用债投资赚的不是白捡高息,而是承担信用风险后的补偿。</p>
+
+        <h2>4. 可转债为什么复杂</h2>
+<p>可转债是债券和股票期权的混合体。它平时像债券,有本金和票息;满足条件时,它可以转成股票,分享股价上涨。</p><p>所以可转债既要看债底,也就是作为债券大概值多少钱;又要看转股价值,也就是未来转成股票后可能值多少钱。它还会受到强赎、回售、下修等条款影响。</p><p>对新手来说,可转债不要只看价格低、溢价率低、债底高这些单个指标。你要把债性、股性、条款和流动性一起看。</p>
+<p>债券量化会研究利率曲线、期限结构、信用利差、久期、凸性、违约概率、成交流动性。股票量化也会用债券信息,因为利率会影响估值,信用利差会影响风险偏好。</p><p>做多资产配置时,债券经常用来平衡股票风险。但债券和股票不是永远负相关。通胀冲击时,股票和债券可能一起跌。</p><p>所以这一章要让你记住:债券是合同现金流,但合同现金流的今天价格会随利率、信用和流动性变化。</p>
+
+        <h2>5. 把钱交给别人管理意味着什么</h2>
+<p>很多普通人不是直接买几十只股票和债券,而是买基金。基金看起来只是一个产品名称,其实它背后是一套法律结构、账户安排、投资规则和费用机制。你买基金,不是把钱交给一个黑箱祈祷它涨,而是买入一套约定:谁来管钱、可以买什么、怎么估值、怎么收费、风险由谁承担。</p>
+<p>基金最简单的理解,是很多人把钱放到一个共同账户里,交给管理人按合同投资。你买到的是基金份额。基金底层可能买股票、债券、货币市场工具、商品、其他基金,也可能使用衍生品。</p><p>基金资产通常由托管人保管,管理人不能随便把基金资产和自己公司资产混在一起。托管、估值、信息披露、投资范围,都是为了降低管理人乱来的风险。</p><p>所以基金不是一种策略,而是一种结构。股票基金、债券基金、货币基金、指数基金、量化基金、对冲基金,都是基金结构下的不同投资方式。</p>
+
+        <h2>6. 基金净值怎么理解</h2>
+<p>基金最常见的数字是单位净值。假设一只基金总资产扣掉负债和费用后值一亿元,总份额是一亿份,那么单位净值就是一元。你持有一万份,大约就是一万元资产。</p><p>如果基金净值从一元涨到一点一元,你的一万份大约变成一万一千元。如果净值跌到零点九元,你的一万份大约变成九千元。</p><p>净值不是每天凭空写出来的。它要根据底层资产估值。如果底层是上市股票,估值相对容易;如果底层是流动性差的债券、非上市资产或复杂衍生品,估值就更依赖模型和规则。</p>
+<p>指数可以理解成一套选样本和加权的规则。比如某个宽基指数会规定选哪些股票,每只股票权重多少,什么时候调整。指数本身不是一个人,它是一套规则计算出来的市场代表。</p><p>指数基金的目标,通常不是战胜指数,而是尽量跟住指数。它把钱按指数规则买入一篮子股票或债券,用较低成本获得市场平均表现。</p><p>《漫步华尔街》强调指数投资,不是因为指数每年都涨,而是因为长期看,低成本、分散化、少犯错,对普通投资者非常有力。很多主动基金扣费后很难长期跑赢宽基指数。</p>
+
+        <h2>7. ETF 为什么重要</h2>
+<p>ETF 是可以在交易所买卖的基金。它通常跟踪某个指数,像股票一样有买卖价格,也有基金净值。你可以在交易时间买卖它。</p><p>ETF 的好处是透明、分散、成本较低、交易方便。你想买整个宽基市场,可以买宽基 ETF;想买某个行业,可以买行业 ETF;想配置债券、黄金、红利、海外市场,也可能找到对应 ETF。</p><p>但 ETF 也不是没有风险。它会跟着底层资产涨跌,也会有跟踪误差、交易价和净值之间的折溢价、流动性差异和费用。低成本不等于保本。</p>
+<p>公募基金面向公众募集,监管和信息披露更严格,普通投资者更容易买到。私募基金面向合格投资者,门槛更高,策略可以更灵活,信息披露也不一样。</p><p>对冲基金这个词容易误导。它不一定真的把风险都对冲掉。广义上,对冲基金可以使用多空、杠杆、衍生品、套利、多策略等方法追求收益。它的关键不是名字,而是具体策略和风险控制。</p><p>私募量化基金常见产品包括指数增强、市场中性、CTA、多策略等。不同产品收益来源不同,波动和回撤也不同。不能听到“量化”两个字就以为风险一样。</p>
+
+        <h2>8. 指数增强和市场中性</h2>
+<p>指数增强可以理解成:先大体跟住一个指数,再用选股模型争取多赚一点。比如跟中证 500 的风险结构差不多,但希望通过因子选股获得超额收益。</p><p>市场中性则更进一步,它希望把大盘涨跌影响尽量对冲掉,留下选股能力带来的收益。现实里常用股指期货、融券或其他工具对冲。</p><p>这两类策略都不是无风险。指数增强会有跟踪误差,市场中性会有对冲成本、基差风险、融券成本、模型失效和极端行情风险。</p>
+<p>基金和 ETF 是量化策略常用的研究对象和交易载体。个人做量化,最适合从 ETF 开始,因为标的少、流动性相对好、数据容易处理。</p><p>机构量化则常通过私募产品承载策略。研究一个量化产品,不能只看收益曲线,还要看基准、费用、回撤、杠杆、持仓分散度、流动性、申赎规则和策略容量。</p><p>如果你以后看到某个基金宣传“年化很高”“回撤很低”,先问它是实盘还是回测,费前还是费后,样本有多长,是否经历极端市场,规模多大,容量多大。这些问题比宣传图重要。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>债券是一串合同现金流,不是绝对无风险资产。</li>
+            <li>票面利率是合同利息,到期收益率是按当前价格买入后的回报。</li>
+            <li>基金是集合投资结构,不是单一策略。</li>
+            <li>指数基金和 ETF 的核心优势是低成本、透明和分散,但不保本。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 债券先当作一张标准化借条</li>
+            <li><strong>2.</strong> 为什么利率上升,债券价格下跌</li>
+            <li><strong>3.</strong> 利率风险的温度计</li>
+            <li><strong>4.</strong> 可转债为什么复杂</li>
+            <li><strong>5.</strong> 把钱交给别人管理意味着什么</li>
+            <li><strong>6.</strong> 基金净值怎么理解</li>
+            <li><strong>7.</strong> ETF 为什么重要</li>
+            <li><strong>8.</strong> 指数增强和市场中性</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>票面利率和到期收益率一样吗?</summary>
+            <p>不一样。票面利率写在合同里,到期收益率取决于当前买入价格和未来现金流。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么长期国债也会跌?</summary>
+            <p>因为长期国债虽然信用风险低,但久期长,对利率上升很敏感。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>基金净值是什么?</summary>
+            <p>基金资产扣除负债和费用后,除以基金份额得到的每份价值。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>指数基金为什么适合普通人作为基准?</summary>
+            <p>因为它低成本、分散、透明,长期很难被多数主动策略稳定战胜。</p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>
