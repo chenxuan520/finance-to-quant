@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 BOOK_TITLE = "从金融零基础到量化研究者"
 BOOK_SUBTITLE = "给计算机背景读者的金融与量化入门书"
+REPO_URL = "https://github.com/chenxuan520/finance-to-quant"
 
 
 MANUSCRIPT_PATH = Path(__file__).with_name("manual_manuscript.py")
@@ -1219,6 +1220,25 @@ def render_index() -> str:
     cards.append("      </div>\n")
 
     return render_head(f"{BOOK_TITLE} · {BOOK_SUBTITLE}", "给计算机背景读者的金融与量化入门书。") + f"""  <body data-cover>
+    <a
+      class="github-corner"
+      href="{REPO_URL}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="在 GitHub 上查看源码"
+    >
+      <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path class="github-corner__ribbon" d="M0 0l115 115h15l12 27 108 108V0z" />
+        <path
+          class="github-corner__arm"
+          d="M128 109c-15-9-9-19-9-19 3-7 2-11 2-11-1-7 3-2 3-2 4 5 2 11 2 11-3 10 5 15 9 16"
+        />
+        <path
+          class="github-corner__body"
+          d="M115 115s4 2 5 0l14-14c3-2 6-3 8-3-8-11-15-24 2-41 5-5 10-7 16-7 1-2 3-7 12-11 0 0 5 3 7 16 4 2 8 5 12 9s7 8 9 12c14 3 17 7 17 7-4 8-9 11-11 11 0 6-2 11-7 16-16 16-30 10-41 2 0 3-1 7-5 11l-12 11c-1 1 1 5 1 5z"
+        />
+      </svg>
+    </a>
     <header class="cover">
       <div class="cover__inner">
         <p class="cover__eyebrow">{esc(BOOK_SUBTITLE)}</p>
@@ -1230,10 +1250,19 @@ def render_index() -> str:
         <div class="cover__actions">
           <a class="button button--primary" data-continue href="chapter-00.html">开始阅读</a>
           <a class="button button--ghost" href="glossary.html">术语表</a>
+          <a class="button button--ghost" href="{REPO_URL}" target="_blank" rel="noopener">GitHub 源码</a>
         </div>
         <p class="muted">
           内容借鉴《小岛经济学》的生产和信用直觉,以及《漫步华尔街》的市场有效性和指数投资思想;
           文字为原创整理,不复写原书章节。
+        </p>
+        <p class="muted" style="margin-top: 0.6rem; font-size: 0.88rem">
+          在线版:
+          <a class="xref" href="https://finance-to-quant.pages.dev/" target="_blank" rel="noopener">finance-to-quant.pages.dev</a>
+          · 源码:
+          <a class="xref" href="{REPO_URL}" target="_blank" rel="noopener">GitHub</a>
+          · PDF:
+          <a class="xref" href="{REPO_URL}/releases" target="_blank" rel="noopener">Releases</a>
         </p>
       </div>
     </header>
@@ -1241,6 +1270,25 @@ def render_index() -> str:
       <h2>全书目录</h2>
       <p class="toc-section__hint">建议顺序阅读。第 0-5 章建立金融和主要资产地基,第 6-8 章理解 A 股交易、行情、指数、收益风险和有效市场,第 9-12 章进入量化研究生产线,第 13-18 章理解行业、策略、产品、监管和多资产,第 19-32 章完成项目、场景练习、检查清单和结语。</p>
 {''.join(cards)}
+      <section class="about reveal">
+        <h2>关于本书</h2>
+        <p>
+          这本书写给和我一样计算机背景、对金融和量化好奇却不知从何下手的人。它不假设你懂任何金融知识,
+          从"钱到底是什么"这种最朴素的问题讲起,用小岛经济学式的直觉、真实历史案例(郁金香狂热、南海泡沫、
+          雷曼、长期资本管理公司、西蒙斯、骑士资本)和手绘概念图,一步步走到量化研究的因子、回测、机器学习、
+          组合优化、交易执行和风控。
+        </p>
+        <p>
+          全书 33 章,正文全部手写,配 22 张解释概念的手绘 SVG 图。内容尽量做到通俗又不失专业,
+          但金融和量化涉及真实资金与风险,书中所有案例、数字和结论仅用于学习,<strong>不构成任何投资建议</strong>。
+          行业、机构和监管信息会随时间变化,实盘和引用前请以交易所、证监会、协会、券商和数据服务商的最新原文为准。
+        </p>
+        <p class="about__meta">
+          作者 <a class="xref" href="https://github.com/chenxuan520" target="_blank" rel="noopener">@chenxuan520</a>
+          · 源码与勘误见 <a class="xref" href="{REPO_URL}" target="_blank" rel="noopener">GitHub 仓库</a>
+          · 以 MIT License 开源
+        </p>
+      </section>
     </main>
     <script src="assets/book.js"></script>
   </body>
@@ -1615,6 +1663,41 @@ a:hover { text-decoration: underline; }
 .toc-card__num { color: var(--accent); font-weight: 800; font-size: 0.92rem; }
 .toc-card__title { font-size: 1.18rem; font-weight: 850; }
 .toc-card__desc { color: var(--text-soft); font-size: 0.96rem; }
+
+/* GitHub 右上角翻角 */
+.github-corner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 20;
+  width: 88px;
+  height: 88px;
+}
+.github-corner svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.github-corner__ribbon { fill: #f0c96a; }
+.github-corner__arm,
+.github-corner__body { fill: #101412; }
+.github-corner:hover .github-corner__ribbon { fill: #f6d98a; }
+
+/* 关于本书 */
+.about {
+  margin-top: 1rem;
+  padding: 1.6rem 1.8rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid rgba(240, 201, 106, 0.55);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.about h2 { margin-top: 0; font-size: 1.5rem; }
+.about p { color: var(--text-soft); }
+.about__meta { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 0; }
+@media (max-width: 640px) {
+  .github-corner { width: 64px; height: 64px; }
+}
 
 .chapter {
   padding: calc(var(--header-height) + 2.4rem) 1.2rem 2rem;

@@ -307,6 +307,41 @@ a:hover { text-decoration: underline; }
 .toc-card__title { font-size: 1.18rem; font-weight: 850; }
 .toc-card__desc { color: var(--text-soft); font-size: 0.96rem; }
 
+/* GitHub 右上角翻角 */
+.github-corner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 20;
+  width: 88px;
+  height: 88px;
+}
+.github-corner svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.github-corner__ribbon { fill: #f0c96a; }
+.github-corner__arm,
+.github-corner__body { fill: #101412; }
+.github-corner:hover .github-corner__ribbon { fill: #f6d98a; }
+
+/* 关于本书 */
+.about {
+  margin-top: 1rem;
+  padding: 1.6rem 1.8rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid rgba(240, 201, 106, 0.55);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.about h2 { margin-top: 0; font-size: 1.5rem; }
+.about p { color: var(--text-soft); }
+.about__meta { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 0; }
+@media (max-width: 640px) {
+  .github-corner { width: 64px; height: 64px; }
+}
+
 .chapter {
   padding: calc(var(--header-height) + 2.4rem) 1.2rem 2rem;
 }
