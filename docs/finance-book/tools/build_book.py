@@ -291,6 +291,12 @@ def build_visible_chapters(source: list) -> list:
             "desc": merge_desc(parts),
             "lead": merge_lead(new_num, parts),
             "sections": merged_sections(parts),
+            # 单元分组:双单元章渲染为 h2(单元) + h3(小节)两层,避免二十多个平级小节
+            "units": [
+                {"title": clean_section_title(p["title"]), "lead": p["lead"] if i else None,
+                 "sections": p["sections"]}
+                for i, p in enumerate(parts)
+            ],
             "summary": [item for ch in parts for item in ch["summary"][:2]][:5],
             "quiz": [item for ch in parts for item in ch["quiz"][:2]][:6],
         })
@@ -1045,8 +1051,10 @@ def render_head(title: str, desc: str = "") -> str:
 """
 
 
-def render_chapter_svg(ch: dict, rendered_sections: list) -> str:
+def render_chapter_svg(ch: dict, rendered_sections: list, uid: str = "", map_title: str = "") -> str:
     title = esc(ch["title"])
+    heading = esc(map_title) if map_title else f"第 {ch['num']} 章概念路径"
+    gid = f"{ch['num']}{uid}"
     raw_sections = [s[0] for s in rendered_sections]
     if len(raw_sections) <= 8:
         section_labels = raw_sections
@@ -1061,7 +1069,7 @@ def render_chapter_svg(ch: dict, rendered_sections: list) -> str:
     flow_nodes = []
     for i, (label, (x, y)) in enumerate(zip(section_labels, node_positions), 1):
         flow_nodes.append(f"""
-            <g filter="url(#softShadow{ch['num']})">
+            <g filter="url(#softShadow{gid})">
               <rect x="{x - 92}" y="{y - 58}" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
               <circle cx="{x - 70}" cy="{y - 36}" r="14" fill="#f0c96a" fill-opacity="0.95" />
               <text x="{x - 70}" y="{y - 31}" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">{i}</text>
@@ -1069,22 +1077,22 @@ def render_chapter_svg(ch: dict, rendered_sections: list) -> str:
             </g>""")
     flow_figure = f"""
         <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="第 {ch['num']} 章流程图: {title}">
+          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="{heading}: {title}">
             <defs>
-              <linearGradient id="mapGrad{ch['num']}" x1="0" x2="1" y1="0" y2="1">
+              <linearGradient id="mapGrad{gid}" x1="0" x2="1" y1="0" y2="1">
                 <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
                 <stop offset="100%" stop-color="#7aa7f0" stop-opacity="0.85" />
               </linearGradient>
-              <filter id="softShadow{ch['num']}" x="-20%" y="-20%" width="140%" height="140%">
+              <filter id="softShadow{gid}" x="-20%" y="-20%" width="140%" height="140%">
                 <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
               </filter>
             </defs>
             <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
-            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">第 {ch['num']} 章概念路径</text>
-            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad{ch['num']})" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">{heading}</text>
+            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad{gid})" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
             {''.join(flow_nodes)}
           </svg>
-          <p class="figure__cap">本图从“{esc(section_labels[0])}”走到“{esc(section_labels[-1])}”,用于先看第 {ch['num']} 章的关键路径,再回到正文补细节。</p>
+          <p class="figure__cap">本图从“{esc(section_labels[0])}”走到“{esc(section_labels[-1])}”,先看路径再回到正文补细节。</p>
         </div>"""
     return flow_figure
 
@@ -1129,31 +1137,63 @@ def render_summary_figure(ch: dict) -> str:
 
 def render_chapter(ch: dict) -> str:
     idx = ch["num"]
-    rendered_sections = prepare_sections(ch["sections"])
     # 概念图按锚点关键词挂到对应小节后面
     anchors = CONCEPT_FIGURES.get(idx, [])
     used = [False] * len(anchors)
+
+    def attach_figures(title: str, out: list):
+        for ai, (keyword, maker) in enumerate(anchors):
+            if not used[ai] and keyword in title:
+                out.append(maker())
+                used[ai] = True
+
+    units = ch.get("units") or []
     sections = []
-    for n, (title, body) in enumerate(rendered_sections, 1):
-        sections.append(f"""
+    recap_rows = []
+    unit_maps = []
+    if len(units) > 1:
+        # 多单元章:单元 = h2 大块,单元内小节 = h3(x.y 编号),每个单元配自己的概念路径图
+        for ui, unit in enumerate(units, 1):
+            unit_sections = prepare_sections(unit["sections"])
+            unit_maps.append((ui, render_chapter_svg(
+                ch, unit_sections, uid=f"u{ui}",
+                map_title=f"第 {idx} 章 · {unit['title']}:概念路径")))
+            sections.append(f"""
+        <h2>{ui}. {esc(unit["title"])}</h2>
+{render_chapter_svg(ch, unit_sections, uid=f"u{ui}", map_title=f"第 {idx} 章 · {unit['title']}:概念路径")}
+""")
+            if unit.get("lead"):
+                sections.append(f"        <p>{esc(unit['lead'])}</p>\n")
+            for si, (title, body) in enumerate(unit_sections, 1):
+                sections.append(f"""
+        <h3>{ui}.{si}. {esc(title)}</h3>
+{body.rstrip()}
+""")
+                recap_rows.append((f"{ui}.{si}.", title))
+                attach_figures(title, sections)
+    else:
+        rendered_sections = prepare_sections(ch["sections"])
+        for n, (title, body) in enumerate(rendered_sections, 1):
+            sections.append(f"""
         <h2>{n}. {esc(title)}</h2>
 {body.rstrip()}
 """)
-        for ai, (keyword, maker) in enumerate(anchors):
-            if not used[ai] and keyword in title:
-                sections.append(maker())
-                used[ai] = True
+            recap_rows.append((f"{n}.", title))
+            attach_figures(title, sections)
     # 没匹配上的概念图(锚点关键词没找到)兜底追加到正文末尾,避免丢图
     for ai, (keyword, maker) in enumerate(anchors):
         if not used[ai]:
             sections.append(maker())
-    # 没有专属概念图的章,用"留下三件事"图收尾
-    tail_figure = "" if anchors else render_summary_figure(ch)
+    # 单单元章:整章概念路径图放在开头;多单元章的概念图已按单元内嵌,开头不再重复
+    top_map = "" if len(units) > 1 else render_chapter_svg(ch, prepare_sections(ch["sections"]))
+    # 多单元章已各带单元概念图,天然呼吸道充足,不再追加"三件事"卡片;
+    # 单单元章且没有手画概念图的,沿用"留下三件事"图收尾
+    tail_figure = "" if (anchors or len(units) > 1) else render_summary_figure(ch)
 
     summary = "\n".join(f"            <li>{esc(x)}</li>" for x in ch["summary"])
     section_recap = "\n".join(
-        f"            <li><strong>{i}.</strong> {esc(title)}</li>"
-        for i, (title, _body) in enumerate(rendered_sections, 1)
+        f"            <li><strong>{num}</strong> {esc(title)}</li>"
+        for num, title in recap_rows
     )
     quiz = "\n".join(
         f"""          <details class="quiz__item">
@@ -1174,7 +1214,7 @@ def render_chapter(ch: dict) -> str:
 {summary}
           </ul>
         </section>
-{render_chapter_svg(ch, rendered_sections)}
+{top_map}
 {''.join(sections)}
 {tail_figure}
         <section class="summary reveal">
