@@ -459,6 +459,23 @@ code {
   font-weight: 650;
 }
 
+/* 金融术语:天青点线,与 deeplearning 书 .term 一致 */
+.term {
+  color: var(--accent);
+  font-weight: 700;
+  border-bottom: 1px dotted rgba(122, 167, 240, 0.55);
+}
+
+/* 数值锚点:数字+单位 */
+.num {
+  color: #ffd97a;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 已有 .hl/.term/.num 在 strong 内优先显示金色 */
+strong .hl, strong .term, strong .num { color: #ffd97a; }
+
 .objectives {
   margin: 1.6rem 0 2rem;
   padding: 1.1rem 1.3rem;

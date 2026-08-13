@@ -1138,7 +1138,31 @@ def render_summary_figure(ch: dict) -> str:
 # 正文排版增强:在不改手稿的前提下,机械地把单调段落串升级成有呼吸感的版式。
 #
 # 1. 句首带标志词的段落(记住/注意/先说结论/铁律...) -> callout 卡片;
-# 2. 短语级强调“xxx” -> 金色高亮 span(参照《从神经元到大模型》的彩色术语)。
+# 2. 短语级强调“xxx” -> 金色高亮 span(参照《从神经元到大模型》的彩色术语);
+# 3. 金融术语(IC/Beta/夏普/ETF...) -> 天青点线术语(同 dl 的 .term);
+# 4. 数值+单位(46 亿美元/3%/20 倍...) -> 金色数字 .num(做全书里的视觉锚点)。
+_ENRICH_TERMS_RE = re.compile(
+    r"(?<![A-Za-z])(?:RankIC(?![a-z])|VaR|ROE|IC(?![a-zA-Z])|IR(?![a-zA-Z])|ETF|REITs?|IPO|PE(?![a-zA-Z])|PB(?![a-zA-Z])|"
+    r"T\+1|T\+0|Alpha|Beta|alpha|beta|夏普比率|夏普|信息比率|最大回撤|波动率|换手率|跟踪误差|"
+    r"超额收益|年化收益|市盈率|市净率|股指期货|保证金|基差|升水|贴水|杠杆|动量|反转|沪深 300|中证 500)"
+)
+_ENRICH_NUM_RE = re.compile(
+    r"(?<![0-9A-Za-z#])(-?\d+(?:\.\d+)?(?:-\d+(?:\.\d+)?)?\s*(?:亿美元|万元|亿元|万美元|万|亿|%|倍|个基点|bp|"
+    r"个百分点|年|个月|月|个交易日|交易日|日|天|股|手|张|点|元|次|分钟|小时))(?![0-9A-Za-z「」])"
+)
+
+
+def _enrich_terms_nums(inner: str) -> str:
+    """只处理纯文本片段,跳过已有标签,避免嵌套错乱。"""
+    parts = re.split(r"(<[^>]+>)", inner)
+    for i in range(len(parts)):
+        seg = parts[i]
+        if not seg or seg.startswith("<"):
+            continue
+        seg = _ENRICH_TERMS_RE.sub(r'<span class="term">\g<0></span>', seg)
+        seg = _ENRICH_NUM_RE.sub(r'<span class="num">\g<0></span>', seg)
+        parts[i] = seg
+    return "".join(parts)
 _CALLOUT_MARKERS = [
     ("郑重提醒", "warn", "郑重提醒"),
     ("先说结论", "note", "先说结论"),
@@ -1183,12 +1207,14 @@ def enrich_body(htmltext: str) -> str:
         # 1) 标志词段落升级成 callout
         kw, style, title = _marker_title(plain)
         if kw and len(plain) <= 260:
-            out.append(f'<div class="callout callout--{style} reveal"><span class="callout__title">{esc(title)}</span><p>{inner}</p></div>')
+            out.append(f'<div class="callout callout--{style} reveal"><span class="callout__title">{esc(title)}</span><p>{_enrich_terms_nums(inner)}</p></div>')
             continue
         # 2) 双引号短语高亮(避免已含标签的片段错乱)
         def _hl(m):
             return f'<span class="hl">“{m.group(1)}”</span>'
         new_inner = re.sub(r"“([^”<>]{2,18})”", _hl, inner)
+        # 3) 术语与数字标注:对已含 <span class="hl"> 的嵌套安全(split 按标签切)
+        new_inner = _enrich_terms_nums(new_inner)
         out.append(f"<p>{new_inner}</p>")
     return "".join(out)
 
@@ -1913,6 +1939,23 @@ code {
   color: #ffd97a;
   font-weight: 650;
 }
+
+/* 金融术语:天青点线,与 deeplearning 书 .term 一致 */
+.term {
+  color: var(--accent);
+  font-weight: 700;
+  border-bottom: 1px dotted rgba(122, 167, 240, 0.55);
+}
+
+/* 数值锚点:数字+单位 */
+.num {
+  color: #ffd97a;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 已有 .hl/.term/.num 在 strong 内优先显示金色 */
+strong .hl, strong .term, strong .num { color: #ffd97a; }
 
 .objectives {
   margin: 1.6rem 0 2rem;
