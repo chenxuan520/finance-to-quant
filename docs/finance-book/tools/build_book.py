@@ -380,7 +380,7 @@ def svg_lines(text: str, max_chars: int = 11, max_lines: int = 4) -> list:
     return lines or [""]
 
 
-def svg_text(text: str, x: int, y: int, width: int, *, size: int = 17, color: str = "#f6f0df",
+def svg_text(text: str, x: int, y: int, width: int, *, size: int = 17, color: str = "#eef4f8",
              weight: int = 760, max_chars: int = 11, max_lines: int = 4) -> str:
     line_height = int(size * 1.35)
     lines = svg_lines(text, max_chars=max_chars, max_lines=max_lines)
@@ -412,7 +412,7 @@ def concept_figure(svg_body: str, viewbox: str, aria: str, cap: str) -> str:
 # 每个重点章手画的"真概念图":用坐标轴、曲线、时间轴、结构块解释一个具体概念,
 # 取代原来纯装饰的"本章留下三件事"卡片图。key = 可见章号。
 def _fig_inflation():
-    body = """            <text x="450" y="34" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">多印鱼票,鱼没变多:每张票能换到的鱼变少</text>
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">多印鱼票,鱼没变多:每张票能换到的鱼变少</text>
             <!-- 左:发票前 -->
             <text x="230" y="74" text-anchor="middle" fill="#7aa7f0" font-size="16" font-weight="800">发票前</text>
             <text x="230" y="98" text-anchor="middle" fill="#c9d4e8" font-size="13">仓库 100 条鱼 · 流通 100 张票</text>
@@ -424,14 +424,14 @@ def _fig_inflation():
             <g fill="#f0c96a"><circle cx="590" cy="150" r="13"/><circle cx="630" cy="150" r="13"/><circle cx="670" cy="150" r="13"/><circle cx="710" cy="150" r="13"/><circle cx="750" cy="150" r="13"/></g>
             <text x="670" y="196" text-anchor="middle" fill="#ffb4b4" font-size="17" font-weight="800">2 张票 → 1 条鱼</text>
             <line x1="450" y1="60" x2="450" y2="210" stroke="#46587a" stroke-width="1.5" stroke-dasharray="6 6"/>
-            <text x="450" y="246" text-anchor="middle" fill="#f6f0df" font-size="15">票变多,鱼没变多 → 同一条鱼要更多票 → 这就是通胀:购买力下降</text>"""
+            <text x="450" y="246" text-anchor="middle" fill="#eef4f8" font-size="15">票变多,鱼没变多 → 同一条鱼要更多票 → 这就是通胀:购买力下降</text>"""
     return concept_figure(body, "0 0 900 270",
         "通胀示意:鱼票翻倍但鱼不变,每张票能换的鱼减半",
         "鱼票从 100 张翻到 200 张,仓库还是 100 条鱼,于是换一条鱼需要的票翻倍。通胀不是某样东西偶尔涨价,而是整体购买力下降。")
 
 
 def _fig_bank_balance():
-    body = """            <text x="450" y="34" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">银行资产负债表:钱不是躺在保险柜里</text>
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">银行资产负债表:钱不是躺在保险柜里</text>
             <!-- 资产侧 -->
             <rect x="70" y="70" width="330" height="200" rx="14" fill="rgba(122,167,240,0.10)" stroke="#7aa7f0" stroke-width="2"/>
             <text x="235" y="98" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">资产(钱用到哪去了)</text>
@@ -456,7 +456,7 @@ def _fig_bank_balance():
 
 
 def _fig_bank_run():
-    body = """            <text x="450" y="34" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">挤兑:为什么信心一崩,好银行也会倒</text>
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">挤兑:为什么信心一崩,好银行也会倒</text>
             <text x="230" y="72" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">正常时</text>
             <rect x="120" y="90" width="220" height="120" rx="12" fill="rgba(122,167,240,0.12)" stroke="#7aa7f0" stroke-width="2"/>
             <text x="230" y="120" text-anchor="middle" fill="#eef4ff" font-size="14">少数人来取钱</text>
@@ -470,14 +470,14 @@ def _fig_bank_run():
             <path d="M 355 150 L 545 150" fill="none" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#runarrow)"/>
             <defs><marker id="runarrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
             <text x="450" y="140" text-anchor="middle" fill="#c9d4e8" font-size="13">信心消失</text>
-            <text x="450" y="250" text-anchor="middle" fill="#f6f0df" font-size="15">部分准备金制度下,银行本就没留够全额现金;挤兑是信心问题,不只是资产问题</text>"""
+            <text x="450" y="250" text-anchor="middle" fill="#eef4f8" font-size="15">部分准备金制度下,银行本就没留够全额现金;挤兑是信心问题,不只是资产问题</text>"""
     return concept_figure(body, "0 0 900 275",
         "挤兑示意:正常时准备金够付,所有人同时取钱时准备金瞬间见底",
         "银行只留部分准备金,平时够用;一旦所有人同时来取,贷款收不回、准备金见底,连经营正常的银行也可能倒下。这就是存款保险和央行存在的原因之一。")
 
 
 def _fig_bond_cashflow():
-    body = """            <text x="450" y="34" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">一张 3 年期债券的现金流(面值 100,票息 5%)</text>
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一张 3 年期债券的现金流(面值 100,票息 5%)</text>
             <line x1="70" y1="180" x2="830" y2="180" stroke="#46587a" stroke-width="2" marker-end="url(#tarrow)"/>
             <defs><marker id="tarrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
             <text x="828" y="205" text-anchor="end" fill="#8499bd" font-size="13">时间</text>
@@ -507,7 +507,7 @@ def _fig_bond_cashflow():
 
 
 def _fig_option_payoff():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">期权到期收益:亏损有底,盈利放大</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期权到期收益:亏损有底,盈利放大</text>
             <!-- 看涨期权 -->
             <text x="230" y="60" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">买入看涨期权</text>
             <line x1="80" y1="240" x2="400" y2="240" stroke="#46587a" stroke-width="1.5"/>
@@ -534,7 +534,7 @@ def _fig_option_payoff():
 
 
 def _fig_drawdown_sharpe():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">同样终点,体验完全不同:回撤决定能不能拿得住</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">同样终点,体验完全不同:回撤决定能不能拿得住</text>
             <line x1="70" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <line x1="70" y1="60" x2="70" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">时间</text>
@@ -556,7 +556,7 @@ def _fig_drawdown_sharpe():
 
 
 def _fig_factor_quantile():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">分层回测:把股票按因子值分成5组,看收益是否单调</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">分层回测:把股票按因子值分成5组,看收益是否单调</text>
             <line x1="90" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <line x1="90" y1="60" x2="90" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <text x="60" y="70" fill="#8499bd" font-size="13">未来收益</text>
@@ -571,7 +571,7 @@ def _fig_factor_quantile():
             <text x="615" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第4组</text>
             <rect x="710" y="90" width="90" height="160" fill="#a8c6ff" opacity="0.9"/>
             <text x="755" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第5组(因子最高)</text>
-            <path d="M 195 195 L 335 170 L 475 145 L 615 115 L 755 85" fill="none" stroke="#f6f0df" stroke-width="2" stroke-dasharray="6 5"/>
+            <path d="M 195 195 L 335 170 L 475 145 L 615 115 L 755 85" fill="none" stroke="#eef4f8" stroke-width="2" stroke-dasharray="6 5"/>
             <text x="600" y="70" fill="#eef4ff" font-size="13">收益随分组单调上升 → 因子可能有效</text>"""
     return concept_figure(body, "0 0 900 290",
         "因子分层回测柱状图:按因子值把股票分成5组,从第1组到第5组未来收益单调递增",
@@ -579,7 +579,7 @@ def _fig_factor_quantile():
 
 
 def _fig_lookahead():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">回测最致命的错:偷看了未来</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回测最致命的错:偷看了未来</text>
             <line x1="70" y1="150" x2="830" y2="150" stroke="#46587a" stroke-width="2" marker-end="url(#la)"/>
             <defs><marker id="la" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
             <line x1="450" y1="80" x2="450" y2="220" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 5"/>
@@ -600,7 +600,7 @@ def _fig_lookahead():
 # 可见章号 -> 该章要插入的手画概念图列表(按顺序渲染)。
 # 这些图取代原本纯装饰的"本章留下三件事"卡片图。
 def _fig_money_flow():
-    body = """            <text x="450" y="32" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">钱和风险怎么在金融系统里流动</text>
+    body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">钱和风险怎么在金融系统里流动</text>
             <!-- 左:资金盈余方 -->
             <rect x="40" y="90" width="170" height="130" rx="14" fill="rgba(122,167,240,0.12)" stroke="#7aa7f0" stroke-width="2"/>
             <text x="125" y="128" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">有钱的人</text>
@@ -636,7 +636,7 @@ def _fig_money_flow():
 
 
 def _fig_stock_ownership():
-    body = """            <text x="450" y="32" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">买一股,就是把公司切成很多份、你拿其中一份</text>
+    body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">买一股,就是把公司切成很多份、你拿其中一份</text>
             <!-- 公司大饼 -->
             <circle cx="230" cy="160" r="95" fill="rgba(18,29,49,0.6)" stroke="#f0c96a" stroke-width="2"/>
             <path d="M 230 160 L 230 65 A 95 95 0 0 1 315 200 Z" fill="rgba(240,201,106,0.28)" stroke="#f0c96a"/>
@@ -660,7 +660,7 @@ def _fig_stock_ownership():
 
 
 def _fig_orderbook():
-    body = """            <text x="450" y="32" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">订单簿:买卖双方在这里排队,价格优先、时间优先</text>
+    body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">订单簿:买卖双方在这里排队,价格优先、时间优先</text>
             <!-- 卖盘(上,红) -->
             <text x="250" y="70" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">卖盘(想卖的人)</text>
             <rect x="150" y="80" width="200" height="26" rx="4" fill="rgba(232,120,120,0.28)"/><text x="160" y="99" fill="#eef4ff" font-size="13">卖三  10.03  ×  800</text>
@@ -687,7 +687,7 @@ def _fig_orderbook():
 
 
 def _fig_candlestick():
-    body = """            <text x="450" y="32" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">一根 K 线,记录一段时间里的四个价格</text>
+    body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一根 K 线,记录一段时间里的四个价格</text>
             <!-- 阳线 -->
             <text x="250" y="76" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">阳线(收盘 &gt; 开盘)</text>
             <line x1="250" y1="96" x2="250" y2="130" stroke="#a8c6ff" stroke-width="2"/>
@@ -713,7 +713,7 @@ def _fig_candlestick():
 
 
 def _fig_quant_pipeline():
-    body = """            <text x="450" y="32" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">量化是一条流水线,算法只是其中一环</text>
+    body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化是一条流水线,算法只是其中一环</text>
             <!-- 5 个流程块 -->
             <rect x="30" y="90" width="150" height="90" rx="12" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0" stroke-width="2"/>
             <text x="105" y="126" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">数据</text>
@@ -751,7 +751,7 @@ def _fig_quant_pipeline():
 
 
 def _fig_index_enhance():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">指数增强:紧贴指数,再想办法多赚一点点</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">指数增强:紧贴指数,再想办法多赚一点点</text>
             <line x1="70" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <line x1="70" y1="60" x2="70" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">时间</text>
@@ -773,7 +773,7 @@ def _fig_index_enhance():
 
 
 def _fig_market_neutral():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">市场中性:买一篮子、卖空等额,抵掉大盘涨跌</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">市场中性:买一篮子、卖空等额,抵掉大盘涨跌</text>
             <!-- 多头柱 -->
             <text x="200" y="76" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">多头:买入看好的股票</text>
             <rect x="130" y="90" width="140" height="70" rx="6" fill="rgba(122,167,240,0.25)" stroke="#a8c6ff" stroke-width="2"/>
@@ -796,7 +796,7 @@ def _fig_market_neutral():
 
 
 def _fig_income_statement():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">利润表:收入一层层减下去,才剩净利润</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">利润表:收入一层层减下去,才剩净利润</text>
             <!-- 漏斗式递减条 -->
             <rect x="250" y="60" width="400" height="40" rx="4" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff"/>
             <text x="450" y="86" text-anchor="middle" fill="#eef4ff" font-size="14" font-weight="800">营业收入(卖东西收到的钱)</text>
@@ -818,7 +818,7 @@ def _fig_income_statement():
 
 
 def _fig_project_layout():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">量化项目要分层,别塞进一个大 notebook</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化项目要分层,别塞进一个大 notebook</text>
             <!-- 分层结构 -->
             <rect x="120" y="60" width="660" height="40" rx="8" fill="rgba(122,167,240,0.20)" stroke="#a8c6ff" stroke-width="1.5"/>
             <text x="140" y="85" fill="#eef4ff" font-size="14">data/  原始与清洗后的数据,来源和口径清楚</text>
@@ -837,7 +837,7 @@ def _fig_project_layout():
 
 
 def _fig_arbitrage():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">相对价值套利:赌两个价格的价差会收敛回来</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">相对价值套利:赌两个价格的价差会收敛回来</text>
             <line x1="70" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <line x1="70" y1="55" x2="70" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">时间</text>
@@ -860,7 +860,7 @@ def _fig_arbitrage():
 
 
 def _fig_fund_nav():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">你买到的不是模型,是扣费后的一条净值曲线</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">你买到的不是模型,是扣费后的一条净值曲线</text>
             <line x1="70" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <line x1="70" y1="55" x2="70" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <text x="52" y="65" fill="#8499bd" font-size="13">净值</text>
@@ -880,7 +880,7 @@ def _fig_fund_nav():
 
 
 def _fig_backtest_loop():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">回测就是在历史里,一天天重放这个循环</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回测就是在历史里,一天天重放这个循环</text>
             <!-- 环形流程 6 步 -->
             <rect x="360" y="60" width="180" height="46" rx="10" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
             <text x="450" y="88" text-anchor="middle" fill="#eef4ff" font-size="13.5">① 读取当时可见数据</text>
@@ -911,7 +911,7 @@ def _fig_backtest_loop():
 
 
 def _fig_overfitting():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">过拟合:样本内越漂亮,样本外可能越崩</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">过拟合:样本内越漂亮,样本外可能越崩</text>
             <line x1="70" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <line x1="70" y1="55" x2="70" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <text x="52" y="65" fill="#8499bd" font-size="13">净值</text>
@@ -931,7 +931,7 @@ def _fig_overfitting():
 
 
 def _fig_loss_recovery():
-    body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">亏得越多,回本要涨得越狠(先活下来)</text>
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">亏得越多,回本要涨得越狠(先活下来)</text>
             <line x1="110" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <line x1="110" y1="55" x2="110" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <text x="90" y="60" text-anchor="end" fill="#8499bd" font-size="12.5">回本涨幅</text>
@@ -1054,7 +1054,6 @@ def render_head(title: str, desc: str = "") -> str:
 def render_chapter_svg(ch: dict, rendered_sections: list, uid: str = "", map_title: str = "") -> str:
     title = esc(ch["title"])
     heading = esc(map_title) if map_title else f"第 {ch['num']} 章概念路径"
-    gid = f"{ch['num']}{uid}"
     raw_sections = [s[0] for s in rendered_sections]
     if len(raw_sections) <= 8:
         section_labels = raw_sections
@@ -1062,34 +1061,25 @@ def render_chapter_svg(ch: dict, rendered_sections: list, uid: str = "", map_tit
         section_labels = raw_sections[:7] + [raw_sections[-1]]
     while len(section_labels) < 8:
         section_labels.append(ch["summary"][len(section_labels) % len(ch["summary"])])
-    node_positions = [
-        (130, 140), (345, 140), (560, 140), (775, 140),
-        (130, 310), (345, 310), (560, 310), (775, 310),
-    ]
+    # 2x4 编号网格:序号在左上,标题主体。不画连接线,干净利落
+    card_positions = []
+    for row in range(2):
+        for col in range(4):
+            card_positions.append((54 + col * 200, 92 + row * 152))  # (x, y) 卡片左上
     flow_nodes = []
-    for i, (label, (x, y)) in enumerate(zip(section_labels, node_positions), 1):
+    for i, (label, (x, y)) in enumerate(zip(section_labels, card_positions), 1):
         flow_nodes.append(f"""
-            <g filter="url(#softShadow{gid})">
-              <rect x="{x - 92}" y="{y - 58}" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
-              <circle cx="{x - 70}" cy="{y - 36}" r="14" fill="#f0c96a" fill-opacity="0.95" />
-              <text x="{x - 70}" y="{y - 31}" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">{i}</text>
-              {svg_text(label, x + 6, y + 7, 148, size=15, max_chars=8, max_lines=4)}
+            <g>
+              <rect x="{x}" y="{y}" width="188" height="112" rx="14" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.3)" stroke-width="1.2" />
+              <rect x="{x + 12}" y="{y + 12}" width="26" height="26" rx="13" fill="#f0c96a" />
+              <text x="{x + 25}" y="{y + 31}" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">{i}</text>
+              {svg_text(label, x + 94, y + 78, 164, size=14, max_chars=9, max_lines=3)}
             </g>""")
     flow_figure = f"""
         <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 410" role="img" aria-label="{heading}: {title}">
-            <defs>
-              <linearGradient id="mapGrad{gid}" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
-                <stop offset="100%" stop-color="#7aa7f0" stop-opacity="0.85" />
-              </linearGradient>
-              <filter id="softShadow{gid}" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
-              </filter>
-            </defs>
-            <rect x="18" y="18" width="864" height="374" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.25)" />
-            <text x="450" y="62" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">{heading}</text>
-            <path d="M222 140 H253 M437 140 H468 M652 140 H683 M775 198 V252 M683 310 H652 M468 310 H437 M253 310 H222" fill="none" stroke="url(#mapGrad{gid})" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 13" />
+          <svg class="chapter-map" viewBox="0 0 900 400" role="img" aria-label="{heading}: {title}">
+            <rect x="18" y="18" width="864" height="352" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
+            <text x="450" y="62" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">{heading}</text>
             {''.join(flow_nodes)}
           </svg>
           <p class="figure__cap">本图从“{esc(section_labels[0])}”走到“{esc(section_labels[-1])}”,先看路径再回到正文补细节。</p>
@@ -1111,23 +1101,16 @@ def render_summary_figure(ch: dict) -> str:
     for i, (label, (x, y)) in enumerate(zip(summary_labels, summary_positions), 1):
         summary_cards.append(f"""
             <g>
-              <rect x="{x - 115}" y="{y - 70}" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(122,167,240,0.50)" stroke-width="2" />
-              <path d="M{x - 65} {y - 30} L{x - 22} {y - 30} L{x - 22} {y - 42} L{x + 60} {y} L{x - 22} {y + 42} L{x - 22} {y + 30} L{x - 65} {y + 30} Z" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.48)" />
-              <text x="{x}" y="{y - 38}" text-anchor="middle" fill="#7aa7f0" font-size="15" font-weight="900">留下 {i}</text>
-              {svg_text(label, x, y + 24, 185, size=15, color="#f6f0df", max_chars=8, max_lines=5)}
+              <rect x="{x - 115}" y="{y - 70}" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
+              <rect x="{x - 103}" y="{y - 58}" width="26" height="26" rx="13" fill="#f0c96a" />
+              <text x="{x - 90}" y="{y - 39}" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">{i}</text>
+              {svg_text(label, x - 96, y - 8, 192, size=14, color="#eef4f8", max_chars=9, max_lines=5)}
             </g>""")
     return f"""
         <div class="figure figure--reading reveal">
           <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 {ch['num']} 章小结图: {title}">
-            <defs>
-              <linearGradient id="sumGrad{ch['num']}" x1="0" x2="1" y1="0" y2="0">
-                <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.75" />
-                <stop offset="100%" stop-color="#7aa7f0" stop-opacity="0.75" />
-              </linearGradient>
-            </defs>
-            <rect x="18" y="18" width="864" height="324" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)" />
-            <text x="450" y="68" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">本章留下的三件事</text>
-            <path d="M295 220 H335 M565 220 H605" fill="none" stroke="url(#sumGrad{ch['num']})" stroke-width="7" stroke-linecap="round" />
+            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
+            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
             {''.join(summary_cards)}
           </svg>
           <p class="figure__cap">读完第 {ch['num']} 章后,至少要能复述“{esc(summary_labels[0])}”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
@@ -1286,6 +1269,8 @@ def render_chapter(ch: dict) -> str:
           </details>"""
         for q, a in ch["quiz"]
     )
+    # 页面含实验台(data-lab 占位)才挂 labs.js
+    labs_script = '\n    <script src="assets/labs.js"></script>' if 'data-lab="' in "".join(sections) else ""
     return render_head(f"第 {idx} 章 · {ch['title']} | {BOOK_TITLE}", ch["desc"]) + f"""  <body data-chapter="{idx}">
     <main class="chapter">
       <div class="chapter__inner">
@@ -1318,7 +1303,7 @@ def render_chapter(ch: dict) -> str:
         </section>
       </div>
     </main>
-    <script src="assets/book.js"></script>
+    <script src="assets/book.js"></script>{labs_script}
   </body>
 </html>
 """
@@ -2277,6 +2262,156 @@ strong .hl, strong .term, strong .num { color: #ffd97a; }
 @media (max-width: 720px) {
   .code-walk { border-radius: 10px; }
   .code-walk__code { font-size: 0.78rem; padding: 0.8rem 0.9rem; }
+}
+
+/* ============ 交互实验台(lab,data-lab 注入) ============ */
+.lab {
+  margin: 1.8rem auto;
+  max-width: 54rem;
+  border: 1px solid rgba(122, 167, 240, 0.22);
+  border-radius: 14px;
+  background: linear-gradient(160deg, rgba(122, 167, 240, 0.05), rgba(240, 201, 106, 0.03)), #0f1626;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.36);
+  overflow: hidden;
+}
+
+/* 顶部窗口栏 */
+.lab__head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1.1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(122, 167, 240, 0.18);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+.lab__head-tag {
+  color: #f0c96a;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.lab__head-name { opacity: 0.75; }
+
+/* 内部主标题 */
+.lab__title {
+  padding: 0.95rem 1.2rem 0.4rem;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+/* 滑杆控件 */
+.lab__ctl {
+  display: grid;
+  grid-template-columns: 9rem 5.5rem 1fr;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.5rem 1.2rem;
+}
+.lab__lab {
+  font-size: 0.92rem;
+  color: var(--text-soft);
+}
+.lab__val {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: #ffd97a;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.lab__range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(122, 167, 240, 0.18);
+  outline: none;
+}
+.lab__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #f0c96a;
+  border: 2.5px solid #101420;
+  box-shadow: 0 1px 8px rgba(240, 201, 106, 0.55);
+  cursor: pointer;
+}
+.lab__range::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+  background: #f0c96a;
+  border: 2.5px solid #101420;
+  box-shadow: 0 1px 8px rgba(240, 201, 106, 0.55);
+  cursor: pointer;
+}
+.lab__range:focus-visible {
+  box-shadow: 0 0 0 3px rgba(240, 201, 106, 0.22);
+}
+
+/* 图表区 */
+.lab__chart {
+  display: block;
+  width: calc(100% - 2.4rem);
+  margin: 0.7rem 1.2rem 0.4rem;
+  border-radius: 10px;
+  background: rgba(8, 13, 24, 0.72);
+  border: 1px solid rgba(122, 167, 240, 0.1);
+}
+
+/* 结论行 */
+.lab__out {
+  padding: 0.4rem 1.2rem 0.2rem;
+}
+.lab__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.3rem 0;
+  font-size: 0.94rem;
+  color: var(--text-soft);
+  border-top: 1px dashed rgba(160, 180, 215, 0.14);
+}
+.lab__row:first-child { border-top: none; }
+.lab__row strong {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: #ffd97a;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.lab__row strong.lab__accent { color: #7aa7f0; font-weight: 800; }
+.lab__hint {
+  font-size: 0.84rem;
+  color: var(--text-dim);
+}
+
+/* 教师注 */
+.lab__tip {
+  margin: 0.7rem 1.2rem 1.1rem;
+  padding: 0.65rem 0.95rem;
+  border-left: 3px solid rgba(240, 201, 106, 0.5);
+  border-radius: 0 8px 8px 0;
+  background: rgba(240, 201, 106, 0.055);
+  font-size: 0.86rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+@media (max-width: 720px) {
+  .lab { border-radius: 11px; margin-left: -0.4rem; margin-right: -0.4rem; }
+  .lab__ctl { grid-template-columns: 1fr auto; row-gap: 0.1rem; }
+  .lab__lab { grid-column: 1; }
+  .lab__val { grid-column: 2; }
+  .lab__range { grid-column: 1 / -1; height: 7px; }
+  .lab__chart { width: calc(100% - 1.4rem); margin: 0.6rem 0.7rem 0.3rem; }
 }
 """
 
