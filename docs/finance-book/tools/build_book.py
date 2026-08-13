@@ -1135,6 +1135,64 @@ def render_summary_figure(ch: dict) -> str:
 """
 
 
+# 正文排版增强:在不改手稿的前提下,机械地把单调段落串升级成有呼吸感的版式。
+#
+# 1. 句首带标志词的段落(记住/注意/先说结论/铁律...) -> callout 卡片;
+# 2. 短语级强调“xxx” -> 金色高亮 span(参照《从神经元到大模型》的彩色术语)。
+_CALLOUT_MARKERS = [
+    ("郑重提醒", "warn", "郑重提醒"),
+    ("先说结论", "note", "先说结论"),
+    ("先说最重要的", "note", "先说最重要的"),
+    ("先说一件事", "note", "先说一件事"),
+    ("一句话记住", "tip", "一句话记住"),
+    ("记住这条铁律", "warn", "铁律"),
+    ("记住两件事", "tip", "记住两件事"),
+    ("记住", "tip", "记住"),
+    ("别搞错", "warn", "别搞错"),
+    ("小心", "warn", "小心"),
+    ("陷阱", "warn", "陷阱"),
+    ("关键", "note", "关键"),
+    ("要点", "tip", "要点"),
+    ("注意", "warn", "注意"),
+    ("提醒", "warn", "提醒"),
+]
+
+def _marker_title(plain: str) -> tuple:
+    """句首 0-16 字内出现标志词,返回 (标志词, 样式, 标题)。"""
+    head = plain[:16]
+    for kw, style, title in _CALLOUT_MARKERS:
+        if kw in head:
+            return (kw, style, title)
+    return (None, None, None)
+
+
+def enrich_body(htmltext: str) -> str:
+    """对单个小节 body 做富文本增强(不改原文文字,只加包装)。
+
+    手稿 body 由 p(...) + ... 直接拼接,段落之间没有换行,因此按 <p>...</p>
+    边界切分;含 figure/pre/table/svg 的复合块保持原样。
+    """
+    parts = re.split(r"(<p>[\s\S]*?</p>)", htmltext)
+    out = []
+    for seg in parts:
+        if not (seg.startswith("<p>") and seg.endswith("</p>")) or any(tag in seg for tag in ("<pre", "<figure", "<table", "<svg", "<ol", "<ul", "code-walk")):
+            out.append(seg)
+            continue
+        inner = seg[3:-4]
+        plain = re.sub(r"<[^>]+>", "", inner)
+        # 1) 标志词段落升级成 callout
+        kw, style, title = _marker_title(plain)
+        if kw and len(plain) <= 260:
+            out.append(f'<div class="callout callout--{style} reveal"><span class="callout__title">{esc(title)}</span><p>{inner}</p></div>')
+            continue
+        # 2) 双引号短语高亮(避免已含标签的片段错乱)
+        def _hl(m):
+            return f'<span class="hl">“{m.group(1)}”</span>'
+        new_inner = re.sub(r"“([^”<>]{2,18})”", _hl, inner)
+        out.append(f"<p>{new_inner}</p>")
+    return "".join(out)
+
+
 def render_chapter(ch: dict) -> str:
     idx = ch["num"]
     # 概念图按锚点关键词挂到对应小节后面
@@ -1167,7 +1225,7 @@ def render_chapter(ch: dict) -> str:
             for si, (title, body) in enumerate(unit_sections, 1):
                 sections.append(f"""
         <h3>{ui}.{si}. {esc(title)}</h3>
-{body.rstrip()}
+{enrich_body(body.rstrip())}
 """)
                 recap_rows.append((f"{ui}.{si}.", title))
                 attach_figures(title, sections)
@@ -1176,7 +1234,7 @@ def render_chapter(ch: dict) -> str:
         for n, (title, body) in enumerate(rendered_sections, 1):
             sections.append(f"""
         <h2>{n}. {esc(title)}</h2>
-{body.rstrip()}
+{enrich_body(body.rstrip())}
 """)
             recap_rows.append((f"{n}.", title))
             attach_figures(title, sections)
@@ -1399,11 +1457,11 @@ CSS = r"""
 :root {
   --bg: #101420;
   --bg-soft: #181e2c;
-  --panel: rgba(245, 241, 229, 0.06);
-  --panel-strong: rgba(245, 241, 229, 0.1);
-  --text: #f6f0df;
-  --text-soft: #d9cfb8;
-  --text-dim: #a99f89;
+  --panel: rgba(214, 228, 248, 0.06);
+  --panel-strong: rgba(214, 228, 248, 0.1);
+  --text: #eef4f8;
+  --text-soft: #bcc9dd;
+  --text-dim: #8b9cb4;
   --line: rgba(240, 201, 106, 0.2);
   --primary: #f0c96a;
   --accent: #7aa7f0;
@@ -1764,7 +1822,8 @@ a:hover { text-decoration: underline; }
 }
 .chapter h2 {
   margin: 3rem 0 1rem;
-  padding-top: 0.6rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
   font-size: clamp(1.5rem, 3.4vw, 2rem);
   line-height: 1.2;
   letter-spacing: 0;
@@ -1780,7 +1839,7 @@ a:hover { text-decoration: underline; }
 }
 ul, ol { padding-left: 1.35rem; }
 li + li { margin-top: 0.25rem; }
-strong { color: #fff7df; }
+strong { color: #ffffff; }
 
 .table-wrap {
   overflow-x: auto;
@@ -1826,10 +1885,33 @@ code {
 
 .callout {
   margin: 1.2rem 0;
-  padding: 1rem;
-  border: 1px solid rgba(122, 167, 240, 0.35);
-  border-radius: 8px;
-  background: rgba(122, 167, 240, 0.08);
+  padding: 1rem 1rem 1rem 0.95rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.callout__title {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+.callout p { margin: 0; }
+
+.callout--note { border-left-color: var(--primary); background: rgba(240, 201, 106, 0.07); }
+.callout--note .callout__title { color: var(--primary); }
+.callout--warn { border-left-color: var(--danger); background: rgba(238, 136, 119, 0.09); }
+.callout--warn .callout__title { color: var(--danger); }
+.callout--tip { border-left-color: var(--accent); }
+
+/* 正文内短语级金色高亮("双引号"关键说法) */
+.hl {
+  color: #ffd97a;
+  font-weight: 650;
 }
 
 .objectives {

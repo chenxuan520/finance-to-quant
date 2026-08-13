@@ -2,11 +2,11 @@
 :root {
   --bg: #101420;
   --bg-soft: #181e2c;
-  --panel: rgba(245, 241, 229, 0.06);
-  --panel-strong: rgba(245, 241, 229, 0.1);
-  --text: #f6f0df;
-  --text-soft: #d9cfb8;
-  --text-dim: #a99f89;
+  --panel: rgba(214, 228, 248, 0.06);
+  --panel-strong: rgba(214, 228, 248, 0.1);
+  --text: #eef4f8;
+  --text-soft: #bcc9dd;
+  --text-dim: #8b9cb4;
   --line: rgba(240, 201, 106, 0.2);
   --primary: #f0c96a;
   --accent: #7aa7f0;
@@ -367,7 +367,8 @@ a:hover { text-decoration: underline; }
 }
 .chapter h2 {
   margin: 3rem 0 1rem;
-  padding-top: 0.6rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
   font-size: clamp(1.5rem, 3.4vw, 2rem);
   line-height: 1.2;
   letter-spacing: 0;
@@ -383,7 +384,7 @@ a:hover { text-decoration: underline; }
 }
 ul, ol { padding-left: 1.35rem; }
 li + li { margin-top: 0.25rem; }
-strong { color: #fff7df; }
+strong { color: #ffffff; }
 
 .table-wrap {
   overflow-x: auto;
@@ -429,10 +430,33 @@ code {
 
 .callout {
   margin: 1.2rem 0;
-  padding: 1rem;
-  border: 1px solid rgba(122, 167, 240, 0.35);
-  border-radius: 8px;
-  background: rgba(122, 167, 240, 0.08);
+  padding: 1rem 1rem 1rem 0.95rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.callout__title {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+.callout p { margin: 0; }
+
+.callout--note { border-left-color: var(--primary); background: rgba(240, 201, 106, 0.07); }
+.callout--note .callout__title { color: var(--primary); }
+.callout--warn { border-left-color: var(--danger); background: rgba(238, 136, 119, 0.09); }
+.callout--warn .callout__title { color: var(--danger); }
+.callout--tip { border-left-color: var(--accent); }
+
+/* 正文内短语级金色高亮("双引号"关键说法) */
+.hl {
+  color: #ffd97a;
+  font-weight: 650;
 }
 
 .objectives {
