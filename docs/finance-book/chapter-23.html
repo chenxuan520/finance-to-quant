@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>第 23 章 · 全书复盘:从一条鱼到一个量化系统 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="把前面所有概念按钱、资产、市场、数据、策略、实盘六层重新串起来。" />
+    <meta name="description" content="把前面所有概念按从真实财富到人与纪律的十层重新串起来。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
@@ -17,8 +17,8 @@
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>金融可以按真实财富、信用时间、资产权利、市场制度、数据、模型、回测、组合、实盘和人这十层理解。</li>
-            <li>量化不是脱离金融的算法游戏,而是把金融假设变成数据、模型、组合和交易系统。</li>
+            <li>金融可以按真实财富、信用时间、资产权利、市场制度、数据、模型、回测、组合、实盘和人这十层来理解。</li>
+            <li>量化不是脱离金融的算法游戏,而是把金融假设一步步变成数据、模型、组合和交易系统。</li>
           </ul>
         </section>
 
@@ -27,7 +27,7 @@
             <defs>
               <linearGradient id="mapGrad23" x1="0" x2="1" y1="0" y2="1">
                 <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
-                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+                <stop offset="100%" stop-color="#7aa7f0" stop-opacity="0.85" />
               </linearGradient>
               <filter id="softShadow23" x="-20%" y="-20%" width="140%" height="140%">
                 <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
@@ -40,74 +40,84 @@
             <g filter="url(#softShadow23)">
               <rect x="38" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
               <circle cx="60" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
-              <text x="60" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">1</text>
+              <text x="60" y="109" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">1</text>
               <text x="136" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="147">真实财富和生产力</tspan></text>
             </g>
             <g filter="url(#softShadow23)">
               <rect x="253" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
               <circle cx="275" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
-              <text x="275" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">2</text>
-              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="147">权利和资产</tspan></text>
+              <text x="275" y="109" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">2</text>
+              <text x="351" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="147">信用和时间</tspan></text>
             </g>
             <g filter="url(#softShadow23)">
               <rect x="468" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
               <circle cx="490" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
-              <text x="490" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">3</text>
-              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="147">数据和可见性</tspan></text>
+              <text x="490" y="109" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">3</text>
+              <text x="566" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="147">权利和资产</tspan></text>
             </g>
             <g filter="url(#softShadow23)">
               <rect x="683" y="82" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
               <circle cx="705" cy="104" r="14" fill="#f0c96a" fill-opacity="0.95" />
-              <text x="705" y="109" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">4</text>
-              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="147">回测和验证</tspan></text>
+              <text x="705" y="109" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">4</text>
+              <text x="781" y="147" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="147">市场和交易制度</tspan></text>
             </g>
             <g filter="url(#softShadow23)">
               <rect x="38" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
               <circle cx="60" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
-              <text x="60" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">5</text>
-              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="317">交易执行和实盘</tspan></text>
+              <text x="60" y="279" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">5</text>
+              <text x="136" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="136" y="317">数据和可见性</tspan></text>
             </g>
             <g filter="url(#softShadow23)">
               <rect x="253" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
               <circle cx="275" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
-              <text x="275" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">6</text>
-              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="287">量化不是脱离金融</tspan><tspan x="351" y="307">的算法游戏,而是</tspan><tspan x="351" y="327">把金融假设变成数</tspan><tspan x="351" y="347">据、模型、组合和</tspan></text>
+              <text x="275" y="279" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">6</text>
+              <text x="351" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="351" y="317">因子和模型</tspan></text>
             </g>
             <g filter="url(#softShadow23)">
               <rect x="468" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
               <circle cx="490" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
-              <text x="490" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">7</text>
-              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="287">金融可以按真实财</tspan><tspan x="566" y="307">富、信用时间、资</tspan><tspan x="566" y="327">产权利、市场制度</tspan><tspan x="566" y="347">、数据、模型、回</tspan></text>
+              <text x="490" y="279" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">7</text>
+              <text x="566" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="566" y="317">回测和验证</tspan></text>
             </g>
             <g filter="url(#softShadow23)">
               <rect x="683" y="252" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
               <circle cx="705" cy="274" r="14" fill="#f0c96a" fill-opacity="0.95" />
-              <text x="705" y="279" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">8</text>
-              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="287">量化不是脱离金融</tspan><tspan x="781" y="307">的算法游戏,而是</tspan><tspan x="781" y="327">把金融假设变成数</tspan><tspan x="781" y="347">据、模型、组合和</tspan></text>
+              <text x="705" y="279" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">8</text>
+              <text x="781" y="317" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="781" y="317">人和纪律</tspan></text>
             </g>
           </svg>
-          <p class="figure__cap">本图从“真实财富和生产力”走到“量化不是脱离金融的算法游戏,而是把金融假设变成数据、模型、组合和交易系统。”,用于先看第 23 章的关键路径,再回到正文补细节。</p>
+          <p class="figure__cap">本图从“真实财富和生产力”走到“人和纪律”,用于先看第 23 章的关键路径,再回到正文补细节。</p>
         </div>
 
         <h2>1. 真实财富和生产力</h2>
-<p>最底层不是钱,而是真实财富。鱼、粮食、房子、药品、机器、软件、知识、组织能力,这些才是人类真正使用的东西。钱只是帮助交换、记账和储藏价值的工具。</p><p>如果社会真实产出没有增加,纸币数量增加不会让所有人真的变富。通胀会让更多名义货币追逐有限商品。理解这一点,能防止你把金融市场的数字上涨误认为真实财富自动增加。</p><p>投资的终点仍然是生产力。股票、债券、基金、期货,最终都要连接到未来现金流、资源配置和风险承担。脱离真实经济,金融只剩互相转账。</p>
-<p>金融解决的核心问题之一是跨时间。今天有资源的人把资源借给未来能创造价值的人,中间需要信用、利率和合同。债券、贷款、银行、央行,都在这条线上。</p><p>利率是时间价格,也是风险价格的一部分。未来的钱不等于今天的钱,因为有机会成本、通胀和不确定性。债券价格和收益率反着走,股票估值受折现率影响,这些都来自时间价值。</p><p>银行把短期存款变成长贷款,提高经济效率,也制造期限错配。央行影响流动性和短端利率,但不能直接创造真实生产率。信用能推动增长,也能积累脆弱性。</p>
+<p>最底层不是钱,而是真实财富:鱼、粮食、房子、药品、机器、软件、知识、组织能力——人类真正在用的东西。钱只是帮忙交换、记账、储藏价值的工具,排在第二位。</p><p>做一个极简推演:社会的真实产出没有增加,只把纸币数量增加,结果不会是人人变富,而是更多名义货币追逐有限商品——通胀。把这一条想明白,你就能免疫大多数幻觉:金融市场的数字上涨,不等于真实财富自动增长。</p><p>投资的终点也仍然落在生产力上。股票、债券、基金、期货,拆到最后都要连接到未来现金流、资源配置和风险承担。脱离真实经济的金融,只剩下大家互相转账,转不出新财富。</p>
 
-        <h2>2. 权利和资产</h2>
-<p>股票是公司剩余收益权,债券是合同固定索取权,基金是集合投资份额,期货是未来价格合约,期权是不对称权利,ETF 是交易所交易的基金份额。每个资产都可以拆成现金流、权利、风险和价格。</p><p>看任何金融产品,先问四个问题: 它承诺什么现金流? 谁有权拿收益? 谁承担风险? 价格怎么形成? 这个方法能帮你不被包装迷惑。</p><p>不同资产的风险不同。股票怕盈利和估值变化,债券怕利率和信用,期货怕杠杆和换月,期权怕波动率和尾部,基金还要看管理人、费用和流动性。</p>
-<p>市场把资产权利变成可交易价格。交易所负责撮合和规则,券商负责接入和服务,登记结算负责权属和交收。你在软件上点一下买入,背后是一套账户、订单、清算和风控系统。</p><p>A 股有交易时间、集合竞价、连续竞价、涨跌幅、T+1、停牌、ST、退市、交易单位和费用。回测不尊重这些制度,收益就会失真。</p><p>订单簿告诉我们价格不是抽象点位。买一卖一、盘口深度、排队、滑点、冲击成本,都决定策略能否成交。市场制度是量化从纸面走向实盘的第一道现实约束。</p>
+        <h2>2. 信用和时间</h2>
+<p>金融要解决的核心问题之一,是跨时间调度资源:今天手里有闲钱的人,把钱借给未来能创造价值的人。中间靠什么运转?信用、利率和合同。债券、贷款、银行、央行,全都挂在这条线上。</p><p>利率是时间的价格,也同时是风险价格的一部分。未来的钱不等于今天的钱,因为中间隔着机会成本、通胀和不确定性。债券价格和收益率反着走,股票估值受折现率影响——这些看似不相干的公式,根都扎在时间价值上。</p><p>银行干的事是把短期存款变成长贷,一边提高经济效率,一边制造期限错配;央行能影响流动性和短端利率,但没法直接印出真实生产率。信用既能推动增长,也会在看不见的地方积累脆弱性,这是同一枚硬币的两面。</p>
 
-        <h2>3. 数据和可见性</h2>
-<p>量化研究依赖数据,但数据不是天然干净。行情、财务、公告、指数成分、宏观、期货、期权、文本,每类数据都有口径、发布时间、修正和缺失问题。</p><p>最重要的原则是点时可见。模型在某个历史时点只能使用当时已经知道的数据。财报披露日、指数成分调整日、宏观公布日、复权价格和真实成交价格,都要按时间线处理。</p><p>数据工程不是辅助工作,而是研究可信度的地基。未来函数、幸存者偏差、成分回填、缺失值处理错误,都会把模型变成偷看答案的机器。</p>
-<p>因子是把投资判断变成可检验数字。估值、质量、成长、动量、反转、流动性、波动、规模,都可以成为因子。模型把多个因子或特征组合成预测分数。</p><p>机器学习在量化里有用,但不能脱离金融问题。横截面排序和时间序列预测不同,RankIC 和分层收益比普通准确率更重要,交易成本会吃掉微弱优势,分布漂移会让模型衰减。</p><p>好模型不是复杂模型,而是可验证、可解释、可交易、可监控的模型。线性模型、树模型、深度学习都只是工具。工具是否有价值,取决于放进策略系统后能否提供净增量。</p>
+        <h2>3. 权利和资产</h2>
+<p>中间一层是各种资产的身份证:股票是公司剩余收益权,债券是合同写死的固定索取权,基金是集合投资的份额,期货是未来价格的合约,期权是不对称的权利,ETF 是在交易所买卖的基金份额。每个资产都可以拆成四件套:现金流、权利、风险、价格。</p><p>以后看到任何金融产品——不管包装多花哨——先问四个问题:它承诺什么现金流?谁有权拿收益?谁承担风险?价格怎么形成?这四个问题问完,再大的营销词也会现原形。</p><p>不同资产怕的东西不一样:股票怕盈利和估值双杀,债券怕利率上行和信用违约,期货怕杠杆和换月,期权怕波动率判断错和尾部风险,基金还要看管理人水平、费用和流动性。怕什么清楚,才知道该怎么管。</p>
 
-        <h2>4. 回测和验证</h2>
-<p>回测是在历史里排练,不是证明未来。好的回测按当时可见数据生成信号,按真实交易规则模拟成交,扣成本,记录交易,和基准比较,再做样本外验证。</p><p>漂亮回测要先查错。股票池是否点时,成交价格是否偷看,成本是否完整,涨跌停停牌是否处理,容量是否合理,参数是否过拟合,样本外是否污染。</p><p>验证的目标不是保住最漂亮曲线,而是剔除不真实收益。修正后还剩下的收益,才可能是真正值得研究的优势。</p>
-<p>预测分数不能直接等于仓位。组合优化要在预期收益、风险、成本、流动性和约束之间取舍。行业、风格、个股、跟踪误差、换手、容量都要被管理。</p><p>风险控制不是预测明天会不会跌,而是限制错误扩大。暴露、集中度、VaR、压力测试、止损、模型失效监控、数据监控和系统监控,共同构成风险框架。</p><p>投资组合要能解释赚的是什么钱。是市场 Beta、行业、风格、选股、基差、执行,还是杠杆? 归因让收益和风险可见。</p>
+        <h2>4. 市场和交易制度</h2>
+<p>市场把纸面权利变成可以交易的价格。交易所管撮合和规则,券商管接入和服务,登记结算管权属和交收。你在软件上点一下买入,背后是账户、订单、清算、风控一整套系统在跑——那个按钮只是冰山露出水面的一角。</p><p>A 股那套具体制度——交易时间、集合竞价、连续竞价、涨跌幅、T+1、停牌、ST、退市、交易单位、费用——每一项都会真实地改变策略结果。回测不尊重这些制度,收益必然失真;前面拆穿漂亮曲线的那一章,好几刀正砍在这里。</p><p>订单簿还在提醒你:价格不是图表上的抽象点位。买一卖一的价差、盘口深度、排队顺序、滑点、冲击成本,这些都决定你的策略到底能不能按想象中的价格成交。市场制度,就是量化从纸面走向实盘时撞上的第一道现实约束。</p>
 
-        <h2>5. 交易执行和实盘</h2>
-<p>实盘不是 buy 函数。订单会被拒、部分成交、撤单失败、排队、滑点、受涨跌停和停牌限制。内部账本要和券商真实状态对账。</p><p>上线前要检查数据、模型、回测一致性、订单、风控、日志、权限和盘后对账。模拟盘和小资金实盘是必要过渡,不是形式。</p><p>越自动、越快、越杠杆,越需要强风控。高频和衍生品策略尤其如此。系统错误会比模型错误更快造成损失。</p>
-<p>最后一层是人。你会害怕亏损,会在上涨后过度自信,会想借钱加仓,会在回撤中怀疑策略。量化减少临场主观,但不能消除人性。</p><p>资金管理要先分清生活钱和风险钱,限制仓位和杠杆,写好停用和加仓规则。一个策略能不能长期执行,取决于你能否承受它真实的坏阶段。</p><p>从小岛的一条鱼到量化系统,中间所有概念都在提醒同一件事: 金融是资源、时间、风险和信息的系统工程。不要被单个名词迷住,要看整条链。</p>
+        <h2>5. 数据和可见性</h2>
+<p>量化研究靠数据喂养,但数据不是从水龙头里流出来的纯净水。行情、财务、公告、指数成分、宏观、期货、期权、文本——每一类都有自己的口径、发布时间、修正历史和缺失毛病,拿到手就用,等于闭上眼睛开车。</p><p>这一层最重要的原则只有四个字:点时可见。模型站在任何历史时点,只能使用当时已经公开的数据——财报按披露日走,指数成分按调整日走,宏观按公布日走,回测用的复权价格和真实成交价格要分清。全部按时间线对齐,一条都不能含糊。</p><p>所以数据工程不是辅助杂活,它是研究可信度的地基。未来函数、幸存者偏差、成分回填、缺失值乱处理,任何一个都会把模型变成偷看答案的机器——考得分数越高,离真相越远。</p>
+
+        <h2>6. 因子和模型</h2>
+<p>因子,是把一句投资判断翻译成可检验数字的工序。估值、质量、成长、动量、反转、流动性、波动、规模,都可以落成因子;模型则把多个因子或特征揉成预测分数,这就是第六层干的事。</p><p>机器学习在这一层有用,但它不能脱离金融问题飘着。横截面排序和时间序列预测是两回事,RankIC 和分层收益比普通准确率更能说明问题,交易成本会吃掉微弱优势,分布漂移会让模型悄悄衰减。这些约束不属于课本,属于市场。</p><p>好模型的标准也不是复杂。可验证、可解释、可交易、可监控,四样齐全才是好模型。线性模型、树模型、深度学习都只是工具,工具值不值钱,看它放进策略系统之后,能不能提供净增量。</p>
+
+        <h2>7. 回测和验证</h2>
+<p>回测是在历史里排练,不是对未来的证明。一次好回测要同时做到:按当时可见的数据生成信号,按真实交易规则模拟成交,老老实实扣成本,逐笔记录交易,和基准比较,再做样本外验证。少一步,结论就要打折。</p><p>看到漂亮回测,先别鼓掌,按老顺序查错:股票池是否点时,成交价格有没有偷看,成本是否完整,涨跌停停牌处理没有,容量合不合理,参数是不是过拟合,样本外有没有被污染。查完错的曲线,才有资格谈好不好。</p><p>验证的目标从来不是保住最漂亮的那条曲线,而是把不真实的收益一样样剔掉。修正之后还留在桌上的收益,才可能是真正值得继续研究的优势。</p>
+
+        <h2>8. 组合和风险</h2>
+<p>预测分数不能直接当仓位用,中间隔着一整层组合优化:在预期收益、风险、成本、流动性和各方约束之间做取舍。行业、风格、个股集中度、跟踪误差、换手、容量,每一项都要被管起来。</p><p>风险控制的本质,不是预测明天跌不跌,而是把错误限制在不致命的范围内。暴露、集中度、VaR、压力测试、止损、模型失效监控、数据监控、系统监控,加起来才构成完整的风险框架——单拿任何一个出来,都只是零件。</p><p>组合还要能解释自己赚的是哪份钱:市场 Beta、行业、风格、选股、基差、执行,还是杠杆?归因的意义就是给收益办一张明细发票,让赚的和冒的险都变得可见——看不见来源的收益,迟早连本带利还回去。</p>
+
+        <h2>9. 交易执行和实盘</h2>
+<p>实盘不是调用一个 buy 函数就完事。订单会被拒,会部分成交,会撤单失败,要排队,有滑点,会被涨跌停和停牌拦住;内部账本还必须和券商真实状态对得上。这一层全是工程师熟悉的脏活,也全是要命的活。</p><p>上线前按清单逐项过:数据、模型、回测一致性、订单、风控、日志、权限、盘后对账,一项一项钉死。模拟盘和小资金实盘是必经之路,不是走过场——它们存在的意义,就是让错误先发生在亏得起的地方。</p><p>原则一句话:越自动、越快、越带杠杆,越需要强风控。高频和衍生品策略把这句话放大到极致。系统错误比模型错误亏得更快——模型错了是慢慢流血,系统错了可能是当场断气。</p>
+
+        <h2>10. 人和纪律</h2>
+<p>链条最后一层,是人。你会害怕亏损,会在上涨之后过度自信,会想借钱加仓,会在回撤里怀疑策略。量化可以减少临场主观,但消不掉人性——它只是把战场从盘中挪到了冷静时刻的规则制定上。</p><p>资金管理的顺序前面已经讲过:先分清生活钱和风险钱,再限制仓位和杠杆,提前写好停用和加仓规则。一个策略能不能长期执行,最终取决于你能不能扛住它真实的坏阶段,而不是它最好的那段曲线。</p><p>从小岛的一条鱼到一整套量化系统,这十层概念翻来覆去说的其实是同一件事:金融是资源、时间、风险和信息的系统工程。别被任何单个名词迷住眼睛,要一直能看见整条链。</p>
 
 
         <div class="figure figure--reading reveal">
@@ -115,29 +125,29 @@
             <defs>
               <linearGradient id="sumGrad23" x1="0" x2="1" y1="0" y2="0">
                 <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.75" />
-                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#7aa7f0" stop-opacity="0.75" />
               </linearGradient>
             </defs>
-            <rect x="18" y="18" width="864" height="324" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(105,179,162,0.28)" />
+            <rect x="18" y="18" width="864" height="324" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)" />
             <text x="450" y="68" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">本章留下的三件事</text>
             <path d="M295 220 H335 M565 220 H605" fill="none" stroke="url(#sumGrad23)" stroke-width="7" stroke-linecap="round" />
             
             <g>
-              <rect x="65" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
-              <path d="M115 190 L158 190 L158 178 L240 220 L158 262 L158 250 L115 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
-              <text x="180" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 1</text>
+              <rect x="65" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(122,167,240,0.50)" stroke-width="2" />
+              <path d="M115 190 L158 190 L158 178 L240 220 L158 262 L158 250 L115 250 Z" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.48)" />
+              <text x="180" y="182" text-anchor="middle" fill="#7aa7f0" font-size="15" font-weight="900">留下 1</text>
               <text x="180" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="180" y="214">金融可以按真实财</tspan><tspan x="180" y="234">富、信用时间、资</tspan><tspan x="180" y="254">产权利、市场制度</tspan><tspan x="180" y="274">要检查</tspan></text>
             </g>
             <g>
-              <rect x="335" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
-              <path d="M385 190 L428 190 L428 178 L510 220 L428 262 L428 250 L385 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
-              <text x="450" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 2</text>
+              <rect x="335" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(122,167,240,0.50)" stroke-width="2" />
+              <path d="M385 190 L428 190 L428 178 L510 220 L428 262 L428 250 L385 250 Z" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.48)" />
+              <text x="450" y="182" text-anchor="middle" fill="#7aa7f0" font-size="15" font-weight="900">留下 2</text>
               <text x="450" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="450" y="234">量化不是脱离金融</tspan><tspan x="450" y="254">的算法游戏</tspan></text>
             </g>
             <g>
-              <rect x="605" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
-              <path d="M655 190 L698 190 L698 178 L780 220 L698 262 L698 250 L655 250 Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
-              <text x="720" y="182" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 3</text>
+              <rect x="605" y="150" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(122,167,240,0.50)" stroke-width="2" />
+              <path d="M655 190 L698 190 L698 178 L780 220 L698 262 L698 250 L655 250 Z" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.48)" />
+              <text x="720" y="182" text-anchor="middle" fill="#7aa7f0" font-size="15" font-weight="900">留下 3</text>
               <text x="720" y="244" text-anchor="middle" fill="#f6f0df" font-size="15" font-weight="760"><tspan x="720" y="234">全书复盘:从一条</tspan><tspan x="720" y="254">鱼到一个量化系统</tspan></text>
             </g>
           </svg>
@@ -148,27 +158,32 @@
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>金融可以按真实财富、信用时间、资产权利、市场制度、数据、模型、回测、组合、实盘和人这十层理解。</li>
-            <li>量化不是脱离金融的算法游戏,而是把金融假设变成数据、模型、组合和交易系统。</li>
+            <li>金融可以按真实财富、信用时间、资产权利、市场制度、数据、模型、回测、组合、实盘和人这十层来理解。</li>
+            <li>量化不是脱离金融的算法游戏,而是把金融假设一步步变成数据、模型、组合和交易系统。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
             <li><strong>1.</strong> 真实财富和生产力</li>
-            <li><strong>2.</strong> 权利和资产</li>
-            <li><strong>3.</strong> 数据和可见性</li>
-            <li><strong>4.</strong> 回测和验证</li>
-            <li><strong>5.</strong> 交易执行和实盘</li>
+            <li><strong>2.</strong> 信用和时间</li>
+            <li><strong>3.</strong> 权利和资产</li>
+            <li><strong>4.</strong> 市场和交易制度</li>
+            <li><strong>5.</strong> 数据和可见性</li>
+            <li><strong>6.</strong> 因子和模型</li>
+            <li><strong>7.</strong> 回测和验证</li>
+            <li><strong>8.</strong> 组合和风险</li>
+            <li><strong>9.</strong> 交易执行和实盘</li>
+            <li><strong>10.</strong> 人和纪律</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
             <summary>为什么说钱不是金融学习的最底层?</summary>
-            <p>因为真实财富和生产力才是最终基础,钱只是交换和记账工具。</p>
+            <p>因为真实财富和生产力才是最终的地基,钱只是交换和记账的工具,钞票变多不等于财富变多。</p>
           </details>
           <details class="quiz__item">
             <summary>量化链条里数据为什么这么重要?</summary>
-            <p>数据决定模型在历史时点看到了什么,数据口径错会让回测和实盘都失真。</p>
+            <p>数据决定模型在历史时点到底看见了什么;口径错了,回测和实盘会一起失真,再好的模型也被喂错料。</p>
           </details>
         </section>
       </div>

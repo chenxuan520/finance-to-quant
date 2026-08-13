@@ -408,10 +408,10 @@ def concept_figure(svg_body: str, viewbox: str, aria: str, cap: str) -> str:
 def _fig_inflation():
     body = """            <text x="450" y="34" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">多印鱼票,鱼没变多:每张票能换到的鱼变少</text>
             <!-- 左:发票前 -->
-            <text x="230" y="74" text-anchor="middle" fill="#69b3a2" font-size="16" font-weight="800">发票前</text>
+            <text x="230" y="74" text-anchor="middle" fill="#7aa7f0" font-size="16" font-weight="800">发票前</text>
             <text x="230" y="98" text-anchor="middle" fill="#c9d4e8" font-size="13">仓库 100 条鱼 · 流通 100 张票</text>
             <g fill="#f0c96a"><circle cx="150" cy="150" r="13"/><circle cx="190" cy="150" r="13"/><circle cx="230" cy="150" r="13"/><circle cx="270" cy="150" r="13"/><circle cx="310" cy="150" r="13"/></g>
-            <text x="230" y="196" text-anchor="middle" fill="#8ef0d1" font-size="17" font-weight="800">1 张票 → 1 条鱼</text>
+            <text x="230" y="196" text-anchor="middle" fill="#a8c6ff" font-size="17" font-weight="800">1 张票 → 1 条鱼</text>
             <!-- 右:多印一倍票 -->
             <text x="670" y="74" text-anchor="middle" fill="#e88" font-size="16" font-weight="800">多印一倍票后</text>
             <text x="670" y="98" text-anchor="middle" fill="#c9d4e8" font-size="13">仓库仍 100 条鱼 · 流通 200 张票</text>
@@ -427,13 +427,13 @@ def _fig_inflation():
 def _fig_bank_balance():
     body = """            <text x="450" y="34" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">银行资产负债表:钱不是躺在保险柜里</text>
             <!-- 资产侧 -->
-            <rect x="70" y="70" width="330" height="200" rx="14" fill="rgba(105,179,162,0.10)" stroke="#69b3a2" stroke-width="2"/>
-            <text x="235" y="98" text-anchor="middle" fill="#8ef0d1" font-size="16" font-weight="800">资产(钱用到哪去了)</text>
-            <rect x="92" y="116" width="286" height="52" rx="8" fill="rgba(105,179,162,0.18)"/>
+            <rect x="70" y="70" width="330" height="200" rx="14" fill="rgba(122,167,240,0.10)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="235" y="98" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">资产(钱用到哪去了)</text>
+            <rect x="92" y="116" width="286" height="52" rx="8" fill="rgba(122,167,240,0.18)"/>
             <text x="104" y="148" fill="#eef4ff" font-size="15">发放的贷款(最大一块,不在柜里)</text>
-            <rect x="92" y="176" width="286" height="34" rx="8" fill="rgba(105,179,162,0.14)"/>
+            <rect x="92" y="176" width="286" height="34" rx="8" fill="rgba(122,167,240,0.14)"/>
             <text x="104" y="198" fill="#eef4ff" font-size="14">债券等投资</text>
-            <rect x="92" y="218" width="286" height="34" rx="8" fill="rgba(105,179,162,0.14)"/>
+            <rect x="92" y="218" width="286" height="34" rx="8" fill="rgba(122,167,240,0.14)"/>
             <text x="104" y="240" fill="#eef4ff" font-size="14">准备金/现金(只留一小部分)</text>
             <!-- 负债侧 -->
             <rect x="500" y="70" width="330" height="200" rx="14" fill="rgba(240,201,106,0.10)" stroke="#f0c96a" stroke-width="2"/>
@@ -451,11 +451,11 @@ def _fig_bank_balance():
 
 def _fig_bank_run():
     body = """            <text x="450" y="34" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">挤兑:为什么信心一崩,好银行也会倒</text>
-            <text x="230" y="72" text-anchor="middle" fill="#8ef0d1" font-size="16" font-weight="800">正常时</text>
-            <rect x="120" y="90" width="220" height="120" rx="12" fill="rgba(105,179,162,0.12)" stroke="#69b3a2" stroke-width="2"/>
+            <text x="230" y="72" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">正常时</text>
+            <rect x="120" y="90" width="220" height="120" rx="12" fill="rgba(122,167,240,0.12)" stroke="#7aa7f0" stroke-width="2"/>
             <text x="230" y="120" text-anchor="middle" fill="#eef4ff" font-size="14">少数人来取钱</text>
             <text x="230" y="150" text-anchor="middle" fill="#eef4ff" font-size="14">准备金够付</text>
-            <text x="230" y="184" text-anchor="middle" fill="#8ef0d1" font-size="15" font-weight="800">银行照常运转</text>
+            <text x="230" y="184" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">银行照常运转</text>
             <text x="670" y="72" text-anchor="middle" fill="#ffb4b4" font-size="16" font-weight="800">恐慌时</text>
             <rect x="560" y="90" width="220" height="120" rx="12" fill="rgba(232,120,120,0.12)" stroke="#e88" stroke-width="2"/>
             <text x="670" y="118" text-anchor="middle" fill="#eef4ff" font-size="14">所有人同时来取钱</text>
@@ -481,13 +481,13 @@ def _fig_bond_cashflow():
             <text x="130" y="272" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">-100</text>
             <text x="130" y="150" text-anchor="middle" fill="#c9d4e8" font-size="13">买入</text>
             <!-- 每年票息:现金流入 -->
-            <line x1="320" y1="180" x2="320" y2="130" stroke="#8ef0d1" stroke-width="3"/>
-            <path d="M 320 130 L 314 142 M 320 130 L 326 142" stroke="#8ef0d1" stroke-width="3" fill="none"/>
-            <text x="320" y="118" text-anchor="middle" fill="#8ef0d1" font-size="14" font-weight="800">+5</text>
+            <line x1="320" y1="180" x2="320" y2="130" stroke="#a8c6ff" stroke-width="3"/>
+            <path d="M 320 130 L 314 142 M 320 130 L 326 142" stroke="#a8c6ff" stroke-width="3" fill="none"/>
+            <text x="320" y="118" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+5</text>
             <text x="320" y="205" text-anchor="middle" fill="#8499bd" font-size="13">第1年</text>
-            <line x1="510" y1="180" x2="510" y2="130" stroke="#8ef0d1" stroke-width="3"/>
-            <path d="M 510 130 L 504 142 M 510 130 L 516 142" stroke="#8ef0d1" stroke-width="3" fill="none"/>
-            <text x="510" y="118" text-anchor="middle" fill="#8ef0d1" font-size="14" font-weight="800">+5</text>
+            <line x1="510" y1="180" x2="510" y2="130" stroke="#a8c6ff" stroke-width="3"/>
+            <path d="M 510 130 L 504 142 M 510 130 L 516 142" stroke="#a8c6ff" stroke-width="3" fill="none"/>
+            <text x="510" y="118" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+5</text>
             <text x="510" y="205" text-anchor="middle" fill="#8499bd" font-size="13">第2年</text>
             <!-- 到期:票息+本金 -->
             <line x1="700" y1="180" x2="700" y2="88" stroke="#f0c96a" stroke-width="3"/>
@@ -503,15 +503,15 @@ def _fig_bond_cashflow():
 def _fig_option_payoff():
     body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">期权到期收益:亏损有底,盈利放大</text>
             <!-- 看涨期权 -->
-            <text x="230" y="60" text-anchor="middle" fill="#8ef0d1" font-size="16" font-weight="800">买入看涨期权</text>
+            <text x="230" y="60" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">买入看涨期权</text>
             <line x1="80" y1="240" x2="400" y2="240" stroke="#46587a" stroke-width="1.5"/>
             <line x1="240" y1="90" x2="240" y2="250" stroke="#46587a" stroke-width="1.5"/>
             <text x="398" y="262" text-anchor="end" fill="#8499bd" font-size="12">到期股价</text>
             <text x="150" y="256" text-anchor="middle" fill="#8499bd" font-size="12">行权价 K</text>
-            <path d="M 100 210 L 240 210 L 380 110" fill="none" stroke="#8ef0d1" stroke-width="3"/>
+            <path d="M 100 210 L 240 210 L 380 110" fill="none" stroke="#a8c6ff" stroke-width="3"/>
             <line x1="100" y1="210" x2="240" y2="210" stroke="#ffb4b4" stroke-width="3"/>
             <text x="150" y="200" text-anchor="middle" fill="#ffb4b4" font-size="12">亏损=权利金(有底)</text>
-            <text x="350" y="98" text-anchor="middle" fill="#8ef0d1" font-size="12">涨越多赚越多</text>
+            <text x="350" y="98" text-anchor="middle" fill="#a8c6ff" font-size="12">涨越多赚越多</text>
             <!-- 看跌期权 -->
             <text x="670" y="60" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">买入看跌期权</text>
             <line x1="520" y1="240" x2="840" y2="240" stroke="#46587a" stroke-width="1.5"/>
@@ -534,8 +534,8 @@ def _fig_drawdown_sharpe():
             <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">时间</text>
             <text x="52" y="70" fill="#8499bd" font-size="13">净值</text>
             <!-- 平稳曲线 A -->
-            <path d="M 70 230 Q 300 190 500 150 T 830 90" fill="none" stroke="#8ef0d1" stroke-width="3"/>
-            <text x="700" y="110" fill="#8ef0d1" font-size="14" font-weight="800">A:平稳上行(夏普高)</text>
+            <path d="M 70 230 Q 300 190 500 150 T 830 90" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <text x="700" y="110" fill="#a8c6ff" font-size="14" font-weight="800">A:平稳上行(夏普高)</text>
             <!-- 大起大落曲线 B,同终点 -->
             <path d="M 70 230 C 180 120 240 300 340 250 C 440 200 520 300 600 180 C 680 90 760 160 830 90" fill="none" stroke="#f0c96a" stroke-width="3"/>
             <text x="150" y="300" fill="#f0c96a" font-size="14" font-weight="800">B:先跌一半再涨回(夏普低)</text>
@@ -563,7 +563,7 @@ def _fig_factor_quantile():
             <text x="475" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第3组</text>
             <rect x="570" y="120" width="90" height="130" fill="#8fb37a" opacity="0.85"/>
             <text x="615" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第4组</text>
-            <rect x="710" y="90" width="90" height="160" fill="#8ef0d1" opacity="0.9"/>
+            <rect x="710" y="90" width="90" height="160" fill="#a8c6ff" opacity="0.9"/>
             <text x="755" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第5组(因子最高)</text>
             <path d="M 195 195 L 335 170 L 475 145 L 615 115 L 755 85" fill="none" stroke="#f6f0df" stroke-width="2" stroke-dasharray="6 5"/>
             <text x="600" y="70" fill="#eef4ff" font-size="13">收益随分组单调上升 → 因子可能有效</text>"""
@@ -578,8 +578,8 @@ def _fig_lookahead():
             <defs><marker id="la" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
             <line x1="450" y1="80" x2="450" y2="220" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 5"/>
             <text x="450" y="70" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">决策时点(此刻)</text>
-            <rect x="110" y="112" width="320" height="40" rx="8" fill="rgba(105,179,162,0.2)" stroke="#69b3a2"/>
-            <text x="270" y="138" text-anchor="middle" fill="#8ef0d1" font-size="14" font-weight="800">已知:历史数据(能用)</text>
+            <rect x="110" y="112" width="320" height="40" rx="8" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="270" y="138" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">已知:历史数据(能用)</text>
             <rect x="470" y="112" width="320" height="40" rx="8" fill="rgba(232,120,120,0.18)" stroke="#e88"/>
             <text x="630" y="138" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">未知:未来数据(不能用)</text>
             <path d="M 630 112 C 620 60 480 60 458 104" fill="none" stroke="#e88" stroke-width="2.5" marker-end="url(#la)"/>
@@ -596,8 +596,8 @@ def _fig_lookahead():
 def _fig_money_flow():
     body = """            <text x="450" y="32" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">钱和风险怎么在金融系统里流动</text>
             <!-- 左:资金盈余方 -->
-            <rect x="40" y="90" width="170" height="130" rx="14" fill="rgba(105,179,162,0.12)" stroke="#69b3a2" stroke-width="2"/>
-            <text x="125" y="128" text-anchor="middle" fill="#8ef0d1" font-size="15" font-weight="800">有钱的人</text>
+            <rect x="40" y="90" width="170" height="130" rx="14" fill="rgba(122,167,240,0.12)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="125" y="128" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">有钱的人</text>
             <text x="125" y="156" text-anchor="middle" fill="#c9d4e8" font-size="13">储户、投资者</text>
             <text x="125" y="182" text-anchor="middle" fill="#c9d4e8" font-size="13">想让钱增值</text>
             <!-- 中:金融中介 -->
@@ -608,20 +608,20 @@ def _fig_money_flow():
             <text x="450" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12.5">撮合 · 定价 · 监管</text>
             <text x="450" y="212" text-anchor="middle" fill="#8499bd" font-size="12">把钱和风险重新分配</text>
             <!-- 右:资金需求方 -->
-            <rect x="690" y="90" width="170" height="130" rx="14" fill="rgba(105,179,162,0.12)" stroke="#69b3a2" stroke-width="2"/>
-            <text x="775" y="128" text-anchor="middle" fill="#8ef0d1" font-size="15" font-weight="800">缺钱的人</text>
+            <rect x="690" y="90" width="170" height="130" rx="14" fill="rgba(122,167,240,0.12)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="775" y="128" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">缺钱的人</text>
             <text x="775" y="156" text-anchor="middle" fill="#c9d4e8" font-size="13">企业、政府</text>
             <text x="775" y="182" text-anchor="middle" fill="#c9d4e8" font-size="13">想融资办事</text>
             <!-- 箭头:资金右流,收益权左流 -->
-            <path d="M 214 130 L 326 130" fill="none" stroke="#8ef0d1" stroke-width="3" marker-end="url(#mfa)"/>
-            <text x="270" y="120" text-anchor="middle" fill="#8ef0d1" font-size="12">资金</text>
-            <path d="M 570 130 L 686 130" fill="none" stroke="#8ef0d1" stroke-width="3" marker-end="url(#mfa)"/>
-            <text x="628" y="120" text-anchor="middle" fill="#8ef0d1" font-size="12">资金</text>
+            <path d="M 214 130 L 326 130" fill="none" stroke="#a8c6ff" stroke-width="3" marker-end="url(#mfa)"/>
+            <text x="270" y="120" text-anchor="middle" fill="#a8c6ff" font-size="12">资金</text>
+            <path d="M 570 130 L 686 130" fill="none" stroke="#a8c6ff" stroke-width="3" marker-end="url(#mfa)"/>
+            <text x="628" y="120" text-anchor="middle" fill="#a8c6ff" font-size="12">资金</text>
             <path d="M 686 200 L 570 200" fill="none" stroke="#f0c96a" stroke-width="3" marker-end="url(#mfb)"/>
             <path d="M 326 200 L 214 200" fill="none" stroke="#f0c96a" stroke-width="3" marker-end="url(#mfb)"/>
             <text x="450" y="272" text-anchor="middle" fill="#c9d4e8" font-size="13">钱从盈余方流向需求方;股权、债权和利息等\u201c收益和风险\u201d反向流回</text>
             <defs>
-              <marker id="mfa" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8ef0d1"/></marker>
+              <marker id="mfa" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a8c6ff"/></marker>
               <marker id="mfb" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker>
             </defs>"""
     return concept_figure(body, "0 0 900 290",
@@ -634,18 +634,18 @@ def _fig_stock_ownership():
             <!-- 公司大饼 -->
             <circle cx="230" cy="160" r="95" fill="rgba(18,29,49,0.6)" stroke="#f0c96a" stroke-width="2"/>
             <path d="M 230 160 L 230 65 A 95 95 0 0 1 315 200 Z" fill="rgba(240,201,106,0.28)" stroke="#f0c96a"/>
-            <path d="M 230 160 L 315 200 A 95 95 0 0 1 175 249 Z" fill="rgba(105,179,162,0.22)" stroke="#69b3a2"/>
-            <path d="M 230 160 L 175 249 A 95 95 0 0 1 149 100 Z" fill="rgba(105,179,162,0.14)" stroke="#69b3a2"/>
-            <path d="M 230 160 L 149 100 A 95 95 0 0 1 230 65 Z" fill="rgba(105,179,162,0.14)" stroke="#69b3a2"/>
+            <path d="M 230 160 L 315 200 A 95 95 0 0 1 175 249 Z" fill="rgba(122,167,240,0.22)" stroke="#7aa7f0"/>
+            <path d="M 230 160 L 175 249 A 95 95 0 0 1 149 100 Z" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0"/>
+            <path d="M 230 160 L 149 100 A 95 95 0 0 1 230 65 Z" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0"/>
             <text x="230" y="285" text-anchor="middle" fill="#c9d4e8" font-size="13">一家公司 = 总股本</text>
             <text x="272" y="130" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">你的1股</text>
             <!-- 右:你这一份意味着什么 -->
-            <text x="600" y="86" text-anchor="middle" fill="#8ef0d1" font-size="15" font-weight="800">持有这一份,你就有</text>
-            <rect x="440" y="104" width="410" height="40" rx="8" fill="rgba(105,179,162,0.12)"/>
+            <text x="600" y="86" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">持有这一份,你就有</text>
+            <rect x="440" y="104" width="410" height="40" rx="8" fill="rgba(122,167,240,0.12)"/>
             <text x="460" y="130" fill="#eef4ff" font-size="14">· 分红权:公司赚钱后按份额分你一部分</text>
-            <rect x="440" y="152" width="410" height="40" rx="8" fill="rgba(105,179,162,0.12)"/>
+            <rect x="440" y="152" width="410" height="40" rx="8" fill="rgba(122,167,240,0.12)"/>
             <text x="460" y="178" fill="#eef4ff" font-size="14">· 投票权:重大事项按份额投票</text>
-            <rect x="440" y="200" width="410" height="40" rx="8" fill="rgba(105,179,162,0.12)"/>
+            <rect x="440" y="200" width="410" height="40" rx="8" fill="rgba(122,167,240,0.12)"/>
             <text x="460" y="226" fill="#eef4ff" font-size="14">· 剩余索取权:还完债、剩下的才归股东</text>
             <text x="645" y="270" text-anchor="middle" fill="#ffb4b4" font-size="13">上不封顶,但也可能归零</text>"""
     return concept_figure(body, "0 0 900 300",
@@ -664,10 +664,10 @@ def _fig_orderbook():
             <line x1="150" y1="176" x2="350" y2="176" stroke="#f0c96a" stroke-width="1.5" stroke-dasharray="5 4"/>
             <text x="370" y="181" fill="#f0c96a" font-size="12">← 买一卖一之间是价差</text>
             <!-- 买盘(下,绿) -->
-            <rect x="150" y="186" width="200" height="26" rx="4" fill="rgba(105,179,162,0.16)"/><text x="160" y="205" fill="#eef4ff" font-size="13">买一  10.00  ×  400</text>
-            <rect x="150" y="216" width="200" height="26" rx="4" fill="rgba(105,179,162,0.22)"/><text x="160" y="235" fill="#eef4ff" font-size="13">买二   9.99  ×  600</text>
-            <rect x="150" y="246" width="200" height="26" rx="4" fill="rgba(105,179,162,0.28)"/><text x="160" y="265" fill="#eef4ff" font-size="13">买三   9.98  ×  900</text>
-            <text x="250" y="292" text-anchor="middle" fill="#8ef0d1" font-size="14" font-weight="800">买盘(想买的人)</text>
+            <rect x="150" y="186" width="200" height="26" rx="4" fill="rgba(122,167,240,0.16)"/><text x="160" y="205" fill="#eef4ff" font-size="13">买一  10.00  ×  400</text>
+            <rect x="150" y="216" width="200" height="26" rx="4" fill="rgba(122,167,240,0.22)"/><text x="160" y="235" fill="#eef4ff" font-size="13">买二   9.99  ×  600</text>
+            <rect x="150" y="246" width="200" height="26" rx="4" fill="rgba(122,167,240,0.28)"/><text x="160" y="265" fill="#eef4ff" font-size="13">买三   9.98  ×  900</text>
+            <text x="250" y="292" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">买盘(想买的人)</text>
             <!-- 右侧说明 -->
             <text x="470" y="110" fill="#eef4ff" font-size="14" font-weight="800">成交怎么发生?</text>
             <text x="470" y="140" fill="#c9d4e8" font-size="13">你出 10.01 买 → 立刻和卖一成交</text>
@@ -683,10 +683,10 @@ def _fig_orderbook():
 def _fig_candlestick():
     body = """            <text x="450" y="32" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">一根 K 线,记录一段时间里的四个价格</text>
             <!-- 阳线 -->
-            <text x="250" y="76" text-anchor="middle" fill="#8ef0d1" font-size="15" font-weight="800">阳线(收盘 &gt; 开盘)</text>
-            <line x1="250" y1="96" x2="250" y2="130" stroke="#8ef0d1" stroke-width="2"/>
-            <line x1="250" y1="230" x2="250" y2="262" stroke="#8ef0d1" stroke-width="2"/>
-            <rect x="222" y="130" width="56" height="100" rx="3" fill="rgba(105,179,162,0.30)" stroke="#8ef0d1" stroke-width="2"/>
+            <text x="250" y="76" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">阳线(收盘 &gt; 开盘)</text>
+            <line x1="250" y1="96" x2="250" y2="130" stroke="#a8c6ff" stroke-width="2"/>
+            <line x1="250" y1="230" x2="250" y2="262" stroke="#a8c6ff" stroke-width="2"/>
+            <rect x="222" y="130" width="56" height="100" rx="3" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff" stroke-width="2"/>
             <text x="300" y="104" fill="#c9d4e8" font-size="12.5">最高价</text>
             <text x="300" y="140" fill="#c9d4e8" font-size="12.5">收盘价(上沿)</text>
             <text x="300" y="228" fill="#c9d4e8" font-size="12.5">开盘价(下沿)</text>
@@ -709,11 +709,11 @@ def _fig_candlestick():
 def _fig_quant_pipeline():
     body = """            <text x="450" y="32" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">量化是一条流水线,算法只是其中一环</text>
             <!-- 5 个流程块 -->
-            <rect x="30" y="90" width="150" height="90" rx="12" fill="rgba(105,179,162,0.14)" stroke="#69b3a2" stroke-width="2"/>
-            <text x="105" y="126" text-anchor="middle" fill="#8ef0d1" font-size="15" font-weight="800">数据</text>
+            <rect x="30" y="90" width="150" height="90" rx="12" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="105" y="126" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">数据</text>
             <text x="105" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">采集·清洗·对齐</text>
-            <rect x="205" y="90" width="150" height="90" rx="12" fill="rgba(105,179,162,0.14)" stroke="#69b3a2" stroke-width="2"/>
-            <text x="280" y="126" text-anchor="middle" fill="#8ef0d1" font-size="15" font-weight="800">信号/因子</text>
+            <rect x="205" y="90" width="150" height="90" rx="12" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="280" y="126" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">信号/因子</text>
             <text x="280" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">研究员建模</text>
             <rect x="380" y="90" width="150" height="90" rx="12" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="2"/>
             <text x="455" y="126" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">组合</text>
@@ -754,8 +754,8 @@ def _fig_index_enhance():
             <path d="M 70 235 Q 300 195 520 165 T 830 120" fill="none" stroke="#8499bd" stroke-width="2.5" stroke-dasharray="7 5"/>
             <text x="700" y="150" fill="#8499bd" font-size="14" font-weight="800">指数基准</text>
             <!-- 增强线,略高于基准 -->
-            <path d="M 70 235 Q 300 182 520 145 T 830 92" fill="none" stroke="#8ef0d1" stroke-width="3"/>
-            <text x="600" y="96" fill="#8ef0d1" font-size="14" font-weight="800">指数增强</text>
+            <path d="M 70 235 Q 300 182 520 145 T 830 92" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <text x="600" y="96" fill="#a8c6ff" font-size="14" font-weight="800">指数增强</text>
             <!-- 超额区间标注 -->
             <line x1="830" y1="92" x2="830" y2="120" stroke="#f0c96a" stroke-width="2"/>
             <path d="M 830 92 L 825 102 M 830 92 L 835 102" stroke="#f0c96a" stroke-width="2" fill="none"/>
@@ -769,8 +769,8 @@ def _fig_index_enhance():
 def _fig_market_neutral():
     body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">市场中性:买一篮子、卖空等额,抵掉大盘涨跌</text>
             <!-- 多头柱 -->
-            <text x="200" y="76" text-anchor="middle" fill="#8ef0d1" font-size="15" font-weight="800">多头:买入看好的股票</text>
-            <rect x="130" y="90" width="140" height="70" rx="6" fill="rgba(105,179,162,0.25)" stroke="#8ef0d1" stroke-width="2"/>
+            <text x="200" y="76" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">多头:买入看好的股票</text>
+            <rect x="130" y="90" width="140" height="70" rx="6" fill="rgba(122,167,240,0.25)" stroke="#a8c6ff" stroke-width="2"/>
             <text x="200" y="132" text-anchor="middle" fill="#eef4ff" font-size="14">+100 万</text>
             <!-- 空头柱 -->
             <text x="200" y="196" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">空头:卖空指数/看淡的股票</text>
@@ -782,7 +782,7 @@ def _fig_market_neutral():
             <text x="615" y="128" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">大盘涨跌被抵消</text>
             <text x="410" y="162" fill="#c9d4e8" font-size="13.5">· 大盘涨 5%:多头 +5%、空头 -5%,方向对冲掉</text>
             <text x="410" y="192" fill="#c9d4e8" font-size="13.5">· 剩下的,是你选股比指数强的那部分</text>
-            <text x="410" y="222" fill="#8ef0d1" font-size="13.5">· 赚的是\u201c选股能力\u201d,不赌大盘方向</text>
+            <text x="410" y="222" fill="#a8c6ff" font-size="13.5">· 赚的是\u201c选股能力\u201d,不赌大盘方向</text>
             <text x="410" y="252" fill="#ffb4b4" font-size="12.5">· 但对冲有成本,基差、融券、极端行情仍是风险</text>"""
     return concept_figure(body, "0 0 900 300",
         "市场中性示意:多头买入等额、空头卖空,大盘方向被对冲,只留下选股超额",
@@ -792,13 +792,13 @@ def _fig_market_neutral():
 def _fig_income_statement():
     body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">利润表:收入一层层减下去,才剩净利润</text>
             <!-- 漏斗式递减条 -->
-            <rect x="250" y="60" width="400" height="40" rx="4" fill="rgba(105,179,162,0.30)" stroke="#8ef0d1"/>
+            <rect x="250" y="60" width="400" height="40" rx="4" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff"/>
             <text x="450" y="86" text-anchor="middle" fill="#eef4ff" font-size="14" font-weight="800">营业收入(卖东西收到的钱)</text>
             <text x="672" y="86" fill="#8499bd" font-size="12">100</text>
-            <rect x="285" y="108" width="330" height="36" rx="4" fill="rgba(105,179,162,0.24)"/>
+            <rect x="285" y="108" width="330" height="36" rx="4" fill="rgba(122,167,240,0.24)"/>
             <text x="450" y="132" text-anchor="middle" fill="#eef4ff" font-size="13.5">− 成本 → 毛利</text>
             <text x="637" y="131" fill="#8499bd" font-size="12">60</text>
-            <rect x="320" y="152" width="260" height="36" rx="4" fill="rgba(105,179,162,0.18)"/>
+            <rect x="320" y="152" width="260" height="36" rx="4" fill="rgba(122,167,240,0.18)"/>
             <text x="450" y="176" text-anchor="middle" fill="#eef4ff" font-size="13.5">− 费用 → 营业利润</text>
             <text x="602" y="175" fill="#8499bd" font-size="12">30</text>
             <rect x="355" y="196" width="190" height="36" rx="4" fill="rgba(240,201,106,0.22)"/>
@@ -814,15 +814,15 @@ def _fig_income_statement():
 def _fig_project_layout():
     body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">量化项目要分层,别塞进一个大 notebook</text>
             <!-- 分层结构 -->
-            <rect x="120" y="60" width="660" height="40" rx="8" fill="rgba(105,179,162,0.20)" stroke="#8ef0d1" stroke-width="1.5"/>
+            <rect x="120" y="60" width="660" height="40" rx="8" fill="rgba(122,167,240,0.20)" stroke="#a8c6ff" stroke-width="1.5"/>
             <text x="140" y="85" fill="#eef4ff" font-size="14">data/  原始与清洗后的数据,来源和口径清楚</text>
-            <rect x="120" y="106" width="660" height="40" rx="8" fill="rgba(105,179,162,0.16)" stroke="#69b3a2" stroke-width="1.5"/>
+            <rect x="120" y="106" width="660" height="40" rx="8" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
             <text x="140" y="131" fill="#eef4ff" font-size="14">factors/  因子计算,每个因子一个可复现脚本</text>
             <rect x="120" y="152" width="660" height="40" rx="8" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
             <text x="140" y="177" fill="#eef4ff" font-size="14">backtest/  回测引擎与成交、成本、约束假设</text>
             <rect x="120" y="198" width="660" height="40" rx="8" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
             <text x="140" y="223" fill="#eef4ff" font-size="14">config/  参数与实验配置,可重复、可追溯</text>
-            <rect x="120" y="244" width="660" height="40" rx="8" fill="rgba(105,179,162,0.16)" stroke="#69b3a2" stroke-width="1.5"/>
+            <rect x="120" y="244" width="660" height="40" rx="8" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
             <text x="140" y="269" fill="#eef4ff" font-size="14">reports/  自动生成的净值、指标和归因报告</text>
             <text x="450" y="300" text-anchor="middle" fill="#8499bd" font-size="12.5">每层职责单一,换人接手也能看懂,几周后自己也不会迷路</text>"""
     return concept_figure(body, "0 0 900 315",
@@ -837,9 +837,9 @@ def _fig_arbitrage():
             <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">时间</text>
             <text x="52" y="65" fill="#8499bd" font-size="13">价格</text>
             <!-- 两条本应同步的价格线,中间张开又收回 -->
-            <path d="M 90 180 C 250 120 320 100 430 95 C 540 100 650 150 830 150" fill="none" stroke="#8ef0d1" stroke-width="2.5"/>
+            <path d="M 90 180 C 250 120 320 100 430 95 C 540 100 650 150 830 150" fill="none" stroke="#a8c6ff" stroke-width="2.5"/>
             <path d="M 90 190 C 250 185 320 190 430 175 C 540 165 650 155 830 152" fill="none" stroke="#f0c96a" stroke-width="2.5"/>
-            <text x="250" y="95" fill="#8ef0d1" font-size="13">资产 A</text>
+            <text x="250" y="95" fill="#a8c6ff" font-size="13">资产 A</text>
             <text x="250" y="205" fill="#f0c96a" font-size="13">资产 B</text>
             <!-- 价差最大处 -->
             <line x1="430" y1="95" x2="430" y2="175" stroke="#ffb4b4" stroke-width="1.5" stroke-dasharray="5 4"/>
@@ -862,8 +862,8 @@ def _fig_fund_nav():
             <path d="M 70 225 Q 300 175 520 140 T 830 85" fill="none" stroke="#8499bd" stroke-width="2.5" stroke-dasharray="7 5"/>
             <text x="640" y="108" fill="#8499bd" font-size="13.5">策略毛收益(宣传里常展示这条)</text>
             <!-- 净收益线,被费用压低 -->
-            <path d="M 70 225 Q 300 195 520 170 T 830 130" fill="none" stroke="#8ef0d1" stroke-width="3"/>
-            <text x="610" y="150" fill="#8ef0d1" font-size="13.5">你到手的净值(扣费后)</text>
+            <path d="M 70 225 Q 300 195 520 170 T 830 130" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <text x="610" y="150" fill="#a8c6ff" font-size="13.5">你到手的净值(扣费后)</text>
             <!-- 费用差 -->
             <line x1="830" y1="85" x2="830" y2="130" stroke="#ffb4b4" stroke-width="2"/>
             <text x="822" y="76" text-anchor="end" fill="#ffb4b4" font-size="12.5">管理费+业绩报酬+申赎</text>
@@ -876,17 +876,17 @@ def _fig_fund_nav():
 def _fig_backtest_loop():
     body = """            <text x="450" y="30" text-anchor="middle" fill="#f6f0df" font-size="19" font-weight="800">回测就是在历史里,一天天重放这个循环</text>
             <!-- 环形流程 6 步 -->
-            <rect x="360" y="60" width="180" height="46" rx="10" fill="rgba(105,179,162,0.16)" stroke="#69b3a2" stroke-width="1.5"/>
+            <rect x="360" y="60" width="180" height="46" rx="10" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
             <text x="450" y="88" text-anchor="middle" fill="#eef4ff" font-size="13.5">① 读取当时可见数据</text>
-            <rect x="640" y="120" width="180" height="46" rx="10" fill="rgba(105,179,162,0.16)" stroke="#69b3a2" stroke-width="1.5"/>
+            <rect x="640" y="120" width="180" height="46" rx="10" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
             <text x="730" y="148" text-anchor="middle" fill="#eef4ff" font-size="13.5">② 计算信号</text>
             <rect x="640" y="210" width="180" height="46" rx="10" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
             <text x="730" y="238" text-anchor="middle" fill="#eef4ff" font-size="13.5">③ 生成目标持仓</text>
             <rect x="360" y="270" width="180" height="46" rx="10" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
             <text x="450" y="298" text-anchor="middle" fill="#eef4ff" font-size="13.5">④ 模拟成交+扣成本</text>
-            <rect x="80" y="210" width="180" height="46" rx="10" fill="rgba(105,179,162,0.16)" stroke="#69b3a2" stroke-width="1.5"/>
+            <rect x="80" y="210" width="180" height="46" rx="10" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
             <text x="170" y="238" text-anchor="middle" fill="#eef4ff" font-size="13.5">⑤ 更新现金持仓</text>
-            <rect x="80" y="120" width="180" height="46" rx="10" fill="rgba(105,179,162,0.16)" stroke="#69b3a2" stroke-width="1.5"/>
+            <rect x="80" y="120" width="180" height="46" rx="10" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
             <text x="170" y="148" text-anchor="middle" fill="#eef4ff" font-size="13.5">⑥ 记录净值</text>
             <!-- 环形箭头 -->
             <g stroke="#8499bd" stroke-width="2" fill="none">
@@ -914,9 +914,9 @@ def _fig_overfitting():
             <text x="270" y="75" text-anchor="middle" fill="#8499bd" font-size="13">样本内(用来调参数)</text>
             <text x="660" y="75" text-anchor="middle" fill="#8499bd" font-size="13">样本外(没见过的新数据)</text>
             <!-- 过拟合线:样本内极好,样本外崩 -->
-            <path d="M 90 240 Q 260 130 470 90" fill="none" stroke="#8ef0d1" stroke-width="3"/>
+            <path d="M 90 240 Q 260 130 470 90" fill="none" stroke="#a8c6ff" stroke-width="3"/>
             <path d="M 470 90 Q 620 130 830 215" fill="none" stroke="#e88" stroke-width="3"/>
-            <text x="250" y="120" fill="#8ef0d1" font-size="13">回测里美如画</text>
+            <text x="250" y="120" fill="#a8c6ff" font-size="13">回测里美如画</text>
             <text x="660" y="200" fill="#ffb4b4" font-size="13" font-weight="800">实盘一上就崩</text>
             <text x="450" y="290" text-anchor="middle" fill="#c9d4e8" font-size="13">参数试得越多、模型越复杂,越容易\u201c背下\u201d历史噪声,而不是学到规律</text>"""
     return concept_figure(body, "0 0 900 305",
@@ -931,7 +931,7 @@ def _fig_loss_recovery():
             <text x="90" y="60" text-anchor="end" fill="#8499bd" font-size="12.5">回本涨幅</text>
             <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">亏损幅度</text>
             <!-- 柱子:亏损 vs 需要涨幅 -->
-            <rect x="160" y="228" width="60" height="22" fill="rgba(105,179,162,0.5)"/><text x="190" y="222" text-anchor="middle" fill="#c9d4e8" font-size="12">亏10%→涨11%</text>
+            <rect x="160" y="228" width="60" height="22" fill="rgba(122,167,240,0.5)"/><text x="190" y="222" text-anchor="middle" fill="#c9d4e8" font-size="12">亏10%→涨11%</text>
             <rect x="320" y="200" width="60" height="50" fill="rgba(240,201,106,0.5)"/><text x="350" y="194" text-anchor="middle" fill="#c9d4e8" font-size="12">亏30%→涨43%</text>
             <rect x="480" y="150" width="60" height="100" fill="rgba(240,150,90,0.6)"/><text x="510" y="144" text-anchor="middle" fill="#c9d4e8" font-size="12">亏50%→涨100%</text>
             <rect x="640" y="75" width="60" height="175" fill="rgba(232,120,120,0.6)"/><text x="670" y="69" text-anchor="middle" fill="#ffb4b4" font-size="12">亏80%→涨400%</text>
@@ -1064,7 +1064,7 @@ def render_chapter_svg(ch: dict, rendered_sections: list) -> str:
             <g filter="url(#softShadow{ch['num']})">
               <rect x="{x - 92}" y="{y - 58}" width="184" height="116" rx="18" fill="#0f1a2e" stroke="rgba(240,201,106,0.42)" stroke-width="2" />
               <circle cx="{x - 70}" cy="{y - 36}" r="14" fill="#f0c96a" fill-opacity="0.95" />
-              <text x="{x - 70}" y="{y - 31}" text-anchor="middle" fill="#101412" font-size="14" font-weight="900">{i}</text>
+              <text x="{x - 70}" y="{y - 31}" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">{i}</text>
               {svg_text(label, x + 6, y + 7, 148, size=15, max_chars=8, max_lines=4)}
             </g>""")
     flow_figure = f"""
@@ -1073,7 +1073,7 @@ def render_chapter_svg(ch: dict, rendered_sections: list) -> str:
             <defs>
               <linearGradient id="mapGrad{ch['num']}" x1="0" x2="1" y1="0" y2="1">
                 <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.9" />
-                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.85" />
+                <stop offset="100%" stop-color="#7aa7f0" stop-opacity="0.85" />
               </linearGradient>
               <filter id="softShadow{ch['num']}" x="-20%" y="-20%" width="140%" height="140%">
                 <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity="0.28" />
@@ -1103,9 +1103,9 @@ def render_summary_figure(ch: dict) -> str:
     for i, (label, (x, y)) in enumerate(zip(summary_labels, summary_positions), 1):
         summary_cards.append(f"""
             <g>
-              <rect x="{x - 115}" y="{y - 70}" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(105,179,162,0.50)" stroke-width="2" />
-              <path d="M{x - 65} {y - 30} L{x - 22} {y - 30} L{x - 22} {y - 42} L{x + 60} {y} L{x - 22} {y + 42} L{x - 22} {y + 30} L{x - 65} {y + 30} Z" fill="rgba(105,179,162,0.18)" stroke="rgba(105,179,162,0.48)" />
-              <text x="{x}" y="{y - 38}" text-anchor="middle" fill="#69b3a2" font-size="15" font-weight="900">留下 {i}</text>
+              <rect x="{x - 115}" y="{y - 70}" width="230" height="140" rx="20" fill="rgba(15,26,46,0.92)" stroke="rgba(122,167,240,0.50)" stroke-width="2" />
+              <path d="M{x - 65} {y - 30} L{x - 22} {y - 30} L{x - 22} {y - 42} L{x + 60} {y} L{x - 22} {y + 42} L{x - 22} {y + 30} L{x - 65} {y + 30} Z" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.48)" />
+              <text x="{x}" y="{y - 38}" text-anchor="middle" fill="#7aa7f0" font-size="15" font-weight="900">留下 {i}</text>
               {svg_text(label, x, y + 24, 185, size=15, color="#f6f0df", max_chars=8, max_lines=5)}
             </g>""")
     return f"""
@@ -1114,10 +1114,10 @@ def render_summary_figure(ch: dict) -> str:
             <defs>
               <linearGradient id="sumGrad{ch['num']}" x1="0" x2="1" y1="0" y2="0">
                 <stop offset="0%" stop-color="#f0c96a" stop-opacity="0.75" />
-                <stop offset="100%" stop-color="#69b3a2" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#7aa7f0" stop-opacity="0.75" />
               </linearGradient>
             </defs>
-            <rect x="18" y="18" width="864" height="324" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(105,179,162,0.28)" />
+            <rect x="18" y="18" width="864" height="324" rx="24" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)" />
             <text x="450" y="68" text-anchor="middle" fill="#f6f0df" font-size="25" font-weight="850">本章留下的三件事</text>
             <path d="M295 220 H335 M565 220 H605" fill="none" stroke="url(#sumGrad{ch['num']})" stroke-width="7" stroke-linecap="round" />
             {''.join(summary_cards)}
@@ -1339,7 +1339,7 @@ def write_assets() -> None:
     assets = ROOT / "assets"
     assets.mkdir(exist_ok=True)
     (assets / "favicon.svg").write_text(
-        """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#10231f"/><path d="M12 44h40M18 38V24m14 14V16m14 22V28" stroke="#f0c96a" stroke-width="5" stroke-linecap="round"/><path d="M14 20h36" stroke="#69b3a2" stroke-width="4" stroke-linecap="round"/></svg>\n""",
+        """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0f1622"/><path d="M12 44h40M18 38V24m14 14V16m14 22V28" stroke="#f0c96a" stroke-width="5" stroke-linecap="round"/><path d="M14 20h36" stroke="#7aa7f0" stroke-width="4" stroke-linecap="round"/></svg>\n""",
         encoding="utf-8",
     )
     (assets / "book.css").write_text(CSS, encoding="utf-8")
@@ -1357,8 +1357,8 @@ def render_js() -> str:
 
 CSS = r"""
 :root {
-  --bg: #101412;
-  --bg-soft: #17201c;
+  --bg: #101420;
+  --bg-soft: #181e2c;
   --panel: rgba(245, 241, 229, 0.06);
   --panel-strong: rgba(245, 241, 229, 0.1);
   --text: #f6f0df;
@@ -1366,7 +1366,7 @@ CSS = r"""
   --text-dim: #a99f89;
   --line: rgba(240, 201, 106, 0.2);
   --primary: #f0c96a;
-  --accent: #69b3a2;
+  --accent: #7aa7f0;
   --danger: #ee8877;
   --reading-width: 47rem;
   --header-height: 56px;
@@ -1385,9 +1385,9 @@ body {
   line-height: 1.85;
   font-size: 1.0625rem;
   background:
-    linear-gradient(115deg, rgba(105, 179, 162, 0.12), transparent 34%),
+    linear-gradient(115deg, rgba(122, 167, 240, 0.12), transparent 34%),
     linear-gradient(245deg, rgba(240, 201, 106, 0.13), transparent 30%),
-    linear-gradient(180deg, #0f1412 0%, #111714 54%, #0d1110 100%);
+    linear-gradient(180deg, #0f141f 0%, #121828 54%, #0d121c 100%);
   background-attachment: fixed;
 }
 a { color: var(--primary); text-decoration: none; }
@@ -1402,7 +1402,7 @@ a:hover { text-decoration: underline; }
   align-items: center;
   gap: 0.75rem;
   padding: 0 1rem;
-  background: rgba(13, 18, 16, 0.86);
+  background: rgba(13, 18, 28, 0.86);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(14px);
 }
@@ -1464,7 +1464,7 @@ a:hover { text-decoration: underline; }
   width: min(25rem, 86vw);
   padding: 1rem;
   overflow-y: auto;
-  background: #121915;
+  background: #131a28;
   border-right: 1px solid var(--line);
   display: none;
   transform: translateX(calc(-100% - 24px));
@@ -1680,7 +1680,7 @@ a:hover { text-decoration: underline; }
 }
 .github-corner__ribbon { fill: #f0c96a; }
 .github-corner__arm,
-.github-corner__body { fill: #101412; }
+.github-corner__body { fill: #101420; }
 .github-corner:hover .github-corner__ribbon { fill: #f6d98a; }
 
 /* 关于本书 */
@@ -1787,9 +1787,9 @@ code {
 .callout {
   margin: 1.2rem 0;
   padding: 1rem;
-  border: 1px solid rgba(105, 179, 162, 0.35);
+  border: 1px solid rgba(122, 167, 240, 0.35);
   border-radius: 8px;
-  background: rgba(105, 179, 162, 0.08);
+  background: rgba(122, 167, 240, 0.08);
 }
 
 .objectives {
@@ -1833,7 +1833,7 @@ code {
   height: auto;
   border-radius: 20px;
   background: rgba(18, 29, 49, 0.55);
-  border: 1px solid rgba(105, 179, 162, 0.22);
+  border: 1px solid rgba(122, 167, 240, 0.22);
   padding: 0.4rem;
 }
 
@@ -2000,6 +2000,118 @@ code {
     grid-template-columns: 280px minmax(0, 56rem) 300px;
     gap: 3rem;
   }
+}
+
+/* ============ 代码走读卡片(code-walk) ============ */
+.code-walk {
+  margin: 1.8rem auto;
+  max-width: 54rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #0d1220;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38);
+  overflow: hidden;
+}
+
+.code-walk__file {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--line);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.code-walk__file::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 14px 0 0 var(--primary), 28px 0 0 var(--danger);
+  margin-right: 1.6rem;
+}
+
+.code-walk__code {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: #d7e3f7;
+  border: none;
+  background: none;
+  tab-size: 2;
+}
+
+.code-walk__code code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+.cw-tag {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.4rem;
+  padding: 0 0.2rem;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #10120f;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 800;
+  vertical-align: middle;
+}
+
+.code-walk__notes {
+  margin: 0;
+  padding: 1rem 1.4rem 1.2rem;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  counter-reset: cw;
+  list-style: none;
+}
+
+.code-walk__notes li {
+  position: relative;
+  margin: 0.7rem 0;
+  padding-left: 2rem;
+  color: var(--text-soft);
+}
+
+.code-walk__notes li::before {
+  counter-increment: cw;
+  content: counter(cw);
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(122, 167, 240, 0.16);
+  border: 1px solid rgba(122, 167, 240, 0.4);
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.code-walk__notes li code {
+  font-size: 0.85em;
+}
+
+@media (max-width: 720px) {
+  .code-walk { border-radius: 10px; }
+  .code-walk__code { font-size: 0.78rem; padding: 0.8rem 0.9rem; }
 }
 """
 

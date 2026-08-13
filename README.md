@@ -25,6 +25,15 @@ python3 -m http.server 8776 --bind 127.0.0.1
 - 第 19-32 章: 项目骨架、公式速查、实战项目、常见错误、场景练习、最终清单和结语。
 - 附录: 术语表与参考资料。
 
+## 配套代码示例
+
+[examples/](examples/) 目录里有四个零第三方依赖的 Python 教学脚本,对应第 9/14/19/20/21/22 章:
+因子分层、指数增强完整回测、未来函数对照实验、市场中性对冲账本。
+
+```bash
+cd examples && python3 run_all.py
+```
+
 ## 从源码构建
 
 书稿正文全部手写在 `docs/finance-book/tools/manual_manuscript.py`,静态站点由 `build_book.py` 生成。

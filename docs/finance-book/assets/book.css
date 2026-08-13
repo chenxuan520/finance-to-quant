@@ -1,7 +1,7 @@
 
 :root {
-  --bg: #101412;
-  --bg-soft: #17201c;
+  --bg: #101420;
+  --bg-soft: #181e2c;
   --panel: rgba(245, 241, 229, 0.06);
   --panel-strong: rgba(245, 241, 229, 0.1);
   --text: #f6f0df;
@@ -9,7 +9,7 @@
   --text-dim: #a99f89;
   --line: rgba(240, 201, 106, 0.2);
   --primary: #f0c96a;
-  --accent: #69b3a2;
+  --accent: #7aa7f0;
   --danger: #ee8877;
   --reading-width: 47rem;
   --header-height: 56px;
@@ -28,9 +28,9 @@ body {
   line-height: 1.85;
   font-size: 1.0625rem;
   background:
-    linear-gradient(115deg, rgba(105, 179, 162, 0.12), transparent 34%),
+    linear-gradient(115deg, rgba(122, 167, 240, 0.12), transparent 34%),
     linear-gradient(245deg, rgba(240, 201, 106, 0.13), transparent 30%),
-    linear-gradient(180deg, #0f1412 0%, #111714 54%, #0d1110 100%);
+    linear-gradient(180deg, #0f141f 0%, #121828 54%, #0d121c 100%);
   background-attachment: fixed;
 }
 a { color: var(--primary); text-decoration: none; }
@@ -45,7 +45,7 @@ a:hover { text-decoration: underline; }
   align-items: center;
   gap: 0.75rem;
   padding: 0 1rem;
-  background: rgba(13, 18, 16, 0.86);
+  background: rgba(13, 18, 28, 0.86);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(14px);
 }
@@ -107,7 +107,7 @@ a:hover { text-decoration: underline; }
   width: min(25rem, 86vw);
   padding: 1rem;
   overflow-y: auto;
-  background: #121915;
+  background: #131a28;
   border-right: 1px solid var(--line);
   display: none;
   transform: translateX(calc(-100% - 24px));
@@ -323,7 +323,7 @@ a:hover { text-decoration: underline; }
 }
 .github-corner__ribbon { fill: #f0c96a; }
 .github-corner__arm,
-.github-corner__body { fill: #101412; }
+.github-corner__body { fill: #101420; }
 .github-corner:hover .github-corner__ribbon { fill: #f6d98a; }
 
 /* 关于本书 */
@@ -430,9 +430,9 @@ code {
 .callout {
   margin: 1.2rem 0;
   padding: 1rem;
-  border: 1px solid rgba(105, 179, 162, 0.35);
+  border: 1px solid rgba(122, 167, 240, 0.35);
   border-radius: 8px;
-  background: rgba(105, 179, 162, 0.08);
+  background: rgba(122, 167, 240, 0.08);
 }
 
 .objectives {
@@ -476,7 +476,7 @@ code {
   height: auto;
   border-radius: 20px;
   background: rgba(18, 29, 49, 0.55);
-  border: 1px solid rgba(105, 179, 162, 0.22);
+  border: 1px solid rgba(122, 167, 240, 0.22);
   padding: 0.4rem;
 }
 
@@ -643,4 +643,116 @@ code {
     grid-template-columns: 280px minmax(0, 56rem) 300px;
     gap: 3rem;
   }
+}
+
+/* ============ 代码走读卡片(code-walk) ============ */
+.code-walk {
+  margin: 1.8rem auto;
+  max-width: 54rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #0d1220;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38);
+  overflow: hidden;
+}
+
+.code-walk__file {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--line);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.code-walk__file::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 14px 0 0 var(--primary), 28px 0 0 var(--danger);
+  margin-right: 1.6rem;
+}
+
+.code-walk__code {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: #d7e3f7;
+  border: none;
+  background: none;
+  tab-size: 2;
+}
+
+.code-walk__code code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+.cw-tag {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.4rem;
+  padding: 0 0.2rem;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #10120f;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 800;
+  vertical-align: middle;
+}
+
+.code-walk__notes {
+  margin: 0;
+  padding: 1rem 1.4rem 1.2rem;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  counter-reset: cw;
+  list-style: none;
+}
+
+.code-walk__notes li {
+  position: relative;
+  margin: 0.7rem 0;
+  padding-left: 2rem;
+  color: var(--text-soft);
+}
+
+.code-walk__notes li::before {
+  counter-increment: cw;
+  content: counter(cw);
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(122, 167, 240, 0.16);
+  border: 1px solid rgba(122, 167, 240, 0.4);
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.code-walk__notes li code {
+  font-size: 0.85em;
+}
+
+@media (max-width: 720px) {
+  .code-walk { border-radius: 10px; }
+  .code-walk__code { font-size: 0.78rem; padding: 0.8rem 0.9rem; }
 }
