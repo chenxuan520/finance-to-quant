@@ -950,6 +950,516 @@ def _fig_loss_recovery():
 # 可见章号 -> [(锚点小节关键词, 图函数), ...]
 # 概念图不再堆在章首,而是渲染在标题包含"锚点关键词"的那个小节正文之后,
 # 让图紧挨着解释它的文字(和 deeplearning 一致)。
+def _fig_b1_roadmap():
+    body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">七个学习阶段:每一级都有拿得出手的产出物</text>
+            <!-- 7 级台阶,从左下到右上,宽 118,高 64+48i,底线 y=430 -->
+            <rect x="36" y="366" width="118" height="64" rx="6" fill="rgba(122,167,240,0.09)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="95" y="388" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">① 金融地图</text>
+            <text x="95" y="408" text-anchor="middle" fill="#eef4f8" font-size="11">产出:行业全图笔记</text>
+            <text x="95" y="426" text-anchor="middle" fill="#8499bd" font-size="11">讲清钱的流转</text>
+            <rect x="156" y="318" width="118" height="112" rx="6" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="215" y="340" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">② 数据小仓</text>
+            <text x="215" y="360" text-anchor="middle" fill="#eef4f8" font-size="11">产出:可复现行情库</text>
+            <text x="215" y="378" text-anchor="middle" fill="#8499bd" font-size="11">重跑结果一致</text>
+            <rect x="276" y="270" width="118" height="160" rx="6" fill="rgba(122,167,240,0.15)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="335" y="292" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">③ 最小回测</text>
+            <text x="335" y="312" text-anchor="middle" fill="#eef4f8" font-size="11">产出:能跑的框架</text>
+            <text x="335" y="330" text-anchor="middle" fill="#8499bd" font-size="11">逐笔解释成本</text>
+            <rect x="396" y="222" width="118" height="208" rx="6" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="455" y="244" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">④ 因子报告</text>
+            <text x="455" y="264" text-anchor="middle" fill="#eef4f8" font-size="11">产出:IC/分层两表</text>
+            <text x="455" y="282" text-anchor="middle" fill="#8499bd" font-size="11">敢说因子灵不灵</text>
+            <rect x="516" y="174" width="118" height="256" rx="6" fill="rgba(122,167,240,0.21)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="575" y="196" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">⑤ 多因子模型</text>
+            <text x="575" y="216" text-anchor="middle" fill="#eef4f8" font-size="11">产出:组合化打分</text>
+            <text x="575" y="234" text-anchor="middle" fill="#8499bd" font-size="11">权重都有理由</text>
+            <rect x="636" y="126" width="118" height="304" rx="6" fill="rgba(122,167,240,0.24)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="695" y="148" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">⑥ 模拟盘</text>
+            <text x="695" y="168" text-anchor="middle" fill="#eef4f8" font-size="11">产出:一个月流水</text>
+            <text x="695" y="186" text-anchor="middle" fill="#8499bd" font-size="11">每天对账不中断</text>
+            <rect x="756" y="78" width="118" height="352" rx="6" fill="rgba(240,201,106,0.20)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="815" y="100" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">⑦ 小资金实盘</text>
+            <text x="815" y="120" text-anchor="middle" fill="#eef4f8" font-size="11">产出:实盘差异笔记</text>
+            <text x="815" y="138" text-anchor="middle" fill="#8499bd" font-size="11">差异都能找到因</text>
+            <!-- 最后一级台阶上的小旗 -->
+            <line x1="862" y1="78" x2="862" y2="36" stroke="#f0c96a" stroke-width="2.5"/>
+            <path d="M 862 36 L 862 58 L 887 47 Z" fill="#f0c96a"/>
+            <line x1="20" y1="430" x2="885" y2="430" stroke="#46587a" stroke-width="1.5"/>
+            <text x="450" y="452" text-anchor="middle" fill="#c9d4e8" font-size="14">过关标准达不到就不上一级:先做出能跑的,再谈做大的</text>"""
+    return concept_figure(body, "0 0 900 460",
+        "七个学习阶段阶梯图:金融地图、数据小仓、最小回测、因子报告、多因子模型、模拟盘、小资金实盘,每级标注产出物和过关标准",
+        "七个阶段像台阶一样,每一级都留下具体产出物:行业全图笔记、可复现行情库、能跑的回测框架、IC/分层两张表、组合化打分、一个月模拟盘流水、实盘与回测的差异笔记。过关标准达不到,就不上一级。")
+
+
+def _fig_b1_neutral_ledger():
+    body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">市场中性组合的三本账:多头、空股指、保证金</text>
+            <!-- 左:多头市值 -->
+            <rect x="60" y="64" width="220" height="140" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="170" y="90" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 多头市值</text>
+            <text x="170" y="116" text-anchor="middle" fill="#8499bd" font-size="12">一篮子股票的市值</text>
+            <text x="170" y="144" text-anchor="middle" fill="#eef4f8" font-size="18" font-weight="800">100 万</text>
+            <text x="170" y="168" text-anchor="middle" fill="#8499bd" font-size="12">赚的是选股 Alpha</text>
+            <text x="170" y="190" text-anchor="middle" fill="#8499bd" font-size="12">市值每天随涨跌变</text>
+            <!-- 中:空股指名义 -->
+            <rect x="340" y="64" width="220" height="140" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="90" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">② 空股指名义</text>
+            <text x="450" y="116" text-anchor="middle" fill="#8499bd" font-size="12">对冲金额 = 市值 × Beta</text>
+            <text x="450" y="144" text-anchor="middle" fill="#eef4f8" font-size="16" font-weight="800">100 万 × 1.2 = 120 万</text>
+            <text x="450" y="168" text-anchor="middle" fill="#8499bd" font-size="12">把大盘的涨跌对冲掉</text>
+            <text x="450" y="190" text-anchor="middle" fill="#8499bd" font-size="12">随多头市值每天重算</text>
+            <!-- 右:保证金占用 -->
+            <rect x="620" y="64" width="220" height="140" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="730" y="88" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">③ 保证金占用</text>
+            <text x="730" y="110" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">120 万 × 12% = 14.4 万</text>
+            <text x="648" y="138" text-anchor="end" fill="#8499bd" font-size="11">名义</text>
+            <rect x="655" y="128" width="165" height="12" rx="3" fill="rgba(122,167,240,0.30)"/>
+            <text x="648" y="160" text-anchor="end" fill="#8499bd" font-size="11">占用</text>
+            <rect x="655" y="150" width="20" height="12" rx="3" fill="#f0c96a"/>
+            <text x="648" y="182" text-anchor="end" fill="#8499bd" font-size="11">备用</text>
+            <rect x="655" y="172" width="36" height="12" rx="3" fill="#8fb37a" opacity="0.6"/>
+            <text x="730" y="199" text-anchor="middle" fill="#ffb4b4" font-size="11">指数涨 10% → 空仓多亏 12 万</text>
+            <!-- 卡间连线 -->
+            <line x1="280" y1="134" x2="336" y2="134" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#b1lg)"/>
+            <text x="310" y="120" text-anchor="middle" fill="#c9d4e8" font-size="11">按 Beta 对冲</text>
+            <line x1="560" y1="134" x2="616" y2="134" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#b1lgg)"/>
+            <text x="590" y="120" text-anchor="middle" fill="#c9d4e8" font-size="11">× 12% 占用</text>
+            <defs>
+              <marker id="b1lg" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker>
+              <marker id="b1lgg" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker>
+            </defs>
+            <text x="450" y="250" text-anchor="middle" fill="#eef4f8" font-size="14">三笔账每天对一遍,爆仓前它们会先说</text>"""
+    return concept_figure(body, "0 0 900 285",
+        "中性组合三本账:多头市值100万,按Beta1.2空股指名义120万,保证金占用120万乘12%等于14.4万,另留备用现金",
+        "中性组合每天要对三本账:多头股票值多少钱、该空多少名义的股指(市值×Beta)、这些名义占用多少保证金(名义×12%)。占用只是名义的一小条,所以指数一涨空仓亏得很快——三笔账每天对一遍,爆仓前它们会先说。")
+
+
+def _fig_b1_ten_layers():
+    body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">全书十层复盘:越往上,越依赖下层垫着</text>
+            <!-- 十层金字塔,底层宽720,每层收60,层高32间距4,底 y=420 -->
+            <rect x="360" y="64" width="180" height="32" rx="4" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="85" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L10 · 人和纪律</text>
+            <rect x="330" y="100" width="240" height="32" rx="4" fill="rgba(122,167,240,0.10)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="121" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L9 · 交易执行实盘</text>
+            <rect x="300" y="136" width="300" height="32" rx="4" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="157" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L8 · 组合和风险</text>
+            <rect x="270" y="172" width="360" height="32" rx="4" fill="rgba(122,167,240,0.14)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="193" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L7 · 回测和验证</text>
+            <rect x="240" y="208" width="420" height="32" rx="4" fill="rgba(122,167,240,0.16)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="229" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L6 · 因子和模型</text>
+            <rect x="210" y="244" width="480" height="32" rx="4" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="265" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L5 · 数据和可见性</text>
+            <rect x="180" y="280" width="540" height="32" rx="4" fill="rgba(122,167,240,0.20)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="301" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L4 · 市场与交易制度</text>
+            <rect x="150" y="316" width="600" height="32" rx="4" fill="rgba(122,167,240,0.22)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="337" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L3 · 权利和资产</text>
+            <rect x="120" y="352" width="660" height="32" rx="4" fill="rgba(122,167,240,0.24)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="373" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L2 · 信用和时间</text>
+            <rect x="90" y="388" width="720" height="32" rx="4" fill="rgba(240,201,106,0.16)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="409" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">L1 · 真实财富和生产力(地基)</text>
+            <!-- 右侧向上的依赖提示 -->
+            <line x1="845" y1="412" x2="845" y2="80" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#b1ly)"/>
+            <defs><marker id="b1ly" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
+            <text x="867" y="243" text-anchor="middle" transform="rotate(-90 867 243)" fill="#f0c96a" font-size="12.5" font-weight="800">越往上,越依赖下层垫着</text>
+            <!-- 底部两条向内的支撑线,构成金字塔底 -->
+            <line x1="90" y1="420" x2="450" y2="446" stroke="rgba(240,201,106,0.42)" stroke-width="2"/>
+            <line x1="810" y1="420" x2="450" y2="446" stroke="rgba(240,201,106,0.42)" stroke-width="2"/>
+            <circle cx="450" cy="446" r="4" fill="#f0c96a"/>"""
+    return concept_figure(body, "0 0 900 460",
+        "十层金字塔:自下而上依次是真实财富、信用时间、权利资产、市场制度、数据可见、因子模型、回测验证、组合风险、交易实盘、人纪律",
+        "把全书压成十层:真实财富和生产力是地基,上面依次垫着信用、资产、市场制度、数据、因子、回测、组合、实盘,最上面是人和纪律。层越往上越窄——它能站住,全靠下面九层垫着;下层有问题,上层加倍还。")
+
+
+def _fig_b1_portfolio():
+    body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">三个作品集:每个都打四个里程碑,打到头才算可展示</text>
+            <!-- 作品集一 -->
+            <text x="150" y="120" text-anchor="middle" fill="#eef4f8" font-size="15" font-weight="800">① 指数增强回测</text>
+            <text x="150" y="140" text-anchor="middle" fill="#8499bd" font-size="11">对应小节 1.4</text>
+            <rect x="270" y="111" width="540" height="10" rx="5" fill="rgba(122,167,240,0.14)"/>
+            <circle cx="346" cy="116" r="5" fill="#7aa7f0"/><text x="346" y="98" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">需求</text><text x="346" y="144" text-anchor="middle" fill="#8499bd" font-size="11">基准与目标写清</text>
+            <circle cx="497" cy="116" r="5" fill="#7aa7f0"/><text x="497" y="98" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">数据</text><text x="497" y="144" text-anchor="middle" fill="#8499bd" font-size="11">成分权重历史齐</text>
+            <circle cx="648" cy="116" r="5" fill="#7aa7f0"/><text x="648" y="98" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">验证</text><text x="648" y="144" text-anchor="middle" fill="#8499bd" font-size="11">跟踪误差算出来</text>
+            <circle cx="767" cy="116" r="5" fill="#7aa7f0"/><text x="767" y="98" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">交付</text><text x="767" y="144" text-anchor="middle" fill="#8499bd" font-size="11">可复现完整报告</text>
+            <circle cx="832" cy="116" r="7" fill="#8fb37a"/><text x="832" y="98" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">可展示</text>
+            <!-- 作品集二 -->
+            <text x="150" y="200" text-anchor="middle" fill="#eef4f8" font-size="15" font-weight="800">② 数据质量与时点</text>
+            <text x="150" y="220" text-anchor="middle" fill="#8499bd" font-size="11">对应小节 1.5</text>
+            <rect x="270" y="191" width="540" height="10" rx="5" fill="rgba(122,167,240,0.14)"/>
+            <circle cx="346" cy="196" r="5" fill="#7aa7f0"/><text x="346" y="178" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">需求</text><text x="346" y="224" text-anchor="middle" fill="#8499bd" font-size="11">列出要修的脏数据</text>
+            <circle cx="497" cy="196" r="5" fill="#7aa7f0"/><text x="497" y="178" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">数据</text><text x="497" y="224" text-anchor="middle" fill="#8499bd" font-size="11">历史时点可还原</text>
+            <circle cx="648" cy="196" r="5" fill="#7aa7f0"/><text x="648" y="178" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">验证</text><text x="648" y="224" text-anchor="middle" fill="#8499bd" font-size="11">修复前后可比对</text>
+            <circle cx="767" cy="196" r="5" fill="#7aa7f0"/><text x="767" y="178" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">交付</text><text x="767" y="224" text-anchor="middle" fill="#8499bd" font-size="11">质检脚本进仓库</text>
+            <circle cx="832" cy="196" r="7" fill="#8fb37a"/><text x="832" y="178" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">可展示</text>
+            <!-- 作品集三 -->
+            <text x="150" y="280" text-anchor="middle" fill="#eef4f8" font-size="15" font-weight="800">③ 模拟盘状态机</text>
+            <text x="150" y="300" text-anchor="middle" fill="#8499bd" font-size="11">对应小节 1.6</text>
+            <rect x="270" y="271" width="540" height="10" rx="5" fill="rgba(122,167,240,0.14)"/>
+            <circle cx="346" cy="276" r="5" fill="#7aa7f0"/><text x="346" y="258" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">需求</text><text x="346" y="304" text-anchor="middle" fill="#8499bd" font-size="11">状态机图先画全</text>
+            <circle cx="497" cy="276" r="5" fill="#7aa7f0"/><text x="497" y="258" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">数据</text><text x="497" y="304" text-anchor="middle" fill="#8499bd" font-size="11">逐笔委托都留痕</text>
+            <circle cx="648" cy="276" r="5" fill="#7aa7f0"/><text x="648" y="258" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">验证</text><text x="648" y="304" text-anchor="middle" fill="#8499bd" font-size="11">断线异常可恢复</text>
+            <circle cx="767" cy="276" r="5" fill="#7aa7f0"/><text x="767" y="258" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">交付</text><text x="767" y="304" text-anchor="middle" fill="#8499bd" font-size="11">连跑一个月不挂</text>
+            <circle cx="832" cy="276" r="7" fill="#8fb37a"/><text x="832" y="258" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">可展示</text>
+            <text x="450" y="338" text-anchor="middle" fill="#c9d4e8" font-size="13">三份作品集的共同标准:能跑、能讲、数据能复现</text>"""
+    return concept_figure(body, "0 0 900 355",
+        "三个作品集进度条:指数增强回测、数据质量与时点处理、模拟盘交易状态机,每件按需求、数据、验证、交付四个里程碑推进,末端为可展示",
+        "作品集不是一条高收益曲线,而是四段可检查的里程碑:需求写清、数据齐备、验证通过、交付可复现。指数增强练流程,数据质量练点时还原,模拟盘状态机练工程稳定性——三件都打到绿点,简历才有得讲。")
+
+
+def _fig_b1_glossary():
+    body = """            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">二十个词速查:先用人话记住,再回去抠定义</text>
+            <!-- 上卡:10 个金融词 -->
+            <rect x="40" y="56" width="820" height="172" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="84" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">金融词 · 先看懂市场在说什么</text>
+            <rect x="57" y="100" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="131" y="121" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">货币</text><text x="131" y="140" text-anchor="middle" fill="#bcc9dd" font-size="11">交换的通用筹码</text>
+            <rect x="214" y="100" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="288" y="121" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">信用</text><text x="288" y="140" text-anchor="middle" fill="#bcc9dd" font-size="11">先拿后还的凭证</text>
+            <rect x="371" y="100" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="445" y="121" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">利率</text><text x="445" y="140" text-anchor="middle" fill="#bcc9dd" font-size="11">钱的时间价格</text>
+            <rect x="528" y="100" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="602" y="121" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">通胀</text><text x="602" y="140" text-anchor="middle" fill="#bcc9dd" font-size="11">钱变薄了</text>
+            <rect x="685" y="100" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="759" y="121" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">股票</text><text x="759" y="140" text-anchor="middle" fill="#bcc9dd" font-size="11">公司的一小片</text>
+            <rect x="57" y="160" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="131" y="181" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">债券</text><text x="131" y="200" text-anchor="middle" fill="#bcc9dd" font-size="11">写进合同的借条</text>
+            <rect x="214" y="160" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="288" y="181" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">基金</text><text x="288" y="200" text-anchor="middle" fill="#bcc9dd" font-size="11">凑钱请人代投</text>
+            <rect x="371" y="160" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="445" y="181" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">ETF</text><text x="445" y="200" text-anchor="middle" fill="#bcc9dd" font-size="11">像股票买的篮子</text>
+            <rect x="528" y="160" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="602" y="181" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">期货</text><text x="602" y="200" text-anchor="middle" fill="#bcc9dd" font-size="11">锁住未来的价</text>
+            <rect x="685" y="160" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="759" y="181" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">期权</text><text x="759" y="200" text-anchor="middle" fill="#bcc9dd" font-size="11">一份选择的权利</text>
+            <!-- 下卡:10 个量化词 -->
+            <rect x="40" y="244" width="820" height="172" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="272" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">量化词 · 再看懂策略在说什么</text>
+            <rect x="57" y="288" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="131" y="309" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">Alpha</text><text x="131" y="328" text-anchor="middle" fill="#bcc9dd" font-size="11">跑赢市场的部分</text>
+            <rect x="214" y="288" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="288" y="309" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">Beta</text><text x="288" y="328" text-anchor="middle" fill="#bcc9dd" font-size="11">跟着大盘的部分</text>
+            <rect x="371" y="288" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="445" y="309" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">因子</text><text x="445" y="328" text-anchor="middle" fill="#bcc9dd" font-size="11">挑股票的依据</text>
+            <rect x="528" y="288" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="602" y="309" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">IC</text><text x="602" y="328" text-anchor="middle" fill="#bcc9dd" font-size="11">验因子灵不灵</text>
+            <rect x="685" y="288" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="759" y="309" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">回测</text><text x="759" y="328" text-anchor="middle" fill="#bcc9dd" font-size="11">用历史试跑策略</text>
+            <rect x="57" y="348" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="131" y="369" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">滑点</text><text x="131" y="388" text-anchor="middle" fill="#bcc9dd" font-size="11">预期价与成交的缝</text>
+            <rect x="214" y="348" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="288" y="369" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">容量</text><text x="288" y="388" text-anchor="middle" fill="#bcc9dd" font-size="11">最多装多少钱</text>
+            <rect x="371" y="348" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="445" y="369" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">跟踪误差</text><text x="445" y="388" text-anchor="middle" fill="#bcc9dd" font-size="11">偏离基准有多远</text>
+            <rect x="528" y="348" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="602" y="369" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">归因</text><text x="602" y="388" text-anchor="middle" fill="#bcc9dd" font-size="11">把盈亏拆出原因</text>
+            <rect x="685" y="348" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="759" y="369" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">风控</text><text x="759" y="388" text-anchor="middle" fill="#bcc9dd" font-size="11">先想好会怎么亏</text>
+            <text x="450" y="440" text-anchor="middle" fill="#8499bd" font-size="12.5">先记住这 20 个,后面翻任何一章都用得上</text>"""
+    return concept_figure(body, "0 0 900 455",
+        "两组术语速查卡:上卡十个金融词,下卡十个量化词,每个词配一句人话注解",
+        "二十个高频词,每个配一句人话:通胀是钱变薄了,滑点是预期价与成交价的缝,跟踪误差是偏离基准有多远。先用这些口语版本在脑子里占位,再去抠严格定义,术语就不再生疏。")
+
+
+def _fig_b1_account_fields():
+    body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">总资产 ≠ 可花的钱:先分清三个口袋</text>
+            <!-- 顶部:总资产 -->
+            <rect x="360" y="58" width="180" height="58" rx="10" fill="rgba(240,201,106,0.14)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="82" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">总资产 93,000</text>
+            <text x="450" y="104" text-anchor="middle" fill="#eef4f8" font-size="12.5">= 可用 25,000 + 持仓 68,000</text>
+            <!-- 分叉线 -->
+            <line x1="450" y1="116" x2="180" y2="164" stroke="#7aa7f0" stroke-width="1.5"/>
+            <line x1="450" y1="116" x2="450" y2="164" stroke="#7aa7f0" stroke-width="1.5"/>
+            <line x1="450" y1="116" x2="720" y2="164" stroke="#7aa7f0" stroke-width="1.5"/>
+            <!-- 三个子框 -->
+            <rect x="55" y="164" width="250" height="110" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="180" y="190" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 可用资金</text>
+            <text x="180" y="214" text-anchor="middle" fill="#c9d4e8" font-size="12.5">能买股票用</text>
+            <text x="180" y="240" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">例 25,000</text>
+            <text x="180" y="262" text-anchor="middle" fill="#8499bd" font-size="11">含当天卖出回款:能买不能取</text>
+            <rect x="325" y="164" width="250" height="110" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="190" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">② 可取资金</text>
+            <text x="450" y="214" text-anchor="middle" fill="#c9d4e8" font-size="12.5">能转出银行卡</text>
+            <text x="450" y="240" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">例 10,000</text>
+            <text x="450" y="262" text-anchor="middle" fill="#8499bd" font-size="11">前一晚对账后的可用( ≤ 可用)</text>
+            <rect x="595" y="164" width="250" height="110" rx="12" fill="rgba(232,120,120,0.08)" stroke="#e88"/>
+            <text x="720" y="190" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 持仓市值</text>
+            <text x="720" y="214" text-anchor="middle" fill="#c9d4e8" font-size="12.5">还没变成钱</text>
+            <text x="720" y="240" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">例 68,000</text>
+            <text x="720" y="262" text-anchor="middle" fill="#8499bd" font-size="11">浮盈要等卖成现金才算数</text>
+            <!-- 流转箭头 1:可用 → 可取(两框间隙,标注 T+1) -->
+            <line x1="305" y1="219" x2="321" y2="219" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#b1at)"/>
+            <text x="313" y="206" text-anchor="middle" fill="#8499bd" font-size="11">T+1</text>
+            <!-- 流转箭头 2:持仓 → 可用(底部大弧线) -->
+            <path d="M 720 276 C 690 348, 230 348, 200 280" fill="none" stroke="#a8c6ff" stroke-width="2.5" marker-end="url(#b1af)"/>
+            <text x="450" y="352" text-anchor="middle" fill="#a8c6ff" font-size="12.5">卖出成交:可用 +10,000,当天这笔钱不可取</text>
+            <defs>
+              <marker id="b1at" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker>
+              <marker id="b1af" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a8c6ff"/></marker>
+            </defs>
+            <text x="450" y="404" text-anchor="middle" fill="#ffb4b4" font-size="14">持仓市值不是钱——涨了的浮盈,先要能卖成现金;当天卖出的钱,T+1 才能取</text>"""
+    return concept_figure(body, "0 0 900 425",
+        "开户软件资产字段分解:总资产拆成可用资金、可取资金和持仓市值,卖出成交先进可用,隔日对账后才进可取",
+        "总资产 93,000 里,能买股票的是可用 25,000,能转出银行卡的只有可取 10,000,剩下的 68,000 是还没变成钱的持仓市值。卖出成交先进可用,当晚对账后(T+1)才进可取——浮盈再多,先要能卖成现金。")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def _fig_b2_week():
+    """第 27 章:模拟盘一周时间线,周一~周五每天一个事故卡,周末写复盘。"""
+    # (x, 日标签, 事故标题, 应对动作, 是否周末卡)
+    cards = [
+        (15, "周一", "数据没按时到", "停机告警·记日志", False),
+        (163, "周二", "信号文件为空", "不交易·查日志", False),
+        (312, "周三", "涨停买不到", "涨停不买·记偏离", False),
+        (460, "周四", "成本比预期高", "分组查滑点·再改", False),
+        (609, "周五", "盘后对账", "对账到0.01元再下班", False),
+        (757, "周末", "写复盘", "病历·药方都留档", True),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">模拟盘第一周:五个事故,一次复盘</text>')
+    parts.append('            <defs><marker id="wk" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>')
+    for x, day, title, act, weekend in cards:
+        cx = x + 64
+        stroke = "rgba(240,201,106,0.42)" if weekend else "rgba(232,136,136,0.35)"
+        fill = "rgba(240,201,106,0.08)" if weekend else "rgba(18,29,49,0.70)"
+        dayc = "#f0c96a" if weekend else "#ffb4b4"
+        parts.append('            <rect x="%d" y="64" width="128" height="172" rx="12" fill="%s" stroke="%s"/>' % (x, fill, stroke))
+        parts.append('            <text x="%d" y="96" text-anchor="middle" fill="%s" font-size="15" font-weight="800">%s</text>' % (cx, dayc, day))
+        parts.append('            ' + svg_text(title, cx, 122, 116, size=14, color="#eef4f8", max_chars=7, max_lines=2))
+        parts.append('            <line x1="%d" y1="142" x2="%d" y2="142" stroke="rgba(122,167,240,0.18)"/>' % (x + 16, x + 112))
+        parts.append('            <text x="%d" y="164" text-anchor="middle" fill="#8499bd" font-size="11.5">%s</text>' % (cx, "收尾" if weekend else "应对动作"))
+        parts.append('            ' + svg_text(act, cx, 194, 116, size=12.5, color="#bcc9dd", weight=600, max_chars=8, max_lines=2))
+    for i in range(5):
+        ax = cards[i][0] + 131
+        bx = cards[i + 1][0] - 3
+        parts.append('            <path d="M %d 118 L %d 118" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#wk)"/>' % (ax, bx))
+    parts.append('            <text x="450" y="258" text-anchor="middle" fill="#8499bd" font-size="12.5">本周末的事故清单:数据延迟 ×1 · 空信号 ×1 · 涨停未成交 ×1 · 滑点持续偏高 · 账实错位 ×1</text>')
+    parts.append('            <text x="450" y="282" text-anchor="middle" fill="#c9d4e8" font-size="13.5">一周只证明流程通了,证明不了策略有效 —— 模拟盘至少再跑几个月,才谈实盘</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 300",
+        "模拟盘一周时间线:周一数据没到、周二信号为空、周三涨停买不到、周四成本超标、周五盘后对账,周末写复盘",
+        "模拟盘第一周把回测里不会发生的事演了个遍:数据迟到、空信号、涨停买不进、滑点超标、账实错位。每条事故都要落成一条事先写好的处理规则,周末复盘把病历和药方一起留档——但一周只证明流程通了,证明不了策略有效。")
+
+
+def _fig_b2_guards():
+    """第 28 章:小实盘的三层护栏,从最外圈一路走到实盘。"""
+    body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">小实盘的三层护栏:从最外圈走到实盘</text>
+            <defs><marker id="gd" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
+            <!-- 人:从外往里走 -->
+            <circle cx="64" cy="150" r="8" fill="none" stroke="#a8c6ff" stroke-width="2.5"/>
+            <path d="M 64 158 L 64 186" stroke="#a8c6ff" stroke-width="2.5" fill="none"/>
+            <path d="M 64 166 L 50 180 M 64 166 L 78 180" stroke="#a8c6ff" stroke-width="2.5" fill="none"/>
+            <path d="M 64 186 L 52 206 M 64 186 L 76 206" stroke="#a8c6ff" stroke-width="2.5" fill="none"/>
+            <text x="64" y="228" text-anchor="middle" fill="#8499bd" font-size="12">从外往里走</text>
+            <!-- 第 1 层:资金上限(金) -->
+            <rect x="155" y="84" width="170" height="198" rx="18" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)" stroke-width="1.8"/>
+            <circle cx="183" cy="84" r="14" fill="#101d33" stroke="rgba(240,201,106,0.6)" stroke-width="1.5"/>
+            <text x="183" y="89" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">1</text>
+            <text x="240" y="116" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">资金上限</text>
+            <text x="240" y="148" text-anchor="middle" fill="#8499bd" font-size="12">标准只有一条:</text>
+            <text x="240" y="172" text-anchor="middle" fill="#eef4f8" font-size="13">全部亏光,也不心疼</text>
+            <text x="240" y="196" text-anchor="middle" fill="#eef4f8" font-size="13">不影响吃饭和房租</text>
+            <text x="240" y="222" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">示例上限:1 万元</text>
+            <rect x="200" y="244" width="80" height="26" rx="13" fill="none" stroke="#f0c96a"/>
+            <text x="240" y="262" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">硬约束</text>
+            <!-- 第 2 层:停止规则(红) -->
+            <rect x="395" y="84" width="170" height="198" rx="18" fill="rgba(232,120,120,0.07)" stroke="rgba(232,136,136,0.42)" stroke-width="1.8"/>
+            <circle cx="423" cy="84" r="14" fill="#101d33" stroke="rgba(232,136,136,0.6)" stroke-width="1.5"/>
+            <text x="423" y="89" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">2</text>
+            <text x="480" y="116" text-anchor="middle" fill="#ffb4b4" font-size="16" font-weight="800">停止规则</text>
+            <text x="480" y="148" text-anchor="middle" fill="#8499bd" font-size="12">入场前写死触发线:</text>
+            <text x="480" y="172" text-anchor="middle" fill="#eef4f8" font-size="13">浮亏 10% → 强制停</text>
+            <text x="480" y="196" text-anchor="middle" fill="#eef4f8" font-size="13">对不上账连两周 → 停</text>
+            <text x="480" y="220" text-anchor="middle" fill="#eef4f8" font-size="13">行为变形说不清 → 停</text>
+            <rect x="440" y="244" width="80" height="26" rx="13" fill="none" stroke="#f0c96a"/>
+            <text x="480" y="262" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">硬约束</text>
+            <!-- 第 3 层:记录纪律(蓝) -->
+            <rect x="635" y="84" width="170" height="198" rx="18" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.30)" stroke-width="1.8"/>
+            <circle cx="663" cy="84" r="14" fill="#101d33" stroke="rgba(122,167,240,0.55)" stroke-width="1.5"/>
+            <text x="663" y="89" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">3</text>
+            <text x="720" y="116" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">记录纪律</text>
+            <text x="720" y="148" text-anchor="middle" fill="#8499bd" font-size="12">一笔一笔写成表:</text>
+            <text x="720" y="172" text-anchor="middle" fill="#eef4f8" font-size="13">委托价 · 成交价 · 滑点</text>
+            <text x="720" y="196" text-anchor="middle" fill="#eef4f8" font-size="13">费用 · 未成交原因</text>
+            <text x="720" y="220" text-anchor="middle" fill="#eef4f8" font-size="13">当时的心理状态</text>
+            <text x="720" y="248" text-anchor="middle" fill="#8499bd" font-size="11.5">盈亏不会说话,记录会</text>
+            <!-- 向左向右的推进箭头 -->
+            <path d="M 84 184 L 151 184" stroke="#a8c6ff" stroke-width="2" fill="none" marker-end="url(#gd)"/>
+            <path d="M 329 184 L 391 184" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#gd)"/>
+            <path d="M 569 184 L 631 184" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#gd)"/>
+            <path d="M 809 184 L 850 184" stroke="#f0c96a" stroke-width="2.5" fill="none" marker-end="url(#gd)"/>
+            <text x="868" y="189" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">实盘</text>"""
+    body += "\n" + '            <text x="450" y="316" text-anchor="middle" fill="#c9d4e8" font-size="13.5">三层护栏入金前写死:钱有上限 · 碰到线就停 · 每笔都留痕 —— 触发停止不是失败,是护栏在工作</text>'
+    return concept_figure(body, "0 0 900 336",
+        "小实盘三层护栏:第1层资金上限(亏光也不影响生活的钱,示例1万)、第2层停止规则(浮亏10%强制停、连续对不上账停)、第3层记录纪律(每笔委托价成交价滑点心理状态留痕)",
+        "第一次小实盘的三层护栏都写在入金之前:钱的上限是「全亏光也不影响生活」的学费;停止线碰到就停,停不是失败;每一笔委托价、成交价、滑点和当时心理状态都留痕——盈亏这个数字最不会说话,记录才会。")
+
+
+def _fig_b2_checklist():
+    """第 29 章:金融直觉 8 件事 vs 量化纪律 10 件事,两列对照,门后才是代码。"""
+    left = [
+        ("钱和财富的区别", "票子 ≠ 产出"),
+        ("银行有用又脆弱", "挤兑是信心病"),
+        ("区分股票和债券", "股东排债主后"),
+        ("基金和 ETF 结构", "一篮子打包卖"),
+        ("A 股交易规则", "T+1 与涨跌停"),
+        ("收益和风险指标", "回撤 · 夏普口径"),
+        ("有效市场与行为偏差", "便宜不会白捡"),
+        ("自己的资金边界", "亏光也不心疼"),
+    ]
+    right = [
+        ("数据必须可追溯", "来路留得住"),
+        ("时间线必须正确", "按公告日对齐"),
+        ("股票池必须点时", "成分随日期变"),
+        ("交易规则进回测", "涨停撮合不掉"),
+        ("成本做敏感性", "佣金·滑点·冲击"),
+        ("因子有单独报告", "不过堂不合成"),
+        ("模型必须有基线", "先赢过等权持有"),
+        ("组合必须有约束", "单票·行业上限"),
+        ("报告必须能复现", "同配置同结果"),
+        ("模拟盘先于实盘", "免费犯错阶段"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">动手写代码前,先过完这 18 道关</text>')
+    parts.append('            <defs><marker id="ky" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>')
+    parts.append('            <text x="201" y="60" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">金融直觉 · 8 件事</text>')
+    parts.append('            <text x="706" y="60" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">量化纪律 · 10 件事</text>')
+    for i, (t, a) in enumerate(left):
+        y = 78 + i * 44
+        cy = y + 20
+        parts.append('            <rect x="28" y="%d" width="346" height="40" rx="10" fill="rgba(18,29,49,0.55)" stroke="rgba(122,167,240,0.22)"/>' % y)
+        parts.append('            <circle cx="46" cy="%d" r="4.5" fill="#7aa7f0"/>' % cy)
+        parts.append('            <text x="60" y="%d" fill="#eef4f8" font-size="13.5" font-weight="700">%s  <tspan fill="#8499bd" font-size="11.5" font-weight="400">%s</tspan></text>' % (cy + 5, t, a))
+    for i, (t, a) in enumerate(right):
+        y = 76 + i * 36
+        cy = y + 16
+        parts.append('            <rect x="540" y="%d" width="332" height="32" rx="9" fill="rgba(18,29,49,0.55)" stroke="rgba(240,201,106,0.25)"/>' % y)
+        parts.append('            <circle cx="558" cy="%d" r="4.5" fill="#f0c96a"/>' % cy)
+        parts.append('            <text x="572" y="%d" fill="#eef4f8" font-size="13" font-weight="700">%s  <tspan fill="#8499bd" font-size="11.5" font-weight="400">%s</tspan></text>' % (cy + 4, t, a))
+    parts.append('            <!-- 中间的门:两边是钥匙,门后才是代码 -->')
+    parts.append('            <path d="M 418 300 L 418 216 A 32 34 0 0 1 482 216 L 482 300 Z" fill="rgba(240,201,106,0.08)" stroke="rgba(240,201,106,0.55)" stroke-width="2"/>')
+    parts.append('            <circle cx="450" cy="250" r="7" fill="#f0c96a"/>')
+    parts.append('            <rect x="447" y="255" width="6" height="22" rx="2" fill="#f0c96a"/>')
+    parts.append('            <path d="M 384 254 L 412 254" stroke="#f0c96a" stroke-width="2" fill="none" marker-end="url(#ky)"/>')
+    parts.append('            <path d="M 530 254 L 488 254" stroke="#f0c96a" stroke-width="2" fill="none" marker-end="url(#ky)"/>')
+    parts.append('            <text x="450" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">两列就是两把钥匙</text>')
+    parts.append('            <text x="450" y="326" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">8 + 10 = 18 关,一关不能跳</text>')
+    parts.append('            <text x="450" y="470" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">门后才是代码:左边看懂世界,右边管住自己</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 492",
+        "两列对照表:左列金融直觉8件事(钱和财富、银行脆弱、股票债券、基金ETF、A股规则、收益风险、有效市场、资金边界),右列量化纪律10件事(数据、时间线、股票池、交易规则、成本、因子、基线、约束、复现、模拟盘),中间一扇门",
+        "动手写代码之前要真正过的 18 道关:左边 8 件是看懂金融世界的直觉,右边 10 件是量化工程的纪律,对应本书前面每一章的地基。两列合在一起是钥匙,门打开之后,才轮得到代码上场。")
+
+
+def _fig_b2_failure():
+    """第 30 章:程序员七步翻车(红)与正确姿势(金)逐步对照。"""
+    # (左主句, 左细节, 右主句, 右细节)
+    rows = [
+        ("先找模型,后找问题", "拿 60 天价格,预测未来 5 天", "先定义问题,再选模型", "股票池 · 频率 · 成本先写死"),
+        ("忽略时间线", "1 月就用上 3 月公布的年报", "先画时间线,再写代码", "每个字段按公告日对齐"),
+        ("低估交易成本", "只扣了个拍脑袋的低佣金", "成本敏感性拉满 0~3 倍", "佣金 · 印花税 · 滑点逐项扣"),
+        ("相信最佳参数", "试一百次,留下样本内第一", "看最差情况,不看最优", "样本外普普通通才算数"),
+        ("小赚后马上加仓", "两周翻红,资金放大 5 倍", "加仓前先有停止线", "每放大一档,重验一遍"),
+        ("没有停止规则", "继续怕亏,停了怕反弹", "先定「什么时候不买」", "回撤超 95% 分位就降仓"),
+        ("最后才复盘", "亏了才想起打印记录", "每次亏损都留日志收尾", "错误清单 6 条,逐条认账"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一个程序员的七步翻车,逐条翻正</text>')
+    parts.append('            <defs><marker id="fl" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>')
+    parts.append('            <text x="200" y="70" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">翻车七步</text>')
+    parts.append('            <text x="450" y="70" text-anchor="middle" fill="#8499bd" font-size="12">→ 逐条翻正 →</text>')
+    parts.append('            <text x="700" y="70" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">正确姿势</text>')
+    for i, (lm, ls, rm, rs) in enumerate(rows):
+        y = 80 + i * 52
+        cy = y + 23
+        parts.append('            <rect x="36" y="%d" width="330" height="46" rx="10" fill="rgba(232,120,120,0.10)" stroke="rgba(232,136,136,0.35)"/>' % y)
+        parts.append('            <circle cx="58" cy="%d" r="11" fill="rgba(232,120,120,0.25)"/>' % cy)
+        parts.append('            <text x="58" y="%d" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">%d</text>' % (cy + 4, i + 1))
+        parts.append('            <text x="76" y="%d" fill="#ffb4b4" font-size="13" font-weight="800">%s</text>' % (cy - 4, lm))
+        parts.append('            <text x="76" y="%d" fill="#bcc9dd" font-size="11.5">%s</text>' % (cy + 16, ls))
+        parts.append('            <path d="M 372 %d C 415 %d 485 %d 528 %d" stroke="#f0c96a" stroke-width="2" fill="none" marker-end="url(#fl)"/>' % (cy, cy - 16, cy - 16, cy))
+        parts.append('            <rect x="534" y="%d" width="330" height="46" rx="10" fill="rgba(240,201,106,0.10)" stroke="rgba(240,201,106,0.42)"/>' % y)
+        parts.append('            <text x="556" y="%d" fill="#f0c96a" font-size="13" font-weight="800">%s</text>' % (cy - 4, rm))
+        parts.append('            <text x="556" y="%d" fill="#bcc9dd" font-size="11.5">%s</text>' % (cy + 16, rs))
+    parts.append('            <text x="450" y="456" text-anchor="middle" fill="#c9d4e8" font-size="13">他的补救是:列 6 条错误清单,然后按和第一次完全相反的顺序,重做整个项目</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 470",
+        "七步翻车与修正对照:先找模型后找问题、忽略时间线、低估成本、相信最佳参数、小赚加仓、没停止规则、最后才复盘;右侧逐条给出正确姿势",
+        "每一步翻车,回测曲线都很好看:60 天价格预测未来 5 天收益、1 月就用上 3 月才公布的年报、只扣拍脑袋的低佣金、试一百次留下样本内第一、两周翻红后资金放大 5 倍……直到亏完才复盘。每一步的正确顺序,都写在右边那列。")
+
+
+def _fig_b2_pipeline():
+    """第 31 章:八步稳妥项目流水线,每步带推进/停止判据,小赚后回到第 5 步。"""
+    # (步名, 判据, 判据是否停止线)
+    nodes = [
+        ("问题很小", "说不清问题 → 停", True),
+        ("先查数据", "数据对不上 → 停", True),
+        ("最简单基线", "先赢过等权基线", False),
+        ("单因子报告", "单因子单独打分", False),
+        ("多因子组合", "等权合成 + 约束", False),
+        ("样本外模拟盘", "样本外普通而不崩", False),
+        ("小资金半自动", "亏光也扛得住的钱", False),
+        ("复盘判断", "先加仪表,再加钱", False),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">稳妥项目的八步流水线:每步都带闸门</text>')
+    parts.append('            <defs><marker id="pl" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker><marker id="plg" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>')
+    for i, (name, crit, is_stop) in enumerate(nodes):
+        cx = 62 + i * 110
+        parts.append('            <rect x="%d" y="66" width="96" height="84" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.30)"/>' % (cx - 48))
+        parts.append('            <circle cx="%d" cy="66" r="11" fill="rgba(122,167,240,0.25)"/>' % (cx - 34))
+        parts.append('            <text x="%d" y="70" text-anchor="middle" fill="#a8c6ff" font-size="12" font-weight="800">%d</text>' % (cx - 34, i + 1))
+        parts.append('            ' + svg_text(name, cx, 108, 90, size=13, color="#eef4f8", weight=800, max_chars=6, max_lines=1))
+        parts.append('            ' + svg_text(crit, cx, 172, 98, size=11, color=("#ffb4b4" if is_stop else "#bcc9dd"), weight=600, max_chars=8, max_lines=1))
+        if i < 7:
+            parts.append('            <path d="M %d 108 L %d 108" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#pl)"/>' % (cx + 49, cx + 61))
+    # 分叉:从第 7 步小赚后回到第 5 步重验,不直接放大
+    parts.append('            <path d="M 722 152 L 722 198 L 502 198 L 502 158" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 5" fill="none" marker-end="url(#plg)"/>')
+    parts.append('            <text x="612" y="220" text-anchor="middle" fill="#f0c96a" font-size="12">小赚后想放大 → 回到第 5 步重验,别直接放大资金</text>')
+    # 主线末端的小旗
+    parts.append('            <line x1="832" y1="66" x2="832" y2="36" stroke="#f0c96a" stroke-width="2"/>')
+    parts.append('            <path d="M 832 36 L 860 43 L 832 50 Z" fill="#f0c96a"/>')
+    parts.append('            <text x="450" y="268" text-anchor="middle" fill="#c9d4e8" font-size="13">顺序不许跳:每一步先过了自己的判据,才迈下一步</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 300",
+        "八步稳妥项目流水线:问题很小、先查数据、最简单基线、单因子报告、多因子组合、样本外模拟盘、小资金半自动、复盘判断;每步带停止或推进判据,小赚后回到第5步重验",
+        "一个稳妥的个人量化项目按八步长大:问题先要小到一句话说清,数据先体检再谈策略,基线先立住、因子单独过堂、组合先等权;样本外「普通而不崩」才上模拟盘,小资金半自动跑顺之后,依然先加仪表再谈放大资金。")
+
+
+def _fig_b2_questions():
+    """第 32 章:六问检查牌,六张等高卡上下堆叠,六关都过才准开始。"""
+    cards = [
+        ("问题足够小?", "一句话说清:哪个池子 · 哪个因子 · 哪个频率"),
+        ("最坏情况知道?", "先想「全亏光那天」长什么样,再谈收益"),
+        ("当时可见?", "从下单到成交,不能让代码看到未来"),
+        ("成本算过?", "佣金 · 印花税 · 滑点 · 冲击:先算成本再看收益"),
+        ("能随时停止?", "停止线开工前写死:数据坏停 · 对不上账停"),
+        ("能复盘写三行?", "数据版本 · 参数 · 成交记录,环环说清"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">研究动手前,先刷六道闸</text>')
+    parts.append('            <line x1="118" y1="86" x2="118" y2="396" stroke="rgba(240,201,106,0.35)" stroke-width="2"/>')
+    for i, (q, k) in enumerate(cards):
+        y = 58 + i * 62
+        cy = y + 28
+        parts.append('            <rect x="78" y="%d" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % y)
+        parts.append('            <circle cx="118" cy="%d" r="16" fill="#f0c96a"/>' % cy)
+        parts.append('            <text x="118" y="%d" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>' % (cy + 6))
+        parts.append('            <text x="150" y="%d" fill="#eef4f8" font-size="15.5" font-weight="800">%s</text>' % (cy - 3, q))
+        parts.append('            <text x="150" y="%d" fill="#bcc9dd" font-size="12.5">%s</text>' % (cy + 19, k))
+        parts.append('            <text x="812" y="%d" text-anchor="end" fill="#8499bd" font-size="12">第 %d 闸</text>' % (cy + 4, i + 1))
+    parts.append('            <text x="450" y="452" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">六关都过,才准开始</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 470",
+        "六问检查牌:问题足够小、最坏情况知道、当时可见、成本算过、能随时停止、能复盘写三行;六关都过才准开始",
+        "每次研究、交易、回测、实盘之前,先把这六张牌从上到下刷一遍:问题要小到一句话说清,先想最坏那一天,每个字段按当时可见性对齐,先算成本再看收益,停止线提前写死,资料留到能复盘——六关都过,才准开始。")
+
+
+CONCEPT_FIGURES_FREE = {
+    12: [("第一阶段", _fig_b1_roadmap)],
+    20: [("保证金和现金", _fig_b1_neutral_ledger)],
+    23: [("真实财富和生产力", _fig_b1_ten_layers)],
+    24: [("指数增强回测", _fig_b1_portfolio)],
+    25: [("货币", _fig_b1_glossary)],
+    26: [("总资产不是可花的钱", _fig_b1_account_fields)],
+    27: [("数据没有按时到", _fig_b2_week)],
+    28: [("先定资金上限", _fig_b2_guards)],
+    29: [("能解释钱和财富的区别", _fig_b2_checklist)],
+    30: [("他先找模型", _fig_b2_failure)],
+    31: [("问题很小", _fig_b2_pipeline)],
+    32: [("问题是否足够小", _fig_b2_questions)],
+}
+
 CONCEPT_FIGURES = {
     0: [("鱼票为什么会缩水", _fig_inflation)],
     1: [("一张极简资产负债表", _fig_bank_balance), ("信心为什么这么重要", _fig_bank_run)],
@@ -973,6 +1483,8 @@ CONCEPT_FIGURES = {
     21: [("过拟合", _fig_overfitting)],
     22: [("回撤里最容易做错决定", _fig_loss_recovery)],
 }
+
+CONCEPT_FIGURES.update(CONCEPT_FIGURES_FREE)
 
 
 SUMMARY_LABEL_OVERRIDES = {
@@ -1049,42 +1561,6 @@ def render_head(title: str, desc: str = "") -> str:
     <link rel="stylesheet" href="assets/book.css" />
   </head>
 """
-
-
-def render_chapter_svg(ch: dict, rendered_sections: list, uid: str = "", map_title: str = "") -> str:
-    title = esc(ch["title"])
-    heading = esc(map_title) if map_title else f"第 {ch['num']} 章概念路径"
-    raw_sections = [s[0] for s in rendered_sections]
-    if len(raw_sections) <= 8:
-        section_labels = raw_sections
-    else:
-        section_labels = raw_sections[:7] + [raw_sections[-1]]
-    while len(section_labels) < 8:
-        section_labels.append(ch["summary"][len(section_labels) % len(ch["summary"])])
-    # 2x4 编号网格:序号在左上,标题主体。不画连接线,干净利落
-    card_positions = []
-    for row in range(2):
-        for col in range(4):
-            card_positions.append((54 + col * 200, 92 + row * 152))  # (x, y) 卡片左上
-    flow_nodes = []
-    for i, (label, (x, y)) in enumerate(zip(section_labels, card_positions), 1):
-        flow_nodes.append(f"""
-            <g>
-              <rect x="{x}" y="{y}" width="188" height="112" rx="14" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.3)" stroke-width="1.2" />
-              <rect x="{x + 12}" y="{y + 12}" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="{x + 25}" y="{y + 31}" text-anchor="middle" fill="#101420" font-size="14" font-weight="900">{i}</text>
-              {svg_text(label, x + 94, y + 78, 164, size=14, max_chars=9, max_lines=3)}
-            </g>""")
-    flow_figure = f"""
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 400" role="img" aria-label="{heading}: {title}">
-            <rect x="18" y="18" width="864" height="352" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
-            <text x="450" y="62" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">{heading}</text>
-            {''.join(flow_nodes)}
-          </svg>
-          <p class="figure__cap">本图从“{esc(section_labels[0])}”走到“{esc(section_labels[-1])}”,先看路径再回到正文补细节。</p>
-        </div>"""
-    return flow_figure
 
 
 def render_summary_figure(ch: dict) -> str:
@@ -1217,17 +1693,12 @@ def render_chapter(ch: dict) -> str:
     units = ch.get("units") or []
     sections = []
     recap_rows = []
-    unit_maps = []
     if len(units) > 1:
-        # 多单元章:单元 = h2 大块,单元内小节 = h3(x.y 编号),每个单元配自己的概念路径图
+        # 多单元章:单元 = h2 大块,单元内小节 = h3(x.y 编号)
         for ui, unit in enumerate(units, 1):
             unit_sections = prepare_sections(unit["sections"])
-            unit_maps.append((ui, render_chapter_svg(
-                ch, unit_sections, uid=f"u{ui}",
-                map_title=f"第 {idx} 章 · {unit['title']}:概念路径")))
             sections.append(f"""
         <h2>{ui}. {esc(unit["title"])}</h2>
-{render_chapter_svg(ch, unit_sections, uid=f"u{ui}", map_title=f"第 {idx} 章 · {unit['title']}:概念路径")}
 """)
             if unit.get("lead"):
                 sections.append(f"        <p>{esc(unit['lead'])}</p>\n")
@@ -1251,11 +1722,9 @@ def render_chapter(ch: dict) -> str:
     for ai, (keyword, maker) in enumerate(anchors):
         if not used[ai]:
             sections.append(maker())
-    # 单单元章:整章概念路径图放在开头;多单元章的概念图已按单元内嵌,开头不再重复
-    top_map = "" if len(units) > 1 else render_chapter_svg(ch, prepare_sections(ch["sections"]))
-    # 多单元章已各带单元概念图,天然呼吸道充足,不再追加"三件事"卡片;
-    # 单单元章且没有手画概念图的,沿用"留下三件事"图收尾
-    tail_figure = "" if (anchors or len(units) > 1) else render_summary_figure(ch)
+    top_map = ""
+    # 没有手画概念图的章(不分单元数),用"留下三件事"图收尾
+    tail_figure = "" if anchors else render_summary_figure(ch)
 
     summary = "\n".join(f"            <li>{esc(x)}</li>" for x in ch["summary"])
     section_recap = "\n".join(
