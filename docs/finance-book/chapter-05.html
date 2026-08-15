@@ -37,6 +37,51 @@
         <h3>1.3. 为什么期货会放大盈亏</h3>
 <p>期货最容易让新手受伤的地方,藏在<span class="hl">“<span class="term">保证金</span>”</span>三个字里。假设一份期货合约名义价值一百万元,<span class="term">保证金</span>比例是百分之十。你不需要掏出一百万元,只需拿出十万元<span class="term">保证金</span>,就能控制这一百万元的名义合约。十万元指挥一百万元,听上去是不是有点像咒语?</p><p>感受一下放大效应。如果标的价格上涨百分之一,合约名义盈利一万元。相对于一百万元,这只是百分之一;可相对于你掏出的十万元<span class="term">保证金</span>,就是百分之十。再翻一面:标的下跌百分之一,你的<span class="term">保证金</span>同样亏掉百分之十。标的才晃了一小下,你的账户已经坐了一整格电梯。</p><p>把每日结算用数字走一遍。第一天标的跌百分之一:合约亏一万元,当天从<span class="term">保证金</span>里划走,账户剩九万。第二天再跌百分之一:再划一万,剩八万。假设交易所的维持线是八万,第三天开盘前,追加<span class="term">保证金</span>的电话就来了。注意,不是到期才算总账,而是每天结一次——你连<span class="hl">“装死等反弹”</span>这个选项都没有。</p><p>这就是<span class="term">杠杆</span>。<span class="term">杠杆</span>不会提高你判断正确的概率,它只负责把结果放大:方向对时赚得快,方向错时亏得也快。<span class="term">保证金</span>不足时,你会被要求追加<span class="term">保证金</span>;拿不出或者不肯拿,强平就找上门,连带你翻身的机会一起清仓。</p><p>金融史上最惨烈的一课,偏偏由一群公认最聪明的人主演。<span class="num">1994 年</span>,一家叫<span class="hl">“长期资本管理公司”</span>(LTCM)的对冲基金成立,合伙人名单金光闪闪:两位后来在 <span class="num">1997 年</span>拿下诺贝尔经济学奖的经济学家——他们正是期权定价理论的奠基人,外加一位前美联储副主席。这支梦之队架起几十倍<span class="term">杠杆</span>,加上规模巨大的衍生品合约,前几年赚得盆满钵满。</p><p>但 <span class="num">1998 年</span>,俄罗斯突然债务违约,市场朝着他们模型里<span class="hl">“几乎不可能”</span>的方向剧烈运动,高<span class="term">杠杆</span>瞬间把亏损放大到无法承受。短短一百多天,基金净值跌去约九成、亏掉近 <span class="num">46 亿美元</span>,最后要美联储出面牵头救助,才没有把整个金融系统一起拖下水。</p><p>把这个故事钉在心里:诺贝尔奖级别的聪明,配上过高的<span class="term">杠杆</span>,照样爆仓。<span class="term">杠杆</span>的问题从来不是<span class="hl">“你会不会算”</span>,而是“万一算错、或者世界不按你的模型走,你还活不活得下来”。这也是本书后面反复强调的顺序:先学会活下来,再谈赚多少。</p><div class="callout callout--note reveal"><span class="callout__title">不要把占用资金少理解成风险小</span><p>期货占用<span class="term">保证金</span>少,不是因为风险小,而是因为它用<span class="term">保证金</span>制度放大了账户波动。</p></div>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 380" role="img" aria-label="期货逐日盯市时间线:缴 10 万保证金控制 100 万合约;标的每天跌 1% 就划走 1 万,余额 10 万、9 万、8 万,触到维持线 8 万后第三天开盘前必须追加,否则强平">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期货逐日盯市:10 万保证金,两天亏到维持线</text>
+            <text x="450" y="58" text-anchor="middle" fill="#8499bd" font-size="12.5">名义 100 万合约 · 保证金比例 10% → 缴 10 万;标的每跌 1%,合约当天就亏 1 万</text>
+            <defs><marker id="c5m" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>
+            <rect x="60" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="150" y="101" text-anchor="middle" fill="#7aa7f0" font-size="14" font-weight="800"><tspan x="150" y="101">开仓日</tspan></text>
+            <text x="150" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">缴保证金 10 万</text>
+            <text x="150" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">控制名义 100 万</text>
+            <text x="150" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">当日余额 10 万</text>
+            <path d="M 242 151 L 266 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
+            <rect x="270" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="360" y="101" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800"><tspan x="360" y="101">第1天收盘</tspan></text>
+            <text x="360" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">结算价 -1%</text>
+            <text x="360" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">当日划走 1 万</text>
+            <text x="360" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">余额 9 万</text>
+            <path d="M 452 151 L 476 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
+            <rect x="480" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(232,120,120,0.45)"/>
+            <text x="570" y="101" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800"><tspan x="570" y="101">第2天收盘</tspan></text>
+            <text x="570" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">再跌 -1%</text>
+            <text x="570" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">又划走 1 万</text>
+            <text x="570" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">余额 8 万</text>
+            <text x="570" y="204" text-anchor="middle" fill="#c9d4e8" font-size="12">触到维持线 8 万</text>
+            <path d="M 662 151 L 686 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
+            <rect x="690" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="780" y="101" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800"><tspan x="780" y="101">第3天开盘前</tspan></text>
+            <text x="780" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">追加保证金电话</text>
+            <text x="780" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">补足 10 万 → 留下</text>
+            <text x="780" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">拿不出 → 强平清仓</text>
+            <text x="100" y="252" fill="#8499bd" font-size="11">账户保证金余额 ↓</text>
+            <line x1="100" y1="316" x2="830" y2="316" stroke="#e88" stroke-width="1.5" stroke-dasharray="6 5"/>
+            <text x="100" y="308" fill="#ffb4b4" font-size="12">维持线 8 万:低于它就要追加</text>
+            <path d="M 150 278 L 360 297 L 570 316 L 780 316" fill="none" stroke="#f0c96a" stroke-width="2"/>
+            <circle cx="150" cy="278" r="5" fill="#f0c96a"/>
+            <text x="150" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">10 万</text>
+            <circle cx="360" cy="297" r="5" fill="#f0c96a"/>
+            <text x="360" y="283" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">9 万</text>
+            <circle cx="570" cy="316" r="5" fill="#f0c96a"/>
+            <text x="570" y="302" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">8 万</text>
+            <circle cx="780" cy="316" r="8" fill="none" stroke="#e88" stroke-width="2"/>
+            <text x="780" y="336" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">第 3 天开盘前:触发追加电话</text>
+            <text x="450" y="364" text-anchor="middle" fill="#c9d4e8" font-size="13">每天收盘按结算价当场结清:连「等反弹再说」的选项都没有——划走的是现金,不是浮亏数字</text>
+          </svg>
+          <p class="figure__cap">把每日结算用数字走一遍:第一天亏 1 万剩 9 万,第二天再亏 1 万剩 8 万,正好触到维持线——第三天开盘前追加电话就到。杠杆不提高判断胜率,只放大结果,而且你连「装死等反弹」的选项都没有。</p>
+        </div>
         <h3>1.4. 套期保值、投机和套利</h3>
 <p>期货有三种常见用途,动机完全不同,别把它们混成一锅。第一种是套期保值。渔民怕鱼价跌,饭店怕鱼价涨,他们用期货锁定未来价格。注意这个目的:不是赚大钱,而是把未来的不确定性切掉一块——像给系统加熔断,不为跑分,只为不出事。</p><p>把套保用数字走完整。渔民今天按十元卖出三个月期货。三个月后现货跌到八元:现货这批鱼每条少卖两元,期货空头按十元卖出、八元平仓买回,每条赚回两元——两笔一抵,每条净收入还是十元。反过来现货涨到十二元:现货多赚两元,期货亏两元,还是十元。看明白了吗?套保画出来的收益线是一条水平线,好坏都锁死。</p><p>第二种是投机。投机者既不生产鱼、也不需要鱼,他只是判断鱼价会涨或会跌,通过期货表达观点。骂投机者之前先停一秒:他们承担了价格波动的风险,也给市场提供了流动性——一个没人愿意接盘的市场,想保值的人也保不了值。</p><p>第三种是套利。比如同一种商品在两个市场价格差得不合理,或者现货和期货之间的关系偏离常态,套利者尝试买便宜的、卖贵的,等待价差收敛。听上去稳赚?别太乐观:价差可能继续扩大,<span class="term">保证金</span>可能先扛不住——<span class="hl">“看到收敛”</span>和<span class="hl">“活到收敛”</span>之间,隔着一条河。</p>
 
@@ -87,6 +132,40 @@
         <h3>2.3. 买方亏损有限,卖方风险更复杂</h3>
 <p>期权买方最大的好处,一句话讲完:亏损有限。你买看涨期权,如果标的大跌,你最多亏掉权利金;你买看跌期权,如果标的大涨,你最多也亏掉权利金。最坏的结果,在你掏出权利金的那一刻就封了顶。</p><p>卖方则是另一本账。他收了权利金,就得承担履约义务。卖出看涨期权时,如果标的暴涨,卖方可能要按低价把标的卖给买方,亏损可能很大;卖出看跌期权时,如果标的暴跌,卖方可能要按高价接下标的,亏损也可能很大。权利金是确定的小收入,义务是不确定的大窟窿。</p><p>把卖方的账算具体。你卖出一张行权价一百元的看涨,收五元权利金。标的涨到一百三十元:你要按一百元交出市价一百三的东西,亏三十元,扣掉权利金净亏二十五;涨到一百五十元,净亏四十五,理论上没有顶。卖出看跌同理:标的跌到六十元,你按一百元接下,亏四十,扣五元净亏三十五;极端情况标的一文不值,净亏九十五。买方的亏损是封了口的信封,卖方的亏损是没封底的井。</p><p>这就是为什么很多<span class="hl">“卖期权”</span>策略看起来胜率很高,但你不能简单把它理解成低风险。它可能平时一笔一笔收小钱,收得你心旷神怡,然后极端行情里一次亏掉大钱。胜率描述的是频率,从来描述不了幅度。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 350" role="img" aria-label="看涨期权买卖双方到期损益镜像图:行权价 10 元、权利金 0.5 元,盈亏平衡点 10.5 元;买方亏损有限盈利不封顶,卖方盈利有限亏损不见底,两条曲线关于零轴镜像">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">看涨期权:买方和卖方,同一条曲线的两面镜子</text>
+            <text x="450" y="56" text-anchor="middle" fill="#8499bd" font-size="12.5">例:行权价 K = 10 元,权利金 0.5 元/股 → 股价涨过 10.5 元,买方才真正开始赚钱</text>
+            <defs><marker id="c5x" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
+            <line x1="100" y1="190" x2="800" y2="190" stroke="#46587a" stroke-width="1.5" marker-end="url(#c5x)"/>
+            <line x1="100" y1="60" x2="100" y2="300" stroke="#46587a" stroke-width="1.5"/>
+            <text x="796" y="212" text-anchor="end" fill="#8499bd" font-size="12">到期股价</text>
+            <text x="88" y="64" text-anchor="end" fill="#8499bd" font-size="12">盈亏</text>
+            <text x="92" y="89" text-anchor="end" fill="#8499bd" font-size="11">+1.5</text>
+            <text x="92" y="159" text-anchor="end" fill="#8499bd" font-size="11">+0.5</text>
+            <text x="92" y="194" text-anchor="end" fill="#8499bd" font-size="11">0</text>
+            <text x="92" y="229" text-anchor="end" fill="#8499bd" font-size="11">-0.5</text>
+            <line x1="104" y1="155" x2="798" y2="155" stroke="rgba(122,167,240,0.14)" stroke-width="1"/>
+            <line x1="104" y1="225" x2="798" y2="225" stroke="rgba(122,167,240,0.14)" stroke-width="1"/>
+            <line x1="340" y1="70" x2="340" y2="310" stroke="rgba(122,167,240,0.35)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <text x="340" y="330" text-anchor="middle" fill="#c9d4e8" font-size="12">行权价 K = 10</text>
+            <line x1="440" y1="70" x2="440" y2="310" stroke="rgba(240,201,106,0.5)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <text x="440" y="330" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">盈亏平衡点 10.5</text>
+            <path d="M 140 225 L 340 225 L 740 85" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <path d="M 140 155 L 340 155 L 740 295" fill="none" stroke="#ffb4b4" stroke-width="3" stroke-dasharray="7 5"/>
+            <circle cx="440" cy="190" r="4.5" fill="#f0c96a"/>
+            <circle cx="740" cy="85" r="4" fill="#a8c6ff"/>
+            <circle cx="740" cy="295" r="4" fill="#ffb4b4"/>
+            <text x="752" y="89" fill="#a8c6ff" font-size="12" font-weight="800">+1.5</text>
+            <text x="752" y="299" fill="#ffb4b4" font-size="12" font-weight="800">-1.5</text>
+            <text x="612" y="70" text-anchor="end" fill="#a8c6ff" font-size="12" font-weight="800">买方(实线):盈利不封顶</text>
+            <text x="612" y="302" text-anchor="end" fill="#ffb4b4" font-size="12" font-weight="800">卖方(虚线):亏损不见底</text>
+            <text x="212" y="246" text-anchor="middle" fill="#a8c6ff" font-size="12">买方最坏:-0.5 权利金(有底)</text>
+            <text x="212" y="136" text-anchor="middle" fill="#ffb4b4" font-size="12">卖方最好:+0.5 权利金(有顶)</text>
+            <text x="450" y="348" text-anchor="middle" fill="#c9d4e8" font-size="12.5">两条线关于 0 轴严格镜像:买方赚的每一分都是卖方亏的——期权是零和的风险转移,不是一起赚钱的地方</text>
+          </svg>
+          <p class="figure__cap">买方最多亏掉权利金 0.5 元(亏损有底),价格涨过平衡点 10.5 元后赚多少没有顶;卖方镜像相反:最多赚 0.5 元,亏损理论上看不到底。所以卖方收的「保费」,本质是替别人扛尾部风险的价格。</p>
+        </div>
         <h3>2.4. 内在价值和时间价值</h3>
 <p>期权的价格通常可以拆成两部分:内在价值和时间价值。内在价值最好懂——如果现在立刻行权,这份权利值多少钱,一算是多少就是多少。它是期权的<span class="hl">“现货成色”</span>,不掺一点对未来的想象。</p><p>算一下就清楚。比如一只股票现在一百二十元,你手里有一张行权价一百元的看涨期权:立刻行权,按一百元买入、再按市价卖出,内在价值大约二十元。反过来,如果股票现在只有八十元,行权价一百元的看涨期权没有内在价值——没人会愿意花一百元去买市价八十元的东西。</p><p>把一张真实报价拆开看。假如这张看涨期权在市场上卖二十五元:二十元是内在价值,多出来的五元就是时间价值。之后股票如果原地不动,这五元会像冰块一样一天天化掉;到期那天,时间价值归零,期权只剩内在价值这具骨架。所以买期权像租着房子赌方向:方向之外,你每天都在为时间付租金。</p><p>没有内在价值,不代表期权一文不值。只要还没到期,未来标的仍可能涨到有利位置,这份可能性本身也值钱,它叫时间价值。留意时间价值的脾气:越接近到期,如果标的价格一直没动到有利位置,时间价值通常会流失。买期权的人经常输在这里:方向其实没看错太多,但时间不够了——哨声响了,比赛结束。</p>
 

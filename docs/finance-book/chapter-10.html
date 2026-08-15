@@ -72,6 +72,41 @@
         <h3>1.9. 历史答案背得太熟</h3>
 <p>过拟合用考试的话说,就是把历年真题的答案背得滚瓜烂熟,一进新考场就懵。模型记住了历史噪声,却没学到未来还用得上的规律。量化里过拟合格外容易发生,因为数据维度高、尝试次数多、市场噪声大。只要参数试得够多,总能凑出一条历史收益曲线很好看的组合。</p><p>过拟合有几个经典症状,值得记进备忘单: 参数稍微一动收益就崩;收益集中在少数几笔交易或少数年份;样本内很好、样本外很差;扣完成本就消失;逻辑解释牵强附会;回撤阶段完全无法解释。命中两条以上,就要高度怀疑。</p><p>防御手段是成体系的: 减少自由度、保留样本外、做滚动验证、做参数稳定性检查、记录所有实验(包括失败的)、使用简单基准、优先选择有经济解释且交易成本合理的策略。没有哪一招能单独救命,组合起来才有效。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 315" role="img" aria-label="训练集、验证集、测试集按时间轴依次排列,测试集信息回流训练的红色虚线被打叉">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">训练、验证、测试:一条只能向前的河</text>
+            <!-- 时间轴 -->
+            <line x1="70" y1="120" x2="830" y2="120" stroke="#46587a" stroke-width="2"/>
+            <defs><marker id="d10a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>
+            <line x1="70" y1="120" x2="826" y2="120" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d10a)"/>
+            <!-- 三段 -->
+            <rect x="70" y="80" width="450" height="80" rx="12" fill="rgba(122,167,240,0.14)" stroke="rgba(122,167,240,0.45)"/>
+            <text x="295" y="106" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">训练集</text>
+            <text x="295" y="128" text-anchor="middle" fill="#eef4f8" font-size="13">模型在这里学参数</text>
+            <text x="295" y="148" text-anchor="middle" fill="#8499bd" font-size="11.5">随便用,用多少遍都行</text>
+            <rect x="530" y="80" width="150" height="80" rx="12" fill="rgba(240,201,106,0.13)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="605" y="106" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">验证集</text>
+            <text x="605" y="128" text-anchor="middle" fill="#eef4f8" font-size="13">用来调超参和选模型</text>
+            <text x="605" y="148" text-anchor="middle" fill="#8499bd" font-size="11.5">可反复用,但会"被用脏"</text>
+            <rect x="690" y="80" width="140" height="80" rx="12" fill="rgba(232,120,120,0.12)" stroke="rgba(232,120,120,0.5)"/>
+            <text x="760" y="106" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">测试集</text>
+            <text x="760" y="128" text-anchor="middle" fill="#eef4f8" font-size="13">封存到最后一刻</text>
+            <text x="760" y="148" text-anchor="middle" fill="#8499bd" font-size="11.5">只用一次,报告它</text>
+            <!-- 信息只能向前 -->
+            <text x="295" y="196" text-anchor="middle" fill="#8499bd" font-size="12">时光</text>
+            <line x1="330" y1="192" x2="500" y2="192" stroke="#8499bd" stroke-width="1.5" marker-end="url(#d10a)"/>
+            <text x="605" y="196" text-anchor="middle" fill="#8499bd" font-size="12"></text>
+            <line x1="680" y1="192" x2="690" y2="192" stroke="#8499bd" stroke-width="1.5"/>
+            <!-- 红色回流禁止 -->
+            <path d="M 760 200 C 700 250, 420 250, 300 200" fill="none" stroke="#e88" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#d10r)"/>
+            <defs><marker id="d10r" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#e88"/></marker></defs>
+            <line x1="560" y1="212" x2="586" y2="238" stroke="#e88" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="586" y1="212" x2="560" y2="238" stroke="#e88" stroke-width="3.5" stroke-linecap="round"/>
+            <text x="450" y="272" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">测试集的信息流回前段 = 回测被判作弊</text>
+            <text x="450" y="298" text-anchor="middle" fill="#c9d4e8" font-size="12.5">顺序变体:时间序列必须按时间切,不能随机打乱——那是另一种偷看未来</text>
+          </svg>
+          <p class="figure__cap">切分不是比例问题,是流向问题:训练集随便用,验证集用来挑超参所以会慢慢被用脏,测试集封存到最后只用一次。任何信息从右往左回流,回测就在作弊;时间序列还必须按时间切,随机打乱等于另一个方向的作弊。</p>
+        </div>
         <h3>1.10. 回测报告应该交代什么</h3>
 <p>一份合格的回测报告,相当于给策略做一次全身体检,项目清单至少包括: 数据来源、股票池、回测区间、基准、调仓频率、成交价格假设、费用和滑点、涨跌停停牌处理、持仓约束、收益风险指标、<span class="term">换手率</span>、容量估计、样本外表现。一项都不能缺。</p><p>还要把收益摊在时间轴上看: 策略在哪些阶段赚钱、哪些阶段亏钱。只甩一个最终<span class="term">年化收益</span>,等于只给体检报告首页的总评。你要看它在牛市、熊市、震荡市分别什么表现,看<span class="term">最大回撤</span>发生时市场是什么环境,看<span class="term">超额收益</span>稳不稳定。</p><p>鉴别报告成色只需一句话: 如果里面没有成本、没有基准、没有回撤、没有换手、没有样本外,那不是研究报告,只是宣传材料。量化研究的专业性,首先体现在你愿不愿意把不利信息也摆上桌面。</p>
 

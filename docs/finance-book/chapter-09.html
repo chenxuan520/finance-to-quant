@@ -72,6 +72,37 @@
         <h3>1.6. 高分组是不是真的更好</h3>
 <p><span class="term">IC</span> 给了一个相关系数,但你的直觉更想看真章:如果真按这个因子下注,能赚吗?分层回测就把这件事演给你看。做法是:按因子值把股票分成几组,常见五组或十组,第一组装因子最高的,最后一组装最低的,然后看各组未来一段时间的真实收益。因子要是有效,通常希望高分组长期跑赢低分组。</p><p>举个例子。把股票按股息率从高到低分成五组,每月调仓一次,跑出几年数据,如果最高股息组的长期收益持续高过最低股息组——而且不是靠某几年极端行情撑起来的——那这个因子八成有点真东西。但别急着收工,还得看多空收益、回撤、换手、行业暴露和市值暴露,确认赚的不是<span class="hl">“碰巧重仓了某个行业”</span>的钱。</p><p>分层回测的价值,在于它比干巴巴的 <span class="term">IC</span> 直观:<span class="term">IC</span> 告诉你排序的相关性,分层收益告诉你照着买会得到一条什么样的净值路径。当然它也不是免死金牌,交易成本、涨跌停约束、停牌、容量限制和数据偏差,都能让纸面上漂亮的多空曲线在实盘里走形。直观归直观,检验归检验。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 330" role="img" aria-label="分层回测柱状图:按股息率把股票分五组,未来一年平均收益从第1组+5.1%单调降到第5组+2.1%,多空差约+3.0个百分点/年">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">分层回测:按股息率分 5 组,未来收益是否单调</text>
+            <text x="450" y="57" text-anchor="middle" fill="#8499bd" font-size="12">口径沿用本节:第 1 组装股息率最高的股票、第 5 组装最低的,每月调仓、连跑数年取平均</text>
+            <line x1="90" y1="60" x2="90" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="90" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="32" y="74" fill="#8499bd" font-size="11">年均收益↑</text>
+            <rect x="130" y="97" width="90" height="153" fill="rgba(240,201,106,0.45)" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="175" y="81" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">+5.1%</text>
+            <text x="175" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 1 组</text>
+            <text x="175" y="291" text-anchor="middle" fill="#8499bd" font-size="11">股息率最高</text>
+            <rect x="270" y="130" width="90" height="120" fill="rgba(122,167,240,0.42)"/>
+            <text x="315" y="114" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+4.0%</text>
+            <text x="315" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 2 组</text>
+            <rect x="410" y="151" width="90" height="99" fill="rgba(122,167,240,0.34)"/>
+            <text x="455" y="135" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+3.3%</text>
+            <text x="455" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 3 组</text>
+            <rect x="550" y="166" width="90" height="84" fill="rgba(122,167,240,0.27)"/>
+            <text x="595" y="150" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+2.8%</text>
+            <text x="595" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 4 组</text>
+            <rect x="690" y="187" width="90" height="63" fill="rgba(232,120,120,0.22)" stroke="#e88" stroke-width="1.5"/>
+            <text x="735" y="171" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">+2.1%</text>
+            <text x="735" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 5 组</text>
+            <text x="735" y="291" text-anchor="middle" fill="#8499bd" font-size="11">股息率最低</text>
+            <path d="M 175 97 L 315 130 L 455 151 L 595 166 L 735 187" fill="none" stroke="#eef4f8" stroke-width="2" stroke-dasharray="6 5"/>
+            <text x="706" y="76" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">单调递减 = 因子值越大,未来收益越好</text>
+            <text x="706" y="96" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">多空差 +5.1% - 2.1% ≈ +3.0 个百分点/年</text>
+            <text x="450" y="316" text-anchor="middle" fill="#ffb4b4" font-size="12.5">反过来,要是第 3 组反超第 1 组、顺序乱跳——先怀疑运气和行业暴露,别急着下注;单调才算有用</text>
+          </svg>
+          <p class="figure__cap">把股票按股息率排队分五组、每月调仓跑上几年:高分组 +5.1% 一路降到低分组 +2.1%,单调才算有用——说明因子分数和未来收益同向。顺序一旦乱跳,先怀疑运气或行业暴露,别急着下注。</p>
+        </div>
         <h3>1.7. 别把别人的风险当成自己的能力</h3>
 <p>这是因子研究里最容易自我感动的一个坑。你发现某个指标选出的股票收益很高,兴奋得不行,仔细一看:选出来几乎全是小市值股票。那它赚的很可能不是你这个指标的钱,而是小市值风格的钱——你只是站在别人的风口上,误以为自己会飞。</p><p>中性化就是把不想蹭的暴露剥离掉,让因子裸泳给你看。常见做法有行业中性、市值中性、风格中性。比如在每个行业内部单独排序,行业涨跌就干扰不到因子选股;或者用回归把市值暴露从因子值里抽走,剩下那部分如果还能预测收益,才算你有真本事。</p><p>但也别把中性化当成越多越好。剥得太狠,可能连因子真实的收益来源一起剥没了,剩下一个干干净净但毫无预测力的空壳。关键是想清楚自己要赚什么钱:如果你对外宣称做的是选股 <span class="term">Alpha</span>,就不能主要靠押行业和押市值;如果你本来就想做风格轮动,那风格暴露本身就是策略的一部分,不用剥,大方承认就好。</p>
 

@@ -64,6 +64,40 @@
           </svg>
           <p class="figure__cap">多数“套利”不是白捡钱,而是赌两个本该同步的价格,在价差拉大后会重新收敛。赌对了赚价差,但价差也可能继续扩大——这正是相对价值交易的真实风险。</p>
         </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="配对交易:两条贴着走的价差线,价差拉到阈值时开多A空B,回归时同时平仓">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">配对交易:两条腿一买一空,赌价差回归</text>
+            <defs>
+              <marker id="d15a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker>
+            </defs>
+            <!-- 双坐标系 -->
+            <line x1="70" y1="260" x2="830" y2="260" stroke="#46587a" stroke-width="1.5"/>
+            <!-- A 腿:低(蓝色) -->
+            <path d="M 70 236 L 150 226 L 230 232 L 310 240 L 390 244 L 470 240 L 550 246 L 630 238 L 710 242 L 830 240" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>
+            <text x="80" y="216" fill="#a8c6ff" font-size="13">A 市场(被低估)</text>
+            <!-- B 腿:高(金色) -->
+            <path d="M 70 96 L 150 106 L 230 100 L 310 92 L 390 88 L 470 92 L 550 86 L 630 94 L 710 90 L 830 92" fill="none" stroke="#f0c96a" stroke-width="2.5"/>
+            <text x="80" y="80" fill="#f0c96a" font-size="13">B 市场(被高估)</text>
+            <!-- 价差带 -->
+            <path d="M 70 136 L 150 136 L 230 136 L 310 136 L 390 136 L 470 136 L 550 136 L 630 136 L 710 136 L 830 136" fill="none" stroke="#8499bd" stroke-width="1" stroke-dasharray="4 4"/>
+            <text x="840" y="130" fill="#8499bd" font-size="11" text-anchor="end">价差均值线</text>
+            <!-- 开仓区间打标 -->
+            <line x1="240" y1="105" x2="240" y2="250" stroke="#e88" stroke-width="2" stroke-dasharray="5 4"/>
+            <text x="240" y="96" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">① 价差扩到阈值</text>
+            <text x="240" y="278" text-anchor="middle" fill="#bcc9dd" font-size="11">开:多 A / 空 B</text>
+            <!-- 平仓 -->
+            <line x1="700" y1="96" x2="700" y2="246" stroke="#8fb37a" stroke-width="2" stroke-dasharray="5 4"/>
+            <text x="700" y="88" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">② 价差回归</text>
+            <text x="700" y="268" text-anchor="middle" fill="#bcc9dd" font-size="11">收:两腿同时平</text>
+            <!-- 数字例 -->
+            <rect x="490" y="290" width="320" height="80" rx="10" fill="rgba(18,29,49,0.75)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="505" y="314" fill="#eef4f8" font-size="12.5" font-weight="800">示意一笔账:</text>
+            <text x="505" y="336" fill="#bcc9dd" font-size="12">开仓 A=100 / B=102;收仓 A=100.5 / B=100.5</text>
+            <text x="505" y="356" fill="#bcc9dd" font-size="12">两腿各赚 +0.5 / +1.5?错了——多A赚 0.5,空B赚 1.5,各算各的</text>
+            <text x="450" y="402" text-anchor="middle" fill="#c9d4e8" font-size="12.5">指望的不是某一边涨,是两边重新贴合——方向赢不赢不影响你,大小盘风格切换才是你的风险</text>
+          </svg>
+          <p class="figure__cap">配对交易永远两腿各算各的:开多被低估的 A、同时空等额的被高估的 B,赌的是它们重新贴合。赚的不是谁涨,是价差回归;方向涨不涨跟你没关系,风格切换才是你的风险。</p>
+        </div>
         <h3>1.6. 统计套利</h3>
 <p>统计套利是一大类策略的统称,它不要求每笔交易都确定赚钱,而是寄希望于大量小优势交易合起来有正期望。多因子市场中性、短期<span class="term">反转</span>、配对交易、价差回归,都可能被归进这个筐。它的商业模式有点像开保险公司:单单的赔付不确定,拼的是大数定律站不站在你这边。</p><p>统计套利最怕两件事。第一,历史统计关系失效——过去成立的规律,未来悄悄失效。第二,小优势被成本吃掉:一个每天看起来有 <span class="num">0.03%</span> 边际收益的信号,滑点和费用稍微高一点,就直接变亏损。这种策略的毛利润本来就薄,成本表就是生死簿。</p><p>因此统计套利必须配上大量样本、严格成本、样本外验证和风险控制四件套。看到过去胜率高就放心,是这里最常见的死法:少数几次极端损失,完全可能抵消很多次小盈利——前面赢了一整年,最后一个月全还回去,还倒贴。</p>
 

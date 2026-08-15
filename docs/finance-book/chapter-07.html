@@ -61,6 +61,39 @@
         <h3>1.3. K 线实体和影线只是压缩图</h3>
 <p>很多新手看 K 线的姿势,像极了古人看星象:这根是<span class="hl">“仙人指路”</span>,那根是<span class="hl">“乌云盖顶”</span>,仿佛每根线里都藏着预言。我们先把这份神秘感拆掉。K 线只是把开、收、高、低四个价格画成一根柱子:实体是开盘和收盘之间的区间,影线是全天最高和最低摸到的位置。收盘高于开盘,画成上涨颜色;收盘低于开盘,画成下跌颜色。注意,红绿的含义各地习惯不同,A 股里常见的是红涨绿跌,和外盘正好相反,别记岔了。</p><p>看一根具体的线。某股当天开 <span class="num">10.00 元</span>、收 <span class="num">11.00 元</span>、最高 <span class="num">11.50 元</span>、最低 <span class="num">9.80 元</span>:实体高 <span class="num">1.00 元</span>,上影线 <span class="num">0.50 元</span>,下影线 <span class="num">0.20 元</span>,全天区间 <span class="num">1.70 元</span>,实体占了约 <span class="num">59%</span>。反算验证:1.00 加 0.50 加 0.20,恰好等于 1.70,账目自洽。稳妥的读法是把 K 线当成交易过程的压缩记录:大实体说明多空打得激烈且一方明显占优,上影线说明冲高过但没守住,下影线说明跳水过但被拉了回来。常有人以为长上影是见顶预告,其实它只是<span class="hl">“冲高未守住”</span>这五个字的事后记录,本身不预测明天。</p><p>对量化来说,K 线形态确实可以变成特征:实体长度、上下影线比例、开盘跳空幅度、收盘在全天区间里的位置,都能变成数值喂给模型。但这些特征必须经过样本外检验和交易成本检验,绝不能靠翻十几张漂亮的图就拍脑袋相信。图形语言适合建立直觉,统计检验才决定它有没有资格进入策略——这条界线,贯穿全书。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 340" role="img" aria-label="OHLC 聚合示意:五笔成交 9.90/10.05/10.20/9.95/10.10 聚合成一根阳线,开 9.90、高 10.20、低 9.90、收 10.10,实体约 +2.0%">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">五笔真实成交,聚合成一根 K 线</text>
+            <defs><marker id="c7a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker><marker id="c7b" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
+            <rect x="40" y="56" width="400" height="232" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="240" y="82" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800">全天 5 笔成交(按时间顺序)</text>
+            <path d="M 90 250 L 155 175 L 220 100 L 285 225 L 350 150" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>
+            <circle cx="90" cy="250" r="6" fill="#f0c96a"/>
+            <circle cx="155" cy="175" r="4.5" fill="#a8c6ff"/>
+            <circle cx="220" cy="100" r="6" fill="#f0c96a"/>
+            <circle cx="285" cy="225" r="4.5" fill="#a8c6ff"/>
+            <circle cx="350" cy="150" r="6" fill="#f0c96a"/>
+            <text x="76" y="254" text-anchor="end" fill="#f0c96a" font-size="11.5" font-weight="800">① 9.90</text>
+            <text x="147" y="197" text-anchor="middle" fill="#eef4f8" font-size="11.5">② 10.05</text>
+            <text x="232" y="104" fill="#f0c96a" font-size="11.5" font-weight="800">③ 10.20 最高</text>
+            <text x="293" y="249" text-anchor="middle" fill="#eef4f8" font-size="11.5">④ 9.95</text>
+            <text x="362" y="152" fill="#f0c96a" font-size="11.5" font-weight="800">⑤ 10.10</text>
+            <line x1="60" y1="270" x2="398" y2="270" stroke="#46587a" stroke-width="1.5" marker-end="url(#c7b)"/>
+            <text x="402" y="274" fill="#8499bd" font-size="11">时间</text>
+            <path d="M 448 165 L 512 165" stroke="#f0c96a" stroke-width="3" fill="none" marker-end="url(#c7a)"/>
+            <text x="480" y="148" text-anchor="middle" fill="#f0c96a" font-size="11.5">聚合</text>
+            <rect x="520" y="56" width="340" height="232" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="690" y="82" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800">得到一根阳线(收盘 &gt; 开盘)</text>
+            <line x1="640" y1="100" x2="640" y2="250" stroke="#a8c6ff" stroke-width="2.5"/>
+            <rect x="612" y="150" width="56" height="100" rx="3" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff" stroke-width="2"/>
+            <text x="692" y="104" fill="#eef4f8" font-size="12">最高 10.20 ← 第③笔</text>
+            <text x="692" y="154" fill="#eef4f8" font-size="12">收盘 10.10 ← 末笔⑤</text>
+            <text x="692" y="254" fill="#eef4f8" font-size="12">开盘=最低 9.90 ← 首笔①</text>
+            <text x="640" y="278" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">实体 +0.20 元 ≈ +2.0%</text>
+            <text x="450" y="320" text-anchor="middle" fill="#c9d4e8" font-size="12.5">四个数各有着落:开=首笔、高低=极值、收=末笔;被压掉的是路径——上午拉升下午跳水,也可能得到同样的四个数</text>
+          </svg>
+          <p class="figure__cap">日线上的四个价格来自一次 first/max/min/last 聚合:开是首笔、收是末笔、高低是极值。这只股票恰好最低=开盘,所以下影线长度为零。聚合很优雅,但路径被压掉了——看 K 线时心里要装着这个前提。</p>
+        </div>
         <h3>1.4. 有多少筹码换了手</h3>
 <p>价格告诉你成交在什么位置,成交量和成交额告诉你那个位置上到底有多少<span class="hl">“真金白银的交接”</span>。成交量是成交了多少股或多少手,成交额是成交了多少钱,两者联动:成交额等于每笔成交价格乘数量再加总,<span class="term">换手率</span>则是成交量除以流通股本。一个价格蹭蹭上涨但成交量很小,可能只是几笔小单推上去的,地基不稳;同样上涨若伴随巨大成交,说明大量资金在那个价格区域完成了换手,这个价是被真金白银投票投出来的。</p><p>算一笔联动账:某股流通股本 <span class="num">2 亿</span>股,今天成交 <span class="num">2000 万</span>股,成交均价 <span class="num">15 元</span>,那么成交额就是 <span class="num">2000 万</span>乘 15,等于 <span class="num">3 亿元</span>,<span class="term">换手率</span>就是 <span class="num">2000 万</span>除以 <span class="num">2 亿</span>,等于 <span class="num">10%</span>。反算验证:成交额除以均价回到 <span class="num">2000 万</span>股的成交量,两个口径互相咬合。再纠正一个最常见的误读:成交量放大,不等于<span class="hl">“买的人比卖的人多”</span>——每一笔成交都是一个买家配一个卖家,缺一不可。成交量放大的真正含义是分歧加大、交易活跃:多空两边在这个价位上激烈地互道珍重。</p><p>量化拿成交量主要干两件事:判断流动性,估算容量。流动性好的股票,策略进出如风;流动性差的股票,你一点资金就能掀起波浪。举个回测里必须算清楚的账:策略计划买入 <span class="num">1000 万元</span>的小盘股,可这只股票当天总成交额只有 <span class="num">3000 万元</span>——你一笔就买走全天三分之一的量,价格不可能纹丝不动地等你成交。回测里假装自己毫无冲击,实盘就会教你做人。</p>
 

@@ -40,6 +40,33 @@
         <h3>1.4. 这条路颠不颠</h3>
 <p>两条路终点相同,一条平坦,一条颠簸,坐起来完全是两回事——<span class="term">波动率</span>就是给投资之路测颠簸程度的仪表。它刻画收益率围绕平均值上下摆动的程度:每天的收益都差不多,<span class="term">波动率</span>低;今天涨 <span class="num">5%</span>、明天跌 <span class="num">4%</span>、后天涨 <span class="num">6%</span>,<span class="term">波动率</span>就高。拿工程打比方:甲接口延迟稳定 50 毫秒,乙接口平均也是 50 毫秒、却常在 10 到 300 毫秒之间弹跳,两者的均值相同、体验天差地别,<span class="term">波动率</span>量的就是这种弹跳幅度,而极端情况要看 P99 那样的尾部指标。注意,<span class="term">波动率</span>不是亏损本身,它刻画的是不确定性和持有过程的摇晃感。</p><p>常见算法是先算日收益率的标准差,再换算成年化口径。这里值得把机制推一步:为什么乘的是根号 252,而不是 252?因为在各日收益近似独立的假设下,按时间线性相加的是方差,不是标准差——<span class="num">252 个交易日</span>的总方差约是日方差的 <span class="num">252 倍</span>,而标准差是方差的平方根,所以只放大根号 <span class="num">252 倍</span>,约 <span class="num">15.87 倍</span>。常有人以为年化波动就是日波动直接乘 252,其实那样会把风险高估十几倍。按 252 口径举例:日波动 <span class="num">1%</span>,年化波动就是 <span class="num">1%</span> 乘 15.87,约 <span class="num">15.9%</span>;反算验证,<span class="num">15.9%</span> 除以根号 252,恰回到约 <span class="num">1%</span>。</p><p>口径上还要多一句嘴:A 股一年实际约 240 多个交易日,严谨的回测可以按实际交易日数年化,行业报告里则常统一取 252 作为近似,看数字时最好知道对方用的是哪个。这个仪表还有两个盲区:第一,它把上涨和下跌一视同仁,都算<span class="hl">“波动”</span>,可投资者分明只讨厌下跌那半边;第二,它对极端尾部迟钝——一个策略平时四平八稳、偶尔爆一次雷,爆雷之前,普通<span class="term">波动率</span>大概率不会发出任何警告。反直觉的是,低波动不等于低风险:天气预报说今天风力温和,不代表你不会遇上百年一遇的台风,这两个刻画的根本不是同一件事。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 350" role="img" aria-label="波动率聚集示意:净值曲线上平静期与风暴期交替,风暴期单日 -6%、+7% 扎堆出现,价格围绕长期中枢上下枢转、但分布并不均匀">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">波动率聚集:平静期和大风大浪是扎堆来的</text>
+            <rect x="70" y="60" width="210" height="210" fill="rgba(122,167,240,0.07)"/>
+            <rect x="300" y="60" width="140" height="210" fill="rgba(232,120,120,0.07)"/>
+            <rect x="460" y="60" width="160" height="210" fill="rgba(122,167,240,0.07)"/>
+            <rect x="640" y="60" width="140" height="210" fill="rgba(232,120,120,0.07)"/>
+            <text x="175" y="76" text-anchor="middle" fill="#a8c6ff" font-size="11.5" font-weight="700"><tspan x="175" y="76">平静期日波动~0.3%</tspan></text>
+            <text x="370" y="76" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="700"><tspan x="370" y="69">风暴期单日±5%</tspan><tspan x="370" y="84">连发</tspan></text>
+            <text x="540" y="76" text-anchor="middle" fill="#a8c6ff" font-size="11.5" font-weight="700"><tspan x="540" y="76">又一段平静</tspan></text>
+            <text x="710" y="76" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="700"><tspan x="710" y="76">又一阵风暴</tspan></text>
+            <path d="M 70 215 L 110 212 L 150 216 L 190 210 L 230 213 L 270 208 L 300 206 L 330 150 L 360 238 L 390 132 L 420 222 L 450 162 L 470 158 L 510 156 L 550 160 L 590 155 L 620 152 L 650 206 L 680 120 L 710 190 L 740 104 L 770 176 L 800 168 L 830 162" fill="none" stroke="#eef4f8" stroke-width="2.5"/>
+            <circle cx="360" cy="238" r="5" fill="#e88"/>
+            <text x="360" y="258" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">单日 -6%</text>
+            <circle cx="740" cy="104" r="5" fill="#f0c96a"/>
+            <text x="740" y="90" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">单日 +7%</text>
+            <line x1="70" y1="208" x2="830" y2="150" stroke="#f0c96a" stroke-width="1.5" stroke-dasharray="7 6"/>
+            <text x="545" y="130" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">长期中枢:偏离远了会被拉回</text>
+            <line x1="70" y1="60" x2="70" y2="270" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="70" y1="270" x2="830" y2="270" stroke="#46587a" stroke-width="1.5"/>
+            <text x="60" y="66" text-anchor="end" fill="#8499bd" font-size="12">净值</text>
+            <text x="828" y="290" text-anchor="end" fill="#8499bd" font-size="12">时间</text>
+            <text x="450" y="312" text-anchor="middle" fill="#c9d4e8" font-size="12.5">大涨大跌喜欢扎堆,而不是均匀撒开:刚刮过风暴的市场,往往还要再晃一阵——波动会聚集</text>
+            <text x="450" y="336" text-anchor="middle" fill="#8499bd" font-size="12">拿「最近 20 天」估风险要记住这回事:风暴刚过时高估、平静太久时低估</text>
+          </svg>
+          <p class="figure__cap">收益率长期围着一条中枢转,但波动本身一阵一阵:平静期每天零点几个百分点,风暴期单日 ±5% 起步且接连不断。市场难赢的原因之一就在这——用最近一段外推风险,总会在错误的时间大意。</p>
+        </div>
         <h3>1.5. 从高点跌到低点有多痛</h3>
 <p>所有风险指标里,<span class="term">最大回撤</span>是投资者最容易秒懂、也最容易低估的一个。它衡量的是从净值的某个历史最高点,到之后最低点的最大跌幅。净值从 1.00 涨到 1.50,然后跌到 1.05,这段回撤是 1.05 除以 1.50 再减 1,等于 <span class="num">-30%</span>;反算验证,1.50 乘 0.7 恰是 1.05。一句话:在你最难受的那一刻打开账户,你比曾经的最高点亏了多少。用工程的话说,它像一次事故里服务从峰值跌到谷底的最大落差,而修复过程对应的就是故障持续时长。</p><p>回撤里藏着一笔必须会算的不对称账。常有人以为跌多少、再涨同样多就回本,其实完全不是这么回事:跌 <span class="num">50%</span> 之后,要涨 <span class="num">100%</span> 才能回到原点。算法是 0.5 除以 0.5 再减 1,恰等于 <span class="num">100%</span>;反算验证,0.5 乘 2 恰好归 1。把亏损阶梯摆出来更触目惊心:跌 <span class="num">10%</span>,回本要 <span class="num">11.1%</span>;跌 <span class="num">20%</span>,要 <span class="num">25%</span>;跌 <span class="num">30%</span>,要 <span class="num">42.9%</span>;跌 <span class="num">50%</span>,要 <span class="num">100%</span>。每一格都能反算:剩余净值乘 (1 + 回本涨幅),恰好回到跌前水平。坑越深,修复的坡度越陡,这就是乘法链条的两面:跌下来是打折,爬回去是加倍。</p><p>为什么<span class="term">最大回撤</span>比<span class="term">波动率</span>更贴近真实体验?因为它直接对准人的心理压力。一个策略年化 <span class="num">30%</span>、听着诱人,可<span class="term">最大回撤</span>是 <span class="num">60%</span> 的话,意味着你眼睁睁看着账户从高点缩水六成——绝大多数人根本熬不到长期收益兑现的那天,会在最深的坑里割肉离场。回撤还有一个常被忽略的维度:恢复时间,坑越深耗时越久,这中间你的资金、心态和外部约束都在被持续消耗。所以风险控制从来不是胆小者的护身符,而是复利这台机器能不能继续运转的前提——机器先别坏,才谈得上跑得快。</p>
 
@@ -67,6 +94,32 @@
         <h3>1.6. 每承担一份波动赚多少超额收益</h3>
 <p>评价策略不能光看赚了多少,还得问:这份收益是背着多大的晃荡换来的?<span class="term">夏普比率</span>干的就是这笔除法:(组合收益 - 无风险收益) / 组合<span class="term">波动率</span>。机制上为什么非要先扣无风险利率?因为那是地板收益:买点货币基金或短债,不承担任何波动也能拿到。把它从分子里剔掉,剩下的才是你扛晃荡换来的报酬;不扣的话,钱的时间价值会被错记成你冒险的功劳。想清这一步,<span class="term">夏普</span>才不是一道好看的除法,而是<span class="hl">“超额报酬除以代价”</span>的诚实账。</p><p>拿两个策略算一遍就明白了。策略 A <span class="term">年化收益</span> <span class="num">15%</span>,无风险收益 <span class="num">3%</span>,年化波动 <span class="num">12%</span>,<span class="term">夏普</span>是 (<span class="num">15%</span> - <span class="num">3%</span>) 除以 <span class="num">12%</span>,恰等于 1;反算验证,无风险 <span class="num">3%</span> 加上波动 <span class="num">12%</span> 乘<span class="term">夏普</span> 1,恰好拼回 <span class="num">15%</span>。策略 B <span class="term">年化收益</span> <span class="num">25%</span>,同样扣 <span class="num">3%</span>,年化波动却高达 <span class="num">44%</span>,<span class="term">夏普</span>是 <span class="num">22%</span> 除以 <span class="num">44%</span>,只有 0.5。B 赚的总量看着更多,可它每扛一份颠簸换来的报酬,只有 A 的一半——坐 B 这趟车,你得先问问自己晕不晕车,还得再问一句:B 多出来的那截收益,会不会只是某段行情里运气好?</p><p>警告必须跟上:<span class="term">夏普</span>不是万能指标。它假设<span class="hl">“波动能代表风险”</span>,可真实风险不止晃荡这一种;它对收益分布的偏态、对那种<span class="hl">“平时小赚、偶尔暴雷”</span>的尾部风险不够敏感——卖期权类策略在暴雷之前,<span class="term">夏普</span>可以一直好看得很。常有人以为高收益一定是承担风险的合理补偿,其实它可能只是运气,或者藏着一颗还没爆的雷。所以看<span class="term">夏普</span>的同时,还必须把回撤、偏度、尾部损失、<span class="term">杠杆</span>和策略逻辑一起摆上桌。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 340" role="img" aria-label="夏普比率直觉对比:两条净值曲线到同一终点年化+8%,平稳的 A 波动率 6% 夏普 1.00,毛刺多的 B 波动率 24% 夏普 0.25">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">夏普比率的直觉:同样的终点,颠簸的价格不同</text>
+            <line x1="70" y1="60" x2="70" y2="260" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="70" y1="260" x2="520" y2="260" stroke="#46587a" stroke-width="1.5"/>
+            <text x="60" y="66" text-anchor="end" fill="#8499bd" font-size="12">净值</text>
+            <text x="518" y="280" text-anchor="end" fill="#8499bd" font-size="12">时间</text>
+            <path d="M 70 235 C 190 215 340 160 500 120" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <path d="M 70 235 L 115 150 L 165 265 L 225 105 L 285 250 L 345 140 L 405 230 L 455 165 L 500 120" fill="none" stroke="#f0c96a" stroke-width="2.5"/>
+            <circle cx="500" cy="120" r="5" fill="#eef4f8"/>
+            <text x="448" y="104" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">同一终点</text>
+            <line x1="92" y1="288" x2="116" y2="288" stroke="#a8c6ff" stroke-width="3"/>
+            <text x="124" y="292" fill="#a8c6ff" font-size="12.5" font-weight="800">A 平稳:波动率 6%</text>
+            <line x1="300" y1="288" x2="324" y2="288" stroke="#f0c96a" stroke-width="3"/>
+            <text x="332" y="292" fill="#f0c96a" font-size="12.5" font-weight="800">B 毛刺:波动率 24%</text>
+            <rect x="560" y="70" width="300" height="190" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="710" y="94" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800"><tspan x="710" y="94">夏普=(年化-无风险2%)/波动率</tspan></text>
+            <text x="584" y="128" fill="#a8c6ff" font-size="13" font-weight="800">A:(8% - 2%) / 6% = 1.00</text>
+            <text x="584" y="156" fill="#f0c96a" font-size="13" font-weight="800">B:(8% - 2%) / 24% = 0.25</text>
+            <line x1="584" y1="174" x2="836" y2="174" stroke="rgba(122,167,240,0.2)" stroke-width="1"/>
+            <text x="584" y="200" fill="#bcc9dd" font-size="12">赚的总数一样,但 B 每扛一份颠簸,</text>
+            <text x="584" y="224" fill="#bcc9dd" font-size="12">换来的超额报酬只有 A 的 1/4</text>
+            <text x="450" y="322" text-anchor="middle" fill="#c9d4e8" font-size="12.5">夏普把收益摊到每份波动上:它衡量「每扛一份晃荡换来多少超额」,所以卖期权这类「平时小赚、偶尔暴雷」的策略,暴雷前夏普会很好看</text>
+          </svg>
+          <p class="figure__cap">终点相同不等于质量相同:A 波动 6% 夏普 1.00,B 波动 24% 夏普 0.25——B 每扛一份颠簸只换来 A 四分之一的超额报酬。看收益先问颠簸价格,这是「每个数字回答不同问题」里夏普负责的那个。</p>
+        </div>
         <h3>1.7. 经常赢不等于长期赚</h3>
 <p>新手打听策略,最爱问的一句是<span class="hl">“胜率多少”</span>。胜率高听着确实舒服,但它单独什么也证明不了。算一笔极端的账:某策略 <span class="num">90%</span> 的交易每次赚 <span class="num">1 元</span>,<span class="num">10%</span> 的交易每次亏 <span class="num">20 元</span>,胜率九成、风光无限。算期望:0.9 乘 1 加 0.1 乘 -20,等于 -1.1,平均每笔亏 <span class="num">1.1 元</span>;换成 10 笔反算验证,9 笔共赚 <span class="num">9 元</span>,1 笔亏 <span class="num">20 元</span>,净亏 <span class="num">11 元</span>,除以 10 恰是 -1.1。账目自洽,结论扎心:经常赢,和长期赚,是两码事。</p><p>缺的那块拼图叫盈亏比:平均每次盈利除以平均每次亏损。胜率和盈亏比绑在一起,还能直接推出保本线。假设盈亏比是 1:2,赚 <span class="num">1 元</span>、亏 <span class="num">2 元</span>,保本胜率 p 满足 p 乘 1 等于 (1 - p) 乘 2,解出来 p 恰为 2/3,约 <span class="num">66.7%</span>;反算验证,胜率 <span class="num">66.7%</span> 时期望恰好为零。于是两种反常识组合都说得通了:趋势跟踪策略胜率常不到四成,靠少数大盈利覆盖大量小止损,照样长期赚钱;而那种天天<span class="hl">“卖保险”</span>式小赚的策略,碰上极端行情一次大亏,可能把几年利润一把清零。</p><p>所以量化评价看的是期望值:胜率乘平均盈利,减去亏损率乘平均亏损,最后别忘了再扣交易成本。机器学习背景的读者对这个味道应该不陌生:只看胜率,就像评估分类模型只看准确率,却不看类别不平衡和不同错误的代价——在 <span class="num">99%</span> 是正常样本的数据里永远猜<span class="hl">“正常”</span>,准确率能到 <span class="num">99%</span>,模型却毫无用处。常有人以为九成胜率就等于稳赚,其实金融市场里的错误,代价常常严重不对称。</p>
 

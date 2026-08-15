@@ -51,6 +51,51 @@
           </svg>
           <p class="figure__cap">利润表像一个漏斗:最上面是收入,往下每一层都要扣掉一块成本,最后漏出来的才是净利润。所以“收入高”不等于“真赚钱”,要看它一路扣完还剩多少。</p>
         </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 360" role="img" aria-label="小面包店一年的三张报表卡:利润表净利润5万、资产负债表30万总资产25万净资产、现金流量表现金减少2万,互相用箭头勾连">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">小面包店一年:三张报表互相指着对方</text>
+            <defs>
+              <marker id="d17a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker>
+              <marker id="d17g" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker>
+            </defs>
+            <!-- 三个报表卡 -->
+            <rect x="40" y="68" width="250" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="165" y="94" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">利润表(今年赚没赚)</text>
+            <text x="58" y="124" fill="#eef4f8" font-size="12.5">收入              80 万</text>
+            <text x="58" y="146" fill="#bcc9dd" font-size="12.5">- 材料/人工        55 万</text>
+            <text x="58" y="168" fill="#bcc9dd" font-size="12.5">- 房租/折旧/税     20 万</text>
+            <line x1="58" y1="176" x2="272" y2="176" stroke="#46587a" stroke-width="1"/>
+            <text x="58" y="196" fill="#f0c96a" font-size="12.5" font-weight="800">= 净利润            5 万</text>
+            <text x="58" y="220" fill="#8499bd" font-size="11">净利 ≠ 到手的钱(有赊账)</text>
+            <text x="58" y="240" fill="#8499bd" font-size="11">是一年干出来的结果</text>
+            <rect x="330" y="68" width="250" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="455" y="94" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">资产负债表(手里有啥)</text>
+            <text x="348" y="124" fill="#eef4f8" font-size="12.5">现金             12 万</text>
+            <text x="348" y="146" fill="#bcc9dd" font-size="12.5">存货(面粉)        3 万</text>
+            <text x="348" y="168" fill="#bcc9dd" font-size="12.5">设备(烤箱)       15 万</text>
+            <line x1="348" y1="176" x2="562" y2="176" stroke="#46587a" stroke-width="1"/>
+            <text x="348" y="196" fill="#eef4f8" font-size="12.5">= 总资产           30 万</text>
+            <text x="348" y="218" fill="#bcc9dd" font-size="12.5">- 借款              5 万</text>
+            <text x="348" y="240" fill="#f0c96a" font-size="12.5" font-weight="800">= 净资产           25 万</text>
+            <rect x="620" y="68" width="250" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="745" y="94" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">现金流量表(钱往哪走)</text>
+            <text x="638" y="124" fill="#eef4f8" font-size="12.5">经营活动净流入  +8 万</text>
+            <text x="638" y="146" fill="#bcc9dd" font-size="12.5">投资(买烤箱)     -15 万</text>
+            <text x="638" y="168" fill="#bcc9dd" font-size="12.5">筹资(借来)      +5 万</text>
+            <line x1="638" y1="176" x2="852" y2="176" stroke="#46587a" stroke-width="1"/>
+            <text x="638" y="196" fill="#f0c96a" font-size="12.5" font-weight="800">= 现金净变化      -2 万</text>
+            <text x="638" y="220" fill="#8499bd" font-size="11">利润 5 万但现金少了 2 万:</text>
+            <text x="638" y="240" fill="#8499bd" font-size="11">净利被存货/应收/折旧吃掉</text>
+            <!-- 三表互指 -->
+            <path d="M 300 178 L 322 178" stroke="#7aa7f0" stroke-width="2" fill="none" marker-end="url(#d17a)"/>
+            <text x="311" y="168" text-anchor="middle" fill="#8499bd" font-size="10.5">净利进净资产</text>
+            <path d="M 590 178 L 612 178" stroke="#f0c96a" stroke-width="2" fill="none" marker-end="url(#d17g)"/>
+            <text x="601" y="168" text-anchor="middle" fill="#8499bd" font-size="10.5">现金对上末数</text>
+            <text x="450" y="312" text-anchor="middle" fill="#c9d4e8" font-size="13">利润表问"赚了吗",资产负债表问"有啥、欠啥",现金流量表问"钱真到手了吗"</text>
+            <text x="450" y="336" text-anchor="middle" fill="#ffb4b4" font-size="12.5">三张表数字对不上 = 有个地方在造假或藏雷;对得上,是真的还是假的,要进一步看经营现金流</text>
+          </svg>
+          <p class="figure__cap">同一个小面包店,三张表各回答一件事:利润表说净赚 5 万,资产负债表说年底手里 30 万总资产、25 万净资产,现金流量表说钱实际上少了 2 万。三张表任何一个数字对不上,背后就有个地方在藏雷。</p>
+        </div>
         <h3>1.2. 收入和利润不是同一回事</h3>
 <p><span class="hl">“我们公司年入百亿!”</span>听到这种话,先别急着鼓掌,补问一句:落到口袋里的利润有多少?收入是公司卖出产品或服务后确认的金额,利润是收入扣掉成本、费用、税费之后剩下的那一口。一家公司收入增长得再快,也不代表它真在赚钱;就算利润在涨,还得追问一句:这钱是不是主营业务挣来的,还是靠卖楼卖股凑出来的一次性进账。</p><p>算一笔最简单的账就明白了:公司卖货收入 <span class="num">100 万</span>,进货成本 <span class="num">70 万</span>,毛利 <span class="num">30 万</span>;再扣掉房租、工资、营销、研发、利息和税,最后净利润可能只剩 <span class="num">5 万</span>。收入数字很唬人,但如果成本和费用更唬人,股东到头来拿不到几个钱。这就是为什么研究和新闻里永远把收入和利润分开报。</p><p>量化里会用收入增长、净利润增长、毛利率、净利率这些指标去搭成长因子和盈利能力因子。但用的时候必须防三样东西:一次性收益、会计调整和行业差异。尤其最后一条——银行、互联网、制造业的利润结构完全不同,拿同一把阈值尺子硬套,等于用体重秤量身高。</p><p>应收账款藏雷,推演一遍就看懂:去年收入 <span class="num">1000 万</span>、应收 <span class="num">200 万</span>,今年收入冲到 <span class="num">1500 万</span>,涨了五成,应收却从 <span class="num">200 万</span>翻到 <span class="num">600 万</span>,膨胀 <span class="num">3 倍</span>。新增的 <span class="num">500 万</span>收入里,<span class="num">400 万</span>只是挂账,等于八成增长是纸面富贵,钱包只鼓了两成。检查位就两个:应收增速除以收入增速,健康时两者该差不多,这里是 <span class="num">3 倍</span>对 <span class="num">0.5 倍</span>,差出 <span class="num">6 倍</span>;再看应收占收入的比例,从 200 ÷ 1000 = <span class="num">20%</span> 抬到 600 ÷ 1500 = <span class="num">40%</span>。两盏灯同亮,收入再漂亮也先打个对折再听。</p>
 

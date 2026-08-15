@@ -33,6 +33,49 @@
         <h3>1.2. 券商是通道,不是交易所</h3>
 <p>先说一个反直觉的事实:你点下的买入,永远直接进不了交易所。你不能把订单直接塞进交易所的撮合系统,通常要通过券商。券商帮你开户、校验身份、管理资金三方存管、接收委托、做前置风控,然后再把合规的订单发往交易所。你和撮合引擎之间,始终隔着这家持牌机构。</p><p>为什么必须隔着这一层?因为交易所的撮合系统只接受会员申报,而交易席位属于持牌券商,普通投资者和交易所之间并没有直接的接入协议。于是整条链路被固定下来:你的 App 把委托发给券商柜台,柜台先做合规与资金持仓校验,过了前置风控,再经交易单元报进交易所网关,成交回报沿原路返回。用工程的话说,券商是带鉴权和限流的网关,交易所才是网关背后的核心服务。</p><p>前置风控具体拦什么?算个数字。你账户可用资金 <span class="num">10 万元</span>,先提交一笔 <span class="num">6 万元</span>的买入委托:校验通过,<span class="num">6 万元</span>被冻结,可用还剩 <span class="num">4 万元</span>。紧接着你又提交一笔 <span class="num">5 万元</span>的买入委托——<span class="num">4 万元</span>盖不住 <span class="num">5 万元</span>,券商前置校验当场拒单,这笔委托根本不会出券商的大门。交易所看到的,永远只是校验通过后的那一部分订单。</p><p>券商的活儿远不止传话。它还会提供行情、融资融券、研究、投行、资管、托管或主经纪商服务。对个人来说,券商主要是交易入口;对机构来说,券商还可能提供交易算法、DMA 接入、<span class="term">PB</span> 服务、融券资源、风控报表和清算支持——个人用的是 App,机构用的是一整套接口和服务。常有人以为券商就是交易所开的<span class="hl">“分店”</span>,其实券商是独立持牌的经营机构,可以有很多家,你可以挑、可以换;交易所是规则化撮合场,是集中市场基础设施。一个是快递网点,一个是分拨中心,分工完全不同。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 430" role="img" aria-label="委托链路图:券商App下单、券商柜台校验并冻结资金、前置风控拦截不合规单、交易所按价格时间优先撮合、登记结算清算轧净额并交收;每环标注出错后果">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一笔委托的旅程:从你点下买入,到钱货两清</text>
+            <line x1="110" y1="86" x2="110" y2="350" stroke="rgba(240,201,106,0.35)" stroke-width="2"/>
+            <rect x="70" y="58" width="760" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="110" cy="86" r="15" fill="rgba(240,201,106,0.18)"/>
+            <text x="110" y="91" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="900">1</text>
+            <text x="150" y="82" fill="#eef4f8" font-size="15" font-weight="800">券商 App 下单</text>
+            <text x="150" y="104" fill="#bcc9dd" font-size="12">点下买入:委托先进券商,永远直接进不了交易所</text>
+            <text x="818" y="82" text-anchor="end" fill="#ffb4b4" font-size="12">出错:非交易时间 → 挂着或废单</text>
+            <text x="818" y="104" text-anchor="end" fill="#8499bd" font-size="11">你 + 券商</text>
+            <rect x="70" y="124" width="760" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="110" cy="152" r="15" fill="rgba(240,201,106,0.18)"/>
+            <text x="110" y="157" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="900">2</text>
+            <text x="150" y="148" fill="#eef4f8" font-size="15" font-weight="800">券商柜台</text>
+            <text x="150" y="170" fill="#bcc9dd" font-size="12">校验身份与三方存管,接收委托,先冻结资金或持仓</text>
+            <text x="818" y="148" text-anchor="end" fill="#ffb4b4" font-size="12">出错:可用资金不足 → 当场拒单</text>
+            <text x="818" y="170" text-anchor="end" fill="#8499bd" font-size="11">券商</text>
+            <rect x="70" y="190" width="760" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="110" cy="218" r="15" fill="rgba(240,201,106,0.18)"/>
+            <text x="110" y="223" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="900">3</text>
+            <text x="150" y="214" fill="#eef4f8" font-size="15" font-weight="800">前置风控</text>
+            <text x="150" y="236" fill="#bcc9dd" font-size="12">拦查停牌、涨跌幅、申报价格、数量单位,合规才放行</text>
+            <text x="818" y="214" text-anchor="end" fill="#ffb4b4" font-size="12">出错:不合规 → 拦在交易所门外</text>
+            <text x="818" y="236" text-anchor="end" fill="#8499bd" font-size="11">券商</text>
+            <rect x="70" y="256" width="760" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="110" cy="284" r="15" fill="rgba(240,201,106,0.18)"/>
+            <text x="110" y="289" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="900">4</text>
+            <text x="150" y="280" fill="#eef4f8" font-size="15" font-weight="800">交易所撮合</text>
+            <text x="150" y="302" fill="#bcc9dd" font-size="12">价格优先、时间优先,排队配对撞出成交价</text>
+            <text x="818" y="280" text-anchor="end" fill="#ffb4b4" font-size="12">出错:没排上对手价 → 干等或撤单</text>
+            <text x="818" y="302" text-anchor="end" fill="#8499bd" font-size="11">交易所</text>
+            <rect x="70" y="322" width="760" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <circle cx="110" cy="350" r="15" fill="rgba(240,201,106,0.18)"/>
+            <text x="110" y="355" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="900">5</text>
+            <text x="150" y="346" fill="#eef4f8" font-size="15" font-weight="800">登记结算</text>
+            <text x="150" y="368" fill="#bcc9dd" font-size="12">清算把买卖轧成净额,T+1 交收钱货两清、登记簿改名</text>
+            <text x="818" y="346" text-anchor="end" fill="#f0c96a" font-size="12">提醒:成交 ≠ 结束,交收才算数</text>
+            <text x="818" y="368" text-anchor="end" fill="#8499bd" font-size="11">登记结算机构</text>
+            <text x="450" y="416" text-anchor="middle" fill="#c9d4e8" font-size="13">五道闸各有分工:订单穿过哪一环、在哪一环出事,决定了报错长什么样;假设「下单即成交」的回测,落地一定数错钱</text>
+          </svg>
+          <p class="figure__cap">你点一次买入,委托要穿过券商柜台、前置风控、交易所撮合、登记结算五道闸:柜台先冻结资金,风控把不合规订单拦在交易所门外,成交之后清算还要轧净额、交收才算钱货两清。每一环出错的后果完全不同。</p>
+        </div>
         <h3>1.3. 交易所做什么</h3>
 <p>订单穿过券商,才到达交易所。交易所主要干五件事:制定交易规则、接收订单、撮合买卖、发布行情、监控异常交易。订单进入交易所后,通常按价格优先、时间优先排队:买方愿意出更高价,优先;同样价格下,先提交的订单优先。规则朴素,但执行起来机器一样严格。</p><p>撮合是怎么落地的?交易所为每只股票维护一本订单簿:买方申报按价格从高到低排队,卖方申报按价格从低到高排队,同一价格内部再按申报到达的先后排。新订单进来,先和对手方排在最前面的一档比:价格能碰上就成交,碰不上就进簿排队等。用程序员的眼光看,这是一个按价格排序、用时间打破平局的优先级队列——难的不是逻辑,而是全市场每秒成千上万笔地跑,还不能错。</p><p>拿一笔具体撮合算一遍。某股票买盘最高一档是 <span class="num">10.01 元</span>买 <span class="num">500 股</span>,卖盘最低一档是 <span class="num">10.03 元</span>卖 <span class="num">200 股</span>。这时来了一笔 <span class="num">10.03 元</span>买 <span class="num">400 股</span>的新买单:它和卖盘价格碰上,先成交 <span class="num">200 股</span>,成交价 <span class="num">10.03 元</span>;剩下的 <span class="num">200 股</span>无人可配,挂在 <span class="num">10.03 元</span>价位成为新的买一。如果这笔新买单报价只有 <span class="num">10.02 元</span>,买卖价差着一分钱,一股都成交不了,只能整笔进簿排队。</p><p>但有一件事交易所不做:它不是判断一家公司值多少钱的裁判。它主要保证交易按规则进行,同时要求上市公司披露信息,盯紧操纵市场、异常申报、过度撤单这类行为。市场价格是全体参与者一笔一笔交易出来的,不是交易所指定的。常有人以为交易所管的是<span class="hl">“价格合不合理”</span>,其实它管的是<span class="hl">“行为合不合规”</span>——交易所是裁判,不是运动员,更不是预言家。还要留心:主板、创业板、科创板、北交所、ST 股票、<span class="term">ETF</span>、债券、可转债,涨跌幅、申报价格、最小单位、交易机制都可能不同,策略不能只写一句笼统的<span class="hl">“买入股票”</span>。</p>
 

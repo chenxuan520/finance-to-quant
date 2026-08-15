@@ -31,6 +31,48 @@
         <h3>1.1. 预测分数不是仓位</h3>
 <p>模型输出的通常是预期收益、排序分数或概率。它只能说明模型相对看好或看空哪些股票,并不直接等于买多少。分数最高的股票,可能流动性差,可能已经涨停买不到,可能和你组合里的已有持仓高度相关,也可能让行业暴露超标。</p><p>来看一个具体场景。模型给某只小盘股打了最高分,但它每天成交额只有 <span class="num">2000 万元</span>,而你的产品规模有 <span class="num">20 亿元</span>。直接按分数买入 <span class="num">5%</span> 仓位,就是要买 <span class="num">1 亿元</span>——相当于吃掉很多天的成交量,价格会被你自己一路推上去。预测再强,也绕不开成交能力这堵墙。</p><p>所以组合构建的目标,是把预测翻译成可执行仓位,在收益、风险、成本、流动性和约束之间折中。量化行业里,预测模型和组合优化通常是两层系统: 一层负责<span class="hl">“想要什么”</span>,一层负责<span class="hl">“能实现多少”</span>。把两层混成一个简单排序,是很多业余策略和专业策略的分水岭。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="五步流水线:模型打分、组合约束、目标组合、对比现持仓、拆成订单,每步标注输入输出">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">从分数到订单:五步流水线,每步都可能改形</text>
+            <defs>
+              <marker id="d11a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker>
+            </defs>
+            <!-- 五个步骤框 -->
+            <rect x="30" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="105" y="112" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">① 模型打分</text>
+            <text x="105" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">每只股一个分</text>
+            <text x="105" y="156" text-anchor="middle" fill="#8499bd" font-size="11">输入:因子值</text>
+            <text x="105" y="174" text-anchor="middle" fill="#8499bd" font-size="11">输出:预期收益排序</text>
+            <rect x="202" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="277" y="112" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">② 组合约束</text>
+            <text x="277" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">单票上限·行业上限</text>
+            <text x="277" y="156" text-anchor="middle" fill="#bcc9dd" font-size="11.5">跟踪误差预算</text>
+            <text x="277" y="174" text-anchor="middle" fill="#8499bd" font-size="11">分数不是仓位,先过笼头</text>
+            <rect x="374" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="449" y="112" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">③ 目标组合</text>
+            <text x="449" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">一张目标权重表</text>
+            <text x="449" y="156" text-anchor="middle" fill="#8499bd" font-size="11">它还不存在</text>
+            <text x="449" y="174" text-anchor="middle" fill="#8499bd" font-size="11">只是计算的结果</text>
+            <rect x="546" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="621" y="112" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">④ 对比现持仓</text>
+            <text x="621" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">目标 vs 实有</text>
+            <text x="621" y="156" text-anchor="middle" fill="#8499bd" font-size="11">差出来的才是交易</text>
+            <text x="621" y="174" text-anchor="middle" fill="#8499bd" font-size="11">差得多 = 换手高 = 成本高</text>
+            <rect x="718" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(232,120,120,0.45)"/>
+            <text x="793" y="112" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">⑤ 拆成订单</text>
+            <text x="793" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">按时间/价格平滑拆单</text>
+            <text x="793" y="156" text-anchor="middle" fill="#8499bd" font-size="11">市价·限价·算法单</text>
+            <text x="793" y="174" text-anchor="middle" fill="#8499bd" font-size="11">下单前三检查拦截</text>
+            <!-- 连线 -->
+            <line x1="180" y1="143" x2="198" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
+            <line x1="352" y1="143" x2="370" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
+            <line x1="524" y1="143" x2="542" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
+            <line x1="696" y1="143" x2="714" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
+            <text x="450" y="248" text-anchor="middle" fill="#eef4f8" font-size="14">每一步都在"变形":分数→满足约束的组合→和现在不同的差→一条条订单</text>
+            <text x="450" y="274" text-anchor="middle" fill="#c9d4e8" font-size="12.5">失误排查从后往前查:先看订单是不是下错,再看持仓对没对,最后才怪模型分数</text>
+          </svg>
+          <p class="figure__cap">分数一路到订单要经过五道工序:打分、过约束、成目标、比现仓、拆订单。故事从后往前排查:订单下错最先看订单系统,组合走形先看约束,最后才轮到怪模型。</p>
+        </div>
         <h3>1.2. 你承诺偏离多少</h3>
 <p>如果产品是指数增强,组合就要围绕某个指数基准来建。比如<span class="term">中证 500</span> 指数增强: 客户掏钱买的是一个承诺——大体跟住<span class="term">中证 500</span>,同时多赚一些<span class="term">超额收益</span>。组合不能因为模型一时看好银行股,就把大量仓位搬进银行,完全跑出<span class="term">中证 500</span> 的形状。那不叫指数增强,叫换了底仓。</p><p>这类承诺落到纸面上,就是基准约束: 个股相对权重、行业偏离、风格偏离和<span class="term">跟踪误差</span>。<span class="term">跟踪误差</span>用大白话讲,就是组合收益偏离基准收益的幅度有多大。<span class="term">跟踪误差</span>越小,组合越像指数,超额空间也可能越小;<span class="term">跟踪误差</span>越大,组合越自由,但客户承担的偏离风险也越大。</p><p>这就是指数增强的核心取舍: 想多赚 <span class="term">Alpha</span>,就得允许一些偏离;但偏离太大,产品就不再像它承诺的那个东西。组合优化器的活儿,就是把这种<span class="hl">“承诺”</span>翻译成数学约束,写进求解过程里。</p>
 

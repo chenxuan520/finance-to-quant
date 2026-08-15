@@ -55,6 +55,36 @@
         <h3>1.2. Beta 对冲的直觉</h3>
 <p><span class="term">Beta</span> 这个词有自己的大白话翻译:组合对大盘的<span class="hl">“敏感系数”</span>。组合 <span class="term">Beta</span> 约为 1,市场涨 <span class="num">1%</span>,组合大致也涨 <span class="num">1%</span>;<span class="term">Beta</span> 约为 0,市场涨跌对组合影响就很小。市场中性策略常希望把组合 <span class="term">Beta</span> 控制在接近 0——让大盘这个变量从收入公式里尽量消失。</p><p>拿笔算一下。假设你有 <span class="num">1000 万</span>股票多头,整体 <span class="term">Beta</span> 接近 1。为了对冲市场风险,你卖出名义价值约 <span class="num">1000 万</span>的<span class="term">股指期货</span>。如果市场跌 <span class="num">5%</span>,股票多头大约亏 <span class="num">50 万</span>,<span class="term">股指期货</span>空头大约赚 <span class="num">50 万</span>,一来一回,大盘风险被抵消掉一部分。账本漂亮得像物理实验。</p><p>现实里这个实验从来不会这么完美。你的股票组合和期货对应的指数不完全一致,<span class="term">Beta</span> 本身会变,期货价格和现货指数之间有<span class="term">基差</span>,交易成本和<span class="term">保证金</span>也会来分一杯羹。理论上是完美抵消,工程上是<span class="hl">“大体抵消,尾差自负”</span>。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="两条净值曲线:纯多头大起大落(波动约16.7%),对冲后收窄到4.8%缓慢上行">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">对冲不是让收益变高,是让带子收窄</text>
+            <defs>
+              <marker id="d14a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker>
+            </defs>
+            <!-- 坐标轴 -->
+            <line x1="60" y1="320" x2="850" y2="320" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="60" y1="60" x2="60" y2="320" stroke="#46587a" stroke-width="1.5" marker-end="url(#d14a)"/>
+            <!-- 纯多头:大起大落带子 -->
+            <path d="M 60 290 L 140 250 L 200 280 L 300 190 L 380 240 L 460 160 L 540 220 L 620 120 L 700 180 L 790 90 L 850 140" fill="none" stroke="#ffb4b4" stroke-width="2.5"/>
+            <!-- 对冲后:窄带子缓慢上行 -->
+            <path d="M 60 300 L 140 285 L 200 292 L 300 262 L 380 268 L 460 240 L 540 248 L 620 222 L 700 228 L 790 205 L 850 212" fill="none" stroke="#7aa7f0" stroke-width="2.8"/>
+            <!-- 对比标注 -->
+            <text x="120" y="80" fill="#ffb4b4" font-size="13.5" font-weight="800">纯多头:大起大落</text>
+            <text x="120" y="100" fill="#bcc9dd" font-size="11.5">年化波动约 ±16%</text>
+            <text x="120" y="118" fill="#8499bd" font-size="11">赚多赚有,坐不住才是风险</text>
+            <text x="600" y="268" fill="#a8c6ff" font-size="13.5" font-weight="800">对冲后:带子收窄</text>
+            <text x="600" y="288" fill="#bcc9dd" font-size="11.5">年化波动压到 ±5% 上下</text>
+            <text x="600" y="306" fill="#8499bd" font-size="11">方向削平了,选股能力留下</text>
+            <!-- 对比数字卡 -->
+            <rect x="660" y="60" width="230" height="110" rx="12" fill="rgba(18,29,49,0.75)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="775" y="86" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">同一组持仓,同一时段内</text>
+            <text x="675" y="110" fill="#bcc9dd" font-size="12">纯多头  年化波动 16.7%</text>
+            <text x="675" y="132" fill="#bcc9dd" font-size="12">对冲后  年化波动  4.8%</text>
+            <text x="675" y="156" fill="#8499bd" font-size="11">代价:付出期指名义和保证金</text>
+            <text x="450" y="364" text-anchor="middle" fill="#c9d4e8" font-size="12.5">对冲的变化不在终点高不高,在路稳不稳——中性策略买的是"拿得住",不是"赚更多"</text>
+          </svg>
+          <p class="figure__cap">对冲做对的事是把波动带子收窄,不是把终点抬高。同一组持仓,纯多头一年 ±16.7% 的大起大落,对冲后收窄到 ±4.8%;代价是你要付期指名义和保证金。</p>
+        </div>
         <h3>1.3. 多头和空头的收益结构</h3>
 <p>很多人以为市场中性的收益来自<span class="hl">“大盘跌了就靠空头赚钱”</span>,错了。它真正想赚的是多头跑赢空头的那条缝:你买入高分股票,卖空低分股票,只要高分的比低分的强——涨得更多或跌得更少——多空组合就赚钱。</p><p>算两个小例子。大盘上涨的日子:多头组合涨 <span class="num">3%</span>,空头组合涨 <span class="num">1%</span>,两边规模相近,多空相对收益约 <span class="num">2%</span>。大盘下跌的日子:多头跌 <span class="num">4%</span>,空头跌 <span class="num">7%</span>,多头虽然亏钱,但空头赚得更多,组合依然可能赚钱。看出来了吗?涨跌方向不重要,<span class="hl">“谁比谁强”</span>才重要。</p><p>反过来也成立:如果高分股票跌得比低分股票还多,市场中性照样亏。它不靠市场方向吃饭,靠的是相对排序——排序错了,对冲做得再标准也救不了你。这就是这门手艺的核心:对冲负责拆掉大盘,选股负责在拆干净的桌面上赢钱。</p>
 

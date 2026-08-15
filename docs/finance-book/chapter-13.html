@@ -84,6 +84,37 @@
         <h3>2.1. 指数收益加超额</h3>
 <p>先想象一个场景:某年<span class="term">中证 500</span> 跌了 <span class="num">15%</span>,你买的<span class="term">中证 500</span> 指数增强产品跌了 <span class="num">10%</span>。你该找经理算账吗?恰恰相反——这时候你该给他加鸡腿:他帮你少亏的 <span class="num">5%</span>,就是<span class="term">超额收益</span>。指数增强产品通常先指定一个基准,比如<span class="term">沪深 300</span>、<span class="term">中证 500</span> 或中证 1000。客户买它,不是希望它随便押方向,而是希望大体拿到这个指数的市场收益,再多赚一些超额。</p><p>反过来也一样。基准涨 <span class="num">20%</span>,产品涨 <span class="num">24%</span>,超额大约 <span class="num">4%</span>——你多拿的这部分才是它的手艺。注意,指数增强从来不保证绝对赚钱:市场大跌时,产品也可能亏,只是争取亏得比基准少一些。它承诺的是<span class="hl">“跟着指数走,但争取走得稍微好一点”</span>,不是<span class="hl">“旱涝保收”</span>。</p><p>所以评价指数增强绝不能只看绝对收益。你要看相对基准的<span class="term">超额收益</span>、<span class="term">跟踪误差</span>、<span class="term">信息比率</span>、最大超额回撤、风格暴露和稳定性。一个在牛市里涨得飞起的产品,如果只是仓位比基准更激进,那不是增强,那是加<span class="term">杠杆</span>赌对了——风一停,它就现原形。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 415" role="img" aria-label="指增收益分解:基准+10%,指增+11.5%拆成Beta下段、Alpha段和成本负截">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">指增的收益拆开看:Beta、Alpha、成本三截账</text>
+            <!-- 三根柱状:左组合总收益,拆右两根 -->
+            <!-- 左:沪深300涨10%,组合涨 +11.5% -->
+            <rect x="90" y="150" width="110" height="200" rx="6" fill="rgba(122,167,240,0.25)" stroke="rgba(122,167,240,0.45)"/>
+            <text x="145" y="170" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">基准(沪深300)</text>
+            <text x="145" y="248" text-anchor="middle" fill="#a8c6ff" font-size="24" font-weight="800">+10%</text>
+            <text x="145" y="275" text-anchor="middle" fill="#8499bd" font-size="11.5">全部来自大盘</text>
+            <!-- 中:分解堆叠:Beta +9/Alpha +2.5/成本 -1 -->
+            <rect x="330" y="170" width="110" height="162" fill="rgba(122,167,240,0.3)" stroke="rgba(122,167,240,0.5)"/>
+            <rect x="330" y="150" width="110" height="20" fill="rgba(240,201,106,0.4)" stroke="rgba(240,201,106,0.6)"/>
+            <rect x="330" y="132" width="110" height="18" fill="rgba(232,120,120,0.4)" stroke="rgba(232,120,120,0.6)"/>
+            <text x="385" y="360" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">指增组合  +11.5%</text>
+            <text x="385" y="250" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">Beta +10%</text>
+            <text x="385" y="163" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">Alpha +2%</text>
+            <text x="385" y="144" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">成本 −0.5%</text>
+            <!-- 右:公式 -->
+            <rect x="560" y="150" width="300" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="710" y="182" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">一句话账</text>
+            <text x="578" y="214" fill="#eef4f8" font-size="13.5">组合收益 = Beta + Alpha − 摩擦</text>
+            <text x="578" y="240" fill="#bcc9dd" font-size="13">= 10% + 2% − 0.5% = 11.5%</text>
+            <text x="578" y="268" fill="#bcc9dd" font-size="12.5">Beta 是大盘给的,学不来也避不掉;</text>
+            <text x="578" y="290" fill="#bcc9dd" font-size="12.5">Alpha 是选股选出来的,指增拼命争它;</text>
+            <text x="578" y="312" fill="#bcc9dd" font-size="12.5">摩擦是每次调仓的买路钱,只能想办法省。</text>
+            <!-- 中间等号 -->
+            <text x="480" y="260" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="800">≈</text>
+            <text x="450" y="392" text-anchor="middle" fill="#c9d4e8" font-size="13">年报上那个"年化收益"从来不自己拆开——先学会自己拆,才看得懂是谁的功劳</text>
+          </svg>
+          <p class="figure__cap">任何一股指增收益都是三截账:Beta 是跟着大盘的,+2% 是拼选股拼出来的 Alpha,−0.5% 是摩擦成本。看年化收益之前先拆开——市场一跌,你会发现 Beta 功劳巨大,Alpha 往往只剩一点点。</p>
+        </div>
         <h3>2.2. 股票池和基准要匹配</h3>
 <p>一个自称<span class="hl">“川菜厨子”</span>的人,端上来的全是粤菜,你就算吃得满意,也有理由投诉他货不对板。指数增强同理:它的股票池通常围绕基准成分股和相近股票。<span class="term">沪深 300</span> 增强主要在大盘蓝筹附近找机会,<span class="term">中证 500</span> 增强更关注中盘股票,中证 1000 增强更偏小盘。股票池,决定了策略活在哪个风险世界里。</p><p>偏了会怎样?如果一只<span class="term">中证 500</span> 增强产品大量买入<span class="term">沪深 300</span> 大盘股,短期可能还真跑赢,但它已经偏离了承诺:客户以为自己买的是<span class="term">中证 500</span> 的风险,拿到手的却是一份没说清楚的混合风险。用程序员的话说,这是接口签名和实际行为不一致——测试没抓到,不等于没问题。</p><p>所以指数增强的第一步不是模型,而是边界:哪些股票允许买,哪些要剔除,ST 怎么处理,停牌怎么处理,新股上市多久后纳入,流动性太差是否剔除。这些规则看着琐碎,却直接决定回测和实盘的一致性——边界画得马虎,回测里买的股票实盘未必买得到。</p>
 
