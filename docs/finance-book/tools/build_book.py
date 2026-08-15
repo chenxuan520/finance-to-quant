@@ -2060,12 +2060,13 @@ a:hover { text-decoration: underline; }
 }
 .book-toc__link {
   display: grid;
-  grid-template-columns: 2.5rem 1fr;
+  grid-template-columns: max-content 1fr;
   gap: 0.5rem;
   padding: 0.55rem 0.65rem;
   border-radius: 8px;
   color: var(--text-soft);
 }
+.book-toc__link > span:first-child { white-space: nowrap; color: var(--accent); font-weight: 700; }
 .book-toc__link:hover, .book-toc__link.is-current {
   background: rgba(240, 201, 106, 0.11);
   color: var(--text);
