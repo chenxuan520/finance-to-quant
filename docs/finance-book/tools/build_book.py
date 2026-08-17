@@ -2050,6 +2050,1064 @@ CONCEPT_FIGURES = {
     22: [("回撤里最容易做错决定", _fig_loss_recovery)],
 }
 
+
+
+
+# -*- coding: utf-8 -*-
+"""batchE:6 张信息型概念图(章号按主题修正后挂载):
+  ch00 生产力的复利阶梯   -> 1.2 "储蓄不是抠门,是给未来留出空间"
+  ch00 价格三问卡         -> 2.3 "价格是信号,不是敌人"
+  ch01 信用-利率-估值传导链 -> 1.5 "为什么利率上升,老债会跌"
+  ch03 平价 vs 波动对照    -> 1.2 "股东排在最后,所以风险和机会都大"
+  ch10 特征-模型-预测-决策四格 -> 2.1 "模型先服务于问题定义"
+  ch13 超额收益来源五格卡   -> 2.3 "超额收益从哪里来"
+数字均取自对应章正文真账(见各函数 docstring)。
+用法: 在 build_book.py 末尾 _merge_figures(CONCEPT_FIGURES, CONCEPT_FIGURES_PATCH)。
+"""
+import sys
+
+sys.path.insert(0, "/data00/home/lingchen.judy/self/finance/docs/finance-book/tools")
+from build_book import concept_figure, svg_text  # noqa: E402
+
+
+def _fig_e00_productivity_ladder():
+    """ch00 生产力复利阶梯。锚点:chapter-00.html <h3>1.2. 储蓄不是抠门,是给未来留出空间</h3>。
+    数字沿用 1.2 节正文:徒手 1 条/天;少吃 1 条省出本钱;腾出 1 天编网;
+    网成后 3 条/天(多 2 条);十天多 20 条 = 20 倍回报。"""
+    steps = [
+        (40, 284, 170, 56, "① 徒手抓鱼", "1 条/天", ["吃 1 条,存下 0 条"]),
+        (240, 240, 170, 100, "② 储蓄:饿 1 天", "省出 1 条鱼", ["成本:1 条鱼 + 1 整天", "这两天产出是 0"]),
+        (440, 195, 170, 145, "③ 投资:编网 1 天", "织出 1 张网", ["钱变资本:效率 ×3", "工具会磨损,要补要修"]),
+        (640, 130, 170, 210, "④ 渔网上岗", "3 条/天", ["徒手 ×3,每天多 2 条", "10 天多 20 条", "回报 20 倍于那条鱼"]),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">生产力的复利阶梯:从一天 1 条鱼到一天 3 条鱼</text>')
+    parts.append('            <text x="450" y="56" text-anchor="middle" fill="#8499bd" font-size="12.5">每一级都要先垫一层:省一条鱼、腾一天工,产出才上一个台阶——垫层决定上限</text>')
+    for x, y, w, h, name, num, notes in steps:
+        parts.append('            <rect x="%d" y="%d" width="%d" height="%d" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % (x, y, w, h))
+        cx = x + w // 2
+        parts.append('            ' + svg_text(name, cx, y + 24, w - 16, size=13, color="#bcc9dd", weight=800, max_chars=10, max_lines=1))
+        parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">%s</text>' % (cx, y + 50, num))
+        for li, ln in enumerate(notes):
+            if h < 80:
+                parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#8499bd" font-size="11.5">%s</text>' % (cx, y - 14 + li * 20, ln))
+            else:
+                parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#8499bd" font-size="11.5">%s</text>' % (cx, y + 74 + li * 22, ln))
+    # 台阶间的小箭头(竖向爬升)
+    for ax, ay in [(214, 268), (414, 218), (614, 168)]:
+        parts.append('            <path d="M %d %d L %d %d L %d %d" stroke="#f0c96a" stroke-width="2" fill="none"/>' % (ax, ay + 28, ax, ay, ax + 24, ay))
+    # 末端小旗:财富上限 = 生产率垫层
+    parts.append('            <line x1="830" y1="50" x2="830" y2="130" stroke="#f0c96a" stroke-width="2.5"/>')
+    parts.append('            <path d="M 830 54 L 868 64 L 830 74 Z" fill="rgba(240,201,106,0.85)"/>')
+    parts.append('            <text x="830" y="98" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">财富上限</text>')
+    parts.append('            <text x="830" y="116" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">= 生产率垫层</text>')
+    parts.append('            <text x="450" y="376" text-anchor="middle" fill="#c9d4e8" font-size="13">一天 −1 条,换每天 +2 条:财富的上限不看票有多少,看生产率垫了多高——垫层以下的钱,只是账面数字</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 400",
+        "生产力复利阶梯:徒手一天 1 条鱼;饿一天省下 1 条当本钱;腾出一天编出渔网;网成后一天 3 条,十天多 20 条;阶梯尽头一面小旗写着财富上限等于生产率垫层",
+        "阿岛的账:储蓄省下 1 条鱼、腾出 1 天编网,产出从 1 条/天翻到 3 条/天,十天多抓 20 条——一天 −1 条换每天 +2 条。财富上限从来不看票加几个零,看生产率垫了多高。")
+
+
+def _fig_e00_price_three_questions():
+    """ch00 价格三问卡。锚点:chapter-00.html <h3>2.3. 价格是信号,不是敌人</h3>。
+    素材沿用 2.3 节:渔夫难捕(供给)、食客叫好(需求)、碎片信息压成一个数字;
+    1637 年郁金香球茎 1 万荷兰盾 ≈ 普通人年薪 150 盾的 66 年 ≈ 一栋豪宅。"""
+    cards = [
+        (30, "谁在生产?供给", "#a8c6ff",
+         ["渔夫知道今天难捕", "网厂看出机会,连夜赶工", "成本、产量都在里面"],
+         "没人生产:有价无货,谈不上价"),
+        (310, "谁需要?需求", "#f0c96a",
+         ["食客知道今天叫好", "人人想多分一条鱼", "愿出多高的价全在这里"],
+         "没人需要:无人出价,也没有价"),
+        (590, "多少钱?成交价", "#a8c6ff",
+         ["碎片信息压成一个数字", "1637 年郁金香:1 颗球茎报 1 万盾", "≈ 年薪 150 盾 × 66 ≈ 一栋豪宅"],
+         "没有价格:稀缺信号传不出去"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">价格三问:每个成交价背后,都压着三个答案</text>')
+    for x, name, ncolor, lines, missing in cards:
+        cx = x + 125
+        parts.append('            <rect x="%d" y="64" width="250" height="190" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % x)
+        parts.append('            <text x="%d" y="94" text-anchor="middle" fill="%s" font-size="15" font-weight="800">%s</text>' % (cx, ncolor, name))
+        for li, ln in enumerate(lines):
+            parts.append('            ' + svg_text(ln, cx, 126 + li * 30, 230, size=12, color="#bcc9dd", weight=600, max_chars=16, max_lines=1))
+        parts.append('            <line x1="%d" y1="216" x2="%d" y2="216" stroke="rgba(122,167,240,0.18)"/>' % (x + 20, x + 230))
+        parts.append('            <text x="%d" y="240" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">%s</text>' % (cx, missing))
+    parts.append('            <text x="450" y="294" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">看懂价格 ≈ 同时回答这三问:价格是把答案压成一个数字的报信人,不是敌人</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 320",
+        "价格三问卡:谁在生产(供给)、谁需要(需求)、多少钱(成交价);第三卡带 1637 年郁金香账:一颗球茎一万盾约等于普通人 66 年工资;每卡配一句没它就没价格",
+        "把一个价格拆开看,背后就是三问:谁在生产、谁需要、多少钱——供给、需求、成交价,缺了任何一个都没有价格。1637 年那颗报一万盾的郁金香提醒你:三问的答案可以是泡沫,看价格也要看它背后的货和人。")
+
+
+def _fig_e01_credit_rate_value():
+    """ch01 信用→利率→估值传导链。锚点:chapter-01.html <h3>1.5. 为什么利率上升,老债会跌</h3>。
+    数字沿用该节正文:一年后确定拿 105 元的债;市场利率 5%→10%;105÷1.1=95.45 元。
+    左格借鱼账沿用 ch00 1.4:借 1 条还 2 条,利息补等待、风险、不方便。"""
+    nodes = [
+        (30, "信用:有人今天肯借", "#f0c96a",
+         ("借 1 条 → 还 2 条", "利息 = 1 条鱼"),
+         "利息补三样:等待·风险·不方便",
+         "没信用:利率再高也没人付"),
+        (320, "利率:多借要付利息", "#a8c6ff",
+         ("市场要求的回报", "5% → 10%"),
+         "折现率 = 市场当下要求的回报",
+         "利率升 → 未来的钱更不值钱"),
+        (610, "估值:把未来折回今天", "#a8c6ff",
+         ("105 ÷ 1.1 = 95.45 元", "1 年后拿 105 元"),
+         "今天的价 = 未来的钱 ÷ (1 + 折现率)",
+         "没折现:未来 1 元 ≠ 今天 1 元"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">信用 → 利率 → 估值:同一条传导链走一遍</text>')
+    parts.append('            <text x="450" y="56" text-anchor="middle" fill="#8499bd" font-size="12.5">先有人肯今天借出,再看市场要多少回报,最后才知道未来的钱折回今天值多少</text>')
+    parts.append('            <defs><marker id="e01a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>')
+    for x, name, ncolor, big, note, warn in nodes:
+        cx = x + 130
+        parts.append('            <rect x="%d" y="76" width="260" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % x)
+        parts.append('            <text x="%d" y="106" text-anchor="middle" fill="%s" font-size="15.5" font-weight="800">%s</text>' % (cx, ncolor, name))
+        parts.append('            <text x="%d" y="140" text-anchor="middle" fill="#c9d4e8" font-size="12">%s</text>' % (cx, big[0]))
+        parts.append('            <text x="%d" y="166" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">%s</text>' % (cx, big[1]))
+        parts.append('            ' + svg_text(note, cx, 198, 240, size=11.5, color="#8499bd", weight=600, max_chars=17, max_lines=1))
+        parts.append('            <line x1="%d" y1="220" x2="%d" y2="220" stroke="rgba(122,167,240,0.18)"/>' % (x + 20, x + 240))
+        parts.append('            ' + svg_text(warn, cx, 248, 240, size=12, color="#ffb4b4", weight=800, max_chars=16, max_lines=1))
+    for ax in (292, 582):
+        parts.append('            <path d="M %d 176 L %d 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e01a)"/>' % (ax, ax + 24))
+    parts.append('            <text x="450" y="310" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">传导一遍:利率从 5% 到 10%,同一张 105 元的债,今天只值 95.45 元(100 → 95.45)</text>')
+    parts.append('            <text x="450" y="336" text-anchor="middle" fill="#c9d4e8" font-size="12.5">债券价格与市场利率反着走;股票、房子,一切长期资产都被这根折现率拽着走</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 360",
+        "信用利率估值传导链:借一条还两条的信用账,市场利率从 5% 升到 10%,一年后 105 元的债折现 105÷1.1=95.45 元,老债从 100 元跌到 95.45 元",
+        "链条走一遍:信用是有人肯今天借鱼(借 1 还 2),利率是多借要付的价(5%→10%),估值是把未来的钱折回今天(105÷1.1=95.45)。利率一升,同一张 105 元的债从 100 元掉到 95.45 元——折现率拽着所有长期资产。")
+
+
+def _fig_e03_flat_vs_volatile():
+    """ch03 平价 vs 波动两商品对照。锚点:chapter-03.html <h3>1.2. 股东排在最后,所以风险和机会都大</h3>。
+    左图:A 商品常年 100±1(债主本息),B 商品 100±30(股东回报);
+    右账卡沿用 1.2 节真账:借款 100 万年息 5 万;利润 10 万→债主 5 万/股东 5 万;
+    利润 30 万→债主 5 万/股东 25 万(回报 5% vs 25%);利润 4 万→股东倒贴。"""
+    def y_of(p):
+        return int(round(300 - (p - 70) * 2.3))
+    xs = [80 + i * 58 for i in range(9)]
+    a_prices = [100, 100, 101, 100, 99, 100, 100, 101, 100]
+    b_prices = [100, 122, 84, 126, 80, 112, 94, 106, 90]
+    a_pts = " L ".join("%d %d" % (x, y_of(p)) for x, p in zip(xs, a_prices))
+    b_pts = " L ".join("%d %d" % (x, y_of(p)) for x, p in zip(xs, b_prices))
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">同样都在 100 附近,谁的风险大?</text>')
+    parts.append('            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">左:两件商品一年走势;右:1.2 节那家公司的两笔真账——债主与股东</text>')
+    # 左图:价格带
+    parts.append('            <rect x="70" y="70" width="490" height="232" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>')
+    parts.append('            <text x="305" y="92" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">A:借出去的钱:常年 100 ± 1</text>')
+    parts.append('            <text x="305" y="112" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">B:当股东拿的回报:100 ± 30</text>')
+    parts.append('            <rect x="84" y="%d" width="452" height="%d" fill="rgba(232,120,120,0.09)"/>' % (y_of(130), y_of(70) - y_of(130)))
+    parts.append('            <rect x="84" y="%d" width="452" height="%d" fill="rgba(122,167,240,0.14)"/>' % (y_of(101), y_of(99) - y_of(101)))
+    parts.append('            <path d="M ' + a_pts + '" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>')
+    parts.append('            <path d="M ' + b_pts + '" fill="none" stroke="#ffb4b4" stroke-width="2.5"/>')
+    parts.append('            <line x1="84" y1="%d" x2="536" y2="%d" stroke="rgba(201,212,232,0.35)" stroke-width="1" stroke-dasharray="4 5"/>' % (y_of(100), y_of(100)))
+    parts.append('            <text x="90" y="%d" fill="#8499bd" font-size="11">基准 100</text>' % (y_of(130) + 16))
+    parts.append('            <text x="548" y="212" fill="#a8c6ff" font-size="11.5" font-weight="800">±1</text>')
+    parts.append('            <text x="548" y="240" fill="#ffb4b4" font-size="11.5" font-weight="800">±30</text>')
+    # 右账卡
+    parts.append('            <rect x="600" y="70" width="260" height="232" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>')
+    parts.append('            <text x="730" y="96" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">同一家公司,两笔账</text>')
+    rows = [
+        ("公司借 100 万,年息 5 万", "#c9d4e8", 600, 122),
+        ("利润 10 万那年:", "#8499bd", 600, 148),
+        ("债主 5 万(5%) · 股东 5 万(5%)", "#eef4f8", 600, 168),
+        ("利润 30 万那年:", "#8499bd", 600, 194),
+        ("债主还是 5 万(雷打不动 5%)", "#a8c6ff", 600, 214),
+        ("股东 25 万 → 回报 25%", "#ffb4b4", 600, 234),
+        ("利润 4 万那年:股东一分没有还倒贴", "#ffb4b4", 600, 262),
+        ("利润的全部波动,都挤到股东身上", "#f0c96a", 600, 286),
+    ]
+    for txt, col, _x, y in rows:
+        parts.append('            <text x="730" y="%d" text-anchor="middle" fill="%s" font-size="12">%s</text>' % (y, col, txt))
+    parts.append('            <text x="450" y="336" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">哪个风险大,不看价格高低,看波动带宽度:±1 vs ±30,差出 30 倍</text>')
+    parts.append('            <text x="450" y="362" text-anchor="middle" fill="#c9d4e8" font-size="12.5">波动率就是把这种不确定数字化;拿走固定收益的人不坐过山车,拿剩余收益的人坐全程</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 400",
+        "平价与波动对照:商品 A 常年 100±1,商品 B 100±30;右账卡写债主雷打不动拿 5 万,股东回报从 5% 到 25% 再到倒贴;风险看波动带宽度不看价格高低",
+        "两件商品都围着 100 转:A 带宽 ±1,B 带宽 ±30,风险差 30 倍。1.2 节的账就是这条:B 是股东,利润 10 万拿 5 万(5%),利润 30 万拿 25 万(25%),利润 4 万就倒贴——波动率是把不确定性数字化。")
+
+
+def _fig_e10_ml_shutter():
+    """ch10 特征→模型→预测→决策四格快门。锚点:chapter-10.html <h3>2.1. 模型先服务于问题定义</h3>。
+    硬信息:2.2 节打分式 0.3×价值+0.2×质量+0.2×动量−0.1×波动;
+    2.10 节个人项目:沪深300/中证500、标签=未来20日相对收益、看 RankIC;
+    四个坑对应小节 1.4(泄漏)、1.9(过拟合)、2.9(信号衰减)、1.5(执行成本)。"""
+    cards = [
+        (24, "① 特征", "#a8c6ff",
+         ["原始行情与财报", "压成因子:估值动量", "波动、质量、流动性"],
+         "坑:数据泄漏", "用了当天之后的数据(1.4)"),
+        (246, "② 模型", "#f0c96a",
+         ["打分式(2.2 节):", "分 = 0.3×价值", "+0.2×质量 +0.2×动量", "−0.1×波动"],
+         "坑:过拟合", "历史答案背得太熟(1.9)"),
+        (468, "③ 预测", "#a8c6ff",
+         ["每只股一个预期分", "标签:未来 20 日收益", "看 RankIC 与分层"],
+         "坑:信号衰减", "上线后 IC 慢慢掉(2.9)"),
+        (690, "④ 决策", "#8fb37a",
+         ["规则:超配前 20%", "月频调仓生成订单", "下进市场才算数"],
+         "坑:执行成本", "佣金滑点吃掉超额(1.5)"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">特征 → 模型 → 预测 → 决策:四道快门,每道都在吃收益</text>')
+    parts.append('            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">顺序不可倒:先定义问题,再谈模型——本章 2.1 节:模型必须由前面的问题来定义</text>')
+    parts.append('            <defs><marker id="e10a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>')
+    for x, name, ncolor, lines, pit, pit_note in cards:
+        cx = x + 93
+        parts.append('            <rect x="%d" y="72" width="186" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % x)
+        parts.append('            <text x="%d" y="100" text-anchor="middle" fill="%s" font-size="15" font-weight="800">%s</text>' % (cx, ncolor, name))
+        parts.append('            <line x1="%d" y1="112" x2="%d" y2="112" stroke="rgba(122,167,240,0.18)"/>' % (x + 16, x + 170))
+        for li, ln in enumerate(lines):
+            parts.append('            ' + svg_text(ln, cx, 136 + li * 26, 170, size=11.5, color="#bcc9dd", weight=600, max_chars=14, max_lines=1))
+        parts.append('            <line x1="%d" y1="230" x2="%d" y2="230" stroke="rgba(232,136,136,0.30)"/>' % (x + 16, x + 170))
+        parts.append('            <text x="%d" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">%s</text>' % (cx, pit))
+        parts.append('            <text x="%d" y="272" text-anchor="middle" fill="#c9d4e8" font-size="10.5">%s</text>' % (cx, pit_note))
+    for ax in (212, 434, 656):
+        parts.append('            <path d="M %d 176 L %d 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e10a)"/>' % (ax, ax + 28))
+    parts.append('            <text x="450" y="318" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">出厂前死于泄漏和过拟合,上线后死于衰减与成本——四道快门,一道都省不掉</text>')
+    parts.append('            <text x="450" y="344" text-anchor="middle" fill="#c9d4e8" font-size="12.5">本章路线因此反过来排:金融问题 → 可交易假设 → 标签 → 数据口径 → 简单基线 → 复杂模型</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 380",
+        "机器学习四道快门:特征(估值动量波动质量流动性因子)、模型(0.3×价值+0.2×质量+0.2×动量−0.1×波动)、预测(未来20日相对收益看RankIC)、决策(超配前20%月频调仓);每格标注一个坑:泄漏、过拟合、信号衰减、执行成本",
+        "从原始数据到下单要过四道快门:特征压成因子、模型压成分数、分数变预测、预测进规则。每道都有一个主题坑:泄漏(1.4)、过拟合(1.9)、衰减(2.9)、成本(1.5)——前两道死在出厂前,后两道死在上线后。")
+
+
+def _fig_e13_alpha_five():
+    """ch13 超额收益来源五格卡。锚点:chapter-13.html <h3>2.3. 超额收益从哪里来</h3>。
+    五格:行业偏离、风格偏离、个股偏离、时点、其他(成本/执行);
+    收底账沿用 2.5 节:产品 A 超额 6% 跟踪误差 6% IR≈1;B 超额 8% 误差 16% IR≈0.5;
+    2.6 节:客户买的是指数增强,不是行业轮动基金。"""
+    cards = [
+        (20, "行业偏离", "#f0c96a", "超配景气行业", "行业反转", "大幅跑输"),
+        (192, "风格偏离", "#a8c6ff", "押市值/价值/动量暴露", "风格切换", "就被打脸"),
+        (364, "个股偏离", "#f0c96a", "模型看好的多配一点", "个股踩雷", "停牌违约"),
+        (536, "时点偏离", "#a8c6ff", "偏离调仓日,卡事件窗口", "交易拥挤", "信号过期"),
+        (708, "其他:成本", "#8fb37a", "成本压一点,执行稳一点", "容量上限", "滑点反噬"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">超额收益从哪来:五种偏离,各赚各的钱,各背各的雷</text>')
+    parts.append('            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">想赚超额就必须偏离基准(2.4 自由度的价格);偏离多大,用跟踪误差预算写死(2.6)</text>')
+    for x, name, ncolor, gain, risk1, risk2 in cards:
+        cx = x + 81
+        parts.append('            <rect x="%d" y="72" width="162" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % x)
+        parts.append('            <text x="%d" y="100" text-anchor="middle" fill="%s" font-size="14" font-weight="800">%s</text>' % (cx, ncolor, name))
+        parts.append('            <line x1="%d" y1="112" x2="%d" y2="112" stroke="rgba(122,167,240,0.18)"/>' % (x + 14, x + 148))
+        parts.append('            <text x="%d" y="132" text-anchor="middle" fill="#8499bd" font-size="10.5">赚它的决策</text>' % cx)
+        parts.append('            ' + svg_text(gain, cx, 152, 148, size=11.5, color="#eef4f8", weight=800, max_chars=11, max_lines=2))
+        parts.append('            <text x="%d" y="206" text-anchor="middle" fill="#8499bd" font-size="10.5">背什么雷</text>' % cx)
+        parts.append('            <text x="%d" y="232" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">%s</text>' % (cx, risk1))
+        parts.append('            <text x="%d" y="252" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">%s</text>' % (cx, risk2))
+        parts.append('            <line x1="%d" y1="272" x2="%d" y2="272" stroke="rgba(122,167,240,0.14)"/>' % (x + 14, x + 148))
+        parts.append('            <text x="%d" y="294" text-anchor="middle" fill="#8499bd" font-size="10.5">偏离即自由度,也是风险</text>' % cx)
+    parts.append('            <text x="450" y="350" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">收底看信息比率(2.5):A 超额 6% / 偏离 6% → IR≈1;B 超额 8% / 偏离 16% → IR≈0.5</text>')
+    parts.append('            <text x="450" y="376" text-anchor="middle" fill="#c9d4e8" font-size="12.5">超额多高不重要,每份偏离换多少才重要;客户买的是指数增强,不是行业轮动基金</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 420",
+        "超额收益五格卡:行业偏离、风格偏离、个股偏离、时点偏离、其他(成本与执行),每格写赚它的决策和背的雷;收底用信息比率两笔账:A 超额6%偏离6% IR=1,B 超额8%偏离16% IR=0.5",
+        "超额只有五个来路:行业、风格、个股、时点的偏离,加上成本与执行的省。每个来路都背一颗对应的雷。收尾用 2.5 节的账:B 超额 8% 看着更高,IR 只有 0.5——拿两倍多的偏离风险换来的,不如 A 的 1。")
+
+
+PATCH_E = {
+    0: [("储蓄不是抠门", _fig_e00_productivity_ladder),
+        ("价格是信号", _fig_e00_price_three_questions)],
+    1: [("老债会跌", _fig_e01_credit_rate_value)],
+    3: [("股东排在最后", _fig_e03_flat_vs_volatile)],
+    10: [("问题定义", _fig_e10_ml_shutter)],
+    13: [("超额收益从哪里", _fig_e13_alpha_five)],
+}
+# -*- coding: utf-8 -*-
+"""概念图 batch F(ch12/16/18/19/20/21/22 各新增第二张,合计 7 张)。
+
+交付约定(与 build_book.py 现有 _fig_xxx 函数一致):
+- 纯字符串拼接,不含 f-string;body 用 % 或字符串加号组拼。
+- 每张图通过 concept_figure(body, "0 0 900 高", aria, cap) 收尾,
+  内部混用 svg_text(...) 与手写 <text>。
+- 调色板与全书一致,禁用暖米色底(全书禁色的那个浅米色)。
+- viewBox 高度 280~480,x 类坐标与 path d 内数字均 <= 890。
+
+锚点关键词:全部是「渲染后小节标题」的子串,已逐一 grep 验证唯一命中,
+且与同章既有锚点("第一阶段"/"净值和收益披露"/"目录结构先分层"/"模拟调仓"/
+"保证金和现金"/"过拟合"/"回撤里最容易做错决定")互不包含,不会被抢挂。
+
+说明:用户原始清单里 ch12/ch16/ch18/ch20 的预设主题与章节实际内容不符
+(ch12 实为「量化机构分工 + 学习路线」,ch16 实为「产品净值费用 + 合规」,
+ch18 实为「工程组织 + 指标公式」,ch20 实为「市场中性 + 上线清单」,
+且 ch21 已有一张过拟合曲线图),故按 AGENTS 规则如实改选本章内
+真正带硬信息的小节绘图,主题向用户原意图尽量靠拢:
+
+grep 验证(<h2>/<h3> 命中行,各唯一):
+  ch12 "研究员每天在做什么"   -> chapter-12.html:33 <h3>1.2. 研究员每天在做什么</h3>
+  ch16 "业绩归因报告怎么看"   -> chapter-16.html:64 <h3>1.6. 业绩归因报告怎么看</h3>
+  ch18 "最大回撤"             -> chapter-18.html:151 <h3>2.4. 最大回撤</h3>
+  ch19 "让时间线先立正"       -> chapter-19.html:44 <h2>3. 让时间线先立正</h2>
+  ch20 "把总收益拆回零件"     -> chapter-20.html:93 <h3>1.7. 把总收益拆回零件</h3>
+  ch21 "手续费不是小零头"     -> chapter-21.html:51 <h3>1.3. 手续费不是小零头</h3>
+  ch22 "复盘顺序"             -> chapter-22.html:101 <h3>2.8. 复盘顺序</h3>
+"""
+
+
+def _fig_f12_researcher_loop():
+    """ch12 研究员的真实日常循环。锚点:chapter-12.html:33 <h3>1.2. 研究员每天在做什么</h3>。
+    流程与措辞沿用 1.2 正文:提出假设、取数据、清洗样本、构造特征、跑回测、看风险、
+    写报告、和已有因子比较、解释为什么失效、重复迭代;典型问题与五关
+    (IC·分层·换手·成本·容量)均为该节原文。"""
+    nodes = ["提出假设", "取数清洗", "构造特征", "跑回测", "风险比较", "报告归档"]
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化研究员的一天:循环体力活,不是灵感爆发</text>')
+    parts.append('            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">提出假设 → 取数清洗 → 构造特征 → 回测 → 和老因子比较 → 写报告;大多数想法最后没用,但失败统统归档</text>')
+    parts.append('            <defs>'
+                 '<marker id="f12a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker>'
+                 '<marker id="f12g" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker>'
+                 '</defs>')
+    for i, name in enumerate(nodes):
+        cx = 83 + i * 148
+        parts.append('            <rect x="%d" y="82" width="126" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % (cx - 63))
+        parts.append('            <circle cx="%d" cy="96" r="10" fill="rgba(122,167,240,0.25)"/>' % (cx - 50))
+        parts.append('            <text x="%d" y="100" text-anchor="middle" fill="#a8c6ff" font-size="11.5" font-weight="800">%d</text>' % (cx - 50, i + 1))
+        parts.append('            ' + svg_text(name, cx, 126, 118, size=12, color="#eef4f8", weight=800, max_chars=4, max_lines=1))
+        if i < 5:
+            parts.append('            <path d="M %d 118 L %d 118" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#f12a)"/>' % (cx + 65, cx + 83))
+    # 循环虚线:从第 6 步回到第 1 步
+    parts.append('            <path d="M 823 158 L 823 186 L 83 186 L 83 158" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 5" fill="none" marker-end="url(#f12g)"/>')
+    parts.append('            <text x="453" y="203" text-anchor="middle" fill="#bcc9dd" font-size="12">↩ 大多数想法最后没用:失败记录照样归档——方向已拥挤 · 数据有坑 · 假设站不住</text>')
+    # 典型问题案例卡
+    parts.append('            <rect x="30" y="220" width="840" height="180" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>')
+    parts.append('            <text x="450" y="246" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">一个典型问题:某类财务质量指标,在中证 1000 里有没有选股效果?</text>')
+    blocks = [
+        ("定义指标口径", "字段对齐公告日期"),
+        ("行业中性·市值中性", "剥离行业和大小盘"),
+        ("五关逐项打分", "任何一关不够就停"),
+        ("判定能否入库", "够格才准加入模型"),
+    ]
+    for i, (main, sub) in enumerate(blocks):
+        cx = 124 + i * 208
+        parts.append('            <rect x="%d" y="264" width="176" height="56" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.28)"/>' % (cx - 88))
+        parts.append('            <text x="%d" y="287" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">%s</text>' % (cx, main))
+        parts.append('            <text x="%d" y="307" text-anchor="middle" fill="#bcc9dd" font-size="11">%s</text>' % (cx, sub))
+        if i < 3:
+            parts.append('            <path d="M %d 292 L %d 292" stroke="#f0c96a" stroke-width="2" fill="none" marker-end="url(#f12g)"/>' % (cx + 90, cx + 118))
+    parts.append('            <text x="70" y="352" fill="#8499bd" font-size="12">入库前五关连看:</text>')
+    gates = ["IC 表现", "分层单调", "换手率", "交易成本", "容量"]
+    for i, g in enumerate(gates):
+        gx = 262 + i * 118
+        parts.append('            <rect x="%d" y="336" width="104" height="26" rx="8" fill="rgba(122,167,240,0.14)" stroke="rgba(122,167,240,0.35)"/>' % gx)
+        parts.append('            <text x="%d" y="354" text-anchor="middle" fill="#a8c6ff" font-size="11.5" font-weight="800">%s</text>' % (gx + 52, g))
+    parts.append('            <text x="450" y="386" text-anchor="middle" fill="#8499bd" font-size="11.5">五关同时过才算数:有效不够——还得分层单调、换手受控、扣完成本还剩、装得下资金</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 430",
+        "研究员日常循环:提出假设、取数清洗、构造特征、跑回测、风险比较、报告归档,失败也归档后回到起点;下方一个典型问题:财务质量指标在中证1000里有没有选股效果,要过口径、中性化、五关(IC、分层、换手、成本、容量)才能入库",
+        "研究员的真实日常是一个循环:提出假设、取数清洗、构造特征、跑回测、和老因子比、写报告解释失效,大多数想法最后没用——但失败记录照样归档。一个典型问题(财务质量指标在中证 1000 有没有选股效果)要过口径、中性化和 IC、分层、换手、成本、容量五关,才谈得上加入现有模型。")
+
+
+def _fig_f16_attribution_bar():
+    """ch16 超额收益归因拆分卡。锚点:chapter-16.html:64 <h3>1.6. 业绩归因报告怎么看</h3>。
+    拆分口径沿用 1.6 正文(行业配置/风格暴露/选股/交易执行/现金管理类),
+    数字为自洽账:1.8+0.6+0.4-0.2-0.5=+2.1%;反面例 0.3+1.9+0.2-0.1=+2.3%。"""
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">超额从哪来:五段加总,必须严丝合缝对上总超额</text>')
+    parts.append('            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">产品甲:组合 +12.1% − 基准 +10.0% = 超额 +2.1% —— 拆开看谁贡献的;负段向下扣,直到净线</text>')
+    # 左柱:产品甲堆积(底 y=350,1% = 70px)
+    segs = [
+        (350, 126, "rgba(143,179,122,0.45)", "rgba(143,179,122,0.7)"),   # 选股 +1.8 -> y 224..350
+        (224, 42, "rgba(240,201,106,0.45)", "rgba(240,201,106,0.6)"),    # 行业 +0.6 -> y 182..224
+        (182, 28, "rgba(122,167,240,0.45)", "rgba(122,167,240,0.6)"),    # 风格 +0.4 -> y 154..182
+        (154, 14, "rgba(232,120,120,0.45)", "rgba(232,136,136,0.6)"),    # 时点 -0.2 -> y 140..154
+        (140, 35, "rgba(232,120,120,0.45)", "rgba(232,136,136,0.6)"),    # 成本 -0.5 -> y 105..140
+    ]
+    for y0, h, fill, stroke in segs:
+        parts.append('            <rect x="120" y="%d" width="140" height="%d" fill="%s" stroke="%s"/>' % (y0 - h, h, fill, stroke))
+    # 净超额水平线 y=203
+    parts.append('            <line x1="120" y1="203" x2="260" y2="203" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 4"/>')
+    parts.append('            <text x="112" y="207" text-anchor="end" fill="#f0c96a" font-size="12.5" font-weight="800">合计 +2.1%</text>')
+    parts.append('            <text x="190" y="372" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">产品甲:来源均衡</text>')
+    labels = [
+        (287, "#eef4f8", "选股 +1.8%(真正想要的 Alpha)"),
+        (203, "#eef4f8", "行业偏离 +0.6%(超配 / 低配)"),
+        (168, "#eef4f8", "风格暴露 +0.4%(大小盘 / 价值成长)"),
+        (147, "#ffb4b4", "交易执行(时点)−0.2%"),
+        (122, "#ffb4b4", "摩擦成本 −0.5%(佣金·印花税·滑点)"),
+    ]
+    for y, color, txt in labels:
+        parts.append('            <line x1="262" y1="%d" x2="292" y2="%d" stroke="#46587a" stroke-width="1"/>' % (y, y))
+        parts.append('            <text x="300" y="%d" fill="%s" font-size="11.5">%s</text>' % (y + 4, color, txt))
+    # 右柱:反面例,超额 +2.3% 但行业独占 +1.9%
+    parts.append('            <text x="595" y="250" text-anchor="middle" fill="#8499bd" font-size="16" font-weight="800">vs</text>')
+    segs2 = [
+        (350, 21, "rgba(143,179,122,0.45)", "rgba(143,179,122,0.7)"),    # 选股 +0.3
+        (329, 14, "rgba(122,167,240,0.45)", "rgba(122,167,240,0.6)"),    # 风格 +0.2
+        (315, 133, "rgba(240,201,106,0.50)", "rgba(240,201,106,0.65)"),  # 行业 +1.9
+        (182, 7, "rgba(232,120,120,0.45)", "rgba(232,136,136,0.6)"),     # 成本 -0.1
+    ]
+    for y0, h, fill, stroke in segs2:
+        parts.append('            <rect x="640" y="%d" width="70" height="%d" fill="%s" stroke="%s"/>' % (y0 - h, h, fill, stroke))
+    parts.append('            <line x1="640" y1="189" x2="710" y2="189" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 4"/>')
+    parts.append('            <text x="675" y="372" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">产品乙:押注中奖</text>')
+    parts.append('            <text x="728" y="196" fill="#f0c96a" font-size="12.5" font-weight="800">这只超额 +2.3%</text>')
+    parts.append('            <text x="728" y="218" fill="#bcc9dd" font-size="11.5">行业独占 +1.9%</text>')
+    parts.append('            <text x="728" y="240" fill="#bcc9dd" font-size="11.5">选股仅 +0.3%</text>')
+    parts.append('            <text x="728" y="268" fill="#ffb4b4" font-size="12" font-weight="800">→ 是押注,不是增强</text>')
+    parts.append('            ' + svg_text("归因报告就是体检:判断它是不是按承诺的方式在赚钱——超额高不高其次,来源对不对才要紧", 450, 400, 880, size=12, color="#c9d4e8", weight=600, max_chars=44, max_lines=1))
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 420",
+        "超额归因堆积柱:产品甲超额+2.1%拆成选股+1.8、行业偏离+0.6、风格暴露+0.4、时点-0.2、成本-0.5;对照产品乙超额+2.3%但行业独占+1.9,选股只有+0.3",
+        "把总超额拆成五段:选股 +1.8%、行业偏离 +0.6%、风格暴露 +0.4%、时点 −0.2%、摩擦成本 −0.5%,加起来必须正好等于 +2.1%。对照右边那只:超额 +2.3% 看着更高,可行业偏离独占 +1.9%——那不是增强,是一次押注中奖。")
+
+
+def _fig_f18_max_drawdown():
+    """ch18 最大回撤的测量。锚点:chapter-18.html:151 <h3>2.4. 最大回撤</h3>。
+    数字沿用 2.4 正文:净值爬到 1.5 又跌到 1.2,最大回撤 = 1.2/1.5 − 1 = −20%;
+    尾巴「跌 50% 要涨 100% 才回本」同为原文。"""
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">最大回撤怎么量:净值从 1.5 跌回 1.2,疼多少?</text>')
+    parts.append('            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">最大回撤 = 净值从历史高点跌到之后低点的最大跌幅——人不是从起点看账户,是牢牢记得那个最高点</text>')
+    # 坐标轴
+    parts.append('            <line x1="120" y1="300" x2="830" y2="300" stroke="#46587a" stroke-width="1.5"/>')
+    parts.append('            <line x1="120" y1="300" x2="120" y2="60" stroke="#46587a" stroke-width="1.5"/>')
+    parts.append('            <text x="812" y="322" text-anchor="end" fill="#8499bd" font-size="12">时间</text>')
+    parts.append('            <text x="96" y="66" text-anchor="end" fill="#8499bd" font-size="12">净值</text>')
+    # 净值曲线(0.1 净值 = 32px,1.0 在 y=280)
+    parts.append('            <path d="M 150 280 L 230 238 L 310 196 L 390 150 L 480 120 L 560 180 L 640 216 L 720 192 L 800 170" fill="none" stroke="#7aa7f0" stroke-width="3"/>')
+    # 高点 1.5 虚线与标记
+    parts.append('            <line x1="120" y1="120" x2="480" y2="120" stroke="rgba(240,201,106,0.5)" stroke-width="1.5" stroke-dasharray="6 5"/>')
+    parts.append('            <circle cx="480" cy="120" r="5" fill="#f0c96a"/>')
+    parts.append('            <text x="112" y="116" text-anchor="end" fill="#f0c96a" font-size="12" font-weight="800">高点 1.5</text>')
+    parts.append('            <text x="480" y="98" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">你记得的是它</text>')
+    # 低点 1.2 虚线与标记
+    parts.append('            <line x1="120" y1="216" x2="640" y2="216" stroke="rgba(232,136,136,0.5)" stroke-width="1.5" stroke-dasharray="6 5"/>')
+    parts.append('            <circle cx="640" cy="216" r="5" fill="#e88"/>')
+    parts.append('            <text x="112" y="212" text-anchor="end" fill="#ffb4b4" font-size="12" font-weight="800">低点 1.2</text>')
+    parts.append('            <text x="640" y="242" text-anchor="middle" fill="#ffb4b4" font-size="12">很多人恰恰停在这附近</text>')
+    # 起点净值 1.0
+    parts.append('            <text x="112" y="276" text-anchor="end" fill="#8499bd" font-size="12">起点 1.0</text>')
+    # 落差括号(x=664)
+    parts.append('            <line x1="664" y1="120" x2="664" y2="216" stroke="#e88" stroke-width="2"/>')
+    parts.append('            <line x1="656" y1="120" x2="672" y2="120" stroke="#e88" stroke-width="2"/>')
+    parts.append('            <line x1="656" y1="216" x2="672" y2="216" stroke="#e88" stroke-width="2"/>')
+    parts.append('            <text x="684" y="172" fill="#e88" font-size="15" font-weight="800">落差 −20%</text>')
+    # 公式卡(左上空白区,避开曲线上升段和高点虚线)
+    parts.append('            <rect x="140" y="62" width="300" height="52" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>')
+    parts.append('            <text x="156" y="84" fill="#eef4f8" font-size="12.5" font-weight="800">最大回撤 = 低点 ÷ 高点 − 1</text>')
+    parts.append('            <text x="156" y="105" fill="#bcc9dd" font-size="12">= 1.2 ÷ 1.5 − 1 = −20%(跌了五分之一)</text>')
+    parts.append('            ' + svg_text("拿不拿得住一个策略,看回撤比看收益更准——账面亏的是钱,心里亏的是落差", 450, 338, 880, size=12, color="#c9d4e8", weight=600, max_chars=36, max_lines=1))
+    parts.append('            <text x="450" y="364" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">复利的尾巴:跌 50%,要涨 100% 才回本;刀砍得越深,爬回来的坡越长</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 380",
+        "最大回撤示意:净值曲线从1.0爬到高点1.5后跌到低点1.2,落差括号标-20%,公式为1.2除以1.5减1;复利尾巴是跌50%要涨100%才回本",
+        "净值一路爬到 1.5,你还没来得及截图炫耀,它掉头跌到 1.2——最大回撤就是 1.2 ÷ 1.5 − 1 = −20%。拖着一条复利的尾巴:跌 50% 要涨 100% 才回本。控回撤不是为曲线好看,是不让复利被一次深亏拦腰打断。")
+
+
+def _fig_f19_one_day_timeline():
+    """ch19 回测里的一天:T/T+1 时间线。锚点:chapter-19.html:44 <h2>3. 让时间线先立正</h2>。
+    四个节点与该时刻「允许看到什么」逐格沿用第 3 节正文表格;
+    红色警示为原文「教科书级别未来函数」例。"""
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回测里的一天:T 日算什么,T+1 做什么,钉死不许挪</text>')
+    parts.append('            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">标准做法:每月最后一个交易日收盘后生成信号,下一个交易日才买卖——每个动作只允许看到当时已公开的数据</text>')
+    parts.append('            <defs><marker id="f19a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker></defs>')
+    cards = [
+        ("T 日收盘后", "计算因子和目标组合", "只能见 T 日收盘", "及以前已公开数据"),
+        ("T+1 开盘", "按规则提交订单", "不得修改 T 日", "已经确定的信号"),
+        ("T+1 盘中", "模拟成交和未成交", "涨跌停 · 停牌", "成交额约束"),
+        ("T+1 收盘后", "更新持仓和净值", "成交回报 · 收盘估值", "费用入账"),
+    ]
+    for i, (head, act, allow1, allow2) in enumerate(cards):
+        cx = 132 + i * 212
+        parts.append('            <rect x="%d" y="84" width="190" height="132" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % (cx - 95))
+        parts.append('            <text x="%d" y="112" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">%s</text>' % (cx, head))
+        parts.append('            <text x="%d" y="146" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">%s</text>' % (cx, act))
+        parts.append('            <text x="%d" y="174" text-anchor="middle" fill="#8499bd" font-size="11">%s</text>' % (cx, allow1))
+        parts.append('            <text x="%d" y="194" text-anchor="middle" fill="#8499bd" font-size="11">%s</text>' % (cx, allow2))
+        if i < 3:
+            parts.append('            <path d="M %d 150 L %d 150" stroke="#7aa7f0" stroke-width="2.5" fill="none" marker-end="url(#f19a)"/>' % (cx + 97, cx + 115))
+    # 未来函数警示卡
+    parts.append('            <rect x="60" y="240" width="780" height="86" rx="12" fill="rgba(232,120,120,0.08)" stroke="rgba(232,136,136,0.5)"/>')
+    parts.append('            <text x="88" y="268" fill="#ffb4b4" font-size="13" font-weight="800">教科书级未来函数长这样:</text>')
+    parts.append('            <text x="88" y="292" fill="#eef4f8" font-size="12.5">用 T 日收盘价算特征,又假设自己按 T 日收盘价成交</text>')
+    parts.append('            <text x="88" y="314" fill="#bcc9dd" font-size="12">= 用收盘后才知道的信息,做了收盘时的决策</text>')
+    parts.append('            <circle cx="790" cy="283" r="24" fill="none" stroke="#e88" stroke-width="2.5"/>')
+    parts.append('            <text x="790" y="293" text-anchor="middle" fill="#e88" font-size="26" font-weight="800">×</text>')
+    parts.append('            ' + svg_text("每次你想按某个价格成交,先问自己:信号是不是也用了这个价格?这个数据在那个时刻真的已经公开了吗?", 450, 354, 880, size=13, color="#c9d4e8", weight=600, max_chars=50, max_lines=1))
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 385",
+        "回测单日时间线:T日收盘后计算因子和目标组合(只见T日收盘前公开数据),T+1开盘提交订单(不得改信号),T+1盘中模拟成交受涨跌停停牌成交额约束,T+1收盘后更新持仓净值;红卡警示用T日收盘价又算特征又成交是教科书级未来函数",
+        "把这张时间线钉在墙上:T 日收盘后算因子、订目标;T+1 开盘交订单、盘中按涨跌停和成交额约束模拟成交、收盘后再记账。最常见的未来函数就一种长相——用 T 日收盘价算特征,又假设自己按 T 日收盘价成交。")
+
+
+def _fig_f20_neutral_decompose():
+    """ch20 中性组合单日收益拆零件。锚点:chapter-20.html:93 <h3>1.7. 把总收益拆回零件</h3>。
+    三段口径沿用 1.7 正文:股票多头收益 + 期货对冲收益 + 现金和费用;
+    两张判案卡为原文两类归因情形。数字自洽:+0.40 − 0.25 − 0.03 = +0.12。"""
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">中性组合的一天收益,拆回三个零件</text>')
+    parts.append('            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">当日总收益 = 股票多头收益 + 期货对冲收益 + 现金和费用;想更细,再拆行业、风格、选股和基差</text>')
+    # 底轴
+    parts.append('            <line x1="80" y1="280" x2="830" y2="280" stroke="#46587a" stroke-width="1.5"/>')
+    # 瀑布(1% = 200px):多头 +0.40 -> 80px;对冲 −0.25 -> 50px;费用 −0.03 -> 6px;合计 +0.12 -> 24px
+    parts.append('            <rect x="132" y="200" width="96" height="80" fill="rgba(143,179,122,0.45)" stroke="rgba(143,179,122,0.7)"/>')
+    parts.append('            <rect x="312" y="200" width="96" height="50" fill="rgba(232,120,120,0.40)" stroke="rgba(232,136,136,0.6)"/>')
+    parts.append('            <rect x="492" y="250" width="96" height="6" fill="rgba(232,120,120,0.55)" stroke="rgba(232,136,136,0.7)"/>')
+    parts.append('            <rect x="672" y="256" width="96" height="24" fill="rgba(240,201,106,0.50)" stroke="rgba(240,201,106,0.65)"/>')
+    # 台阶虚线
+    parts.append('            <line x1="228" y1="200" x2="312" y2="200" stroke="#8499bd" stroke-width="1" stroke-dasharray="4 4"/>')
+    parts.append('            <line x1="408" y1="250" x2="492" y2="250" stroke="#8499bd" stroke-width="1" stroke-dasharray="4 4"/>')
+    parts.append('            <line x1="588" y1="256" x2="672" y2="256" stroke="#8499bd" stroke-width="1" stroke-dasharray="4 4"/>')
+    # 段标签
+    parts.append('            <text x="180" y="188" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">股票多头 +0.40%</text>')
+    parts.append('            <text x="360" y="188" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">期货对冲 −0.25%</text>')
+    parts.append('            <line x1="540" y1="248" x2="540" y2="196" stroke="#8499bd" stroke-width="1"/>')
+    parts.append('            <text x="540" y="188" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">现金和费用 −0.03%</text>')
+    parts.append('            <text x="720" y="244" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">当日合计 +0.12%</text>')
+    # 柱下短名
+    parts.append('            <text x="180" y="296" text-anchor="middle" fill="#8499bd" font-size="11">选股赚的</text>')
+    parts.append('            <text x="360" y="296" text-anchor="middle" fill="#8499bd" font-size="11">对冲亏的</text>')
+    parts.append('            <text x="540" y="296" text-anchor="middle" fill="#8499bd" font-size="11">每天固定扣</text>')
+    parts.append('            <text x="720" y="296" text-anchor="middle" fill="#f0c96a" font-size="11">落进口袋的</text>')
+    # 两张归因判案卡
+    parts.append('            <rect x="50" y="336" width="390" height="64" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>')
+    parts.append('            <text x="66" y="360" fill="#f0c96a" font-size="12" font-weight="800">总收益好,但主要来自期货基差 →</text>')
+    parts.append('            <text x="66" y="382" fill="#bcc9dd" font-size="11.5">不是纯选股 Alpha,是基差行情赏的饭</text>')
+    parts.append('            <rect x="460" y="336" width="390" height="64" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>')
+    parts.append('            <text x="476" y="360" fill="#a8c6ff" font-size="12" font-weight="800">总收益差,但多头跑赢、对冲成本过高 →</text>')
+    parts.append('            <text x="476" y="382" fill="#bcc9dd" font-size="11.5">药方是换工具或降成本,不是推翻选股模型</text>')
+    parts.append('            ' + svg_text("归因是用来抓说谎的:月度归因累计着看——中性策略的错误,是在多个阶段慢慢暴露的", 450, 420, 880, size=12, color="#c9d4e8", weight=600, max_chars=44, max_lines=1))
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 430",
+        "中性组合单日收益瀑布:股票多头+0.40%、期货对冲-0.25%、现金和费用-0.03%,合计+0.12%;两张判案卡:收益好但来自基差不是Alpha,收益差但多头跑赢则问题在对冲成本",
+        "每天收益可以拆成三个零件:股票多头 +0.40%、期货对冲 −0.25%、现金和费用 −0.03%,合计 +0.12%。归因用来抓说谎:收益好但主要来自基差,那是行情赏饭;收益差但多头跑赢、只是对冲太贵,药方是换工具降成本,不是推翻选股模型。")
+
+
+def _fig_f21_cost_erosion():
+    """ch21 成本敏感性照妖镜。锚点:chapter-21.html:51 <h3>1.3. 手续费不是小零头</h3>。
+    方法沿用 1.3 正文「0 / 1 / 2 / 3 倍成本各跑一遍」;成本清单为原文逐项;
+    两策略数字自洽:甲 12 − 7.5k,乙 15 − 6k(k = 成本倍数)。"""
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">手续费不是小零头:同一条策略,成本翻几倍就现原形</text>')
+    parts.append('            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">成本敏感性测试:同一策略拿 0 / 1 / 2 / 3 倍成本各跑一遍——健康的策略,成本加一倍还能活</text>')
+    parts.append('            <text x="450" y="78" text-anchor="middle" fill="#8499bd" font-size="11.5">成本全家桶:佣金 · 印花税 · 过户费 · 买卖价差 · 滑点 · 冲击成本 · 融资融券 · 期货展期和基差</text>')
+    # 零线
+    parts.append('            <line x1="60" y1="235" x2="866" y2="235" stroke="#8499bd" stroke-width="1.5"/>')
+    parts.append('            <text x="66" y="225" fill="#8499bd" font-size="11">0</text>')
+    groups = [
+        # (cx, 收益%, 柱高 px@7px/%, 是否非负) 甲:12 - 7.5k;乙:15 - 6k
+        [(130, "+12%", 84, 1), (210, "+4.5%", 32, 1), (290, "−3%", 21, 0), (370, "−10.5%", 74, 0)],
+        [(520, "+15%", 105, 1), (600, "+9%", 63, 1), (680, "+3%", 21, 1), (760, "−3%", 21, 0)],
+    ]
+    scale_labels = ["0 成本", "1× 成本", "2× 成本", "3× 成本"]
+    for g in groups:
+        for i, (cx, lab, h, ok) in enumerate(g):
+            x = cx - 28
+            if ok:
+                y = 235 - h
+                parts.append('            <rect x="%d" y="%d" width="56" height="%d" rx="4" fill="rgba(143,179,122,0.45)" stroke="rgba(143,179,122,0.7)"/>' % (x, y, h))
+                parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">%s</text>' % (cx, y - 8, lab))
+            else:
+                parts.append('            <rect x="%d" y="235" width="56" height="%d" rx="4" fill="rgba(232,120,120,0.40)" stroke="rgba(232,136,136,0.6)"/>' % (x, h))
+                parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">%s</text>' % (cx, 235 + h + 17, lab))
+            parts.append('            <text x="%d" y="344" text-anchor="middle" fill="#bcc9dd" font-size="11.5">%s</text>' % (cx, scale_labels[i]))
+    parts.append('            <text x="250" y="368" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">策略甲:毛 +12%,年换手成本约 7.5%/倍 → 一倍就重伤</text>')
+    parts.append('            <text x="640" y="368" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">策略乙:毛 +15%,成本约 6%/倍 → 两倍还活着</text>')
+    parts.append('            ' + svg_text("回测里少扣 0.05% 看似小数点后的事,高换手策略一年买卖几百回,每回都交一遍过路费", 450, 392, 880, size=12, color="#c9d4e8", weight=600, max_chars=46, max_lines=1))
+    parts.append('            <text x="450" y="414" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">只在 0 成本下赚钱的策略,赚的不是市场的钱,是你少扣的钱</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 420",
+        "成本敏感性对比:策略甲毛收益+12%,1倍成本剩+4.5%,2倍变-3%,3倍-10.5%;策略乙毛+15%,1倍+9%,2倍+3%,3倍才转负;成本清单含佣金印花税过户费价差滑点冲击融资融券展期基差",
+        "同一策略按 0、1、2、3 倍成本各跑一遍:甲毛收益 +12%,一倍成本只剩 +4.5%,两倍转负;乙毛 +15%,两倍成本还有 +3%。成本远不只是佣金——印花税、过户费、买卖价差、滑点、冲击、融资融券、展期基差,每一项单看不起眼,加起来足够吃掉一整个策略。")
+
+
+def _fig_f22_strip_curve():
+    """ch22 拆穿漂亮曲线的十步检查顺序。锚点:chapter-22.html:101 <h3>2.8. 复盘顺序</h3>。
+    故事数字沿用 2.1 原文(年化 45%、回撤 8%、夏普 2 以上),
+    修正账沿用 2.7 原文(年化 8%~12%、回撤约 25%),十步为 2.8 原文顺序。"""
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一条漂亮回测曲线,照这个顺序被拆穿</text>')
+    # 左上:故事卡
+    parts.append('            <rect x="40" y="58" width="410" height="80" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>')
+    parts.append('            <text x="58" y="82" fill="#f0c96a" font-size="12" font-weight="800">故事:月频 · 过去 20 日涨幅选 30 只 · 十年回测</text>')
+    badges = [("年化 +45%", "#f0c96a"), ("回撤仅 8%", "#a8c6ff"), ("夏普 > 2", "#a8c6ff")]
+    for i, (b, c) in enumerate(badges):
+        bx = 58 + i * 126
+        parts.append('            <rect x="%d" y="94" width="114" height="32" rx="8" fill="rgba(122,167,240,0.10)" stroke="rgba(122,167,240,0.30)"/>' % bx)
+        parts.append('            <text x="%d" y="115" text-anchor="middle" fill="%s" font-size="12.5" font-weight="800">%s</text>' % (bx + 57, c, b))
+    # 右上:修正总账卡
+    parts.append('            <rect x="470" y="58" width="390" height="80" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>')
+    parts.append('            <text x="488" y="82" fill="#a8c6ff" font-size="12" font-weight="800">剔完假收益,盘一下总账:</text>')
+    parts.append('            <text x="488" y="104" fill="#eef4f8" font-size="12.5" font-weight="800">年化 8%~12% · 回撤约 25% · 样本外不稳</text>')
+    parts.append('            <text x="488" y="126" fill="#bcc9dd" font-size="11">还能当一个偏弱动量信号,进多因子模型尽一份力</text>')
+    steps = [
+        ("股票池", "是否点时"), ("数据在当时", "是否可见"), ("信号与成交", "时点对吗"), ("成本", "是否完整"), ("涨跌停·停牌", "T+1 处理了吗"),
+        ("容量假设", "合理吗"), ("参数", "是否稳定"), ("样本外留了没", "有没有污染"), ("收益集中在", "少数年份吗"), ("风险暴露", "能解释吗"),
+    ]
+    for i, (s1, s2) in enumerate(steps):
+        row = i // 5
+        col = i % 5
+        cx = 102 + col * 168
+        y = 162 + row * 84
+        parts.append('            <rect x="%d" y="%d" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % (cx - 75, y))
+        parts.append('            <circle cx="%d" cy="%d" r="10" fill="rgba(240,201,106,0.85)"/>' % (cx - 59, y + 16))
+        parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">%d</text>' % (cx - 59, y + 20, i + 1))
+        parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">%s</text>' % (cx + 8, y + 40, s1))
+        parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#bcc9dd" font-size="11">%s</text>' % (cx + 8, y + 58, s2))
+    parts.append('            ' + svg_text("这个顺序比闷头调模型有用:把假收益一样一样剔掉,剔完还活着的,才值得被复杂化", 450, 352, 880, size=12, color="#c9d4e8", weight=600, max_chars=38, max_lines=1))
+    parts.append('            <text x="450" y="378" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">你不是从 45% 亏到 8%——是从假的好结果,走到了真的普通结果</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 395",
+        "拆穿漂亮回测曲线十步顺序:股票池点时、数据当时可见、信号与成交时点、成本完整、涨跌停停牌T加1、容量、参数稳定、样本外、收益集中度、风险暴露解释;故事卡年化45%回撤8%夏普大于2,修正后年化8%至12%回撤约25%",
+        "十年回测年化 45%、回撤 8%、夏普 2 以上——第一反应不该是庆祝,而该按十步顺序查:股票池、数据可见性、成交时点、成本、交易规则、容量、参数、样本外、收益集中度、风险解释。剔完假收益还剩年化 8%~12%、回撤约 25%:普通但真实,永远比惊艳但虚假值钱。")
+
+
+PATCH_F = {
+    12: [("研究员每天在做什么", _fig_f12_researcher_loop)],
+    16: [("业绩归因报告怎么看", _fig_f16_attribution_bar)],
+    18: [("最大回撤", _fig_f18_max_drawdown)],
+    19: [("让时间线先立正", _fig_f19_one_day_timeline)],
+    20: [("把总收益拆回零件", _fig_f20_neutral_decompose)],
+    21: [("手续费不是小零头", _fig_f21_cost_erosion)],
+    22: [("复盘顺序", _fig_f22_strip_curve)],
+}
+# -*- coding: utf-8 -*-
+"""概念图 batch G(ch23-ch32 每章各加 1 张,合计 10 张)。
+
+交付约定(与 build_book.py 现有 _fig_xxx / PATCH_C / PATCH_D 一致):
+- 纯字符串拼接,不含 f-string;body 用 % 或字符串加号组拼。
+- 每张图通过 concept_figure(body, "0 0 900 高", aria, cap) 收尾,
+  内部混用 svg_text(...) 与手写 <text>(svg_text 的 x 为中心点)。
+- 调色板与全书一致;禁用暖米色底。
+- viewBox 高度 280~480;x 类坐标与 path d 数字均 <= 890。
+
+锚点关键词:全部是「小节标题文字片段」的子串(h3 的 x.y. 编号不算),
+且已逐一 grep 验证在本章小节标题中唯一。本批 10 章此前每章各已挂一张图
+(见 CONCEPT_FIGURES_FREE),本批全部另选小节、另选主题,不重复已覆盖内容:
+
+  ch23 已有「十层金字塔」@真实财富和生产力 -> 本批:回测查错老顺序七刀
+  ch24 已有「三个作品集」@指数增强回测     -> 本批:可信回测报告 12 栏目 + 复盘四问
+  ch25 已有「二十个词速查」@货币           -> 本批:风控 11 件家伙各管一类失控
+  ch26 已有「资产三口袋」@总资产不是可花的钱 -> 本批:月报风险指标六格 + 回撤 20% 算例
+  ch27 已有「模拟盘一周」@数据没有按时到    -> 本批:收益/回撤两策略并排对比
+  ch28 已有「三层护栏」@先定资金上限        -> 本批:小实盘毕业评审四象限
+  ch29 已有「18 道关」@能解释钱和财富的区别 -> 本批:成本九项清单 + 敏感性四档
+  ch30 已有「七步翻车」@他先找模型          -> 本批:胜率错觉(90% 亏钱 vs 40% 赚钱)
+  ch31 已有「八步流水线」@问题很小          -> 本批:单因子档案六栏 + 三因子性格
+  ch32 已有「六道闸」@问题是否足够小        -> 本批:停止规则三行表(触发/动作/恢复)
+"""
+
+try:
+    from build_book import concept_figure, svg_text
+except ImportError:
+    # 预览/测试时由 harness 注入 build_book.concept_figure / build_book.svg_text
+    concept_figure = None
+    svg_text = None
+
+
+def _fig_g23_backtest_audit():
+    """ch23 §7 回测和验证:看到漂亮曲线先按老顺序查错的七刀。"""
+    rows = [
+        ("股票池是不是点时", "按当时的成分名单,不许拿今天的名单回填历史", "#7aa7f0"),
+        ("成交价有没有偷看", "信号日和成交日要错开,当天收盘价不许当天用", "#7aa7f0"),
+        ("成本是否完整", "佣金、滑点、冲击缺一项,纸面收益就虚高一截", "#7aa7f0"),
+        ("涨跌停停牌处理没有", "买不进、卖不出的日子,不许假装成交", "#f0c96a"),
+        ("容量合不合理", "小资金做出来的成绩,不能原样平移到大资金", "#f0c96a"),
+        ("参数是不是过拟合", "试了无数次留下的「最佳」,先打问号再上桌", "#f0c96a"),
+        ("样本外有没有被污染", "反复看测试集回头改策略,测试集就进了回路", "#e88"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">看到漂亮曲线先别鼓掌:按老顺序查错,七刀砍完再谈好不好</text>')
+    parts.append('            <text x="450" y="58" text-anchor="middle" fill="#8499bd" font-size="12.5">回测是在历史里排练,不是对未来的证明;查错顺序对应前面拆穿漂亮曲线的那几章</text>')
+    parts.append('            <line x1="56" y1="106" x2="56" y2="394" stroke="rgba(122,167,240,0.28)" stroke-width="2" stroke-dasharray="5 5"/>')
+    for i, (t, d, c) in enumerate(rows):
+        y = 80 + i * 48
+        cy = y + 26
+        parts.append('            <rect x="28" y="%d" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % y)
+        parts.append('            <circle cx="56" cy="%d" r="13" fill="#101d33" stroke="%s" stroke-width="1.5"/>' % (cy, c))
+        parts.append('            <text x="56" y="%d" text-anchor="middle" fill="%s" font-size="13" font-weight="800">%d</text>' % (cy + 5, c, i + 1))
+        parts.append('            ' + svg_text(t, 190, cy + 1, 210, size=13.5, color="#eef4f8", weight=800, max_chars=10, max_lines=1))
+        parts.append('            <text x="318" y="%d" fill="#8499bd" font-size="12">%s</text>' % (cy + 5, d))
+    parts.append('            <text x="450" y="438" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">验证的目标不是保住最漂亮的曲线,是把不真实的收益一样样剔掉——剔完还留在桌上的,才可能是真优势</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 452",
+        "回测查错七刀:按顺序检查股票池是否点时、成交价有没有偷看、成本是否完整、涨跌停停牌处理、容量合理性、参数过拟合、样本外污染",
+        "看到漂亮回测,先按老顺序查错:股票池是不是点时、成交价有没有偷看、成本是否完整、涨跌停停牌处理没有、容量合不合理、参数是不是过拟合、样本外有没有被污染。查完错的曲线,才有资格谈好不好。")
+
+
+def _fig_g24_report_lines():
+    """ch24 §2.4:一份可信回测报告的 12 个栏目,外加复盘四问。"""
+    tiles = [
+        ("净值", "策略自己的曲线"),
+        ("基准", "超额的对照物"),
+        ("超额", "比基准多赚的"),
+        ("回撤", "从峰值摔下多疼"),
+        ("年化", "拉平时间的外推"),
+        ("波动", "一路上有多颠"),
+        ("夏普", "每份波动换多少"),
+        ("换手", "策略有多爱交易"),
+        ("成本", "扣完还剩多少"),
+        ("年度收益", "按年拆开看"),
+        ("月度收益", "逐月看稳定性"),
+        ("持仓暴露", "组合押在什么上"),
+    ]
+    qs = [
+        "① 它在哪些环境有效",
+        "② 它在哪些地方失效",
+        "③ 它对哪个假设最敏感",
+        "④ 这条路值不值得继续",
+    ]
+    parts = []
+    parts.append('            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">可信回测报告的底线:自动生成,12 个栏目一个不能少</text>')
+    parts.append('            <text x="450" y="56" text-anchor="middle" fill="#8499bd" font-size="12.5">报告不许手工拼图;没有它,视线会自动粘在信息密度最低的那个数——总收益上</text>')
+    for i, (name, note) in enumerate(tiles):
+        col = i % 4
+        row = i // 4
+        x = 40 + col * 208
+        y = 76 + row * 64
+        parts.append('            <rect x="%d" y="%d" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % (x, y))
+        parts.append('            ' + svg_text(name, x + 98, y + 22, 176, size=13.5, color="#a8c6ff", weight=800, max_chars=8, max_lines=1))
+        parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#bcc9dd" font-size="11">%s</text>' % (x + 98, y + 42, note))
+    parts.append('            <text x="450" y="290" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">跑完不算完:复盘再答四个扎心问题</text>')
+    for i, q in enumerate(qs):
+        x = 40 + i * 208
+        parts.append('            <rect x="%d" y="304" width="196" height="46" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>' % x)
+        parts.append('            ' + svg_text(q, x + 98, 328, 180, size=12.5, color="#f0c96a", weight=800, max_chars=11, max_lines=1))
+    parts.append('            <text x="450" y="388" text-anchor="middle" fill="#c9d4e8" font-size="13">答完这四问,才算「做完」回测,而不只是「跑完」回测</text>')
+    parts.append('            <text x="450" y="414" text-anchor="middle" fill="#8499bd" font-size="12">第一份报告策略越简单越好:复杂度不是重点,可信度才是</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 440",
+        "回测报告必备十二栏目:净值、基准、超额、回撤、年化、波动、夏普、换手、成本、年度收益、月度收益、持仓暴露;跑完后复盘回答四问:哪些环境有效、哪里失效、对哪个假设最敏感、值不值得继续",
+        "第一份可信的回测报告要自动生成、不许手工拼图,至少摆齐净值、基准、超额、回撤、年化、波动、夏普、换手、成本、年度收益、月度收益和持仓暴露十二个栏目;跑完再回答四问——哪里有效、哪里失效、对什么假设敏感、值不值得继续,答完才算「做完」回测。")
+
+
+def _fig_g25_risk_toolbox():
+    """ch25 §2.10 风控:一整套家伙,每件对应一类具体的失控方式。"""
+    row1 = [
+        ("仓位", "管押多大"),
+        ("杠杆", "管放大几倍"),
+        ("个股上限", "管单票爆雷"),
+        ("行业上限", "管押单一赛道"),
+        ("回撤", "管从峰值亏多深"),
+    ]
+    row2 = [
+        ("VaR", "管常态日子亏多少"),
+        ("压力测试", "管极端行情亏多惨"),
+        ("数据监控", "管喂错的料"),
+        ("模型监控", "管信号悄悄漂移"),
+        ("订单限额", "管一笔错单闯多大祸"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">风控不预测明天跌不跌:它是熔断器和监控告警</text>')
+    parts.append('            <rect x="60" y="54" width="780" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>')
+    parts.append('            <text x="450" y="79" text-anchor="middle" fill="#c9d4e8" font-size="13">不预测事故——事故一旦发生,先把火情控制住,把信息亮出来,让异常可见、可处理</text>')
+    for row, items in enumerate([row1, row2]):
+        y = 112 + row * 88
+        for i, (name, job) in enumerate(items):
+            x = 41 + i * 166
+            parts.append('            <rect x="%d" y="%d" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % (x, y))
+            parts.append('            ' + svg_text(name, x + 77, y + 28, 134, size=13.5, color="#a8c6ff", weight=800, max_chars=6, max_lines=1))
+            parts.append('            ' + svg_text(job, x + 77, y + 54, 134, size=11, color="#bcc9dd", weight=400, max_chars=9, max_lines=1))
+    parts.append('            <rect x="180" y="292" width="540" height="56" rx="12" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>')
+    parts.append('            ' + svg_text("灾难开关 · 管「先拉闸再说」", 450, 312, 480, size=13.5, color="#f0c96a", weight=800, max_chars=16, max_lines=1))
+    parts.append('            <text x="450" y="334" text-anchor="middle" fill="#bcc9dd" font-size="11.5">不管原因先把交易停下来——像烟雾报警器响,响不是失败,是防护还在工作</text>')
+    parts.append('            <text x="450" y="382" text-anchor="middle" fill="#c9d4e8" font-size="13">好风控不是让策略不亏——那不叫风控,叫许愿;它要的是亏得明明白白,停得有条不紊</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 400",
+        "风控工具箱:仓位、杠杆、个股上限、行业上限、回撤、VaR、压力测试、数据监控、模型监控、订单限额各管一类失控,灾难开关管先拉闸再说",
+        "风控不是预测明天跌不跌,而是一整套家伙:仓位管押多大,限额管一笔错单闯多大祸,灾难开关管先拉闸再说——每一件都对应一类具体的失控方式。目标是策略在亏损和异常发生时不失控:亏得明明白白,停得有条不紊。")
+
+
+def _fig_g26_risk_metrics():
+    """ch26 §2.4 看风险指标:六个指标 + 最大回撤 20% 亲手算一遍。"""
+    tiles = [
+        ("最大回撤", "从峰值摔下", "那一下有多疼"),
+        ("波动率", "赚钱的路上", "有多颠簸"),
+        ("夏普比率", "每份波动", "换多少收益"),
+        ("卡玛比率", "每份回撤", "换多少年化"),
+        ("跟踪误差", "偏离基准", "有多远"),
+        ("信息比率", "每单位偏离", "换多少超额"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">月报风险指标别光看:峰值 1.5 跌到 1.2,回撤自己算一遍</text>')
+    # 左卡:回撤算例
+    parts.append('            <rect x="40" y="64" width="430" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>')
+    parts.append('            ' + svg_text("最大回撤 =(峰值 − 谷底)÷ 峰值", 255, 92, 380, size=14, color="#a8c6ff", weight=800, max_chars=19, max_lines=1))
+    parts.append('            <path d="M 80 158 L 170 134 L 350 226 L 425 188" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>')
+    parts.append('            <line x1="80" y1="134" x2="425" y2="134" stroke="#f0c96a" stroke-width="1.2" stroke-dasharray="5 4"/>')
+    parts.append('            <circle cx="170" cy="134" r="5" fill="#f0c96a"/>')
+    parts.append('            <text x="170" y="120" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">净值最高 1.5</text>')
+    parts.append('            <circle cx="350" cy="226" r="5" fill="#e88"/>')
+    parts.append('            <text x="350" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">后来跌到 1.2</text>')
+    parts.append('            <path d="M 170 144 L 170 217" stroke="#e88" stroke-width="1.5" stroke-dasharray="4 4"/>')
+    parts.append('            <text x="150" y="182" text-anchor="end" fill="#ffb4b4" font-size="11.5">亏掉 0.3</text>')
+    parts.append('            <text x="255" y="284" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">(1.5 − 1.2) ÷ 1.5 = 回撤 20%</text>')
+    # 右侧六格
+    for i, (name, l1, l2) in enumerate(tiles):
+        col = i % 2
+        row = i // 2
+        x = 490 + col * 191
+        y = 64 + row * 84
+        parts.append('            <rect x="%d" y="%d" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % (x, y))
+        parts.append('            ' + svg_text(name, x + 89, y + 23, 159, size=13, color="#a8c6ff", weight=800, max_chars=6, max_lines=1))
+        parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#bcc9dd" font-size="10.5">%s</text>' % (x + 89, y + 46, l1))
+        parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#bcc9dd" font-size="10.5">%s</text>' % (x + 89, y + 63, l2))
+    # 底部两卡
+    parts.append('            <rect x="40" y="322" width="400" height="62" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>')
+    parts.append('            <text x="240" y="346" text-anchor="middle" fill="#c9d4e8" font-size="12">按策略类型读:CTA 的回撤形态和指增长得不一样</text>')
+    parts.append('            <text x="240" y="368" text-anchor="middle" fill="#c9d4e8" font-size="12">市场中性波动应相对低——读出来高了要警觉</text>')
+    parts.append('            <rect x="460" y="322" width="400" height="62" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>')
+    parts.append('            <text x="660" y="346" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">闭眼想象:这是你的账户,从峰值眼睁睁亏两成</text>')
+    parts.append('            <text x="660" y="368" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">拿不住,这个产品的风险对你就超标</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 400",
+        "基金月报风险指标:最大回撤、波动率、夏普比率、卡玛比率、跟踪误差、信息比率;最大回撤算例为净值从峰值1.5跌到1.2,回撤等于(1.5减1.2)除以1.5等于百分之二十",
+        "风险指标都在回答两件朴素的事:赚钱的过程稳不稳,相对基准跑偏多少。最大回撤要亲手算——净值从 1.5 跌到 1.2,回撤就是 (1.5−1.2)÷1.5 = 20%;再闭眼想想:真钱从峰值亏两成,你拿不拿得住。")
+
+
+def _fig_g27_two_funds():
+    """ch27 §1.5 看收益和回撤:年化20/回撤40 vs 年化12/回撤8 并排。"""
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">收益高不代表「更好」,只代表「更陡」:两个策略并排看</text>')
+    cards = [
+        (40, "策略甲 · 陡而痛", 140, 280, "20%", "40%", "适合扛得住账户接近腰斩的人", "#7aa7f0"),
+        (460, "策略乙 · 缓而稳", 84, 56, "12%", "8%", "适合要睡安稳觉的人", "#f0c96a"),
+    ]
+    for x0, name, wg, wr, vg, vr, note, hc in cards:
+        parts.append('            <rect x="%d" y="60" width="400" height="176" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % x0)
+        parts.append('            ' + svg_text(name, x0 + 200, 86, 360, size=14.5, color=hc, weight=800, max_chars=16, max_lines=1))
+        parts.append('            <text x="%d" y="122" fill="#c9d4e8" font-size="12">年化收益</text>' % (x0 + 14))
+        parts.append('            <rect x="%d" y="108" width="280" height="18" rx="9" fill="rgba(122,167,240,0.14)"/>' % (x0 + 96))
+        parts.append('            <rect x="%d" y="108" width="%d" height="18" rx="9" fill="#7aa7f0"/>' % (x0 + 96, wg))
+        parts.append('            <text x="%d" y="122" fill="#eef4f8" font-size="12" font-weight="800">%s</text>' % (x0 + 96 + wg + 10, vg))
+        parts.append('            <text x="%d" y="166" fill="#c9d4e8" font-size="12">最大回撤</text>' % (x0 + 14))
+        parts.append('            <rect x="%d" y="152" width="280" height="18" rx="9" fill="rgba(232,136,136,0.14)"/>' % (x0 + 96))
+        parts.append('            <rect x="%d" y="152" width="%d" height="18" rx="9" fill="#e88"/>' % (x0 + 96, wr))
+        if vr == "40%":
+            parts.append('            <text x="%d" y="166" text-anchor="end" fill="#101d33" font-size="12" font-weight="800">%s</text>' % (x0 + 96 + wr - 10, vr))
+        else:
+            parts.append('            <text x="%d" y="166" fill="#ffb4b4" font-size="12" font-weight="800">%s</text>' % (x0 + 96 + wr + 10, vr))
+        parts.append('            <text x="%d" y="204" text-anchor="middle" fill="#8499bd" font-size="12">%s</text>' % (x0 + 200, note))
+        parts.append('            <text x="%d" y="224" text-anchor="middle" fill="#bcc9dd" font-size="11">回撤刻度:0 ───────── 40%%</text>' % (x0 + 200))
+    parts.append('            <rect x="40" y="256" width="400" height="64" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>')
+    parts.append('            <text x="240" y="280" text-anchor="middle" fill="#a8c6ff" font-size="12.5" font-weight="800">看收益四个刻度:累计 · 年化 · 年度 · 月度</text>')
+    parts.append('            <text x="240" y="302" text-anchor="middle" fill="#bcc9dd" font-size="11.5">年度收益表能拆穿「收益集中在某一年」的曲线</text>')
+    parts.append('            <rect x="460" y="256" width="400" height="64" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>')
+    parts.append('            <text x="660" y="280" text-anchor="middle" fill="#a8c6ff" font-size="12.5" font-weight="800">看回撤三个维度:跌多深 · 持续多久 · 修复多长</text>')
+    parts.append('            <text x="660" y="302" text-anchor="middle" fill="#bcc9dd" font-size="11.5">只盯最终收益,是只看了记分牌,错过整场比赛</text>')
+    parts.append('            <text x="450" y="356" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">年化 20% 回撤 40% 和年化 12% 回撤 8%,哪个好?看你的心脏</text>')
+    parts.append('            <text x="450" y="382" text-anchor="middle" fill="#c9d4e8" font-size="12.5">你能不能承受这条路径,才是属于你的指标</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 396",
+        "两个策略并排对比:策略甲年化收益百分之二十、最大回撤百分之四十,策略乙年化收益百分之十二、最大回撤百分之八;看收益要四个刻度,看回撤要三个维度",
+        "报告里把两个策略并排:年化 20%、最大回撤 40%,和年化 12%、最大回撤 8%——哪个好,看你的心脏。收益看四个刻度(累计、年化、年度、月度),回撤看三个维度(多深、持续多久、修复多长);只盯终点,是只看了比赛的记分牌。")
+
+
+def _fig_g28_graduation_matrix():
+    """ch28 §8:小实盘毕业评审,流程稳不稳 × 账户赚不赚四象限。"""
+    quads = [
+        (150, 88, "rgba(132,153,189,0.35)", "#bcc9dd", "流程乱 + 亏钱",
+         "整套退回模拟盘重练", "错上加错,归因都归不了"),
+        (490, 88, "#e88", "#ffb4b4", "流程乱 + 赚钱",
+         "运气成分大,千万别放大资金", "流程乱时的盈利,下一笔未必客气"),
+        (150, 204, "rgba(122,167,240,0.45)", "#a8c6ff", "流程稳 + 亏钱",
+         "系统合格,问题在策略本身", "不用动系统,继续改策略就好"),
+        (490, 204, "#8fb37a", "#8fb37a", "流程稳 + 赚钱",
+         "四项齐备,小实盘才算毕业", "此时才谈得上放大——仍按事先规则"),
+    ]
+    chips = ["① 流程稳定", "② 风险可控", "③ 成本符合预期", "④ 管住手按规则执行"]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">小实盘毕业评审:流程稳不稳 × 账户赚不赚,四象限分开诊断</text>')
+    parts.append('            <text x="310" y="76" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">账户亏钱</text>')
+    parts.append('            <text x="650" y="76" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">账户赚钱</text>')
+    parts.append('            <text x="134" y="144" text-anchor="end" fill="#8499bd" font-size="12.5" font-weight="800">流程混乱</text>')
+    parts.append('            <text x="134" y="260" text-anchor="end" fill="#8499bd" font-size="12.5" font-weight="800">流程稳定</text>')
+    for x, y, sc, tc, head, verdict, note in quads:
+        parts.append('            <rect x="%d" y="%d" width="330" height="104" rx="12" fill="rgba(18,29,49,0.70)" stroke="%s"/>' % (x, y, sc))
+        parts.append('            ' + svg_text(head, x + 165, y + 28, 290, size=14, color=tc, weight=800, max_chars=12, max_lines=1))
+        parts.append('            ' + svg_text(verdict, x + 165, y + 58, 290, size=12.5, color="#eef4f8", weight=800, max_chars=15, max_lines=1))
+        parts.append('            ' + svg_text(note, x + 165, y + 84, 290, size=11, color="#8499bd", weight=400, max_chars=16, max_lines=1))
+    parts.append('            <text x="450" y="344" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">毕业线:四件事同时成立,缺哪项先补哪项——别拿盈利替流程缺陷盖章</text>')
+    for i, c in enumerate(chips):
+        x = 40 + i * 208
+        parts.append('            <rect x="%d" y="358" width="196" height="46" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>' % x)
+        parts.append('            ' + svg_text(c, x + 98, 382, 176, size=12.5, color="#f0c96a", weight=800, max_chars=11, max_lines=1))
+    parts.append('            <text x="450" y="436" text-anchor="middle" fill="#8499bd" font-size="12">评审另有一串流程指标:信号按时生成?订单按计划执行?真实成本差多少?未成交占比多高?对账一致吗?手痒干预了几次?</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 448",
+        "小实盘验收四象限:流程乱亏钱退回模拟盘,流程乱赚钱是运气别放大,流程稳亏钱说明系统合格回去改策略,流程稳赚钱且流程稳定、风险可控、成本符合预期、能管住手才算毕业",
+        "小实盘跑了足够长,验收别只盯盈亏:流程稳定但策略亏,说明系统合格、问题在策略;策略赚了但流程一团糟,运气成分大,千万别放大资金。通过线是四件事同时成立——流程稳定、风险可控、成本符合预期、能管住手按规则执行。")
+
+
+def _fig_g29_cost_stress():
+    """ch29 §2.5 成本必须做敏感性:九项清单 + 0/1/2/3 倍四档并排。"""
+    items = ["佣金", "印花税", "过户费", "买卖价差", "滑点", "市场冲击", "融资成本", "融券成本", "合约展期"]
+    bars = [
+        ("无成本", 250, "#7aa7f0", "12%"),
+        ("1× 正常成本", 167, "#a8c6ff", "8%"),
+        ("2× 成本", 83, "#f0c96a", "4%"),
+        ("3× 成本", 11, "#e88", "0.5%"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">成本不是报表末尾的小数点,是一张九项开支清单</text>')
+    parts.append('            <rect x="40" y="64" width="296" height="268" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>')
+    parts.append('            ' + svg_text("每一项都在啃净收益", 188, 92, 260, size=13.5, color="#a8c6ff", weight=800, max_chars=11, max_lines=1))
+    for i, it in enumerate(items):
+        col = i % 3
+        row = i // 3
+        x = 58 + col * 92
+        y = 110 + row * 70
+        parts.append('            <rect x="%d" y="%d" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>' % (x, y))
+        parts.append('            ' + svg_text(it, x + 40, y + 34, 68, size=12.5, color="#eef4f8", weight=800, max_chars=4, max_lines=1))
+    parts.append('            <rect x="360" y="64" width="500" height="268" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>')
+    parts.append('            ' + svg_text("最低标准:同一报告摆四档成本(示意)", 610, 92, 460, size=13.5, color="#f0c96a", weight=800, max_chars=23, max_lines=1))
+    for i, (lab, w, c, v) in enumerate(bars):
+        y = 116 + i * 46
+        parts.append('            <text x="382" y="%d" fill="#c9d4e8" font-size="12.5">%s</text>' % (y + 16, lab))
+        parts.append('            <rect x="556" y="%d" width="264" height="20" rx="10" fill="rgba(122,167,240,0.12)"/>' % y)
+        parts.append('            <rect x="556" y="%d" width="%d" height="20" rx="10" fill="%s"/>' % (y, max(w, 11), c))
+        parts.append('            <text x="%d" y="%d" fill="#eef4f8" font-size="12.5" font-weight="800">%s</text>' % (556 + w + 14 if w > 30 else 556 + 26, y + 16, v))
+    parts.append('            <text x="610" y="308" text-anchor="middle" fill="#8499bd" font-size="11.5">刻度 0 ── 12%;数字仅示意,换成你自己策略的实测四档再来排</text>')
+    parts.append('            <rect x="60" y="352" width="780" height="56" rx="12" fill="rgba(232,136,136,0.07)" stroke="rgba(232,136,136,0.45)"/>')
+    parts.append('            <text x="450" y="376" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">试金石:成本假设翻一倍,策略就由盈转亏 → 边际薄得像纸,可以继续研究,别当强策略宣称</text>')
+    parts.append('            <text x="450" y="398" text-anchor="middle" fill="#c9d4e8" font-size="12.5">一条曲线扛住几倍成本还剩多少收益,是策略成色的第一道公开检验</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 424",
+        "交易成本九项清单:佣金、印花税、过户费、买卖价差、滑点、市场冲击、融资成本、融券成本、合约展期;敏感性最低标准是同一份报告并列展示无成本、一倍、两倍、三倍成本下的结果",
+        "成本清单有九项:佣金、印花税、过户费、买卖价差、滑点、市场冲击、融资成本、融券成本、合约展期,每一项都在啃净收益。最低标准是同一份报告并列摆出无成本、一倍、两倍、三倍成本四档结果——成本翻一倍就由盈转亏的策略,边际薄得像纸。")
+
+
+def _fig_g30_winrate_trap():
+    """ch30 §1.7:胜率最会骗人——90% 亏钱 vs 40% 赚钱,十笔记账。"""
+    cards = [
+        (40, "策略甲 · 胜率 90%", "#ffb4b4", "十次赚小钱,一次亏大的",
+         9, "9×(+1%) + 1×(−12%) = −3%", "#e88",
+         "小赚大亏:卖期权式形态,一次极端行情收走多年收益"),
+        (460, "策略乙 · 胜率 40%", "#8fb37a", "亏的次数多但每次小,赢的次数少但每次大",
+         4, "4×(+2%) + 6×(−0.5%) = +5%", "#8fb37a",
+         "趋势策略常态:胜率四成出头,盈利靠少数几波大趋势"),
+    ]
+    chips = ["期望值", "盈亏比", "最大回撤", "尾部风险", "杠杆"]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">胜率最会骗人:90% 胜率亏钱,40% 胜率赚钱</text>')
+    for x0, head, hc, sub, wins, formula, fc, verdict in cards:
+        parts.append('            <rect x="%d" y="60" width="400" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % x0)
+        parts.append('            ' + svg_text(head, x0 + 200, 88, 360, size=15, color=hc, weight=800, max_chars=16, max_lines=1))
+        parts.append('            ' + svg_text(sub, x0 + 200, 112, 360, size=11.5, color="#8499bd", weight=400, max_chars=20, max_lines=1))
+        for i in range(10):
+            sx = x0 + 33 + i * 35
+            c = "#8fb37a" if i < wins else "#e88"
+            parts.append('            <rect x="%d" y="126" width="28" height="26" rx="5" fill="%s"/>' % (sx, c))
+        parts.append('            <text x="%d" y="172" fill="#8499bd" font-size="11">10 笔账,绿赢红亏</text>' % (x0 + 40))
+        parts.append('            <text x="%d" y="198" text-anchor="middle" fill="%s" font-size="14" font-weight="800">%s</text>' % (x0 + 200, fc, formula))
+        parts.append('            ' + svg_text(verdict, x0 + 200, 232, 360, size=11.5, color="#c9d4e8", weight=400, max_chars=22, max_lines=1))
+    parts.append('            <text x="450" y="288" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800">评价策略至少摆五件套,缺一个维度结论都可能翻转</text>')
+    for i, c in enumerate(chips):
+        x = 56 + i * 160
+        parts.append('            <rect x="%d" y="302" width="148" height="42" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % x)
+        parts.append('            ' + svg_text(c, x + 74, 324, 128, size=13, color="#a8c6ff", weight=800, max_chars=5, max_lines=1))
+    parts.append('            <text x="450" y="378" text-anchor="middle" fill="#c9d4e8" font-size="12.5">只看胜率,相当于选车只看方向盘手感,不看刹车</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 396",
+        "胜率错觉:策略甲胜率百分之九十,九笔各赚百分之一、一笔亏百分之十二,合计负百分之三;策略乙胜率百分之四十,四笔各赚百分之二、六笔各亏百分之零点五,合计正百分之五",
+        "胜率 90% 的策略可以亏钱:九笔各 +1%、一笔 −12%,合计 −3%;胜率 40% 的趋势策略可以赚钱:四笔各 +2%、六笔各 −0.5%,合计 +5%。评价策略要把期望值、盈亏比、最大回撤、尾部风险和杠杆五件套摆在一起——只看胜率,等于选车不看刹车。")
+
+
+def _fig_g31_factor_files():
+    """ch31 §1.4 单因子报告:六栏档案 + 三个因子的性格速写。"""
+    tiles = [
+        ("覆盖率", "覆盖多少只股票"),
+        ("IC · RankIC", "排序灵不灵"),
+        ("五分组收益", "高分组真更好吗"),
+        ("换手率", "这因子爱交易吗"),
+        ("行业暴露", "押在哪个行业"),
+        ("失效年份", "哪些年罢工过"),
+    ]
+    rows = [
+        ("低估值", "某些年份挺管用", "", "但行业暴露重"),
+        ("动量", "收益不错", "但换手偏高", "成本敏感"),
+        ("质量", "单独看收益一般", "", "但回撤比较低"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">因子登场前先过堂:一个因子一份档案,谁也不许蒙混</text>')
+    parts.append('            <text x="450" y="58" text-anchor="middle" fill="#8499bd" font-size="12.5">低估值、质量、动量一个个单独测:六栏体检,外加三份性格速写</text>')
+    parts.append('            <rect x="40" y="76" width="400" height="248" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>')
+    parts.append('            ' + svg_text("单因子档案 · 六栏", 240, 104, 340, size=13.5, color="#a8c6ff", weight=800, max_chars=11, max_lines=1))
+    for i, (name, note) in enumerate(tiles):
+        col = i % 2
+        row = i // 2
+        x = 62 + col * 194
+        y = 120 + row * 64
+        parts.append('            <rect x="%d" y="%d" width="182" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>' % (x, y))
+        parts.append('            ' + svg_text(name, x + 91, y + 22, 162, size=12.5, color="#f0c96a", weight=800, max_chars=9, max_lines=1))
+        parts.append('            <text x="%d" y="%d" text-anchor="middle" fill="#bcc9dd" font-size="11">%s</text>' % (x + 91, y + 42, note))
+    parts.append('            <rect x="460" y="76" width="400" height="248" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>')
+    parts.append('            ' + svg_text("三因子体检结论(各自的性格)", 660, 104, 340, size=13.5, color="#f0c96a", weight=800, max_chars=15, max_lines=1))
+    for i, (name, l1, l2, l3) in enumerate(rows):
+        y = 122 + i * 66
+        parts.append('            <rect x="482" y="%d" width="356" height="56" rx="9" fill="rgba(240,201,106,0.06)" stroke="rgba(240,201,106,0.25)"/>' % y)
+        parts.append('            <rect x="482" y="%d" width="80" height="56" rx="9" fill="rgba(122,167,240,0.14)"/>' % y)
+        parts.append('            ' + svg_text(name, 522, y + 34, 72, size=13, color="#a8c6ff", weight=800, max_chars=4, max_lines=1))
+        detail = l1
+        if l2:
+            detail = l1 + " · " + l2
+        if l3:
+            detail = detail + ";" + l3
+        parts.append('            <text x="576" y="%d" fill="#eef4f8" font-size="12">%s</text>' % (y + 34, detail))
+    parts.append('            <text x="450" y="358" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">没有一条神奇结论,但每一条都真实可查</text>')
+    parts.append('            <text x="450" y="384" text-anchor="middle" fill="#c9d4e8" font-size="12.5">摸清性格再合成组合:知道自己在合什么,而不是闭着眼睛搅一锅</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 404",
+        "单因子报告:每个因子按覆盖率、IC与RankIC、五分组收益、换手率、行业暴露、失效年份六栏出档案;示例三因子性格为低估值某些年份管用但行业暴露重、动量收益不错但换手偏高成本敏感、质量收益一般但回撤比较低",
+        "因子一个个单独测,每个都出六栏档案:覆盖率、IC 和 RankIC、五分组收益、换手率、行业暴露、哪些年失效过。低估值某些年份管用但行业暴露重,动量收益不错但换手偏高、成本敏感,质量收益一般但回撤低——摸清性格,合成时才知道自己在合什么。")
+
+
+def _fig_g32_stop_rules():
+    """ch32 §5 实盘前先问能否停止:触发→动作→恢复三行写死。"""
+    rows = [
+        ("① 数据缺失/异常超阈值", "停止生成新单", "数据检查连续通过才恢复"),
+        ("② 对账对不上(不一致)", "暂停交易", "差异解释清楚并修复"),
+        ("③ 回撤超过预设上限", "降仓或停用", "完成复盘并人工确认"),
+    ]
+    parts = []
+    parts.append('            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">上线前最后一道闸:三行停止规则,写下来才算数</text>')
+    parts.append('            <text x="220" y="72" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">触发条件(开工前写死)</text>')
+    parts.append('            <text x="515" y="72" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">触发后动作</text>')
+    parts.append('            <text x="730" y="72" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">恢复条件</text>')
+    for i, (trig, act, back) in enumerate(rows):
+        y = 90 + i * 68
+        cy = y + 34
+        parts.append('            <rect x="60" y="%d" width="320" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>' % y)
+        parts.append('            ' + svg_text(trig, 220, cy + 1, 290, size=13, color="#eef4f8", weight=800, max_chars=15, max_lines=1))
+        parts.append('            <text x="395" y="%d" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">→</text>' % (cy + 6))
+        parts.append('            <rect x="420" y="%d" width="190" height="58" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>' % y)
+        parts.append('            ' + svg_text(act, 515, cy + 1, 170, size=13, color="#f0c96a", weight=800, max_chars=10, max_lines=1))
+        parts.append('            <text x="625" y="%d" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">→</text>' % (cy + 6))
+        parts.append('            <rect x="650" y="%d" width="210" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>' % y)
+        parts.append('            ' + svg_text(back, 730, cy + 1, 190, size=12, color="#c9d4e8", weight=400, max_chars=12, max_lines=1))
+    parts.append('            <text x="60" y="322" fill="#8499bd" font-size="12.5">正文还点名两个扳机:</text>')
+    parts.append('            <rect x="200" y="300" width="310" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>')
+    parts.append('            ' + svg_text("订单出现异常 → 停", 355, 321, 280, size=12.5, color="#ffb4b4", weight=800, max_chars=13, max_lines=1))
+    parts.append('            <rect x="530" y="300" width="310" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>')
+    parts.append('            ' + svg_text("模型指标长期反向 → 停", 685, 321, 280, size=12.5, color="#ffb4b4", weight=800, max_chars=15, max_lines=1))
+    parts.append('            <rect x="60" y="358" width="800" height="66" rx="12" fill="rgba(240,201,106,0.06)" stroke="rgba(240,201,106,0.42)"/>')
+    parts.append('            <text x="450" y="384" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">停止规则必须在还没赚钱也没亏钱的时候写好——等亏了再补写的,通常是情绪,不是规则</text>')
+    parts.append('            <text x="450" y="408" text-anchor="middle" fill="#c9d4e8" font-size="12.5">别把停止当失败:它和烟雾报警器响一个性质,说明防护还在工作</text>')
+    body = "\n".join(parts)
+    return concept_figure(body, "0 0 900 440",
+        "实盘前停止规则表:数据缺失或异常超阈值就停止生成新单、数据检查连续通过才恢复;对账不一致就暂停交易、差异解释清楚并修复后恢复;回撤超过预设上限就降仓或停用、完成复盘并人工确认后恢复",
+        "上线前把停止规则写成三行表:触发条件、触发后动作、恢复条件——数据异常停止生成新单,对账不一致暂停交易,回撤超上限降仓或停用;另外订单异常、模型指标长期反向也得停。规则要在没赚钱也没亏钱时写好,亏着补写出来的通常是情绪。")
+
+
+PATCH_G = {
+    23: [("回测和验证", _fig_g23_backtest_audit)],
+    24: [("写出第一份可信的回测报告", _fig_g24_report_lines)],
+    25: [("风控", _fig_g25_risk_toolbox)],
+    26: [("看风险指标", _fig_g26_risk_metrics)],
+    27: [("看收益和回撤", _fig_g27_two_funds)],
+    28: [("小实盘结束后看什么", _fig_g28_graduation_matrix)],
+    29: [("成本必须做敏感性", _fig_g29_cost_stress)],
+    30: [("高胜率策略一定好吗", _fig_g30_winrate_trap)],
+    31: [("单因子报告", _fig_g31_factor_files)],
+    32: [("实盘前先问能否停止", _fig_g32_stop_rules)],
+}
+
+
 def _merge_figures(base, patch):
     """按章合并锚点列表,不覆盖既有条目"""
     for k, v in patch.items():
@@ -2058,6 +3116,9 @@ def _merge_figures(base, patch):
 _merge_figures(CONCEPT_FIGURES, CONCEPT_FIGURES_FREE)
 _merge_figures(CONCEPT_FIGURES, PATCH_C)
 _merge_figures(CONCEPT_FIGURES, PATCH_D)
+_merge_figures(CONCEPT_FIGURES, PATCH_E)
+_merge_figures(CONCEPT_FIGURES, PATCH_F)
+_merge_figures(CONCEPT_FIGURES, PATCH_G)
 
 
 SUMMARY_LABEL_OVERRIDES = {

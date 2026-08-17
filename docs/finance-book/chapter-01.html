@@ -47,6 +47,39 @@
                             </div>
                     </p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 360" role="img" aria-label="信用利率估值传导链:借一条还两条的信用账,市场利率从 5% 升到 10%,一年后 105 元的债折现 105÷1.1=95.45 元,老债从 100 元跌到 95.45 元">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">信用 → 利率 → 估值:同一条传导链走一遍</text>
+            <text x="450" y="56" text-anchor="middle" fill="#8499bd" font-size="12.5">先有人肯今天借出,再看市场要多少回报,最后才知道未来的钱折回今天值多少</text>
+            <defs><marker id="e01a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>
+            <rect x="30" y="76" width="260" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="160" y="106" text-anchor="middle" fill="#f0c96a" font-size="15.5" font-weight="800">信用:有人今天肯借</text>
+            <text x="160" y="140" text-anchor="middle" fill="#c9d4e8" font-size="12">借 1 条 → 还 2 条</text>
+            <text x="160" y="166" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">利息 = 1 条鱼</text>
+            <text x="160" y="198" text-anchor="middle" fill="#8499bd" font-size="11.5" font-weight="600"><tspan x="160" y="198">利息补三样:等待·风险·不方便</tspan></text>
+            <line x1="50" y1="220" x2="270" y2="220" stroke="rgba(122,167,240,0.18)"/>
+            <text x="160" y="248" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800"><tspan x="160" y="248">没信用:利率再高也没人付</tspan></text>
+            <rect x="320" y="76" width="260" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="106" text-anchor="middle" fill="#a8c6ff" font-size="15.5" font-weight="800">利率:多借要付利息</text>
+            <text x="450" y="140" text-anchor="middle" fill="#c9d4e8" font-size="12">市场要求的回报</text>
+            <text x="450" y="166" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">5% → 10%</text>
+            <text x="450" y="198" text-anchor="middle" fill="#8499bd" font-size="11.5" font-weight="600"><tspan x="450" y="198">折现率=市场当下要求的回报</tspan></text>
+            <line x1="340" y1="220" x2="560" y2="220" stroke="rgba(122,167,240,0.18)"/>
+            <text x="450" y="248" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800"><tspan x="450" y="248">利率升→未来的钱更不值钱</tspan></text>
+            <rect x="610" y="76" width="260" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="740" y="106" text-anchor="middle" fill="#a8c6ff" font-size="15.5" font-weight="800">估值:把未来折回今天</text>
+            <text x="740" y="140" text-anchor="middle" fill="#c9d4e8" font-size="12">105 ÷ 1.1 = 95.45 元</text>
+            <text x="740" y="166" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">1 年后拿 105 元</text>
+            <text x="740" y="198" text-anchor="middle" fill="#8499bd" font-size="11.5" font-weight="600"><tspan x="740" y="198">今天的价=未来的钱÷(1+折现率)</tspan></text>
+            <line x1="630" y1="220" x2="850" y2="220" stroke="rgba(122,167,240,0.18)"/>
+            <text x="740" y="248" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800"><tspan x="740" y="248">没折现:未来1元≠今天1元</tspan></text>
+            <path d="M 292 176 L 316 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e01a)"/>
+            <path d="M 582 176 L 606 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e01a)"/>
+            <text x="450" y="310" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">传导一遍:利率从 5% 到 10%,同一张 105 元的债,今天只值 95.45 元(100 → 95.45)</text>
+            <text x="450" y="336" text-anchor="middle" fill="#c9d4e8" font-size="12.5">债券价格与市场利率反着走;股票、房子,一切长期资产都被这根折现率拽着走</text>
+          </svg>
+          <p class="figure__cap">链条走一遍:信用是有人肯今天借鱼(借 1 还 2),利率是多借要付的价(5%→10%),估值是把未来的钱折回今天(105÷1.1=95.45)。利率一升,同一张 105 元的债从 100 元掉到 95.45 元——折现率拽着所有长期资产。</p>
+        </div>
         <h3>1.6. 国债、公司债和信用利差</h3>
 <p>欠债的名单拉出来,信用并不平等。国债通常被认为信用风险较低——背后有税收和货币体系撑着。公司债就要看公司的经营脸色了:可能赚钱,可能亏损,极端时直接违约不还。</p><p>市场怎么给这种差别标价?看数字。同样三年期,国债收益率百分之三,某家公司债收益率百分之六,中间多出来的三个百分点,一大块就是市场向这家公司索要的信用补偿。这个差价有名字:信用利差。说白了,就是<span class="hl">“你比国家更可能赖账,那就多付我利息”</span>。</p><p>把利差换算成真金白银。同样借一百万元,国债一年利息三万,那家公司一年六万——每年多掏的三万,就是市场为<span class="hl">“这家公司可能还不上”</span>收的保险费。规模放大到百亿级的发债盘子,利差每走一个百分点,就是一年一个亿的成本差。</p><p>利差还会呼吸。信用利差扩大,通常意味着市场开始担心违约或流动性、纷纷要求更高补偿;利差收窄,说明市场的心又大了,愿意重新承担信用风险。它像债券市场的体温计,做债券量化、信用策略、宏观策略的人,天天盯着这条线。</p>
 

@@ -106,6 +106,60 @@
         <h3>2.4. 写出第一份可信的回测报告</h3>
 <p>到这一阶段,前面砌的砖终于可以盖出第一间房子:一个可信的回测。策略本身越简单越好——低估值、<span class="term">动量</span>,都行。复杂度不是重点,可信度才是,所以下面每件都要硬处理:交易日历怎么对齐,股票池是不是点时的,复权数据怎么用,信号和成交差几个时点,交易成本怎么算,停牌怎么办,涨跌停买不进卖不出怎么办,基准选谁。</p><p>回测跑完,报告要自动生成,不许手工拼图。里面至少要有:净值、基准、超额、回撤、年化、波动、<span class="term">夏普</span>、换手、成本、年度收益、月度收益和持仓暴露。为什么没有报告不行?因为没有它,你的视线会自动粘在最后一个指标——总收益上,而它恰恰是整份报告里信息密度最低的一个数。</p><p>阶段产出是一份完整回测报告加一页复盘。复盘要回答四个扎心问题:策略在哪些环境有效?哪里失效?对哪个假设最敏感?这条路值不值得继续走?答完这四问,才算真正「做完」回测,而不只是「跑完」回测。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 440" role="img" aria-label="回测报告必备十二栏目:净值、基准、超额、回撤、年化、波动、夏普、换手、成本、年度收益、月度收益、持仓暴露;跑完后复盘回答四问:哪些环境有效、哪里失效、对哪个假设最敏感、值不值得继续">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">可信回测报告的底线:自动生成,12 个栏目一个不能少</text>
+            <text x="450" y="56" text-anchor="middle" fill="#8499bd" font-size="12.5">报告不许手工拼图;没有它,视线会自动粘在信息密度最低的那个数——总收益上</text>
+            <rect x="40" y="76" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="138" y="98" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="138" y="98">净值</tspan></text>
+            <text x="138" y="118" text-anchor="middle" fill="#bcc9dd" font-size="11">策略自己的曲线</text>
+            <rect x="248" y="76" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="346" y="98" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="346" y="98">基准</tspan></text>
+            <text x="346" y="118" text-anchor="middle" fill="#bcc9dd" font-size="11">超额的对照物</text>
+            <rect x="456" y="76" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="554" y="98" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="554" y="98">超额</tspan></text>
+            <text x="554" y="118" text-anchor="middle" fill="#bcc9dd" font-size="11">比基准多赚的</text>
+            <rect x="664" y="76" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="762" y="98" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="762" y="98">回撤</tspan></text>
+            <text x="762" y="118" text-anchor="middle" fill="#bcc9dd" font-size="11">从峰值摔下多疼</text>
+            <rect x="40" y="140" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="138" y="162" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="138" y="162">年化</tspan></text>
+            <text x="138" y="182" text-anchor="middle" fill="#bcc9dd" font-size="11">拉平时间的外推</text>
+            <rect x="248" y="140" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="346" y="162" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="346" y="162">波动</tspan></text>
+            <text x="346" y="182" text-anchor="middle" fill="#bcc9dd" font-size="11">一路上有多颠</text>
+            <rect x="456" y="140" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="554" y="162" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="554" y="162">夏普</tspan></text>
+            <text x="554" y="182" text-anchor="middle" fill="#bcc9dd" font-size="11">每份波动换多少</text>
+            <rect x="664" y="140" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="762" y="162" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="762" y="162">换手</tspan></text>
+            <text x="762" y="182" text-anchor="middle" fill="#bcc9dd" font-size="11">策略有多爱交易</text>
+            <rect x="40" y="204" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="138" y="226" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="138" y="226">成本</tspan></text>
+            <text x="138" y="246" text-anchor="middle" fill="#bcc9dd" font-size="11">扣完还剩多少</text>
+            <rect x="248" y="204" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="346" y="226" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="346" y="226">年度收益</tspan></text>
+            <text x="346" y="246" text-anchor="middle" fill="#bcc9dd" font-size="11">按年拆开看</text>
+            <rect x="456" y="204" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="554" y="226" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="554" y="226">月度收益</tspan></text>
+            <text x="554" y="246" text-anchor="middle" fill="#bcc9dd" font-size="11">逐月看稳定性</text>
+            <rect x="664" y="204" width="196" height="56" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="762" y="226" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="762" y="226">持仓暴露</tspan></text>
+            <text x="762" y="246" text-anchor="middle" fill="#bcc9dd" font-size="11">组合押在什么上</text>
+            <text x="450" y="290" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">跑完不算完:复盘再答四个扎心问题</text>
+            <rect x="40" y="304" width="196" height="46" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="138" y="328" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800"><tspan x="138" y="328">①它在哪些环境有效</tspan></text>
+            <rect x="248" y="304" width="196" height="46" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="346" y="328" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800"><tspan x="346" y="328">②它在哪些地方失效</tspan></text>
+            <rect x="456" y="304" width="196" height="46" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="554" y="328" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800"><tspan x="554" y="328">③它对哪个假设最敏感</tspan></text>
+            <rect x="664" y="304" width="196" height="46" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="762" y="328" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800"><tspan x="762" y="328">④这条路值不值得继续</tspan></text>
+            <text x="450" y="388" text-anchor="middle" fill="#c9d4e8" font-size="13">答完这四问,才算「做完」回测,而不只是「跑完」回测</text>
+            <text x="450" y="414" text-anchor="middle" fill="#8499bd" font-size="12">第一份报告策略越简单越好:复杂度不是重点,可信度才是</text>
+          </svg>
+          <p class="figure__cap">第一份可信的回测报告要自动生成、不许手工拼图,至少摆齐净值、基准、超额、回撤、年化、波动、夏普、换手、成本、年度收益、月度收益和持仓暴露十二个栏目;跑完再回答四问——哪里有效、哪里失效、对什么假设敏感、值不值得继续,答完才算「做完」回测。</p>
+        </div>
         <h3>2.5. 因子和机器学习,先学会走路再上天</h3>
 <p>因子阶段要掌握一套标准体检流程:<span class="term">IC</span>、<span class="term">RankIC</span>、分层回测、中性化、风格暴露、组合边际贡献。这套流程的本质是回答「这一列数字到底有没有用、用处多大、做完组合还剩多少」。机器学习阶段请从线性模型和树模型开始,踏实验证之后,再考虑要不要碰深度学习。</p><p>这里要泼一盆冷水:别一上来就 Transformer。金融数据出了名的难对付——信噪比低,分布会漂移,样本互相纠缠,还对成本极度敏感。在这样的数据上,复杂模型如果没有强基线对照和严格的样本外纪律,做的事通常只是「更复杂地过拟合」,而且过拟合得比线性模型更隐蔽。</p><p>阶段产出是一份多因子报告,板块一个不能少:因子定义、数据口径、<span class="term">IC</span>、分层、成本、暴露、样本外、模型对比,外加一节诚实交代失败阶段。写完报告,你自己会先成为最了解这个策略局限的人——这正是研究员和赌徒的分界线。</p>
 

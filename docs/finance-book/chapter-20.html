@@ -93,6 +93,37 @@ neutral_nav.append(neutral_nav[-1] * (1 + neutral_ret))
         <h3>1.7. 把总收益拆回零件</h3>
 <p>每天收益可以拆成三部分: 股票多头收益、期货对冲收益、现金和费用。想更细,可以继续拆行业、风格、选股和<span class="term">基差</span>。拆完之后,你能清楚看到市场中性到底中性在哪里、不中性又在哪里。</p><p>归因是用来抓说谎的。如果总收益很好,但主要来自期货<span class="term">基差</span>收益,那它不是纯选股 <span class="term">Alpha</span>,是<span class="term">基差</span>行情赏的饭;如果总收益很差,但股票多头跑赢基准、只是对冲成本过高,问题可能在对冲工具,药方是换工具或降成本,而不是推翻选股模型。不看归因就开药方,迟早医错部位。</p><p>归因报告要按月输出,并且累计着看。市场中性策略的错误通常不是一天看出来的,而是在多个阶段慢慢暴露: 对冲偏差一点点积累、成本一点点上升、风格一点点<span class="term">反转</span>、<span class="term">基差</span>一段段不利。月度归因表就是你的异常监控大盘。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 430" role="img" aria-label="中性组合单日收益瀑布:股票多头+0.40%、期货对冲-0.25%、现金和费用-0.03%,合计+0.12%;两张判案卡:收益好但来自基差不是Alpha,收益差但多头跑赢则问题在对冲成本">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">中性组合的一天收益,拆回三个零件</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">当日总收益 = 股票多头收益 + 期货对冲收益 + 现金和费用;想更细,再拆行业、风格、选股和基差</text>
+            <line x1="80" y1="280" x2="830" y2="280" stroke="#46587a" stroke-width="1.5"/>
+            <rect x="132" y="200" width="96" height="80" fill="rgba(143,179,122,0.45)" stroke="rgba(143,179,122,0.7)"/>
+            <rect x="312" y="200" width="96" height="50" fill="rgba(232,120,120,0.40)" stroke="rgba(232,136,136,0.6)"/>
+            <rect x="492" y="250" width="96" height="6" fill="rgba(232,120,120,0.55)" stroke="rgba(232,136,136,0.7)"/>
+            <rect x="672" y="256" width="96" height="24" fill="rgba(240,201,106,0.50)" stroke="rgba(240,201,106,0.65)"/>
+            <line x1="228" y1="200" x2="312" y2="200" stroke="#8499bd" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="408" y1="250" x2="492" y2="250" stroke="#8499bd" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="588" y1="256" x2="672" y2="256" stroke="#8499bd" stroke-width="1" stroke-dasharray="4 4"/>
+            <text x="180" y="188" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">股票多头 +0.40%</text>
+            <text x="360" y="188" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">期货对冲 −0.25%</text>
+            <line x1="540" y1="248" x2="540" y2="196" stroke="#8499bd" stroke-width="1"/>
+            <text x="540" y="188" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">现金和费用 −0.03%</text>
+            <text x="720" y="244" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">当日合计 +0.12%</text>
+            <text x="180" y="296" text-anchor="middle" fill="#8499bd" font-size="11">选股赚的</text>
+            <text x="360" y="296" text-anchor="middle" fill="#8499bd" font-size="11">对冲亏的</text>
+            <text x="540" y="296" text-anchor="middle" fill="#8499bd" font-size="11">每天固定扣</text>
+            <text x="720" y="296" text-anchor="middle" fill="#f0c96a" font-size="11">落进口袋的</text>
+            <rect x="50" y="336" width="390" height="64" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="66" y="360" fill="#f0c96a" font-size="12" font-weight="800">总收益好,但主要来自期货基差 →</text>
+            <text x="66" y="382" fill="#bcc9dd" font-size="11.5">不是纯选股 Alpha,是基差行情赏的饭</text>
+            <rect x="460" y="336" width="390" height="64" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="476" y="360" fill="#a8c6ff" font-size="12" font-weight="800">总收益差,但多头跑赢、对冲成本过高 →</text>
+            <text x="476" y="382" fill="#bcc9dd" font-size="11.5">药方是换工具或降成本,不是推翻选股模型</text>
+            <text x="450" y="420" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="600"><tspan x="450" y="420">归因是用来抓说谎的:月度归因累计着看——中性策略的错误,是在多个阶段慢慢暴露的</tspan></text>
+          </svg>
+          <p class="figure__cap">每天收益可以拆成三个零件:股票多头 +0.40%、期货对冲 −0.25%、现金和费用 −0.03%,合计 +0.12%。归因用来抓说谎:收益好但主要来自基差,那是行情赏饭;收益差但多头跑赢、只是对冲太贵,药方是换工具降成本,不是推翻选股模型。</p>
+        </div>
         <h3>1.8. 中性两个字要拿证据说话</h3>
 <p>市场中性模拟要看的风险清单比股票策略长:<span class="term">年化收益</span>、波动、<span class="term">最大回撤</span>、<span class="term">夏普</span>、月度胜率、净暴露、总<span class="term">杠杆</span>、<span class="term">保证金</span>占用、对冲误差、<span class="term">基差</span>贡献和交易成本。每一项都对应一种可能的死法,缺一项就有一处盲区。</p><p>还有一个一句话的证伪检查:看策略净值与大盘的相关性。如果策略号称市场中性,但净值和大盘高度同涨同跌,无非两种可能:对冲没有做好,或者股票组合本身暴露太强。无论哪种,中性两个字都要先打个问号。</p><p>最后上压力测试,用假想但合理的情景扎它几针。假设大盘一天跌 <span class="num">5%</span>,期货<span class="term">基差</span>突然扩大,股票多头流动性变差,组合会怎样?这些情景比普通历史波动更能暴露问题,因为它精准打击你账本最脆弱的几个接口。</p>
 

@@ -134,6 +134,47 @@
                 </div>
                 <p>停止规则必须在还没赚钱也没亏钱的时候写好,这一点没有商量。等到亏损已经发生再去补写,你写出来的通常不是规则,是情绪——而情绪化的规则,往往是用来合理化下一次冲动的。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 440" role="img" aria-label="实盘前停止规则表:数据缺失或异常超阈值就停止生成新单、数据检查连续通过才恢复;对账不一致就暂停交易、差异解释清楚并修复后恢复;回撤超过预设上限就降仓或停用、完成复盘并人工确认后恢复">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">上线前最后一道闸:三行停止规则,写下来才算数</text>
+            <text x="220" y="72" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">触发条件(开工前写死)</text>
+            <text x="515" y="72" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">触发后动作</text>
+            <text x="730" y="72" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">恢复条件</text>
+            <rect x="60" y="90" width="320" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="220" y="125" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800"><tspan x="220" y="125">①数据缺失/异常超阈值</tspan></text>
+            <text x="395" y="130" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">→</text>
+            <rect x="420" y="90" width="190" height="58" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="515" y="125" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800"><tspan x="515" y="125">停止生成新单</tspan></text>
+            <text x="625" y="130" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">→</text>
+            <rect x="650" y="90" width="210" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="730" y="125" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="400"><tspan x="730" y="125">数据检查连续通过才恢复</tspan></text>
+            <rect x="60" y="158" width="320" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="220" y="193" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800"><tspan x="220" y="193">②对账对不上(不一致)</tspan></text>
+            <text x="395" y="198" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">→</text>
+            <rect x="420" y="158" width="190" height="58" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="515" y="193" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800"><tspan x="515" y="193">暂停交易</tspan></text>
+            <text x="625" y="198" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">→</text>
+            <rect x="650" y="158" width="210" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="730" y="193" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="400"><tspan x="730" y="193">差异解释清楚并修复</tspan></text>
+            <rect x="60" y="226" width="320" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="220" y="261" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800"><tspan x="220" y="261">③回撤超过预设上限</tspan></text>
+            <text x="395" y="266" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">→</text>
+            <rect x="420" y="226" width="190" height="58" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="515" y="261" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800"><tspan x="515" y="261">降仓或停用</tspan></text>
+            <text x="625" y="266" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">→</text>
+            <rect x="650" y="226" width="210" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="730" y="261" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="400"><tspan x="730" y="261">完成复盘并人工确认</tspan></text>
+            <text x="60" y="322" fill="#8499bd" font-size="12.5">正文还点名两个扳机:</text>
+            <rect x="200" y="300" width="310" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="355" y="321" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800"><tspan x="355" y="321">订单出现异常→停</tspan></text>
+            <rect x="530" y="300" width="310" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="685" y="321" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800"><tspan x="685" y="321">模型指标长期反向→停</tspan></text>
+            <rect x="60" y="358" width="800" height="66" rx="12" fill="rgba(240,201,106,0.06)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="384" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">停止规则必须在还没赚钱也没亏钱的时候写好——等亏了再补写的,通常是情绪,不是规则</text>
+            <text x="450" y="408" text-anchor="middle" fill="#c9d4e8" font-size="12.5">别把停止当失败:它和烟雾报警器响一个性质,说明防护还在工作</text>
+          </svg>
+          <p class="figure__cap">上线前把停止规则写成三行表:触发条件、触发后动作、恢复条件——数据异常停止生成新单,对账不一致暂停交易,回撤超上限降仓或停用;另外订单异常、模型指标长期反向也得停。规则要在没赚钱也没亏钱时写好,亏着补写出来的通常是情绪。</p>
+        </div>
         <h2>6. 最后问自己是否能复盘</h2>
 <p>最后一个检查点在每个项目、每笔交易结束之时:你能不能完整地讲清楚发生了什么?当时用的是哪个版本的数据、哪个版本的模型、哪一组参数?订单实际怎么成交的?成本一共付了多少?赚的部分从哪来?亏的部分又从哪去?一环一环,都说得出来吗?</p><p>为什么不能复盘就等于白做?因为不复盘就没法进步。一笔讲不清来源的盈利,本质上只是运气打卡上班;一笔讲不清来源的亏损,更可惜——学费照样交了,课却根本没上。市场收学费痛快,但从不负责讲课。</p><p>说句公道话:金融市场不会因为你态度认真就奖励你,它没那么温情。但认真的复盘有一个确定的效果——同样的错误,别人错三次,你只错一次。长期看,这就是复利。</p>
                 <div class="table-wrap">

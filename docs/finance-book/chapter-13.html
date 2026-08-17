@@ -121,6 +121,65 @@
         <h3>2.3. 超额收益从哪里来</h3>
 <p>指数增强怎么做到<span class="hl">“比标准答案多对几道题”</span>?超额的来源有一整套工具箱:多因子选股、机器学习模型、基本面数据、交易行为数据、事件信息、风险暴露管理和交易执行。最朴素的版本一句话说完:选出相对更可能跑赢指数的股票,多配一点;相对弱的股票,少买或不买。</p><p>举个具体例子。在中证 1000 成分附近,模型发现某些股票估值更合理、盈利质量更好、<span class="term">动量</span>更强、流动性足够,就提高它们的权重;另一些股票基本面差、波动过高或短期拥挤,就降低权重。每次调整幅度都不大,但几百只股票、每周每月地调,累积起来的偏离就是超额的雏形。</p><p>但超额不是只靠预测准。交易成本低一点、风险暴露控制好一点、调仓更稳一点,最后都会变成超额。很多时候,策略不是靠一次石破天惊的大判断赢,而是靠许多小边际优势长期累积——像往存钱罐里丢硬币,一枚不响,一年下来也很可观。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="超额收益五格卡:行业偏离、风格偏离、个股偏离、时点偏离、其他(成本与执行),每格写赚它的决策和背的雷;收底用信息比率两笔账:A 超额6%偏离6% IR=1,B 超额8%偏离16% IR=0.5">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">超额收益从哪来:五种偏离,各赚各的钱,各背各的雷</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">想赚超额就必须偏离基准(2.4 自由度的价格);偏离多大,用跟踪误差预算写死(2.6)</text>
+            <rect x="20" y="72" width="162" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="101" y="100" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">行业偏离</text>
+            <line x1="34" y1="112" x2="168" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="101" y="132" text-anchor="middle" fill="#8499bd" font-size="10.5">赚它的决策</text>
+            <text x="101" y="152" text-anchor="middle" fill="#eef4f8" font-size="11.5" font-weight="800"><tspan x="101" y="152">超配景气行业</tspan></text>
+            <text x="101" y="206" text-anchor="middle" fill="#8499bd" font-size="10.5">背什么雷</text>
+            <text x="101" y="232" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">行业反转</text>
+            <text x="101" y="252" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">大幅跑输</text>
+            <line x1="34" y1="272" x2="168" y2="272" stroke="rgba(122,167,240,0.14)"/>
+            <text x="101" y="294" text-anchor="middle" fill="#8499bd" font-size="10.5">偏离即自由度,也是风险</text>
+            <rect x="192" y="72" width="162" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="273" y="100" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">风格偏离</text>
+            <line x1="206" y1="112" x2="340" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="273" y="132" text-anchor="middle" fill="#8499bd" font-size="10.5">赚它的决策</text>
+            <text x="273" y="152" text-anchor="middle" fill="#eef4f8" font-size="11.5" font-weight="800"><tspan x="273" y="152">押市值/价值/动量暴露</tspan></text>
+            <text x="273" y="206" text-anchor="middle" fill="#8499bd" font-size="10.5">背什么雷</text>
+            <text x="273" y="232" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">风格切换</text>
+            <text x="273" y="252" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">就被打脸</text>
+            <line x1="206" y1="272" x2="340" y2="272" stroke="rgba(122,167,240,0.14)"/>
+            <text x="273" y="294" text-anchor="middle" fill="#8499bd" font-size="10.5">偏离即自由度,也是风险</text>
+            <rect x="364" y="72" width="162" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="445" y="100" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">个股偏离</text>
+            <line x1="378" y1="112" x2="512" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="445" y="132" text-anchor="middle" fill="#8499bd" font-size="10.5">赚它的决策</text>
+            <text x="445" y="152" text-anchor="middle" fill="#eef4f8" font-size="11.5" font-weight="800"><tspan x="445" y="152">模型看好的多配一点</tspan></text>
+            <text x="445" y="206" text-anchor="middle" fill="#8499bd" font-size="10.5">背什么雷</text>
+            <text x="445" y="232" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">个股踩雷</text>
+            <text x="445" y="252" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">停牌违约</text>
+            <line x1="378" y1="272" x2="512" y2="272" stroke="rgba(122,167,240,0.14)"/>
+            <text x="445" y="294" text-anchor="middle" fill="#8499bd" font-size="10.5">偏离即自由度,也是风险</text>
+            <rect x="536" y="72" width="162" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="617" y="100" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">时点偏离</text>
+            <line x1="550" y1="112" x2="684" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="617" y="132" text-anchor="middle" fill="#8499bd" font-size="10.5">赚它的决策</text>
+            <text x="617" y="152" text-anchor="middle" fill="#eef4f8" font-size="11.5" font-weight="800"><tspan x="617" y="152">偏离调仓日,卡事件窗口</tspan></text>
+            <text x="617" y="206" text-anchor="middle" fill="#8499bd" font-size="10.5">背什么雷</text>
+            <text x="617" y="232" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">交易拥挤</text>
+            <text x="617" y="252" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">信号过期</text>
+            <line x1="550" y1="272" x2="684" y2="272" stroke="rgba(122,167,240,0.14)"/>
+            <text x="617" y="294" text-anchor="middle" fill="#8499bd" font-size="10.5">偏离即自由度,也是风险</text>
+            <rect x="708" y="72" width="162" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="789" y="100" text-anchor="middle" fill="#8fb37a" font-size="14" font-weight="800">其他:成本</text>
+            <line x1="722" y1="112" x2="856" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="789" y="132" text-anchor="middle" fill="#8499bd" font-size="10.5">赚它的决策</text>
+            <text x="789" y="152" text-anchor="middle" fill="#eef4f8" font-size="11.5" font-weight="800"><tspan x="789" y="152">成本压一点,执行稳一点</tspan></text>
+            <text x="789" y="206" text-anchor="middle" fill="#8499bd" font-size="10.5">背什么雷</text>
+            <text x="789" y="232" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">容量上限</text>
+            <text x="789" y="252" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">滑点反噬</text>
+            <line x1="722" y1="272" x2="856" y2="272" stroke="rgba(122,167,240,0.14)"/>
+            <text x="789" y="294" text-anchor="middle" fill="#8499bd" font-size="10.5">偏离即自由度,也是风险</text>
+            <text x="450" y="350" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">收底看信息比率(2.5):A 超额 6% / 偏离 6% → IR≈1;B 超额 8% / 偏离 16% → IR≈0.5</text>
+            <text x="450" y="376" text-anchor="middle" fill="#c9d4e8" font-size="12.5">超额多高不重要,每份偏离换多少才重要;客户买的是指数增强,不是行业轮动基金</text>
+          </svg>
+          <p class="figure__cap">超额只有五个来路:行业、风格、个股、时点的偏离,加上成本与执行的省。每个来路都背一颗对应的雷。收尾用 2.5 节的账:B 超额 8% 看着更高,IR 只有 0.5——拿两倍多的偏离风险换来的,不如 A 的 1。</p>
+        </div>
         <h3>2.4. 自由度的价格</h3>
 <p>想考全班第一,又必须与同桌的答案一模一样,这两件事不可能同时成立。指数增强也一样:想要超额,就必须和基准不完全一样;但偏离越大,相对基准的风险也越大。<span class="term">跟踪误差</span>就是衡量这种<span class="hl">“偏离波动”</span>的重要指标——它量的不是你赚了多少,而是你为了多赚,敢偏离基准多远。</p><p><span class="term">跟踪误差</span>低,产品更像指数,客户体验稳定,但超额空间也小——手脚被绑住,能改的<span class="hl">“答案”</span>有限;<span class="term">跟踪误差</span>高,产品更自由,可能赚得更多,也可能大幅跑输。不同客户能接受的<span class="term">跟踪误差</span>不同,所以它本质上是产品定位的一部分,不是越高越好,也不是越低越好。</p><p>在量化组合优化里,<span class="term">跟踪误差</span>会被写成约束或惩罚项。这意味着模型再看好某只股票,如果买入会让组合跟基准偏离太大,优化器也可能只给小仓位。用工程的话说:性能再诱人,也不能超出系统预留的误差预算。</p>
 

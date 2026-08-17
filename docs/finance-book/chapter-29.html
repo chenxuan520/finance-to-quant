@@ -141,6 +141,54 @@
         <h3>2.5. 成本必须做敏感性</h3>
 <p>交易成本不是报表末尾一个小数点几的附注,它是一张开支清单:佣金、印花税、过户费、买卖价差、滑点、市场冲击、融资成本、融券成本、合约展期,每一项都在啃你的净收益。把它们漏掉或压低,策略的利润常常是纸面上的。</p><p>这里有一个很实用的试金石:把成本假设翻一倍,策略就从赚钱变成亏钱,说明它的边际薄得像纸。这种策略你可以继续研究、继续改进,但千万别把它当强策略对外宣称——一点成本假设的误差就足以让它现出原形。</p><p>最低标准:同一份报告里,并列展示无成本、正常成本、两倍成本、三倍成本下的结果。一条曲线扛住几倍成本还剩多少收益,是策略成色的第一道公开检验。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 424" role="img" aria-label="交易成本九项清单:佣金、印花税、过户费、买卖价差、滑点、市场冲击、融资成本、融券成本、合约展期;敏感性最低标准是同一份报告并列展示无成本、一倍、两倍、三倍成本下的结果">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">成本不是报表末尾的小数点,是一张九项开支清单</text>
+            <rect x="40" y="64" width="296" height="268" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="188" y="92" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="188" y="92">每一项都在啃净收益</tspan></text>
+            <rect x="58" y="110" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="98" y="144" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="98" y="144">佣金</tspan></text>
+            <rect x="150" y="110" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="190" y="144" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="190" y="144">印花税</tspan></text>
+            <rect x="242" y="110" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="282" y="144" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="282" y="144">过户费</tspan></text>
+            <rect x="58" y="180" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="98" y="214" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="98" y="214">买卖价差</tspan></text>
+            <rect x="150" y="180" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="190" y="214" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="190" y="214">滑点</tspan></text>
+            <rect x="242" y="180" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="282" y="214" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="282" y="214">市场冲击</tspan></text>
+            <rect x="58" y="250" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="98" y="284" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="98" y="284">融资成本</tspan></text>
+            <rect x="150" y="250" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="190" y="284" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="190" y="284">融券成本</tspan></text>
+            <rect x="242" y="250" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="282" y="284" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="282" y="284">合约展期</tspan></text>
+            <rect x="360" y="64" width="500" height="268" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="610" y="92" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800"><tspan x="610" y="92">最低标准:同一报告摆四档成本(示意)</tspan></text>
+            <text x="382" y="132" fill="#c9d4e8" font-size="12.5">无成本</text>
+            <rect x="556" y="116" width="264" height="20" rx="10" fill="rgba(122,167,240,0.12)"/>
+            <rect x="556" y="116" width="250" height="20" rx="10" fill="#7aa7f0"/>
+            <text x="820" y="132" fill="#eef4f8" font-size="12.5" font-weight="800">12%</text>
+            <text x="382" y="178" fill="#c9d4e8" font-size="12.5">1× 正常成本</text>
+            <rect x="556" y="162" width="264" height="20" rx="10" fill="rgba(122,167,240,0.12)"/>
+            <rect x="556" y="162" width="167" height="20" rx="10" fill="#a8c6ff"/>
+            <text x="737" y="178" fill="#eef4f8" font-size="12.5" font-weight="800">8%</text>
+            <text x="382" y="224" fill="#c9d4e8" font-size="12.5">2× 成本</text>
+            <rect x="556" y="208" width="264" height="20" rx="10" fill="rgba(122,167,240,0.12)"/>
+            <rect x="556" y="208" width="83" height="20" rx="10" fill="#f0c96a"/>
+            <text x="653" y="224" fill="#eef4f8" font-size="12.5" font-weight="800">4%</text>
+            <text x="382" y="270" fill="#c9d4e8" font-size="12.5">3× 成本</text>
+            <rect x="556" y="254" width="264" height="20" rx="10" fill="rgba(122,167,240,0.12)"/>
+            <rect x="556" y="254" width="11" height="20" rx="10" fill="#e88"/>
+            <text x="582" y="270" fill="#eef4f8" font-size="12.5" font-weight="800">0.5%</text>
+            <text x="610" y="308" text-anchor="middle" fill="#8499bd" font-size="11.5">刻度 0 ── 12%;数字仅示意,换成你自己策略的实测四档再来排</text>
+            <rect x="60" y="352" width="780" height="56" rx="12" fill="rgba(232,136,136,0.07)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="450" y="376" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">试金石:成本假设翻一倍,策略就由盈转亏 → 边际薄得像纸,可以继续研究,别当强策略宣称</text>
+            <text x="450" y="398" text-anchor="middle" fill="#c9d4e8" font-size="12.5">一条曲线扛住几倍成本还剩多少收益,是策略成色的第一道公开检验</text>
+          </svg>
+          <p class="figure__cap">成本清单有九项:佣金、印花税、过户费、买卖价差、滑点、市场冲击、融资成本、融券成本、合约展期,每一项都在啃净收益。最低标准是同一份报告并列摆出无成本、一倍、两倍、三倍成本四档结果——成本翻一倍就由盈转亏的策略,边际薄得像纸。</p>
+        </div>
         <h3>2.6. 因子必须有单独报告</h3>
 <p>开工前容易犯的错:把几十个因子一次性喂给模型,然后只看最终的净值曲线来决定去留。这就像进餐厅只尝混合大锅菜,永远不知道是哪种食材在起作用、哪种已经变质。每个重要因子,都应该先拆开单独体检:覆盖率、<span class="term">IC</span>、<span class="term">RankIC</span>、分层收益、<span class="term">换手率</span>、行业暴露和市值暴露,一项一项看。</p><p>单因子报告的意义,是在你叠上复杂模型之前,先确认这些输入本身有基本含义。缺了这一环节,再高级的模型也可能只是在高速搅拌噪声——数字在动,但没有任何一条对应真实世界。</p><p>最低标准是:每个核心因子都能拿出一份档案——定义是什么、方向是正是负、数据口径是哪种、历史统计表现如何、什么阶段失效过。没有档案的因子,不许进模型。</p>
 

@@ -123,6 +123,48 @@
         <h3>2.10. 风控</h3>
 <p>对风控最大的误解,是以为它在预测「明天会不会跌」。不是。风控干的事是限制损失扩大,让系统的异常状态可见、可处理。它更像你程序里的熔断器和监控告警:不预测事故,但事故一旦发生,先把火情控制住,把信息亮出来。</p><p>风控是一整套家伙:仓位、<span class="term">杠杆</span>、个股上限、行业上限、回撤、<span class="term">VaR</span>、压力测试、数据监控、模型监控、订单限额、灾难开关。每一件都对应一类具体的失控方式——仓位管押多大,限额管一笔错单闯多大祸,灾难开关管「先拉闸再说」。</p><p>好的风控不是让策略不亏——那不叫风控,叫许愿。它的目标是让策略在亏损和异常发生时不失控:亏得明明白白,停得有条不紊。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="风控工具箱:仓位、杠杆、个股上限、行业上限、回撤、VaR、压力测试、数据监控、模型监控、订单限额各管一类失控,灾难开关管先拉闸再说">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">风控不预测明天跌不跌:它是熔断器和监控告警</text>
+            <rect x="60" y="54" width="780" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="79" text-anchor="middle" fill="#c9d4e8" font-size="13">不预测事故——事故一旦发生,先把火情控制住,把信息亮出来,让异常可见、可处理</text>
+            <rect x="41" y="112" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="118" y="140" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="118" y="140">仓位</tspan></text>
+            <text x="118" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="118" y="166">管押多大</tspan></text>
+            <rect x="207" y="112" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="284" y="140" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="284" y="140">杠杆</tspan></text>
+            <text x="284" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="284" y="166">管放大几倍</tspan></text>
+            <rect x="373" y="112" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="140" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="450" y="140">个股上限</tspan></text>
+            <text x="450" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="450" y="166">管单票爆雷</tspan></text>
+            <rect x="539" y="112" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="616" y="140" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="616" y="140">行业上限</tspan></text>
+            <text x="616" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="616" y="166">管押单一赛道</tspan></text>
+            <rect x="705" y="112" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="782" y="140" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="782" y="140">回撤</tspan></text>
+            <text x="782" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="782" y="166">管从峰值亏多深</tspan></text>
+            <rect x="41" y="200" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="118" y="228" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="118" y="228">VaR</tspan></text>
+            <text x="118" y="254" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="118" y="254">管常态日子亏多少</tspan></text>
+            <rect x="207" y="200" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="284" y="228" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="284" y="228">压力测试</tspan></text>
+            <text x="284" y="254" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="284" y="254">管极端行情亏多惨</tspan></text>
+            <rect x="373" y="200" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="228" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="450" y="228">数据监控</tspan></text>
+            <text x="450" y="254" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="450" y="254">管喂错的料</tspan></text>
+            <rect x="539" y="200" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="616" y="228" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="616" y="228">模型监控</tspan></text>
+            <text x="616" y="254" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="616" y="254">管信号悄悄漂移</tspan></text>
+            <rect x="705" y="200" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="782" y="228" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="782" y="228">订单限额</tspan></text>
+            <text x="782" y="254" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="782" y="254">管一笔错单闯多大祸</tspan></text>
+            <rect x="180" y="292" width="540" height="56" rx="12" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="312" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800"><tspan x="450" y="312">灾难开关·管「先拉闸再说」</tspan></text>
+            <text x="450" y="334" text-anchor="middle" fill="#bcc9dd" font-size="11.5">不管原因先把交易停下来——像烟雾报警器响,响不是失败,是防护还在工作</text>
+            <text x="450" y="382" text-anchor="middle" fill="#c9d4e8" font-size="13">好风控不是让策略不亏——那不叫风控,叫许愿;它要的是亏得明明白白,停得有条不紊</text>
+          </svg>
+          <p class="figure__cap">风控不是预测明天跌不跌,而是一整套家伙:仓位管押多大,限额管一笔错单闯多大祸,灾难开关管先拉闸再说——每一件都对应一类具体的失控方式。目标是策略在亏损和异常发生时不失控:亏得明明白白,停得有条不紊。</p>
+        </div>
 
         <section class="summary reveal">
           <h2>小结</h2>

@@ -48,6 +48,56 @@
         <h3>1.7. 高胜率策略一定好吗</h3>
 <p>不一定。胜率只是评价维度里的一个,而且是最会骗人的一个。高胜率可能来自<span class="hl">“小赚大亏”</span>的形态:十次赚小钱,一次亏大的就能抹光十次。卖期权式的策略平时收租收得欢,一次极端行情就可能把多年收益连本带利收走。</p><p>真要评价策略,至少得把五样东西摆在一起看:期望值、盈亏比、<span class="term">最大回撤</span>、尾部风险、用了多少<span class="term">杠杆</span>。只看胜率,相当于选车只看方向盘手感,不看刹车。</p><p>还有一层反直觉:很多优秀的趋势策略,胜率并不高,四成出头很正常,它们的盈利靠少数几波大趋势。亏的次数多但每次小,赢的次数少但每次大——所以,别把<span class="hl">“常常赚钱”</span>的舒服感,误认成稳健。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 396" role="img" aria-label="胜率错觉:策略甲胜率百分之九十,九笔各赚百分之一、一笔亏百分之十二,合计负百分之三;策略乙胜率百分之四十,四笔各赚百分之二、六笔各亏百分之零点五,合计正百分之五">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">胜率最会骗人:90% 胜率亏钱,40% 胜率赚钱</text>
+            <rect x="40" y="60" width="400" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="240" y="88" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800"><tspan x="240" y="88">策略甲·胜率90%</tspan></text>
+            <text x="240" y="112" text-anchor="middle" fill="#8499bd" font-size="11.5" font-weight="400"><tspan x="240" y="112">十次赚小钱,一次亏大的</tspan></text>
+            <rect x="73" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="108" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="143" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="178" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="213" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="248" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="283" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="318" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="353" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="388" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <text x="80" y="172" fill="#8499bd" font-size="11">10 笔账,绿赢红亏</text>
+            <text x="240" y="198" text-anchor="middle" fill="#e88" font-size="14" font-weight="800">9×(+1%) + 1×(−12%) = −3%</text>
+            <text x="240" y="232" text-anchor="middle" fill="#c9d4e8" font-size="11.5" font-weight="400"><tspan x="240" y="232">小赚大亏:卖期权式形态,一次极端行情收走多年</tspan></text>
+            <rect x="460" y="60" width="400" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="660" y="88" text-anchor="middle" fill="#8fb37a" font-size="15" font-weight="800"><tspan x="660" y="88">策略乙·胜率40%</tspan></text>
+            <text x="660" y="112" text-anchor="middle" fill="#8499bd" font-size="11.5" font-weight="400"><tspan x="660" y="112">亏的次数多但每次小,赢的次数少但每次大</tspan></text>
+            <rect x="493" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="528" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="563" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="598" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="633" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <rect x="668" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <rect x="703" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <rect x="738" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <rect x="773" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <rect x="808" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <text x="500" y="172" fill="#8499bd" font-size="11">10 笔账,绿赢红亏</text>
+            <text x="660" y="198" text-anchor="middle" fill="#8fb37a" font-size="14" font-weight="800">4×(+2%) + 6×(−0.5%) = +5%</text>
+            <text x="660" y="232" text-anchor="middle" fill="#c9d4e8" font-size="11.5" font-weight="400"><tspan x="660" y="232">趋势策略常态:胜率四成出头,盈利靠少数几波大</tspan></text>
+            <text x="450" y="288" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800">评价策略至少摆五件套,缺一个维度结论都可能翻转</text>
+            <rect x="56" y="302" width="148" height="42" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="130" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="130" y="324">期望值</tspan></text>
+            <rect x="216" y="302" width="148" height="42" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="290" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="290" y="324">盈亏比</tspan></text>
+            <rect x="376" y="302" width="148" height="42" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="450" y="324">最大回撤</tspan></text>
+            <rect x="536" y="302" width="148" height="42" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="610" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="610" y="324">尾部风险</tspan></text>
+            <rect x="696" y="302" width="148" height="42" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="770" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="770" y="324">杠杆</tspan></text>
+            <text x="450" y="378" text-anchor="middle" fill="#c9d4e8" font-size="12.5">只看胜率,相当于选车只看方向盘手感,不看刹车</text>
+          </svg>
+          <p class="figure__cap">胜率 90% 的策略可以亏钱:九笔各 +1%、一笔 −12%,合计 −3%;胜率 40% 的趋势策略可以赚钱:四笔各 +2%、六笔各 −0.5%,合计 +5%。评价策略要把期望值、盈亏比、最大回撤、尾部风险和杠杆五件套摆在一起——只看胜率,等于选车不看刹车。</p>
+        </div>
         <h3>1.8. 市场中性是不是无风险</h3>
 <p>不是。中性两个字听上去像把风险清零了,其实它只是试图把大盘方向的暴露压到很低。剩下的风险一点不少:行业没配比好会暴露,风格有偏向会暴露,期货<span class="term">基差</span>波动会暴露,融资利率会暴露,流动性会暴露,当然,模型本身也会出错。</p><p>再具体一点。多头那篮子可能偏偏跑输基准,空头对冲的<span class="term">股指期货</span>可能被<span class="term">基差</span>来回割,融券可能借不到券,<span class="term">保证金</span>一催还可能触发压力。中性策略的收益曲线可以很漂亮,但这些问题的答案决定了它是因为聪明而美,还是因为暂时没出事而美。</p><p>以后看到<span class="hl">“中性”</span>两个字,标准动作是三问:中性化了什么?还剩下哪些风险?对冲的成本是多少?三问答齐再继续看,答不齐就先放下。</p>
 

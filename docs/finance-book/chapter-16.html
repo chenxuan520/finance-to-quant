@@ -64,6 +64,43 @@
         <h3>1.6. 业绩归因报告怎么看</h3>
 <p>归因报告就是产品的<span class="hl">“体检报告”</span>:专业产品会拆解收益来源——来自市场 <span class="term">Beta</span>、行业配置、风格暴露、选股、期货<span class="term">基差</span>、交易执行,还是现金管理。归因的价值在于,它能帮你判断产品是不是按承诺的方式在赚钱,还是偷偷换了配方。</p><p>举两个该警惕的画面。一个市场中性产品,收益主要来自大盘上涨——那它的<span class="hl">“中性程度”</span>要打问号,你付了对冲的钱,买到了一份指数。一个指数增强产品,超额主要来自重仓某个行业——那它的选股 <span class="term">Alpha</span> 可能被夸大,你看到的增强,其实是一次押注中奖。</p><p>归因也能解释亏损:亏的是模型短期失效、风格逆风、<span class="term">基差</span>扩大、交易成本上升,还是风险暴露越界?不同病因对应不同药方——前几种可能属于策略的正常成本,最后一种则是管理纪律出了问题。会看归因,你就不再只是盯净值干着急的旁观者。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="超额归因堆积柱:产品甲超额+2.1%拆成选股+1.8、行业偏离+0.6、风格暴露+0.4、时点-0.2、成本-0.5;对照产品乙超额+2.3%但行业独占+1.9,选股只有+0.3">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">超额从哪来:五段加总,必须严丝合缝对上总超额</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">产品甲:组合 +12.1% − 基准 +10.0% = 超额 +2.1% —— 拆开看谁贡献的;负段向下扣,直到净线</text>
+            <rect x="120" y="224" width="140" height="126" fill="rgba(143,179,122,0.45)" stroke="rgba(143,179,122,0.7)"/>
+            <rect x="120" y="182" width="140" height="42" fill="rgba(240,201,106,0.45)" stroke="rgba(240,201,106,0.6)"/>
+            <rect x="120" y="154" width="140" height="28" fill="rgba(122,167,240,0.45)" stroke="rgba(122,167,240,0.6)"/>
+            <rect x="120" y="140" width="140" height="14" fill="rgba(232,120,120,0.45)" stroke="rgba(232,136,136,0.6)"/>
+            <rect x="120" y="105" width="140" height="35" fill="rgba(232,120,120,0.45)" stroke="rgba(232,136,136,0.6)"/>
+            <line x1="120" y1="203" x2="260" y2="203" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="112" y="207" text-anchor="end" fill="#f0c96a" font-size="12.5" font-weight="800">合计 +2.1%</text>
+            <text x="190" y="372" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">产品甲:来源均衡</text>
+            <line x1="262" y1="287" x2="292" y2="287" stroke="#46587a" stroke-width="1"/>
+            <text x="300" y="291" fill="#eef4f8" font-size="11.5">选股 +1.8%(真正想要的 Alpha)</text>
+            <line x1="262" y1="203" x2="292" y2="203" stroke="#46587a" stroke-width="1"/>
+            <text x="300" y="207" fill="#eef4f8" font-size="11.5">行业偏离 +0.6%(超配 / 低配)</text>
+            <line x1="262" y1="168" x2="292" y2="168" stroke="#46587a" stroke-width="1"/>
+            <text x="300" y="172" fill="#eef4f8" font-size="11.5">风格暴露 +0.4%(大小盘 / 价值成长)</text>
+            <line x1="262" y1="147" x2="292" y2="147" stroke="#46587a" stroke-width="1"/>
+            <text x="300" y="151" fill="#ffb4b4" font-size="11.5">交易执行(时点)−0.2%</text>
+            <line x1="262" y1="122" x2="292" y2="122" stroke="#46587a" stroke-width="1"/>
+            <text x="300" y="126" fill="#ffb4b4" font-size="11.5">摩擦成本 −0.5%(佣金·印花税·滑点)</text>
+            <text x="595" y="250" text-anchor="middle" fill="#8499bd" font-size="16" font-weight="800">vs</text>
+            <rect x="640" y="329" width="70" height="21" fill="rgba(143,179,122,0.45)" stroke="rgba(143,179,122,0.7)"/>
+            <rect x="640" y="315" width="70" height="14" fill="rgba(122,167,240,0.45)" stroke="rgba(122,167,240,0.6)"/>
+            <rect x="640" y="182" width="70" height="133" fill="rgba(240,201,106,0.50)" stroke="rgba(240,201,106,0.65)"/>
+            <rect x="640" y="175" width="70" height="7" fill="rgba(232,120,120,0.45)" stroke="rgba(232,136,136,0.6)"/>
+            <line x1="640" y1="189" x2="710" y2="189" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="675" y="372" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">产品乙:押注中奖</text>
+            <text x="728" y="196" fill="#f0c96a" font-size="12.5" font-weight="800">这只超额 +2.3%</text>
+            <text x="728" y="218" fill="#bcc9dd" font-size="11.5">行业独占 +1.9%</text>
+            <text x="728" y="240" fill="#bcc9dd" font-size="11.5">选股仅 +0.3%</text>
+            <text x="728" y="268" fill="#ffb4b4" font-size="12" font-weight="800">→ 是押注,不是增强</text>
+            <text x="450" y="400" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="600"><tspan x="450" y="400">归因报告就是体检:判断它是不是按承诺的方式在赚钱——超额高不高其次,来源对不对才要紧</tspan></text>
+          </svg>
+          <p class="figure__cap">把总超额拆成五段:选股 +1.8%、行业偏离 +0.6%、风格暴露 +0.4%、时点 −0.2%、摩擦成本 −0.5%,加起来必须正好等于 +2.1%。对照右边那只:超额 +2.3% 看着更高,可行业偏离独占 +1.9%——那不是增强,是一次押注中奖。</p>
+        </div>
         <h3>1.7. 历史业绩的陷阱</h3>
 <p><span class="hl">“历史业绩不代表未来”</span>,这句话不是免责声明里的废话,是评委们的血泪心得。产品历史可能刚好经历了有利的市场环境;你看到的列表还可能只展示了存续下来的产品——那些清盘的、表现差的,早就悄悄从货架上撤掉了。这叫幸存者偏差:你只看到了活到今天的选手。</p><p>还要警惕短样本高年化:一个产品运行 <span class="num">3 个月</span>赚了 <span class="num">8%</span>,年化一下仿佛很高,但样本太短,根本没经历过一个完整市场周期。也要警惕只展示最好阶段、不展示回撤和停滞期的材料——精修过的履历,谁都能光华四射。</p><p>更合理的姿势是:把历史业绩当线索,而不是当结论。结合策略逻辑、团队稳定性、风险控制、规模变化、费用、市场环境和样本长度,一起判断。单看一条曲线就下单,相当于单看简历就发 offer——爽是爽,后果自负。</p>
 

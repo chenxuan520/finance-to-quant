@@ -151,6 +151,36 @@ def test_no_trade_when_limit_up():
         <h3>2.4. 最大回撤</h3>
 <p>净值一路爬到 1.5,你还没来得及截图炫耀,它掉头跌到 1.2——这一段的疼痛值怎么量?用<span class="term">最大回撤</span>:净值从历史高点跌到之后低点的最大跌幅,1.2 / 1.5 - 1 = <span class="num">-20%</span>,<span class="term">最大回撤</span>就是 <span class="num">-20%</span>。所有风险指标里,只有它天然带着<span class="hl">“曾经拥有”</span>的心碎感。</p><p><span class="term">最大回撤</span>之所以贴近真实投资体验,是因为人不是从起点看账户的,而是牢牢记得那个最高点。净值从高点掉下来,账面亏的是钱,心里亏的是落差,压力大到一定程度,很多人就会在回撤中赎回、停掉策略——而且恰恰停在最不该停的底部附近。一个策略你拿不拿得住,看回撤比看收益更准。</p><p>回撤还拖着一条复利的尾巴:跌 <span class="num">50%</span>,要涨 <span class="num">100%</span> 才回本。刀砍得越深,爬回来的坡越长。所以策略控制回撤,从来不是为了净值曲线好看,而是为了不让复利被一次深亏拦腰打断——复利最怕的不是慢,是重头再来。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 380" role="img" aria-label="最大回撤示意:净值曲线从1.0爬到高点1.5后跌到低点1.2,落差括号标-20%,公式为1.2除以1.5减1;复利尾巴是跌50%要涨100%才回本">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">最大回撤怎么量:净值从 1.5 跌回 1.2,疼多少?</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">最大回撤 = 净值从历史高点跌到之后低点的最大跌幅——人不是从起点看账户,是牢牢记得那个最高点</text>
+            <line x1="120" y1="300" x2="830" y2="300" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="120" y1="300" x2="120" y2="60" stroke="#46587a" stroke-width="1.5"/>
+            <text x="812" y="322" text-anchor="end" fill="#8499bd" font-size="12">时间</text>
+            <text x="96" y="66" text-anchor="end" fill="#8499bd" font-size="12">净值</text>
+            <path d="M 150 280 L 230 238 L 310 196 L 390 150 L 480 120 L 560 180 L 640 216 L 720 192 L 800 170" fill="none" stroke="#7aa7f0" stroke-width="3"/>
+            <line x1="120" y1="120" x2="480" y2="120" stroke="rgba(240,201,106,0.5)" stroke-width="1.5" stroke-dasharray="6 5"/>
+            <circle cx="480" cy="120" r="5" fill="#f0c96a"/>
+            <text x="112" y="116" text-anchor="end" fill="#f0c96a" font-size="12" font-weight="800">高点 1.5</text>
+            <text x="480" y="98" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">你记得的是它</text>
+            <line x1="120" y1="216" x2="640" y2="216" stroke="rgba(232,136,136,0.5)" stroke-width="1.5" stroke-dasharray="6 5"/>
+            <circle cx="640" cy="216" r="5" fill="#e88"/>
+            <text x="112" y="212" text-anchor="end" fill="#ffb4b4" font-size="12" font-weight="800">低点 1.2</text>
+            <text x="640" y="242" text-anchor="middle" fill="#ffb4b4" font-size="12">很多人恰恰停在这附近</text>
+            <text x="112" y="276" text-anchor="end" fill="#8499bd" font-size="12">起点 1.0</text>
+            <line x1="664" y1="120" x2="664" y2="216" stroke="#e88" stroke-width="2"/>
+            <line x1="656" y1="120" x2="672" y2="120" stroke="#e88" stroke-width="2"/>
+            <line x1="656" y1="216" x2="672" y2="216" stroke="#e88" stroke-width="2"/>
+            <text x="684" y="172" fill="#e88" font-size="15" font-weight="800">落差 −20%</text>
+            <rect x="140" y="62" width="300" height="52" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="156" y="84" fill="#eef4f8" font-size="12.5" font-weight="800">最大回撤 = 低点 ÷ 高点 − 1</text>
+            <text x="156" y="105" fill="#bcc9dd" font-size="12">= 1.2 ÷ 1.5 − 1 = −20%(跌了五分之一)</text>
+            <text x="450" y="338" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="600"><tspan x="450" y="338">拿不拿得住一个策略,看回撤比看收益更准——账面亏的是钱,心里亏的是落差</tspan></text>
+            <text x="450" y="364" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">复利的尾巴:跌 50%,要涨 100% 才回本;刀砍得越深,爬回来的坡越长</text>
+          </svg>
+          <p class="figure__cap">净值一路爬到 1.5,你还没来得及截图炫耀,它掉头跌到 1.2——最大回撤就是 1.2 ÷ 1.5 − 1 = −20%。拖着一条复利的尾巴:跌 50% 要涨 100% 才回本。控回撤不是为曲线好看,是不让复利被一次深亏拦腰打断。</p>
+        </div>
         <h3>2.5. 夏普比率</h3>
 <p>两个策略摆面前:A <span class="term">年化收益</span> <span class="num">15%</span>,B <span class="term">年化收益</span> <span class="num">25%</span>,选谁?先别急,问一句各自冒了多大风险。<span class="term">夏普比率</span>就是干这个的:它大致等于超出无风险收益的部分,除以收益的<span class="term">波动率</span>。翻译成人话:每承担一份波动,你换来多少<span class="term">超额收益</span>。它不问<span class="hl">“赚没赚”</span>,问的是<span class="hl">“赚得值不值”</span>。</p><p>代几个数字感受一下:A 策略<span class="term">年化收益</span> <span class="num">15%</span>,无风险收益 <span class="num">3%</span>,年化波动 <span class="num">12%</span>,<span class="term">夏普</span>约为 1;B 策略<span class="term">年化收益</span> <span class="num">25%</span>,波动 <span class="num">44%</span>,<span class="term">夏普</span>约 0.5。B 赚的绝对数字更多,但每一单位波动换来的收益质量更差——一个像匀速巡航的高铁,一个像半夜狂飙的摩托,终点都是<span class="hl">“到了”</span>,过程体验天差地别。</p><p>还要警惕<span class="term">夏普</span>的盲区:它会系统性低估<span class="hl">“小赚大亏”</span>型策略的风险。卖期权、加<span class="term">杠杆</span>、吃流动性尾部风险的策略,平时风平浪静、<span class="term">夏普</span>可能很好,可一次极端行情就能亏掉几年的积累——<span class="term">夏普</span>只看得见日常的抖动,看不见悬崖。<span class="term">夏普</span>高到离谱的策略,第一件事不是兴奋,是检查它的风险藏哪了。</p>
 

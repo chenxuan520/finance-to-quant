@@ -116,6 +116,56 @@
         <h3>2.1. 模型先服务于问题定义</h3>
 <p>做机器学习项目,很多人的肌肉记忆是先选模型、再找数据。在量化里,这个顺序是灾难的起点。这里的第一步是定义问题: 你到底要预测什么? 未来 <span class="num">1 日</span>收益、未来 <span class="num">20 日</span><span class="term">超额收益</span>、股票排序、<span class="term">波动率</span>、成交概率,还是风险暴露? 问题不同,数据、标签、损失函数和评价指标全都跟着变。</p><p>举例感受一下。目标是选股排序,你关心的就是 <span class="term">RankIC</span>、分层收益和组合<span class="term">超额收益</span>,而不是普通回归的 MSE;目标是判断明天这单能不能成交,你关心的是成交概率和拒单风险;目标是控制风险,预测误差的方向可能比收益预测本身更要紧。</p><p>很多失败的量化项目,从起点就走错了: 先挑一个酷模型,再满世界找数据喂它。更稳的顺序正好反过来: 金融问题、可交易假设、标签定义、数据口径、简单基线、复杂模型、组合和执行。模型在这条链上排在后面——不是它不重要,是它必须由前面的问题来定义。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 380" role="img" aria-label="机器学习四道快门:特征(估值动量波动质量流动性因子)、模型(0.3×价值+0.2×质量+0.2×动量−0.1×波动)、预测(未来20日相对收益看RankIC)、决策(超配前20%月频调仓);每格标注一个坑:泄漏、过拟合、信号衰减、执行成本">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">特征 → 模型 → 预测 → 决策:四道快门,每道都在吃收益</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">顺序不可倒:先定义问题,再谈模型——本章 2.1 节:模型必须由前面的问题来定义</text>
+            <defs><marker id="e10a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>
+            <rect x="24" y="72" width="186" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="117" y="100" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 特征</text>
+            <line x1="40" y1="112" x2="194" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="117" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="117" y="136">原始行情与财报</tspan></text>
+            <text x="117" y="162" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="117" y="162">压成因子:估值动量</tspan></text>
+            <text x="117" y="188" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="117" y="188">波动、质量、流动性</tspan></text>
+            <line x1="40" y1="230" x2="194" y2="230" stroke="rgba(232,136,136,0.30)"/>
+            <text x="117" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">坑:数据泄漏</text>
+            <text x="117" y="272" text-anchor="middle" fill="#c9d4e8" font-size="10.5">用了当天之后的数据(1.4)</text>
+            <rect x="246" y="72" width="186" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="339" y="100" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">② 模型</text>
+            <line x1="262" y1="112" x2="416" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="339" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="339" y="136">打分式(2.2节):</tspan></text>
+            <text x="339" y="162" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="339" y="162">分=0.3×价值</tspan></text>
+            <text x="339" y="188" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="339" y="188">+0.2×质量+0.2×动量</tspan></text>
+            <text x="339" y="214" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="339" y="214">−0.1×波动</tspan></text>
+            <line x1="262" y1="230" x2="416" y2="230" stroke="rgba(232,136,136,0.30)"/>
+            <text x="339" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">坑:过拟合</text>
+            <text x="339" y="272" text-anchor="middle" fill="#c9d4e8" font-size="10.5">历史答案背得太熟(1.9)</text>
+            <rect x="468" y="72" width="186" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="561" y="100" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">③ 预测</text>
+            <line x1="484" y1="112" x2="638" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="561" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="561" y="136">每只股一个预期分</tspan></text>
+            <text x="561" y="162" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="561" y="162">标签:未来20日收益</tspan></text>
+            <text x="561" y="188" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="561" y="188">看RankIC与分层</tspan></text>
+            <line x1="484" y1="230" x2="638" y2="230" stroke="rgba(232,136,136,0.30)"/>
+            <text x="561" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">坑:信号衰减</text>
+            <text x="561" y="272" text-anchor="middle" fill="#c9d4e8" font-size="10.5">上线后 IC 慢慢掉(2.9)</text>
+            <rect x="690" y="72" width="186" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="783" y="100" text-anchor="middle" fill="#8fb37a" font-size="15" font-weight="800">④ 决策</text>
+            <line x1="706" y1="112" x2="860" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="783" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="783" y="136">规则:超配前20%</tspan></text>
+            <text x="783" y="162" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="783" y="162">月频调仓生成订单</tspan></text>
+            <text x="783" y="188" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="783" y="188">下进市场才算数</tspan></text>
+            <line x1="706" y1="230" x2="860" y2="230" stroke="rgba(232,136,136,0.30)"/>
+            <text x="783" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">坑:执行成本</text>
+            <text x="783" y="272" text-anchor="middle" fill="#c9d4e8" font-size="10.5">佣金滑点吃掉超额(1.5)</text>
+            <path d="M 212 176 L 240 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e10a)"/>
+            <path d="M 434 176 L 462 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e10a)"/>
+            <path d="M 656 176 L 684 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e10a)"/>
+            <text x="450" y="318" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">出厂前死于泄漏和过拟合,上线后死于衰减与成本——四道快门,一道都省不掉</text>
+            <text x="450" y="344" text-anchor="middle" fill="#c9d4e8" font-size="12.5">本章路线因此反过来排:金融问题 → 可交易假设 → 标签 → 数据口径 → 简单基线 → 复杂模型</text>
+          </svg>
+          <p class="figure__cap">从原始数据到下单要过四道快门:特征压成因子、模型压成分数、分数变预测、预测进规则。每道都有一个主题坑:泄漏(1.4)、过拟合(1.9)、衰减(2.9)、成本(1.5)——前两道死在出厂前,后两道死在上线后。</p>
+        </div>
         <h3>2.2. 线性模型为什么还活着</h3>
 <p>都这个年代了,线性模型凭什么还在量化一线活跃? 凭三点: 可解释、稳定、容易加约束。一个线性模型给每个因子一个权重,你一眼能看出模型大概在奖励什么——估值、质量、<span class="term">动量</span>,还是流动性。它像一只透明外壳的机械表,不炫,但每个齿轮都能拆开检查。</p><p>最典型的多因子打分,写出来像一行配置: 分数 = 0.3 × 价值因子 + 0.2 × 质量因子 + 0.2 × <span class="term">动量</span>因子 - 0.1 × 波动因子。真实模型更复杂,但核心直觉就是这样: 把多个因子按权重合成一个预期收益分数。</p><p>线性模型的短板也明显: 表达能力有限,抓不住非线性和特征之间的交互。比如低估值在某些行业是机会,在另一些行业可能是价值陷阱;<span class="term">动量</span>在高流动性股票上有效,到低流动性股票上可能还不够付成本。这类弯弯绕的关系,可能就得请非线性模型处理。</p>
 

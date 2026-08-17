@@ -102,6 +102,76 @@
 <p>以后再遇到漂亮回测,照这个顺序查:第一,股票池是否点时;第二,数据在当时是否可见;第三,信号时间和成交时间对不对得上;第四,成本是否完整;第五,涨跌停、停牌、<span class="term">T+1</span> 是否处理。</p><p>第六,容量假设合不合理;第七,参数是否稳定;第八,样本外有没有留、有没有被污染;第九,收益是否集中在少数年份;第十,收益能不能用风险暴露解释清楚。</p><p>这个顺序比闷头调模型有用得多。很多策略根本不需要更复杂的模型,只需要先把假收益一样一样剔出去——剔完还活着的,才值得被复杂化。</p>
 <p>一轮又一轮修正,曲线一掉再掉,说不沮丧是假的。但请换个角度:你不是从 <span class="num">45%</span> 亏到了 <span class="num">8%</span>,你是从一个不真实的好结果,走到了一个可以相信的普通结果。普通但真实,永远比惊艳但虚假值钱。</p><p>专业研究的日常,就是把不真实收益一样一样拿掉:未来函数拿掉,幸存者偏差拿掉,漏算的成本补上,虚高的容量砍掉,过拟合挤掉。桌上最后剩下的那一小撮,才可能是你真正的优势。</p><p>如果修到最后什么都不剩,同样不是失败。它明明白白告诉你:这条路不值得一分钱实盘。一份诚实的回测帮你省下一大笔真金白银的亏损,这是研究阶段能做成最划算的买卖。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 395" role="img" aria-label="拆穿漂亮回测曲线十步顺序:股票池点时、数据当时可见、信号与成交时点、成本完整、涨跌停停牌T加1、容量、参数稳定、样本外、收益集中度、风险暴露解释;故事卡年化45%回撤8%夏普大于2,修正后年化8%至12%回撤约25%">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一条漂亮回测曲线,照这个顺序被拆穿</text>
+            <rect x="40" y="58" width="410" height="80" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="58" y="82" fill="#f0c96a" font-size="12" font-weight="800">故事:月频 · 过去 20 日涨幅选 30 只 · 十年回测</text>
+            <rect x="58" y="94" width="114" height="32" rx="8" fill="rgba(122,167,240,0.10)" stroke="rgba(122,167,240,0.30)"/>
+            <text x="115" y="115" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">年化 +45%</text>
+            <rect x="184" y="94" width="114" height="32" rx="8" fill="rgba(122,167,240,0.10)" stroke="rgba(122,167,240,0.30)"/>
+            <text x="241" y="115" text-anchor="middle" fill="#a8c6ff" font-size="12.5" font-weight="800">回撤仅 8%</text>
+            <rect x="310" y="94" width="114" height="32" rx="8" fill="rgba(122,167,240,0.10)" stroke="rgba(122,167,240,0.30)"/>
+            <text x="367" y="115" text-anchor="middle" fill="#a8c6ff" font-size="12.5" font-weight="800">夏普 > 2</text>
+            <rect x="470" y="58" width="390" height="80" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="488" y="82" fill="#a8c6ff" font-size="12" font-weight="800">剔完假收益,盘一下总账:</text>
+            <text x="488" y="104" fill="#eef4f8" font-size="12.5" font-weight="800">年化 8%~12% · 回撤约 25% · 样本外不稳</text>
+            <text x="488" y="126" fill="#bcc9dd" font-size="11">还能当一个偏弱动量信号,进多因子模型尽一份力</text>
+            <rect x="27" y="162" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="43" cy="178" r="10" fill="rgba(240,201,106,0.85)"/>
+            <text x="43" y="182" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">1</text>
+            <text x="110" y="202" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">股票池</text>
+            <text x="110" y="220" text-anchor="middle" fill="#bcc9dd" font-size="11">是否点时</text>
+            <rect x="195" y="162" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="211" cy="178" r="10" fill="rgba(240,201,106,0.85)"/>
+            <text x="211" y="182" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">2</text>
+            <text x="278" y="202" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">数据在当时</text>
+            <text x="278" y="220" text-anchor="middle" fill="#bcc9dd" font-size="11">是否可见</text>
+            <rect x="363" y="162" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="379" cy="178" r="10" fill="rgba(240,201,106,0.85)"/>
+            <text x="379" y="182" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">3</text>
+            <text x="446" y="202" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">信号与成交</text>
+            <text x="446" y="220" text-anchor="middle" fill="#bcc9dd" font-size="11">时点对吗</text>
+            <rect x="531" y="162" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="547" cy="178" r="10" fill="rgba(240,201,106,0.85)"/>
+            <text x="547" y="182" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">4</text>
+            <text x="614" y="202" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">成本</text>
+            <text x="614" y="220" text-anchor="middle" fill="#bcc9dd" font-size="11">是否完整</text>
+            <rect x="699" y="162" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="715" cy="178" r="10" fill="rgba(240,201,106,0.85)"/>
+            <text x="715" y="182" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">5</text>
+            <text x="782" y="202" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">涨跌停·停牌</text>
+            <text x="782" y="220" text-anchor="middle" fill="#bcc9dd" font-size="11">T+1 处理了吗</text>
+            <rect x="27" y="246" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="43" cy="262" r="10" fill="rgba(240,201,106,0.85)"/>
+            <text x="43" y="266" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">6</text>
+            <text x="110" y="286" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">容量假设</text>
+            <text x="110" y="304" text-anchor="middle" fill="#bcc9dd" font-size="11">合理吗</text>
+            <rect x="195" y="246" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="211" cy="262" r="10" fill="rgba(240,201,106,0.85)"/>
+            <text x="211" y="266" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">7</text>
+            <text x="278" y="286" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">参数</text>
+            <text x="278" y="304" text-anchor="middle" fill="#bcc9dd" font-size="11">是否稳定</text>
+            <rect x="363" y="246" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="379" cy="262" r="10" fill="rgba(240,201,106,0.85)"/>
+            <text x="379" y="266" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">8</text>
+            <text x="446" y="286" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">样本外留了没</text>
+            <text x="446" y="304" text-anchor="middle" fill="#bcc9dd" font-size="11">有没有污染</text>
+            <rect x="531" y="246" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="547" cy="262" r="10" fill="rgba(240,201,106,0.85)"/>
+            <text x="547" y="266" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">9</text>
+            <text x="614" y="286" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">收益集中在</text>
+            <text x="614" y="304" text-anchor="middle" fill="#bcc9dd" font-size="11">少数年份吗</text>
+            <rect x="699" y="246" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="715" cy="262" r="10" fill="rgba(240,201,106,0.85)"/>
+            <text x="715" y="266" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">10</text>
+            <text x="782" y="286" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">风险暴露</text>
+            <text x="782" y="304" text-anchor="middle" fill="#bcc9dd" font-size="11">能解释吗</text>
+            <text x="450" y="352" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="600"><tspan x="450" y="352">这个顺序比闷头调模型有用:把假收益一样一样剔掉,剔完还活着的,才值得被复杂化</tspan></text>
+            <text x="450" y="378" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">你不是从 45% 亏到 8%——是从假的好结果,走到了真的普通结果</text>
+          </svg>
+          <p class="figure__cap">十年回测年化 45%、回撤 8%、夏普 2 以上——第一反应不该是庆祝,而该按十步顺序查:股票池、数据可见性、成交时点、成本、交易规则、容量、参数、样本外、收益集中度、风险解释。剔完假收益还剩年化 8%~12%、回撤约 25%:普通但真实,永远比惊艳但虚假值钱。</p>
+        </div>
 
         <section class="summary reveal">
           <h2>小结</h2>

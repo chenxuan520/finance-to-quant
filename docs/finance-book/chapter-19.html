@@ -56,6 +56,44 @@
                 </div>
                 <p>把这张时间线钉在墙上,它能挡住最常见的未来函数。以后每次你想在某个价格上成交,先问自己一句:信号是不是也用了这个价格?这个数据在那个时刻真的已经公开了吗?</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="回测单日时间线:T日收盘后计算因子和目标组合(只见T日收盘前公开数据),T+1开盘提交订单(不得改信号),T+1盘中模拟成交受涨跌停停牌成交额约束,T+1收盘后更新持仓净值;红卡警示用T日收盘价又算特征又成交是教科书级未来函数">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回测里的一天:T 日算什么,T+1 做什么,钉死不许挪</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">标准做法:每月最后一个交易日收盘后生成信号,下一个交易日才买卖——每个动作只允许看到当时已公开的数据</text>
+            <defs><marker id="f19a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker></defs>
+            <rect x="37" y="84" width="190" height="132" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="132" y="112" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">T 日收盘后</text>
+            <text x="132" y="146" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">计算因子和目标组合</text>
+            <text x="132" y="174" text-anchor="middle" fill="#8499bd" font-size="11">只能见 T 日收盘</text>
+            <text x="132" y="194" text-anchor="middle" fill="#8499bd" font-size="11">及以前已公开数据</text>
+            <path d="M 229 150 L 247 150" stroke="#7aa7f0" stroke-width="2.5" fill="none" marker-end="url(#f19a)"/>
+            <rect x="249" y="84" width="190" height="132" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="344" y="112" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">T+1 开盘</text>
+            <text x="344" y="146" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">按规则提交订单</text>
+            <text x="344" y="174" text-anchor="middle" fill="#8499bd" font-size="11">不得修改 T 日</text>
+            <text x="344" y="194" text-anchor="middle" fill="#8499bd" font-size="11">已经确定的信号</text>
+            <path d="M 441 150 L 459 150" stroke="#7aa7f0" stroke-width="2.5" fill="none" marker-end="url(#f19a)"/>
+            <rect x="461" y="84" width="190" height="132" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="556" y="112" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">T+1 盘中</text>
+            <text x="556" y="146" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">模拟成交和未成交</text>
+            <text x="556" y="174" text-anchor="middle" fill="#8499bd" font-size="11">涨跌停 · 停牌</text>
+            <text x="556" y="194" text-anchor="middle" fill="#8499bd" font-size="11">成交额约束</text>
+            <path d="M 653 150 L 671 150" stroke="#7aa7f0" stroke-width="2.5" fill="none" marker-end="url(#f19a)"/>
+            <rect x="673" y="84" width="190" height="132" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="768" y="112" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">T+1 收盘后</text>
+            <text x="768" y="146" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">更新持仓和净值</text>
+            <text x="768" y="174" text-anchor="middle" fill="#8499bd" font-size="11">成交回报 · 收盘估值</text>
+            <text x="768" y="194" text-anchor="middle" fill="#8499bd" font-size="11">费用入账</text>
+            <rect x="60" y="240" width="780" height="86" rx="12" fill="rgba(232,120,120,0.08)" stroke="rgba(232,136,136,0.5)"/>
+            <text x="88" y="268" fill="#ffb4b4" font-size="13" font-weight="800">教科书级未来函数长这样:</text>
+            <text x="88" y="292" fill="#eef4f8" font-size="12.5">用 T 日收盘价算特征,又假设自己按 T 日收盘价成交</text>
+            <text x="88" y="314" fill="#bcc9dd" font-size="12">= 用收盘后才知道的信息,做了收盘时的决策</text>
+            <circle cx="790" cy="283" r="24" fill="none" stroke="#e88" stroke-width="2.5"/>
+            <text x="790" y="293" text-anchor="middle" fill="#e88" font-size="26" font-weight="800">×</text>
+            <text x="450" y="354" text-anchor="middle" fill="#c9d4e8" font-size="13" font-weight="600"><tspan x="450" y="354">每次你想按某个价格成交,先问自己:信号是不是也用了这个价格?这个数据在那个时刻真的已经公开了吗?</tspan></text>
+          </svg>
+          <p class="figure__cap">把这张时间线钉在墙上:T 日收盘后算因子、订目标;T+1 开盘交订单、盘中按涨跌停和成交额约束模拟成交、收盘后再记账。最常见的未来函数就一种长相——用 T 日收盘价算特征,又假设自己按 T 日收盘价成交。</p>
+        </div>
         <h2>4. 先落地,再谈花活</h2>
 <p>因子听起来玄,教学版其实四类就够开张。第一是估值,比如 <span class="term">PB</span> 或 <span class="term">PE</span> 的倒数,越便宜分越高;第二是<span class="term">动量</span>,比如过去 <span class="num">60 日</span>收益率,涨得顺的分高;第三是波动,取过去 <span class="num">60 日</span>日收益标准差的负值,走得稳的分高;第四是质量,比如 <span class="term">ROE</span>(净资产收益率),赚钱效率高的分高。</p><p>原始因子值还不能直接上战场,先处理脏数据。每个因子都要处理极端值和缺失值:常见做法是 winsorize 截尾,把最离谱的那部分按回边界,再做标准化。行业差异明显的因子,还可以在每个行业内部各自标准化——不然有的行业天生估值低、有的行业天生估值高,你的组合做着做着就变成一把行业押注,你还以为自己在认真选股。</p><p>还有一个新手必踩的坑:方向统一。先立好规矩:分数越高代表越看好。低 <span class="term">PB</span> 如果代表便宜,可以使用 <span class="term">PB</span> 的负值,或者干脆用 BP = 1 / <span class="term">PB</span>;波动越低越好,可以使用负波动。方向不统一就急着合成,就像把正着数和倒着数的排行榜直接相加,结果什么意义都没有。</p>
                 <pre><code>value_bp = 1 / pb
