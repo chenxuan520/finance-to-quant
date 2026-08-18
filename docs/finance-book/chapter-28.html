@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 28 章 · 场景练习:第一次小资金实盘 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="讲清小资金实盘的目标、仓位、下单、记录、复盘和停止规则,避免把验证流程变成赌博。" />
+    <title>第 28 章 · 场景练习:开户软件和基金月报 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="带读者按顺序检查一份回测报告里的净值、基准、成本、换手、持仓、风险和样本外。 / 用一周模拟盘日志讲清数据更新、信号生成、订单模拟、净值记录、异常处理和周末复盘。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
@@ -12,158 +12,215 @@
     <main class="chapter">
       <div class="chapter__inner">
         <p class="chapter__eyebrow">第七部分 · 路线、复盘与检查清单 · 第 28 章</p>
-        <h1>场景练习:第一次小资金实盘</h1>
-        <p class="lead">小资金实盘不是为了证明自己能很快赚钱,而是为了验证真实的交易链路。这一章带你走一遍第一次小实盘:先把资金上限定在“全亏掉也不影响生活”的水平,再观察订单、成交、费用、滑点、持仓、对账和自己的情绪反应。这一步最重要的从来不是收益,而是知道真实市场会怎样改变你的系统和你的心态。</p>
+        <h1>场景练习:开户软件和基金月报</h1>
+        <p class="lead">概念懂了,真正上手时还是会被界面和文件里的术语绊住。这一章用两个真实场景带你练一遍:第一次开户后,交易软件里每一个数字、每一个按钮到底在说什么;第一次拿到基金月报和产品报告,又该重点看哪些栏目、警惕哪些说法。把抽象概念落到你真会遇到的屏幕和纸面上,才算真的学会。</p>
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>第一次小资金实盘的目标是验证真实交易链路,不是追求收益。</li>
-            <li>资金上限、半自动执行、交易记录、盘后对账和停止规则是小实盘的核心。</li>
+            <li>看回测报告,先看策略、数据、股票池、基准和交易假设,再看收益。顺序反了,结论常常也反了。</li>
+            <li>回撤、换手、成本、持仓暴露和样本外,比孤独的年化收益更能说明一个策略的真实质量。</li>
+            <li>模拟盘的第一目标是验证真实时间流程跑得稳不稳,不是证明短期收益好不好看。</li>
+            <li>数据延迟、空信号、涨跌停未成交、成本偏差和对账错误——这些问题只有放到真实节奏里,才会自己浮出来。</li>
           </ul>
         </section>
 
 
-        <h2>1. 先定资金上限</h2>
-<p>第一次小实盘,第一件事不是开户入金,而是先写死一个数字:总金额上限。这个数字的标准只有一条——哪怕全部亏光,不心疼、不影响吃饭、不影响房租、不影响你继续学习的心态。说白了,这笔钱不是发财本金,而是你给自己交的学费,学费要有上限,课程质量才会高。</p><p>你可能会听到一种说法:小资金没意义,赚那点钱还不够费事的。这是把目标搞反了。小资金阶段的目标是验证流程,不是追求收益。一道 bug 用小钱引爆,你会好好排查;等它在大钱上引爆,你大概率连复盘都冷静不下来。同样的问题,用大钱发现的代价,是用小钱发现的几倍甚至几十倍。</p><p>资金上限写下来之后,最难的其实是不改它。第一周赚了点,很多人手就痒:再加点呗,反正顺利。请忍住。加仓只能按事先写好的规则走,比如模拟盘稳定运行三个月、小实盘稳定运行三个月,加上对账一直无误、真实成本符合预期,才谈得上放大。用一时手气当加仓依据,等于把流程验证偷偷换成了赌博。</p>
+        <h2>1. 第一次看回测报告</h2>
+
+        <h3>1.1. 先看策略说明</h3>
+<p>翻开报告第一件事:搞清楚策略干什么。是选股、择时、套利、CTA,还是资产配置?交易什么资产?调仓频率多少?用了哪些数据?目标是绝对收益,还是相对基准的超额?这是一份报告的「需求文档」,需求都说不清,后面跑出来的东西不用看。</p><p>警惕那种一上来就摆净值曲线、策略规则却语焉不详的报告。策略说明越模糊,越容易在里面藏两样东西:过拟合,和不真实的假设。清楚的人巴不得讲清楚,含糊的人常常不得不含糊。</p><p>你不需要一开始就消化所有模型细节。最低要求只有两条:这个策略为什么可能赚钱?它在市场里承担什么风险?这两个问题答不出来,后面任何指标都没有放置的地方。</p>
+
+        <h3>1.2. 看数据区间和股票池</h3>
+<p>回测区间决定这份报告经历过的「天气」。2019 到 <span class="num">2021 年</span>,和 2015 到 <span class="num">2024 年</span>,是两种完全不同的样本环境。一个只覆盖上涨阶段的回测,什么都不能告诉你——它对熊市和震荡市一无所知,你还夸它业绩稳定。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>股票池同样关键。全 A、<span class="term">沪深 300</span>、<span class="term">中证 500</span>、中证 1000、行业股票池,同一个策略放进不同的池子,交出完全不同的答卷。除了这些,还要确认两件小事:股票池是不是点时的?退市股和 ST 剔没剔除?这两处处理不好,结果直接被污染。</p></div><p>看报告时先做一件事:把样本范围写在纸上。数据区间短、股票池口径不清、退市处理不明——只要占了其中一条,后面所有指标都要在你心里先打个折再看。</p>
+
+        <h3>1.3. 看基准</h3>
+<p>收益只有放在比较对象旁边,才有意义。基准就是那个比较对象:股票多头策略,应该和合适的指数比;指数增强,应该和目标指数比;市场中性,应该看绝对收益和与市场的相关性。没有基准,你根本不知道收益从哪来——是市场赏的,还是策略挣的。</p><p>基准选错,结论会整个拧掉。一个主买中小盘股票的策略,偏要拿<span class="term">沪深 300</span> 当基准:小盘风格上涨时它跑赢大盘指数,你以为是选股能力强,其实只是风格顺风车。错位的比较,是报告里最安静的谎言。</p><p>理想情况下,报告里应该同时展示三条线:策略净值、基准净值、超额净值。第三条线能告诉你前两条看不到的东西——相对基准,策略是不是在持续改善。</p>
+
+        <h3>1.4. 看交易假设</h3>
+<p>业绩展示页背后的「隐藏图层」,是交易假设:按什么价格成交?费用怎么收?滑点怎么设?涨跌停、停牌、<span class="term">T+1</span> 处理了吗?交易单位考虑了吗?容量上限在哪?这一层不翻,前面看的全是彩色图层。</p><p>两个必须提的问题。第一,如果报告假设按当天收盘价成交——信号是不是也用了当天收盘价?用了,就可能存在未来函数(偷看未来)。第二,如果报告没算成本——扣掉合理成本之后,收益还剩多少?问完这两句,报告的成色常常已经清楚了一半。</p><p>交易假设是回测报告里最容易被读者忽略的部分,也是最容易把策略从赚钱改成亏钱的部分。它在目录里常常排最后,在杀伤力上常常排第一。</p>
+
+        <h3>1.5. 看收益和回撤</h3>
+<p>看收益要看四个刻度:累计收益、<span class="term">年化收益</span>、年度收益、月度收益。看回撤要看三个维度:<span class="term">最大回撤</span>多深、回撤持续多久、花多长时间修复。只盯最终收益,是只看了比赛的记分牌,错过了整场比赛。</p><p>把两个策略并排:年化 <span class="num">20%</span>、<span class="term">最大回撤</span> <span class="num">40%</span>;年化 <span class="num">12%</span>、<span class="term">最大回撤</span> <span class="num">8%</span>。哪个好?看你的心脏——前者适合扛得住账户接近腰斩的人,后者适合要睡安稳觉的人。收益高不代表「更好」,只代表「更陡」,而你能不能承受这条路径,才是属于你的指标。</p><p>年度收益表是被低估的好东西。它能告诉你:收益是不是集中在某一年?是连续多年有效还是只灵光一现?是全天候,还是只在牛市里表演?拆开按年看,很多惊艳的曲线会露出锯齿。</p>
+
+        <h3>1.6. 看换手和成本</h3>
+<p><span class="term">换手率</span>回答一个朴素问题:这个策略有多爱交易。高换手意味着高成本、高滑点、高执行难度——每一次买卖都在给市场和券商付费。一个因子如果需要高频换仓才赚钱,实盘里它就站在悬崖边上班。</p><p>报告应该同时展示成本前后的收益。如果成本前很风光、成本后很骨感,这个策略的边际很薄——风一吹,利润就没了。如果还有成本敏感性测试,更好:它直接告诉你费用假设稍微变一点,结论会不会整个翻过来。</p><p>高换手不是原罪,但它必须被足够强的信号和足够硬的执行能力支撑。个人项目里,对高换手策略要多一份谨慎:机构拼车拼弹药,你只有一双手和一台电脑。</p>
+
+        <h3>1.7. 看持仓和暴露</h3>
+<p>持仓分析回答的是「策略真金白银买了什么」。持仓数量多少?单票集中度多高?行业怎么分布?市值风格偏哪头?是不是长期偏向某一类股票?这些答案,净值曲线不会告诉你,持仓表会。</p><p>一种特别要警惕的情形:报告声称是多因子选股,结果收益主要来自长期重仓某个行业或小市值风格。那它的 <span class="term">Alpha</span> 就要重新解释——押对风格的回报,和选股的超额,是两笔不同的钱。混为一谈,你没法预判它什么时候失效。</p><p>暴露本身不是坏事,押注本来就是投资的一部分。但暴露必须可见。写在报告里的风险是风险,藏起来的风险是地雷——看不见的最危险。</p>
+
+        <h3>1.8. 看样本外</h3>
+<p>「样本外」三个字是什么意思?模型在训练、调参、选择时没见过的那段历史。一份只有样本内的报告,只证明策略「解释了过去」,不能证明它有未来能力——就像只用考过的旧题测验,分数再高也不说明学会了。</p><p>样本外也会被污染,而且污染得很隐蔽:研究员反复看测试集的结果,根据结果回头改策略——这一来,测试集就进了决策回路,不再干净。报告应该坦白两件事:参数是怎么选的?测试集是否真的被保留到最后才开封?</p><p>真正有说服力的链路长这样:样本内提出规则,样本外保持大方向有效,模拟盘继续跑验证。三步缺了哪一步,故事都还没讲完。</p>
+
+        <h3>1.9. 看失败阶段</h3>
+<p>一份好报告不只谈高光,也应该展示失败阶段:策略什么时候亏?为什么亏?亏损能不能解释?有没有超出历史范围?通篇只有成功剪辑的报告,像一张全程微笑的简历——看着完美,没法信。</p><p>失败阶段是风险的标本馆。<span class="term">动量</span>策略怕<span class="term">反转</span>,一旦行情掉头,之前涨得猛的跌得也猛;价值策略怕价值陷阱和长期风格逆风,便宜可以更便宜很多年;市场中性怕对冲成本上升和模型反向。每一种策略都有自己最怕的天气,写得出来的报告才是读过天气预报的报告。</p><p>反过来,如果一份报告声称策略几乎没有失败阶段,只有两种可能:要么真找到了极其特殊的东西,要么风险还没被正确记录。理性告诉你先按第二种理解。</p>
+
+        <h3>1.10. 写读后审查结论</h3>
+<p>报告翻完,合上当即写一个三段式审查结论。第一段:策略做什么、结果怎么样。第二段:你相信哪些部分、不相信哪些部分。第三段:如果要继续研究,下一步验证什么。三段写完,不超过一页。</p><p>这个小小的动作防的都是大病。只读后不写,结论会被单个亮眼指标带走;落到三段文字里,报告会被你主动拆成三摞:哪些假设可信,哪些需要复现,哪些风险没讲清。前者是观众,后者才是审查官。</p><p>放宽心态:读回测报告的目标不是立刻找到「能实盘的那个策略」,而是训练审查能力。审查能力越强,漂漂亮亮的曲线越骗不了你——这个能力,陪你走的比任何一份报告都远。</p>
+
+        <h2>2. 第一次跑模拟盘的一周</h2>
+        <p>模拟盘不是过家家。回测是把历史按快进键跑一遍,模拟盘是把系统扔进真实时间里,跟着时钟一天天走。而真实时间的脾气,你会在这一周里领教个遍:周一数据迟到,周二信号文件空着,周三目标股涨停,周四成本比假设高,周五对账出错。第一次跑模拟盘,目标不是赚钱,是看系统在真实节奏下会出什么问题——这是给你的系统做压测。</p>
+
+        <h3>2.1. 数据没有按时到</h3>
+<p>你的计划很美好:每天晚上八点更新数据、生成信号。第一天,现实就给你上课——数据源延迟,部分股票的收盘价缺席。如果脚本不做缺失检查,闷头往下跑,模型就会用残缺的数据生成一本正经的错误信号。</p><p>正确姿势是给流程装一道闸:先跑数据检查,缺失率超过阈值就停止生成信号,记录日志并发出告警。宁可今天不交易,也不要拿坏数据交易。前者是少做一单,后者是带着错误认知做一单。</p><p>模拟盘第一课:数据准时、完整,不是这个世界的默认配置。实盘系统的第一原则,是先确认输入健康,再谈模型输出——输入不对,模型越聪明,错得越自信。</p>
+
+        <h3>2.2. 信号文件为空</h3>
+<p>第二天,数据正常了。打开信号文件——空的。排查下来,是股票池过滤太严格:剔除停牌、剔除 ST、剔除低成交额、剔除缺失因子,几刀下来,剩不下几只股票了。</p><p>这不是技术小插曲,是策略级的抉择时刻:如果实盘里信号为空,系统该怎么办?保持原仓位?清仓收手?还是干脆停机?三个动作风险完全不同,而市场不会等你开会讨论。规则必须提前写好。</p><p>模拟盘第二课:任何异常输出都得有预案。空信号、极端信号、重复信号、数量太少——每一种都要有事先定义好的处理规则,临场拍脑袋的不是策略,是骰子。</p>
+
+        <h3>2.3. 目标股票涨停买不到</h3>
+<p>第三天,策略选中一只高分股票,买入信号很坚定。可它开盘后一路冲上涨停,封板不动。这时候如果你的模拟撮合仍然按目标价「成交」了——恭喜,你的模拟盘在现实里根本没发生这笔交易,只有回测里成交了。</p><p>于是你把规则改成涨停不可买:这笔订单未成交,现金保留在账户。结果也立竿见影——当天策略少买一只强势股,模拟净值和理想回测之间出现了第一条裂缝。这种裂缝,正是模拟盘要逼你看清的东西。</p><p>模拟盘第三课:交易限制会让真实组合偏离目标组合。偏离本身必须记录在案,否则下周你就开始困惑:实盘的曲线为什么和回测对不上?答案周三就写在日志里了。</p>
+
+        <h3>2.4. 成本比预期高</h3>
+<p>第四天,模拟成交结束后你做了一件事:把这几天的滑点成本汇总统计。结果眉头一皱——平均滑点明显高于回测假设。往下查原因:策略买的小盘股本身成交额偏低,而目标订单占成交额的比例偏高,单子在自己拖动价格。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>注意,这时候不该做的动作是立刻回去改模型。先做成本分析:按股票成交额分组看滑点,按订单参与率看滑点;看清楚结构,再决定是加一道流动性过滤,还是降低单票权重。对症下药之前,先把脉。</p></div><p>模拟盘第四课:成本不是刻在石头上的常数,它会随规模和流动性变化。实盘前的成本估计,必须在模拟和小实盘里反复校准——一回校准不准,不等于永远不用校。</p>
+
+        <h3>2.5. 盘后对账</h3>
+<p>周五收盘,你做盘后对账:现金、持仓、模拟成交、费用、净值,一项项核对是否一致。查着查着,发现一个刺眼的错位:一只股票卖出失败了,但内部的目标持仓表里,已经把它删掉了。</p><p>这个错位有多严重?如果不对账,下周系统会坚信这只股票已经不在持仓中——风险计算漏掉它,订单生成也漏掉它,一个幽灵误差从此在系统里自由生长。你要做的是修复账户模块:未成交的持仓继续保留在状态里,并在报告中明确标记偏离。</p><p>模拟盘第五课:对账是交易系统的底线。没有对账,系统的内部状态会慢慢偏离真实世界,像一台从不校准的仪器,用着用着就相信了自己的幻觉。</p>
+
+        <h3>2.6. 写复盘</h3>
+<p>周末到了,坐下来写本周复盘。先声明一件事:这周收益多少,不重要。你要记录的是事故清单:数据延迟一次、空信号一次、涨停未成交一次、滑点持续高于预期、对账发现一次状态错误。收益曲线是不是好看,是这些记录的注脚而不是主角。</p><p>然后,针对每条事故写改进:增加数据缺失阈值、定义空信号处理规则、加入涨跌停成交限制、按流动性调整滑点模型、修复未成交持仓对账逻辑。事故清单是病历,改进清单是药方,两个都要留档。</p><p>模拟盘第六课:每一个异常,都是系统变稳的机会。只要你记录、定位、修正,它就不会白疼。这正是模拟盘存在的意义——让错误发生在免费的时候。</p>
+
+        <h3>2.7. 模拟盘要跑多久</h3>
+<p>跑完这一周,可以上实盘了吗?不行。一周只能帮你看清流程问题,证明不了策略有效。至少跑几个月:经历日常数据更新和调仓,也经历节假日、停牌、市场上涨、下跌和系统异常——把这些全见过一遍,系统的底才摸到。</p><p>还有一条纪律:模拟期间不要频繁改策略逻辑。今天改个参数、明天换个规则,最后你将分不清表现到底来自原策略,还是来自你的不断干预。修 bug、补风控,随时欢迎;策略规则的变更,必须记录版本,像代码走发布流程一样。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>记住模拟盘的定位:它是把回测策略变成可运行流程的转换器。流程还不稳定之前,不谈实盘——桥还没做过载测试,就先别让车上。</p></div>
+
+        <h3>2.8. 模拟盘报告应包含什么</h3>
+<p>模拟盘不是「跑起来就行」,它生成的报告应该能回答每一天发生了什么。至少包含这些栏目:每日信号生成状态、订单列表、模拟成交、未成交原因、持仓偏离、成本、净值、风险暴露、数据检查结果和异常日志。</p><p>还有一样最容易被漏掉的:人工干预记录。你有没有手动跳过某一天?有没有手动改过参数?有没有临时修改股票池?这些动作看着随手,其实都在改变结果,不记下来,复盘时你会忘了自己做过什么。</p><p>什么时候才有资格讨论小资金实盘?一个朴素的标准:当模拟盘报告能够稳定解释每一天发生了什么。哪一天系统做了什么、没做什么、为什么——都能说清,桥才算过了载测试。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 336" role="img" aria-label="小实盘三层护栏:第1层资金上限(亏光也不影响生活的钱,示例1万)、第2层停止规则(浮亏10%强制停、连续对不上账停)、第3层记录纪律(每笔委托价成交价滑点心理状态留痕)">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">小实盘的三层护栏:从最外圈走到实盘</text>
-            <defs><marker id="gd" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
-            <!-- 人:从外往里走 -->
-            <circle cx="64" cy="150" r="8" fill="none" stroke="#a8c6ff" stroke-width="2.5"/>
-            <path d="M 64 158 L 64 186" stroke="#a8c6ff" stroke-width="2.5" fill="none"/>
-            <path d="M 64 166 L 50 180 M 64 166 L 78 180" stroke="#a8c6ff" stroke-width="2.5" fill="none"/>
-            <path d="M 64 186 L 52 206 M 64 186 L 76 206" stroke="#a8c6ff" stroke-width="2.5" fill="none"/>
-            <text x="64" y="228" text-anchor="middle" fill="#8499bd" font-size="12">从外往里走</text>
-            <!-- 第 1 层:资金上限(金) -->
-            <rect x="155" y="84" width="170" height="198" rx="18" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)" stroke-width="1.8"/>
-            <circle cx="183" cy="84" r="14" fill="#101d33" stroke="rgba(240,201,106,0.6)" stroke-width="1.5"/>
-            <text x="183" y="89" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">1</text>
-            <text x="240" y="116" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">资金上限</text>
-            <text x="240" y="148" text-anchor="middle" fill="#8499bd" font-size="12">标准只有一条:</text>
-            <text x="240" y="172" text-anchor="middle" fill="#eef4f8" font-size="13">全部亏光,也不心疼</text>
-            <text x="240" y="196" text-anchor="middle" fill="#eef4f8" font-size="13">不影响吃饭和房租</text>
-            <text x="240" y="222" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">示例上限:1 万元</text>
-            <rect x="200" y="244" width="80" height="26" rx="13" fill="none" stroke="#f0c96a"/>
-            <text x="240" y="262" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">硬约束</text>
-            <!-- 第 2 层:停止规则(红) -->
-            <rect x="395" y="84" width="170" height="198" rx="18" fill="rgba(232,120,120,0.07)" stroke="rgba(232,136,136,0.42)" stroke-width="1.8"/>
-            <circle cx="423" cy="84" r="14" fill="#101d33" stroke="rgba(232,136,136,0.6)" stroke-width="1.5"/>
-            <text x="423" y="89" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">2</text>
-            <text x="480" y="116" text-anchor="middle" fill="#ffb4b4" font-size="16" font-weight="800">停止规则</text>
-            <text x="480" y="148" text-anchor="middle" fill="#8499bd" font-size="12">入场前写死触发线:</text>
-            <text x="480" y="172" text-anchor="middle" fill="#eef4f8" font-size="13">浮亏 10% → 强制停</text>
-            <text x="480" y="196" text-anchor="middle" fill="#eef4f8" font-size="13">对不上账连两周 → 停</text>
-            <text x="480" y="220" text-anchor="middle" fill="#eef4f8" font-size="13">行为变形说不清 → 停</text>
-            <rect x="440" y="244" width="80" height="26" rx="13" fill="none" stroke="#f0c96a"/>
-            <text x="480" y="262" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">硬约束</text>
-            <!-- 第 3 层:记录纪律(蓝) -->
-            <rect x="635" y="84" width="170" height="198" rx="18" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.30)" stroke-width="1.8"/>
-            <circle cx="663" cy="84" r="14" fill="#101d33" stroke="rgba(122,167,240,0.55)" stroke-width="1.5"/>
-            <text x="663" y="89" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">3</text>
-            <text x="720" y="116" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">记录纪律</text>
-            <text x="720" y="148" text-anchor="middle" fill="#8499bd" font-size="12">一笔一笔写成表:</text>
-            <text x="720" y="172" text-anchor="middle" fill="#eef4f8" font-size="13">委托价 · 成交价 · 滑点</text>
-            <text x="720" y="196" text-anchor="middle" fill="#eef4f8" font-size="13">费用 · 未成交原因</text>
-            <text x="720" y="220" text-anchor="middle" fill="#eef4f8" font-size="13">当时的心理状态</text>
-            <text x="720" y="248" text-anchor="middle" fill="#8499bd" font-size="11.5">盈亏不会说话,记录会</text>
-            <!-- 向左向右的推进箭头 -->
-            <path d="M 84 184 L 151 184" stroke="#a8c6ff" stroke-width="2" fill="none" marker-end="url(#gd)"/>
-            <path d="M 329 184 L 391 184" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#gd)"/>
-            <path d="M 569 184 L 631 184" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#gd)"/>
-            <path d="M 809 184 L 850 184" stroke="#f0c96a" stroke-width="2.5" fill="none" marker-end="url(#gd)"/>
-            <text x="868" y="189" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">实盘</text>
-            <text x="450" y="316" text-anchor="middle" fill="#c9d4e8" font-size="13.5">三层护栏入金前写死:钱有上限 · 碰到线就停 · 每笔都留痕 —— 触发停止不是失败,是护栏在工作</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 425" role="img" aria-label="开户软件资产字段分解:总资产拆成可用资金、可取资金和持仓市值,卖出成交先进可用,隔日对账后才进可取">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">总资产 ≠ 可花的钱:先分清三个口袋</text>
+            <!-- 顶部:总资产 -->
+            <rect x="360" y="58" width="180" height="58" rx="10" fill="rgba(240,201,106,0.14)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="82" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">总资产 93,000</text>
+            <text x="450" y="104" text-anchor="middle" fill="#eef4f8" font-size="12.5">= 可用 25,000 + 持仓 68,000</text>
+            <!-- 分叉线 -->
+            <line x1="450" y1="116" x2="180" y2="164" stroke="#7aa7f0" stroke-width="1.5"/>
+            <line x1="450" y1="116" x2="450" y2="164" stroke="#7aa7f0" stroke-width="1.5"/>
+            <line x1="450" y1="116" x2="720" y2="164" stroke="#7aa7f0" stroke-width="1.5"/>
+            <!-- 三个子框 -->
+            <rect x="55" y="164" width="250" height="110" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="180" y="190" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 可用资金</text>
+            <text x="180" y="214" text-anchor="middle" fill="#c9d4e8" font-size="12.5">能买股票用</text>
+            <text x="180" y="240" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">例 25,000</text>
+            <text x="180" y="262" text-anchor="middle" fill="#8499bd" font-size="11">含当天卖出回款:能买不能取</text>
+            <rect x="325" y="164" width="250" height="110" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="190" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">② 可取资金</text>
+            <text x="450" y="214" text-anchor="middle" fill="#c9d4e8" font-size="12.5">能转出银行卡</text>
+            <text x="450" y="240" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">例 10,000</text>
+            <text x="450" y="262" text-anchor="middle" fill="#8499bd" font-size="11">前一晚对账后的可用( ≤ 可用)</text>
+            <rect x="595" y="164" width="250" height="110" rx="12" fill="rgba(232,120,120,0.08)" stroke="#e88"/>
+            <text x="720" y="190" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 持仓市值</text>
+            <text x="720" y="214" text-anchor="middle" fill="#c9d4e8" font-size="12.5">还没变成钱</text>
+            <text x="720" y="240" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">例 68,000</text>
+            <text x="720" y="262" text-anchor="middle" fill="#8499bd" font-size="11">浮盈要等卖成现金才算数</text>
+            <!-- 流转箭头 1:可用 → 可取(两框间隙,标注 T+1) -->
+            <line x1="305" y1="219" x2="321" y2="219" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#b1at)"/>
+            <text x="313" y="206" text-anchor="middle" fill="#8499bd" font-size="11">T+1</text>
+            <!-- 流转箭头 2:持仓 → 可用(底部大弧线) -->
+            <path d="M 720 276 C 690 348, 230 348, 200 280" fill="none" stroke="#a8c6ff" stroke-width="2.5" marker-end="url(#b1af)"/>
+            <text x="450" y="352" text-anchor="middle" fill="#a8c6ff" font-size="12.5">卖出成交:可用 +10,000,当天这笔钱不可取</text>
+            <defs>
+              <marker id="b1at" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker>
+              <marker id="b1af" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a8c6ff"/></marker>
+            </defs>
+            <text x="450" y="404" text-anchor="middle" fill="#ffb4b4" font-size="14">持仓市值不是钱——涨了的浮盈,先要能卖成现金;当天卖出的钱,T+1 才能取</text>
           </svg>
-          <p class="figure__cap">第一次小实盘的三层护栏都写在入金之前:钱的上限是「全亏光也不影响生活」的学费;停止线碰到就停,停不是失败;每一笔委托价、成交价、滑点和当时心理状态都留痕——盈亏这个数字最不会说话,记录才会。</p>
+          <p class="figure__cap">总资产 93,000 里,能买股票的是可用 25,000,能转出银行卡的只有可取 10,000,剩下的 68,000 是还没变成钱的持仓市值。卖出成交先进可用,当晚对账后(T+1)才进可取——浮盈再多,先要能卖成现金。</p>
         </div>
-        <h2>2. 第一笔交易选简单品种</h2>
-<p>第一次小实盘,品种挑选的原则就三条:流动性好,规则简单,费用清楚。宽基 <span class="term">ETF</span> 或大盘股票是最合适的观察对象,成交活跃、规则直白、出问题容易定位。反过来,期权、期货、高频交易,还有一天成交不了几笔的低流动性小票,请一律绕道——不是以后都不碰,是第一次不碰。</p><p>为什么?因为你第一次要看的东西很多:下单的过程、成交的速度、费用的构成、持仓变化、可卖数量、资金变动,以及第二天交收对不对。每多一个复杂变量,排查问题时就多一条岔路:对不上账,到底是系统错了、口径错了,还是品种规则你没搞懂?变量太多,你就永远分不清问题出在哪一层。</p><p>选简单品种不是低级,是专业。工程团队上线新系统,第一步也是先选一条低风险路径做灰度验证,没人第一天就把核心链路全切过去。先证明基础流程正确,再往上叠加复杂度,这个顺序在软件里叫稳妥上线,在交易里叫活下去。</p>
-
-        <h2>3. 半自动比全自动更适合第一步</h2>
-<p>第一次小实盘,推荐半自动模式:系统负责生成信号和订单清单,你人工逐笔检查,然后手动下单。这样做有两个好处:一是自动化还没经受考验,人工这道关卡能挡掉一批低级错误;二是你被迫亲手执行每一笔交易,对每笔单子的来龙去脉都会多一分真实理解,这是看日志看不来的。</p><p>全自动的门槛比看起来高得多:风控逻辑、操作权限、日志埋点、异常停止、券商接口、每日对账,每一块都要足够成熟才配交出方向盘。个人一上来就全自动,常见剧情是:一个不起眼的边界 bug,让程序在一分钟内重复下单,或者方向写反把买单发成卖单。在回测里这只是报错重跑,在实盘里这是真金白银。</p><p>所以别把半自动当成倒退回石器时代——它就是灰度上线。等你连续很多次确认过:系统生成的订单清单,和你人工核对后该下的单完全一致,自动化才算攒够了信用分。到那时候再讨论进一步自动化,心里才有底。</p>
-
-        <h2>4. 记录每一笔交易</h2>
-<p>小实盘必须记录每一笔交易,一笔都不许漏。记录清单是:信号产生的时间、目标股票、目标数量、委托价格、实际成交价格、实际成交数量、各项费用、滑点、没成交的原因,加上一条人工备注。听起来繁琐,其实用一张表就能搞定,难的是坚持不漏记。</p><p>这些记录以后会变成你最有价值的资产。翻回去看,你能知道:回测里假设的成交价,和真实成交差多少;哪一类股票的滑点特别大;哪些订单经常想买却买不到;自己哪类人工操作最不靠谱。回测告诉你理想世界,这些记录告诉你现实世界,中间的缝就是你下一步要补的课。</p><p>反过来说,不做记录的小实盘,几个月后只剩一个东西:账户盈亏。而盈亏这个数字是最不会说话的,它告诉你结果,却不告诉你系统哪里做得好、哪里做得烂。只有结果的实验,等于白做。</p>
-
-        <h2>5. 每天盘后对账</h2>
-<p>小实盘期间,每天收盘后都要做对账。做法很朴素:你自己系统里记录的现金、持仓、成交、费用,逐条和券商账户核对,必须一致;只要有差异,就必须查出原因,不许带着问号过夜。</p><p>对账还有一个隐藏福利:它会帮你发现费用口径的坑。你以为佣金是这么算的,券商实际那么收;印花税、过户费各自在哪里扣,扣多少,不看真实账户你可能一直是想当然。这些口径前面章节讲过,但只有真金白银经历了,才算真懂。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>记住一条铁律:对账不一致,第二天不要继续按自动信号交易。先停下来把账修平,再恢复交易。账不对就意味着系统眼里的世界和真实世界脱轨了,在错误的持仓和现金状态上继续自动下单,等于拿错地图赶路,只会越跑越偏。</p></div>
-
-        <h2>6. 观察自己的心理</h2>
-<p>小实盘还会送上一份回测永远给不了的礼物:第一次感受真实盈亏。哪怕金额很小,你也会发现自己变了个人——亏损时坐立不安,刷新行情像刷朋友圈;盈利时莫名兴奋,看什么都顺。这些反应不要当笑话,写下来,它们是你风险承受力的第一手数据。</p><p>想想这个放大器:几千块的波动就能让你半夜想改策略,那几十万、几百万的波动只会把这个冲动放大十倍。心理承受力不是坐在书桌前想象出来的,只能在真实波动里一节一节地练出来、看出来。以为自己拿得住和真的拿得住,是两回事。</p><p>具体做法是:每次你冒出想手动干预的念头,记下时间、想法和原因,冷静后再回看分类——到底是有证据说明规则失效了,还是单纯因为害怕或兴奋?这个区分至关重要。前者该启动复盘流程,后者该吃药的不是策略,是你自己。</p>
-
-        <h2>7. 什么时候停止</h2>
-<p>小实盘不是上了发条就永远转的玩具,它必须有停止规则,而且要在开始前写好。典型触发条件:数据异常,停;对账不一致,停;连续出现交易错误,停;亏损超过预设上限,停;策略逻辑和实盘表现的差异大到解释不了,停。触发哪一条,就先停下再说。</p><p>别把停止等同于失败。停止是一种保护机制,小实盘本来就是用来找问题的阶段——你花点小钱换来一次异常暴露,及时停下来查,恰恰说明整套流程运转良好。真正危险的信号不是触发停止,而是异常出现却没人拉闸。</p><p>停下来之后还有最后一道工序:写复盘。问题是什么,影响面有多大,修好没有,需不需要退回模拟盘重新验证——写完、改完、验完,才有资格重启。最怕的是停了一天,什么也没改,第二天原样又开始跑,那不叫迭代,叫轮回。</p>
-
-        <h2>8. 小实盘结束后看什么</h2>
-<p>小实盘跑了足够长的一段时间,验收时不要只盯着赚还是亏。真正要评审的是流程指标:信号是不是按时生成,订单是不是按计划执行,真实成本和预期差多少,没成交的订单占比多高,每日对账是否稳定一致,你人工手痒干预了几次。这一串答案,比盈亏数字更能回答<span class="hl">“我到底行不行”</span>。</p><p>四种结果要分开诊断。如果流程稳定但策略亏损,说明系统是合格的,问题出在策略研究本身,继续改策略就好。反过来,如果策略赚了钱但流程一团糟,千万别急着放大资金——流程混乱状态下的盈利,运气成分大,下一笔钱未必这么客气。</p><p>所以小实盘的通过线不是赚到了钱,而是四件事同时成立:流程稳定、风险可控、成本符合预期、你能管住手按规则执行。四项齐备,小实盘才算毕业;缺了哪一项,就先补哪一项,别拿盈利数字替流程缺陷盖章。</p>
-
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 448" role="img" aria-label="小实盘验收四象限:流程乱亏钱退回模拟盘,流程乱赚钱是运气别放大,流程稳亏钱说明系统合格回去改策略,流程稳赚钱且流程稳定、风险可控、成本符合预期、能管住手才算毕业">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">小实盘毕业评审:流程稳不稳 × 账户赚不赚,四象限分开诊断</text>
-            <text x="310" y="76" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">账户亏钱</text>
-            <text x="650" y="76" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">账户赚钱</text>
-            <text x="134" y="144" text-anchor="end" fill="#8499bd" font-size="12.5" font-weight="800">流程混乱</text>
-            <text x="134" y="260" text-anchor="end" fill="#8499bd" font-size="12.5" font-weight="800">流程稳定</text>
-            <rect x="150" y="88" width="330" height="104" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(132,153,189,0.35)"/>
-            <text x="315" y="116" text-anchor="middle" fill="#bcc9dd" font-size="14" font-weight="800"><tspan x="315" y="116">流程乱+亏钱</tspan></text>
-            <text x="315" y="146" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="315" y="146">整套退回模拟盘重练</tspan></text>
-            <text x="315" y="172" text-anchor="middle" fill="#8499bd" font-size="11" font-weight="400"><tspan x="315" y="172">错上加错,归因都归不了</tspan></text>
-            <rect x="490" y="88" width="330" height="104" rx="12" fill="rgba(18,29,49,0.70)" stroke="#e88"/>
-            <text x="655" y="116" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800"><tspan x="655" y="116">流程乱+赚钱</tspan></text>
-            <text x="655" y="146" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="655" y="146">运气成分大,千万别放大资金</tspan></text>
-            <text x="655" y="172" text-anchor="middle" fill="#8499bd" font-size="11" font-weight="400"><tspan x="655" y="172">流程乱时的盈利,下一笔未必客气</tspan></text>
-            <rect x="150" y="204" width="330" height="104" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.45)"/>
-            <text x="315" y="232" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800"><tspan x="315" y="232">流程稳+亏钱</tspan></text>
-            <text x="315" y="262" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="315" y="262">系统合格,问题在策略本身</tspan></text>
-            <text x="315" y="288" text-anchor="middle" fill="#8499bd" font-size="11" font-weight="400"><tspan x="315" y="288">不用动系统,继续改策略就好</tspan></text>
-            <rect x="490" y="204" width="330" height="104" rx="12" fill="rgba(18,29,49,0.70)" stroke="#8fb37a"/>
-            <text x="655" y="232" text-anchor="middle" fill="#8fb37a" font-size="14" font-weight="800"><tspan x="655" y="232">流程稳+赚钱</tspan></text>
-            <text x="655" y="262" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="655" y="262">四项齐备,小实盘才算毕业</tspan></text>
-            <text x="655" y="288" text-anchor="middle" fill="#8499bd" font-size="11" font-weight="400"><tspan x="655" y="288">此时才谈得上放大——仍按事先规则</tspan></text>
-            <text x="450" y="344" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">毕业线:四件事同时成立,缺哪项先补哪项——别拿盈利替流程缺陷盖章</text>
-            <rect x="40" y="358" width="196" height="46" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="138" y="382" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800"><tspan x="138" y="382">①流程稳定</tspan></text>
-            <rect x="248" y="358" width="196" height="46" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="346" y="382" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800"><tspan x="346" y="382">②风险可控</tspan></text>
-            <rect x="456" y="358" width="196" height="46" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="554" y="382" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800"><tspan x="554" y="382">③成本符合预期</tspan></text>
-            <rect x="664" y="358" width="196" height="46" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="762" y="382" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800"><tspan x="762" y="382">④管住手按规则执行</tspan></text>
-            <text x="450" y="436" text-anchor="middle" fill="#8499bd" font-size="12">评审另有一串流程指标:信号按时生成?订单按计划执行?真实成本差多少?未成交占比多高?对账一致吗?手痒干预了几次?</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="基金月报风险指标:最大回撤、波动率、夏普比率、卡玛比率、跟踪误差、信息比率;最大回撤算例为净值从峰值1.5跌到1.2,回撤等于(1.5减1.2)除以1.5等于百分之二十">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">月报风险指标别光看:峰值 1.5 跌到 1.2,回撤自己算一遍</text>
+            <rect x="40" y="64" width="430" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="255" y="92" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800"><tspan x="255" y="92">最大回撤=(峰值−谷底)÷峰值</tspan></text>
+            <path d="M 80 158 L 170 134 L 350 226 L 425 188" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>
+            <line x1="80" y1="134" x2="425" y2="134" stroke="#f0c96a" stroke-width="1.2" stroke-dasharray="5 4"/>
+            <circle cx="170" cy="134" r="5" fill="#f0c96a"/>
+            <text x="170" y="120" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">净值最高 1.5</text>
+            <circle cx="350" cy="226" r="5" fill="#e88"/>
+            <text x="350" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">后来跌到 1.2</text>
+            <path d="M 170 144 L 170 217" stroke="#e88" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <text x="150" y="182" text-anchor="end" fill="#ffb4b4" font-size="11.5">亏掉 0.3</text>
+            <text x="255" y="284" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">(1.5 − 1.2) ÷ 1.5 = 回撤 20%</text>
+            <rect x="490" y="64" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="579" y="87" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="579" y="87">最大回撤</tspan></text>
+            <text x="579" y="110" text-anchor="middle" fill="#bcc9dd" font-size="10.5">从峰值摔下</text>
+            <text x="579" y="127" text-anchor="middle" fill="#bcc9dd" font-size="10.5">那一下有多疼</text>
+            <rect x="681" y="64" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="770" y="87" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="770" y="87">波动率</tspan></text>
+            <text x="770" y="110" text-anchor="middle" fill="#bcc9dd" font-size="10.5">赚钱的路上</text>
+            <text x="770" y="127" text-anchor="middle" fill="#bcc9dd" font-size="10.5">有多颠簸</text>
+            <rect x="490" y="148" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="579" y="171" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="579" y="171">夏普比率</tspan></text>
+            <text x="579" y="194" text-anchor="middle" fill="#bcc9dd" font-size="10.5">每份波动</text>
+            <text x="579" y="211" text-anchor="middle" fill="#bcc9dd" font-size="10.5">换多少收益</text>
+            <rect x="681" y="148" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="770" y="171" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="770" y="171">卡玛比率</tspan></text>
+            <text x="770" y="194" text-anchor="middle" fill="#bcc9dd" font-size="10.5">每份回撤</text>
+            <text x="770" y="211" text-anchor="middle" fill="#bcc9dd" font-size="10.5">换多少年化</text>
+            <rect x="490" y="232" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="579" y="255" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="579" y="255">跟踪误差</tspan></text>
+            <text x="579" y="278" text-anchor="middle" fill="#bcc9dd" font-size="10.5">偏离基准</text>
+            <text x="579" y="295" text-anchor="middle" fill="#bcc9dd" font-size="10.5">有多远</text>
+            <rect x="681" y="232" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="770" y="255" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="770" y="255">信息比率</tspan></text>
+            <text x="770" y="278" text-anchor="middle" fill="#bcc9dd" font-size="10.5">每单位偏离</text>
+            <text x="770" y="295" text-anchor="middle" fill="#bcc9dd" font-size="10.5">换多少超额</text>
+            <rect x="40" y="322" width="400" height="62" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="240" y="346" text-anchor="middle" fill="#c9d4e8" font-size="12">按策略类型读:CTA 的回撤形态和指增长得不一样</text>
+            <text x="240" y="368" text-anchor="middle" fill="#c9d4e8" font-size="12">市场中性波动应相对低——读出来高了要警觉</text>
+            <rect x="460" y="322" width="400" height="62" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="660" y="346" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">闭眼想象:这是你的账户,从峰值眼睁睁亏两成</text>
+            <text x="660" y="368" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">拿不住,这个产品的风险对你就超标</text>
           </svg>
-          <p class="figure__cap">小实盘跑了足够长,验收别只盯盈亏:流程稳定但策略亏,说明系统合格、问题在策略;策略赚了但流程一团糟,运气成分大,千万别放大资金。通过线是四件事同时成立——流程稳定、风险可控、成本符合预期、能管住手按规则执行。</p>
+          <p class="figure__cap">风险指标都在回答两件朴素的事:赚钱的过程稳不稳,相对基准跑偏多少。最大回撤要亲手算——净值从 1.5 跌到 1.2,回撤就是 (1.5−1.2)÷1.5 = 20%;再闭眼想想:真钱从峰值亏两成,你拿不拿得住。</p>
         </div>
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>第一次小资金实盘的目标是验证真实交易链路,不是追求收益。</li>
-            <li>资金上限、半自动执行、交易记录、盘后对账和停止规则是小实盘的核心。</li>
+            <li>看回测报告,先看策略、数据、股票池、基准和交易假设,再看收益。顺序反了,结论常常也反了。</li>
+            <li>回撤、换手、成本、持仓暴露和样本外,比孤独的年化收益更能说明一个策略的真实质量。</li>
+            <li>模拟盘的第一目标是验证真实时间流程跑得稳不稳,不是证明短期收益好不好看。</li>
+            <li>数据延迟、空信号、涨跌停未成交、成本偏差和对账错误——这些问题只有放到真实节奏里,才会自己浮出来。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.</strong> 先定资金上限</li>
-            <li><strong>2.</strong> 第一笔交易选简单品种</li>
-            <li><strong>3.</strong> 半自动比全自动更适合第一步</li>
-            <li><strong>4.</strong> 记录每一笔交易</li>
-            <li><strong>5.</strong> 每天盘后对账</li>
-            <li><strong>6.</strong> 观察自己的心理</li>
-            <li><strong>7.</strong> 什么时候停止</li>
-            <li><strong>8.</strong> 小实盘结束后看什么</li>
+            <li><strong>1.1.</strong> 先看策略说明</li>
+            <li><strong>1.2.</strong> 看数据区间和股票池</li>
+            <li><strong>1.3.</strong> 看基准</li>
+            <li><strong>1.4.</strong> 看交易假设</li>
+            <li><strong>1.5.</strong> 看收益和回撤</li>
+            <li><strong>1.6.</strong> 看换手和成本</li>
+            <li><strong>1.7.</strong> 看持仓和暴露</li>
+            <li><strong>1.8.</strong> 看样本外</li>
+            <li><strong>1.9.</strong> 看失败阶段</li>
+            <li><strong>1.10.</strong> 写读后审查结论</li>
+            <li><strong>2.1.</strong> 数据没有按时到</li>
+            <li><strong>2.2.</strong> 信号文件为空</li>
+            <li><strong>2.3.</strong> 目标股票涨停买不到</li>
+            <li><strong>2.4.</strong> 成本比预期高</li>
+            <li><strong>2.5.</strong> 盘后对账</li>
+            <li><strong>2.6.</strong> 写复盘</li>
+            <li><strong>2.7.</strong> 模拟盘要跑多久</li>
+            <li><strong>2.8.</strong> 模拟盘报告应包含什么</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>小资金实盘的目的不是赚钱,那是为了什么?</summary>
-            <p>为了用很小的代价验证整条交易链路:订单、成交、费用、对账,以及你自己的心理承受力,这些都验证过之后,收益才谈得上。</p>
+            <summary>为什么回测报告不能只看年化收益?</summary>
+            <p>年化收益对回撤、成本、样本外、基准和风险暴露一概不谈;单看一个终点数字,等于只听了故事的最后一句。</p>
           </details>
           <details class="quiz__item">
-            <summary>第一次实盘为什么更适合半自动?</summary>
-            <p>人工确认能在自动化不成熟时挡掉重复下单、方向颠倒一类错误,同时逼你亲手理解每一笔真实交易。</p>
+            <summary>交易假设为什么重要?</summary>
+            <p>成交价格、费用、滑点、涨跌停和容量直接决定纸面收益能不能兑现;假设离市场越远,报告越像科幻小说。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>模拟盘的第一目标是什么?</summary>
+            <p>验证数据、信号、订单、成交、对账、报告这条流程在真实时间里稳不稳——先跑通流水线,再谈它产出的东西好不好。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>信号文件为空时为什么不能临场猜?</summary>
+            <p>因为保持原仓位、清仓、停止三种动作的风险完全不同,临场拍脑袋等于让情绪替你定规则;规则必须事先写好。</p>
           </details>
         </section>
       </div>

@@ -23,8 +23,8 @@ def run(name, mod):
 
 
 if __name__ == "__main__":
-    run("示例 1 · 因子与分层回测(第 9 章)", ex01_factors)
-    run("示例 2 · 指数增强完整回测(第 19 章)", ex02_index_enhance)
+    run("示例 1 · 因子与分层回测(第 11 章)", ex01_factors)
+    run("示例 2 · 指数增强完整回测(第 21 章)", ex02_index_enhance)
     run("示例 3 · 偷看未来 vs 不偷看(第 21/22 章)", ex03_lookahead)
     run("示例 4 · 市场中性对冲账本(第 14/20 章)", ex04_neutral)
     print("全部示例运行通过(含各自断言自检)。")
