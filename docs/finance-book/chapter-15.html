@@ -3,259 +3,228 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 15 章 · 量化策略版图与指数增强 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="把常见量化策略按收益来源、交易频率、资产类别和风险暴露分清楚。 / 用完整流程讲清指数增强如何从股票池、因子、风险约束和交易成本中争取超额收益。" />
+    <title>第 15 章 · 量化的起点:因子和数据 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="解释量化里常说的因子、信号、暴露、IC、分层回测和因子失效。 / 讲清行情、财务、另类数据、标签定义、点时数据和训练验证切分。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="15">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第五部分 · 量化行业与策略版图 · 第 15 章</p>
-        <h1>量化策略版图与指数增强</h1>
-        <p class="lead">量化不是一种策略,而是一大类用数据、模型和规则做投资的方法:有人做指数增强,有人做市场中性,有人做商品趋势,有人做套利和高频。这一章先把整张策略地图铺开,让你看清它们在数据、频率、收益来源和风险上的根本差异;再深入第一种最容易理解的路径——指数增强,看它如何在紧贴基准的同时,争取那一点点稳定的超额收益。</p>
+        <p class="chapter__eyebrow">第三部分 · 收益、风险与投资评价 · 第 15 章</p>
+        <h1>量化的起点:因子和数据</h1>
+        <p class="lead">实习时听到的“找因子”,不是什么玄学密码。最朴素地说,因子就是一列能描述资产特征、风险暴露或预测信息的数字,量化研究的第一步就是把一句投资判断写成可检验的数据列。这一章先讲因子是什么、从哪里来、怎么检验有没有用,再讲更容易被忽略却更致命的一环:数据从哪里来、标签怎么定义、样本又该怎么切分。</p>
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>量化是一类方法而不是一种策略:要按收益来源、资产类别和交易频率分格子看,不能都混成“预测涨跌”。</li>
-            <li>指数增强、市场中性、CTA、套利、高频赚的是五种完全不同的钱,怕的也是五件完全不同的事。</li>
-            <li>指数增强的目标是在贴近基准的前提下争取超额收益,只盯绝对收益,永远看不懂它在干什么。</li>
-            <li>跟踪误差、信息比率、行业风格暴露、换手和容量,共同决定一只增强产品的成色。</li>
+            <li>因子是把投资判断变成一列有口径、可排序、可检验的数据。</li>
+            <li>IC、RankIC 和分层回测用于检验因子是否对未来收益有排序信息。</li>
+            <li>量化数据必须恢复历史当时的信息状态,点时数据是防止未来函数的核心。</li>
+            <li>标签定义决定模型任务,预测绝对收益、相对收益、波动或回撤是不同问题。</li>
           </ul>
         </section>
 
 
-        <h2>1. 指数增强、市场中性、CTA、套利和高频</h2>
+        <h2>1. 把投资判断变成可检验的数字</h2>
 
-        <h3>1.1. 它到底赚谁的钱</h3>
-<p>看量化产品的宣传材料,普通人第一眼盯住的是<span class="hl">“<span class="term">年化收益</span>”</span>;内行盯住的是另一件事:这钱到底是怎么赚来的。指数增强赚相对指数的选股超额;市场中性拆掉大盘因素,赚多空相对收益;CTA 赚期货趋势、期限结构或跨品种关系;套利赚价格关系偏离之后的那次回归;高频和做市赚微观结构里的价差、流动性和执行优势。五种钱,五种打法。</p><p>钱从哪来,风险就从哪来。指数增强怕跑输基准和风格失效;市场中性怕对冲成本和<span class="term">基差</span>;CTA 怕长期无趋势的震荡;套利怕极端价差扩大和流动性中断;高频怕技术延迟、交易规则变化和竞争挤压。宣传页不会写这些“怕”,但每一种怕背后,都有亏过真金白银的产品。</p><p>所以成熟投资者不会只问<span class="hl">“年化多少”</span>,而是追问:收益从哪里来、什么情况下会亏、容量多大、成本如何、能否长期复制。这五个问题,就是这张地图的坐标。</p><div class="callout callout--note reveal"><span class="callout__title">先看赚的是哪一种钱,再看年化多少</span><p>同样一条年化 <span class="num">10%</span> 的曲线,背后的钱可能来自五个完全不同的口袋:选股超额、多空相对收益、趋势、价差回归、微观结构。钱的来源决定了它会怎么亏、容量多大、对成本多敏感。所以拿到任何一份量化材料,先把收益归到正确的口袋,再谈数字——分类分错,后面的比较全是白比。</p></div>
+        <h3>1.1. 因子不是魔法,是一列有口径的数据</h3>
+<p>在动手造因子之前,先看看这条路的天花板有多高。有个叫詹姆斯·西蒙斯的数学家,年轻时是顶尖的几何学家,拿过数学大奖,还给美国政府破译过密码。40 多岁时他离开学术界,创立了文艺复兴科技公司,办公室里招来的不是西装革履的交易员,而是一群数学家、物理学家和计算机科学家。他们做的事情,本质上就是本章要讲的事:把海量市场数据变成一列列数字,再用统计和模型,从中找出微弱但稳定的规律。</p><p>他们交出的成绩单是金融史上最夸张的那张:旗舰产品<span class="hl">“大奖章”</span>基金,从 1988 到 <span class="num">2018 年</span>,在扣掉高得离谱的费用之后,<span class="term">年化收益</span>仍约 <span class="num">39%</span>,扣费前更是高达约 <span class="num">66%</span>。更反直觉的细节是,据公开资料,他们单笔交易的胜率大概只有 <span class="num">50.75%</span>——和抛硬币几乎没区别。秘诀不是每次都猜对,而是把那一点点微弱的优势,靠海量交易次数和严格风控,滚成惊人的复利。这就是量化的灵魂:不追求算准明天,只追求长期站在概率这一边。而这一切的起点却朴素得惊人——把一个投资想法,变成一列可以检验的数字。这列数字,就是因子。</p><p>来亲手翻译一句试试。你说<span class="hl">“便宜的股票未来表现可能更好”</span>——这话说给人听没问题,可量化系统听不懂<span class="hl">“便宜”</span>这种形容词,你得给它数字:<span class="term">市盈率</span> <span class="term">PE</span>、<span class="term">市净率</span> <span class="term">PB</span>、企业价值倍数 EV/EBITDA,或者它们的倒数。选定口径之后,每只股票每天都有了一个确定的数,这一列数,就是你的估值因子。</p><p>再翻译两句。<span class="hl">“最近涨得强的股票可能继续强”</span>——可以译成过去 <span class="num">20 个交易日</span>收益率、过去 <span class="num">60 日</span>收益率,或者剔除最近几天<span class="term">反转</span>影响之后的<span class="term">动量</span>因子。<span class="hl">“质量好的公司更稳”</span>——可以用 <span class="term">ROE</span>、毛利率、负债率、现金流质量这些指标拼出一个质量因子。看到没有,投资界的每一句朴素判断,背后都能站出一列数据。</p><p>所以因子不是一张别人发给你的固定清单,而是一种把投资直觉数据化的方法。而数据化的关键永远是口径:用什么数据?在哪个时间点可见?缺失值和极端值怎么处理?每天怎么更新?适用于哪些股票?口径含糊的因子,翻译过来就是一句话都说不清的<span class="hl">“投资感觉”</span>,没法检验,更没法信任。</p>
 
-        <h3>1.2. 四个互不相通的世界</h3>
-<p>都挂着<span class="hl">“量化”</span>两个字,做股票的人和做期权的人坐下来,可能聊十分钟就发现互相听不懂。股票量化是最常被讨论的方向,包括多因子选股、指数增强、市场中性、事件驱动和高频股票交易;债券量化盯利率曲线、久期、信用利差、流动性和相对价值;期货量化在商品、股指、国债、外汇等合约上做趋势、价差和期限结构;期权量化研究<span class="term">波动率</span>、希腊字母、<span class="term">波动率</span>曲面和尾部风险。</p><p>用程序员的话说,每类资产都有自己的<span class="hl">“数据方言”</span>:股票有财报、行业、指数成分和公司事件;期货有主力合约切换、<span class="term">保证金</span>、展期和夜盘;债券有久期、凸性、信用评级和成交不连续;期权有行权价、到期日、隐含<span class="term">波动率</span>和流动性。方言接错,解析出来全是乱码——拿股票的回填方式去拼期货价格,回测从第一步就错了。</p><p>个人学习最好先挑一个资产类别扎进去。A 股日频股票是比较适合入门的方向:概念丰富、数据相对容易理解,光弄懂交易规则就能学到很多。基础扎实后,再扩展到期货、期权、债券或多资产。</p>
+        <h3>1.2. 因子、信号和特征有什么区别</h3>
+<p>在量化圈子里,因子、信号、特征这三个词经常被混着用,不同公司甚至有不同习惯,新人听得云里雾里。入门阶段可以按这样一套分工来记:特征,是喂给模型的原始或加工变量;因子,通常带着金融解释,能描述某种收益来源或风险暴露;信号,则更靠近交易决策,告诉你现在该不该买卖、给多少仓位。</p><p>拿一个具体例子串起来看。过去 <span class="num">20 日</span>收益率,扔进模型时它是个特征。如果你认为它代表<span class="term">动量</span>效应——涨的还会再涨——它就成了<span class="term">动量</span>因子。等模型把它和几十个其他变量揉在一起,输出一个股票预期收益分数,这个分数就是选股信号。同一个数字,在流水线的不同位置换了三个身份。</p><p>较真这三个词不是为了咬文嚼字,而是防止一个思维错误:把所有数字都当成 <span class="term">Alpha</span>。一个变量可能只是风险暴露,带上它不等于有正向收益预测;一个特征可能在模型里确实有用,却给不出清晰的经济解释;一个交易信号可能短期很灵,但容量小到装不下多少资金。身份不同,信任等级就该不同。</p>
 
-        <h3>1.3. 从季度调仓到毫秒抢单</h3>
-<p>想象三个节奏完全不同的岗位:一个人每季度才做一次决定,一个人每天早上调一次仓,还有一个要在几毫秒内下完单。低频策略可能月度或季度调仓,主要用财务、估值、宏观和长期价格特征;中频策略可能每日或每周调仓,关注价格<span class="term">动量</span>、短期<span class="term">反转</span>、成交量、事件和资金流;高频在秒级、毫秒级甚至更短时间内交易,盯的是盘口、订单流、排队位置和延迟。</p><p>频率越高,工程和交易成本的戏份越重。低频像定时跑的批处理任务:慢慢算、慢慢执行,代价是承受较长持有期风险;高频像对延迟极度敏感的联机系统:单次收益极薄,需要极低延迟、稳定通道、精细风控和大量交易样本,链路任何一环抖一下,抖掉的都是真金白银。</p><p>计算机背景的人容易被高频吸引,因为它最像系统工程。但个人通常不适合从高频开始:没有交易通道、行情质量、低延迟基础设施和成本优势,高频回测很容易变成纸上游戏——你在自己电脑上跑赢了,只是因为回测里没有一整层专业机构在跟你抢单。</p>
-
-        <h3>1.4. 指数增强</h3>
-<p>买指数基金,相当于直接抄指数的<span class="hl">“作业”</span>;买指数增强,是抄作业时顺手改几个答案,赌自己改得比标准答案好。它围绕一个基准指数构建组合,目标是指数收益加<span class="term">超额收益</span>:通常持有一篮子股票,控制行业、风格、个股和<span class="term">跟踪误差</span>,用量化因子或模型在指数成分及相近股票中争取更好的排序。大方向跟着指数走,细节处偷偷使劲。</p><p>这个结构的好处是客户容易理解:买的是某个指数附近的增强版。风险同样清楚:模型选股失效、风格暴露不利或交易成本过高,产品就会跑输基准,<span class="hl">“增强”</span>两个字就变成了反话。</p><p>国内量化私募和公募都很重视指数增强,原因很实际:A 股股票数量多、散户占比和风格轮动明显、指数产品需求大。但另一面是竞争激烈,简单因子很难长期提供高超额——你能在公开资料里学到的套路,别人早就用上了。</p>
+        <h3>1.3. 常见因子家族</h3>
+<p>股票量化里的因子虽多,大致能归成几个家族,先把户口本认全。估值因子看股票贵不贵:<span class="term">PB</span>、<span class="term">PE</span>、股息率。质量因子看公司经营得好不好:<span class="term">ROE</span>、毛利率、现金流。成长因子看收入和利润的增长速度。<span class="term">动量</span>因子跟着过去的价格趋势走。<span class="term">反转</span>因子赌短期涨跌过度后的回摆。规模因子看市值大小。流动性因子盯成交额、<span class="term">换手率</span>和买卖价差。七个家族,各有脾气。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>但请立刻记住:这些因子没有一个是天天发工资的印钞机。价值因子可能连续多年跑输大盘;<span class="term">动量</span>因子会在市场急转弯时大亏一笔;小市值因子受监管政策和流动性的影响起伏很大;高股息因子往往集中在低成长行业。因子本质上是一组风险和行为模式的刻画,它们兑现收益的方式从不温柔准时。</p></div><p>所以成熟的量化研究员,问出<span class="hl">“哪个因子收益最高”</span>之后,紧接着还有一串问题:它和现有因子的相关性高不高?换手高不高?容量有多大?暴露明显落在哪些行业?计算时有没有用到未来数据?扣掉成本后还剩多少?能答完这一串,才算真正了解一个因子——收益数字只是它的简历,履历背调才是录取依据。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 305" role="img" aria-label="指数增强示意:增强曲线贴着指数基准走,并持续高出一小截超额收益">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">指数增强:紧贴指数,再想办法多赚一点点</text>
-            <line x1="70" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <line x1="70" y1="60" x2="70" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">时间</text>
-            <text x="52" y="70" fill="#8499bd" font-size="13">净值</text>
-            <!-- 指数基准线 -->
-            <path d="M 70 235 Q 300 195 520 165 T 830 120" fill="none" stroke="#8499bd" stroke-width="2.5" stroke-dasharray="7 5"/>
-            <text x="700" y="150" fill="#8499bd" font-size="14" font-weight="800">指数基准</text>
-            <!-- 增强线,略高于基准 -->
-            <path d="M 70 235 Q 300 182 520 145 T 830 92" fill="none" stroke="#a8c6ff" stroke-width="3"/>
-            <text x="600" y="96" fill="#a8c6ff" font-size="14" font-weight="800">指数增强</text>
-            <!-- 超额区间标注 -->
-            <line x1="830" y1="92" x2="830" y2="120" stroke="#f0c96a" stroke-width="2"/>
-            <path d="M 830 92 L 825 102 M 830 92 L 835 102" stroke="#f0c96a" stroke-width="2" fill="none"/>
-            <text x="815" y="80" text-anchor="end" fill="#f0c96a" font-size="13">超额收益(Alpha)</text>
-            <text x="450" y="292" text-anchor="middle" fill="#c9d4e8" font-size="13">大方向跟着指数走(Beta),再靠选股在上面抠出一层薄薄的超额</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 290" role="img" aria-label="因子分层回测柱状图:按因子值把股票分成5组,从第1组到第5组未来收益单调递增">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">分层回测:把股票按因子值分成5组,看收益是否单调</text>
+            <line x1="90" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="90" y1="60" x2="90" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="60" y="70" fill="#8499bd" font-size="13">未来收益</text>
+            <!-- 5根柱子,单调递增 -->
+            <rect x="150" y="200" width="90" height="50" fill="#e88" opacity="0.75"/>
+            <text x="195" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第1组(因子最低)</text>
+            <rect x="290" y="175" width="90" height="75" fill="#c98b6a" opacity="0.8"/>
+            <text x="335" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第2组</text>
+            <rect x="430" y="150" width="90" height="100" fill="#b0a06a" opacity="0.8"/>
+            <text x="475" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第3组</text>
+            <rect x="570" y="120" width="90" height="130" fill="#8fb37a" opacity="0.85"/>
+            <text x="615" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第4组</text>
+            <rect x="710" y="90" width="90" height="160" fill="#a8c6ff" opacity="0.9"/>
+            <text x="755" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第5组(因子最高)</text>
+            <path d="M 195 195 L 335 170 L 475 145 L 615 115 L 755 85" fill="none" stroke="#eef4f8" stroke-width="2" stroke-dasharray="6 5"/>
+            <text x="600" y="70" fill="#eef4ff" font-size="13">收益随分组单调上升 → 因子可能有效</text>
           </svg>
-          <p class="figure__cap">指数增强不追求暴利。它先老老实实跟住指数(拿到市场平均的 Beta),再用量化选股在基准之上多挤出一点超额收益(Alpha)。日积月累,这一点点也很可观。</p>
+          <p class="figure__cap">把股票按因子值排序、平均分成几组,再看每组之后的平均收益。如果从低到高单调递增(或递减),说明这个因子可能真的携带信息,而不是随机噪声。</p>
         </div>
-        <h3>1.5. 市场中性</h3>
-<p>普通买股票,本质是在赌天气:天晴大家一起赚,下雨大家一起挨浇。市场中性的想法是:我不赌天气,只赚自己选股的手艺钱。常见做法是买入看好的股票组合,同时用<span class="term">股指期货</span>或其他工具对冲市场 <span class="term">Beta</span>。这样市场大涨大跌时,组合理论上更关注一件事:多头是否跑赢了空头或基准。</p><p>但请把<span class="hl">“中性”</span>和<span class="hl">“无风险”</span>彻底分开。<span class="term">股指期货</span>有<span class="term">基差</span>,对冲比例可能不准,多头股票可能跌得比对冲工具更多,融券和期货成本会变化,极端行情里相关性会失效。大盘方向的风险被对冲掉了,其余风险还在原地站着。</p><p>它适合想降低市场方向暴露的资金,但对风控和执行要求很高。个人投资者如果不熟悉期货<span class="term">保证金</span>、<span class="term">基差</span>和对冲误差,不应轻易模仿——这个策略看着温柔,真做起来全是细节,每个细节都要钱。</p>
+        <h3>1.4. 同一天把股票排队</h3>
+<p>大量股票因子是在<span class="hl">“横截面”</span>上使用的。横截面这个词听着学术,动作却很形象:在同一天,把所有可投资股票拉到操场上,按某个因子值排成一队。比如今天全市场 4000 只股票,你按 <span class="term">PB</span> 从低到高排队,最便宜的站队首,最贵的站队尾。排完这支队,再谈怎么用。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>注意横截面排序和时间序列预测是两回事。它不预测大盘明天涨还是跌,它预测的是在同一锅里,哪几只股票相对更好。指数增强和市场中性策略最爱的就是这种相对收益:同一个市场环境下,多买排名靠前的,少买或者卖空排名靠后的——大盘涨你跟着涨,但你涨得比它多一点就行。</p></div><p>这也解释了你实习时为什么天天和<span class="hl">“矩阵”</span>打交道:行是日期,列是股票,每个格子里是一个因子值。一张巨大的表横在眼前,研究员每天的工作就是追问:这张矩阵里,到底有没有稳定的横截面排序信息?有,则留;没有,则扔。简单粗暴,但很诚实。</p>
 
-        <h3>1.6. CTA 和趋势跟踪</h3>
-<p>长辈最爱教训股民的话是<span class="hl">“别追涨杀跌”</span>。CTA 趋势跟踪干的事,恰恰是把<span class="hl">“追涨杀跌”</span>写成规则、严格执行——只不过靠系统,不靠情绪。CTA 常指管理期货策略,覆盖商品、股指、国债、外汇等期货市场;趋势跟踪是其中最经典的方向:价格上涨趋势中做多,下跌趋势中做空,试图抓住持续行情。</p><p>背后的直觉是:市场有时会因为基本面、资金和行为偏差形成持续趋势。所以趋势策略可能经常小亏——假突破来一下就止损;但逮住一波大趋势,赚的就够盖住前面所有小亏。难处也在这:震荡市会反复止损,长期无趋势阶段能把人磨到怀疑人生。</p><p>趋势之外,CTA 还有期限结构、跨品种套利、库存和供需逻辑等方向。做商品期货不能只看 K 线,还要理解合约换月、<span class="term">保证金</span>、夜盘、仓单、库存、<span class="term">基差</span>和产业链。</p>
+        <h3>1.5. 因子排序和未来收益是否同向</h3>
+<p>排好了队,自然要问:排得对不对?<span class="term">IC</span> 就是给排队质量打分的指标。<span class="term">IC</span> 是 Information Coefficient 的缩写,常见做法是计算因子值和未来收益之间的相关系数:今天得分高的股票,未来一段时间收益也更高,<span class="term">IC</span> 就是正的;要是高分股反而普遍表现更差,<span class="term">IC</span> 就是负的。正负之间,就是这个因子靠不靠谱的第一印象。</p><p>举个极简的例子感受一下。今天你按某因子给 5 只股票打分,明天高分股票普遍涨得多、低分股票涨得少甚至下跌,那这一天的 <span class="term">IC</span> 就比较高。业内的做法是把成百上千个交易日的 <span class="term">IC</span> 连成一条序列,再看它的平均值、稳定性和波动——单看一天的 <span class="term">IC</span> 意义不大,长期的平均表现才开始说明问题。</p><p>实战中更常用 <span class="term">RankIC</span>,也就是用排名算相关性,而不是用原始数值。原因很实际:因子值里常有极端值捣乱,排名的抗干扰能力更强。另外千万别觉得 <span class="term">IC</span> 要大才有用——股票横截面的噪声极强,一个长期平均 <span class="term">RankIC</span> 只有 0.03 的因子,如果稳定、成本低、容量大,一样可能有商业价值。在这个行业,微弱但稳定,胜过耀眼但抽风。
+                <div class="figure reveal">
+                          <div data-lab="ic"></div>
+                          <p class="figure__cap"><span class="term">IC</span> 实验台:拖动相关性强度 ρ,看散点从雾变成斜线——这就是书里说的<span class="hl">“因子排序和未来收益同向”</span>。</p>
+                        </div>
+                </p>
 
-        <h3>1.7. 套利和相对价值</h3>
-<p>楼下便利店可乐卖 3 块,对面超市卖 2 块 8,理论上你可以从超市搬货到便利店门口卖掉——这就是套利的直觉。区别是,金融市场里你扛货过马路的那几秒,两边价格可能已经变了。套利策略关注两个或多个相关资产价格关系的偏离,比如 <span class="term">ETF</span> 和一篮子股票、期货和现货、可转债和正股、同一公司不同上市地股票、不同期限债券利差。</p><p>必须泼一盆冷水:很多<span class="hl">“套利”</span>并不是无风险套利,更准确叫相对价值交易。价差可能继续扩大,流动性可能消失,融资成本可能上升,其中一边可能停牌或涨跌停。你以为在等价差回归,市场可能在告诉你:关系已经变了。</p><p>这类策略通常收益较薄,依赖低成本、快执行和强风控。个人做套利要特别小心交易规则和费用:你盯着的那个价差,可能刚好够佣金、滑点和冲击成本分着吃——扣完成本,肉没了,只剩骨头。</p>
-
-        <h3>1.8. 高频、做市和订单簿策略</h3>
-<p>把熟悉的 K 线图一直放大到毫秒级,你会看到一个新世界:价格不是一条光滑的线,而是一群人在排队抢位子。高频策略在非常短的时间尺度上利用订单簿信息、订单流、买卖价差和微观结构;做市策略同时挂出买单和卖单,提供流动性,希望赚取价差和流动性补偿——相当于在市场里摆摊,低买高卖做周转。</p><p>高频的竞争核心是一份长长的工程清单:低延迟行情、交易通道、撮合规则理解、硬件、网络、风险控制和大量微观数据。它单次收益极薄,靠海量次数积少成多;反过来,一次系统错误可能吃掉很久的利润——赚时像收租,亏时像水管爆裂。</p><p>个人可以了解高频思想,比如价差、盘口深度、排队和冲击成本,这些做日频策略也用得上;但不建议把高频实盘作为入门目标:没有基础设施优势去和专业机构同场竞技,结局基本是给对方送流动性。</p>
-
-        <h3>1.9. 多策略平台</h3>
-<p>一个策略像一门手艺:会补胎的补胎,会喷漆的喷漆。多策略平台想开的是一家综合修理厂:不只押一种模型,而是把不同策略放在一起——股票多因子、指数增强、市场中性、CTA、套利、期权、债券、事件策略。目标很朴素:收益来源分散开,单一策略失效时整体还稳得住。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>但多策略的关键不是把策略简单相加,像自助餐一样把盘子堆满。真功夫在管理:管理相关性、容量、资金分配、回撤、风险预算和交易冲突。两个策略单独看都好,放一起却可能同时买卖同一资产互相打架,或在同一类市场环境里一起亏——相关性在风平浪静时看不出来,出事那天才现形。</p></div><p>这也是机构和个人差距较大的地方:多策略需要数据、系统、风控和资金管理的一整套能力。个人可以学这个思想,但落到实际项目,先把一两个简单策略做扎实,胜过铺一桌子半成品。</p>
-
-        <h3>1.10. 你该从哪类策略开始</h3>
-<p>地图看完了,最实际的问题摆上桌:第一步迈到哪里?如果你是计算机背景、金融新手,更建议从低频股票因子和指数基准开始。它能完整训练金融概念、数据清洗、回测、风险指标、交易成本和报告能力,同时不需要高频那套昂贵的基础设施。</p><p>第二步可以做 <span class="term">ETF</span> 和指数配置,理解资产配置和再平衡;第三步可以尝试简单 CTA 趋势,借它学习期货合约和<span class="term">保证金</span>。至于高频、复杂期权和多空<span class="term">杠杆</span>策略,应放在更后面——它们是这张地图上的<span class="hl">“困难副本”</span>,装备没齐别硬闯。</p><p>归根结底,路线选择要和资源匹配。个人最大的资源不是低延迟服务器,而是时间、学习能力、工程能力和纪律。把这几样投到可复现、可解释、可控风险的项目里,比扛着家用电脑去追逐机构级战场,现实得多,也走得远得多。</p>
-
-        <h2>2. 在基准附近争取一点点超额</h2>
-        <p>指数增强是理解国内量化最好的入口之一。它不像主观选股那样天马行空,也不像普通指数基金那样只会“复制粘贴”。它更像给一份标准答案做局部批改:大框架照搬基准指数,局部用自己的模型争取多对几道题,每多对一道,就是一点超额。这一章把完整流程摆开:股票池怎么画、因子怎么用、风险约束怎么卡、交易成本怎么扣,看超额到底从哪里一点点抠出来。看懂它,你就能看懂很多量化私募和公募产品到底在做什么。</p>
-
-        <h3>2.1. 指数收益加超额</h3>
-<p>先想象一个场景:某年<span class="term">中证 500</span> 跌了 <span class="num">15%</span>,你买的<span class="term">中证 500</span> 指数增强产品跌了 <span class="num">10%</span>。你该找经理算账吗?恰恰相反——这时候你该给他加鸡腿:他帮你少亏的 <span class="num">5%</span>,就是<span class="term">超额收益</span>。指数增强产品通常先指定一个基准,比如<span class="term">沪深 300</span>、<span class="term">中证 500</span> 或中证 1000。客户买它,不是希望它随便押方向,而是希望大体拿到这个指数的市场收益,再多赚一些超额。</p><p>反过来也一样。基准涨 <span class="num">20%</span>,产品涨 <span class="num">24%</span>,超额大约 <span class="num">4%</span>——你多拿的这部分才是它的手艺。注意,指数增强从来不保证绝对赚钱:市场大跌时,产品也可能亏,只是争取亏得比基准少一些。它承诺的是<span class="hl">“跟着指数走,但争取走得稍微好一点”</span>,不是<span class="hl">“旱涝保收”</span>。</p><p>所以评价指数增强绝不能只看绝对收益。你要看相对基准的<span class="term">超额收益</span>、<span class="term">跟踪误差</span>、<span class="term">信息比率</span>、最大超额回撤、风格暴露和稳定性。一个在牛市里涨得飞起的产品,如果只是仓位比基准更激进,那不是增强,那是加<span class="term">杠杆</span>赌对了——风一停,它就现原形。</p>
+        <h3>1.6. 高分组是不是真的更好</h3>
+<p><span class="term">IC</span> 给了一个相关系数,但你的直觉更想看真章:如果真按这个因子下注,能赚吗?分层回测就把这件事演给你看。做法是:按因子值把股票分成几组,常见五组或十组,第一组装因子最高的,最后一组装最低的,然后看各组未来一段时间的真实收益。因子要是有效,通常希望高分组长期跑赢低分组。</p><p>举个例子。把股票按股息率从高到低分成五组,每月调仓一次,跑出几年数据,如果最高股息组的长期收益持续高过最低股息组——而且不是靠某几年极端行情撑起来的——那这个因子八成有点真东西。但别急着收工,还得看多空收益、回撤、换手、行业暴露和市值暴露,确认赚的不是<span class="hl">“碰巧重仓了某个行业”</span>的钱。</p><p>分层回测的价值,在于它比干巴巴的 <span class="term">IC</span> 直观:<span class="term">IC</span> 告诉你排序的相关性,分层收益告诉你照着买会得到一条什么样的净值路径。当然它也不是免死金牌,交易成本、涨跌停约束、停牌、容量限制和数据偏差,都能让纸面上漂亮的多空曲线在实盘里走形。直观归直观,检验归检验。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 415" role="img" aria-label="指增收益分解:基准+10%,指增+11.5%拆成Beta下段、Alpha段和成本负截">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">指增的收益拆开看:Beta、Alpha、成本三截账</text>
-            <!-- 三根柱状:左组合总收益,拆右两根 -->
-            <!-- 左:沪深300涨10%,组合涨 +11.5% -->
-            <rect x="90" y="150" width="110" height="200" rx="6" fill="rgba(122,167,240,0.25)" stroke="rgba(122,167,240,0.45)"/>
-            <text x="145" y="170" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">基准(沪深300)</text>
-            <text x="145" y="248" text-anchor="middle" fill="#a8c6ff" font-size="24" font-weight="800">+10%</text>
-            <text x="145" y="275" text-anchor="middle" fill="#8499bd" font-size="11.5">全部来自大盘</text>
-            <!-- 中:分解堆叠:Beta +9/Alpha +2.5/成本 -1 -->
-            <rect x="330" y="170" width="110" height="162" fill="rgba(122,167,240,0.3)" stroke="rgba(122,167,240,0.5)"/>
-            <rect x="330" y="150" width="110" height="20" fill="rgba(240,201,106,0.4)" stroke="rgba(240,201,106,0.6)"/>
-            <rect x="330" y="132" width="110" height="18" fill="rgba(232,120,120,0.4)" stroke="rgba(232,120,120,0.6)"/>
-            <text x="385" y="360" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">指增组合  +11.5%</text>
-            <text x="385" y="250" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">Beta +10%</text>
-            <text x="385" y="163" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">Alpha +2%</text>
-            <text x="385" y="144" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">成本 −0.5%</text>
-            <!-- 右:公式 -->
-            <rect x="560" y="150" width="300" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="710" y="182" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">一句话账</text>
-            <text x="578" y="214" fill="#eef4f8" font-size="13.5">组合收益 = Beta + Alpha − 摩擦</text>
-            <text x="578" y="240" fill="#bcc9dd" font-size="13">= 10% + 2% − 0.5% = 11.5%</text>
-            <text x="578" y="268" fill="#bcc9dd" font-size="12.5">Beta 是大盘给的,学不来也避不掉;</text>
-            <text x="578" y="290" fill="#bcc9dd" font-size="12.5">Alpha 是选股选出来的,指增拼命争它;</text>
-            <text x="578" y="312" fill="#bcc9dd" font-size="12.5">摩擦是每次调仓的买路钱,只能想办法省。</text>
-            <!-- 中间等号 -->
-            <text x="480" y="260" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="800">≈</text>
-            <text x="450" y="392" text-anchor="middle" fill="#c9d4e8" font-size="13">年报上那个"年化收益"从来不自己拆开——先学会自己拆,才看得懂是谁的功劳</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 330" role="img" aria-label="分层回测柱状图:按股息率把股票分五组,未来一年平均收益从第1组+5.1%单调降到第5组+2.1%,多空差约+3.0个百分点/年">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">分层回测:按股息率分 5 组,未来收益是否单调</text>
+            <text x="450" y="57" text-anchor="middle" fill="#8499bd" font-size="12">口径沿用本节:第 1 组装股息率最高的股票、第 5 组装最低的,每月调仓、连跑数年取平均</text>
+            <line x1="90" y1="60" x2="90" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="90" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="32" y="74" fill="#8499bd" font-size="11">年均收益↑</text>
+            <rect x="130" y="97" width="90" height="153" fill="rgba(240,201,106,0.45)" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="175" y="81" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">+5.1%</text>
+            <text x="175" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 1 组</text>
+            <text x="175" y="291" text-anchor="middle" fill="#8499bd" font-size="11">股息率最高</text>
+            <rect x="270" y="130" width="90" height="120" fill="rgba(122,167,240,0.42)"/>
+            <text x="315" y="114" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+4.0%</text>
+            <text x="315" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 2 组</text>
+            <rect x="410" y="151" width="90" height="99" fill="rgba(122,167,240,0.34)"/>
+            <text x="455" y="135" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+3.3%</text>
+            <text x="455" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 3 组</text>
+            <rect x="550" y="166" width="90" height="84" fill="rgba(122,167,240,0.27)"/>
+            <text x="595" y="150" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+2.8%</text>
+            <text x="595" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 4 组</text>
+            <rect x="690" y="187" width="90" height="63" fill="rgba(232,120,120,0.22)" stroke="#e88" stroke-width="1.5"/>
+            <text x="735" y="171" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">+2.1%</text>
+            <text x="735" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 5 组</text>
+            <text x="735" y="291" text-anchor="middle" fill="#8499bd" font-size="11">股息率最低</text>
+            <path d="M 175 97 L 315 130 L 455 151 L 595 166 L 735 187" fill="none" stroke="#eef4f8" stroke-width="2" stroke-dasharray="6 5"/>
+            <text x="706" y="76" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">单调递减 = 因子值越大,未来收益越好</text>
+            <text x="706" y="96" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">多空差 +5.1% - 2.1% ≈ +3.0 个百分点/年</text>
+            <text x="450" y="316" text-anchor="middle" fill="#ffb4b4" font-size="12.5">反过来,要是第 3 组反超第 1 组、顺序乱跳——先怀疑运气和行业暴露,别急着下注;单调才算有用</text>
           </svg>
-          <p class="figure__cap">任何一股指增收益都是三截账:Beta 是跟着大盘的,+2% 是拼选股拼出来的 Alpha,−0.5% 是摩擦成本。看年化收益之前先拆开——市场一跌,你会发现 Beta 功劳巨大,Alpha 往往只剩一点点。</p>
+          <p class="figure__cap">把股票按股息率排队分五组、每月调仓跑上几年:高分组 +5.1% 一路降到低分组 +2.1%,单调才算有用——说明因子分数和未来收益同向。顺序一旦乱跳,先怀疑运气或行业暴露,别急着下注。</p>
         </div>
-        <h3>2.2. 股票池和基准要匹配</h3>
-<p>一个自称<span class="hl">“川菜厨子”</span>的人,端上来的全是粤菜,你就算吃得满意,也有理由投诉他货不对板。指数增强同理:它的股票池通常围绕基准成分股和相近股票。<span class="term">沪深 300</span> 增强主要在大盘蓝筹附近找机会,<span class="term">中证 500</span> 增强更关注中盘股票,中证 1000 增强更偏小盘。股票池,决定了策略活在哪个风险世界里。</p><p>偏了会怎样?如果一只<span class="term">中证 500</span> 增强产品大量买入<span class="term">沪深 300</span> 大盘股,短期可能还真跑赢,但它已经偏离了承诺:客户以为自己买的是<span class="term">中证 500</span> 的风险,拿到手的却是一份没说清楚的混合风险。用程序员的话说,这是接口签名和实际行为不一致——测试没抓到,不等于没问题。</p><p>所以指数增强的第一步不是模型,而是边界:哪些股票允许买,哪些要剔除,ST 怎么处理,停牌怎么处理,新股上市多久后纳入,流动性太差是否剔除。这些规则看着琐碎,却直接决定回测和实盘的一致性——边界画得马虎,回测里买的股票实盘未必买得到。</p>
+        <h3>1.7. 别把别人的风险当成自己的能力</h3>
+<p>这是因子研究里最容易自我感动的一个坑。你发现某个指标选出的股票收益很高,兴奋得不行,仔细一看:选出来几乎全是小市值股票。那它赚的很可能不是你这个指标的钱,而是小市值风格的钱——你只是站在别人的风口上,误以为自己会飞。</p><p>中性化就是把不想蹭的暴露剥离掉,让因子裸泳给你看。常见做法有行业中性、市值中性、风格中性。比如在每个行业内部单独排序,行业涨跌就干扰不到因子选股;或者用回归把市值暴露从因子值里抽走,剩下那部分如果还能预测收益,才算你有真本事。</p><p>但也别把中性化当成越多越好。剥得太狠,可能连因子真实的收益来源一起剥没了,剩下一个干干净净但毫无预测力的空壳。关键是想清楚自己要赚什么钱:如果你对外宣称做的是选股 <span class="term">Alpha</span>,就不能主要靠押行业和押市值;如果你本来就想做风格轮动,那风格暴露本身就是策略的一部分,不用剥,大方承认就好。</p>
 
-        <h3>2.3. 超额收益从哪里来</h3>
-<p>指数增强怎么做到<span class="hl">“比标准答案多对几道题”</span>?超额的来源有一整套工具箱:多因子选股、机器学习模型、基本面数据、交易行为数据、事件信息、风险暴露管理和交易执行。最朴素的版本一句话说完:选出相对更可能跑赢指数的股票,多配一点;相对弱的股票,少买或不买。</p><p>举个具体例子。在中证 1000 成分附近,模型发现某些股票估值更合理、盈利质量更好、<span class="term">动量</span>更强、流动性足够,就提高它们的权重;另一些股票基本面差、波动过高或短期拥挤,就降低权重。每次调整幅度都不大,但几百只股票、每周每月地调,累积起来的偏离就是超额的雏形。</p><p>但超额不是只靠预测准。交易成本低一点、风险暴露控制好一点、调仓更稳一点,最后都会变成超额。很多时候,策略不是靠一次石破天惊的大判断赢,而是靠许多小边际优势长期累积——像往存钱罐里丢硬币,一枚不响,一年下来也很可观。</p>
+        <h3>1.8. 因子为什么会失效</h3>
+<p>因子不是永动机,它哪天躺平了,通常逃不出四种死因。第一,它本来就是噪声,只是历史上碰巧表现好——回测里的明星,数据挖掘的幽灵。第二,市场结构变了,过去支撑它的机制不再成立。第三,用的人太多,收益被蜂拥的交易挤没了。第四,交易成本上升或流动性变差,纸面收益根本落不了地。</p><p>除了彻底死亡,还有一种更磨人的情况:周期性失效。价值因子可能在成长股的大行情里难受好几年,<span class="term">动量</span>因子会在市场急转弯时突然崩给你看,低波因子会在风险偏好暴涨的牛市里跑输得让人怀疑人生。这不一定说明因子永久死了,但你的资金能不能扛到它复活,是个现实问题——长期信仰,短期要命。</p><p>所以判断失效绝不能只看一个月亏损就掀桌子。先查一串东西:亏损是不是超出了历史分布的正常范围?市场环境变没变?因子的拥挤度是不是在上升?交易成本是不是变高了?数据口径是不是出了毛病?组合约束是不是放大了某类风险?失效诊断是功夫活,它和当初发现因子一样,都是研究的一部分。</p>
 
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="超额收益五格卡:行业偏离、风格偏离、个股偏离、时点偏离、其他(成本与执行),每格写赚它的决策和背的雷;收底用信息比率两笔账:A 超额6%偏离6% IR=1,B 超额8%偏离16% IR=0.5">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">超额收益从哪来:五种偏离,各赚各的钱,各背各的雷</text>
-            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">想赚超额就必须偏离基准(2.4 自由度的价格);偏离多大,用跟踪误差预算写死(2.6)</text>
-            <rect x="20" y="72" width="162" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="101" y="100" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">行业偏离</text>
-            <line x1="34" y1="112" x2="168" y2="112" stroke="rgba(122,167,240,0.18)"/>
-            <text x="101" y="132" text-anchor="middle" fill="#8499bd" font-size="10.5">赚它的决策</text>
-            <text x="101" y="152" text-anchor="middle" fill="#eef4f8" font-size="11.5" font-weight="800"><tspan x="101" y="152">超配景气行业</tspan></text>
-            <text x="101" y="206" text-anchor="middle" fill="#8499bd" font-size="10.5">背什么雷</text>
-            <text x="101" y="232" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">行业反转</text>
-            <text x="101" y="252" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">大幅跑输</text>
-            <line x1="34" y1="272" x2="168" y2="272" stroke="rgba(122,167,240,0.14)"/>
-            <text x="101" y="294" text-anchor="middle" fill="#8499bd" font-size="10.5">偏离即自由度,也是风险</text>
-            <rect x="192" y="72" width="162" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="273" y="100" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">风格偏离</text>
-            <line x1="206" y1="112" x2="340" y2="112" stroke="rgba(122,167,240,0.18)"/>
-            <text x="273" y="132" text-anchor="middle" fill="#8499bd" font-size="10.5">赚它的决策</text>
-            <text x="273" y="152" text-anchor="middle" fill="#eef4f8" font-size="11.5" font-weight="800"><tspan x="273" y="152">押市值/价值/动量暴露</tspan></text>
-            <text x="273" y="206" text-anchor="middle" fill="#8499bd" font-size="10.5">背什么雷</text>
-            <text x="273" y="232" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">风格切换</text>
-            <text x="273" y="252" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">就被打脸</text>
-            <line x1="206" y1="272" x2="340" y2="272" stroke="rgba(122,167,240,0.14)"/>
-            <text x="273" y="294" text-anchor="middle" fill="#8499bd" font-size="10.5">偏离即自由度,也是风险</text>
-            <rect x="364" y="72" width="162" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="445" y="100" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">个股偏离</text>
-            <line x1="378" y1="112" x2="512" y2="112" stroke="rgba(122,167,240,0.18)"/>
-            <text x="445" y="132" text-anchor="middle" fill="#8499bd" font-size="10.5">赚它的决策</text>
-            <text x="445" y="152" text-anchor="middle" fill="#eef4f8" font-size="11.5" font-weight="800"><tspan x="445" y="152">模型看好的多配一点</tspan></text>
-            <text x="445" y="206" text-anchor="middle" fill="#8499bd" font-size="10.5">背什么雷</text>
-            <text x="445" y="232" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">个股踩雷</text>
-            <text x="445" y="252" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">停牌违约</text>
-            <line x1="378" y1="272" x2="512" y2="272" stroke="rgba(122,167,240,0.14)"/>
-            <text x="445" y="294" text-anchor="middle" fill="#8499bd" font-size="10.5">偏离即自由度,也是风险</text>
-            <rect x="536" y="72" width="162" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="617" y="100" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">时点偏离</text>
-            <line x1="550" y1="112" x2="684" y2="112" stroke="rgba(122,167,240,0.18)"/>
-            <text x="617" y="132" text-anchor="middle" fill="#8499bd" font-size="10.5">赚它的决策</text>
-            <text x="617" y="152" text-anchor="middle" fill="#eef4f8" font-size="11.5" font-weight="800"><tspan x="617" y="152">偏离调仓日,卡事件窗口</tspan></text>
-            <text x="617" y="206" text-anchor="middle" fill="#8499bd" font-size="10.5">背什么雷</text>
-            <text x="617" y="232" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">交易拥挤</text>
-            <text x="617" y="252" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">信号过期</text>
-            <line x1="550" y1="272" x2="684" y2="272" stroke="rgba(122,167,240,0.14)"/>
-            <text x="617" y="294" text-anchor="middle" fill="#8499bd" font-size="10.5">偏离即自由度,也是风险</text>
-            <rect x="708" y="72" width="162" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="789" y="100" text-anchor="middle" fill="#8fb37a" font-size="14" font-weight="800">其他:成本</text>
-            <line x1="722" y1="112" x2="856" y2="112" stroke="rgba(122,167,240,0.18)"/>
-            <text x="789" y="132" text-anchor="middle" fill="#8499bd" font-size="10.5">赚它的决策</text>
-            <text x="789" y="152" text-anchor="middle" fill="#eef4f8" font-size="11.5" font-weight="800"><tspan x="789" y="152">成本压一点,执行稳一点</tspan></text>
-            <text x="789" y="206" text-anchor="middle" fill="#8499bd" font-size="10.5">背什么雷</text>
-            <text x="789" y="232" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">容量上限</text>
-            <text x="789" y="252" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">滑点反噬</text>
-            <line x1="722" y1="272" x2="856" y2="272" stroke="rgba(122,167,240,0.14)"/>
-            <text x="789" y="294" text-anchor="middle" fill="#8499bd" font-size="10.5">偏离即自由度,也是风险</text>
-            <text x="450" y="350" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">收底看信息比率(2.5):A 超额 6% / 偏离 6% → IR≈1;B 超额 8% / 偏离 16% → IR≈0.5</text>
-            <text x="450" y="376" text-anchor="middle" fill="#c9d4e8" font-size="12.5">超额多高不重要,每份偏离换多少才重要;客户买的是指数增强,不是行业轮动基金</text>
-          </svg>
-          <p class="figure__cap">超额只有五个来路:行业、风格、个股、时点的偏离,加上成本与执行的省。每个来路都背一颗对应的雷。收尾用 2.5 节的账:B 超额 8% 看着更高,IR 只有 0.5——拿两倍多的偏离风险换来的,不如 A 的 1。</p>
-        </div>
-        <h3>2.4. 自由度的价格</h3>
-<p>想考全班第一,又必须与同桌的答案一模一样,这两件事不可能同时成立。指数增强也一样:想要超额,就必须和基准不完全一样;但偏离越大,相对基准的风险也越大。<span class="term">跟踪误差</span>就是衡量这种<span class="hl">“偏离波动”</span>的重要指标——它量的不是你赚了多少,而是你为了多赚,敢偏离基准多远。</p><p><span class="term">跟踪误差</span>低,产品更像指数,客户体验稳定,但超额空间也小——手脚被绑住,能改的<span class="hl">“答案”</span>有限;<span class="term">跟踪误差</span>高,产品更自由,可能赚得更多,也可能大幅跑输。不同客户能接受的<span class="term">跟踪误差</span>不同,所以它本质上是产品定位的一部分,不是越高越好,也不是越低越好。</p><p>在量化组合优化里,<span class="term">跟踪误差</span>会被写成约束或惩罚项。这意味着模型再看好某只股票,如果买入会让组合跟基准偏离太大,优化器也可能只给小仓位。用工程的话说:性能再诱人,也不能超出系统预留的误差预算。</p><div class="callout callout--note reveal"><span class="callout__title">自由度不是免费的,每一格都标着价</span><p><span class="term">跟踪误差</span>听起来像个纯风险指标,其实它是一张价目表:你想让组合离基准多远,就得预备多大的相对回撤,还要有本事向客户解释清楚。管理人真正的手艺,是在给定的误差预算内把超额抠到最大;预算一旦花超,赚得再多,那也是另一款产品。自由可以要,先想清楚自己付不付得起。</p></div>
+        <h3>1.9. 好因子需要同时过四关</h3>
+<p>一个因子想进实盘组合,得过四道关,一关都不能少。第一关是经济解释:为什么这列数字可能和未来收益有关?背后是风险补偿、行为偏差、信息滞后,还是制度约束?没解释也能研究,但你心里要给自己打个问号,持仓时也更谨慎。</p><p>第二关是统计检验:<span class="term">IC</span>、分层收益、多空组合、样本外表现,稳不稳定?第三关是交易可行:<span class="term">换手率</span>、滑点、停牌、涨跌停、容量,会不会把纸面收益吃个干净?第四关是组合贡献:把它放进已有的模型里,它能带来新增信息,还是和老因子高度重复——换个姿势说了同一件事?</p><p>四关一立,你会看到很多<span class="term">反转</span>的剧本:有些因子单测时气势如虹,一进组合就被发现和老因子长得太像,沦为多余;另有一些因子单测平平无奇,却因为和别人相关性低,加进来让整个组合更稳。量化研究最后看的从来不是单因子炫技,而是整个策略系统里,你到底贡献了多少边际价值。</p>
 
-        <h3>2.5. 超额收益的质量</h3>
-<p>两个基金经理年收入都多赚了几十万,一个是稳定加薪加的,一个是赌年终奖赌来的,你会把钱交给谁?<span class="term">信息比率</span>回答的就是这个问题。它大致等于年化<span class="term">超额收益</span>除以年化<span class="term">跟踪误差</span>,翻译成人话:每承担一份偏离基准的风险,换来多少<span class="term">超额收益</span>。</p><p>算两笔账。产品 A 年化超额 <span class="num">6%</span>,<span class="term">跟踪误差</span> <span class="num">6%</span>,<span class="term">信息比率</span>约 1;产品 B 年化超额 <span class="num">8%</span>,<span class="term">跟踪误差</span> <span class="num">16%</span>,<span class="term">信息比率</span>只有 0.5。B 的超额更高,却是拿两倍多的偏离风险换来的——就像同样的提速,一个来自优化算法,一个来自超频硬扛,工程的含金量完全不同。</p><p>当然,<span class="term">信息比率</span>也不是万能指标。它依赖历史样本,会被极端年份带偏,也不能完全描述最大超额回撤——两次各跌 <span class="num">10%</span> 和一次跌 <span class="num">20%</span>,<span class="term">信息比率</span>可能看不出区别,客户的心脏感受得出。所以看指数增强,要把<span class="term">信息比率</span>和超额回撤、稳定性、容量、费用放在一起看。</p>
+        <h3>1.10. 个人如何做第一个因子研究</h3>
+<p>理论铺垫够了,该挽袖子了。个人入门的第一个因子研究,用最简单的日频因子就够:选一个股票池,比如<span class="term">沪深 300</span> 或<span class="term">中证 500</span> 成分股;选一个再平衡频率,比如每月一次调仓;选一个朴素因子,比如过去 <span class="num">20 日</span>收益率或 <span class="term">PB</span>;然后把时点数据、排序、分组、调仓、扣成本这一整套流程走通。</p><div class="callout callout--warn reveal"><span class="callout__title">郑重提醒</span><p>郑重提醒:别一上来就上深度学习,先把最朴素的流程做对。数据日期不能错位,停牌的股票不能随便成交,未来的财报不能提前用,指数成分不能用现在的名单回填历史,交易费用要老老实实扣,涨跌停要正确处理。这套流程的严谨程度,比你模型的名字响亮程度重要一百倍——流程错了,模型越聪明,自欺越高效。</p></div><p>走完第一遍,你应该能交出一份像样的研究报告:因子定义、数据来源、股票池、回测区间、调仓频率、<span class="term">IC</span>、分层收益、换手、成本、<span class="term">最大回撤</span>、失效阶段和可能的解释。每一项都有出处,每一个数字都经得起追问。做到这一步,恭喜你,才算真正站到了量化研究的大门口。</p>
+                <p>光说不练假把式。本书 <code>examples/</code> 目录里有四个零依赖、纯 Python 标准库的教学脚本,这一章对应的是 <code>ex01_factors.py</code>,核心函数长这样:</p>
+                <figure class="code-walk reveal">
+                  <figcaption class="code-walk__file">examples/ex01_factors.py</figcaption>
+                  <pre class="code-walk__code"><code>def factors_at(stocks, t):
+    # 只用 [0, t] 内可见的数据——这是纪律,不是习惯。                    <b class="cw-tag">1</b>
+    value, momentum, low_vol, quality = [], [], [], []
+    for s in stocks:
+        value.append((s, book_like(s, t) / s.prices[t]))          <b class="cw-tag">2</b>
+        momentum.append((s, s.prices[t] / s.prices[t - 60] - 1))
+        low_vol.append((s, -vol_60(s, t)))
+        quality.append((s, s.quality))
+    zs = [zscore(x) for x in (value, momentum, low_vol, quality)]  <b class="cw-tag">3</b>
+    return {c: sum(z[c] for z in zs) / 4 for c in zs[0]}           <b class="cw-tag">4</b></code></pre>
+                  <ol class="code-walk__notes">
+                    <li><strong>函数签名先锁数据边界</strong>:只取 <code>[0, t]</code> 区间。写因子代码,第一件事不是写公式,而是声明“我在 t 时刻到底能看到什么”——以后每加一列数据,都被这个 <code>t</code> 管着。</li>
+                    <li><strong>四个方向不同的东西先各自打分</strong>:“底子/价格”越高越便宜、动量越大越强、波动越小越稳、质量越高越好。同一行只能看到它们各自的得分,别急着相加。</li>
+                    <li><strong>zscore 是度量统一</strong>:四个因子单位完全不同,直接相加等于拿米、斤、摄氏度比大小。减去均值、除以标准差,先拉到同一量纲——第 19 章“四个分数怎么拧成一个”,拧的就是这一步。</li>
+                    <li><strong>等权 1/4 是刻意朴素</strong>:第一版别优化权重。先看等权合成是否仍有排序信息(本章的 IC、分层),再谈怎么配权——样本内调出来的“最优权重”,十有八九是噪声。</li>
+                  </ol>
+                </figure>
+                <p>跑一遍 `python3 ex01_factors.py`,你会看到五组分层收益是否单调、四个单因子 <span class="term">IC</span> 各是多少。注意一个诚实的提醒:这是合成数据上的教学,真实世界里 <span class="term">IC</span> 能稳定站在 0.03-0.05 已经可以拿来用了,别被示例里的好数字惯坏了眼睛。</p>
 
-        <h3>2.6. 行业中性和风格中性</h3>
-<p>客户买的是指数增强,不是行业轮动基金。很多指数增强产品会主动控制行业和风格偏离:行业中性意味着组合的行业权重大体接近基准,不靠押对某个行业赚主要收益;风格中性意味着市值、价值、成长、<span class="term">动量</span>、波动这些暴露,不要过度偏离基准。</p><p>为什么要给自己上这个铐?因为如果超额主要来自重仓某个行业,那一旦行业<span class="term">反转</span>,产品就会大幅跑输——而且这部分收益根本不是模型选股能力,只是一次行业赌博恰好赌对了。别把 <span class="term">Beta</span> 的运气,当成 <span class="term">Alpha</span> 的本事。</p><p>当然,完全中性也会把收益掐死,一点偏离都不允许,超额也就无从谈起。实际管理里会在一定范围内允许偏离。关键不在于偏不偏,而在于偏离要可见、可解释、可承受,而不是模型无意中形成的——意料之外的暴露,才是风险。</p><div class="callout callout--note reveal"><span class="callout__title">别把 Beta 的运气,记成 Alpha 的本事</span><p>牛市里仓位重一点,谁都像股神;某个行业大涨时重仓它,超额也会很好看。问题是这部分收益来自暴露,不来自排序能力——风向一变,它会连本带利还回去。归因时要养成本能:先把市场、行业、风格带进来的那部分剔干净,剩下的才配叫 <span class="term">Alpha</span>。剔不干净,你奖励的就是运气,罚掉的就是手艺。</p></div>
+        <h2>2. 量化模型从哪里学</h2>
+        <p>如果你有机器学习的底子,很容易把量化当成一个普通监督学习问题:把特征和标签喂给模型,训练,验证,上线,收工。但金融数据最阴险的地方,恰恰在于它会不动声色地让你把未来塞进过去:财报的发布日期、指数成分的变动、复权价格、停牌、涨跌停、退市、交易成本——每一个细节都可能让你的模型在回测里像个天才,一到实盘立刻失忆。这一章专门拆解这些坑,它们是初学者和老手之间的那道分水岭。</p>
 
-        <h3>2.7. 调仓和换手</h3>
-<p>调仓对指数增强,就像发版对软件:发得太少,线上跑的是三个月前的逻辑;发得太勤,每次发版都要付一次上线成本。指数增强通常定期调仓,比如每周、双周或每月,也可能根据模型和风险变化动态调整。调仓太少,模型信号更新慢;调仓太频繁,交易成本会升上来。</p><p><span class="term">换手率</span>在这件事里分量极重。很多股票因子单看毛收益很漂亮,但需要频繁交易才能实现,扣掉成本后就所剩无几。尤其在小盘股增强里,成交额和冲击成本会直接限制策略容量——信号再好,船太大也进不了小河道。</p><p>所以优化器常会加入换手惩罚:只有当新信号带来的预期超额足以覆盖交易成本时,才值得换仓。好的指数增强不是每天追逐最新排名,而是控制成本后的净优势最大化。一句话:不光要比谁看得准,还要比谁折腾得少。</p>
+        <h3>2.1. 量化数据不是只有 K 线</h3>
+<p>新手想象中的量化数据,往往就是一张 K 线表。实际上,行情数据只是最基础的一层:开盘价、最高价、最低价、收盘价、成交量、成交额、盘口和逐笔成交。往上还有基本面数据:财报里的收入、利润、资产负债、现金流、<span class="term">ROE</span>、毛利率、负债率。再往上还有公告、分析师预测、基金持仓、指数成分、融资融券、期货持仓、期权<span class="term">波动率</span>、新闻文本和宏观数据。数据食材琳琅满目,问题是怎么配菜。</p><p>配菜的最大麻烦是:这些数据的频率和发布时间完全不在一个节拍上。行情数据每天甚至每秒更新,财报按季度才披露一次,宏观数据按月或按季发布,分析师报告和新闻则是不规则地突然到达。把它们拼进同一张训练表时,必须时刻盯住一件事——在交易发生的那个时刻,这条数据到底是不是已经可见?</p><p>所以量化数据工程的核心,不是把表拼起来那种体力活,而是考古式的还原:恢复历史当时的信息状态。模型在 <span class="num">2020 年</span> <span class="num">4 月</span> <span class="num">10 日</span>做决定时,绝不能看到 <span class="num">2020 年</span> <span class="num">4 月</span> <span class="num">30 日</span>才发布的年报修正,也不能看到后来才确定的指数成分回填。模型可以笨,但不能作弊——作弊考出的高分,一文不值。</p>
 
-        <h3>2.8. 指数调整日和成分变化</h3>
-<p>指数不是刻进石头的名单,它会定期调整成分:有的股票被纳入,有的股票被剔除。指数基金需要跟着调整,指数增强产品也必须处理这些变化。新纳入的股票可能被被动资金集中买入,被剔除的可能被集中卖出,这会实实在在影响价格和流动性。</p><p>这里埋着一个新手最容易踩的坑:回测指数增强时,必须使用历史当时的指数成分。不能用今天的成分回测过去,也不能提前知道下一次指数调整的结果——这两件事都是典型的<span class="hl">“偷看未来”</span>。指数调整公告、实施日期和实际可交易时间,每一个都要如实处理。</p><p>成分变化还会影响基准权重和<span class="term">跟踪误差</span>:一只股票刚被指数纳入,如果组合没及时调整,相对基准的暴露就会悄悄变化。所以指数增强不是建好模型就躺平的策略,它的运营细节并不少——很多人看净值曲线时,忘了背后还有人在认真对这张成分表。</p><div class="callout callout--note reveal"><span class="callout__title">指数调整日,是一场公开又拥挤的约会</span><p>调整名单提前公告、生效日期写在日历上——人人都知道哪天会发生什么,但这不等于人人能轻松赚钱:被动资金集中调仓,价格可能被提前透支,流动性在生效日前后拧成一团。对增强策略来说,这一天的正确姿势不是赌方向,而是提前检查:成分表换没换、权重对不对、回测里用的是不是<span class="hl">“当时的名单”</span>。约会可以参加,别穿着未来的衣服去。</p></div>
+        <h3>2.2. 在那个时点你到底知道什么</h3>
+<p>点时数据是量化里极其重要的概念,用一句话说:每条数据都要携带<span class="hl">“何时生效、何时可见、何时被修正”</span>的完整时间档案。听起来理所当然?举个最常见的反例:财报的报告期末是 <span class="num">12 月</span> <span class="num">31 日</span>,很多人就以为 <span class="num">12 月</span> <span class="num">31 日</span>当天就能用全年利润建模——错。投资者真正知道这个数字,通常要等公告发布之后,中间可能隔着好几个月。</p><p>代入一个具体场景,感受这个坑有多深。某公司 <span class="num">2025 年</span>年报的实际披露日是 <span class="num">2026 年</span> <span class="num">3 月</span> <span class="num">28 日</span>。如果你在 <span class="num">2026 年</span> <span class="num">1 月</span>的回测里使用了这份年报的最终净利润,那么你的模型等于提前两个多月偷看了答案——这就是教科书级的未来函数。它在回测里刷出的<span class="term">超额收益</span>,到了实盘一秒蒸发。</p><p>数据库里还埋着更隐蔽的雷:字段里只有报告期、没有发布日期;或者数据供应商把历史数据悄悄修正成最终版本,却没保留当时的初版。这种数据看起来干干净净,回测出来的结果却天然过于乐观——因为模型看到的是<span class="hl">“事后改过的历史”</span>。专业的数据服务会尽量提供公告日期、更新时间和历史版本沿革,买数据、选数据时,这条是硬指标。</p>
 
-        <h3>2.9. 为什么指数增强会阶段性跑输</h3>
-<p>先纠正一个幻想:指数增强不是一台每天多吐一点钱的机器。它会阶段性跑输,而且跑输的原因能列出一串:因子失效、风格逆风、行业暴露不利、交易成本上升、市场极端分化、模型过拟合、规模变大导致容量不足。</p><p>举两个具体画面。小市值因子长期有效时,偏小盘的增强可能春风得意;但如果市场突然转向大盘蓝筹,它就可能跑输——不是模型坏了,是风向变了。再比如<span class="term">动量</span>因子在趋势行情里很顺手,到了快速<span class="term">反转</span>的行情里就可能挨打:昨天最强的股票,今天跌得最狠。</p><p>客户和管理人都要接受一件事:<span class="term">超额收益</span>本身也有回撤。判断产品时,真正该问的是:这次跑输是否在风险预算内,能不能解释,是否超出历史规律,有没有风险暴露失控。能回答这四个问题的跑输,是成本;回答不了的,才是警报。</p>
+        <h3>2.3. 你让模型预测什么</h3>
+<p>训练模型之前,有个问题必须先想清楚:你到底让它预测什么?这个<span class="hl">“什么”</span>,就是标签。股票量化里常见的标签有:未来 <span class="num">1 日</span>、<span class="num">5 日</span>、<span class="num">20 日</span>或 <span class="num">60 日</span>的收益率;也可以是未来相对行业或指数的<span class="term">超额收益</span>;还可以是未来是否跑赢市场中位数、未来的<span class="term">波动率</span>、未来的<span class="term">最大回撤</span>,甚至未来能否顺利成交。标签不同,你训练的根本就是不同的模型。</p><p>别小看标签定义,换一个标签,等于换了一道题。预测明天收益和预测下个月收益,是两份完全不同的考卷:明天收益噪声更大、交易频率更高、对成本更敏感;下个月收益信号或许更慢更稳,但持有期间的风险更长。同理,预测绝对收益,你会被整个市场的涨跌裹挟;预测相对收益,才是真正的选股题——那一部分才可能是你模型做出的成绩。</p><p>拿一个常见的入门标签来说:从今天收盘,到未来 <span class="num">20 个交易日</span>之后的复权收盘收益。它适合月频选股研究,但它绝不等于真实可成交的收益。为什么?因为你今天收盘之后才能算出完整收盘价,实际执行买入最早也要等到明天开盘或盘中,这中间隔着一个夜晚的跳空;而且还没扣成本,没处理停牌和涨跌停能不能成交的问题。标签是题面,成交是答题,先分清这两件事。</p>
 
-        <h3>2.10. 个人如何做一个简化版指数增强</h3>
-<p>道理讲完了,动手做一个教学版,比再读十篇文章都管用。选一个基准——<span class="term">沪深 300</span> 或<span class="term">中证 500</span>都行——每月调仓一次,只在当时真实的成分股里计算几个简单因子,比如低估值、<span class="term">动量</span>、质量、低波动,合成分数后选前 50 只等权。骨架就这么简单。</p><p>然后一层层加约束,把<span class="hl">“教学版”</span>往<span class="hl">“实盘”</span>方向推:行业权重不要偏离基准太多;单只股票不超过 <span class="num">3%</span>;剔除成交额太低、ST、停牌和涨跌停无法买入的股票;最后老老实实扣掉佣金、印花税、滑点和冲击。跑完再和基准比一比:<span class="term">超额收益</span>、<span class="term">跟踪误差</span>、<span class="term">信息比率</span>、回撤和换手,一个都别漏。</p><p>这个项目不一定能实盘赚钱,但它能训练完整流程,让你亲身体会一件事:指数增强不是<span class="hl">“选几只好股票”</span>就完事,而是一套基准、股票池、因子、组合、成本和风险约束共同工作的系统。亲手拧过每一颗螺丝,你再看市面上的指增产品,眼光就完全不一样了。</p>
+        <h3>2.4. 特征和标签的时间对齐</h3>
+<p>监督学习有条铁律:特征 X 必须在标签 y 之前可见。在任何领域都成立,但在量化里,它值得用加粗加大号字体刻在你的工位上。特征日期、数据发布日期、交易决策时间、下单时间、成交时间、标签收益区间——六个时间点,必须像火车时刻表一样排得整整齐齐,一处都不能越位。</p><p>来感受一个每天都会犯的经典错误。你用今天的收盘价计算特征,又在回测里假设自己按今天的收盘价买入——可收盘价格是收盘那一瞬间才确定的,你等于先看了答案再做题。正确姿势是:收盘后生成信号,下一次可执行成交在之后的某个交易时点。差一步,就是从研究滑向自欺的一步。</p><p>这类错误的可恶之处,在于它在代码里根本不显眼。一个 shift 写错了一格,一个 merge_asof 的连接方向反了,一个财报公告日期没做处理——模型表现立刻<span class="hl">“优异”</span>得不像话。所以请把下面这句话变成条件反射:看到过于漂亮的结果,第一反应不是庆祝自己挖到圣杯,而是去检查时间对齐。在金融数据里,异常好往往意味着异常错。</p>
+
+        <h3>2.5. 复权价格和真实成交价格要分开</h3>
+<p>前面章节讲过,复权是为了让历史价格口径可比。到了建模这一步,你会撞上一个看似矛盾的规则:算收益标签,该用复权价格;模拟真实成交,却绝不能用复权价格。两套价格,各管一段,弄混了全盘皆错。</p><p>用一个例子把这两条路分开。某股票分红除权,未复权价格从 <span class="num">10 元</span>变成 <span class="num">9.5 元</span>。如果你拿未复权价格算收益,会硬生生把分到手里的分红算成亏损——冤枉了它;可反过来,如果你拿复权价格去模拟下单成交,又是在用一个历史上根本不存在的交易价格——骗了你自己。标准做法是:收益计算和因子计算,走合适的复权口径;撮合成交、判断涨跌停、计算成本,一律走当时真实可交易的价格口径。</p><p>很多回测框架会在内部默默帮你做这些转换,这很方便,但也埋着信任风险——你不能完全盲信框架。至少要把几个字段抠清楚:close 到底是未复权还是前复权?return 含不含分红?limit_up 和 limit_down 用的是哪个价格口径?口径不清楚,后面的一切计算都建在流沙上。做量化,先把字段当法律文书读。</p>
+
+        <h3>2.6. 你允许模型在哪些资产上下注</h3>
+<p>模型不是想选谁就选谁——动手之前,你要先给它发一张<span class="hl">“准入名单”</span>,也就是股票池。你可以选全 A 股,也可以选<span class="term">沪深 300</span>、<span class="term">中证 500</span>、中证 1000 的成分股,或者锁定某个行业;也常常顺手剔除 ST 股、停牌股、上市未满一定天数的新股和流动性太差的股票。别以为股票池是随便画的圈,它直接决定策略的收益、风险和可执行性。</p><p>股票池里最阴的一个坑,是拿今天的名单回测过去。比如只拿现在还活着、还上市的股票回测十年——那些中途黯然退市的公司,被你的数据集悄悄抹掉了,样本里清一色<span class="hl">“活到了决赛圈”</span>的幸存者。这就是幸存者偏差。正确做法是:每个历史日期,都只使用当时可投资的股票池,让过去只看到过去的名单。</p><p>股票池还顺手决定了你的基准,这两件事必须配套。你在<span class="term">沪深 300</span> 成分里选股,就应该主要和<span class="term">沪深 300</span> 比;在中证 1000 里选,就和中证 1000 比。股票池和基准不匹配,就像拿游泳运动员的配速去考核自行车手——市场暴露和选股能力搅在一起,结论必然失真。</p>
+
+        <h3>2.7. 缺失值不是小麻烦</h3>
+<p>金融数据从来就不是完整的方格子。新上市的公司历史短,停牌的日子没成交,财务字段可能还没到披露时间,某些行业指标在别的行业根本不适用,新闻数据覆盖更是厚此薄彼——缺失无处不在。最危险的一个动作是:看见缺失就填 0。要知道,0 可能是一个真实数值(比如本期计提为零),也可能只是<span class="hl">“没有数据”</span>,两者的含义天差地别。</p><p>常见处理方式有这么几样:删除缺失样本、用行业中位数填充、拿上一期可见值延续、加一个<span class="hl">“是否缺失”</span>的标记位,或者干脆让模型自己学会处理缺失。选哪种没有标准答案,取决于字段的真实含义。比如 <span class="term">PB</span> 缺失,可能是公司净资产为负、算出来没意义,也可能只是数据未覆盖——一个是信号,一个是事故,绝不能一视同仁。</p><p>再深一层:缺失本身可能携带信息。财报迟迟不发、没有分析师覆盖、数据质量差,往往和风险挂在一起。如果你图省事,把带缺失的样本一刀切全删掉,你的股票池会悄悄偏向信息披露好、流动性好、规模大的公司——一个看不见的偏差,就被你亲手埋进了训练集。你以为在做清洗,其实是在做采样偏见。</p>
+
+        <h3>2.8. 训练集、验证集和测试集不能随机打乱</h3>
+<p>机器学习课本能教你随机划分训练集和测试集,但金融序列不吃这一套。为什么不能随便随机打乱?因为金融市场在时间上是连续的、上下游有依赖的:未来样本和过去样本可能共享同一个市场状态。一随机,未来市场环境的<span class="hl">“气味”</span>就顺着共享的状态渗进了训练集,模型等于提前闻过了考卷的味道。</p><p>更合理的做法是按时间顺序切分:比如 <span class="num">2015-2019 年</span>用作训练,<span class="num">2020-2021 年</span>做验证调参,<span class="num">2022-2024 年</span>守住测试。这样测试集才是真正的<span class="hl">“未来”</span>。还可以做滚动训练和 walk-forward 验证:用过去一段时间训练,向前预测一段,再整体往前滚动窗口,像推着时间向前走。让模型永远只学昨天、预测明天。</p><p>但时间切分也不是金钟罩。如果训练期和测试期的市场环境碰巧太像,结果仍可能乐观;如果测试期刚好撞上极端环境,结果又会过于悲观。所以更稳的做法是覆盖多个市场阶段,看策略在牛市、熊市、震荡市、流动性冲击里分别什么德行。一次切分一盏灯,多种环境才是全景灯。</p>
+
+        <h3>2.9. 样本外不是一句口号</h3>
+<p><span class="hl">“我做了样本外测试”</span>——研究报告里这行字人人会写,真正做到的却没有那么多。样本外的含义,是模型没有用这段数据参与训练、调参和策略选择。现实里最常见的违规是:反复盯着测试集结果看,根据测试结果回头改特征、调参数。一次两次看不出问题,搞多了,测试集就被悄悄<span class="hl">“用脏”</span>了——名为样本外,实为训练集。</p><p>量化里还有个更隐蔽的污染源,藏在研究员自己的脑子里。假设你试了 200 个因子,只留下表现最好的 5 个写进报告——即使每个因子都规规矩矩在测试集上跑过,最终的报告依然带着数据挖掘偏差。因为<span class="hl">“留下这 5 个”</span>这个动作本身,就已经看过了测试集的成绩。你筛过的不是因子,是运气。</p><p>对抗这种自欺,靠的是一整套研究纪律:留一份真正没碰过的最终样本、记录所有做过的实验(包括失败的)、控制试错次数、做跨市场交叉验证、上模拟盘和小规模实盘再验证一轮。样本外不是一个技术名词,而是一种对自己的诚实——能不骗自己的研究员,才配得上信任曲线。</p>
+
+        <h3>2.10. 从数据表到训练样本</h3>
+<p>铺垫了这么多防线,最后一步该真的搭样本了。一个股票日频训练样本,可以想象成三维结构:日期、股票、特征。每个交易日,操场上站着一批股票,每只身上挂着几十个特征值,标签是未来一段收益。喂给模型时,把这个立体结构拍平成一张大表:每一行是<span class="hl">“某天某只股票”</span>,列是特征和标签。</p><p>但拍平这张表之前,要过一串安检门:当天是否可交易?是否停牌?是否涨跌停到无法买卖?上市天数够不够?财务数据是否已披露?是否在股票池内?最关键的是:这套过滤规则,必须在训练、回测和实盘三处完全一致——三套规则各说各话,训练出来的就是<span class="hl">“三次元模型在二次元考试”</span>。</p><p>过滤不一致的结局是什么?如果训练样本里混着大量实盘根本买不到的股票,模型会津津有味地学习一堆不可执行的机会——纸上高手,实盘废物;如果回测过滤得严、训练过滤得松,训练目标和交易目标从一开始就南辕北辙。量化的细节不会浮现在 PPT 里,它们藏在每一行过滤规则里,最后统统反映在收益曲线上。</p>
 
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>量化是一类方法而不是一种策略:要按收益来源、资产类别和交易频率分格子看,不能都混成“预测涨跌”。</li>
-            <li>指数增强、市场中性、CTA、套利、高频赚的是五种完全不同的钱,怕的也是五件完全不同的事。</li>
-            <li>指数增强的目标是在贴近基准的前提下争取超额收益,只盯绝对收益,永远看不懂它在干什么。</li>
-            <li>跟踪误差、信息比率、行业风格暴露、换手和容量,共同决定一只增强产品的成色。</li>
+            <li>因子是把投资判断变成一列有口径、可排序、可检验的数据。</li>
+            <li>IC、RankIC 和分层回测用于检验因子是否对未来收益有排序信息。</li>
+            <li>量化数据必须恢复历史当时的信息状态,点时数据是防止未来函数的核心。</li>
+            <li>标签定义决定模型任务,预测绝对收益、相对收益、波动或回撤是不同问题。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.1.</strong> 它到底赚谁的钱</li>
-            <li><strong>1.2.</strong> 四个互不相通的世界</li>
-            <li><strong>1.3.</strong> 从季度调仓到毫秒抢单</li>
-            <li><strong>1.4.</strong> 指数增强</li>
-            <li><strong>1.5.</strong> 市场中性</li>
-            <li><strong>1.6.</strong> CTA 和趋势跟踪</li>
-            <li><strong>1.7.</strong> 套利和相对价值</li>
-            <li><strong>1.8.</strong> 高频、做市和订单簿策略</li>
-            <li><strong>1.9.</strong> 多策略平台</li>
-            <li><strong>1.10.</strong> 你该从哪类策略开始</li>
-            <li><strong>2.1.</strong> 指数收益加超额</li>
-            <li><strong>2.2.</strong> 股票池和基准要匹配</li>
-            <li><strong>2.3.</strong> 超额收益从哪里来</li>
-            <li><strong>2.4.</strong> 自由度的价格</li>
-            <li><strong>2.5.</strong> 超额收益的质量</li>
-            <li><strong>2.6.</strong> 行业中性和风格中性</li>
-            <li><strong>2.7.</strong> 调仓和换手</li>
-            <li><strong>2.8.</strong> 指数调整日和成分变化</li>
-            <li><strong>2.9.</strong> 为什么指数增强会阶段性跑输</li>
-            <li><strong>2.10.</strong> 个人如何做一个简化版指数增强</li>
+            <li><strong>1.1.</strong> 因子不是魔法,是一列有口径的数据</li>
+            <li><strong>1.2.</strong> 因子、信号和特征有什么区别</li>
+            <li><strong>1.3.</strong> 常见因子家族</li>
+            <li><strong>1.4.</strong> 同一天把股票排队</li>
+            <li><strong>1.5.</strong> 因子排序和未来收益是否同向</li>
+            <li><strong>1.6.</strong> 高分组是不是真的更好</li>
+            <li><strong>1.7.</strong> 别把别人的风险当成自己的能力</li>
+            <li><strong>1.8.</strong> 因子为什么会失效</li>
+            <li><strong>1.9.</strong> 好因子需要同时过四关</li>
+            <li><strong>1.10.</strong> 个人如何做第一个因子研究</li>
+            <li><strong>2.1.</strong> 量化数据不是只有 K 线</li>
+            <li><strong>2.2.</strong> 在那个时点你到底知道什么</li>
+            <li><strong>2.3.</strong> 你让模型预测什么</li>
+            <li><strong>2.4.</strong> 特征和标签的时间对齐</li>
+            <li><strong>2.5.</strong> 复权价格和真实成交价格要分开</li>
+            <li><strong>2.6.</strong> 你允许模型在哪些资产上下注</li>
+            <li><strong>2.7.</strong> 缺失值不是小麻烦</li>
+            <li><strong>2.8.</strong> 训练集、验证集和测试集不能随机打乱</li>
+            <li><strong>2.9.</strong> 样本外不是一句口号</li>
+            <li><strong>2.10.</strong> 从数据表到训练样本</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>为什么看策略不能只问年化收益?</summary>
-            <p>因为年化数字不告诉你钱从哪来。必须弄清收益来源、什么情况下会亏、容量多大、成本如何、能否长期复制,才能判断好坏。</p>
+            <summary>因子为什么不能只理解成“能赚钱的数字”?</summary>
+            <p>因为因子也可能只是风险暴露、解释变量或历史噪声,必须检验它的预测能力、交易成本和风险来源,才能确认是不是有真金白银。</p>
           </details>
           <details class="quiz__item">
-            <summary>市场中性为什么不是无风险?</summary>
-            <p>因为对冲本身有基差和成本,多空相对关系可能变化,极端行情里相关性会失效——它只拆掉了大盘方向,其余风险都在。</p>
+            <summary>RankIC 大致衡量什么?</summary>
+            <p>它衡量因子排序和未来收益排序之间是否同向;用的是排名相关,比直接用原始数值相关更抗极端值的干扰。</p>
           </details>
           <details class="quiz__item">
-            <summary>指数增强为什么必须指定基准?</summary>
-            <p>因为它的评价口径就是相对基准的超额收益和偏离风险——没有基准,就没有“增强”可言,也无法判断增强质量。</p>
+            <summary>为什么财报报告期不等于可用时间?</summary>
+            <p>报告期只是财务数据覆盖的时间区间,投资者通常要等公告发布之后才能看到这些数字;在披露日之前使用,就是未来函数。</p>
           </details>
           <details class="quiz__item">
-            <summary>跟踪误差代表什么?</summary>
-            <p>它衡量组合相对基准收益偏离的波动,可以理解为指数增强为了争取超额所付出的“自由度价格”。</p>
+            <summary>未来 20 日收益标签有什么执行问题?</summary>
+            <p>用今天收盘价生成信号又按今天收盘成交,等于先看到收盘结果再下单,偷看了当天信息;此外还要扣成本、处理停牌涨跌停。</p>
           </details>
         </section>
       </div>
     </main>
     <script src="assets/book.js"></script>
+    <script src="assets/labs.js"></script>
   </body>
 </html>
