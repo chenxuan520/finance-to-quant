@@ -3284,6 +3284,156 @@ PATCH_I = {
 
 
 
+def _fig_j6_snowball():
+    """ch06:雪球结构的敲进敲出四条命。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">雪球结构的四条命:同一张产品,四种结局</text>
+            <!-- 图表区:时间横轴,标的价格纵轴 -->
+            <line x1="70" y1="330" x2="830" y2="330" stroke="#41506b" stroke-width="2"/>
+            <text x="836" y="334" fill="#8499bd" font-size="12">到期</text>
+            <!-- 敲出线 103% -->
+            <line x1="70" y1="110" x2="830" y2="110" stroke="#f0c96a" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="76" y="102" fill="#f0c96a" font-size="12" font-weight="700">敲出线 103%(每月观察)</text>
+            <!-- 敲入线 70% -->
+            <line x1="70" y1="250" x2="830" y2="250" stroke="#e87878" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="76" y="270" fill="#ffb4b4" font-size="12" font-weight="700">敲入线 70%(每日观察)</text>
+            <text x="76" y="190" fill="#bcc9dd" font-size="12">起点 100%</text>
+            <!-- 命 A:不碰两边,到期拿满票息 -->
+            <polyline points="70,190 220,176 380,196 560,164 830,178" fill="none" stroke="#8fb37a" stroke-width="3"/>
+            <text x="560" y="150" fill="#b8d6a3" font-size="12" font-weight="700">命 1:区间震荡,到期拿满两年票息 30%</text>
+            <!-- 命 B:提前敲出 -->
+            <polyline points="70,190 180,150 300,118 340,110" fill="none" stroke="#7aa7f0" stroke-width="3"/>
+            <circle cx="340" cy="110" r="6" fill="#7aa7f0"/>
+            <text x="360" y="88" fill="#a8c6ff" font-size="12" font-weight="700">命 2:第 6 个月敲出,提前结束,拿 6 个月票息≈7.5%</text>
+            <!-- 命 C:先敲入再敲出 -->
+            <polyline points="70,190 200,238 260,252 380,238 520,150 640,116 700,110" fill="none" stroke="#c9a7f5" stroke-width="3"/>
+            <circle cx="260" cy="252" r="5" fill="#c9a7f5"/>
+            <circle cx="700" cy="110" r="6" fill="#c9a7f5"/>
+            <text x="420" y="300" fill="#d8c1f7" font-size="12" font-weight="700">命 3:先敲入、后敲出——捡回票息,虚惊一场</text>
+            <!-- 命 D:敲入未敲出 -->
+            <polyline points="70,190 220,246 300,252 430,286 600,300 830,312" fill="none" stroke="#e87878" stroke-width="3"/>
+            <text x="560" y="340" fill="#ffb4b4" font-size="12" font-weight="700">命 4:敲入后没爬回——按到期跌幅赔本金,票息一分没有</text>
+            <!-- 底部注解 -->
+            <text x="450" y="392" text-anchor="middle" fill="#8499bd" font-size="13">你拿到的高票息,是替券商卖出了一张"障碍看跌期权"的权利金——命 4 发生时,你在替整个市场接盘。</text>"""
+    return concept_figure(body, "0 0 900 420",
+        "雪球产品两条障碍线之间,标的价格的四种路径:区间震荡拿满票息、提前敲出、先敲入再敲出、敲入未敲出赔本金",
+        "雪球只有四种结局,三种都是小赚,一种是大亏——而且大亏恰恰发生在市场最差、你最需要钱的时候。票息两位数不是银行的慷慨,是你卖出保险换来的权利金。")
+
+
+def _fig_j9_spine():
+    """ch09:危机的同一根脊柱。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">危机的同一根脊柱:四百年,四步走</text>
+            <!-- 四步竖排 -->
+            <rect x="60" y="64" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="80" y="92" fill="#a8c6ff" font-size="15" font-weight="800">① 叙事</text>
+            <text x="80" y="118" fill="#bcc9dd" font-size="12.5">一个故事把价格抬离现金流的锚:球茎、南海股票、.com、算法稳定币</text>
+            <path d="M 225 136 L 225 156" stroke="#41506b" stroke-width="2" fill="none"/>
+            <path d="M 218 150 L 225 160 L 232 150 Z" fill="#41506b"/>
+            <rect x="60" y="160" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.5)"/>
+            <text x="80" y="188" fill="#f0c96a" font-size="15" font-weight="800">② 杠杆</text>
+            <text x="80" y="214" fill="#bcc9dd" font-size="12.5">短债长资:无保证金远期、分期认购、10 倍孖展、两融配资、90 天养 3 年</text>
+            <path d="M 225 232 L 225 252" stroke="#41506b" stroke-width="2" fill="none"/>
+            <path d="M 218 246 L 225 256 L 232 246 Z" fill="#41506b"/>
+            <rect x="60" y="256" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,120,120,0.5)"/>
+            <text x="80" y="284" fill="#ffb4b4" font-size="15" font-weight="800">③ 点火</text>
+            <text x="80" y="310" fill="#bcc9dd" font-size="12.5">利率上行或外部冲击,不对称性引爆:加息 525bp、储备耗光、千亿赎回</text>
+            <path d="M 225 328 L 225 348" stroke="#41506b" stroke-width="2" fill="none"/>
+            <path d="M 218 342 L 225 352 L 232 342 Z" fill="#41506b"/>
+            <rect x="60" y="352" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(143,183,122,0.5)"/>
+            <text x="80" y="380" fill="#b8d6a3" font-size="15" font-weight="800">④ 清算:规则被重写</text>
+            <text x="80" y="406" fill="#bcc9dd" font-size="12.5">期权化撕约、银行休假、废除金本位、熔断、无限 QE、周末 48 小时联姻</text>
+            <!-- 右侧:12 场危机时间线 -->
+            <text x="640" y="70" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">同一张脸,换了十二次妆</text>
+            <line x1="470" y1="96" x2="470" y2="410" stroke="#41506b" stroke-width="2"/>
+            <!-- 刻度点 -->
+            <circle cx="470" cy="104" r="5" fill="#7aa7f0"/><text x="486" y="108" fill="#bcc9dd" font-size="12.5">1637 郁金香:空气交易一夜流拍</text>
+            <circle cx="470" cy="128" r="5" fill="#7aa7f0"/><text x="486" y="132" fill="#bcc9dd" font-size="12.5">1720 南海:股价本身成了利润来源</text>
+            <circle cx="470" cy="152" r="5" fill="#7aa7f0"/><text x="486" y="156" fill="#bcc9dd" font-size="12.5">1929 大萧条:道指 -89%,25 年才回本</text>
+            <circle cx="470" cy="176" r="5" fill="#f0c96a"/><text x="486" y="180" fill="#bcc9dd" font-size="12.5">1987 黑色星期一:程序化自救的踩踏</text>
+            <circle cx="470" cy="200" r="5" fill="#f0c96a"/><text x="486" y="204" fill="#bcc9dd" font-size="12.5">1990 日本:抵押品循环被加息截断</text>
+            <circle cx="470" cy="224" r="5" fill="#f0c96a"/><text x="486" y="228" fill="#bcc9dd" font-size="12.5">1997 亚洲:做空一个国家的完整手册</text>
+            <circle cx="470" cy="248" r="5" fill="#e87878"/><text x="486" y="252" fill="#bcc9dd" font-size="12.5">2000 互联网:思科有利润也跌 -89%</text>
+            <circle cx="470" cy="272" r="5" fill="#e87878"/><text x="486" y="276" fill="#bcc9dd" font-size="12.5">2008 次贷:相关性假设值一万亿美元</text>
+            <circle cx="470" cy="296" r="5" fill="#e87878"/><text x="486" y="300" fill="#bcc9dd" font-size="12.5">2010 欧债:没有最后贷款人的货币联盟</text>
+            <circle cx="470" cy="320" r="5" fill="#8fb37a"/><text x="486" y="324" fill="#bcc9dd" font-size="12.5">2015 A 股:两融 2.27 万亿与千股跌停</text>
+            <circle cx="470" cy="344" r="5" fill="#8fb37a"/><text x="486" y="348" fill="#bcc9dd" font-size="12.5">2020/2022:抢现金与反身性死亡螺旋</text>
+            <circle cx="470" cy="368" r="5" fill="#8fb37a"/><text x="486" y="372" fill="#bcc9dd" font-size="12.5">2023 SVB/瑞信:单日挤兑 420 亿美元</text>
+            <text x="640" y="404" text-anchor="middle" fill="#8499bd" font-size="12.5">点火时间不可测,顺序永远一致。</text>"""
+    return concept_figure(body, "0 0 900 440",
+        "危机四步骨架:叙事、杠杆、点火、规则重写,右侧十二场危机的时间线从 1637 郁金香排到 2023 硅谷银行",
+        "四步永远按同一顺序发生:叙事先把价格抬离锚,杠杆把错配堆到极限,点火只需一根火柴,灭火靠的是规则被临时重写。危机无法预测,但每一步都有可监测的仪表盘。")
+
+
+def _fig_j10_mismatch():
+    """ch10:期限错配的梯子——90 天滚动负债养 3 年资产。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期限错配:用 90 天的钱养 3 年的资产</text>
+            <!-- 负债端:90 天滚动四段 -->
+            <text x="70" y="84" fill="#a8c6ff" font-size="14" font-weight="800">负债端:投资者的钱,90 天一轮回</text>
+            <rect x="70" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="156" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 1 轮 90 天</text>
+            <rect x="250" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="336" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 2 轮 90 天</text>
+            <rect x="430" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="516" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 3 轮 90 天</text>
+            <rect x="610" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="696" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 4 轮 90 天…</text>
+            <!-- 资产端:一条 3 年 -->
+            <text x="70" y="190" fill="#f0c96a" font-size="14" font-weight="800">资产端:借给地产商的贷款,3 年才到期,收益 5%</text>
+            <rect x="70" y="202" width="712" height="46" rx="8" fill="rgba(240,201,106,0.18)" stroke="#f0c96a"/>
+            <text x="426" y="230" text-anchor="middle" fill="#ffe6a8" font-size="12">3 年 × 5% ——第 1095 天晚上 12 点之前,一分钱拿不回来</text>
+            <!-- 利差赚取区 -->
+            <text x="70" y="282" fill="#8fb37a" font-size="13" font-weight="800">平时赚什么:借 3.2%、贷 5%,一年躺赚 1.8% 价差</text>
+            <!-- 断裂点 -->
+            <line x1="426" y1="300" x2="426" y2="380" stroke="#e87878" stroke-width="2" stroke-dasharray="6 6"/>
+            <path d="M 412 380 L 426 396 L 440 380 Z" fill="#e87878"/>
+            <rect x="200" y="400" width="452" height="64" rx="10" fill="rgba(232,120,120,0.16)" stroke="#e87878"/>
+            <text x="216" y="426" fill="#ffb4b4" font-size="13" font-weight="800">某一天,第 N 轮 90 天到期的钱不肯续了</text>
+            <text x="216" y="448" fill="#bcc9dd" font-size="12">资产还剩 2 年才到期——要么折价卖、要么求谁借钱。1997 / 2008 / 2023 都是这一天。</text>
+            <text x="450" y="490" text-anchor="middle" fill="#8499bd" font-size="12.5">左侧滚动的每一格都不是新钱,是旧钱的"再借一次"。滚动断掉的那天,账面上的盈利模型只剩一句话:谁能借我钱?</text>"""
+    return concept_figure(body, "0 0 900 515",
+        "期限错配示意:上方负债端四个 90 天滚动块,下方资产端一条 3 年长方块,中间是 1.8% 的利差,底部红色区域标记滚动断裂点",
+        "影子银行与正规银行共用同一台发动机:滚动短钱,放长期资产,吃利差。1997 年是央行储备续不上,2008 年是回购市场续不上,2023 年硅谷银行是储户续不上——点火处不同,断的是同一根轴。")
+
+
+def _fig_j11_trilemma():
+    """ch11:不可能三角。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">不可能三角:三样东西,只能选两样</text>
+            <!-- 三角形 -->
+            <path d="M 450 110 L 170 380 L 730 380 Z" fill="rgba(18,29,49,0.55)" stroke="#41506b" stroke-width="2"/>
+            <!-- 顶点 -->
+            <circle cx="450" cy="110" r="9" fill="#f0c96a"/>
+            <text x="450" y="86" text-anchor="middle" fill="#ffe6a8" font-size="15" font-weight="800">独立的货币政策</text>
+            <text x="450" y="134" text-anchor="middle" fill="#bcc9dd" font-size="11.5">自己定利率,想加就加</text>
+            <circle cx="170" cy="380" r="9" fill="#7aa7f0"/>
+            <text x="170" y="414" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">资本自由流动</text>
+            <text x="170" y="436" text-anchor="middle" fill="#bcc9dd" font-size="11.5">钱想来就来,想走就走</text>
+            <circle cx="730" cy="380" r="9" fill="#8fb37a"/>
+            <text x="730" y="414" text-anchor="middle" fill="#b8d6a3" font-size="15" font-weight="800">汇率稳定</text>
+            <text x="730" y="436" text-anchor="middle" fill="#bcc9dd" font-size="11.5">盯住美元或一篮子</text>
+            <!-- 三边:选法与代价 -->
+            <rect x="60" y="180" width="230" height="86" rx="10" fill="rgba(122,167,240,0.14)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="76" y="206" fill="#a8c6ff" font-size="13" font-weight="800">美国:选 ①+②</text>
+            <text x="76" y="228" fill="#bcc9dd" font-size="12">放弃汇率稳定——美元自由浮动,</text>
+            <text x="76" y="248" fill="#bcc9dd" font-size="12">涨跌都认,换完整政策主权</text>
+            <rect x="610" y="180" width="230" height="86" rx="10" fill="rgba(143,183,122,0.14)" stroke="rgba(143,183,122,0.5)"/>
+            <text x="626" y="206" fill="#b8d6a3" font-size="13" font-weight="800">中国香港:选 ②+③</text>
+            <text x="626" y="228" fill="#bcc9dd" font-size="12">放弃货币政策——联系汇率下,</text>
+            <text x="626" y="248" fill="#bcc9dd" font-size="12">美联储加息香港只能跟加</text>
+            <rect x="335" y="470" width="230" height="86" rx="10" fill="rgba(240,201,106,0.14)" stroke="rgba(240,201,106,0.5)"/>
+            <text x="351" y="496" fill="#ffe6a8" font-size="13" font-weight="800">中国内地:选 ①+③</text>
+            <text x="351" y="518" fill="#bcc9dd" font-size="12">放弃资本自由流动——资本管制,</text>
+            <text x="351" y="538" fill="#bcc9dd" font-size="12">才有自己的利率与汇率节奏</text>
+            <text x="450" y="330" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">1992 英镑、1997 泰铢:</text>
+            <text x="450" y="352" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">都是想三个全要,被市场投票出局</text>"""
+    return concept_figure(body, "0 0 900 575",
+        "不可能三角:三个顶点分别是独立的货币政策、资本自由流动、汇率稳定,三条边外各标注美国的选法、香港的选法、中国内地的选法",
+        "三角形的三个顶点不能同时占有,每个国家只是选了放弃哪一样。所有伟大的汇率危机——1992 英镑、1997 泰铢、2015 瑞郎——都发生在“我全要”的那一侧。")
+
+
+PATCH_J = {
+    6: [("敲进敲出的四条命", _fig_j6_snowball)],
+    9: [("危机的同一根脊柱", _fig_j9_spine)],
+    10: [("用 90 天的钱养 3 年的资产", _fig_j10_mismatch)],
+    11: [("三样东西,只能选两样", _fig_j11_trilemma)],
+}
+
+
+
 def _merge_figures(base, patch):
     """按章合并锚点列表,不覆盖既有条目"""
     for k, v in patch.items():
@@ -3297,6 +3447,7 @@ _merge_figures(CONCEPT_FIGURES, PATCH_F)
 _merge_figures(CONCEPT_FIGURES, PATCH_G)
 _merge_figures(CONCEPT_FIGURES, PATCH_H)
 _merge_figures(CONCEPT_FIGURES, PATCH_I)
+_merge_figures(CONCEPT_FIGURES, PATCH_J)
 
 
 SUMMARY_LABEL_OVERRIDES = {

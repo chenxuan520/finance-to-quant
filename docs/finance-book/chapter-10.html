@@ -29,6 +29,31 @@
         <h2>2. 用 90 天的钱养 3 年的资产</h2>
 <p>如果有人向你介绍一门生意:拿别人 <span class="num">90 天</span>后就要来取的钱,买 <span class="num">3 年</span>后才能变现的资产,中间差价全归你——你的第一反应大概是,这钱也太好赚了。影子银行的全部故事,都从这口锅开始。锅的名字叫期限错配。</p><p>常态下收益率曲线向上倾斜:期限越长,利率越高。发 <span class="num">90 天</span>理财的付息成本是 <span class="num">3.2%</span>,买 <span class="num">3 年</span>期资产的收益是 <span class="num">5%</span>,中间 <span class="num">1.8 个百分点</span>就是错配的价差。假设池子募了 <span class="num">90 天</span>产品 <span class="num">10 亿</span>,投进一笔 <span class="num">3 年</span>期市政债权——只要 <span class="num">3 年</span>内能滚动发行 12 期 <span class="num">90 天</span>产品接上,利差就稳稳到手。</p><p>错配要玩得转,靠另外两件套掩护。一是资金池:多笔资金混进一个池子,多笔资产混进另一个池子,不逐笔对应,灵活是灵活,亏了却不知道该算在谁头上。二是刚性兑付:产品亏了,管理人悄悄垫上,投资者以为自己买的就是高息存款。资金池负责藏亏损,刚兑负责藏风险,两个一联手,市场定价机制当场失灵。用程序员的比方记这三件套:期限错配是拿活钱补长账的定时任务,资金池是没有隔离的共享缓存,刚兑是吞掉所有异常的 try-except——系统平时跑着极顺,出事全是雪崩。</p><p>拿这笔账算到底:某银行理财资金池 <span class="num">100 亿</span>,负债端成本 <span class="num">3.5%</span>,资产端平均 <span class="num">4.3%</span>,利差 <span class="num">0.8%</span>,一年净赚 <span class="num">8000 万</span>。某笔 <span class="num">10 亿</span>非标违约,只收回六成,亏 <span class="num">4 亿</span>——池子当年直接倒亏 <span class="num">3.2 亿</span>。按合同,这笔亏损本该投资者自己承担;按行规,银行得补齐。所谓刚性兑付,就是这么一本广告里不出现、年年都要付的隐形负债。</p><p>错配的脆弱藏在一个会计细节里。池子有 <span class="num">50 亿</span>资产、综合久期 <span class="num">2 年</span>,若某季利率上行 <span class="num">1 个百分点</span>,按市值算要浮亏约 <span class="num">2%</span>,也就是 <span class="num">1 亿</span>。可只要没人赎回、债券持有到期,这笔浮亏可以永远不体现在报表上。所以这门生意的真相是:不挤兑就没事,一挤兑就全是事——账面平静和瞬间爆炸之间,只差一个赎回按钮。</p><p>回头看三次大炸雷,炸的都是同一台发动机。<span class="num">1997 年</span>亚洲金融危机,一些经济体拿随时会撤的短期外资养长期的本地项目,外资一退潮,汇率和银行一起出事。<span class="num">2008 年</span>,美国影子银行拿隔夜回购养房贷证券,机构一夜之间抽走资金。<span class="num">2023 年</span>,硅谷银行拿活期存款养十年期美债,储户 <span class="num">48 小时</span>把它提空。中国自己也预演过一次: <span class="num">2013 年</span> <span class="num">6 月</span><span class="hl">“钱荒”</span>,银行间隔夜 Shibor 定盘一度冲到约 <span class="num">13.4%</span>,靠同业融资滚动续命的理财和货基险些断链。三十年跨度,半个地球,死法一模一样:借的短,贷的长,债主先跑为敬。</p><div class="callout callout--note reveal"><span class="callout__title">这台发动机的说明书</span><p>负债端期限短、成本低;资产端期限长、收益高;中间的差价就是利润。它运转的每一天都看起来无比正确,直到某一天,债主们同时敲门。它的利润是真的,它的“稳”是假的——哪天要验货,只挑挤兑那天。</p></div>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 515" role="img" aria-label="期限错配示意:上方负债端四个 90 天滚动块,下方资产端一条 3 年长方块,中间是 1.8% 的利差,底部红色区域标记滚动断裂点">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期限错配:用 90 天的钱养 3 年的资产</text>
+            <!-- 负债端:90 天滚动四段 -->
+            <text x="70" y="84" fill="#a8c6ff" font-size="14" font-weight="800">负债端:投资者的钱,90 天一轮回</text>
+            <rect x="70" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="156" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 1 轮 90 天</text>
+            <rect x="250" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="336" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 2 轮 90 天</text>
+            <rect x="430" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="516" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 3 轮 90 天</text>
+            <rect x="610" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="696" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 4 轮 90 天…</text>
+            <!-- 资产端:一条 3 年 -->
+            <text x="70" y="190" fill="#f0c96a" font-size="14" font-weight="800">资产端:借给地产商的贷款,3 年才到期,收益 5%</text>
+            <rect x="70" y="202" width="712" height="46" rx="8" fill="rgba(240,201,106,0.18)" stroke="#f0c96a"/>
+            <text x="426" y="230" text-anchor="middle" fill="#ffe6a8" font-size="12">3 年 × 5% ——第 1095 天晚上 12 点之前,一分钱拿不回来</text>
+            <!-- 利差赚取区 -->
+            <text x="70" y="282" fill="#8fb37a" font-size="13" font-weight="800">平时赚什么:借 3.2%、贷 5%,一年躺赚 1.8% 价差</text>
+            <!-- 断裂点 -->
+            <line x1="426" y1="300" x2="426" y2="380" stroke="#e87878" stroke-width="2" stroke-dasharray="6 6"/>
+            <path d="M 412 380 L 426 396 L 440 380 Z" fill="#e87878"/>
+            <rect x="200" y="400" width="452" height="64" rx="10" fill="rgba(232,120,120,0.16)" stroke="#e87878"/>
+            <text x="216" y="426" fill="#ffb4b4" font-size="13" font-weight="800">某一天,第 N 轮 90 天到期的钱不肯续了</text>
+            <text x="216" y="448" fill="#bcc9dd" font-size="12">资产还剩 2 年才到期——要么折价卖、要么求谁借钱。1997 / 2008 / 2023 都是这一天。</text>
+            <text x="450" y="490" text-anchor="middle" fill="#8499bd" font-size="12.5">左侧滚动的每一格都不是新钱,是旧钱的"再借一次"。滚动断掉的那天,账面上的盈利模型只剩一句话:谁能借我钱?</text>
+          </svg>
+          <p class="figure__cap">影子银行与正规银行共用同一台发动机:滚动短钱,放长期资产,吃利差。1997 年是央行储备续不上,2008 年是回购市场续不上,2023 年硅谷银行是储户续不上——点火处不同,断的是同一根轴。</p>
+        </div>
         <h2>3. 开在批发市场里的银行</h2>
 <p>美国的影子银行不在街边,在华尔街的报表角落里。它服务的不是邻居大妈,而是机构:大企业财务官、对冲基金、投行交易台。整条链从一句简单的话开始——银行不想再把贷款自己捂到期了。</p><p>源头是证券化。银行把成千上万笔房贷打包、切块、评级,卖给市场,资金很快回笼,再放下一笔。链条是<span class="hl">“贷款→证券化→层层分销”</span>,风险像接力棒一样一棒一棒传下去。在 <span class="num">2008 年</span>之前,这套动作有个更好听的名字,叫风险分散。贷款从资产变成了商品,银行从持有人变成了批发商——这个转变本身没错,错在链条上后来没人再觉得自己该管风险。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>链条上有几块关键拼图。第一块是货币市场基金(MMF):它向机构和普通人募现金,声称净值永远 1 美元、随存随取,再拿去买商业票据和短债。说白了,就是一个批发版活钱池,大公司的现金管理部把它当活期账户用,基金经理把它当弹药库用。</p></div><p>第二块是回购市场(repo):机构把证券“卖”给对手方,签好一两天后加价买回来——本质是抵押借钱,就是书里讲债券时说的回购。美国的投行和基金天天靠它滚动隔夜资金,它是整个体系里最粗的一根输血管,粗到没人敢想它会停。</p><p>第三块最隐蔽:银行在表外开管道公司(conduit)和结构性投资载体(SIV)。它们发短期资产支持商票(ABCP)融资,转身买银行转出来的长期房贷证券——这是银行在监管围墙外开的分身:资本金留在表内,错配搬到表外,真出了事,母体银行又躲不掉。投行也开同款表外管道。影子银行的<span class="hl">“影子”</span>两个字,精准得可怕。</p><p>整条链连起来看:银行放贷,投行打包成证券,货币基金和管道公司买走,回购市场再给它们加<span class="term">杠杆</span>——放贷、持有、融资三件事被拆给三类机构轮着做。注意一个要命的事实:这条链上没有一个环节叫<span class="hl">“银行”</span>,所以也没有一个环节能敲开央行的救援窗口。它复制了银行的全部功能,唯独复制不了银行的保险丝。</p>
 
@@ -53,33 +78,6 @@
         <h2>10. 消灭不了的影子, 断不了的共生</h2>
 <p>讲了这么多事故,一个朴素的问题自然浮出来:影子银行既然这么危险,出过这么大的事,又耗了监管这么多年,为什么不干脆一纸禁令,全部禁掉,天下太平?这一节收个尾,答案是两个词:禁不掉,也不该禁。</p><p>禁不掉,是因为影子银行在填真实需求的坑。监管红线一刀切,必然有借款人被切在门外;储户永远想要比存款更高的收益,机构永远需要一个放活钱的地方,企业永远有常规信贷喂不饱的时刻。影子是套利的形状,更是需求的形状——需求不消失,影子只会换造型。强行全砍掉的代价,是融资更贵、门槛更高、更多人被踢出体系。</p><p>不该禁,是因为影子和正规银行是共生,不是寄生。中国的影子链条从头到尾围着银行转,银行出客户、出资金、出隐性信用;美国的回购和货基是整个金融体系的现金管理层,连美联储救火都得临时给货基设工具。真把影子一刀切掉,等于把它服务的那部分真实经济也一起切掉。</p><p>反过来,伞内也不是保险箱。<span class="num">2019 年</span>被接管的包商银行,成了第一家进入司法破产程序的银行,<span class="num">65 亿</span>二级资本债被全额减记,开了同类型减记的先河; <span class="num">2023 年</span>的硅谷银行拿着全套合规报表, <span class="num">48 小时</span>就没了; <span class="num">2022 年</span>河南、安徽那五家村镇银行更离谱,波及约 <span class="num">40 万</span>储户、约 <span class="num">400 亿</span>资金,其中一部分存款压根没进银行的账。全国村镇银行约 1651 家、占银行机构总数约 <span class="num">36%</span>,高风险机构里村镇银行占近三成。影子是风险,招牌也未必是安全。</p><p>落到你的研究上,影子银行最大的坑藏在数据口径里。资管新规前的理财规模,同一块钱可能在理财、信托、券商资管的统计里各算一遍;新规前后两段数据直接拼接,会画出假的崩溃曲线; P2P 的成交额全是复投水分。拿到任何一块影子银行的数据,先问它被数了几次、用什么口径,远比拿到多少行数据重要。</p><p>最后带走一个最简单的判断工具:任何向你承诺<span class="hl">“高收益、随时取、没风险”</span>的产品,先问一句——它拿什么兑现?如果答案是<span class="hl">“后面新进来的钱”</span>,那你面前正停着那台最古老的发动机。它能跑很多年,甚至跑得比谁都风光,但不会永远有下一个买家。影子银行不会因为难看而消失,只会因为被看懂而减速。</p>
 
-
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 10 章小结图: 影子银行:银行不在银行里">
-            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
-            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
-            
-            <g>
-              <rect x="65" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="77" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="90" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">1</text>
-              <text x="84" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="84" y="194">影子银行就是干银行</tspan><tspan x="84" y="212">三件事(集短钱、放</tspan><tspan x="84" y="230">长贷、赚利差要检查</tspan></text>
-            </g>
-            <g>
-              <rect x="335" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="347" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="360" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">2</text>
-              <text x="354" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="354" y="194">期限错配是这台生意</tspan><tspan x="354" y="212">的发动机:借短贷长</tspan><tspan x="354" y="230">赚期限利差</tspan></text>
-            </g>
-            <g>
-              <rect x="605" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="617" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="630" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">3</text>
-              <text x="624" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="624" y="203">影子银行:银行不在</tspan><tspan x="624" y="221">银行里</tspan></text>
-            </g>
-          </svg>
-          <p class="figure__cap">读完第 10 章后,至少要能复述“影子银行就是干银行三件事(集短钱、放长贷、赚利差要检查”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
-        </div>
 
         <section class="summary reveal">
           <h2>小结</h2>

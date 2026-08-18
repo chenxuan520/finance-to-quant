@@ -29,6 +29,39 @@
         <h2>2. 敲进敲出的四条命</h2>
 <p>挑一只最典型的产品放上手术台:雪球。名字温软,条款一点也不温软。它是 <span class="num">2021 年</span>前后券商柜台最火的结构化产品,火到要靠预约抢额度;也是后来把<span class="hl">“稳健”</span><span class="hl">“高息”</span>这几个字摔得最碎的一个。把它彻底拆透,这一族产品的套路,你就算是全见过了。</p><p>把一份典型条款摆上桌,逐个词翻译:名义本金 <span class="num">100 万</span>,挂钩<span class="term">中证 500</span> 指数,入场时指数 <span class="num">9500 点</span>;期限三年;敲出线画在入场价的 <span class="num">103%</span>,即 <span class="num">9785 点</span>;敲入线画在入场价的 <span class="num">70%</span>,即 <span class="num">6650 点</span>;票息年化 <span class="num">15%</span>。<span class="hl">“敲出”</span>是指数涨够之后提前散场的那扇门,<span class="hl">“敲入”</span>是指数跌穿之后保护失效的那扇门。两扇门的位置一画好,整棵 if-else 树就长出来了。还要盯住观察日的设定:敲出通常按月观察,敲入在很多产品里是按日盯的——条款里这几行小字,决定了行情<span class="hl">“碰到线”</span>到底算不算数。</p><p>这棵树只有四种结局,一条一条过:没敲入也没敲出,到期拿完整票息,年化 <span class="num">15%</span>;某个观察日指数收上敲出线,产品提前终止,利息算到敲出那天为止;期间跌穿过敲入线、之后再没涨回敲出线,到期指数跌多少你就亏多少,本金不保底;先敲入、后来又敲出,票息照样拿到敲出日。注意顺序很重要:敲入是一次性翻牌,翻过去就回不去,后面涨回来也只能按敲入后的条款结账。</p><p>手算第一种行情:指数两年多一直在 <span class="num">6650 点</span>上方晃,第 <span class="num">14 个月</span>的观察日收上了 <span class="num">9785 点</span>,敲出,产品提前终止。利息 = <span class="num">100 万</span> × <span class="num">15%</span> × 14 ÷ 12 ≈ <span class="num">17.5 万</span>。只拿了一年出头的利息,没拿满三年,但落袋为安。这是销售材料里最爱展示的路径:持有期短、票息亮眼、过程丝滑,客户体验几乎完美。</p><p>再算第二种行情:指数一路下行,某个交易日跌穿 <span class="num">6650 点</span>,敲入;之后慢慢往回爬,但直到到期也没能再站上 <span class="num">9785 点</span>,最后收在 <span class="num">7800 点</span>。亏损 = <span class="num">100 万</span> × (7800 ÷ 9500 - 1) ≈ <span class="num">-17.9 万</span>,本金实实在在亏掉一块。同一张合同、同一个入场价:一个结局 +<span class="num">17.5 万</span>,一个结局 <span class="num">-17.9 万</span>——差别不在终点,在两条路径中间各自踩过了哪扇门。</p><div class="callout callout--note reveal"><span class="callout__title">雪球条款速读</span><p>敲出线画在上方:涨够了就散场,收益封顶;敲入线画在下方:跌穿了,票息保护失效,到期按指数跌幅结账。<span class="num">15%</span> 的票息只在<span class="hl">“从没敲入”</span>的世界里完整成立——这个前提,宣传页通常不会替你划重点。</p></div>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="雪球产品两条障碍线之间,标的价格的四种路径:区间震荡拿满票息、提前敲出、先敲入再敲出、敲入未敲出赔本金">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">雪球结构的四条命:同一张产品,四种结局</text>
+            <!-- 图表区:时间横轴,标的价格纵轴 -->
+            <line x1="70" y1="330" x2="830" y2="330" stroke="#41506b" stroke-width="2"/>
+            <text x="836" y="334" fill="#8499bd" font-size="12">到期</text>
+            <!-- 敲出线 103% -->
+            <line x1="70" y1="110" x2="830" y2="110" stroke="#f0c96a" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="76" y="102" fill="#f0c96a" font-size="12" font-weight="700">敲出线 103%(每月观察)</text>
+            <!-- 敲入线 70% -->
+            <line x1="70" y1="250" x2="830" y2="250" stroke="#e87878" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="76" y="270" fill="#ffb4b4" font-size="12" font-weight="700">敲入线 70%(每日观察)</text>
+            <text x="76" y="190" fill="#bcc9dd" font-size="12">起点 100%</text>
+            <!-- 命 A:不碰两边,到期拿满票息 -->
+            <polyline points="70,190 220,176 380,196 560,164 830,178" fill="none" stroke="#8fb37a" stroke-width="3"/>
+            <text x="560" y="150" fill="#b8d6a3" font-size="12" font-weight="700">命 1:区间震荡,到期拿满两年票息 30%</text>
+            <!-- 命 B:提前敲出 -->
+            <polyline points="70,190 180,150 300,118 340,110" fill="none" stroke="#7aa7f0" stroke-width="3"/>
+            <circle cx="340" cy="110" r="6" fill="#7aa7f0"/>
+            <text x="360" y="88" fill="#a8c6ff" font-size="12" font-weight="700">命 2:第 6 个月敲出,提前结束,拿 6 个月票息≈7.5%</text>
+            <!-- 命 C:先敲入再敲出 -->
+            <polyline points="70,190 200,238 260,252 380,238 520,150 640,116 700,110" fill="none" stroke="#c9a7f5" stroke-width="3"/>
+            <circle cx="260" cy="252" r="5" fill="#c9a7f5"/>
+            <circle cx="700" cy="110" r="6" fill="#c9a7f5"/>
+            <text x="420" y="300" fill="#d8c1f7" font-size="12" font-weight="700">命 3:先敲入、后敲出——捡回票息,虚惊一场</text>
+            <!-- 命 D:敲入未敲出 -->
+            <polyline points="70,190 220,246 300,252 430,286 600,300 830,312" fill="none" stroke="#e87878" stroke-width="3"/>
+            <text x="560" y="340" fill="#ffb4b4" font-size="12" font-weight="700">命 4:敲入后没爬回——按到期跌幅赔本金,票息一分没有</text>
+            <!-- 底部注解 -->
+            <text x="450" y="392" text-anchor="middle" fill="#8499bd" font-size="13">你拿到的高票息,是替券商卖出了一张"障碍看跌期权"的权利金——命 4 发生时,你在替整个市场接盘。</text>
+          </svg>
+          <p class="figure__cap">雪球只有四种结局,三种都是小赚,一种是大亏——而且大亏恰恰发生在市场最差、你最需要钱的时候。票息两位数不是银行的慷慨,是你卖出保险换来的权利金。</p>
+        </div>
         <h2>3. 两位数票息的弦外之音</h2>
 <p>现在回答那个最要紧的问题:<span class="num">15%</span> 的年化票息,到底是从谁的口袋里掏出来的?天下没有免费的利息,券商更不是慈善机构——这么显眼的一笔固定收益,一定有一个说得清的出处。</p><p>出处其实是你自己。买入一份雪球,相当于你把一份带障碍条件的看跌期权卖给了券商:指数不跌穿敲入线,这份期权到期作废,你净赚权利金;一旦跌穿,期权生效,你按指数跌幅赔钱。所谓票息,大头就是你卖出这份<span class="hl">“下跌保护”</span>收到的权利金,再叠上做市商在场内做对冲赚的价差预算。说穿了:你在赌<span class="hl">“跌不到七成”</span>,赌赢收租,赌输一个人吞下指数的全部跌幅。</p><p>这套结构在特定天气里体验好得出奇。<span class="num">2021 年</span>前后指数震荡慢涨,敲出频频触发,很多投资人持有几个月就拿一笔利息离场,来回几次,体验无限接近<span class="hl">“能提前取的高息存款”</span>。销售端只需要展示过去一年敲出了多少笔、客户拿得多开心,成交就水到渠成——在慢牛里,这棵 if-else 树最危险的那根树枝永远不会被踩到,也就没人愿意相信它真的存在。</p><p>转折出现在指数掉头之后。这种结构最怕的不是崩盘式暴跌一天,而是层层阴跌:<span class="num">2022 年</span>起<span class="term">中证 500</span> 从高位回落,<span class="num">2024 年</span>初小盘股又是一轮急跌,指数先后跌穿一批产品的敲入线,大面积敲入集中发生。当年被卖成<span class="hl">“稳稳收息”</span>的产品,在下跌里显出真面目:非保本,指数跌多少,本金就亏多少。宣传期的<span class="hl">“从没敲入过”</span>,从来就不是条款的一部分。</p><p>还有一层更隐蔽的机制会火上浇油:做市商的对冲盘。指数在安全区时,对冲仓位很小,市场感觉不到它;一旦逼近敲入线,雪球内嵌期权的 Delta 会突然冲向 1,做市商被迫在短时间内集中调仓,抛售压力砸向本已脆弱的市场,下跌反过来触发更多雪球敲入。敲入区附近的砸盘,不是谁在使坏,是一叠合同在同一时刻机械执行的后果。</p><p>对量化研究,这类产品的坑直接写在数据频率上。拿<span class="hl">“每月抽样模拟一次”</span>去回测雪球,等于蒙住条款的眼睛:它的收益是严格路径依赖的,除非每条分钟级路径都真实经过敲入、敲出的判定,尾部风险必然被低估。历史上大量雪球回测在 <span class="num">2015 年</span>、<span class="num">2022 年</span>那些关键月份<span class="hl">“恰好没踩到”</span>敲入路径——事后复盘才发现,漏掉的不是哪个参数,是路径本身。</p><div class="callout callout--note reveal"><span class="callout__title">敲入前夜会发生什么</span><p>指数越贴近敲入线,做市商的 Delta 对冲越像踩下油门:仓位不是慢慢变,是反向加速变。2023 到 <span class="num">2024 年</span>那轮<span class="hl">“越跌越砸、越砸越跌”</span>的夹杀,底层正是这层对冲反馈。知道这层机制,你就不会在下跌里再去问<span class="hl">“谁在砸盘”</span>。</p></div>
 
@@ -53,33 +86,6 @@
         <h2>10. 大宗、ESG 与收尾一问</h2>
 <p>最后收两件小一点的,再把整章收拢。先说大宗商品:它的坑和股票长得完全不一样——你拿到手的不是一家公司,而是一串会到期的合约。价格看错了可以扛着等翻本,合约一到期,你连扛的资格都没有。</p><p>先认一张图:同一个商品、不同到期月份的期货价格,排成一条曲线。远月比近月贵,叫<span class="term">升水</span>结构(Contango),通常反映仓储、保险和资金成本;远月比近月便宜,是<span class="term">贴水</span>结构。长期做多商品期货的人,真实收入常常不是现货涨价,而是展期:近月快到期时换成远月,一卖一买之间,升<span class="term">贴水</span>悄悄吃掉或补贴你的收益——方向看对、展期亏钱,是这个市场最经典的新手死法。</p><p>两次极端行情值得背下来。<span class="num">2020 年</span> <span class="num">4 月</span> <span class="num">20 日</span>,WTI 原油 <span class="num">5 月</span>合约最低打到 -37.63 美元一桶:交割规则要求实物入库,美国内陆的储油罐全部爆满,拿着合约等于倒贴钱求人把油接走——教科书级的<span class="hl">“交割机制扭曲价格”</span>。<span class="num">2022 年</span> <span class="num">3 月</span>,LME 镍遭遇大规模逼空,几天内从约 <span class="num">2.5 万美元</span>冲到 <span class="num">8 万美元</span>以上,交易所最终取消当天交易并停盘——那一刻所有人都重学了一遍:衍生品平台方手里的裁定权,比任何技术指标都大。</p><p>ESG 和碳交易简单交代:绿债是把融资明确投向风电、光伏、水处理等环保用途的债券;蓝债是它的海洋版本,<span class="num">2020 年</span>起出现的新兴品种;碳市场则把排放配额做成可交易的资产。量化的冷水必须浇在这:多套 ESG 评级口径互相打架,同一家公司在不同体系里得分能差出几档;<span class="hl">“ESG <span class="term">超额收益</span>”</span>在学术上显著性不稳定,实务里更多是风险偏好和监管配置的产物。别把标签当成免费的 <span class="term">Alpha</span>。</p><p>现在把这一章所有东西并排摆好,问出那个贯穿始终的问题:你卖出的,是你以为的风险吗?雪球的票息背后,是你卖出去的看跌保护;CDS 的保费背后,是四十倍的或有赔付;AAA 评级背后,是一个相关系数能从 0.2 跳到 1 的世界;稳定币的锚背后,是没人彻底查过的仓库;<span class="term">REITs</span> 的分派率背后,是利率那把刀。签字之前,把<span class="hl">“我到底在替谁背什么风险”</span>写成一句话——写不出来,就别签。</p><div class="callout callout--note reveal"><span class="callout__title">量化接手这类资产前的四问</span><p>一、历史数据有多长,序列断过几次?二、有没有脱锚、停盘、监管切换这类系统性断点?三、收益是连续的,还是条款驱动的 if-else 树?四、回测用的价格路径,细到分钟级了吗?四问答不齐,再漂亮的净值曲线也只是草稿。</p></div>
 
-
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 6 章小结图: 结构性产品与另类资产:把风险和收益切开重卖">
-            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
-            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
-            
-            <g>
-              <rect x="65" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="77" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="90" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">1</text>
-              <text x="84" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="84" y="194">结构性产品的母机是</tspan><tspan x="84" y="212">债券加期权:收益是</tspan><tspan x="84" y="230">一棵条款写死要检查</tspan></text>
-            </g>
-            <g>
-              <rect x="335" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="347" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="360" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">2</text>
-              <text x="354" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="354" y="185">雪球的两位数票息来</tspan><tspan x="354" y="203">自你卖出的看跌保护</tspan><tspan x="354" y="221">:涨够敲出、收益封</tspan><tspan x="354" y="239">顶</tspan></text>
-            </g>
-            <g>
-              <rect x="605" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="617" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="630" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">3</text>
-              <text x="624" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="624" y="194">结构性产品与另类资</tspan><tspan x="624" y="212">产:把风险和收益切</tspan><tspan x="624" y="230">开重卖</tspan></text>
-            </g>
-          </svg>
-          <p class="figure__cap">读完第 6 章后,至少要能复述“结构性产品的母机是债券加期权:收益是一棵条款写死要检查”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
-        </div>
 
         <section class="summary reveal">
           <h2>小结</h2>
