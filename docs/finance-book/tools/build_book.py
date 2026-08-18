@@ -3434,6 +3434,142 @@ PATCH_J = {
 
 
 
+def _fig_k6_waterfall():
+    """ch06:CDO 分层瀑布——现金流自上而下,损失自下而上。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">CDO 的瀑布:现金流从上往下浇,损失从下往上烧</text>
+            <!-- 三层塔 -->
+            <rect x="120" y="80" width="360" height="66" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/>
+            <text x="300" y="106" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">AAA 优先层 80%</text>
+            <text x="300" y="130" text-anchor="middle" fill="#bcc9dd" font-size="11.5">先吃饭:贷款回款先付它,票息最低</text>
+            <rect x="120" y="146" width="360" height="66" rx="8" fill="rgba(240,201,106,0.24)" stroke="#f0c96a"/>
+            <text x="300" y="172" text-anchor="middle" fill="#ffe6a8" font-size="14" font-weight="800">夹层 BBB~A 15%</text>
+            <text x="300" y="196" text-anchor="middle" fill="#bcc9dd" font-size="11.5">排队吃:优先级吃饱才轮它,票息居中</text>
+            <rect x="120" y="212" width="360" height="66" rx="8" fill="rgba(232,120,120,0.22)" stroke="#e87878"/>
+            <text x="300" y="238" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">股权层(最先死)5%</text>
+            <text x="300" y="262" text-anchor="middle" fill="#bcc9dd" font-size="11.5">收缴碗:所有损失先砸它,票息最肥</text>
+            <!-- 现金流箭头(自上而下) -->
+            <path d="M 540 70 L 540 260" stroke="#8fb37a" stroke-width="3" fill="none"/>
+            <path d="M 532 70 L 548 70 L 540 56 Z" fill="#8fb37a"/>
+            <text x="566" y="110" fill="#b8d6a3" font-size="12.5" font-weight="700">现金流向下浇:</text>
+            <text x="566" y="132" fill="#bcc9dd" font-size="12">100 万月供先进来,</text>
+            <text x="566" y="152" fill="#bcc9dd" font-size="12">AAA 拿走它的那份,</text>
+            <text x="566" y="172" fill="#bcc9dd" font-size="12">剩下的才浇下一层</text>
+            <!-- 损失箭头(自下而上) -->
+            <path d="M 720 260 L 720 76" stroke="#e87878" stroke-width="3" fill="none"/>
+            <path d="M 712 78 L 728 78 L 720 64 Z" fill="#e87878"/>
+            <text x="620" y="290" fill="#ffb4b4" font-size="12.5" font-weight="700">违约损失往上烧:</text>
+            <text x="620" y="310" fill="#bcc9dd" font-size="12">平均违约率 7% 时,股权层烧光、</text>
+            <text x="620" y="330" fill="#bcc9dd" font-size="12">夹层带血,AAA 岿然不动;</text>
+            <text x="620" y="350" fill="#bcc9dd" font-size="12">2008 年各地违约一起跳到 25%——</text>
+            <text x="620" y="370" fill="#bcc9dd" font-size="12">AAA 的"安全"原来是相关性假设</text>
+            <!-- 底部 -->
+            <text x="450" y="416" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">分层不减风险,只重排风险的座位:总损失 = 各层损失相加,一层都省不了。</text>
+            <text x="450" y="444" text-anchor="middle" fill="#8499bd" font-size="12.5">2008 年的发明不是分层,是把一群"相关性 0.2"的假设卖掉、再按"相关性 1"的现实定价</text>"""
+    return concept_figure(body, "0 0 900 470",
+        "CDO 三层塔自上而下:AAA 优先层、夹层、股权层;左侧绿色箭头现金流自上而下,右侧红色箭头违约损失自下而上",
+        "瀑布的本质是队列,不是魔法:上游 AAA 先吃饭,下游股权层先替所有人收碗。2008 年大家发现,只要各地房价一起跌,AAA 的'安全'只是建在相关性 0.2 的假设上。")
+
+
+def _fig_k9_doubleplay():
+    """ch09:1997 香港双击——做空港元 + 做空恒指期货。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">1997 香港双击:哪条腿赚钱,我都赢</text>
+            <!-- 左:第一腿 做空港元 -->
+            <rect x="60" y="76" width="350" height="110" rx="10" fill="rgba(122,167,240,0.16)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="80" y="104" fill="#a8c6ff" font-size="14" font-weight="800">腿 ①:做空港元</text>
+            <text x="80" y="128" fill="#bcc9dd" font-size="12">借入港元,市场上抛港元换美元</text>
+            <text x="80" y="148" fill="#bcc9dd" font-size="12">赌联系汇率守不住,一旦改浮,</text>
+            <text x="80" y="168" fill="#bcc9dd" font-size="12">港元贬 30%,借出还入赚价差</text>
+            <!-- 右:第二腿 做空恒指期货 -->
+            <rect x="490" y="76" width="350" height="110" rx="10" fill="rgba(232,120,120,0.14)" stroke="rgba(232,120,120,0.5)"/>
+            <text x="510" y="104" fill="#ffb4b4" font-size="14" font-weight="800">腿 ②:做空恒生指数期货</text>
+            <text x="510" y="128" fill="#bcc9dd" font-size="12">预先卖空恒指</text>
+            <text x="510" y="148" fill="#bcc9dd" font-size="12">赌央行保汇率必须加息,一加息,</text>
+            <text x="510" y="168" fill="#bcc9dd" font-size="12">股市崩、期货空头赚翻</text>
+            <!-- 中央:港府的选项 -->
+            <text x="450" y="222" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">金管局只有两种反应,两种都被算计</text>
+            <path d="M 235 186 L 380 232 L 380 246" stroke="#41506b" fill="none" stroke-width="2"/>
+            <path d="M 665 186 L 520 232 L 520 246" stroke="#41506b" fill="none" stroke-width="2"/>
+            <rect x="140" y="252" width="300" height="86" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.5)"/>
+            <text x="160" y="280" fill="#ffe6a8" font-size="13" font-weight="800">若弃守:联系汇率浮动</text>
+            <text x="160" y="304" fill="#bcc9dd" font-size="12">腿 ①赚:港元贬值兑现</text>
+            <text x="160" y="324" fill="#bcc9dd" font-size="12">腿 ②平仓,结局=泰铢模式</text>
+            <rect x="460" y="252" width="300" height="86" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.5)"/>
+            <text x="480" y="280" fill="#ffe6a8" font-size="13" font-weight="800">若死守:隔夜 HIBOR 拉到 280%</text>
+            <text x="480" y="304" fill="#bcc9dd" font-size="12">腿 ②赚:恒指四天 -23%(1997.10)</text>
+            <text x="480" y="324" fill="#bcc9dd" font-size="12">腿 ①平仓,结局=汇率守住股市崩</text>
+            <!-- 底部结局 -->
+            <rect x="140" y="362" width="620" height="64" rx="10" fill="rgba(143,183,122,0.12)" stroke="rgba(143,183,122,0.5)"/>
+            <text x="450" y="388" text-anchor="middle" fill="#b8d6a3" font-size="13" font-weight="800">1998.8 港府第三反应:外汇基金直接买入 1200 亿港元恒指成分股,托住期货结算价</text>
+            <text x="450" y="414" text-anchor="middle" fill="#bcc9dd" font-size="12">1999 年打包成盈富基金退出,还盈利约 300 亿港元——防守方第一次用了空头没想到的招</text>"""
+    return concept_figure(body, "0 0 900 450",
+        "1997 香港双击结构:左框做空港元、右框做空恒指期货,中间金管局的两种反应各喂饱一条腿,底部港府直接入市的反击",
+        "双击的精髓:两条腿方向正交、情景互补,无论央行如何选择,总有一条腿在收钱。对抗它的唯一方式是打在它的算式之外:直接买入它的对手盘。")
+
+
+def _fig_k10_repo():
+    """ch10:回购市场挤兑螺旋——折扣率与价格互相咬尾。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回购市场怎么挤兑:折扣率和价格互相咬尾</text>
+            <!-- 螺旋五步循环 -->
+            <ellipse cx="450" cy="250" rx="300" ry="150" fill="none" stroke="#41506b" stroke-width="2" stroke-dasharray="6 5"/>
+            <rect x="330" y="70" width="240" height="52" rx="8" fill="rgba(18,29,49,0.85)" stroke="#e87878"/>
+            <text x="450" y="102" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">① 风声:MBS 开始跌</text>
+            <rect x="580" y="180" width="250" height="52" rx="8" fill="rgba(18,29,49,0.85)" stroke="#e87878"/>
+            <text x="705" y="212" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">② 折扣率 2% → 40%</text>
+            <rect x="580" y="300" width="250" height="52" rx="8" fill="rgba(18,29,49,0.85)" stroke="#e87878"/>
+            <text x="705" y="332" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">③ 同样的抵押,借到的钱少了</text>
+            <rect x="70" y="300" width="250" height="52" rx="8" fill="rgba(18,29,49,0.85)" stroke="#e87878"/>
+            <text x="195" y="332" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">④ 被迫抛售资产补保证金</text>
+            <rect x="70" y="180" width="250" height="52" rx="8" fill="rgba(18,29,49,0.85)" stroke="#e87878"/>
+            <text x="195" y="212" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">⑤ 价格跌更狠 → 回到 ①</text>
+            <!-- 中央标注 -->
+            <text x="450" y="238" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">融资流动性螺旋</text>
+            <text x="450" y="262" text-anchor="middle" fill="#bcc9dd" font-size="12">Brunnermeier–Pedersen</text>
+            <text x="450" y="282" text-anchor="middle" fill="#bcc9dd" font-size="12">每一圈都要抵押品管加一遍</text>
+            <!-- 底部对照 -->
+            <text x="450" y="430" text-anchor="middle" fill="#8499bd" font-size="12.5">2008 年 9 月,这个螺旋用四天走完贝尔斯登三个月的路:没有门口排队,只有回购单上以小时计的折扣率上调。</text>
+            <text x="450" y="456" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">存款有存款保险,回购没有。</text>"""
+    return concept_figure(body, "0 0 900 480",
+        "回购市场挤兑的五步咬尾循环:MBS 跌、折扣率从 2% 涨到 40%、借款能力缩水、被迫抛售、价格再跌,中央标注融资流动性螺旋",
+        "影子银行的挤兑不排队,在抵押品的折扣率上发生:昨天 98 元抵押能借 96,今天只能借 60,差额必须用卖资产补——卖出本身让价格再跌,拧紧下一圈。")
+
+
+def _fig_k11_curve():
+    """ch11:收益率曲线与倒挂——长短期利率打架的信号。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">收益率曲线:平时上坡,危险时倒着挂</text>
+            <!-- 坐标区 -->
+            <line x1="90" y1="330" x2="810" y2="330" stroke="#41506b" stroke-width="2"/>
+            <line x1="90" y1="330" x2="90" y2="70" stroke="#41506b" stroke-width="2"/>
+            <text x="66" y="200" fill="#8499bd" font-size="12">利率</text>
+            <text x="816" y="334" fill="#8499bd" font-size="12">期限</text>
+            <!-- 正常曲线(上行) -->
+            <path d="M 100 280 Q 300 200 800 120" stroke="#8fb37a" stroke-width="3" fill="none"/>
+            <text x="640" y="104" fill="#b8d6a3" font-size="13" font-weight="800">正常形态:期限越长,利息越高</text>
+            <text x="640" y="128" fill="#bcc9dd" font-size="11.5">短借长贷有利差,银行开心</text>
+            <!-- 倒挂曲线(下行) -->
+            <path d="M 100 130 Q 300 220 800 290" stroke="#e87878" stroke-width="3" fill="none"/>
+            <text x="120" y="118" fill="#ffb4b4" font-size="13" font-weight="800">倒挂:短端比长端贵</text>
+            <text x="120" y="142" fill="#bcc9dd" font-size="11.5">央行加息把短端顶上去了,连 5 年期都不愿给这么高</text>
+            <!-- 倒挂的含义 -->
+            <rect x="120" y="356" width="660" height="86" rx="10" fill="rgba(232,120,120,0.12)" stroke="rgba(232,120,120,0.5)"/>
+            <text x="140" y="384" fill="#ffb4b4" font-size="13" font-weight="800">倒挂交易的是"央行的未来认输"</text>
+            <text x="140" y="410" fill="#bcc9dd" font-size="12">长端利率 = 未来平均短期利率的市场预期。倒挂 = 市场赌央行很快就会降息,</text>
+            <text x="140" y="430" fill="#bcc9dd" font-size="12">而此时降息的理由通常只有一个:经济衰退要来了。</text>
+            <text x="450" y="474" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">历史样本:2 年-10 年倒挂后,衰退从未缺席过——只是不知道什么时候来。</text>
+            <text x="450" y="500" text-anchor="middle" fill="#8499bd" font-size="12.5">用法:它是一个状态变量,带不来择时,但当它出现时,每一张多头仓位都该重新审一遍。</text>"""
+    return concept_figure(body, "0 0 900 525",
+        "收益率曲线坐标图:绿色正常曲线上坡,红色倒挂曲线下坡,底部框注明倒挂的含义是市场赌央行即将降息",
+        "曲线的形状是央行之手与市场预期的合力。倒挂时,曲线的两端在打架:短端说'我现在紧',长端说'我知道你不会一直紧'——历史告诉我们,长端常常是对的.")
+
+
+PATCH_K = {
+    6: [("一栋房子卖出一百份保险", _fig_k6_waterfall)],
+    9: [("做空一个国家的完整手册", _fig_k9_doubleplay)],
+    10: [("挤兑的队伍排在回购市场上", _fig_k10_repo)],
+    11: [("长短期利率打架的信号", _fig_k11_curve)],
+}
+
+
+
 def _merge_figures(base, patch):
     """按章合并锚点列表,不覆盖既有条目"""
     for k, v in patch.items():
@@ -3448,6 +3584,7 @@ _merge_figures(CONCEPT_FIGURES, PATCH_G)
 _merge_figures(CONCEPT_FIGURES, PATCH_H)
 _merge_figures(CONCEPT_FIGURES, PATCH_I)
 _merge_figures(CONCEPT_FIGURES, PATCH_J)
+_merge_figures(CONCEPT_FIGURES, PATCH_K)
 
 
 SUMMARY_LABEL_OVERRIDES = {

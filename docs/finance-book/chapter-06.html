@@ -74,6 +74,40 @@
         <h2>6. 一栋房子卖出一百份保险</h2>
 <p>CDS 还只是两个人对赌一家公司的生死。真正把 <span class="num">2008 年</span>炸翻的,是另一台功率大得多的机器:CDO,担保债务工具——把一堆违约风险打包、切碎、分级,再卖给全世界。要理解那场席卷全球的危机,其实只需要看懂这一台机器是怎么转的。</p><p>做法像切蛋糕,只不过刀口从风险那头下刀。把一大堆房贷、企业债打包成一个资产池,按<span class="hl">“谁先吃损失”</span>切成三层:股权层最先挨打,夹层居中,AAA 优先级最后才轮到。用数字把栅栏立起来:池子的损失先由股权层吞掉前 <span class="num">5%</span>,夹层吞 <span class="num">5%</span> 到 <span class="num">15%</span> 之间那一段,AAA 只在总损失超过 <span class="num">15%</span> 之后才开始出血。每一层各标各的价:越靠后挨打的层越贵、收益率越低;最先流血的股权层,票息高得吓人——高收益三个字,就是这么造出来的。</p><p>评级的幻觉就从这道栅栏里长出来:历史上房贷的平均违约率只有 <span class="num">2%</span> 到 <span class="num">3%</span>,要伤到 AAA,得先穿破股权层、再穿破夹层——看起来<span class="hl">“几乎不可能”</span>。评级公司顺水推舟盖上 AAA 的章,于是全世界的养老金、保险公司都敢买。注意这里的潜台词:AAA 不是没有风险,是它背后的模型假设着<span class="hl">“损失率无论如何到不了 <span class="num">15%</span>”</span>。章是真的,假设是模型的。</p><p>一层两层还不够卖。上下两层卖光了,就把一堆 CDO 的夹层再打包、再切三层,人称 CDO 的平方;更激进的品种叫合成 CDO——池子里根本没有真债,全是用 CDS<span class="hl">“复制”</span>出来的债券表现:卖出一份保费收入,同时承担一份违约赔付。同一笔房贷违约,参考它的 CDS 可以签上一百次。换句话说:同一栋房子,卖出了一百份火灾保险。</p><p><span class="num">2008 年</span>的崩塌链条,六步走完。第一步,房贷发放标准松掉,没收入、没工作、没资产也能批贷;第二步,投行把这些房贷打包成 RMBS;第三步,RMBS 的夹层再被做成 CDO、CDO 的平方和合成 CDO;第四步,评级公司给出 AAA,因为模型假设<span class="hl">“美国各地房价不会同时跌”</span>;第五步,房价真的一起跌,<span class="hl">“几乎不违约”</span>的前提瞬间作废;第六步,手里攥着 AAA 的机构不但收不到钱,还得按 CDS 对外赔付,对手方跟着一起爆。</p><p>这台机器给量化留下的伤口,不是<span class="hl">“没算出来”</span>,而是相关系数。模型里,各地房价违约的相关性用的是历史值 0.2;危机一来,它直接跳到 1——所有分散化假设在同一时刻失效。任何用历史协方差矩阵搭出来的组合,都是踩在这个假设上走钢丝。<span class="num">2008 年</span>的量化基金不是死在公式上,是死在没人告诉公式:相关系数有时候会变成 1。</p><div class="callout callout--note reveal"><span class="callout__title">同一栋房子,一百份保险</span><p>合成 CDO 的可怕在于:风险敞口不再受真实债券数量的约束。保单可以比房子多一百倍,房价跌穿的那天,要赔的窟窿也就比房子大一百倍。衍生品本身不点火,它只是把火种复制了一百份,再分发到全世界的仓库里。</p></div>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 470" role="img" aria-label="CDO 三层塔自上而下:AAA 优先层、夹层、股权层;左侧绿色箭头现金流自上而下,右侧红色箭头违约损失自下而上">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">CDO 的瀑布:现金流从上往下浇,损失从下往上烧</text>
+            <!-- 三层塔 -->
+            <rect x="120" y="80" width="360" height="66" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/>
+            <text x="300" y="106" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">AAA 优先层 80%</text>
+            <text x="300" y="130" text-anchor="middle" fill="#bcc9dd" font-size="11.5">先吃饭:贷款回款先付它,票息最低</text>
+            <rect x="120" y="146" width="360" height="66" rx="8" fill="rgba(240,201,106,0.24)" stroke="#f0c96a"/>
+            <text x="300" y="172" text-anchor="middle" fill="#ffe6a8" font-size="14" font-weight="800">夹层 BBB~A 15%</text>
+            <text x="300" y="196" text-anchor="middle" fill="#bcc9dd" font-size="11.5">排队吃:优先级吃饱才轮它,票息居中</text>
+            <rect x="120" y="212" width="360" height="66" rx="8" fill="rgba(232,120,120,0.22)" stroke="#e87878"/>
+            <text x="300" y="238" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">股权层(最先死)5%</text>
+            <text x="300" y="262" text-anchor="middle" fill="#bcc9dd" font-size="11.5">收缴碗:所有损失先砸它,票息最肥</text>
+            <!-- 现金流箭头(自上而下) -->
+            <path d="M 540 70 L 540 260" stroke="#8fb37a" stroke-width="3" fill="none"/>
+            <path d="M 532 70 L 548 70 L 540 56 Z" fill="#8fb37a"/>
+            <text x="566" y="110" fill="#b8d6a3" font-size="12.5" font-weight="700">现金流向下浇:</text>
+            <text x="566" y="132" fill="#bcc9dd" font-size="12">100 万月供先进来,</text>
+            <text x="566" y="152" fill="#bcc9dd" font-size="12">AAA 拿走它的那份,</text>
+            <text x="566" y="172" fill="#bcc9dd" font-size="12">剩下的才浇下一层</text>
+            <!-- 损失箭头(自下而上) -->
+            <path d="M 720 260 L 720 76" stroke="#e87878" stroke-width="3" fill="none"/>
+            <path d="M 712 78 L 728 78 L 720 64 Z" fill="#e87878"/>
+            <text x="620" y="290" fill="#ffb4b4" font-size="12.5" font-weight="700">违约损失往上烧:</text>
+            <text x="620" y="310" fill="#bcc9dd" font-size="12">平均违约率 7% 时,股权层烧光、</text>
+            <text x="620" y="330" fill="#bcc9dd" font-size="12">夹层带血,AAA 岿然不动;</text>
+            <text x="620" y="350" fill="#bcc9dd" font-size="12">2008 年各地违约一起跳到 25%——</text>
+            <text x="620" y="370" fill="#bcc9dd" font-size="12">AAA 的"安全"原来是相关性假设</text>
+            <!-- 底部 -->
+            <text x="450" y="416" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">分层不减风险,只重排风险的座位:总损失 = 各层损失相加,一层都省不了。</text>
+            <text x="450" y="444" text-anchor="middle" fill="#8499bd" font-size="12.5">2008 年的发明不是分层,是把一群"相关性 0.2"的假设卖掉、再按"相关性 1"的现实定价</text>
+          </svg>
+          <p class="figure__cap">瀑布的本质是队列,不是魔法:上游 AAA 先吃饭,下游股权层先替所有人收碗。2008 年大家发现,只要各地房价一起跌,AAA 的&#x27;安全&#x27;只是建在相关性 0.2 的假设上。</p>
+        </div>
         <h2>7. 固定和浮动的对赌台</h2>
 <p>两个人坐在一张桌子两端,互相羡慕对方的债:你那笔是浮动利率,天天怕加息;我这笔是固定利率,怕利率涨了自己吃亏。解决办法意外地朴素:开一张对赌台,把两种利息的形态对调——本金各自留着不动,谁也不用挪窝。这张台子叫利率互换,IRS,机构世界里最常用、普通人最少见到的一种衍生品。</p><p>合同长这样:A 背着 <span class="num">100 万</span>贷款,利率是 LPR 加 <span class="num">1 个百分点</span>;B 手里有 <span class="num">100 万</span>固定利率 <span class="num">4%</span> 的头寸,笃定利率要涨、想改成浮动。双方签一份互换:A 每年付 B 固定 <span class="num">4%</span>,B 每年付 A <span class="hl">“LPR+<span class="num">1%</span>”</span>。名义本金 <span class="num">100 万</span>,从头到尾不换本金,只轧差利息——A 欠银行的贷款还是 A 自己还,互换只管两边利息的差额。这 <span class="num">100 万</span>是把算数的标尺,叫<span class="hl">“名义”</span>就是因为没人真把它掏出来。</p><p>手算一遍 A 的账。签约时 LPR 是 <span class="num">3.45%</span>,A 原本每年要付 <span class="num">100 万</span> × (<span class="num">3.45%</span>+<span class="num">1%</span>) = <span class="num">4.45 万</span>;签完互换,A 对外那笔浮动利息被 B 的付款抵掉,净支出钉死在 <span class="num">4 万</span>,当下就差出 <span class="num">0.45 万</span>一年。之后哪怕 LPR 涨到 <span class="num">3.85%</span>,A 的年支出还是 <span class="num">4 万</span>,加息的焦虑彻底转给了对手方。也别忘了 A 放弃的那半边:如果 LPR 不涨反跌,他照样付 <span class="num">4 万</span>,眼睁睁看别人越付越少——互换锁死的是确定性,从来不是包赚协议。</p><p>别嫌这工具土:银行、保险和大型私募管理利率风险,主力就是它。中国的银行间利率互换市场从 <span class="num">2014 年</span>起就是几十万亿级别的体量,比普通人熟悉的股票期权市场热闹得多,只是柜台不对个人开放。机构版的<span class="hl">“怕加息”</span>,最后大多落到这条线上解决——你看不见它,但它垫在整个债券市场的底下。</p><p>顺手收两个进阶名词。第一个是互换期权,Swaption:它给你一个权利——在未来某个时点,按约定的固定利率进入一笔利率互换。比如你明年要发债、怕届时利率涨,可以先买这份<span class="hl">“入场保险”</span>;届时利率真涨过约定水平,你签约后立刻比市价占便宜;没涨,权利金白付。逻辑和普通期权一模一样,只是保的标的换成了一份互换合同。</p><p>第二个是 DV01,也常叫 PVBP:利率每动 <span class="num">1 个基点</span>,一手互换的账面盈亏是多少钱。给你量级感:<span class="num">1000 万</span>名义、<span class="num">10 年</span>期的互换,DV01 大约 <span class="num">950 元</span>——收益率曲线动一小格,账上就是近千元的进或出。粗算法是<span class="hl">“久期 × 名义本金 ÷ 10000”</span>。实盘里没人手算它,都调现成的库,但你得知道这个数是怎么长出来的:它是对利率风险最小的那块量砖。</p>
 
