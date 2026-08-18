@@ -41,6 +41,32 @@
     logs/                  # 每次实验和模拟盘日志</code></pre>
                 <p>上面这棵目录树不是行业唯一标准,但它给了第一版项目一个可以照抄的形状。务实一点的做法是:先只实现 `configs`、`data`、`features`、`backtest`、`reports` 这五层,让研究流程能完整跑一圈;等到了模拟盘阶段,再把 `models`、`logs` 和更完整的测试补进来。骨架先立住,肌肉慢慢长。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 415" role="img" aria-label="量化项目目录三层图:raw 原始层只读、features 特征层可算、reports 报告层只产,层间只允许向下读写,右侧红色虚线表示禁止反向回流">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">把目录当地层:每一层只许干一件事</text>
+            <!-- 三层地层,像地质剖面 -->
+            <rect x="80" y="70" width="740" height="84" rx="8" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="110" y="102" fill="#a8c6ff" font-size="14" font-weight="800">data/raw 原始层</text>
+            <text x="110" y="128" fill="#bcc9dd" font-size="12">落地之后一个字都不许改——改坏了没人知道,所有脏活留给下一层</text>
+            <rect x="80" y="166" width="740" height="84" rx="8" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="110" y="198" fill="#f0c96a" font-size="14" font-weight="800">data/features 特征层</text>
+            <text x="110" y="224" fill="#bcc9dd" font-size="12">清洗、对齐、算因子全在这里;每个因子一张登记表:定义、公式、值域、频率</text>
+            <rect x="80" y="262" width="740" height="84" rx="8" fill="rgba(238,136,119,0.13)" stroke="#ee8877"/>
+            <text x="110" y="294" fill="#ffb4b4" font-size="14" font-weight="800">reports 报告层</text>
+            <text x="110" y="320" fill="#bcc9dd" font-size="12">回测曲线、指标表、报错日志只从这里出;截图从贴自动生成,杜绝手工美图</text>
+            <!-- 层间箭头:只许向下 -->
+            <line x1="450" y1="156" x2="450" y2="164" stroke="#8499bd" stroke-width="3"/>
+            <line x1="450" y1="252" x2="450" y2="260" stroke="#8499bd" stroke-width="3"/>
+            <text x="470" y="161" fill="#8499bd" font-size="11">只许向下读</text>
+            <text x="470" y="257" fill="#8499bd" font-size="11">只许向下写</text>
+            <!-- 右侧红线:禁止反向 -->
+            <path d="M 800 330 Q 860 220 800 100" fill="none" stroke="#ee8877" stroke-width="3" stroke-dasharray="8 6"/>
+            <line x1="786" y1="88" x2="814" y2="112" stroke="#ee8877" stroke-width="3"/>
+            <line x1="786" y1="112" x2="814" y2="88" stroke="#ee8877" stroke-width="3"/>
+            <text x="450" y="388" text-anchor="middle" fill="#bcc9dd" font-size="12.5">吃过亏的项目最后都长成一个样:原始层只读、特征层可算、报告层只产,箭头一律向下</text>
+          </svg>
+          <p class="figure__cap">把目录当地质层:data/raw 落地后一个字不许改;data/features 负责清洗和算因子,每个因子都有登记表;reports 只负责产出回测曲线和报错日志。吃亏的项目最后都长成一个样——箭头一律向下,谁也不许反向回流。</p>
+        </div>
         <h3>1.2. 配置文件比硬编码可靠</h3>
 <p>打开很多新手的量化代码,随手一搜就能搜出十几个魔法数字:日期写死在第三行,路径写死在循环里,费率藏在一个谁也想不起来的函数深处。这是给自己埋雷。正确的做法是:股票池、回测区间、调仓频率、交易成本、滑点、因子列表、模型参数,统统收进配置文件或显式参数里,不让任何关键数字散落在代码各处。写代码时你对它们了如指掌,三个月后它们就是你读不懂的甲骨文。</p><p>配置真正的价值,是让实验可重复。设想一下:你今天跑了一个<span class="term">中证 500</span> 月频低估值策略,一个月后你应该能用同一份配置跑出同样的结果;如果结果不一样,你必须能回答到底是数据更新了、代码改动了,还是依赖环境变了。回答不出这个问题,你做的就不是研究,是许愿——每次跑出来的都是许来的新愿。</p><p>配置还有个大用场:做对比实验。只改一个参数,比如把交易成本从 <span class="num">0.1%</span> 调到 <span class="num">0.2%</span>,其余一概不动,观察结果怎么变——这才是干净的单变量实验。要是参数散在代码里,对比实验就退化成了手工记忆大赛:刚才那次我到底改没改滑点来着?想不起来,实验就白费了。</p>
                 <pre><code>universe: csi500
@@ -96,6 +122,56 @@
         <h3>1.6. 训练、预测和回测不要混</h3>
 <p>引入机器学习之后,有一条分工红线必须焊死:训练脚本负责用训练区间拟合模型,预测脚本负责在指定日期输出分数,回测脚本负责把分数变成组合。三件事,三个入口。一旦混在一起写,样本泄漏几乎是必然结局——它不会轰隆一声炸掉,而是悄悄把<span class="hl">“未来”</span>揉进训练集,让你的回测成绩好看到值得怀疑人生。</p><p>模型文件必须带版本,这是底线工程素养:用了哪些特征、训练区间到哪、参数是什么、随机种子是什么、代码是哪个版本,全部记录在案。要求是实盘的硬标准——模拟盘或实盘里某一天做出的预测,必须能一路追溯到当时那个具体的模型。追溯不到,那次预测就是一次无法复盘的悬案。</p><p>预测结果也要落盘,别让每次回测都临时训一遍模型然后直接交易。真实生产流程里,每天是先生成一份预测文件,组合构建和交易系统再去读它。照这个流程做模拟,一来更贴近真实生产,二来每一步都有档可查。回测里<span class="hl">“图省事”</span>省掉的每一步,未来都会变成你选择困难与互相矛盾的实验结果。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 920 385" role="img" aria-label="量化项目分层流水线图:原始数据、清洗、特征因子、训练、预测、回测报告六个方框单向排列,训练到因子之间画红色禁止回流线和叉号,下方三栏口诀分别为配置外置、失败也留档、测试断言守门">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化项目流水线:每一层只管自己的事</text>
+            <!-- 六层管道 -->
+            <rect x="40" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#7aa7f0"/>
+            <text x="100" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">原始数据</text>
+            <text x="100" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">只读,不改</text>
+            <rect x="190" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#7aa7f0"/>
+            <text x="250" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">清洗</text>
+            <text x="250" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">对齐·去重·补缺</text>
+            <rect x="340" y="70" width="120" height="56" rx="8" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+            <text x="400" y="94" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">特征/因子</text>
+            <text x="400" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">每个有定义</text>
+            <rect x="490" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#8fb37a"/>
+            <text x="550" y="94" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">训练</text>
+            <text x="550" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">只用历史段</text>
+            <rect x="640" y="70" width="100" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#ee8877"/>
+            <text x="690" y="94" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">预测</text>
+            <text x="690" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">滚到样本外</text>
+            <rect x="770" y="70" width="110" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#ee8877"/>
+            <text x="825" y="94" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">回测/报告</text>
+            <text x="825" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">自动生成</text>
+            <!-- 箭头 -->
+            <line x1="160" y1="98" x2="188" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="310" y1="98" x2="338" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="460" y1="98" x2="488" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="610" y1="98" x2="638" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="740" y1="98" x2="768" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <!-- 数据不可回流红线 -->
+            <path d="M 690 128 Q 550 190 400 168" fill="none" stroke="#ee8877" stroke-width="3" stroke-dasharray="8 6"/>
+            <line x1="380" y1="160" x2="420" y2="176" stroke="#ee8877" stroke-width="3"/>
+            <line x1="380" y1="176" x2="420" y2="160" stroke="#ee8877" stroke-width="3"/>
+            <text x="545" y="186" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">禁止:未来信息回流训练——一跨线就是前视偏差</text>
+            <!-- 底部三栏口诀 -->
+            <rect x="60" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="80" y="246" fill="#a8c6ff" font-size="13" font-weight="800">配置外置</text>
+            <text x="80" y="270" fill="#bcc9dd" font-size="12">路径·参数全进配置文件</text>
+            <text x="80" y="292" fill="#bcc9dd" font-size="12">代码里不许硬编码</text>
+            <rect x="330" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.4)"/>
+            <text x="350" y="246" fill="#f0c96a" font-size="13" font-weight="800">失败也留档</text>
+            <text x="350" y="270" fill="#bcc9dd" font-size="12">跑挂的实验记参数和报错</text>
+            <text x="350" y="292" fill="#bcc9dd" font-size="12">失败的坑只值记一次</text>
+            <rect x="600" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(238,136,119,0.4)"/>
+            <text x="620" y="246" fill="#ffb4b4" font-size="13" font-weight="800">测试断言守门</text>
+            <text x="620" y="270" fill="#bcc9dd" font-size="12">因子值域、收益单位、</text>
+            <text x="620" y="292" fill="#bcc9dd" font-size="12">截面覆盖率,进 CI 每天查</text>
+            <text x="450" y="352" text-anchor="middle" fill="#bcc9dd" font-size="12.5">工程骨架的正确性不看代码多聪明,看三条纪律:数据单向流、配置全外置、结果可复现</text>
+          </svg>
+          <p class="figure__cap">量化项目的正确性靠的是三条纪律而不是代码聪明:数据只能从原始层一路单向流到报告层,训练绝不允许偷看样本外(一跨线就是前视偏差);路径参数全部外置到配置文件;跑挂的实验也要留档,同样的坑只值记一次。</p>
+        </div>
         <h3>1.7. 自动生成比手工截图可靠</h3>
 <p>回测跑完了,接下来这一幕你肯定不陌生:打开 notebook,挑几张好看的图截下来,贴进文档——收工。问题恰恰出在“挑”字上。报告必须尽量自动生成:回测一结束,脚本就该自动输出净值图、回撤图、年度收益、月度收益、<span class="term">IC</span>、分层、换手、持仓、行业暴露和成本敏感性,一个都不许少。流程固定了,才轮不到人性出场挑肥拣瘦。</p><p>手工截图有两个原罪:一是容易只挑对自己有利的图,二是容易漏掉不利的结果——而这两者往往同时发生,且当事人毫无自觉。自动报告的价值就在于把固定指标一股脑全摆在你面前,逼你直面策略的真实长相,包括它卸妆后的部分。研究里最贵的能力不是发现机会,而是不对自己撒谎。</p><p>报告里还要保留元信息:用的是哪份配置、哪个数据版本。别人(包括三个月后的你)看到一条曲线,应该立刻能知道它出自哪个实验、哪组参数、哪版数据。没有元信息的图表,复盘价值趋近于零——一条来历不明的漂亮曲线,和一张没写日期的化验单一样,看着精密,毫无用处。</p>
 
@@ -154,33 +230,6 @@ def test_no_trade_when_limit_up():
         <h3>2.11. PE、PB 和股息率</h3>
 <p>一只股票 <span class="num">100 元</span>,贵还是便宜?单看价格回答不了,得问<span class="hl">“<span class="num">100 元</span>买到了什么”</span>——估值三兄弟就是干这个的。<span class="term">PE</span> 是市值除以净利润,问的是市场愿意为一元利润付多少钱;<span class="term">PB</span> 是市值除以净资产,问的是愿意为一元账面净资产付多少钱;股息率是分红除以价格,问的是按当前价格买入,分红回报大约多少。三个问题,三种<span class="hl">“相对贵贱”</span>的视角。</p><p>不过这三个指标都必须防机械使用:低 <span class="term">PE</span>、低 <span class="term">PB</span>、高股息率常被看作便宜,但低估值可能来自真实风险(便宜得有道理),高股息可能不可持续(今年分完明年没得分),<span class="term">PB</span> 对轻资产公司解释力有限(人家值钱的资产根本不在账上)。便宜货和坑,从外表看是双胞胎,区别藏在基本面里。</p><p>正确的打开方式,是把估值指标和行业、质量、成长、现金流放在一起看——估值负责回答<span class="hl">“贵不贵”</span>,其他维度负责回答<span class="hl">“值不值”</span>。量化里的标准动作是做行业中性和极端值处理,避免把行业之间的天然差异,误当成某只股票的便宜。估值是雷达,不是自动导航,方向还得你把。</p>
 
-
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 23 章小结图: 一个量化项目的代码骨架 与 公式和指标速查">
-            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
-            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
-            
-            <g>
-              <rect x="65" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="77" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="90" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">1</text>
-              <text x="84" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="84" y="194">量化项目要按数据、</tspan><tspan x="84" y="212">因子、回测、模型、</tspan><tspan x="84" y="230">报告和日志分层组织</tspan></text>
-            </g>
-            <g>
-              <rect x="335" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="347" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="360" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">2</text>
-              <text x="354" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="354" y="203">配置、版本、交易记</tspan><tspan x="354" y="221">录和自动报告</tspan></text>
-            </g>
-            <g>
-              <rect x="605" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="617" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="630" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">3</text>
-              <text x="624" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="624" y="194">公式的作用是把收益</tspan><tspan x="624" y="212">、风险、基准和估值</tspan><tspan x="624" y="230">问题算清楚、要检查</tspan></text>
-            </g>
-          </svg>
-          <p class="figure__cap">读完第 23 章后,至少要能复述“量化项目要按数据、因子、回测、模型、报告和日志分层组织”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
-        </div>
 
         <section class="summary reveal">
           <h2>小结</h2>

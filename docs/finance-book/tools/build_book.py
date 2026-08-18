@@ -3570,6 +3570,156 @@ PATCH_K = {
 
 
 
+def _fig_l8_stairs():
+    """ch08:中等收入陷阱的楼梯图:红利耗尽后的两条路。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">中等收入陷阱:楼梯爬到一半,梯子撤了</text>
+            <!-- 楼梯 -->
+            <rect x="80" y="330" width="160" height="40" rx="6" fill="rgba(122,167,240,0.25)" stroke="#7aa7f0"/>
+            <text x="160" y="355" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">农业起步</text>
+            <rect x="240" y="280" width="160" height="40" rx="6" fill="rgba(122,167,240,0.35)" stroke="#7aa7f0"/>
+            <text x="320" y="305" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">出口代工</text>
+            <rect x="400" y="230" width="160" height="40" rx="6" fill="rgba(240,201,106,0.3)" stroke="#f0c96a"/>
+            <text x="480" y="255" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">中等收入(卡壳高发区)</text>
+            <rect x="640" y="180" width="160" height="40" rx="6" fill="rgba(143,179,122,0.3)" stroke="#8fb37a"/>
+            <text x="720" y="205" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">高收入</text>
+            <!-- 断梯 -->
+            <line x1="560" y1="280" x2="640" y2="190" stroke="#ee8877" stroke-width="4" stroke-dasharray="10 8"/>
+            <text x="600" y="160" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">梯子撤了:工资涨了,廉价优势没了</text>
+            <!-- 两条路 -->
+            <path d="M 480 230 Q 560 150 700 128" fill="none" stroke="#8fb37a" stroke-width="4"/>
+            <text x="620" y="120" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">A:技术升级接上去(日韩)</text>
+            <path d="M 480 272 Q 560 320 700 330" fill="none" stroke="#ee8877" stroke-width="4"/>
+            <text x="620" y="352" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">B:靠借债和老本打转(拉美)</text>
+            <text x="450" y="400" text-anchor="middle" fill="#bcc9dd" font-size="12.5">判断看点:工人工资涨得比效率快,债务堆得比技术快,就是 B 路线的前兆</text>"""
+    return concept_figure(body, "0 0 900 430",
+        "中等收入陷阱楼梯图:农业起步、出口代工、中等收入三级台阶,通向高收入的梯子断掉,一条绿色路线升级接上去,一条红色路线原地打转",
+        "爬楼前半段靠的是便宜劳动力和出口代工,谁都能爬;难的是工资涨起来之后那一级——梯子(廉价优势)撤了,要么靠技术升级接上去(日韩路线),要么靠借债在原地打转(拉美路线)。判断前兆就看两条:工资涨得比效率快、债务堆得比技术快。")
+
+
+def _fig_l23_pipeline():
+    """ch23:量化项目从原始数据到研究报告的分层流水线。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化项目流水线:每一层只管自己的事</text>
+            <!-- 六层管道 -->
+            <rect x="40" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#7aa7f0"/>
+            <text x="100" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">原始数据</text>
+            <text x="100" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">只读,不改</text>
+            <rect x="190" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#7aa7f0"/>
+            <text x="250" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">清洗</text>
+            <text x="250" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">对齐·去重·补缺</text>
+            <rect x="340" y="70" width="120" height="56" rx="8" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+            <text x="400" y="94" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">特征/因子</text>
+            <text x="400" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">每个有定义</text>
+            <rect x="490" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#8fb37a"/>
+            <text x="550" y="94" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">训练</text>
+            <text x="550" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">只用历史段</text>
+            <rect x="640" y="70" width="100" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#ee8877"/>
+            <text x="690" y="94" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">预测</text>
+            <text x="690" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">滚到样本外</text>
+            <rect x="770" y="70" width="110" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#ee8877"/>
+            <text x="825" y="94" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">回测/报告</text>
+            <text x="825" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">自动生成</text>
+            <!-- 箭头 -->
+            <line x1="160" y1="98" x2="188" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="310" y1="98" x2="338" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="460" y1="98" x2="488" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="610" y1="98" x2="638" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="740" y1="98" x2="768" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <!-- 数据不可回流红线 -->
+            <path d="M 690 128 Q 550 190 400 168" fill="none" stroke="#ee8877" stroke-width="3" stroke-dasharray="8 6"/>
+            <line x1="380" y1="160" x2="420" y2="176" stroke="#ee8877" stroke-width="3"/>
+            <line x1="380" y1="176" x2="420" y2="160" stroke="#ee8877" stroke-width="3"/>
+            <text x="545" y="186" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">禁止:未来信息回流训练——一跨线就是前视偏差</text>
+            <!-- 底部三栏口诀 -->
+            <rect x="60" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="80" y="246" fill="#a8c6ff" font-size="13" font-weight="800">配置外置</text>
+            <text x="80" y="270" fill="#bcc9dd" font-size="12">路径·参数全进配置文件</text>
+            <text x="80" y="292" fill="#bcc9dd" font-size="12">代码里不许硬编码</text>
+            <rect x="330" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.4)"/>
+            <text x="350" y="246" fill="#f0c96a" font-size="13" font-weight="800">失败也留档</text>
+            <text x="350" y="270" fill="#bcc9dd" font-size="12">跑挂的实验记参数和报错</text>
+            <text x="350" y="292" fill="#bcc9dd" font-size="12">失败的坑只值记一次</text>
+            <rect x="600" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(238,136,119,0.4)"/>
+            <text x="620" y="246" fill="#ffb4b4" font-size="13" font-weight="800">测试断言守门</text>
+            <text x="620" y="270" fill="#bcc9dd" font-size="12">因子值域、收益单位、</text>
+            <text x="620" y="292" fill="#bcc9dd" font-size="12">截面覆盖率,进 CI 每天查</text>
+            <text x="450" y="352" text-anchor="middle" fill="#bcc9dd" font-size="12.5">工程骨架的正确性不看代码多聪明,看三条纪律:数据单向流、配置全外置、结果可复现</text>"""
+    return concept_figure(body, "0 0 920 385",
+        "量化项目分层流水线图:原始数据、清洗、特征因子、训练、预测、回测报告六个方框单向排列,训练到因子之间画红色禁止回流线和叉号,下方三栏口诀分别为配置外置、失败也留档、测试断言守门",
+        "量化项目的正确性靠的是三条纪律而不是代码聪明:数据只能从原始层一路单向流到报告层,训练绝不允许偷看样本外(一跨线就是前视偏差);路径参数全部外置到配置文件;跑挂的实验也要留档,同样的坑只值记一次。")
+
+
+def _fig_m8_export():
+    """ch08:出口造血循环:外汇怎么变成工资和工厂。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">拿出口给自己造血:一个国家的造血循环</text>
+            <!-- 中心循环四个节点 -->
+            <rect x="360" y="70" width="180" height="56" rx="8" fill="rgba(122,167,240,0.25)" stroke="#7aa7f0"/>
+            <text x="450" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">开工厂接订单</text>
+            <text x="450" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">先把东西卖出去</text>
+            <rect x="640" y="196" width="180" height="56" rx="8" fill="rgba(143,179,122,0.25)" stroke="#8fb37a"/>
+            <text x="730" y="220" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">外汇流进来</text>
+            <text x="730" y="240" text-anchor="middle" fill="#bcc9dd" font-size="11">美元/欧元落袋</text>
+            <rect x="360" y="320" width="180" height="56" rx="8" fill="rgba(240,201,106,0.25)" stroke="#f0c96a"/>
+            <text x="450" y="344" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">结汇变本币</text>
+            <text x="450" y="364" text-anchor="middle" fill="#bcc9dd" font-size="11">央行/银行系统放大</text>
+            <rect x="80" y="196" width="180" height="56" rx="8" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
+            <text x="170" y="220" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">发工资扩内需</text>
+            <text x="170" y="240" text-anchor="middle" fill="#bcc9dd" font-size="11">工人有钱再消费</text>
+            <!-- 循环箭头 -->
+            <path d="M 540 100 Q 660 130 716 192" fill="none" stroke="#8499bd" stroke-width="3" marker-end="url(#arrowM)"/>
+            <path d="M 700 252 Q 620 306 544 336" fill="none" stroke="#8499bd" stroke-width="3"/>
+            <path d="M 360 350 Q 240 320 190 256" fill="none" stroke="#8499bd" stroke-width="3"/>
+            <path d="M 200 196 Q 260 130 356 104" fill="none" stroke="#8499bd" stroke-width="3"/>
+            <defs><marker id="arrowM" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8499bd"/></marker></defs>
+            <!-- 循环中心 -->
+            <circle cx="450" cy="212" r="46" fill="rgba(18,29,49,0.9)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="450" y="208" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">造血机</text>
+            <text x="450" y="228" text-anchor="middle" fill="#bcc9dd" font-size="11">越转越壮</text>
+            <text x="450" y="412" text-anchor="middle" fill="#bcc9dd" font-size="12.5">循环一旦转起来,工人变消费者,消费者养活更多工厂;反之订单一断,整个环跟着收缩</text>"""
+    return concept_figure(body, "0 0 900 440",
+        "出口造血循环图:开工厂接订单、外汇流进来、结汇变本币、发工资扩内需四个方框围成顺时针循环,中心圆写造血机越转越壮",
+        "一个国家拿出口给自己造血的完整循环:开工厂接订单,外汇流进来,结汇变成本币,发工资扩内需,工人变消费者再养活更多工厂——越转越壮。反过来,订单一断,整个环跟着收缩。")
+
+
+def _fig_m23_dirs():
+    """ch23:量化项目目录分层:原始层只读,特征层可算,报告层只产。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">把目录当地层:每一层只许干一件事</text>
+            <!-- 三层地层,像地质剖面 -->
+            <rect x="80" y="70" width="740" height="84" rx="8" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="110" y="102" fill="#a8c6ff" font-size="14" font-weight="800">data/raw 原始层</text>
+            <text x="110" y="128" fill="#bcc9dd" font-size="12">落地之后一个字都不许改——改坏了没人知道,所有脏活留给下一层</text>
+            <rect x="80" y="166" width="740" height="84" rx="8" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="110" y="198" fill="#f0c96a" font-size="14" font-weight="800">data/features 特征层</text>
+            <text x="110" y="224" fill="#bcc9dd" font-size="12">清洗、对齐、算因子全在这里;每个因子一张登记表:定义、公式、值域、频率</text>
+            <rect x="80" y="262" width="740" height="84" rx="8" fill="rgba(238,136,119,0.13)" stroke="#ee8877"/>
+            <text x="110" y="294" fill="#ffb4b4" font-size="14" font-weight="800">reports 报告层</text>
+            <text x="110" y="320" fill="#bcc9dd" font-size="12">回测曲线、指标表、报错日志只从这里出;截图从贴自动生成,杜绝手工美图</text>
+            <!-- 层间箭头:只许向下 -->
+            <line x1="450" y1="156" x2="450" y2="164" stroke="#8499bd" stroke-width="3"/>
+            <line x1="450" y1="252" x2="450" y2="260" stroke="#8499bd" stroke-width="3"/>
+            <text x="470" y="161" fill="#8499bd" font-size="11">只许向下读</text>
+            <text x="470" y="257" fill="#8499bd" font-size="11">只许向下写</text>
+            <!-- 右侧红线:禁止反向 -->
+            <path d="M 800 330 Q 860 220 800 100" fill="none" stroke="#ee8877" stroke-width="3" stroke-dasharray="8 6"/>
+            <line x1="786" y1="88" x2="814" y2="112" stroke="#ee8877" stroke-width="3"/>
+            <line x1="786" y1="112" x2="814" y2="88" stroke="#ee8877" stroke-width="3"/>
+            <text x="450" y="388" text-anchor="middle" fill="#bcc9dd" font-size="12.5">吃过亏的项目最后都长成一个样:原始层只读、特征层可算、报告层只产,箭头一律向下</text>"""
+    return concept_figure(body, "0 0 900 415",
+        "量化项目目录三层图:raw 原始层只读、features 特征层可算、reports 报告层只产,层间只允许向下读写,右侧红色虚线表示禁止反向回流",
+        "把目录当地质层:data/raw 落地后一个字不许改;data/features 负责清洗和算因子,每个因子都有登记表;reports 只负责产出回测曲线和报错日志。吃亏的项目最后都长成一个样——箭头一律向下,谁也不许反向回流。")
+
+
+PATCH_M = {
+    8: [("拿出口给自己造血", _fig_m8_export)],
+    23: [("目录结构先分层", _fig_m23_dirs)],
+}
+
+
+PATCH_L = {
+    8: [("卡在不高不低的那一档", _fig_l8_stairs)],
+    23: [("训练、预测和回测不要混", _fig_l23_pipeline)],
+}
+
+
 def _merge_figures(base, patch):
     """按章合并锚点列表,不覆盖既有条目"""
     for k, v in patch.items():
@@ -3585,6 +3735,8 @@ _merge_figures(CONCEPT_FIGURES, PATCH_H)
 _merge_figures(CONCEPT_FIGURES, PATCH_I)
 _merge_figures(CONCEPT_FIGURES, PATCH_J)
 _merge_figures(CONCEPT_FIGURES, PATCH_K)
+_merge_figures(CONCEPT_FIGURES, PATCH_L)
+_merge_figures(CONCEPT_FIGURES, PATCH_M)
 
 
 SUMMARY_LABEL_OVERRIDES = {
