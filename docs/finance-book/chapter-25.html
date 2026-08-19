@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 25 章 · 量化项目的工程骨架与速查 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="用工程视角讲清数据层、因子层、回测层、模型层、报告层和配置管理。 / 把收益率、年化、波动、回撤、夏普、IC、跟踪误差、久期和估值公式统一解释。" />
+    <title>第 25 章 · 市场中性与 CTA 趋势 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="解释多空组合、Beta 对冲、股指期货、基差、融券和中性策略风险。 / 讲清期货保证金、主力合约、换月、趋势跟踪、期限结构和 CTA 风险。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
@@ -12,324 +12,187 @@
     <main class="chapter">
       <div class="chapter__inner">
         <p class="chapter__eyebrow">第五部分 · 量化行业与策略版图 · 第 25 章</p>
-        <h1>量化项目的工程骨架与速查</h1>
-        <p class="lead">计算机背景的读者最容易把量化项目写成一个越拉越长的 notebook,几周后连自己都理不清哪个单元格先跑、哪个文件才是最终结果。这一章先讲怎么像正经工程项目那样组织一个量化项目:数据来源清楚、配置可重复、实验有记录、回测可复现、报告能自动生成;再给一份公式和指标速查,帮你在“别死背公式,要知道它在问什么”之间找到平衡。</p>
+        <h1>市场中性与 CTA 趋势</h1>
+        <p class="lead">市场中性听起来很诱人:不管大盘涨跌,只赚自己的选股能力。但“中性”到底中和了什么值得先讲清楚——对冲能降低方向风险,却消灭不了基差、融券、成本和极端行情里的相关性失效。这一章先拆解市场中性对冲之后到底还剩什么风险,再转向 CTA 和期货趋势,看另一类完全不同的思路:用规则去交易商品、股指和利率的趋势。</p>
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>量化项目要按数据、因子、回测、模型、报告和日志分层组织,把所有逻辑塞进一个 notebook,等于放弃复盘能力。</li>
-            <li>配置、版本、交易记录和自动报告,是可复现研究的四根支柱,缺一根,结论就立不住。</li>
-            <li>公式的作用是把收益、风险、基准和估值问题算清楚、说清楚、比清楚——它们是尺子,不需要跪拜,只需要用对。</li>
-            <li>同一个指标各有适用边界:夏普、VaR、PE、IC 单独使用都会骗人,必须结伴出场、交叉验证。</li>
+            <li>市场中性试图降低市场方向暴露,主要赚多头相对空头的选股收益——大盘只是被拆掉的变量,不是收益的来源。</li>
+            <li>对冲工具自带基差、成本、保证金和流动性风险:中性不等于无风险,只是风险换了100种姿势。</li>
+            <li>CTA 覆盖期货和衍生品策略的大家族,趋势跟踪只是其中最经典的一支,别把一支当全部。</li>
+            <li>期货策略必须正面处理保证金、杠杆、合约到期、换月、期限结构和成交规则,绕开任何一个都等于没看见风险。</li>
           </ul>
         </section>
 
 
-        <h2>1. 从数据到报告怎么组织</h2>
+        <h2>1. 对冲大盘以后还剩什么</h2>
 
-        <h3>1.1. 目录结构先分层</h3>
-<p>拿到一个新项目,第一件事不是写因子,而是开目录。就像接手一个后端服务,你总得先知道代码、配置和日志各住哪个房间。一个最小化的量化项目,可以分成这么几层:data 保存原始数据和处理后的数据,features 保存因子构造,backtest 保存回测逻辑,models 保存训练和预测,reports 保存图表和结论,configs 保存参数,logs 保存运行记录。七个目录,各管一段,谁也不越界。</p><p>目录分得这么讲究,不是为了看着整齐,而是为了隔离责任——工程师听到<span class="hl">“隔离责任”</span>这四个字,应该条件反射般地舒服。原始数据不该被实验脚本随手改掉;因子计算不该和回测撮合搅在一起;报告不该靠手工复制粘贴拼出来。每层的边界都清清楚楚,出错了你才知道去哪一层抓人;边界糊成一锅粥,debug 就变成全链路推理小说。</p><p>入门阶段完全不必上什么复杂框架,但有一条铁律:别把所有东西都塞进一个脚本。量化研究是要反复试错的,结构一乱,你很快就会发现一个致命问题——收益率变了,你却分不清它是来自模型改进、数据更新,还是某次手抖的手工操作。分不清功劳和 bug 的项目,比没有项目还危险,因为它会给你虚假的信心。</p>
-                <pre><code>quant_project/
-    configs/base.yaml
-    data/raw/              # 原始下载,不手改
-    data/processed/        # 清洗后的价格、成分、财务
-    features/              # 因子计算脚本
-    backtest/              # 账户、订单、撮合、指标
-    models/                # 训练、预测、模型版本
-    reports/               # 自动生成的图表和结论
-    tests/                 # 数据、因子、回测状态测试
-    logs/                  # 每次实验和模拟盘日志</code></pre>
-                <p>上面这棵目录树不是行业唯一标准,但它给了第一版项目一个可以照抄的形状。务实一点的做法是:先只实现 `configs`、`data`、`features`、`backtest`、`reports` 这五层,让研究流程能完整跑一圈;等到了模拟盘阶段,再把 `models`、`logs` 和更完整的测试补进来。骨架先立住,肌肉慢慢长。</p>
+        <h3>1.1. 市场中性想解决什么</h3>
+<p>先设想一个场景:你的选股模型其实不错,挑的股票长期跑赢同类。可大盘一跌,你的组合照样绿油油——因为覆巢之下,完卵很少。普通股票多头策略就是这样暴露在大盘风险里:市场涨,很多股票一起涨;市场跌,很多股票一起跌,你的选股手艺被大盘的巨浪完全盖住。市场中性策略要做的,就是把大盘方向的影响降下来,让组合收益更多来自相对选股。</p><p>最朴素的做法是:买入模型看好的股票,同时卖空模型看差的股票;或者用<span class="term">股指期货</span>空头,对冲多头组合的市场 <span class="term">Beta</span>。这样如果大盘整体下跌,多头这边亏钱,空头或期货对冲那边赚钱,组合的净损失可能还小。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>但请注意分寸:市场中性通常只是对某个市场风险中性,不是对所有风险中性。行业、风格、流动性、个股、<span class="term">基差</span>、融资成本、模型失效,全都还在原地站着。它拆的是墙上最大的一颗钉子,不是把整面墙拆了。</p></div>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 315" role="img" aria-label="量化项目分层结构示意:data、factors、backtest、config、reports 各司其职">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化项目要分层,别塞进一个大 notebook</text>
-            <!-- 分层结构 -->
-            <rect x="120" y="60" width="660" height="40" rx="8" fill="rgba(122,167,240,0.20)" stroke="#a8c6ff" stroke-width="1.5"/>
-            <text x="140" y="85" fill="#eef4ff" font-size="14">data/  原始与清洗后的数据,来源和口径清楚</text>
-            <rect x="120" y="106" width="660" height="40" rx="8" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
-            <text x="140" y="131" fill="#eef4ff" font-size="14">factors/  因子计算,每个因子一个可复现脚本</text>
-            <rect x="120" y="152" width="660" height="40" rx="8" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
-            <text x="140" y="177" fill="#eef4ff" font-size="14">backtest/  回测引擎与成交、成本、约束假设</text>
-            <rect x="120" y="198" width="660" height="40" rx="8" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
-            <text x="140" y="223" fill="#eef4ff" font-size="14">config/  参数与实验配置,可重复、可追溯</text>
-            <rect x="120" y="244" width="660" height="40" rx="8" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
-            <text x="140" y="269" fill="#eef4ff" font-size="14">reports/  自动生成的净值、指标和归因报告</text>
-            <text x="450" y="300" text-anchor="middle" fill="#8499bd" font-size="12.5">每层职责单一,换人接手也能看懂,几周后自己也不会迷路</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="市场中性示意:多头买入等额、空头卖空,大盘方向被对冲,只留下选股超额">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">市场中性:买一篮子、卖空等额,抵掉大盘涨跌</text>
+            <!-- 多头柱 -->
+            <text x="200" y="76" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">多头:买入看好的股票</text>
+            <rect x="130" y="90" width="140" height="70" rx="6" fill="rgba(122,167,240,0.25)" stroke="#a8c6ff" stroke-width="2"/>
+            <text x="200" y="132" text-anchor="middle" fill="#eef4ff" font-size="14">+100 万</text>
+            <!-- 空头柱 -->
+            <text x="200" y="196" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">空头:卖空指数/看淡的股票</text>
+            <rect x="130" y="206" width="140" height="70" rx="6" fill="rgba(232,120,120,0.22)" stroke="#ffb4b4" stroke-width="2"/>
+            <text x="200" y="248" text-anchor="middle" fill="#eef4ff" font-size="14">-100 万</text>
+            <!-- 等号与结果 -->
+            <text x="330" y="185" text-anchor="middle" fill="#f0c96a" font-size="30" font-weight="800">=</text>
+            <rect x="380" y="95" width="470" height="180" rx="14" fill="rgba(18,29,49,0.5)" stroke="rgba(240,201,106,0.3)"/>
+            <text x="615" y="128" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">大盘涨跌被抵消</text>
+            <text x="410" y="162" fill="#c9d4e8" font-size="13.5">· 大盘涨 5%:多头 +5%、空头 -5%,方向对冲掉</text>
+            <text x="410" y="192" fill="#c9d4e8" font-size="13.5">· 剩下的,是你选股比指数强的那部分</text>
+            <text x="410" y="222" fill="#a8c6ff" font-size="13.5">· 赚的是“选股能力”,不赌大盘方向</text>
+            <text x="410" y="252" fill="#ffb4b4" font-size="12.5">· 但对冲有成本,基差、融券、极端行情仍是风险</text>
           </svg>
-          <p class="figure__cap">把项目按职责拆成清晰的几层,而不是全写进一个越拉越长的 notebook。数据、因子、回测、配置、报告各归各位,几周后你和接手的人都还能看懂。</p>
+          <p class="figure__cap">市场中性用一手买、一手卖空,把“大盘涨不涨”这个最大的不确定性对冲掉,只留下你选股比别人强的那一小块收益。代价是对冲本身要花钱,也有失效的时候。</p>
         </div>
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 415" role="img" aria-label="量化项目目录三层图:raw 原始层只读、features 特征层可算、reports 报告层只产,层间只允许向下读写,右侧红色虚线表示禁止反向回流">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">把目录当地层:每一层只许干一件事</text>
-            <!-- 三层地层,像地质剖面 -->
-            <rect x="80" y="70" width="740" height="84" rx="8" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
-            <text x="110" y="102" fill="#a8c6ff" font-size="14" font-weight="800">data/raw 原始层</text>
-            <text x="110" y="128" fill="#bcc9dd" font-size="12">落地之后一个字都不许改——改坏了没人知道,所有脏活留给下一层</text>
-            <rect x="80" y="166" width="740" height="84" rx="8" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
-            <text x="110" y="198" fill="#f0c96a" font-size="14" font-weight="800">data/features 特征层</text>
-            <text x="110" y="224" fill="#bcc9dd" font-size="12">清洗、对齐、算因子全在这里;每个因子一张登记表:定义、公式、值域、频率</text>
-            <rect x="80" y="262" width="740" height="84" rx="8" fill="rgba(238,136,119,0.13)" stroke="#ee8877"/>
-            <text x="110" y="294" fill="#ffb4b4" font-size="14" font-weight="800">reports 报告层</text>
-            <text x="110" y="320" fill="#bcc9dd" font-size="12">回测曲线、指标表、报错日志只从这里出;截图从贴自动生成,杜绝手工美图</text>
-            <!-- 层间箭头:只许向下 -->
-            <line x1="450" y1="156" x2="450" y2="164" stroke="#8499bd" stroke-width="3"/>
-            <line x1="450" y1="252" x2="450" y2="260" stroke="#8499bd" stroke-width="3"/>
-            <text x="470" y="161" fill="#8499bd" font-size="11">只许向下读</text>
-            <text x="470" y="257" fill="#8499bd" font-size="11">只许向下写</text>
-            <!-- 右侧红线:禁止反向 -->
-            <path d="M 800 330 Q 860 220 800 100" fill="none" stroke="#ee8877" stroke-width="3" stroke-dasharray="8 6"/>
-            <line x1="786" y1="88" x2="814" y2="112" stroke="#ee8877" stroke-width="3"/>
-            <line x1="786" y1="112" x2="814" y2="88" stroke="#ee8877" stroke-width="3"/>
-            <text x="450" y="388" text-anchor="middle" fill="#bcc9dd" font-size="12.5">吃过亏的项目最后都长成一个样:原始层只读、特征层可算、报告层只产,箭头一律向下</text>
-          </svg>
-          <p class="figure__cap">把目录当地质层:data/raw 落地后一个字不许改;data/features 负责清洗和算因子,每个因子都有登记表;reports 只负责产出回测曲线和报错日志。吃亏的项目最后都长成一个样——箭头一律向下,谁也不许反向回流。</p>
-        </div>
-        <h3>1.2. 配置文件比硬编码可靠</h3>
-<p>打开很多新手的量化代码,随手一搜就能搜出十几个魔法数字:日期写死在第三行,路径写死在循环里,费率藏在一个谁也想不起来的函数深处。这是给自己埋雷。正确的做法是:股票池、回测区间、调仓频率、交易成本、滑点、因子列表、模型参数,统统收进配置文件或显式参数里,不让任何关键数字散落在代码各处。写代码时你对它们了如指掌,三个月后它们就是你读不懂的甲骨文。</p><p>配置真正的价值,是让实验可重复。设想一下:你今天跑了一个<span class="term">中证 500</span> 月频低估值策略,一个月后你应该能用同一份配置跑出同样的结果;如果结果不一样,你必须能回答到底是数据更新了、代码改动了,还是依赖环境变了。回答不出这个问题,你做的就不是研究,是许愿——每次跑出来的都是许来的新愿。</p><p>配置还有个大用场:做对比实验。只改一个参数,比如把交易成本从 <span class="num">0.1%</span> 调到 <span class="num">0.2%</span>,其余一概不动,观察结果怎么变——这才是干净的单变量实验。要是参数散在代码里,对比实验就退化成了手工记忆大赛:刚才那次我到底改没改滑点来着?想不起来,实验就白费了。</p>
-                <pre><code>universe: csi500
-    start_date: 2016-01-01
-    end_date: 2024-12-31
-    rebalance: monthly
-    trade_price: next_open
-    cost:
-    buy_bps: 8
-    sell_bps: 13
-    constraints:
-    max_weight: 0.03
-    min_avg_amount: 20000000
-    factors:
-    - value_bp
-    - momentum_60
-    - quality_roe</code></pre>
-                <p>这份配置写的是一个研究项目的完整边界。以后报告里只要引用它,读者一眼就能知道:股票池是什么、日期从哪到哪、多久调一次仓、成本怎么扣、约束有几条、用了哪几个因子。配置写得越清楚,越难在事后偷偷改规则——它既是给别人的说明书,也是给未来那个容易心软的自己上的一把锁。</p>
-
-        <h3>1.3. 原始、清洗和特征分开</h3>
-<p>数据进来之后,最不该发生的就是<span class="hl">“边洗边用边覆盖”</span>。数据层至少要分出三个区:raw、processed 和 feature。raw 是原始下载或导入的数据,尽量一个字节都不改——它是案发现场的原貌;processed 是清洗后的标准表,比如统一了代码、日期、复权和停牌字段;feature 则是从 processed 算出来的因子和模型输入。三层各司其职,污染才不会顺着管道一路扩散。</p><p>这么分的用意是:每一步都要可追溯。某天你发现某个因子值异常,必须能沿着管道倒回去——从因子值,到清洗后的字段,到原始价格,再到处理脚本——一路查到源头。查不回去,模型输出错了你就只能猜;研究里“猜”这个字,比亏损本身更贵。</p><p>还有一件事要单独拎出来:数据检查脚本必须独立存在、随更随跑。缺失率、重复日期、异常价格、停牌状态、复权跳变、财报发布日期、指数成分变化,每一项都要能自动检查。数据检查绝不是开工那天跑一次就完事的仪式,每次更新数据都要重跑一遍——它更像 CI 而不是剪彩,何况脏数据最喜欢趁你不检查的时候溜进来。</p>
-                <div class="table-wrap">
-                  <table>
-                    <thead><tr><th>表</th><th>关键字段</th><th>用途</th></tr></thead>
-                    <tbody>
-                      <tr><td>prices</td><td>date, code, open, close, volume, amount, adj_factor, paused, limit_up, limit_down</td><td>行情、成交限制、收益计算</td></tr>
-                      <tr><td>universe</td><td>date, code, index_code, weight</td><td>点时股票池和基准权重</td></tr>
-                      <tr><td>features</td><td>date, code, factor_name, value, available_at</td><td>因子矩阵和可见时间</td></tr>
-                      <tr><td>orders</td><td>date, code, side, qty, limit_price, status</td><td>回测和模拟盘订单状态</td></tr>
-                      <tr><td>positions</td><td>date, code, qty, sellable_qty, market_value</td><td>持仓、T+1 和风险暴露</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p>有了上面这几张最小字段表,你就能把研究从一堆散落的 DataFrame,升级成一个可以逐表检查的数据层。字段不必一上来就追求齐全,但每个字段都必须说得出含义和口径——你今天省掉的注释,就是明年 debug 时流的泪。</p>
-
-        <h3>1.4. 每个因子都要有定义</h3>
-<p>因子代码最怕写成一句<span class="hl">“反正就是这么算的”</span>。每个因子都要白纸黑字写清楚:输入是什么,输出是什么,时间口径是什么。拿 momentum_20 举例:它用过去 <span class="num">20 个交易日</span>的复权收益,是否跳过最近 <span class="num">1 天</span>?做没做行业中性?极端值怎么处理?缺失值怎么填?这些问题不回答,同一个名字下可能住着三四种不同的因子,而你还以为它们是一个。</p><p>每个因子最好配两样小东西:一段文档和一个小测试。测试不用复杂,给它一段极小的假数据,算出预期结果,断言对上就行。别小看这几行——将来你重构代码时,它就是那个能在你手滑把 shift 方向改错的瞬间、立刻报警的哨兵。方向错了一位,因子就整个反了,而回测曲线照样会画出图来,绝不主动提醒你。</p><p>因子层还要舍得存中间结果。训练模型时不要每次临时把全部因子重算一遍:又慢,又难复现,还会让<span class="hl">“同一次实验”</span>变成玄学概念。工程上很简单:按日期和股票把因子矩阵落盘,记好生成它的代码和数据版本。因子矩阵就是研究世界的 checkpoint,存了它,你才能随时读档重来。</p>
-
-        <h3>1.5. 账户、订单和指标分开</h3>
-<p>回测层里至少住着三个角色,千万别让它们合体:策略负责生成目标仓位,撮合模块负责模拟成交,账户模块负责更新现金和持仓。最怕的写法是让策略函数直接改净值——看起来少写几十行,实际上你把成本、停牌、<span class="term">T+1</span> 和部分成交这些现实,全都挡在了门外。爽一时,假一世:这种回测越漂亮,离市场越远。</p><p>指标计算同样要独立出来。<span class="term">年化收益</span>、<span class="term">最大回撤</span>、<span class="term">夏普</span>、<span class="term">换手率</span>、超额、<span class="term">跟踪误差</span>、<span class="term">信息比率</span>、行业暴露,这些统统可以从净值、持仓和交易记录里算出来,干嘛塞在回测主循环里?指标一旦独立,所有策略就能共用同一套评价体系——谁都别想给自己定制一把对自己有利的尺子。评价口径统一,是实验可比性的前提。</p><p>交易记录必须老老实实保存,这一条没有商量余地。只留一条净值曲线是远远不够的:你要知道每一次买卖了什么、数量多少、价格多少、费用多少、有没有失败。净值曲线是结果,交易记录是证据;复盘时不看证据只看结果,和破案时只看心情不看监控,本质上是一回事。</p>
-                <pre><code>for date in trading_calendar:
-    data = load_point_in_time_data(date)
-    if is_rebalance_day(date):
-        score = compute_score(data.features)
-        target = build_target_portfolio(score, constraints)
-        orders = diff_to_orders(account.positions, target)
-    orders = risk_check(orders, account, market_rules)
-    fills = match_orders(orders, data.next_bar, cost_model)
-    account.update(fills, data.close_price)
-    recorder.save(date, account, orders, fills)</code></pre>
-                <p>这段伪代码的重点只有两个字:顺序。先取当时可见的数据,再算分数和目标组合,再生成订单,再过风控,再撮合成交,最后更新账户并记录——一环扣一环。这个顺序只要乱一环,未来函数或账户状态错误就会从裂缝里爬进来,而且通常不会报错,只会安静地给你一个好看得不真实的收益。回测引擎的全部尊严,都在这个循环里。</p>
-
-        <h3>1.6. 训练、预测和回测不要混</h3>
-<p>引入机器学习之后,有一条分工红线必须焊死:训练脚本负责用训练区间拟合模型,预测脚本负责在指定日期输出分数,回测脚本负责把分数变成组合。三件事,三个入口。一旦混在一起写,样本泄漏几乎是必然结局——它不会轰隆一声炸掉,而是悄悄把<span class="hl">“未来”</span>揉进训练集,让你的回测成绩好看到值得怀疑人生。</p><p>模型文件必须带版本,这是底线工程素养:用了哪些特征、训练区间到哪、参数是什么、随机种子是什么、代码是哪个版本,全部记录在案。要求是实盘的硬标准——模拟盘或实盘里某一天做出的预测,必须能一路追溯到当时那个具体的模型。追溯不到,那次预测就是一次无法复盘的悬案。</p><p>预测结果也要落盘,别让每次回测都临时训一遍模型然后直接交易。真实生产流程里,每天是先生成一份预测文件,组合构建和交易系统再去读它。照这个流程做模拟,一来更贴近真实生产,二来每一步都有档可查。回测里<span class="hl">“图省事”</span>省掉的每一步,未来都会变成你选择困难与互相矛盾的实验结果。</p>
+        <h3>1.2. Beta 对冲的直觉</h3>
+<p><span class="term">Beta</span> 这个词有自己的大白话翻译:组合对大盘的<span class="hl">“敏感系数”</span>。组合 <span class="term">Beta</span> 约为 1,市场涨 <span class="num">1%</span>,组合大致也涨 <span class="num">1%</span>;<span class="term">Beta</span> 约为 0,市场涨跌对组合影响就很小。市场中性策略常希望把组合 <span class="term">Beta</span> 控制在接近 0——让大盘这个变量从收入公式里尽量消失。</p><p>拿笔算一下。假设你有 <span class="num">1000 万</span>股票多头,整体 <span class="term">Beta</span> 接近 1。为了对冲市场风险,你卖出名义价值约 <span class="num">1000 万</span>的<span class="term">股指期货</span>。如果市场跌 <span class="num">5%</span>,股票多头大约亏 <span class="num">50 万</span>,<span class="term">股指期货</span>空头大约赚 <span class="num">50 万</span>,一来一回,大盘风险被抵消掉一部分。账本漂亮得像物理实验。</p><p>现实里这个实验从来不会这么完美。你的股票组合和期货对应的指数不完全一致,<span class="term">Beta</span> 本身会变,期货价格和现货指数之间有<span class="term">基差</span>,交易成本和<span class="term">保证金</span>也会来分一杯羹。理论上是完美抵消,工程上是<span class="hl">“大体抵消,尾差自负”</span>。</p><div class="callout callout--note reveal"><span class="callout__title">对冲是把浪压平,不是把门锁死</span><p>对冲之后,净值曲线上的浪确实矮了一截:大盘的涨跌大体被抵消,剩下的是选股手艺的小幅波动。但被压平的只是<span class="hl">“市场方向”</span>这一个变量——<span class="term">基差</span>、成本、<span class="term">保证金</span>、排序失效,全都还在原地。中性产品的曲线更平,不是因为风险被锁进了保险箱,而是最大那块风险被换成了十几块小风险。平,是要天天维护的。</p></div>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 920 385" role="img" aria-label="量化项目分层流水线图:原始数据、清洗、特征因子、训练、预测、回测报告六个方框单向排列,训练到因子之间画红色禁止回流线和叉号,下方三栏口诀分别为配置外置、失败也留档、测试断言守门">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化项目流水线:每一层只管自己的事</text>
-            <!-- 六层管道 -->
-            <rect x="40" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#7aa7f0"/>
-            <text x="100" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">原始数据</text>
-            <text x="100" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">只读,不改</text>
-            <rect x="190" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#7aa7f0"/>
-            <text x="250" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">清洗</text>
-            <text x="250" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">对齐·去重·补缺</text>
-            <rect x="340" y="70" width="120" height="56" rx="8" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
-            <text x="400" y="94" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">特征/因子</text>
-            <text x="400" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">每个有定义</text>
-            <rect x="490" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#8fb37a"/>
-            <text x="550" y="94" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">训练</text>
-            <text x="550" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">只用历史段</text>
-            <rect x="640" y="70" width="100" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#ee8877"/>
-            <text x="690" y="94" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">预测</text>
-            <text x="690" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">滚到样本外</text>
-            <rect x="770" y="70" width="110" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#ee8877"/>
-            <text x="825" y="94" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">回测/报告</text>
-            <text x="825" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">自动生成</text>
-            <!-- 箭头 -->
-            <line x1="160" y1="98" x2="188" y2="98" stroke="#8499bd" stroke-width="2.5"/>
-            <line x1="310" y1="98" x2="338" y2="98" stroke="#8499bd" stroke-width="2.5"/>
-            <line x1="460" y1="98" x2="488" y2="98" stroke="#8499bd" stroke-width="2.5"/>
-            <line x1="610" y1="98" x2="638" y2="98" stroke="#8499bd" stroke-width="2.5"/>
-            <line x1="740" y1="98" x2="768" y2="98" stroke="#8499bd" stroke-width="2.5"/>
-            <!-- 数据不可回流红线 -->
-            <path d="M 690 128 Q 550 190 400 168" fill="none" stroke="#ee8877" stroke-width="3" stroke-dasharray="8 6"/>
-            <line x1="380" y1="160" x2="420" y2="176" stroke="#ee8877" stroke-width="3"/>
-            <line x1="380" y1="176" x2="420" y2="160" stroke="#ee8877" stroke-width="3"/>
-            <text x="545" y="186" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">禁止:未来信息回流训练——一跨线就是前视偏差</text>
-            <!-- 底部三栏口诀 -->
-            <rect x="60" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(122,167,240,0.4)"/>
-            <text x="80" y="246" fill="#a8c6ff" font-size="13" font-weight="800">配置外置</text>
-            <text x="80" y="270" fill="#bcc9dd" font-size="12">路径·参数全进配置文件</text>
-            <text x="80" y="292" fill="#bcc9dd" font-size="12">代码里不许硬编码</text>
-            <rect x="330" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.4)"/>
-            <text x="350" y="246" fill="#f0c96a" font-size="13" font-weight="800">失败也留档</text>
-            <text x="350" y="270" fill="#bcc9dd" font-size="12">跑挂的实验记参数和报错</text>
-            <text x="350" y="292" fill="#bcc9dd" font-size="12">失败的坑只值记一次</text>
-            <rect x="600" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(238,136,119,0.4)"/>
-            <text x="620" y="246" fill="#ffb4b4" font-size="13" font-weight="800">测试断言守门</text>
-            <text x="620" y="270" fill="#bcc9dd" font-size="12">因子值域、收益单位、</text>
-            <text x="620" y="292" fill="#bcc9dd" font-size="12">截面覆盖率,进 CI 每天查</text>
-            <text x="450" y="352" text-anchor="middle" fill="#bcc9dd" font-size="12.5">工程骨架的正确性不看代码多聪明,看三条纪律:数据单向流、配置全外置、结果可复现</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="两条净值曲线:纯多头大起大落(波动约16.7%),对冲后收窄到4.8%缓慢上行">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">对冲不是让收益变高,是让带子收窄</text>
+            <defs>
+              <marker id="d14a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker>
+            </defs>
+            <!-- 坐标轴 -->
+            <line x1="60" y1="320" x2="850" y2="320" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="60" y1="60" x2="60" y2="320" stroke="#46587a" stroke-width="1.5" marker-end="url(#d14a)"/>
+            <!-- 纯多头:大起大落带子 -->
+            <path d="M 60 290 L 140 250 L 200 280 L 300 190 L 380 240 L 460 160 L 540 220 L 620 120 L 700 180 L 790 90 L 850 140" fill="none" stroke="#ffb4b4" stroke-width="2.5"/>
+            <!-- 对冲后:窄带子缓慢上行 -->
+            <path d="M 60 300 L 140 285 L 200 292 L 300 262 L 380 268 L 460 240 L 540 248 L 620 222 L 700 228 L 790 205 L 850 212" fill="none" stroke="#7aa7f0" stroke-width="2.8"/>
+            <!-- 对比标注 -->
+            <text x="120" y="80" fill="#ffb4b4" font-size="13.5" font-weight="800">纯多头:大起大落</text>
+            <text x="120" y="100" fill="#bcc9dd" font-size="11.5">年化波动约 ±16%</text>
+            <text x="120" y="118" fill="#8499bd" font-size="11">赚多赚有,坐不住才是风险</text>
+            <text x="600" y="268" fill="#a8c6ff" font-size="13.5" font-weight="800">对冲后:带子收窄</text>
+            <text x="600" y="288" fill="#bcc9dd" font-size="11.5">年化波动压到 ±5% 上下</text>
+            <text x="600" y="306" fill="#8499bd" font-size="11">方向削平了,选股能力留下</text>
+            <!-- 对比数字卡 -->
+            <rect x="660" y="60" width="230" height="110" rx="12" fill="rgba(18,29,49,0.75)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="775" y="86" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">同一组持仓,同一时段内</text>
+            <text x="675" y="110" fill="#bcc9dd" font-size="12">纯多头  年化波动 16.7%</text>
+            <text x="675" y="132" fill="#bcc9dd" font-size="12">对冲后  年化波动  4.8%</text>
+            <text x="675" y="156" fill="#8499bd" font-size="11">代价:付出期指名义和保证金</text>
+            <text x="450" y="364" text-anchor="middle" fill="#c9d4e8" font-size="12.5">对冲的变化不在终点高不高,在路稳不稳——中性策略买的是"拿得住",不是"赚更多"</text>
           </svg>
-          <p class="figure__cap">量化项目的正确性靠的是三条纪律而不是代码聪明:数据只能从原始层一路单向流到报告层,训练绝不允许偷看样本外(一跨线就是前视偏差);路径参数全部外置到配置文件;跑挂的实验也要留档,同样的坑只值记一次。</p>
+          <p class="figure__cap">对冲做对的事是把波动带子收窄,不是把终点抬高。同一组持仓,纯多头一年 ±16.7% 的大起大落,对冲后收窄到 ±4.8%;代价是你要付期指名义和保证金。</p>
         </div>
-        <h3>1.7. 自动生成比手工截图可靠</h3>
-<p>回测跑完了,接下来这一幕你肯定不陌生:打开 notebook,挑几张好看的图截下来,贴进文档——收工。问题恰恰出在“挑”字上。报告必须尽量自动生成:回测一结束,脚本就该自动输出净值图、回撤图、年度收益、月度收益、<span class="term">IC</span>、分层、换手、持仓、行业暴露和成本敏感性,一个都不许少。流程固定了,才轮不到人性出场挑肥拣瘦。</p><p>手工截图有两个原罪:一是容易只挑对自己有利的图,二是容易漏掉不利的结果——而这两者往往同时发生,且当事人毫无自觉。自动报告的价值就在于把固定指标一股脑全摆在你面前,逼你直面策略的真实长相,包括它卸妆后的部分。研究里最贵的能力不是发现机会,而是不对自己撒谎。</p><p>报告里还要保留元信息:用的是哪份配置、哪个数据版本。别人(包括三个月后的你)看到一条曲线,应该立刻能知道它出自哪个实验、哪组参数、哪版数据。没有元信息的图表,复盘价值趋近于零——一条来历不明的漂亮曲线,和一张没写日期的化验单一样,看着精密,毫无用处。</p>
+        <h3>1.3. 多头和空头的收益结构</h3>
+<p>很多人以为市场中性的收益来自<span class="hl">“大盘跌了就靠空头赚钱”</span>,错了。它真正想赚的是多头跑赢空头的那条缝:你买入高分股票,卖空低分股票,只要高分的比低分的强——涨得更多或跌得更少——多空组合就赚钱。</p><p>算两个小例子。大盘上涨的日子:多头组合涨 <span class="num">3%</span>,空头组合涨 <span class="num">1%</span>,两边规模相近,多空相对收益约 <span class="num">2%</span>。大盘下跌的日子:多头跌 <span class="num">4%</span>,空头跌 <span class="num">7%</span>,多头虽然亏钱,但空头赚得更多,组合依然可能赚钱。看出来了吗?涨跌方向不重要,<span class="hl">“谁比谁强”</span>才重要。</p><p>反过来也成立:如果高分股票跌得比低分股票还多,市场中性照样亏。它不靠市场方向吃饭,靠的是相对排序——排序错了,对冲做得再标准也救不了你。这就是这门手艺的核心:对冲负责拆掉大盘,选股负责在拆干净的桌面上赢钱。</p>
 
-        <h3>1.8. 记录失败比记录成功更重要</h3>
-<p>说一个不浪漫的事实:量化研究里,大多数想法都会失败。那么你失败的想法去哪了?如果不记录失败,两个后果等着你:一是反复在同一个方向上徒劳尝试,二是记忆里只剩下成功案例,完美患上幸存者偏差。实验日志应该老老实实记这些:日期、想法、配置、结果、结论、下一步。它不贵,每次十分钟,换的是不再原地打转。</p><p>日志不需要长,但必须诚实。举个例子,一条合格的记录长这样:尝试 <span class="num">60 日</span><span class="term">动量</span>,样本内有效,<span class="num">2021 年</span>后失效,换手偏高,扣完成本超额为负,暂不加入组合。几句话,信息量齐全。这样的记录攒上半年,它比任何一本交易秘籍都懂你——因为它记录的恰恰是你亲手撞过的每一堵墙。</p><p>记录失败还有个隐藏收益:它能训练你的研究判断力。翻着翻着,规律自己会浮出来——哪些方向总是死在成本上,哪些因子扒光了看其实只是市值暴露,哪些模型对参数敏感到一碰就变脸。这些<span class="hl">“伤亡名单”</span>攒起来,才是你区别于新手的真正护城河。没写过失败日志的研究员,永远都在交同一笔学费。</p>
+        <h3>1.4. 股指期货对冲和基差</h3>
+<p>在 A 股市场做市场中性,最常用的对冲工具是<span class="term">股指期货</span>。但这里有个容易忽视的细节:<span class="term">股指期货</span>的价格不一定等于现货指数点位,两者的差距叫<span class="term">基差</span>。期货价格高于现货指数叫<span class="term">升水</span>,低于现货指数叫<span class="term">贴水</span>,而这个差不是装饰品——它会实打实地影响你的对冲成本和收益。</p><p>举个机制上的直觉:如果期货长期<span class="term">贴水</span>,你做空期货对冲时,在合约展期的过程中可能付出成本、也可能获得收益,具体取决于价格路径和持仓方式。总之,<span class="term">基差</span>的变化会让对冲的实际效果,偏离教科书里那个干净的<span class="hl">“大盘涨跌完全抵消”</span>。</p><p>所以市场中性产品的报告里,常会单列<span class="term">基差</span>影响。一个策略选股很好,但<span class="term">基差</span>成本很高,净收益照样被压扁。记住一句话:对冲工具不是免费的保险,它本身就是一个会波动、会消耗<span class="term">保证金</span>的交易品种——请保镖,是要付工资的。</p><div class="callout callout--note reveal"><span class="callout__title">对冲标的一旦选歪,勤快也变成白打扫</span><p>对冲能不能成,先看空头那头押的是什么。拿大盘蓝筹指数期货去对冲一篮子小盘股票,风一吹两边各走各的:股票跌得凶,期货纹丝不动。打扫的动作再标准,扫错了屋子也是白忙。所以做中性,第一步不是算对冲比例,而是检查多头和空头的<span class="hl">“血缘”</span>——两边长得越像,对冲越真。</p></div>
 
-        <h3>1.9. 测试和断言</h3>
-<p>你写出过一个收益年化翻倍的策略,结果第二天发现是复权因子用反了吗?写过的举手的人很多,承认的没几个。量化代码要和任何工程项目一样写测试,至少备齐四类:数据测试、因子测试、回测状态测试和指标测试。收益率算得对不对、复权处理合不合理、持仓会不会变成负数、现金和交易记录对不对得上账,每一项都要有测试兜底。</p><p>断言则是挡低级错误的廉价保险:禁止使用未来日期的数据,禁止下单数量不是交易单位的整数倍,禁止组合权重突破上限,禁止净值出现非数字,禁止成交发生在停牌日。写起来一条一行,抓 bug 一抓一个准。这些门槛再简单不过,可它们拦住的,恰恰是历史上无数<span class="hl">“漂亮回测”</span>的真实死因。</p><p>这些测试看着不像金融研究,倒像是软件工程的杂务——没错,它们就是杂务,但它们会救你的命。说三遍也不嫌多:很多漂亮回测来自 bug,不是来自 <span class="term">Alpha</span>。测试写得越早,你被假收益欺骗的次数就越少;等到实盘才发现,就不叫学费,叫赔偿金。</p>
-                <pre><code>def test_momentum_uses_only_past_prices():
-    prices = [10, 11, 12, 13]
-    # asof=3 是第 4 天,只能看到第 4 天之前的可见价格
-    assert momentum(prices, asof=3, window=2) == 12 / 10 - 1
+        <h3>1.5. 融券做空的限制</h3>
+<p>教科书里的市场中性很潇洒:买入好股票,卖空差股票,双线作战。现实里,融券远没有这么自由:可融券的股票范围有限,券源可能不足,融券费率会变化,你好不容易借到的券,还可能被中途召回——就像租房子,房东随时可能说<span class="hl">“我要收回来自己用”</span>。</p><p>这意味着很多市场中性策略没法完全自由地构造空头组合。它们更多用<span class="term">股指期货</span>来对冲市场 <span class="term">Beta</span>,而不是逐只卖空低分股票。这样做能对冲大盘,但有个代价:它无法完整表达你对个股层面的负面观点——你觉得某公司烂,但烂得没机会通过做空它赚钱。</p><p>个人投资者更要留个心眼:融券的门槛、成本、可借标的和强平风险,每一样都需要先弄明白。海外教材里那套 long-short equity,别直接往自己的 A 股账户上搬——人家的交易系统、券源市场和你的,根本不是同一个环境。</p>
 
-def test_no_trade_when_limit_up():
-    order = Buy(code="000001", qty=100)
-    bar = Bar(open=10.0, limit_up=10.0, sell_volume=0)
-    assert match(order, bar).filled_qty == 0</code></pre>
-                <div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>注意这些测试样例的共同特点:小到一眼能算出答案。它们不追求覆盖金融现实的全部复杂度,目标很聚焦——挡住最常见的方向错误、未来数据和非法成交。测试的价值不在宏大,在于每个都简单到无可辩驳:对就是对,错就是错,没有辩解空间。</p></div>
+        <h3>1.6. 杠杆和保证金</h3>
+<p>问你个问题:<span class="num">1000 万</span>资金,买 <span class="num">1000 万</span>股票多头,再用期货空头对冲 <span class="num">1000 万</span>名义价值,这个账户风险大不大?很多人会答:净 <span class="term">Beta</span> 接近 0,风险很小。错。净暴露不大,但总<span class="term">杠杆</span>不低——你实际上在两头同时持有大额头寸,任何一头出问题都要真金白银地扛。</p><p><span class="term">股指期货</span>是要交<span class="term">保证金</span>的。市场剧烈波动时,<span class="term">保证金</span>占用和追加<span class="term">保证金</span>的压力会跟着放大。最难受的局面是:多头在亏损,期货对冲却因为<span class="term">基差</span>不利没赚到足够的钱,账户同时面对净值回撤和<span class="term">保证金</span>追缴——两头挨打的滋味,经历过一次就懂。</p><p>所以看市场中性不能只看净暴露,还要看总敞口、<span class="term">杠杆</span>、<span class="term">保证金</span>占用、流动性,以及极端情况下的现金需求。净敞口是门面,<span class="term">保证金</span>水位才是命门。</p>
 
-        <h3>1.10. 从教学项目到生产系统</h3>
-<p>教学项目可以舒舒服服跑在你自己的笔记本上,生产系统则要直面一堆残酷的新世界:调度、监控、权限、容错、备份、日志、告警和人工接管。这里要替你按一下刹车:千万别一上来就奔着复杂生产系统去造——但也要知道,未来某天你会需要它们。方向要看清,步子要放慢,这两件事不矛盾。</p><p>一条合理的过渡路线是循序渐进的:本地脚本先跑通,然后配置化;接着让报告每天定时自动生成;然后模拟盘自动更新;再然后小资金半自动下单;最后才谈全自动。注意每一级的共同点:都恰好比上一级多一个真实约束。这就像给游戏逐级解锁难度——跳级的人,通常会被市场用最贵的方式补课。</p><p>最后把工程化这件事的动机说透:它不是为了炫技术,而是为了让策略在时间里可维护。量化项目会持续迭代,没有结构、没有记录的项目,几个月之后就会退化成一台没人敢碰的黑箱——包括你自己。今天你嫌工程化麻烦,明天它就是你和<span class="hl">“推倒重来”</span>之间唯一的距离。</p>
+        <h3>1.7. 中性策略的收益指标</h3>
+<p>既然不跟大盘比涨跌,那拿什么衡量一只市场中性产品?通常看的是绝对收益、回撤、<span class="term">夏普</span>、波动、月度胜率和与股票市场的相关性。它的目标是:在控制住市场暴露之后,提供一条相对稳定的收益曲线。</p><p>但评价时要放回环境里看。大盘上涨时它涨得少,不一定差——本来就该把市场行情对冲掉;大盘下跌时它依然稳,反而可能说明对冲是真的有效。反过来,如果它和大盘高度同涨同跌,就要怀疑了:你买的中性,是不是只中在了名字上?</p><p>还有一层更重要:收益到底从哪来?是选股 <span class="term">Alpha</span>、期货<span class="term">基差</span>、行业暴露、风格暴露,还是偶然的<span class="term">杠杆</span>?没有归因,市场中性的“稳”可能只是暂时没遇到风险——就像一套从没上过生产环境的系统,测试通过率一直是 <span class="num">100%</span>。</p>
 
-        <h2>2. 别背公式,要知道它在问什么</h2>
-        <p>金融公式一摆出来,很多小白条件反射式地紧张,仿佛又回到了被高数支配的岁月。其实大可不必——入门级公式没有一条是故弄玄虚,它们每个都在问一个朴素的问题:赚了多少?扛了多大波动?从最高点摔下来多深?有没有跑赢该跑赢的基准?这个价格相对利润算贵吗?这只债券对利率变化有多敏感?公式的存在,不是为了显得专业,而是为了把这些问题说清楚、算清楚、比清楚。这一章我们把常用公式和指标逐个拆开,只看一件事:它到底在问什么。</p>
+        <h3>1.8. 什么时候市场中性会难受</h3>
+<p>第一种难受:模型排序失效,高分股票跑输低分股票,多空组合直接亏钱。第二种:风格极端<span class="term">反转</span>,比如长期有效的小盘或<span class="term">动量</span>暴露突然掉头。第三种:对冲成本上升,<span class="term">基差</span>不利——保险本身变贵了。</p><p>第四种:流动性冲击。多头和空头都需要交易,市场流动性一变差,滑点上升,平仓都困难。第五种:监管或交易规则变化,影响<span class="term">股指期货</span>、融券或程序化交易——游戏规则的修改,从来不会提前征求策略的意见。</p><p>所以,市场中性虽然目标更稳,但绝不是低风险存款。它是一套结构复杂的交易机器,需要持续监控模型、对冲、成本、<span class="term">杠杆</span>和流动性——稳是精密维护出来的,不是天然长成的。</p>
 
-        <h3>2.1. 收益率</h3>
-<p><span class="num">100 元</span>变成 <span class="num">105 元</span>,和 <span class="num">100 万</span>变成 <span class="num">105 万</span>,哪笔更厉害?直觉告诉你后者赚得多,但“多”是本金堆出来的。要把它们放上同一把尺子,就得算出比例——这就是收益率:单期收益率 = 结束价值 / 开始价值 - 1。<span class="num">100 元</span>变成 <span class="num">105 元</span>,收益率 <span class="num">5%</span>;<span class="num">100 元</span>变成 <span class="num">95 元</span>,收益率 <span class="num">-5%</span>。收益率存在的全部意义,就是抹平本金规模的差异,让大钱小钱可以同框比较。</p><p>但多期收益千万别简单相加,得按复利相乘。第一期赚 <span class="num">10%</span>,第二期亏 <span class="num">10%</span>,最终是 1.1 × 0.9 - 1 = <span class="num">-1%</span>——涨跌幅看着对称,账户结果并不对称。这和写代码一个道理:字符串拼接和真正的数值计算,长得像,结果完全两码事。收益是在变化后的新本金上继续滚动,乘法才是它的母语。</p><p>量化代码里最容易栽跟头的,反而不是公式,而是价格口径:用未复权价格算长期收益,会把分红除权误读成股价下跌;用复权价格模拟真实成交,又对不上当时市场里的真实价格。收益公式两行就写完,数据口径却能坑你一整个回测。写第一行代码之前,先问自己:我手里的价格,到底是哪种价格?</p>
+        <h3>1.9. 个人能不能做市场中性</h3>
+<p>先给结论:思想可以学,实盘要非常谨慎。个人完全可以用指数期货或 <span class="term">ETF</span> 对冲一部分市场风险,或者在模拟盘里做多空回测。但真实执行时,工具门槛、<span class="term">保证金</span>、融券、成本和风控要求都不算低,每一项都可能单独把你挡在门外。</p><p>更适合个人的练习,是先做纸面多空组合:每月在模拟环境里“买”高分组、“空”低分组,观察多空相对收益的变化,不急着实盘。这样你能验证一个关键问题:我的因子到底有没有相对排序能力?这一步不过关,后面所有对冲都是白搭。</p><p>如果未来真的上实盘,也要从小规模、低<span class="term">杠杆</span>、清晰止损和充分对账开始。市场中性一旦用上<span class="term">杠杆</span>和衍生品,错误会比普通买股票更快被放大——普通买股犯错像开车跑偏,带<span class="term">杠杆</span>的中性犯错像高速上爆胎,修正空间完全不同。</p>
 
-        <h3>2.2. 年化收益</h3>
-<p>某个策略跑了一周,赚了 <span class="num">2%</span>。朋友兴奋地一把按下计算器:一年 50 多周,那年化不得翻倍?先按住他的手——这就是<span class="term">年化收益</span>最常被滥用的姿势。年化的本意很单纯:把不同长度的投资结果换算成<span class="hl">“一年”</span>这个公共口径,方便比较。比如 <span class="num">3 个月</span>收益 <span class="num">5%</span>,复利年化大约是 1.05 的 <span class="num">4 次</span>方再减一。它是个换算器,不是个许愿池。</p><p>请把这句话抄在屏幕上:年化不是预测。一个策略一周赚 <span class="num">2%</span>,绝不能据此外推一年能赚多少。那一周的收益,可能来自运气,可能来自正好刮过你持仓的市场风格,也可能来自一次性事件——年化之后,这些短期波动都会被放大成吓人的天文数字。短期样本年化=拿着一天的天气预告一年的收成。</p><p>所以看<span class="term">年化收益</span>时,必须同时摆出回撤、波动和样本长度,三者是年化的法定监护人。没有风险指标陪跑的<span class="term">年化收益</span>,就像有人只告诉你这辆车极速能跑 350,绝口不提刹车灵不灵——数字越大,你越该警惕,而不是越兴奋。</p>
+        <h3>1.10. 市场中性的核心问题</h3>
+<p>读懂市场中性,最后要回到三个问题。第一:你的多头为什么会跑赢空头?这需要因子和模型来证明。第二:你中和了哪些风险,还剩哪些风险?这需要风险模型和归因来回答。第三:扣掉对冲成本和交易成本之后,还剩多少?这需要真实的成本和容量估算。</p><p>如果这三个问题答不上来,市场中性就只是一个好听的名字。真正的市场中性不是没有风险,而是有意识地把不想承担的风险降下来,然后专注赚自己有优势的那部分收益——是主动设计,不是被动祈祷。</p><p>这也是量化思维的典型体现:不笼统地说看好或看空,而是把收益来源拆开,把风险来源拆开,再用工具把不想要的暴露尽量处理掉。拆得越清楚,赚的那部分钱越明白;不明白的部分,迟早会来找你结账。</p><div class="callout callout--note reveal"><span class="callout__title">中性策略的确定性,来自一整条链条</span><p>多头凭什么跑赢空头,用什么工具对冲、<span class="term">基差</span>多贵,扣完成本和容量之后还剩多少——这三个问题是串成一条链的。排序不行,对冲只是把亏损锁得更准时;对冲失真,选股再好也会被成本吃掉;成本算错,前面两头全白搭。任何一环答不上来,<span class="hl">“中性”</span>就只是个名字,不是确定性。</p></div>
 
-        <h3>2.3. 波动率</h3>
-<p>两台机器,一台每天稳定输出 1 单,一台有时 10 单有时 -8 单,长期平均相同——你会把生产任务交给哪台?<span class="term">波动率</span>量的就是这种<span class="hl">“忽上忽下”</span>的程度:它通常是收益率的标准差,衡量收益围绕平均值上下摆动的幅度。日收益稳稳的,<span class="term">波动率</span>低;大涨大跌交替上演,<span class="term">波动率</span>高。</p><p>日<span class="term">波动率</span>怎么年化?常用方法是乘以交易日数量的平方根。A 股严谨回测可以按实际交易日数算,行业报告也常统一用 252 作为近似。这背后有个假设要心里有数:它来自独立同分布近似——每一天的收益被假设成互不影响的独立抽样——现实市场并不完美满足这个假设,但作为粗略的比较工具,它简单、好用、行业通行,够用就先拿来用。</p><p>不过<span class="term">波动率</span>有个<span class="hl">“政策性歧视”</span>要知道:它把上涨和下跌一视同仁,全算成波动。可投资者并不讨厌上涨时的波动,真正让人睡不着觉的,是下跌、回撤和尾部亏损。所以<span class="term">波动率</span>是个有用的粗筛,却不是风险的完整画像——它告诉你车在晃,但分不清是在上坡还是在坠崖。</p>
+        <h2>2. 用规则交易商品、股指和利率</h2>
+        <p>CTA 常被说成“期货量化”或“趋势跟踪”,但它绝不是看着 K 线追涨杀跌那么简单。期货市场有自己的一整套游戏规则:保证金、杠杆、合约到期、换月、夜盘、基差、库存、产业链、宏观变量,规则都没读完就下场,结局可想而知。趋势策略也只是 CTA 的一部分,不是全部。想理解 CTA,要先理解期货合约的交易结构,再看趋势为什么有时会延续,又为什么会在震荡里把你反复摩擦。</p>
 
-        <h3>2.4. 最大回撤</h3>
-<p>净值一路爬到 1.5,你还没来得及截图炫耀,它掉头跌到 1.2——这一段的疼痛值怎么量?用<span class="term">最大回撤</span>:净值从历史高点跌到之后低点的最大跌幅,1.2 / 1.5 - 1 = <span class="num">-20%</span>,<span class="term">最大回撤</span>就是 <span class="num">-20%</span>。所有风险指标里,只有它天然带着<span class="hl">“曾经拥有”</span>的心碎感。</p><p><span class="term">最大回撤</span>之所以贴近真实投资体验,是因为人不是从起点看账户的,而是牢牢记得那个最高点。净值从高点掉下来,账面亏的是钱,心里亏的是落差,压力大到一定程度,很多人就会在回撤中赎回、停掉策略——而且恰恰停在最不该停的底部附近。一个策略你拿不拿得住,看回撤比看收益更准。</p><p>回撤还拖着一条复利的尾巴:跌 <span class="num">50%</span>,要涨 <span class="num">100%</span> 才回本。刀砍得越深,爬回来的坡越长。所以策略控制回撤,从来不是为了净值曲线好看,而是为了不让复利被一次深亏拦腰打断——复利最怕的不是慢,是重头再来。</p>
+        <h3>2.1. CTA 是什么</h3>
+<p>先拆名字:CTA 原意是 Commodity Trading Advisor,直译<span class="hl">“商品交易顾问”</span>,常指管理期货和衍生品策略的投资管理人。但别被 Commodity 骗了——在国内语境里,CTA 常覆盖商品期货、<span class="term">股指期货</span>、国债期货等量化策略,远不只是做商品。名字是祖传的,生意早就扩张了。</p><p>CTA 策略的家族很大:趋势跟踪、期限结构、跨品种价差、基本面量化、<span class="term">波动率</span>策略、日内短周期策略。其中最经典、最容易入门理解的是趋势跟踪,规则一句话就能说完:市场出现持续上涨趋势时做多,持续下跌趋势时做空。简单到让人怀疑,难做到让人崩溃——为什么,后面慢慢讲。</p><p>CTA 受机构欢迎,是因为它的收益来源和股票多头不同。股票多头主要看企业盈利和股市风险偏好,CTA 却可能在商品供需、通胀、利率、汇率和危机趋势中赚钱。收益来源不同,波动节奏就常常错开,所以它常被放进多策略组合里做分散化——一个锅里炒菜,一个灶上炖汤,不容易一起糊。</p>
 
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 380" role="img" aria-label="最大回撤示意:净值曲线从1.0爬到高点1.5后跌到低点1.2,落差括号标-20%,公式为1.2除以1.5减1;复利尾巴是跌50%要涨100%才回本">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">最大回撤怎么量:净值从 1.5 跌回 1.2,疼多少?</text>
-            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">最大回撤 = 净值从历史高点跌到之后低点的最大跌幅——人不是从起点看账户,是牢牢记得那个最高点</text>
-            <line x1="120" y1="300" x2="830" y2="300" stroke="#46587a" stroke-width="1.5"/>
-            <line x1="120" y1="300" x2="120" y2="60" stroke="#46587a" stroke-width="1.5"/>
-            <text x="812" y="322" text-anchor="end" fill="#8499bd" font-size="12">时间</text>
-            <text x="96" y="66" text-anchor="end" fill="#8499bd" font-size="12">净值</text>
-            <path d="M 150 280 L 230 238 L 310 196 L 390 150 L 480 120 L 560 180 L 640 216 L 720 192 L 800 170" fill="none" stroke="#7aa7f0" stroke-width="3"/>
-            <line x1="120" y1="120" x2="480" y2="120" stroke="rgba(240,201,106,0.5)" stroke-width="1.5" stroke-dasharray="6 5"/>
-            <circle cx="480" cy="120" r="5" fill="#f0c96a"/>
-            <text x="112" y="116" text-anchor="end" fill="#f0c96a" font-size="12" font-weight="800">高点 1.5</text>
-            <text x="480" y="98" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">你记得的是它</text>
-            <line x1="120" y1="216" x2="640" y2="216" stroke="rgba(232,136,136,0.5)" stroke-width="1.5" stroke-dasharray="6 5"/>
-            <circle cx="640" cy="216" r="5" fill="#e88"/>
-            <text x="112" y="212" text-anchor="end" fill="#ffb4b4" font-size="12" font-weight="800">低点 1.2</text>
-            <text x="640" y="242" text-anchor="middle" fill="#ffb4b4" font-size="12">很多人恰恰停在这附近</text>
-            <text x="112" y="276" text-anchor="end" fill="#8499bd" font-size="12">起点 1.0</text>
-            <line x1="664" y1="120" x2="664" y2="216" stroke="#e88" stroke-width="2"/>
-            <line x1="656" y1="120" x2="672" y2="120" stroke="#e88" stroke-width="2"/>
-            <line x1="656" y1="216" x2="672" y2="216" stroke="#e88" stroke-width="2"/>
-            <text x="684" y="172" fill="#e88" font-size="15" font-weight="800">落差 −20%</text>
-            <rect x="140" y="62" width="300" height="52" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="156" y="84" fill="#eef4f8" font-size="12.5" font-weight="800">最大回撤 = 低点 ÷ 高点 − 1</text>
-            <text x="156" y="105" fill="#bcc9dd" font-size="12">= 1.2 ÷ 1.5 − 1 = −20%(跌了五分之一)</text>
-            <text x="450" y="338" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="600"><tspan x="450" y="338">拿不拿得住一个策略,看回撤比看收益更准——账面亏的是钱,心里亏的是落差</tspan></text>
-            <text x="450" y="364" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">复利的尾巴:跌 50%,要涨 100% 才回本;刀砍得越深,爬回来的坡越长</text>
-          </svg>
-          <p class="figure__cap">净值一路爬到 1.5,你还没来得及截图炫耀,它掉头跌到 1.2——最大回撤就是 1.2 ÷ 1.5 − 1 = −20%。拖着一条复利的尾巴:跌 50% 要涨 100% 才回本。控回撤不是为曲线好看,是不让复利被一次深亏拦腰打断。</p>
-        </div>
-        <h3>2.5. 夏普比率</h3>
-<p>两个策略摆面前:A <span class="term">年化收益</span> <span class="num">15%</span>,B <span class="term">年化收益</span> <span class="num">25%</span>,选谁?先别急,问一句各自冒了多大风险。<span class="term">夏普比率</span>就是干这个的:它大致等于超出无风险收益的部分,除以收益的<span class="term">波动率</span>。翻译成人话:每承担一份波动,你换来多少<span class="term">超额收益</span>。它不问<span class="hl">“赚没赚”</span>,问的是<span class="hl">“赚得值不值”</span>。</p><p>代几个数字感受一下:A 策略<span class="term">年化收益</span> <span class="num">15%</span>,无风险收益 <span class="num">3%</span>,年化波动 <span class="num">12%</span>,<span class="term">夏普</span>约为 1;B 策略<span class="term">年化收益</span> <span class="num">25%</span>,波动 <span class="num">44%</span>,<span class="term">夏普</span>约 0.5。B 赚的绝对数字更多,但每一单位波动换来的收益质量更差——一个像匀速巡航的高铁,一个像半夜狂飙的摩托,终点都是<span class="hl">“到了”</span>,过程体验天差地别。</p><p>还要警惕<span class="term">夏普</span>的盲区:它会系统性低估<span class="hl">“小赚大亏”</span>型策略的风险。卖期权、加<span class="term">杠杆</span>、吃流动性尾部风险的策略,平时风平浪静、<span class="term">夏普</span>可能很好,可一次极端行情就能亏掉几年的积累——<span class="term">夏普</span>只看得见日常的抖动,看不见悬崖。<span class="term">夏普</span>高到离谱的策略,第一件事不是兴奋,是检查它的风险藏哪了。</p>
+        <h3>2.2. 期货合约和保证金</h3>
+<p>用 <span class="num">10 万</span>块钱,做 <span class="num">100 万</span>的生意,赚的时候收益翻倍——这就是<span class="term">保证金</span>交易对新手最有诱惑、也最危险的地方。期货交易的是标准化合约,约定未来按规则买卖某个标的;你不需要一次性支付全部名义价值,只缴一笔<span class="term">保证金</span>。<span class="term">保证金</span>提高了资金效率,同时也把<span class="term">杠杆</span>塞进了你的手里。</p><p>算笔账感受下速度。假设一手期货名义价值 <span class="num">100 万元</span>,<span class="term">保证金</span>比例 <span class="num">10%</span>,你只需约 <span class="num">10 万元</span>就能控制这手合约。价格上涨 <span class="num">2%</span>,名义盈利 <span class="num">2 万元</span>,相当于<span class="term">保证金</span>收益 <span class="num">20%</span>;价格下跌 <span class="num">2%</span>,<span class="term">保证金</span>亏损同样是 <span class="num">20%</span>。标的只动了 <span class="num">2%</span>,你的账户动了 <span class="num">20%</span>——<span class="term">杠杆</span>就是这么个放大器,方向对了放大喜悦,方向错了放大事故。</p><p>所以期货策略不能只看方向预测,还要看<span class="term">杠杆</span>、<span class="term">保证金</span>占用、追加<span class="term">保证金</span>、强平风险和极端行情。很多新手犯的同一个错误,就是低估了<span class="term">杠杆</span>的速度:眼睛盯着的标的风平浪静,账户里的净值已经惊涛骇浪。</p>
 
-        <h3>2.6. 信息比率</h3>
-<p>跑赢指数 <span class="num">5%</span>,听起来不错——但如果这 <span class="num">5%</span> 是东一榔头西一棒子、上下乱窜着跑出来的呢?<span class="term">信息比率</span>就是给<span class="hl">“跑赢基准”</span>打质量分的:它等于年化<span class="term">超额收益</span>除以年化<span class="term">跟踪误差</span>,专门评价相对基准的主动管理能力,尤其贴合指数增强那一类产品。<span class="term">夏普</span>看的是绝对收益的性价比,<span class="term">信息比率</span>看的是<span class="term">超额收益</span>的性价比,别记混。</p><p>拆开看两个零件:<span class="term">超额收益</span> = 组合收益 - 基准收益;<span class="term">跟踪误差</span> = <span class="term">超额收益</span>的波动。把它俩一除,<span class="term">信息比率</span>的含义就清楚了:你每偏离基准一份、每承担一份<span class="hl">“跟丢指数”</span>的风险,换回多少超额。<span class="term">信息比率</span>高,说明偏离得值;比率低,说明你在为基准免费增加了心跳。</p><p>和<span class="term">夏普</span>一样,<span class="term">信息比率</span>也得看样本长度和稳定性。一个产品短期超额很高,但<span class="term">跟踪误差</span>也高、超额回撤又深,未必比一个稳定小超额的产品更好——前者像一场暴扣集锦,后者像一支赛季胜率稳定的球队。教练(和投资人)真正想要的,通常是后者。</p>
+        <h3>2.3. 合约到期和换月</h3>
+<p>股票可以买了放着传给孩子,期货不行——合约是有保质期的。同一个商品可能有 <span class="num">1 月</span>、<span class="num">5 月</span>、<span class="num">9 月</span>等不同到期合约,临近交割时,交易者通常要把持仓从旧合约搬到更远月或新的主力合约上,这个动作叫换月,也叫展期。像接力赛:跑完一棒,必须把棒交到下一棒手里。</p><p>换月直接带来一个回测工程问题:不能把不同合约的价格简单拼成一条线。合约之间价格不同,换月处会产生跳变——拼出来的曲线在那一天凭空“涨”了一块,其实是换了个合约而已。数据供应商常提供主力连续、指数连续或复权连续合约,但每种口径都有自己的含义和局限,用之前先弄清它是怎么缝出来的。</p><p>如果你用连续合约计算信号,又用真实合约模拟成交,必须清楚两者之间的转换关系。期货回测里,合约选择、换月规则、成交价格和<span class="term">保证金</span>规则都是地基。地基没打,上面跑什么均线策略都一样是歪楼。</p>
 
-        <h3>2.7. IC 和 RankIC</h3>
-<p>你造了一个因子,怎么知道它有没有用?最直接的体检:看看因子打分和未来收益是否同向相关——这就是 <span class="term">IC</span>,它衡量因子值和未来收益之间的相关性。<span class="term">RankIC</span> 是它的近亲,改用排序相关:不看数值差多少,只看因子排名和未来收益排名是否一致,天然对极端值不敏感,实际研究里更常用。</p><p>先泼好冷水,免得期望虚高:股票横截面噪声极大,<span class="term">IC</span> 通常不会高。长期平均 <span class="term">RankIC</span> 只有 0.02 或 0.03,听着像废铁?别急着扔——如果它够稳定、成本够低、容量够大,照样可能有价值。这就像大规模系统里的微弱信号:单次几乎听不见,架不住每天重复几千遍,聚沙成塔。判断因子,看的是细水长流,不是单日暴击。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>但记住:<span class="term">IC</span> 只是第一层检验,不是合格证书。一个因子 <span class="term">IC</span> 漂亮,还要过五关:分层收益是否单调、换手是否扛得住、成本后还剩多少、行业暴露干不干净、样本外是否还活着,外加它在组合里的边际贡献。单科状元不等于全能选手,因子入组合前,六关一关都别省。</p></div>
+        <h3>2.4. 趋势为什么可能存在</h3>
+<p>价格为什么要<span class="hl">“排队走一段”</span>,而不是消息一出就一步跳到终点?一个原因是基本面变化会被市场逐步吸收:供给持续减少、库存下降、需求超预期,商品价格往往不是一天反应完,而是走成一段上涨趋势。宏观利率、汇率和通胀的变化,也可能推动多个市场持续移动一段时间。</p><p>另一个原因来自行为和资金:投资者反应不足、止损盘追单、基金调仓、风险预算调整,都会让价格变化带上惯性。有意思的地方在于,趋势跟踪策略根本不需要知道这些原因是什么——它只需要识别一件事:价格已经形成了某种持续方向。就像冲浪手不需要精通流体力学,只要能认出浪来了。</p><p>但趋势不是天天有。更多时候,价格只是在原地来回震荡。趋势策略在震荡里会不断开仓、止损、反向、再止损全身淤青。它的收益常常来自少数几波大趋势,而不是每天稳定小赚——这是一门<span class="hl">“三年不开张,开张吃三年”</span>的生意,前提是你要活得过那三年。</p>
 
-        <h3>2.8. 跟踪误差</h3>
-<p>指数基金的管理员最怕什么?偏离指数——<span class="term">跟踪误差</span>就是给这种<span class="hl">“偏离程度”</span>量的体温:它衡量组合收益相对基准收益的波动。指数基金希望它越低越好,贴着基准走;指数增强则故意留出一部分<span class="term">跟踪误差</span>,用它换取<span class="term">超额收益</span>的空间。</p><p>所以<span class="term">跟踪误差</span>不是坏东西,它是主动管理自由度的代价——一分偏离,一分机会。完全不偏离基准,组合就是个复制品,很难产生任何超额;偏离太大,客户拿到的风险就可能不再是他签字时以为买的那种产品。自由度本身是中性工具,错的是你以为它免费。</p><p>评价指数增强产品时,<span class="term">跟踪误差</span>必须和<span class="term">超额收益</span>结伴看,绝不能单看<span class="hl">“超额高”</span>。超额很高但偏离也很大的组合,可能只是把指数的外衣穿在了一个主动豪赌的身上。买指增买的就是<span class="hl">“受控的偏离”</span>,失控的偏离等于花了被动钱、担了主动险。</p>
+        <h3>2.5. 一个最简单的趋势规则</h3>
+<p>趋势策略可以简单到一条均线:收盘价高于过去 <span class="num">60 日</span>均线就做多,低于 <span class="num">60 日</span>均线就做空或空仓。也可以用过去 <span class="num">20 日</span>、<span class="num">60 日</span>、<span class="num">120 日</span>的收益率来判断趋势强弱。规则本身,小学生都看得懂。</p><p>真正的工夫全在规则之外:用哪个连续合约算?什么时候换月?信号出在收盘,下一根 K 线成交还是当天成交?手续费和滑点扣多少?<span class="term">保证金</span>怎么计算?涨跌停无法成交怎么办?夜盘数据怎么和白盘合并?这些细节每一项都不起眼,每一项都能把回测写成另一份回测。</p><p>所以趋势策略的重点不是把规则搞复杂,而是确认它是否稳健:换几个品种,换几个周期,换几段市场环境,它还成立吗?一个只在某个品种某几年有效的均线,大概率只是历史偶然——那不是规律,是巧合化了妆。</p>
 
-        <h3>2.9. 久期</h3>
-<p>手里握着一只债券,听说要加息,该慌几分?久期就是回答这个问题的<span class="hl">“利率敏感度计”</span>:它可以粗略理解为债券价格对利率变化的敏感程度。久期为 7 的债券,收益率上升 <span class="num">1 个百分点</span>,价格大约下跌 <span class="num">7%</span>。这是近似值,但是极其好用的近似值——久期 7,利率动 <span class="num">1%</span>,价格约动 <span class="num">7%</span>,一句话记住了九成功夫。</p><p>结论很直白:久期越长,债券越怕利率上升,也越受益于利率下降,是个对称的放大器。有个常见误区值得敲黑板:长期国债没有信用违约风险,这话没错,但它有明显的利率风险——政府的信用不会跑,利率的波动照样让你的账面疼。安全≠不波动,很多新手在这一格上栽过。</p><p>以后读债券基金报告,看到<span class="hl">“久期较长”</span>四个字,就要自动翻译成:这只基金对利率变化敏感。别把债券基金默认理解成<span class="hl">“不会跌的产品”</span>——它不违约,但它会回撤。看债基先看久期,就像租车先看刹车,几秒的事,省一堆麻烦。</p>
+        <h3>2.6. 多品种分散</h3>
+<p>单个品种可能几年不刮一阵风,等风的策略会被饿死。所以 CTA 常做多品种组合:黑色、能源、化工、有色、农产品、股指、国债一起监控。单个品种趋势不稳定,多品种既能增加捕捉趋势的机会,也能降低单一品种的风险——东方不亮西方亮。</p><p>但多品种不是把品种简单平均一下就完事。不同品种<span class="term">波动率</span>不同、<span class="term">保证金</span>不同、流动性不同、夜盘时间不同、产业逻辑也不同。组合层面必须做风险平衡,否则高波动品种会主导整体盈亏:你以为自己做了十只品种,其实是一只品种加九个观众。</p><p>一个常见方法是按<span class="term">波动率</span>调整仓位:波动大的品种少配,波动小的品种多配,让每个品种贡献相近的风险。这不保证赚钱,它保证的是另一件事:没有品种能仅凭天生脾气暴,就压倒其他所有信号。</p>
 
-        <h3>2.10. VaR</h3>
-<p>老板问你:<span class="hl">“这组合最多会亏多少?”</span>这个问题其实问得不精确,精确的问法是:在某个置信水平和期限下,正常情况下可能亏多少——这就是 <span class="term">VaR</span>(在险价值)。比如 <span class="num">1 日</span> <span class="num">95%</span> <span class="term">VaR</span> 为 <span class="num">100 万</span>,意思是模型估计:<span class="num">95%</span> 的日子里,单日亏损不超过 <span class="num">100 万</span>。它给了风险一个可以开会讨论的数字。</p><p><span class="term">VaR</span> 有几种常见口径:历史模拟、参数法、蒙特卡洛,各自对收益分布和尾部形状的假设不同,算出来的数自然不同。它适合做风险沟通,让非技术同事秒懂量级;但它有一个天生说不出口的秘密:超过 <span class="term">VaR</span> 之后会亏多惨,它一概不说。<span class="term">VaR</span> 告诉你护栏有多高,从不告诉你护栏外面是草坪还是悬崖。</p><p>所以 <span class="term">VaR</span> 绝不能单挂上岗,必须和压力测试、<span class="term">最大回撤</span>、尾部损失、<span class="term">杠杆</span>、流动性组队。只甩出一个 <span class="term">VaR</span> 数字,证明不了风险被充分控制——那更像是风险报告的精装修,而不是结构安全检测。真想知道最坏情况,得请压力测试出马,那是它的岗位。</p>
+        <h3>2.7. 期限结构和展期收益</h3>
+<p>同一个商品,<span class="num">1 月</span>到期和 <span class="num">9 月</span>到期的合约价格并不一样——期货不同到期月份排成的这条价格线,叫期限结构。近月价格低于远月,通常称正向市场或 contango,也可以说远月相对近月<span class="term">升水</span>;近月价格高于远月,通常称反向市场或 backwardation,也可以说远月相对近月<span class="term">贴水</span>。提醒一句:说<span class="term">升水</span><span class="term">贴水</span>必须讲清参照物,不然很容易正好说反。</p><p>期限结构不只是术语,它直接影响钱。展期收益就来自换月过程中的价格结构:如果你长期持有某类期货、不断从近月换到远月,结构本身就在悄悄帮你赚钱或亏钱。商品指数和 CTA 策略,都绕不开这笔账。</p><p>趋势和期限结构还可以叠加使用:价格处于上涨趋势,同时期限结构显示现货紧张,信号可能就更强。但这类解释需要真正的商品基本面知识,只看图形是读不出<span class="hl">“现货紧张”</span>四个字的。</p>
 
-        <h3>2.11. PE、PB 和股息率</h3>
-<p>一只股票 <span class="num">100 元</span>,贵还是便宜?单看价格回答不了,得问<span class="hl">“<span class="num">100 元</span>买到了什么”</span>——估值三兄弟就是干这个的。<span class="term">PE</span> 是市值除以净利润,问的是市场愿意为一元利润付多少钱;<span class="term">PB</span> 是市值除以净资产,问的是愿意为一元账面净资产付多少钱;股息率是分红除以价格,问的是按当前价格买入,分红回报大约多少。三个问题,三种<span class="hl">“相对贵贱”</span>的视角。</p><p>不过这三个指标都必须防机械使用:低 <span class="term">PE</span>、低 <span class="term">PB</span>、高股息率常被看作便宜,但低估值可能来自真实风险(便宜得有道理),高股息可能不可持续(今年分完明年没得分),<span class="term">PB</span> 对轻资产公司解释力有限(人家值钱的资产根本不在账上)。便宜货和坑,从外表看是双胞胎,区别藏在基本面里。</p><p>正确的打开方式,是把估值指标和行业、质量、成长、现金流放在一起看——估值负责回答<span class="hl">“贵不贵”</span>,其他维度负责回答<span class="hl">“值不值”</span>。量化里的标准动作是做行业中性和极端值处理,避免把行业之间的天然差异,误当成某只股票的便宜。估值是雷达,不是自动导航,方向还得你把。</p>
+        <h3>2.8. CTA 的回撤特征</h3>
+<p>只看胜率的人,一定会误判 CTA:趋势跟踪策略常见特征恰恰是胜率不高,但盈亏比可能较好。日常状态是频繁小亏——假突破骗一次,止损一次;少数大赚来自真正的持续趋势。它不像工资,更像年终奖占大头、平时只发基本生活费。</p><p>CTA 的回撤往往发生在无趋势、快速<span class="term">反转</span>和波动结构变化的时候。最折磨人的剧本是这样的:策略刚跟上上涨趋势,市场突然掉头;刚止损离场,价格又恢复趋势。同样的剧情连续来几次,净值曲线会非常难看——不是做错了什么,是这碗饭本来就带沙子。</p><p>所以评价 CTA,要看长期样本、多品种表现、回撤恢复、波动目标、<span class="term">保证金</span>占用和极端行情表现。短期几个月的好坏,说明不了策略本质:三个月的乖孩子,可能是三年熊孩子里的一个乖镜头。</p>
+
+        <h3>2.9. CTA 和股票组合的关系</h3>
+<p>CTA 有个迷人的传说:股票下跌或宏观剧变时,它可能表现较好,因为它可以做空期货,还可能捕捉债券、商品或汇率上的趋势。这正是它在资产配置里的价值所在——和股票组合的收益来源不同,关键时刻也许能顶上。</p><p>但请把传说降半个温:CTA 不是股票下跌保险,它不保证危机时一定赚钱。如果危机来得太快、趋势不连续,或者流动性冲击导致多个品种同时<span class="term">反转</span>,CTA 也可能跟着亏。伞在大多数雨天好用,台风天也一样会被吹翻。</p><p>更准确的说法是:CTA 的收益来源和股票不同,长期相关性可能较低,因此可能改善组合的风险收益。把它当分散化工具,没错;把它当万能避险神器,就过了。</p><div class="callout callout--note reveal"><span class="callout__title">把 CTA 当队友,别当保险单</span><p>CTA 的价值在于收益来源和股票错开:平时低头各赚各的,危机里也许能顶上来——<span class="hl">“也许”</span>两个字必须留着,趋势不连续、流动性冲击一起上时,它也会跟着回撤。把它放进组合,买的是低相关,不是保险单;指望它每次股灾都赚钱,等于把队友错当成了理赔窗口。</p></div>
+
+        <h3>2.10. 个人如何学习 CTA</h3>
+<p>个人学 CTA,照例从一个教学版开始。选几个流动性较好的期货品种,用日线主力连续数据,白纸黑字写下明确的换月规则,用 <span class="num">20 日</span>或 <span class="num">60 日</span><span class="term">动量</span>作为信号,按<span class="term">波动率</span>分配仓位,老老实实扣手续费和滑点。要素就这么多,但每一个都不能省。</p><p>报告要写清楚:每个品种各自的收益、回撤、换手、<span class="term">保证金</span>占用、最大连续亏损,以及趋势期和震荡期的分别表现。还要检查参数是否稳定——换个均线周期业绩就翻天,那不是策略,是调参彩票。别只挑一个最漂亮的参数放进报告里安慰自己。</p><p>实盘之前,必须先硬核补课:期货账户、<span class="term">保证金</span>、夜盘、合约到期、涨跌停、强平、手续费和交易权限,一项都不能含糊。没有这些基础,千万不要因为回测曲线好看就上<span class="term">杠杆</span>——回测里<span class="term">杠杆</span>放大的是曲线,实盘里放大的是事故。</p>
 
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>量化项目要按数据、因子、回测、模型、报告和日志分层组织,把所有逻辑塞进一个 notebook,等于放弃复盘能力。</li>
-            <li>配置、版本、交易记录和自动报告,是可复现研究的四根支柱,缺一根,结论就立不住。</li>
-            <li>公式的作用是把收益、风险、基准和估值问题算清楚、说清楚、比清楚——它们是尺子,不需要跪拜,只需要用对。</li>
-            <li>同一个指标各有适用边界:夏普、VaR、PE、IC 单独使用都会骗人,必须结伴出场、交叉验证。</li>
+            <li>市场中性试图降低市场方向暴露,主要赚多头相对空头的选股收益——大盘只是被拆掉的变量,不是收益的来源。</li>
+            <li>对冲工具自带基差、成本、保证金和流动性风险:中性不等于无风险,只是风险换了100种姿势。</li>
+            <li>CTA 覆盖期货和衍生品策略的大家族,趋势跟踪只是其中最经典的一支,别把一支当全部。</li>
+            <li>期货策略必须正面处理保证金、杠杆、合约到期、换月、期限结构和成交规则,绕开任何一个都等于没看见风险。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.1.</strong> 目录结构先分层</li>
-            <li><strong>1.2.</strong> 配置文件比硬编码可靠</li>
-            <li><strong>1.3.</strong> 原始、清洗和特征分开</li>
-            <li><strong>1.4.</strong> 每个因子都要有定义</li>
-            <li><strong>1.5.</strong> 账户、订单和指标分开</li>
-            <li><strong>1.6.</strong> 训练、预测和回测不要混</li>
-            <li><strong>1.7.</strong> 自动生成比手工截图可靠</li>
-            <li><strong>1.8.</strong> 记录失败比记录成功更重要</li>
-            <li><strong>1.9.</strong> 测试和断言</li>
-            <li><strong>1.10.</strong> 从教学项目到生产系统</li>
-            <li><strong>2.1.</strong> 收益率</li>
-            <li><strong>2.2.</strong> 年化收益</li>
-            <li><strong>2.3.</strong> 波动率</li>
-            <li><strong>2.4.</strong> 最大回撤</li>
-            <li><strong>2.5.</strong> 夏普比率</li>
-            <li><strong>2.6.</strong> 信息比率</li>
-            <li><strong>2.7.</strong> IC 和 RankIC</li>
-            <li><strong>2.8.</strong> 跟踪误差</li>
-            <li><strong>2.9.</strong> 久期</li>
-            <li><strong>2.10.</strong> VaR</li>
-            <li><strong>2.11.</strong> PE、PB 和股息率</li>
+            <li><strong>1.1.</strong> 市场中性想解决什么</li>
+            <li><strong>1.2.</strong> Beta 对冲的直觉</li>
+            <li><strong>1.3.</strong> 多头和空头的收益结构</li>
+            <li><strong>1.4.</strong> 股指期货对冲和基差</li>
+            <li><strong>1.5.</strong> 融券做空的限制</li>
+            <li><strong>1.6.</strong> 杠杆和保证金</li>
+            <li><strong>1.7.</strong> 中性策略的收益指标</li>
+            <li><strong>1.8.</strong> 什么时候市场中性会难受</li>
+            <li><strong>1.9.</strong> 个人能不能做市场中性</li>
+            <li><strong>1.10.</strong> 市场中性的核心问题</li>
+            <li><strong>2.1.</strong> CTA 是什么</li>
+            <li><strong>2.2.</strong> 期货合约和保证金</li>
+            <li><strong>2.3.</strong> 合约到期和换月</li>
+            <li><strong>2.4.</strong> 趋势为什么可能存在</li>
+            <li><strong>2.5.</strong> 一个最简单的趋势规则</li>
+            <li><strong>2.6.</strong> 多品种分散</li>
+            <li><strong>2.7.</strong> 期限结构和展期收益</li>
+            <li><strong>2.8.</strong> CTA 的回撤特征</li>
+            <li><strong>2.9.</strong> CTA 和股票组合的关系</li>
+            <li><strong>2.10.</strong> 个人如何学习 CTA</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>为什么不建议把量化项目写成一个长 notebook?</summary>
-            <p>运行顺序、临时文件和手工操作全都难以复现,时间一长,连你自己也分不清结果到底来自模型、数据还是手滑。</p>
+            <summary>市场中性主要想中和什么?</summary>
+            <p>主要是降低大盘方向 Beta,让组合收益更多来自相对选股能力,而不是跟着指数同涨同跌。</p>
           </details>
           <details class="quiz__item">
-            <summary>回测为什么必须保存交易记录?</summary>
-            <p>净值只能告诉你结果,交易记录才能让你复盘每一笔买卖、费用、失败单和持仓变化——证据比结论重要。</p>
+            <summary>为什么股指期货对冲不完美?</summary>
+            <p>因为期货和现货指数之间有基差会变动,股票组合和指数不完全一致,Beta 会漂移,还要算保证金和交易成本。</p>
           </details>
           <details class="quiz__item">
-            <summary>为什么多期收益率要用乘法而不是简单相加?</summary>
-            <p>因为每期收益都作用在变化后的新本金上,投资是一条复利链,只有乘法能正确描述它。</p>
+            <summary>期货保证金为什么会放大风险?</summary>
+            <p>因为你只用较少的保证金就控制了较大名义价值的合约,标的的小幅波动,会被杠杆放大成本金的大幅波动。</p>
           </details>
           <details class="quiz__item">
-            <summary>夏普比率为什么不能单独用来判断策略好坏?</summary>
-            <p>它拿波动率当风险的全部,会低估尾部亏损、杠杆和“小赚大亏”结构的危险。</p>
+            <summary>期货回测为什么不能随便拼接合约价格?</summary>
+            <p>不同到期合约的价格和流动性不同,换月会产生跳变;必须先明确连续合约口径和真实成交口径的换算关系。</p>
           </details>
         </section>
       </div>

@@ -3,229 +3,166 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 33 章 · 场景练习:开户软件和基金月报 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="用真实操作视角带读者看懂账户资产、可用资金、持仓、盈亏、委托、成交和风险提示。 / 用投资者视角拆解净值、基准、持仓、回撤、归因、费用和风险提示。" />
+    <title>第 33 章 · 全书复盘:从一条鱼到一个量化系统 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="把前面所有概念按从真实财富到人与纪律的十层重新串起来。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="33">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第七部分 · 路线、复盘与检查清单 · 第 33 章</p>
-        <h1>场景练习:开户软件和基金月报</h1>
-        <p class="lead">概念懂了,真正上手时还是会被界面和文件里的术语绊住。这一章用两个真实场景带你练一遍:第一次开户后,交易软件里每一个数字、每一个按钮到底在说什么;第一次拿到基金月报和产品报告,又该重点看哪些栏目、警惕哪些说法。把抽象概念落到你真会遇到的屏幕和纸面上,才算真的学会。</p>
+        <p class="chapter__eyebrow">第六部分 · 项目实战与工程化 · 第 33 章</p>
+        <h1>全书复盘:从一条鱼到一个量化系统</h1>
+        <p class="lead">学到这里,名词已经很多:货币、信用、股票、债券、基金、期货、期权、指数、因子、回测、机器学习、组合优化、交易执行、风控。这一章把它们重新收束成一条链——真实财富产生现金流,金融工具分配现金流和风险,市场给这些权利定价,数据记录市场状态,策略试图从数据里找到优势,实盘系统再把优势变成可控的交易。金融不是一堆孤立术语,量化也不是孤立算法。</p>
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>总资产、可用资金、可取资金、持仓市值、可卖数量是五个不同口径,软件上挨着排,含义各不相同。</li>
-            <li>委托不等于成交:成交之后,资金、持仓、费用和可卖状态还要一一更新,这条链才走完。</li>
-            <li>读产品报告,先确认策略类型和基准,再依次看净值、风险、持仓、归因、费用和申赎——顺序错了,结论容易错。</li>
-            <li>收益必须和回撤、波动、样本长度、规模变化放在一起看,只看排名,等于只看电影的最后一帧。</li>
+            <li>金融可以按真实财富、信用时间、资产权利、市场制度、数据、模型、回测、组合、实盘和人这十层来理解。</li>
+            <li>量化不是脱离金融的算法游戏,而是把金融假设一步步变成数据、模型、组合和交易系统。</li>
           </ul>
         </section>
 
 
-        <h2>1. 第一次开户后,交易软件里每个数字怎么看</h2>
-
-        <h3>1.1. 总资产不是可花的钱</h3>
-<p>打开账户,最显眼的是总资产。它通常包括现金、股票市值、基金市值、债券市值以及其他资产估值,意思是:账户里所有东西按当前价格折算下来值多少钱。注意,它只是估值,不等于你现在就能拿出来花的钱。</p><p>为什么?因为里面装着股票,股票的价格在变。股票涨,总资产水涨船高;股票跌,总资产原地缩水。在你点下卖出之前,这些涨跌都只是浮动盈亏——账面数字会动,但还没有变成真的钱。</p><p>真正接近「能花」的,是可用资金——当前可以用于买入或转出的资金口径之一。但连它都要再看银证转账时间、资金交收和券商规则。先记住一条:总资产、可用资金、可取资金,是三个不同的数字,谁也不等于谁。</p>
+        <h2>1. 真实财富和生产力</h2>
+<p>最底层不是钱,而是真实财富:鱼、粮食、房子、药品、机器、软件、知识、组织能力——人类真正在用的东西。钱只是帮忙交换、记账、储藏价值的工具,排在第二位。</p><p>做一个极简推演:社会的真实产出没有增加,只把纸币数量增加,结果不会是人人变富,而是更多名义货币追逐有限商品——通胀。把这一条想明白,你就能免疫大多数幻觉:金融市场的数字上涨,不等于真实财富自动增长。</p><p>投资的终点也仍然落在生产力上。股票、债券、基金、期货,拆到最后都要连接到未来现金流、资源配置和风险承担。脱离真实经济的金融,只剩下大家互相转账,转不出新财富。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 425" role="img" aria-label="开户软件资产字段分解:总资产拆成可用资金、可取资金和持仓市值,卖出成交先进可用,隔日对账后才进可取">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">总资产 ≠ 可花的钱:先分清三个口袋</text>
-            <!-- 顶部:总资产 -->
-            <rect x="360" y="58" width="180" height="58" rx="10" fill="rgba(240,201,106,0.14)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="450" y="82" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">总资产 93,000</text>
-            <text x="450" y="104" text-anchor="middle" fill="#eef4f8" font-size="12.5">= 可用 25,000 + 持仓 68,000</text>
-            <!-- 分叉线 -->
-            <line x1="450" y1="116" x2="180" y2="164" stroke="#7aa7f0" stroke-width="1.5"/>
-            <line x1="450" y1="116" x2="450" y2="164" stroke="#7aa7f0" stroke-width="1.5"/>
-            <line x1="450" y1="116" x2="720" y2="164" stroke="#7aa7f0" stroke-width="1.5"/>
-            <!-- 三个子框 -->
-            <rect x="55" y="164" width="250" height="110" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="180" y="190" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 可用资金</text>
-            <text x="180" y="214" text-anchor="middle" fill="#c9d4e8" font-size="12.5">能买股票用</text>
-            <text x="180" y="240" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">例 25,000</text>
-            <text x="180" y="262" text-anchor="middle" fill="#8499bd" font-size="11">含当天卖出回款:能买不能取</text>
-            <rect x="325" y="164" width="250" height="110" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="450" y="190" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">② 可取资金</text>
-            <text x="450" y="214" text-anchor="middle" fill="#c9d4e8" font-size="12.5">能转出银行卡</text>
-            <text x="450" y="240" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">例 10,000</text>
-            <text x="450" y="262" text-anchor="middle" fill="#8499bd" font-size="11">前一晚对账后的可用( ≤ 可用)</text>
-            <rect x="595" y="164" width="250" height="110" rx="12" fill="rgba(232,120,120,0.08)" stroke="#e88"/>
-            <text x="720" y="190" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 持仓市值</text>
-            <text x="720" y="214" text-anchor="middle" fill="#c9d4e8" font-size="12.5">还没变成钱</text>
-            <text x="720" y="240" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">例 68,000</text>
-            <text x="720" y="262" text-anchor="middle" fill="#8499bd" font-size="11">浮盈要等卖成现金才算数</text>
-            <!-- 流转箭头 1:可用 → 可取(两框间隙,标注 T+1) -->
-            <line x1="305" y1="219" x2="321" y2="219" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#b1at)"/>
-            <text x="313" y="206" text-anchor="middle" fill="#8499bd" font-size="11">T+1</text>
-            <!-- 流转箭头 2:持仓 → 可用(底部大弧线) -->
-            <path d="M 720 276 C 690 348, 230 348, 200 280" fill="none" stroke="#a8c6ff" stroke-width="2.5" marker-end="url(#b1af)"/>
-            <text x="450" y="352" text-anchor="middle" fill="#a8c6ff" font-size="12.5">卖出成交:可用 +10,000,当天这笔钱不可取</text>
-            <defs>
-              <marker id="b1at" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker>
-              <marker id="b1af" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a8c6ff"/></marker>
-            </defs>
-            <text x="450" y="404" text-anchor="middle" fill="#ffb4b4" font-size="14">持仓市值不是钱——涨了的浮盈,先要能卖成现金;当天卖出的钱,T+1 才能取</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 460" role="img" aria-label="十层金字塔:自下而上依次是真实财富、信用时间、权利资产、市场制度、数据可见、因子模型、回测验证、组合风险、交易实盘、人纪律">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">全书十层复盘:越往上,越依赖下层垫着</text>
+            <!-- 十层金字塔,底层宽720,每层收60,层高32间距4,底 y=420 -->
+            <rect x="360" y="64" width="180" height="32" rx="4" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="85" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L10 · 人和纪律</text>
+            <rect x="330" y="100" width="240" height="32" rx="4" fill="rgba(122,167,240,0.10)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="121" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L9 · 交易执行实盘</text>
+            <rect x="300" y="136" width="300" height="32" rx="4" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="157" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L8 · 组合和风险</text>
+            <rect x="270" y="172" width="360" height="32" rx="4" fill="rgba(122,167,240,0.14)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="193" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L7 · 回测和验证</text>
+            <rect x="240" y="208" width="420" height="32" rx="4" fill="rgba(122,167,240,0.16)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="229" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L6 · 因子和模型</text>
+            <rect x="210" y="244" width="480" height="32" rx="4" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="265" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L5 · 数据和可见性</text>
+            <rect x="180" y="280" width="540" height="32" rx="4" fill="rgba(122,167,240,0.20)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="301" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L4 · 市场与交易制度</text>
+            <rect x="150" y="316" width="600" height="32" rx="4" fill="rgba(122,167,240,0.22)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="337" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L3 · 权利和资产</text>
+            <rect x="120" y="352" width="660" height="32" rx="4" fill="rgba(122,167,240,0.24)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="373" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L2 · 信用和时间</text>
+            <rect x="90" y="388" width="720" height="32" rx="4" fill="rgba(240,201,106,0.16)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="409" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">L1 · 真实财富和生产力(地基)</text>
+            <!-- 右侧向上的依赖提示 -->
+            <line x1="845" y1="412" x2="845" y2="80" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#b1ly)"/>
+            <defs><marker id="b1ly" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
+            <text x="867" y="243" text-anchor="middle" transform="rotate(-90 867 243)" fill="#f0c96a" font-size="12.5" font-weight="800">越往上,越依赖下层垫着</text>
+            <!-- 底部两条向内的支撑线,构成金字塔底 -->
+            <line x1="90" y1="420" x2="450" y2="446" stroke="rgba(240,201,106,0.42)" stroke-width="2"/>
+            <line x1="810" y1="420" x2="450" y2="446" stroke="rgba(240,201,106,0.42)" stroke-width="2"/>
+            <circle cx="450" cy="446" r="4" fill="#f0c96a"/>
           </svg>
-          <p class="figure__cap">总资产 93,000 里,能买股票的是可用 25,000,能转出银行卡的只有可取 10,000,剩下的 68,000 是还没变成钱的持仓市值。卖出成交先进可用,当晚对账后(T+1)才进可取——浮盈再多,先要能卖成现金。</p>
+          <p class="figure__cap">把全书压成十层:真实财富和生产力是地基,上面依次垫着信用、资产、市场制度、数据、因子、回测、组合、实盘,最上面是人和纪律。层越往上越窄——它能站住,全靠下面九层垫着;下层有问题,上层加倍还。</p>
         </div>
-        <h3>1.2. 可用资金和可取资金</h3>
-<p>「能买」和「能取」,是两回事。可用资金是账户里可以用来买证券的钱;可取资金是可以从证券账户转回银行卡的钱。这俩数字经常对不上,因为卖出证券回来的钱,当天通常可以接着买,却未必当天能取走。</p><p>举个例子:你今天卖掉一只股票,卖完钱「回来了」,可以马上买别的股票;但想把这笔钱转回银行卡?要等到下一个交易日。这不是券商刁难你,背后是清算交收规则在起作用。不同品种的规则可能还不一样,用之前先看清楚。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>这件事量化系统也得记住。回测如果假设卖出后资金立刻可取、可用、还能随意跨市场调配,那只是模拟世界的美好愿望,真实账户不答应。</p></div>
+        <h2>2. 信用和时间</h2>
+<p>金融要解决的核心问题之一,是跨时间调度资源:今天手里有闲钱的人,把钱借给未来能创造价值的人。中间靠什么运转?信用、利率和合同。债券、贷款、银行、央行,全都挂在这条线上。</p><p>利率是时间的价格,也同时是风险价格的一部分。未来的钱不等于今天的钱,因为中间隔着机会成本、通胀和不确定性。债券价格和收益率反着走,股票估值受折现率影响——这些看似不相干的公式,根都扎在时间价值上。</p><p>银行干的事是把短期存款变成长贷,一边提高经济效率,一边制造期限错配;央行能影响流动性和短端利率,但没法直接印出真实生产率。信用既能推动增长,也会在看不见的地方积累脆弱性,这是同一枚硬币的两面。</p>
 
-        <h3>1.3. 持仓市值和成本价</h3>
-<p>往下翻,持仓里有两个价格最容易被搞混。持仓市值,是你持有的证券按当前价格估算出来的价值——此刻它值多少。成本价,通常是你买入成本加上费用后摊出来的平均成本——当初你花了多少。不同软件对成本价的计算口径可能略有差异,以自己软件的说明为准。</p><p>给你一个必须焊死的常识:成本价不是市场需要记住的价格。你 <span class="num">10 元</span>买入,市场不会因为你成本是 <span class="num">10 元</span>,就出手把它托住不让跌破。成本价只对你的盈亏计算有意义,它不是资产价值的地心引力。</p><p>新手最容易被成本价绑架:跌破成本价就舍不得卖,怕「割肉变实亏」;涨回成本价又急着卖,只想「回本就走」。两个问题看穿了都一样——投资决策应该看未来的风险和收益,你的买入价,只属于过去。</p>
+        <h2>3. 权利和资产</h2>
+<p>中间一层是各种资产的身份证:股票是公司剩余收益权,债券是合同写死的固定索取权,基金是集合投资的份额,期货是未来价格的合约,期权是不对称的权利,<span class="term">ETF</span> 是在交易所买卖的基金份额。每个资产都可以拆成四件套:现金流、权利、风险、价格。</p><p>以后看到任何金融产品——不管包装多花哨——先问四个问题:它承诺什么现金流?谁有权拿收益?谁承担风险?价格怎么形成?这四个问题问完,再大的营销词也会现原形。</p><p>不同资产怕的东西不一样:股票怕盈利和估值双杀,债券怕利率上行和信用违约,期货怕<span class="term">杠杆</span>和换月,期权怕<span class="term">波动率</span>判断错和尾部风险,基金还要看管理人水平、费用和流动性。怕什么清楚,才知道该怎么管。</p>
 
-        <h3>1.4. 浮动盈亏和已实现盈亏</h3>
-<p>盈亏也分两种状态:在途的和落袋的。浮动盈亏是当前价格相对成本的账面变化,只要你没卖出,它就会继续变;已实现盈亏是卖出之后真正锁定的盈亏,从此不再随行情波动。</p><p>为什么说浮盈不是到手的钱?因为行情没收盘给你的承诺都不算数:股票今天涨 <span class="num">10%</span>,明天可能原样跌回去。浮亏也不是最终结局,但它代表的是你此刻选择退出会真实发生的结果。一个还在继续演,一个已经盖了章。</p><p>这条界线在量化里同样存在。报告里的净值通常按每日市值估算,里面天然包含浮动盈亏;而实盘对账时,要把已实现交易损益和持仓浮动损益分开看。混在一起,你会连「钱是在哪一步赚到的」都说不清。</p>
+        <h2>4. 市场和交易制度</h2>
+<p>市场把纸面权利变成可以交易的价格。交易所管撮合和规则,券商管接入和服务,登记结算管权属和交收。你在软件上点一下买入,背后是账户、订单、清算、风控一整套系统在跑——那个按钮只是冰山露出水面的一角。</p><p>A 股那套具体制度——交易时间、集合竞价、连续竞价、涨跌幅、<span class="term">T+1</span>、停牌、ST、退市、交易单位、费用——每一项都会真实地改变策略结果。回测不尊重这些制度,收益必然失真;前面拆穿漂亮曲线的那一章,好几刀正砍在这里。</p><div class="callout callout--warn reveal"><span class="callout__title">提醒</span><p>订单簿还在提醒你:价格不是图表上的抽象点位。买一卖一的价差、盘口深度、排队顺序、滑点、冲击成本,这些都决定你的策略到底能不能按想象中的价格成交。市场制度,就是量化从纸面走向实盘时撞上的第一道现实约束。</p></div>
 
-        <h3>1.5. 可卖数量</h3>
-<p>持仓显示 <span class="num">1000 股</span>,现在能全卖吗?不一定。A 股普通股票有 <span class="term">T+1</span> 规则——今天买入的股票,通常今天不能卖。于是持仓数量和可卖数量会不一样:账户里躺着 <span class="num">1000 股</span>,不代表此刻 <span class="num">1000 股</span>都点得动卖出。</p><p>算给你看:你昨天已经持有 <span class="num">1000 股</span>,今天又买了 <span class="num">500 股</span>。今天可卖的,通常只有昨天那 <span class="num">1000 股</span>;新买的 <span class="num">500 股</span>,得等下一个交易日才能卖。持仓是总数,可卖是其中「满了 <span class="term">T+1</span>」的那部分。</p><p>这个细节对量化是硬约束。策略不能只记录一个 position,还得单独记录 sellable_position。否则回测里当天买当天卖,跑得风生水起;真到实盘,规则直接把你拦在门外。</p>
-<p>你点了「买入」,屏幕上显示委托已提交——买到了吗?还没有。委托是你发给市场的买卖请求,成交是市场真的撮合成功。两者之间隔着交易所的撮合,所以委托不等于成交:限价单可能一直挂着没人理,可能只成交一部分,你也可以主动撤单。</p><p>委托列表里那些状态缩写,都是这段旅程的路标:已报、已成、部成、已撤、废单。废单尤其值得看原因——价格越界、资金不足、数量不合法、权限不足、交易时间不对,都可能让单子直接被打回。</p><p>量化实盘更是铁律:必须以成交回报为准,不能自己假设委托发出去就算成功。订单状态机是整个交易系统的心脏,订单到哪一步了,系统必须时刻知道。</p>
+        <h2>5. 数据和可见性</h2>
+<p>量化研究靠数据喂养,但数据不是从水龙头里流出来的纯净水。行情、财务、公告、指数成分、宏观、期货、期权、文本——每一类都有自己的口径、发布时间、修正历史和缺失毛病,拿到手就用,等于闭上眼睛开车。</p><p>这一层最重要的原则只有四个字:点时可见。模型站在任何历史时点,只能使用当时已经公开的数据——财报按披露日走,指数成分按调整日走,宏观按公布日走,回测用的复权价格和真实成交价格要分清。全部按时间线对齐,一条都不能含糊。</p><p>所以数据工程不是辅助杂活,它是研究可信度的地基。未来函数、幸存者偏差、成分回填、缺失值乱处理,任何一个都会把模型变成偷看答案的机器——考得分数越高,离真相越远。</p>
 
-        <h3>1.6. 买一卖一和盘口</h3>
-<p>行情页上「买一 9.98、卖一 10.00」是什么意思?买一,是当前市场上有人愿意买的最高价;卖一,是有人愿意卖的最低价。两者之间的缝隙,叫买卖价差。盘口行情,就是把双方此刻的出价排开给你看。</p><p>想马上成交,就要「打得过去」:想立刻买,通常要打到卖一的价;想立刻卖,通常要打到买一的价。把单子挂在买一或卖一等成交?可以,但不保证轮到——你前面还排着队。</p><p>盘口还藏着理解交易成本的钥匙。价格图上相邻两档只差一分钱,看起来无所谓;但大资金进场时,盘口深度不够,一层层往上买、往下砸,成交均价会比图上那点差距差得多。</p>
+        <h2>6. 因子和模型</h2>
+<p>因子,是把一句投资判断翻译成可检验数字的工序。估值、质量、成长、<span class="term">动量</span>、<span class="term">反转</span>、流动性、波动、规模,都可以落成因子;模型则把多个因子或特征揉成预测分数,这就是第六层干的事。</p><p>机器学习在这一层有用,但它不能脱离金融问题飘着。横截面排序和时间序列预测是两回事,<span class="term">RankIC</span> 和分层收益比普通准确率更能说明问题,交易成本会吃掉微弱优势,分布漂移会让模型悄悄衰减。这些约束不属于课本,属于市场。</p><p>好模型的标准也不是复杂。可验证、可解释、可交易、可监控,四样齐全才是好模型。线性模型、树模型、深度学习都只是工具,工具值不值钱,看它放进策略系统之后,能不能提供净增量。</p>
 
-        <h3>1.7. 涨跌幅和风险提示</h3>
-<p>行情页还没看完。涨跌幅、涨停价、跌停价、风险警示、停牌状态,这一排数字和标签说的是:今天这股票的价格被允许走到哪、遇到了什么特别情况。先纠正一个误解:涨跌幅限制不是保护你不亏损,它只是限制当日交易价格的范围——亏不亏,市场不管。</p><p>这条边界的实际体感是什么?跌停时你想卖,可能没有足够买盘接你;涨停时你想买,可能排到收盘也轮不上;停牌时,正常交易直接按下暂停。ST 和退市风险提示那几行小字,更不能当背景板忽略。</p><p>新手看到涨停容易兴奋,看到跌停容易恐慌。真正该问的是三个问题:这个价格能不能成交?风险发生了什么变化?我自己理不理解原因?情绪和成交,是两个世界的东西。</p>
-
-        <h3>1.8. 银证转账和交易时间</h3>
-<p>银行卡里的钱,怎么进到证券账户?银证转账。它是连接银行账户和证券账户的通道,但这条通道不是 <span class="num">24 小时</span>开放的,转账有时间限制。交易时间、转账时间、清算时间是三套不同的钟,各走各的。</p><p>晚上刷到一条新闻,心潮澎湃想加仓——委托可以先提交、计划可以先写好,但只要交易所不在连续交易时段,单子就不会立刻撮合。中午休市,也一样晾着。市场不是便利店,不会随时开门。</p><p>所以你的量化系统里,必须有交易日历和交易时段这两张表。A 股普通股票不是按自然日和 <span class="num">24 小时</span>逻辑运转的,拿处理日志系统的方式来调度交易,是会出事故的。</p>
-
-        <h3>1.9. 第一次操作的建议</h3>
-<p>看到这儿,你可能手痒想第一单了。给你一个建议:第一单的目标不是赚钱,是把流程看一遍。买一手流动性好的 <span class="term">ETF</span> 或股票,然后像做实验记录一样,逐项记下来:下单时间、委托状态、成交价格、费用、持仓变化、可卖数量,以及第二天的资金状态。</p><p>这一单的本质,是你在亲手摸市场的接口。前面那么多章讲的 <span class="term">T+1</span>、费用、成交、持仓、可用资金,都会在这几十块钱里变成具体的数字和状态。理论到实践的距离,有时候就差这一手。</p><p>小额体验比空想有用一百倍,前提是心态摆正:你在学习流程,不是拿真实账户测手气。测手气有赌场的玩法,学流程有工程师的玩法——咱们走后一种。</p>
-
-        <h2>2. 第一次读基金月报和产品报告</h2>
-        <p>很多人买基金或量化产品,决策依据只有一个:近一年收益排第几。这就像买车只看百公里加速,其他全凭销售张罗。其实月报和产品报告里藏着多得多的信息:它在和什么基准比,这段时间为什么赚或亏,持仓集中在哪,回撤多大,费用怎么收,规模有没有变。这一章教你把这份报告一页页拆开读——学会读报告,比听谁推荐都靠谱。</p>
-
-        <h3>2.1. 先看产品名称和策略类型</h3>
-<p>报告第一页通常是「身份页」:产品名称、策略类型、管理人、托管人、成立日期、规模和风险等级。先别急着翻收益,先确认它到底是什么。是股票多头、指数增强、市场中性、CTA、债券,还是多策略?这个问题不解决,后面的数字全是白看。</p><p>策略类型决定你用什么眼光打量它:指数增强,盯<span class="term">超额收益</span>和<span class="term">跟踪误差</span>;市场中性,看绝对收益和市场相关性;CTA,看多品种趋势和回撤;债券产品,看久期和信用风险。每种策略,有每种策略的考卷。</p><p>拿错考卷的比赛没有意义:拿市场中性产品和<span class="term">沪深 300</span> 比涨幅,或者拿股票多头和货币基金比稳定性,都是错位比较——一个是让举重选手比百米,一个是让长跑选手比跳高。</p>
-
-        <h3>2.2. 看净值曲线和基准曲线</h3>
-<p>一份报告只有一条净值曲线,算合格吗?不够。净值曲线展示产品价值的变化,基准曲线展示参照对象的表现,两条必须叠在一起看:产品是跟着市场水涨船高,还是真的走出了自己的超额?</p><p>两条线一比,事情就有意思了。产品涨 <span class="num">10%</span>、基准涨 <span class="num">20%</span>——绝对赚钱,但相对落后;产品跌 <span class="num">5%</span>、基准跌 <span class="num">20%</span>——账户是亏的,但防守漂亮。你要先弄清产品在和谁比,否则「赚」和「赔」两个字的含金量完全不同。</p><p>看曲线还要穿透终点:中间有没有深回撤?有没有很长时间不创新高?有没有某一段突然大幅偏离基准?终点只是结果,路径才是持有者的真实体验——你要每天坐在那条线上,不是只坐最后一格。</p>
-
-        <h3>2.3. 看收益指标</h3>
-<p>月报的收益栏目通常摆一排:近一个月、近三个月、今年以来、成立以来。先看哪根?短期收益容易被市场环境带节奏,长期收益更能看出策略的稳定性——但长期也可能掺着早期小规模或特殊环境的「水分」,不是越长越金贵。</p><p><span class="term">年化收益</span>尤其要配样本长度看。成立三个月跑出惊人年化,参考意义有限——三个月够发生什么?不够。成立多年、穿越过几轮市场冷热的产品,数字才更有说服力。年化是把时间拉平的外推,样本短,外推就是画大饼。</p><p>最后别忘看<span class="term">超额收益</span>。绝对收益只是第一层答卷;如果是指数增强,相对基准多赚多少,才是它真正的考题。</p>
-
-        <h3>2.4. 看风险指标</h3>
-<p>接下来的栏目最容易让人犯怵:<span class="term">最大回撤</span>、<span class="term">波动率</span>、<span class="term">夏普比率</span>、卡玛比率、<span class="term">跟踪误差</span>、<span class="term">信息比率</span>。别被名词墙吓住,它们都在回答两件朴素的事:赚钱的过程稳不稳?相对基准跑偏多少?</p><p><span class="term">最大回撤</span>尤其值得停下来。产品净值历史最高到过 1.5,后来跌到 1.2,回撤就是 <span class="num">20%</span>。现在闭眼想象一下:如果这是你的账户,真钱真情绪,从峰值眼睁睁亏掉两成,你能不能拿得住?拿不住,这个产品于你而言风险就是超标的,和别人怎么评价它无关。</p><p>风险指标还要结合策略类型读。CTA 的回撤形态和股票指数增强长得不一样;市场中性波动应相对低一些,读出来高了要警觉;股票多头则必须接受更高的市场波动——这是它的出厂属性。</p>
+        <h2>7. 回测和验证</h2>
+<p>回测是在历史里排练,不是对未来的证明。一次好回测要同时做到:按当时可见的数据生成信号,按真实交易规则模拟成交,老老实实扣成本,逐笔记录交易,和基准比较,再做样本外验证。少一步,结论就要打折。</p><p>看到漂亮回测,先别鼓掌,按老顺序查错:股票池是否点时,成交价格有没有偷看,成本是否完整,涨跌停停牌处理没有,容量合不合理,参数是不是过拟合,样本外有没有被污染。查完错的曲线,才有资格谈好不好。</p><p>验证的目标从来不是保住最漂亮的那条曲线,而是把不真实的收益一样样剔掉。修正之后还留在桌上的收益,才可能是真正值得继续研究的优势。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="基金月报风险指标:最大回撤、波动率、夏普比率、卡玛比率、跟踪误差、信息比率;最大回撤算例为净值从峰值1.5跌到1.2,回撤等于(1.5减1.2)除以1.5等于百分之二十">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">月报风险指标别光看:峰值 1.5 跌到 1.2,回撤自己算一遍</text>
-            <rect x="40" y="64" width="430" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="255" y="92" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800"><tspan x="255" y="92">最大回撤=(峰值−谷底)÷峰值</tspan></text>
-            <path d="M 80 158 L 170 134 L 350 226 L 425 188" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>
-            <line x1="80" y1="134" x2="425" y2="134" stroke="#f0c96a" stroke-width="1.2" stroke-dasharray="5 4"/>
-            <circle cx="170" cy="134" r="5" fill="#f0c96a"/>
-            <text x="170" y="120" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">净值最高 1.5</text>
-            <circle cx="350" cy="226" r="5" fill="#e88"/>
-            <text x="350" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">后来跌到 1.2</text>
-            <path d="M 170 144 L 170 217" stroke="#e88" stroke-width="1.5" stroke-dasharray="4 4"/>
-            <text x="150" y="182" text-anchor="end" fill="#ffb4b4" font-size="11.5">亏掉 0.3</text>
-            <text x="255" y="284" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">(1.5 − 1.2) ÷ 1.5 = 回撤 20%</text>
-            <rect x="490" y="64" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="579" y="87" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="579" y="87">最大回撤</tspan></text>
-            <text x="579" y="110" text-anchor="middle" fill="#bcc9dd" font-size="10.5">从峰值摔下</text>
-            <text x="579" y="127" text-anchor="middle" fill="#bcc9dd" font-size="10.5">那一下有多疼</text>
-            <rect x="681" y="64" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="770" y="87" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="770" y="87">波动率</tspan></text>
-            <text x="770" y="110" text-anchor="middle" fill="#bcc9dd" font-size="10.5">赚钱的路上</text>
-            <text x="770" y="127" text-anchor="middle" fill="#bcc9dd" font-size="10.5">有多颠簸</text>
-            <rect x="490" y="148" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="579" y="171" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="579" y="171">夏普比率</tspan></text>
-            <text x="579" y="194" text-anchor="middle" fill="#bcc9dd" font-size="10.5">每份波动</text>
-            <text x="579" y="211" text-anchor="middle" fill="#bcc9dd" font-size="10.5">换多少收益</text>
-            <rect x="681" y="148" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="770" y="171" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="770" y="171">卡玛比率</tspan></text>
-            <text x="770" y="194" text-anchor="middle" fill="#bcc9dd" font-size="10.5">每份回撤</text>
-            <text x="770" y="211" text-anchor="middle" fill="#bcc9dd" font-size="10.5">换多少年化</text>
-            <rect x="490" y="232" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="579" y="255" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="579" y="255">跟踪误差</tspan></text>
-            <text x="579" y="278" text-anchor="middle" fill="#bcc9dd" font-size="10.5">偏离基准</text>
-            <text x="579" y="295" text-anchor="middle" fill="#bcc9dd" font-size="10.5">有多远</text>
-            <rect x="681" y="232" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="770" y="255" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="770" y="255">信息比率</tspan></text>
-            <text x="770" y="278" text-anchor="middle" fill="#bcc9dd" font-size="10.5">每单位偏离</text>
-            <text x="770" y="295" text-anchor="middle" fill="#bcc9dd" font-size="10.5">换多少超额</text>
-            <rect x="40" y="322" width="400" height="62" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="240" y="346" text-anchor="middle" fill="#c9d4e8" font-size="12">按策略类型读:CTA 的回撤形态和指增长得不一样</text>
-            <text x="240" y="368" text-anchor="middle" fill="#c9d4e8" font-size="12">市场中性波动应相对低——读出来高了要警觉</text>
-            <rect x="460" y="322" width="400" height="62" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="660" y="346" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">闭眼想象:这是你的账户,从峰值眼睁睁亏两成</text>
-            <text x="660" y="368" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">拿不住,这个产品的风险对你就超标</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 452" role="img" aria-label="回测查错七刀:按顺序检查股票池是否点时、成交价有没有偷看、成本是否完整、涨跌停停牌处理、容量合理性、参数过拟合、样本外污染">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">看到漂亮曲线先别鼓掌:按老顺序查错,七刀砍完再谈好不好</text>
+            <text x="450" y="58" text-anchor="middle" fill="#8499bd" font-size="12.5">回测是在历史里排练,不是对未来的证明;查错顺序对应前面拆穿漂亮曲线的那几章</text>
+            <line x1="56" y1="106" x2="56" y2="394" stroke="rgba(122,167,240,0.28)" stroke-width="2" stroke-dasharray="5 5"/>
+            <rect x="28" y="80" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="106" r="13" fill="#101d33" stroke="#7aa7f0" stroke-width="1.5"/>
+            <text x="56" y="111" text-anchor="middle" fill="#7aa7f0" font-size="13" font-weight="800">1</text>
+            <text x="190" y="107" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="107">股票池是不是点时</tspan></text>
+            <text x="318" y="111" fill="#8499bd" font-size="12">按当时的成分名单,不许拿今天的名单回填历史</text>
+            <rect x="28" y="128" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="154" r="13" fill="#101d33" stroke="#7aa7f0" stroke-width="1.5"/>
+            <text x="56" y="159" text-anchor="middle" fill="#7aa7f0" font-size="13" font-weight="800">2</text>
+            <text x="190" y="155" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="155">成交价有没有偷看</tspan></text>
+            <text x="318" y="159" fill="#8499bd" font-size="12">信号日和成交日要错开,当天收盘价不许当天用</text>
+            <rect x="28" y="176" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="202" r="13" fill="#101d33" stroke="#7aa7f0" stroke-width="1.5"/>
+            <text x="56" y="207" text-anchor="middle" fill="#7aa7f0" font-size="13" font-weight="800">3</text>
+            <text x="190" y="203" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="203">成本是否完整</tspan></text>
+            <text x="318" y="207" fill="#8499bd" font-size="12">佣金、滑点、冲击缺一项,纸面收益就虚高一截</text>
+            <rect x="28" y="224" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="250" r="13" fill="#101d33" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="56" y="255" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">4</text>
+            <text x="190" y="251" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="251">涨跌停停牌处理没有</tspan></text>
+            <text x="318" y="255" fill="#8499bd" font-size="12">买不进、卖不出的日子,不许假装成交</text>
+            <rect x="28" y="272" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="298" r="13" fill="#101d33" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="56" y="303" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">5</text>
+            <text x="190" y="299" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="299">容量合不合理</tspan></text>
+            <text x="318" y="303" fill="#8499bd" font-size="12">小资金做出来的成绩,不能原样平移到大资金</text>
+            <rect x="28" y="320" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="346" r="13" fill="#101d33" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="56" y="351" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">6</text>
+            <text x="190" y="347" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="347">参数是不是过拟合</tspan></text>
+            <text x="318" y="351" fill="#8499bd" font-size="12">试了无数次留下的「最佳」,先打问号再上桌</text>
+            <rect x="28" y="368" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="394" r="13" fill="#101d33" stroke="#e88" stroke-width="1.5"/>
+            <text x="56" y="399" text-anchor="middle" fill="#e88" font-size="13" font-weight="800">7</text>
+            <text x="190" y="395" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="395">样本外有没有被污染</tspan></text>
+            <text x="318" y="399" fill="#8499bd" font-size="12">反复看测试集回头改策略,测试集就进了回路</text>
+            <text x="450" y="438" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">验证的目标不是保住最漂亮的曲线,是把不真实的收益一样样剔掉——剔完还留在桌上的,才可能是真优势</text>
           </svg>
-          <p class="figure__cap">风险指标都在回答两件朴素的事:赚钱的过程稳不稳,相对基准跑偏多少。最大回撤要亲手算——净值从 1.5 跌到 1.2,回撤就是 (1.5−1.2)÷1.5 = 20%;再闭眼想想:真钱从峰值亏两成,你拿不拿得住。</p>
+          <p class="figure__cap">看到漂亮回测,先按老顺序查错:股票池是不是点时、成交价有没有偷看、成本是否完整、涨跌停停牌处理没有、容量合不合理、参数是不是过拟合、样本外有没有被污染。查完错的曲线,才有资格谈好不好。</p>
         </div>
-        <h3>2.5. 看持仓和暴露</h3>
-<p>收益和风险都是「结果」,持仓才是「行为」。公募基金通常披露前十大持仓和行业配置,私募披露可能更有限。能看到持仓时,先看两件事:集中度和行业暴露。前十大持仓占比很高,意味着产品的命运很大程度押在少数几个判断上。</p><p>行业配置说的是产品的口味偏哪。一个嘴上喊「均衡」的产品,如果长期重仓单一行业,风险和宣传就不是一回事。指数增强产品还要看行业相对基准偏离多少——偏离本身就是它押的注。</p><p>有些报告还会披露风格暴露:市值、价值、成长、<span class="term">动量</span>、波动。读不懂这些词也没关系,先存一句话在脑子里:这些暴露会影响产品表现。以后在归因和对比里遇到,再回头补。</p>
+        <h2>8. 组合和风险</h2>
+<p>预测分数不能直接当仓位用,中间隔着一整层组合优化:在预期收益、风险、成本、流动性和各方约束之间做取舍。行业、风格、个股集中度、<span class="term">跟踪误差</span>、换手、容量,每一项都要被管起来。</p><p>风险控制的本质,不是预测明天跌不跌,而是把错误限制在不致命的范围内。暴露、集中度、<span class="term">VaR</span>、压力测试、止损、模型失效监控、数据监控、系统监控,加起来才构成完整的风险框架——单拿任何一个出来,都只是零件。</p><p>组合还要能解释自己赚的是哪份钱:市场 <span class="term">Beta</span>、行业、风格、选股、<span class="term">基差</span>、执行,还是<span class="term">杠杆</span>?归因的意义就是给收益办一张明细发票,让赚的和冒的险都变得可见——看不见来源的收益,迟早连本带利还回去。</p>
 
-        <h3>2.6. 看归因解释</h3>
-<p>好的月报会主动交代本期收益的来源:市场上涨贡献多少,行业配置贡献多少,选股贡献多少,期货<span class="term">基差</span>影响多少,交易成本影响多少。一句话,钱是坐着哪趟车来的,要能说清。</p><p>亏钱更要说清。是市场本身整体下跌,是风格逆风,是模型阶段性失效,还是对冲成本上升?解释不代表一定正确,但敢于解释,本身比沉默透明。</p><p>特别警惕一种话术抽搐:赚钱时全是能力,亏钱时全是市场。真正可信的管理人,在坏月份也会出来讲清楚问题在哪。只能顺风、不会逆风的归因,不是归因,是宣传。</p>
+        <h2>9. 交易执行和实盘</h2>
+<p>实盘不是调用一个 buy 函数就完事。订单会被拒,会部分成交,会撤单失败,要排队,有滑点,会被涨跌停和停牌拦住;内部账本还必须和券商真实状态对得上。这一层全是工程师熟悉的脏活,也全是要命的活。</p><p>上线前按清单逐项过:数据、模型、回测一致性、订单、风控、日志、权限、盘后对账,一项一项钉死。模拟盘和小资金实盘是必经之路,不是走过场——它们存在的意义,就是让错误先发生在亏得起的地方。</p><p>原则一句话:越自动、越快、越带<span class="term">杠杆</span>,越需要强风控。高频和衍生品策略把这句话放大到极致。系统错误比模型错误亏得更快——模型错了是慢慢流血,系统错了可能是当场断气。</p>
 
-        <h3>2.7. 看规模变化</h3>
-<p>规模是很多人忽略、其实很要紧的一栏。规模快速上升,可能给策略带来容量压力——钱多了,原来的机会装不下;规模快速下降,可能是赎回潮,也可能反过来逼着管理人卖出持仓。两头都会改变产品的「体质」。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>对量化小盘策略,规模尤其关键。原本能从容交易的小机会,资金体量太大之后就不够用,滑点和冲击双双上升。策略没变,收益率却不一样了——因为策略和环境之间的比例变了。</p></div><p>读月报时把规模和业绩放一起看:过去的收益是在多大体量下拿到的?如果现在规模大得多,不要随便用历史收益外推未来——一条小船和一支船队,不能用同一份航海日志预测。</p>
-
-        <h3>2.8. 看费用和申赎</h3>
-<p>费用是从你收益里直接扣的真金白银,不能不数。管理费、托管费、销售费、申赎费、业绩报酬,逐项看。私募产品尤其要看业绩报酬如何计提,是否有高水位——条款长在合同里,但扣的是你口袋里的钱。</p><p>申赎安排决定你的流动性自主性:开放日多久一次?赎回多久确认?有没有封闭期?有没有赎回费?出现巨额赎回怎么处理?这五句话,下单前都该有答案。</p><p>最忌讳的一类错配是钱期错配:这笔钱半年后就要用,就别买一年封闭或流动性差的产品。产品收益再高,也拗不过你的资金用途——钱有自己的时间表,产品也有自己的时间表,两张表得对齐。</p>
-
-        <h3>2.9. 看风险提示</h3>
-<p>风险提示不是写着糊墙的小字。市场风险、流动性风险、信用风险、衍生品风险、模型风险、操作风险、管理人风险——每一条都是真实世界里发生过的事故类型。</p><p>如果产品能用期货、期权、融资融券或其他衍生品,风险提示的权重还要上调。衍生品是放大器:可能放大收益,也可能放大亏损和流动性压力。工具本身没有方向,但放大的事没有小事。</p><p>读风险提示时不要以「法律模板」的眼神扫过。正确姿势是把每条都过一遍脑子:如果这个风险真的发生,我的账户会怎样?我能不能承受?不追问到「我」字,白读。</p>
-
-        <h3>2.10. 写一页自己的产品笔记</h3>
-<p>读完月报,合上书之前多做一件事:写一页自己的产品笔记。内容不用复杂,包括产品类型、基准、收益、回撤、费用、持仓、主要风险、你看不懂的地方,以及——最关键的一条——是否适合你自己的资金用途。</p><p>为什么要落到笔头?因为只看不写,信息很容易被销售话术接管;一旦要用自己的话写,问题会一个个浮出来:基准不清楚、费用没看懂、回撤其实不能承受、持仓和自己已有资产高度重合。每一行问题,都是真金白银省下来的学费。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>记住一句话:投资不是集邮,不是收集产品名字。投资是把产品安放进自己的资产配置和风险承受力里。笔记写到这里,这一章才算真的读完。</p></div>
+        <h2>10. 人和纪律</h2>
+<p>链条最后一层,是人。你会害怕亏损,会在上涨之后过度自信,会想借钱加仓,会在回撤里怀疑策略。量化可以减少临场主观,但消不掉人性——它只是把战场从盘中挪到了冷静时刻的规则制定上。</p><p>资金管理的顺序前面已经讲过:先分清生活钱和风险钱,再限制仓位和<span class="term">杠杆</span>,提前写好停用和加仓规则。一个策略能不能长期执行,最终取决于你能不能扛住它真实的坏阶段,而不是它最好的那段曲线。</p><p>从小岛的一条鱼到一整套量化系统,这十层概念翻来覆去说的其实是同一件事:金融是资源、时间、风险和信息的系统工程。别被任何单个名词迷住眼睛,要一直能看见整条链。</p>
 
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>总资产、可用资金、可取资金、持仓市值、可卖数量是五个不同口径,软件上挨着排,含义各不相同。</li>
-            <li>委托不等于成交:成交之后,资金、持仓、费用和可卖状态还要一一更新,这条链才走完。</li>
-            <li>读产品报告,先确认策略类型和基准,再依次看净值、风险、持仓、归因、费用和申赎——顺序错了,结论容易错。</li>
-            <li>收益必须和回撤、波动、样本长度、规模变化放在一起看,只看排名,等于只看电影的最后一帧。</li>
+            <li>金融可以按真实财富、信用时间、资产权利、市场制度、数据、模型、回测、组合、实盘和人这十层来理解。</li>
+            <li>量化不是脱离金融的算法游戏,而是把金融假设一步步变成数据、模型、组合和交易系统。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.1.</strong> 总资产不是可花的钱</li>
-            <li><strong>1.2.</strong> 可用资金和可取资金</li>
-            <li><strong>1.3.</strong> 持仓市值和成本价</li>
-            <li><strong>1.4.</strong> 浮动盈亏和已实现盈亏</li>
-            <li><strong>1.5.</strong> 可卖数量</li>
-            <li><strong>1.6.</strong> 买一卖一和盘口</li>
-            <li><strong>1.7.</strong> 涨跌幅和风险提示</li>
-            <li><strong>1.8.</strong> 银证转账和交易时间</li>
-            <li><strong>1.9.</strong> 第一次操作的建议</li>
-            <li><strong>2.1.</strong> 先看产品名称和策略类型</li>
-            <li><strong>2.2.</strong> 看净值曲线和基准曲线</li>
-            <li><strong>2.3.</strong> 看收益指标</li>
-            <li><strong>2.4.</strong> 看风险指标</li>
-            <li><strong>2.5.</strong> 看持仓和暴露</li>
-            <li><strong>2.6.</strong> 看归因解释</li>
-            <li><strong>2.7.</strong> 看规模变化</li>
-            <li><strong>2.8.</strong> 看费用和申赎</li>
-            <li><strong>2.9.</strong> 看风险提示</li>
-            <li><strong>2.10.</strong> 写一页自己的产品笔记</li>
+            <li><strong>1.</strong> 真实财富和生产力</li>
+            <li><strong>2.</strong> 信用和时间</li>
+            <li><strong>3.</strong> 权利和资产</li>
+            <li><strong>4.</strong> 市场和交易制度</li>
+            <li><strong>5.</strong> 数据和可见性</li>
+            <li><strong>6.</strong> 因子和模型</li>
+            <li><strong>7.</strong> 回测和验证</li>
+            <li><strong>8.</strong> 组合和风险</li>
+            <li><strong>9.</strong> 交易执行和实盘</li>
+            <li><strong>10.</strong> 人和纪律</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>总资产为什么不等于可花的钱?</summary>
-            <p>总资产包含持仓市值等按当前价格估算的价值,会随行浮动;而可用、可取资金还要受交易和交收规则约束——估值、能用、能取,是三件事。</p>
+            <summary>为什么说钱不是金融学习的最底层?</summary>
+            <p>因为真实财富和生产力才是最终的地基,钱只是交换和记账的工具,钞票变多不等于财富变多。</p>
           </details>
           <details class="quiz__item">
-            <summary>为什么持仓数量不一定等于可卖数量?</summary>
-            <p>A 股普通股票有 T+1 规则,今天买入的部分通常当天不可卖,要等下一个交易日;持仓 1000、可卖 1000 未必画等号。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>为什么读月报先看产品类型?</summary>
-            <p>因为每种策略有自己的评价标准:不先确认类型,就不知道拿它和什么比、用什么指标要求它,后面所有数字都失去坐标。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>净值曲线为什么要和基准一起看?</summary>
-            <p>单看净值分不清「水涨船高」和「自己划得快」;两条线对比,才能分离市场本身的涨跌和产品相对基准的超额。</p>
+            <summary>量化链条里数据为什么这么重要?</summary>
+            <p>数据决定模型在历史时点到底看见了什么;口径错了,回测和实盘会一起失真,再好的模型也被喂错料。</p>
           </details>
         </section>
       </div>

@@ -36,11 +36,12 @@ REFERENCES = _manuscript.REFERENCES
 CHAPTER_GROUPS = [
     [0, 1], [2, 3], [4, 5], [6, 7], [8, 9], [10, 11, 12],
     [70], [37, 38, 65], [66], [67], [68], [69], [71], [72],
-    [13, 14], [15, 16], [17, 18, 19],
+    [13, 14], [76],
+    [15, 16], [17, 18, 19], [74], [75],
     [20, 21], [22, 23], [24, 25, 26],
     [27, 28], [29, 30], [31, 32], [33, 34], [35, 36],
     [39, 40], [41], [42, 43], [44, 45], [46, 47], [48],
-    [49, 50], [51, 52], [53, 54], [55, 56], [57], [58, 59],
+    [49, 50], [51, 52], [53, 54], [55, 56], [77], [57], [58, 59],
     [60, 61], [62, 63], [64],
 ]
 
@@ -64,9 +65,12 @@ VISIBLE_PARTS = [
 "第二部分 · A 股市场与交易机器",
 "第二部分 · A 股市场与交易机器",
 "第三部分 · 收益、风险与投资评价",
+"第三部分 · 收益、风险与投资评价",
+"第三部分 · 收益、风险与投资评价",
 "第四部分 · 量化研究从因子开始",
 "第四部分 · 量化研究从因子开始",
 "第四部分 · 量化研究从因子开始",
+"第四部分 · 量化研究从因子开始",
 "第五部分 · 量化行业与策略版图",
 "第五部分 · 量化行业与策略版图",
 "第五部分 · 量化行业与策略版图",
@@ -78,6 +82,7 @@ VISIBLE_PARTS = [
 "第六部分 · 项目实战与工程化",
 "第六部分 · 项目实战与工程化",
 "第六部分 · 项目实战与工程化",
+"第七部分 · 路线、复盘与检查清单",
 "第七部分 · 路线、复盘与检查清单",
 "第七部分 · 路线、复盘与检查清单",
 "第七部分 · 路线、复盘与检查清单",
@@ -137,43 +142,43 @@ CHAPTER_OVERRIDES = {
         "title": "A 股的交易机器:从下单到成交",
         "lead": "你在手机上点一次买入,看似一秒钟的事,背后却串起账户、券商、交易所、登记结算、托管、清算和风控一整套机器。这一章先讲清这套机器里每个角色在做什么,再落到 A 股具体的交易规则:交易时间、涨跌幅限制、T+1、各项费用。量化系统如果不懂这些,就会把交易写成一个想当然的简单函数,最后在实盘里出错。",
     },
-    15: {
+    16: {
         "title": "看懂行情:屏幕上的数字和基准",
         "lead": "第一次打开行情软件,满屏的最新价、涨跌幅、成交量、换手率、买一卖一、K 线、均线、复权很容易把人吓住。这一章先不急着学指标,而是讲清这些数字从哪里来、表示什么、又不能说明什么;再讲指数、ETF 和基准,回答一个常被忽略的问题:你的收益到底在和谁比较?看懂行情,才谈得上理解交易和量化数据。",
     },
-    16: {
+    17: {
         "title": "收益、风险与市场为什么难赢",
         "lead": "一条收益曲线好不好,不能只看最后赚了多少。这一章先讲怎么量化收益和风险:年化、波动、最大回撤、夏普比率,让\u201c赚钱的体验发生在时间里\u201d这件事变得可测量;再讲资产配置和分散化,为什么不该把判断全押在一处;最后借有效市场、随机游走和行为偏差,解释一个残酷的现实\u2014\u2014赚超额收益为什么这么难。",
     },
-    17: {
+    20: {
         "title": "量化的起点:因子和数据",
         "lead": "实习时听到的\u201c找因子\u201d,不是什么玄学密码。最朴素地说,因子就是一列能描述资产特征、风险暴露或预测信息的数字,量化研究的第一步就是把一句投资判断写成可检验的数据列。这一章先讲因子是什么、从哪里来、怎么检验有没有用,再讲更容易被忽略却更致命的一环:数据从哪里来、标签怎么定义、样本又该怎么切分。",
     },
-    18: {
+    21: {
         "title": "回测与机器学习:在历史里排练",
         "lead": "回测是量化研究的实验室:把策略规则放进历史市场里跑一遍,看当时这么做会发生什么。但它是排练,不是时光机,更不是赚钱证明\u2014\u2014偷看未来、忽略成本、假设无限成交,结果就会变成幻觉。这一章先讲怎么做一次可信的回测,再讲量化里的机器学习:模型为什么不是越复杂越好,以及金融数据和图像文本有什么根本不同。",
     },
-    19: {
+    22: {
         "title": "从预测到交易:组合、执行与风控",
         "lead": "量化研究员常常先得到一列预测分数,但真实投资从不是把最高分的股票全部买满。这一章讲预测之后的三件事:组合优化怎么在收益、风险和各种约束之间做权衡;交易执行怎么把理想仓位真的下到市场里,又不被成本和冲击吃掉;风控和监控怎么盯住边界,决定什么时候该减仓、停用和复盘。预测告诉你想要什么,这三步决定你能付出什么代价去实现它。",
     },
-    20: {
+    23: {
         "title": "量化行业和个人的路线",
         "lead": "从外面看,量化像一群人关在办公室里写神秘算法;真实工作更像一条生产线,研究、工程、交易、风控、合规各司其职,算法只是其中一环。这一章先讲行业里不同角色到底在做什么,帮你看清自己适合站在哪个位置;再给计算机背景的个人一条能真正走通的学习路线:从零起步,该学什么、该做什么、又该避开哪些一开始就注定失败的方向。",
     },
-    21: {
+    24: {
         "title": "量化策略版图与指数增强",
         "lead": "量化不是一种策略,而是一大类用数据、模型和规则做投资的方法:有人做指数增强,有人做市场中性,有人做商品趋势,有人做套利和高频。这一章先把整张策略地图铺开,让你看清它们在数据、频率、收益来源和风险上的根本差异;再深入第一种最容易理解的路径\u2014\u2014指数增强,看它如何在紧贴基准的同时,争取那一点点稳定的超额收益。",
     },
-    22: {
+    25: {
         "title": "市场中性与 CTA 趋势",
         "lead": "市场中性听起来很诱人:不管大盘涨跌,只赚自己的选股能力。但\u201c中性\u201d到底中和了什么值得先讲清楚\u2014\u2014对冲能降低方向风险,却消灭不了基差、融券、成本和极端行情里的相关性失效。这一章先拆解市场中性对冲之后到底还剩什么风险,再转向 CTA 和期货趋势,看另一类完全不同的思路:用规则去交易商品、股指和利率的趋势。",
     },
-    23: {
+    26: {
         "title": "套利与高频:更快更精细的战场",
         "lead": "\u201c套利\u201d这个词容易让人误会成白捡钱。严格意义上的无风险套利很少,一旦出现就会被速度快、成本低、资金大的参与者迅速挤掉;普通人说的套利,多数是\u201c赌价差回归\u201d的相对价值交易,能赚钱但绝不是没有风险。这一章先讲套利和相对价值的真实面貌,再进入高频交易和市场微观结构,看清毫秒之间价格、排队和风险是怎么运作的。",
     },
-    24: {
+    27: {
         "title": "量化产品、监管与合规",
         "lead": "很多人理解了策略,却不会看产品。一个量化产品不是一段回测代码,而是有管理人、托管人、合同、费用、封闭期和净值披露的金融产品,投资者真正买到的是扣费后、受约束、会波动的一条净值曲线。这一章先讲怎么看懂一个量化产品:净值、费用、封闭期和业绩归因;再讲监管、合规和伦理\u2014\u2014技术能力再强,也不能越过市场规则的边界。",
     },
@@ -181,63 +186,63 @@ CHAPTER_OVERRIDES = {
         "title": "基本面与宏观:数字背后的公司和经济",
         "lead": "股票背后是公司,公司背后是生意。量化可以只用价格和成交量,也可以用财务报表做基本面因子。这一章先讲清收入、利润、资产、负债和现金流分别在说什么,以及为什么\u201c利润好看但现金流很差\u201d会让投资者警惕;再把视野拉到宏观,看利率、通胀、汇率和商品这些大变量如何彼此牵动,又如何一层层传导到你持有的资产上。",
     },
-    25: {
+    28: {
         "title": "量化项目的工程骨架与速查",
         "lead": "计算机背景的读者最容易把量化项目写成一个越拉越长的 notebook,几周后连自己都理不清哪个单元格先跑、哪个文件才是最终结果。这一章先讲怎么像正经工程项目那样组织一个量化项目:数据来源清楚、配置可重复、实验有记录、回测可复现、报告能自动生成;再给一份公式和指标速查,帮你在\u201c别死背公式,要知道它在问什么\u201d之间找到平衡。",
     },
-    26: {
+    29: {
         "title": "实战一:从零做一个指数增强回测",
         "lead": "前面讲了很多概念,这一章带你真正走一遍完整的研究流程。目标很具体:选一个指数作为基准,在它的成分股里构造几个简单因子,每月调仓,扣除成本,再和基准比较。做完你会发现,量化项目真正难的地方不是写出买卖信号,而是让数据、时间、交易规则、风险和报告全都对得上\u2014\u2014这也是把\u201c懂概念\u201d变成\u201c能动手\u201d的第一道坎。",
     },
-    27: {
+    30: {
         "title": "实战二:市场中性模拟盘与上线检查",
         "lead": "市场中性比指数增强更复杂,因为它不只买股票,还要处理对冲。这一章带你做一个市场中性的模拟盘,重点不是收益,而是看清多头为什么赚或亏、对冲工具贡献多少、基差带来什么影响、保证金和现金怎么变化。做完之后,再给你一份从回测走到模拟盘、再走向实盘前必须逐条确认的检查清单,把\u201c手刹\u201d拉在真正下真金白银之前。",
     },
-    28: {
+    31: {
         "title": "避坑:常见错误和如何读研究",
         "lead": "量化新手亏钱,常常不是因为不懂高深理论,而是掉进了几个反复出现的坑:看起来赚钱,其实在偷看未来的答案。这一章先把这些最常见的错误一个个摆出来,让你在自己的项目里能认出它们;再讲一项同样重要的能力\u2014\u2014如何读量化研究报告和论文:先找它的假设和数据口径,再看结论,别被漂亮的曲线和术语牵着走。",
     },
-    29: {
+    32: {
         "title": "心理、资金管理与一次复盘",
         "lead": "技术之外,能不能活下来,往往取决于心理和资金管理。这一章先讲为什么\u201c活下来比一次赚快钱更重要\u201d:仓位怎么定、亏损怎么扛、情绪怎么不被行情牵着走;再用一个复盘案例,完整拆开一条看起来很漂亮的回测曲线,看它是怎么在偷看未来、幸存者偏差和成本假设上一步步被拆穿的。纸面收益和真实收益之间,隔着的正是这些。",
     },
-    30: {
+    33: {
         "title": "全书复盘:从一条鱼到一个量化系统",
         "lead": "学到这里,名词已经很多:货币、信用、股票、债券、基金、期货、期权、指数、因子、回测、机器学习、组合优化、交易执行、风控。这一章把它们重新收束成一条链\u2014\u2014真实财富产生现金流,金融工具分配现金流和风险,市场给这些权利定价,数据记录市场状态,策略试图从数据里找到优势,实盘系统再把优势变成可控的交易。金融不是一堆孤立术语,量化也不是孤立算法。",
     },
-    31: {
+    34: {
         "title": "职业路线与长期学习",
         "lead": "如果你想把兴趣变成职业,这一章讲两件事。一是计算机背景的人怎样进入量化:该积累什么能力、怎么攒一个能证明自己的作品集、面试和岗位大致看什么;二是一条能长期走下去的学习路线\u2014\u2014读什么、做什么、又怎么定期复盘。量化是一条需要耐心的路,走得远比一开始跑得快更重要。",
     },
-    32: {
+    35: {
         "title": "术语复盘:用人话再讲一遍",
         "lead": "全书出现了大量术语,这一章把它们集中起来,用最朴素的人话再讲一遍,方便你随时回来查。前半部分复盘金融基础词汇:货币、信用、股票、债券、基金这些概念到底在说什么;后半部分复盘量化词汇:因子、回测、夏普、中性、滑点又分别指什么。不追求严谨定义,只求你一看就想起它对应的那件真实的事。",
     },
-    33: {
+    36: {
         "title": "场景练习:开户软件和基金月报",
         "lead": "概念懂了,真正上手时还是会被界面和文件里的术语绊住。这一章用两个真实场景带你练一遍:第一次开户后,交易软件里每一个数字、每一个按钮到底在说什么;第一次拿到基金月报和产品报告,又该重点看哪些栏目、警惕哪些说法。把抽象概念落到你真会遇到的屏幕和纸面上,才算真的学会。",
     },
-    34: {
+    37: {
         "title": "场景练习:回测报告和模拟盘",
         "lead": "这一章继续用场景带你练手。第一个场景:第一次看到一份回测报告,你该按什么顺序读、哪些指标最容易骗人、哪些细节能暴露它是否偷看了未来;第二个场景:第一次跑模拟盘的一周,每天该关注什么、会遇到哪些和回测不一样的意外。这些练习的目的,是让你在面对真实材料时有一套可靠的检查动作,而不是凭感觉。",
     },
-    35: {
+    39: {
         "title": "场景练习:第一次小资金实盘",
         "lead": "小资金实盘不是为了证明自己能很快赚钱,而是为了验证真实的交易链路。这一章带你走一遍第一次小实盘:先把资金上限定在\u201c全亏掉也不影响生活\u201d的水平,再观察订单、成交、费用、滑点、持仓、对账和自己的情绪反应。这一步最重要的从来不是收益,而是知道真实市场会怎样改变你的系统和你的心态。",
     },
-    36: {
+    40: {
         "title": "最终清单:动手前必须真正懂的事",
         "lead": "在真正动手做量化之前,有些事必须先真正弄懂,而不是\u201c好像知道\u201d。这一章给你两份清单:第一份是从金融小白走到量化之前,必须真正理解的金融常识;第二份是着手做量化项目之前,必须真正做到的准备。把这两份清单当成过关检查,任何一条答不上来,就说明前面某一章还需要回去补。",
     },
-    37: {
+    41: {
         "title": "自检判断题与一个反面案例",
         "lead": "这一章用两种方式帮你检验自己是不是真的理解了。先是十个判断题,每一个都对应书里的一个关键直觉,答错说明那块地基还没打牢;再是一个反面案例,完整讲一个程序员是怎样凭着扎实的编程能力,却在量化里一步步亏钱的。别人踩过的坑,是最便宜的学费。",
     },
-    38: {
+    42: {
         "title": "一个稳妥的项目与结语",
         "lead": "这一章先讲一个正面案例:一个稳妥的个人量化项目,是怎样从一个很小的问题出发,一点点长成能长期运行的东西的\u2014\u2014它和那些追求一夜暴富的做法,区别到底在哪里。最后是全书的结语,回答一个问题:读完这本书,你现在真正应该带走的是什么。不是某个策略,而是一套看待金融和量化的方式。",
     },
-    39: {
+    43: {
         "title": "附录:每次研究前先读这张纸",
         "lead": "最后给你一张可以反复看的纸。每次你想做一个策略、买一个产品、写一个模型、跑一次回测,或者把模拟盘推向实盘之前,先把这一章读一遍。它不提供新概念,只帮你把手刹拉住几分钟\u2014\u2014很多亏损不是因为不懂高深理论,而是因为忘了最基本的问题:问题是否足够小、数据是否可信、成本是否算够、风险是否扛得住。",
     },
@@ -1470,18 +1475,18 @@ def _fig_b2_questions():
 
 
 CONCEPT_FIGURES_FREE = {
-    20: [("先把金融地图补齐", _fig_b1_roadmap)],
-    27: [("中性组合也会缺钱", _fig_b1_neutral_ledger)],
-    30: [("真实财富和生产力", _fig_b1_ten_layers)],
-    31: [("指数增强回测", _fig_b1_portfolio)],
-    32: [("货币", _fig_b1_glossary)],
-    33: [("总资产不是可花的钱", _fig_b1_account_fields)],
-    34: [("数据没有按时到", _fig_b2_week)],
-    35: [("先定资金上限", _fig_b2_guards)],
-    36: [("能解释钱和财富的区别", _fig_b2_checklist)],
-    37: [("他先找模型", _fig_b2_failure)],
-    38: [("问题很小", _fig_b2_pipeline)],
-    39: [("问题是否足够小", _fig_b2_questions)],
+    23: [("先把金融地图补齐", _fig_b1_roadmap)],
+    30: [("中性组合也会缺钱", _fig_b1_neutral_ledger)],
+    33: [("真实财富和生产力", _fig_b1_ten_layers)],
+    34: [("指数增强回测", _fig_b1_portfolio)],
+    35: [("货币", _fig_b1_glossary)],
+    36: [("总资产不是可花的钱", _fig_b1_account_fields)],
+    37: [("数据没有按时到", _fig_b2_week)],
+    39: [("先定资金上限", _fig_b2_guards)],
+    40: [("能解释钱和财富的区别", _fig_b2_checklist)],
+    41: [("他先找模型", _fig_b2_failure)],
+    42: [("问题很小", _fig_b2_pipeline)],
+    43: [("问题是否足够小", _fig_b2_questions)],
 }
 
 
@@ -2033,19 +2038,19 @@ PATCH_C = {
     5: [("为什么期货会放大盈亏", _fig_c5_margin_timeline),
         ("买方亏损有限", _fig_c5_option_mirror)],
     14: [("券商是通道", _fig_c6_order_pipeline)],
-    15: [("影线只是压缩图", _fig_c7_ohlc_aggregation)],
-    16: [("这条路颠不颠", _fig_c8_volatility_cluster),
+    16: [("影线只是压缩图", _fig_c7_ohlc_aggregation)],
+    17: [("这条路颠不颠", _fig_c8_volatility_cluster),
         ("每承担一份波动赚多少超额收益", _fig_c8_sharpe_compare)],
-    17: [("高分组是不是真的更好", _fig_c9_factor_groups)],
+    20: [("高分组是不是真的更好", _fig_c9_factor_groups)],
 }
 
 
 PATCH_D = {
-    18: [("历史答案背得太熟", _fig_d10_split)],
-    19: [("预测分数不是仓位", _fig_d11_pipeline)],
-    21: [("指数收益加超额", _fig_d13_alpha_beta)],
-    22: [("Beta 对冲的直觉", _fig_d14_hedge_vol)],
-    23: [("配对交易", _fig_d15_pair_trading)],
+    21: [("历史答案背得太熟", _fig_d10_split)],
+    22: [("预测分数不是仓位", _fig_d11_pipeline)],
+    24: [("指数收益加超额", _fig_d13_alpha_beta)],
+    25: [("Beta 对冲的直觉", _fig_d14_hedge_vol)],
+    26: [("配对交易", _fig_d15_pair_trading)],
     7: [("三张报表分别回答什么", _fig_d17_three_tables)],
 }
 
@@ -2058,20 +2063,20 @@ CONCEPT_FIGURES = {
     4: [("债券先当作一张标准化借条", _fig_bond_cashflow)],
     5: [("看涨期权和看跌期权", _fig_option_payoff)],
     14: [("价格优先和时间优先", _fig_orderbook)],
-    15: [("一天被压成四个价格", _fig_candlestick)],
-    16: [("从高点跌到低点有多痛", _fig_drawdown_sharpe)],
-    17: [("常见因子家族", _fig_factor_quantile)],
-    18: [("收盘价成交最容易骗人", _fig_lookahead)],
-    19: [("约束优化的直觉", _fig_quant_pipeline)],
-    21: [("指数增强", _fig_index_enhance)],
-    22: [("市场中性想解决什么", _fig_market_neutral)],
-    23: [("配对交易", _fig_arbitrage)],
-    24: [("净值和收益披露", _fig_fund_nav)],
+    16: [("一天被压成四个价格", _fig_candlestick)],
+    17: [("从高点跌到低点有多痛", _fig_drawdown_sharpe)],
+    20: [("常见因子家族", _fig_factor_quantile)],
+    21: [("收盘价成交最容易骗人", _fig_lookahead)],
+    22: [("约束优化的直觉", _fig_quant_pipeline)],
+    24: [("指数增强", _fig_index_enhance)],
+    25: [("市场中性想解决什么", _fig_market_neutral)],
+    26: [("配对交易", _fig_arbitrage)],
+    27: [("净值和收益披露", _fig_fund_nav)],
     7: [("三张报表分别回答什么", _fig_income_statement)],
-    25: [("目录结构先分层", _fig_project_layout)],
-    26: [("纸面组合落地的第一道关", _fig_backtest_loop)],
-    28: [("把历史噪声背成了规律", _fig_overfitting)],
-    29: [("回撤里最容易做错决定", _fig_loss_recovery)],
+    28: [("目录结构先分层", _fig_project_layout)],
+    29: [("纸面组合落地的第一道关", _fig_backtest_loop)],
+    31: [("把历史噪声背成了规律", _fig_overfitting)],
+    32: [("回撤里最容易做错决定", _fig_loss_recovery)],
 }
 
 
@@ -2338,8 +2343,8 @@ PATCH_E = {
         ("价格是信号", _fig_e00_price_three_questions)],
     1: [("老债会跌", _fig_e01_credit_rate_value)],
     3: [("股东排在最后", _fig_e03_flat_vs_volatile)],
-    18: [("问题定义", _fig_e10_ml_shutter)],
-    21: [("超额收益从哪里", _fig_e13_alpha_five)],
+    21: [("问题定义", _fig_e10_ml_shutter)],
+    24: [("超额收益从哪里", _fig_e13_alpha_five)],
 }
 # -*- coding: utf-8 -*-
 """概念图 batch F(ch12/16/18/19/20/21/22 各新增第二张,合计 7 张)。
@@ -2682,13 +2687,13 @@ def _fig_f22_strip_curve():
 
 
 PATCH_F = {
-    20: [("研究员每天在做什么", _fig_f12_researcher_loop)],
-    24: [("业绩归因报告怎么看", _fig_f16_attribution_bar)],
-    25: [("最大回撤", _fig_f18_max_drawdown)],
-    26: [("让时间线先立正", _fig_f19_one_day_timeline)],
-    27: [("把总收益拆回零件", _fig_f20_neutral_decompose)],
-    28: [("手续费不是小零头", _fig_f21_cost_erosion)],
-    29: [("复盘顺序", _fig_f22_strip_curve)],
+    23: [("研究员每天在做什么", _fig_f12_researcher_loop)],
+    27: [("业绩归因报告怎么看", _fig_f16_attribution_bar)],
+    28: [("最大回撤", _fig_f18_max_drawdown)],
+    29: [("让时间线先立正", _fig_f19_one_day_timeline)],
+    30: [("把总收益拆回零件", _fig_f20_neutral_decompose)],
+    31: [("手续费不是小零头", _fig_f21_cost_erosion)],
+    32: [("复盘顺序", _fig_f22_strip_curve)],
 }
 # -*- coding: utf-8 -*-
 """概念图 batch G(ch23-ch32 每章各加 1 张,合计 10 张)。
@@ -3119,16 +3124,16 @@ def _fig_g32_stop_rules():
 
 
 PATCH_G = {
-    30: [("回测和验证", _fig_g23_backtest_audit)],
-    31: [("写出第一份可信的回测报告", _fig_g24_report_lines)],
-    32: [("风控", _fig_g25_risk_toolbox)],
-    33: [("看风险指标", _fig_g26_risk_metrics)],
-    34: [("看收益和回撤", _fig_g27_two_funds)],
-    35: [("小实盘结束后看什么", _fig_g28_graduation_matrix)],
-    36: [("成本必须做敏感性", _fig_g29_cost_stress)],
-    37: [("高胜率策略一定好吗", _fig_g30_winrate_trap)],
-    38: [("单因子报告", _fig_g31_factor_files)],
-    39: [("实盘前先问能否停止", _fig_g32_stop_rules)],
+    33: [("回测和验证", _fig_g23_backtest_audit)],
+    34: [("写出第一份可信的回测报告", _fig_g24_report_lines)],
+    35: [("风控", _fig_g25_risk_toolbox)],
+    36: [("看风险指标", _fig_g26_risk_metrics)],
+    37: [("看收益和回撤", _fig_g27_two_funds)],
+    39: [("小实盘结束后看什么", _fig_g28_graduation_matrix)],
+    40: [("成本必须做敏感性", _fig_g29_cost_stress)],
+    41: [("高胜率策略一定好吗", _fig_g30_winrate_trap)],
+    42: [("单因子报告", _fig_g31_factor_files)],
+    43: [("实盘前先问能否停止", _fig_g32_stop_rules)],
 }
 
 
@@ -3712,7 +3717,7 @@ def _fig_m23_dirs():
 
 PATCH_M = {
     8: [("拿出口给自己造血", _fig_m8_export)],
-    25: [("目录结构先分层", _fig_m23_dirs)],
+    28: [("目录结构先分层", _fig_m23_dirs)],
 }
 
 def _fig_n12_pool():
@@ -3854,9 +3859,226 @@ PATCH_N = {
          ("国家、企业、自己各扛一部分", _fig_n13_pillars)],
 }
 
+def _fig_p15_ipo():
+    """ch15:打新从红包到技术活的前后对比。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">打新经济学:从制度红包到技术活</text>
+            <!-- 两根柱子:核准 vs 注册 -->
+            <rect x="120" y="90" width="240" height="170" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="240" y="118" text-anchor="middle" fill="#b5d3a0" font-size="16" font-weight="800">核准制时代</text>
+            <text x="240" y="146" text-anchor="middle" fill="#bcc9dd" font-size="13">23 倍 PE 隐形上限</text>
+            <text x="240" y="170" text-anchor="middle" fill="#bcc9dd" font-size="13">首日涨跌 ≤ 44%</text>
+            <text x="240" y="198" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">破发率 ≈ 0</text>
+            <text x="240" y="228" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">两只门缝的免费彩票</text>
+            <rect x="540" y="90" width="240" height="170" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="660" y="118" text-anchor="middle" fill="#ffb4b4" font-size="16" font-weight="800">注册制时代(2023.4 起)</text>
+            <text x="660" y="146" text-anchor="middle" fill="#bcc9dd" font-size="13">询价制,贴近二级价</text>
+            <text x="660" y="170" text-anchor="middle" fill="#bcc9dd" font-size="13">前五日不设涨跌幅</text>
+            <text x="660" y="198" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">破发率 10-20%+</text>
+            <text x="660" y="228" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">要读招股书的技术活</text>
+            <path d="M 370 170 Q 450 130 530 170" fill="none" stroke="#8499bd" stroke-width="3" stroke-dasharray="8 6"/>
+            <text x="450" y="120" text-anchor="middle" fill="#8499bd" font-size="12">制度差价消失了</text>
+            <text x="450" y="308" text-anchor="middle" fill="#bcc9dd" font-size="12.5">免费彩票变调研题之后,你的本钱路线和机会成本才受到正视</text>"""
+    return concept_figure(body, "0 0 900 340",
+        "打新制度对比图:左列核准制时代隐形上限23倍PE、首日涨跌44%、破发率近零;右列注册制询价,破发率10%以上",
+        "核准制下打新是制度红包,注册制把红包收回变成技术活。这不是制度变坏了,定价权交回市场了——免费午餐一收摊,你赚不赚钱只能靠自己读东西。")
+
+
+def _fig_p15_delist():
+    """ch15:上市与退市两条门扇,才能优胜劣汏。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一只门的上市和另一只门的退市</text>
+            <!-- 左:上市门 -->
+            <path d="M 80 300 L 80 130 Q 200 100 320 130 L 320 300 Z" fill="rgba(122,167,240,0.12)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="200" y="150" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">发行端(进门)</text>
+            <text x="200" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">注册制:审核只查披露</text>
+            <text x="200" y="200" text-anchor="middle" fill="#bcc9dd" font-size="12">监管不再实质把关</text>
+            <text x="200" y="228" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">门变宽:更多公司能进</text>
+            <!-- 右:退市门 -->
+            <path d="M 580 300 L 580 130 Q 700 100 820 130 L 820 300 Z" fill="rgba(238,136,119,0.12)" stroke="#ee8877" stroke-width="2"/>
+            <text x="700" y="150" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">退市端(出门)</text>
+            <text x="700" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">交易指标:面值1元/市值3亿红线</text>
+            <text x="700" y="200" text-anchor="middle" fill="#bcc9dd" font-size="12">财务违法指标:连年亏损/造假</text>
+            <text x="700" y="228" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">门变宽:壳价值丢多</text>
+            <!-- 中间的池 -->
+            <ellipse cx="450" cy="215" rx="95" ry="55" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="210" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">二级市场水池</text>
+            <text x="450" y="232" text-anchor="middle" fill="#bcc9dd" font-size="12">进得出才健康</text>
+            <!-- 循环箭头 -->
+            <path d="M 320 215 Q 355 210 355 215" fill="none" stroke="#8499bd" stroke-width="3" marker-end="url(#arrowP)"/>
+            <path d="M 545 215 Q 580 210 580 215" fill="none" stroke="#8499bd" stroke-width="3" marker-end="url(#arrowP)"/>
+            <defs><marker id="arrowP" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8499bd"/></marker></defs>
+            <text x="450" y="328" text-anchor="middle" fill="#8499bd" font-size="12.5">美国一年退几百家,中国个位数时代刚结束;两扇门一起拉开,水洼才会流转</text>"""
+    return concept_figure(body, "0 0 900 360",
+        "上市与退市两扇门夹着二级市场水池:发行端注册制门宽、退市端指标红线下沉,两门同开水才会錯转",
+        "注册制打开了进水口,退市常态化打开了出水口。只有进没有出,水池变渊;只出不进,市场变成存量屠宰场。两头都活络,市场才完成天然的汰换。")
+
+
+def _fig_p18_scurve():
+    """ch18:前景理论 S 曲线:左半比右半陡。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">卡尼曼 S 曲线:同一个 100 元,亏的时候疼一倍</text>
+            <!-- 数轴 -->
+            <line x1="100" y1="200" x2="800" y2="200" stroke="#8499bd" stroke-width="2"/>
+            <line x1="450" y1="70" x2="450" y2="330" stroke="#8499bd" stroke-width="2"/>
+            <text x="785" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">客观盈亏</text>
+            <text x="462" y="86" fill="#bcc9dd" font-size="12">主观感受</text>
+            <circle cx="450" cy="200" r="6" fill="#f0c96a"/>
+            <text x="450" y="224" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">参照点(你买入价)</text>
+            <!-- S 曲线 -->
+            <path d="M 160 300 Q 300 290 400 230 Q 440 205 450 200 Q 460 195 500 170 Q 600 110 740 100" fill="none" stroke="#a8c6ff" stroke-width="4"/>
+            <text x="210" y="320" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">亏损侧(陡)</text>
+            <text x="690" y="90" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">盈利侧(平)</text>
+            <!-- 拼装标 ↓ 收入 -->
+            <path d="M 380 285 L 520 115" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="460" y="205" fill="#f0c96a" font-size="11.5">斜率≈2-2.5倍</text>
+            <text x="450" y="352" text-anchor="middle" fill="#bcc9dd" font-size="12.5">含义:同样 100 元,当它离开你时,你的难受程度是它进来时的两倍</text>"""
+    return concept_figure(body, "0 0 900 385",
+        "前景理论S形曲线:横轴客观盈亏纵轴主观感受,原点是你买入价,左半亏损侧陡于右半盈利侧,斜率差约两倍",
+        "前景理论的图式记法:人不是按绝对财富作判断,是按相对参照点作判断;亏损侧比盈利侧陡一倍,所以丢 100 的疼需要赚 200 才能抹平。这是处置效应、回本执念、死扛不换仓的总源头。")
+
+
+def _fig_p18_disposition():
+    """ch18:处置效应:两只票你会先卖哪只。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">处置效应:为什么你会留下错的那只</text>
+            <!-- 两条持仓条 -->
+            <rect x="100" y="90" width="320" height="110" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="260" y="118" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">股票 A:+18%</text>
+            <text x="260" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">浮盈,心里复古的想法:</text>
+            <text x="260" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">“赶紧卖了,怕回吐!”</text>
+            <text x="260" y="192" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">卖出概率高</text>
+            <rect x="480" y="90" width="320" height="110" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="640" y="118" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">股票 B:-25%</text>
+            <text x="640" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">浮亏,心里复古的想法:</text>
+            <text x="640" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">“只要不卖,就不算输”</text>
+            <text x="640" y="192" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">持有概率高</text>
+            <!-- 不合理之处 -->
+            <text x="450" y="240" text-anchor="middle" fill="#ee8877" font-size="14" font-weight="800">全世界散户加起来做了同一个动作——把未来会涨的票卖了,抱着未来还在跌的票不放手</text>
+            <text x="450" y="270" text-anchor="middle" fill="#bcc9dd" font-size="12.5">不是谁比谁脏,是损失厌恶+S形曲线写了同一道出厂程序</text>
+            <!-- 健康的相反动作 -->
+            <rect x="60" y="295" width="780" height="60" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="84" y="320" fill="#a8c6ff" font-size="13" font-weight="800">量化纪律恰恰相反</text>
+            <text x="84" y="344" fill="#bcc9dd" font-size="12">止损失败的方向(截断错误),加码成功的方向(让浮盈延伸) ——对人性用力气,对出厂设置拆阀门,比技术分析的点金术要高级。</text>"""
+    return concept_figure(body, "0 0 900 385",
+        "处置效应两票对比图:股票A浮盈18%卖出概率高、股票B浮亏25%持有概率高;卖出猛涨持有还跌的,与量化纪律恰好相反",
+        "同一个时间的两个按钮:你心里会按键的顺序,与市场赢钱的顺序恰好相反。截断失败、放大成功这种量化纪律,不是逆着运,是逆着出厂设置。")
+
+
+def _fig_p19_iceberg():
+    """ch19:家庭资产冰山:保障性水位舄茅看不到。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">家庭配置的冰山:水面上是投资,水面下是底盘</text>
+            <!-- 水面 -->
+            <line x1="100" y1="160" x2="800" y2="160" stroke="#8499bd" stroke-width="3" stroke-dasharray="10 6"/>
+            <text x="782" y="148" text-anchor="end" fill="#8499bd" font-size="12">水面</text>
+            <!-- 水面上的小金子 -->
+            <path d="M 370 120 L 530 120 L 500 160 L 400 160 Z" fill="rgba(240,201,106,0.9)" stroke="#f0c96a"/>
+            <text x="450" y="148" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">大家看到的那块:股票/基金仓位</text>
+            <!-- 水下的大冰床 -->
+            <path d="M 400 160 L 500 160 L 620 330 L 280 330 Z" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="210" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">水面下:应急资金(3-6 个月刚性支出)</text>
+            <text x="450" y="236" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">重疾险 / 医疗险 / 定期寿险</text>
+            <text x="450" y="262" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">养老金(第一二三支柱分跑)</text>
+            <text x="450" y="294" text-anchor="middle" fill="#bcc9dd" font-size="12">只谈水面上的仓位,水花一大缝就直接沉底</text>
+            <text x="450" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12.5">顺序:现金垫→风险垫→长期投资,任何一步翻墙都会被生活血腥教学</text>"""
+    return concept_figure(body, "0 0 900 390",
+        "家庭资产冰山图:水面上是金尖股票基金仓位,水面下是应急金、保险保障、养老金",
+        "家庭配置是冰山:水面上的金尖人人都看得见,水面下的应急、保障、养老才是决定你沉不沉的部分。把水下那三层先铸实,再谈金尖的成色。")
+
+
+def _fig_p19_buckets():
+    """ch19:三个桶顺序图。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">家庭资产按用途分三个桶:次序不可逆</text>
+            <!-- 桶① -->
+            <path d="M 90 130 L 100 300 Q 165 320 230 300 L 240 130 Z" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="165" y="160" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">桶① 现金桶</text>
+            <text x="165" y="190" text-anchor="middle" fill="#bcc9dd" font-size="11.5">3-6 个月刚性支出</text>
+            <text x="165" y="212" text-anchor="middle" fill="#bcc9dd" font-size="11.5">货币基金/活期/短债</text>
+            <text x="165" y="240" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">要稳不要多</text>
+            <!-- 桶② -->
+            <path d="M 355 130 L 365 300 Q 430 320 495 300 L 505 130 Z" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="430" y="160" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">桶② 保障桶</text>
+            <text x="430" y="190" text-anchor="middle" fill="#bcc9dd" font-size="11.5">重疾险→医疗险→寿险</text>
+            <text x="430" y="212" text-anchor="middle" fill="#bcc9dd" font-size="11.5">保费 ≤ 年收入 3-8%</text>
+            <text x="430" y="240" text-anchor="middle" fill="#ee8877" font-size="12" font-weight="800">保险不做理财</text>
+            <!-- 桶③ -->
+            <path d="M 620 130 L 630 300 Q 695 320 760 300 L 770 130 Z" fill="rgba(238,136,119,0.12)" stroke="#ee8877"/>
+            <text x="695" y="160" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">桶③ 增值桶</text>
+            <text x="695" y="190" text-anchor="middle" fill="#bcc9dd" font-size="11.5">宽基指数/债券组合</text>
+            <text x="695" y="212" text-anchor="middle" fill="#bcc9dd" font-size="11.5">3-5 年以上不动的钱</text>
+            <text x="695" y="240" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">股债 60/40 起步</text>
+            <!-- 箭头 -->
+            <path d="M 240 210 Q 295 210 350 210" fill="none" stroke="#8499bd" stroke-width="2.5" marker-end="url(#arrowP2)"/>
+            <path d="M 505 210 Q 560 210 615 210" fill="none" stroke="#8499bd" stroke-width="2.5" marker-end="url(#arrowP2)"/>
+            <defs><marker id="arrowP2" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8499bd"/></marker></defs>
+            <text x="450" y="352" text-anchor="middle" fill="#bcc9dd" font-size="12.5">桶②和桶③ 位置泄露,桶③ 波动首先震倒没有现金和保障的家庭</text>"""
+    return concept_figure(body, "0 0 900 385",
+        "三桶图:桶一是现金桶应急,桶二是保障桶保险,桶三是增值桶资产配置,三桶必须按顺序装",
+        "把家里的钱装进三个桶:现金桶保证你能活,保障桶保证你能今晚安睡,增值桶才谈得上赚多少。你常踩的每一个坑,几乎都是桶②和桶③没装好就冲去装点桶③。")
+
+
+def _fig_p38_reading():
+    """ch38:一个产品的三份文件,阅读顺序与各自责任。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">产品文件三层:合同是地基,报告是例行体检</text>
+            <!-- 三层 -->
+            <rect x="90" y="80" width="720" height="70" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="120" y="108" fill="#a8c6ff" font-size="14" font-weight="800">第一层 地基(一次性)</text>
+            <text x="120" y="132" fill="#bcc9dd" font-size="12">基金招募书 / 产品说明书——写清楚能买什么、什么价可以买、什么价必须止损</text>
+            <rect x="90" y="170" width="720" height="70" rx="10" fill="rgba(240,201,106,0.12)" stroke="#f0c96a"/>
+            <text x="120" y="198" fill="#f0c96a" font-size="14" font-weight="800">第二层 体检(每季度)</text>
+            <text x="120" y="222" fill="#bcc9dd" font-size="12">定期报告:超额收益、份额变化、重仓集中度——超过三层信号都在这份文件里</text>
+            <rect x="90" y="260" width="720" height="70" rx="10" fill="rgba(238,136,119,0.12)" stroke="#ee8877"/>
+            <text x="120" y="288" fill="#ffb4b4" font-size="14" font-weight="800">第三层 生死状(结构化)</text>
+            <text x="120" y="312" fill="#bcc9dd" font-size="12">确认书:敲出/敲入/票息/观察频率/期限——这五个数决定你到底买了什么中间可以的结局</text>
+            <text x="450" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12.5">所有事项权重都在文档里,任何“销售说”的话却都不成立</text>"""
+    return concept_figure(body, "0 0 900 390",
+        "产品文件三层图:招募书地基、定期报告体检、确认书生死状,各写一行对应你要顶的指标",
+        "产品文件分列三层:地基是一次性体检(招募书),例行体检是季报,生死状是结构化条款清单。每层你只看自己负责的指标。黑字永远压倒言语。")
+
+
+def _fig_p38_fivesnowball():
+    """ch38:雪球确认书五处必看。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">雪球确认书的五个词</text>
+            <!-- 五个框 -->
+            <rect x="40" y="90" width="150" height="130" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="115" y="118" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">① 敲出价</text>
+            <text x="115" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">涨的门槛</text>
+            <text x="115" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">期初 × 100-105%</text>
+            <rect x="210" y="90" width="150" height="130" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="285" y="118" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">② 敲入价</text>
+            <text x="285" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">跌的陷阱</text>
+            <text x="285" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">期初 × 70-80%</text>
+            <rect x="380" y="90" width="150" height="130" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="455" y="118" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">③ 票息率</text>
+            <text x="455" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">承诺的年票息</text>
+            <text x="455" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">15%-20%是拉客价</text>
+            <rect x="550" y="90" width="150" height="130" rx="10" fill="rgba(143,179,122,0.15)" stroke="#8fb37a"/>
+            <text x="625" y="118" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">④ 观察频率</text>
+            <text x="625" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">每日 / 每月</text>
+            <text x="625" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">错颗粒度会错估概率</text>
+            <rect x="720" y="90" width="150" height="130" rx="10" fill="rgba(132,153,189,0.15)" stroke="#8499bd"/>
+            <text x="795" y="118" text-anchor="middle" fill="#bcc9dd" font-size="13" font-weight="800">⑤ 期限</text>
+            <text x="795" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">有多长</text>
+            <text x="795" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">长期票息更高但风险更长</text>
+            <text x="450" y="266" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">这五个数拼起来就是你买的东西;丢了任何一个,你都不知买的是什么</text>
+            <text x="450" y="300" text-anchor="middle" fill="#bcc9dd" font-size="12.5">回程资金账:敲入触发后,票息补不回敲入的下跌;第六章已把四条命拆解过了</text>"""
+    return concept_figure(body, "0 0 920 330",
+        "雪球确认书五关键词:敲出价、敲入价、票息率、观察频率、期限,五框匀排",
+        "雪球这类结构化产品的阅读绝不复杂:只要五处数字你能在确认书里找到,你就知道买了什么。腿不净判读不叫节省工夫,叫按运气发牌。")
+
+
+PATCH_P = {
+    15: [("从制度红包到智力活动", _fig_p15_ipo),
+         ("发行与退市是同一部机器的两半", _fig_p15_delist)],
+    18: [("所有苦乐都看参照点", _fig_p18_scurve),
+         ("为什么你总把赚钱的卖了", _fig_p18_disposition)],
+    19: [("先给自己留一条能呼吸的缝", _fig_p19_iceberg),
+         ("先分桶,不是先选股", _fig_p19_buckets)],
+    38: [("一切口头的承诺都不算数", _fig_p38_reading),
+         ("雪球确认书逐词拆", _fig_p38_fivesnowball)],
+}
+
+
+
 PATCH_L = {
     8: [("卡在不高不低的那一档", _fig_l8_stairs)],
-    25: [("训练、预测和回测不要混", _fig_l23_pipeline)],
+    28: [("训练、预测和回测不要混", _fig_l23_pipeline)],
 }
 
 
@@ -3878,6 +4100,7 @@ _merge_figures(CONCEPT_FIGURES, PATCH_K)
 _merge_figures(CONCEPT_FIGURES, PATCH_L)
 _merge_figures(CONCEPT_FIGURES, PATCH_M)
 _merge_figures(CONCEPT_FIGURES, PATCH_N)
+_merge_figures(CONCEPT_FIGURES, PATCH_P)
 
 
 SUMMARY_LABEL_OVERRIDES = {
