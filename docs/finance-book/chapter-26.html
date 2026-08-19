@@ -3,234 +3,337 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 26 章 · 实战一:从零做一个指数增强回测 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="用完整步骤拆解一个教学版指数增强项目,包括数据、因子、组合、成本、报告和复盘。" />
+    <title>第 26 章 · 量化项目的工程骨架与速查 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="用工程视角讲清数据层、因子层、回测层、模型层、报告层和配置管理。 / 把收益率、年化、波动、回撤、夏普、IC、跟踪误差、久期和估值公式统一解释。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="26">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第六部分 · 项目实战与工程化 · 第 26 章</p>
-        <h1>实战一:从零做一个指数增强回测</h1>
-        <p class="lead">前面讲了很多概念,这一章带你真正走一遍完整的研究流程。目标很具体:选一个指数作为基准,在它的成分股里构造几个简单因子,每月调仓,扣除成本,再和基准比较。做完你会发现,量化项目真正难的地方不是写出买卖信号,而是让数据、时间、交易规则、风险和报告全都对得上——这也是把“懂概念”变成“能动手”的第一道坎。</p>
+        <p class="chapter__eyebrow">第五部分 · 量化行业与策略版图 · 第 26 章</p>
+        <h1>量化项目的工程骨架与速查</h1>
+        <p class="lead">计算机背景的读者最容易把量化项目写成一个越拉越长的 notebook,几周后连自己都理不清哪个单元格先跑、哪个文件才是最终结果。这一章先讲怎么像正经工程项目那样组织一个量化项目:数据来源清楚、配置可重复、实验有记录、回测可复现、报告能自动生成;再给一份公式和指标速查,帮你在“别死背公式,要知道它在问什么”之间找到平衡。</p>
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>指数增强项目的核心是一个闭环:基准、股票池、因子、组合、成本和报告,一环都不能缺。</li>
-            <li>教学项目要先把时间顺序、交易规则和成本做对,再追求模型复杂度——顺序反了,得到的只是漂亮的假象。</li>
+            <li>量化项目要按数据、因子、回测、模型、报告和日志分层组织,把所有逻辑塞进一个 notebook,等于放弃复盘能力。</li>
+            <li>配置、版本、交易记录和自动报告,是可复现研究的四根支柱,缺一根,结论就立不住。</li>
+            <li>公式的作用是把收益、风险、基准和估值问题算清楚、说清楚、比清楚——它们是尺子,不需要跪拜,只需要用对。</li>
+            <li>同一个指标各有适用边界:夏普、VaR、PE、IC 单独使用都会骗人,必须结伴出场、交叉验证。</li>
           </ul>
         </section>
 
 
-        <h2>1. 先把项目目标和边界钉死</h2>
-<p>做项目的第一步不是打开编辑器写代码,而是拿纸笔把边界钉死。这一版我们这样定:基准从两个里选一个,<span class="term">中证 500</span> 或<span class="term">沪深 300</span>;股票池用历史当时的指数成分股,不是拿今天的名单往回抄;每月调仓一次;成交价用下一个交易日的开盘价或成交均价来近似;成本一项不落——佣金、印花税、过户费和滑点,统统要扣。</p><p>目标也要说死:这个项目不求找出史上最强策略,而是搭一个能反复使用的研究框架。搭好之后,你要能面不改色地回答一串问题:策略相对基准有没有<span class="term">超额收益</span>?超额来自哪几个因子?换手多高、成本吃掉多少?<span class="term">最大回撤</span>有多深?是不是某几年特别灵、某几年彻底失效?结果是否依赖少数几个参数?这些问题答不出来,净值曲线再好看也只是一张图。</p><p>为什么先钉边界?因为回测有一个魔咒:做着做着总会越来越好看。而变好看的原因往往不是策略变强了,是你不知不觉偷偷改了假设——股票池放宽一点、调仓时点挪一挪、成本参数调一调。先把边界写下来,后面每一次改动都记录在案,你才能分清是自己进步了,还是在自己骗自己。</p>
-                <div class="table-wrap">
-                  <table>
-                    <thead><tr><th>输入</th><th>第一版字段</th><th>为什么需要</th></tr></thead>
-                    <tbody>
-                      <tr><td>行情</td><td>date, code, open, close, amount, adj_factor, paused, limit_up, limit_down</td><td>算收益、判断可交易、估计成本</td></tr>
-                      <tr><td>股票池</td><td>date, code, index_code, index_weight</td><td>保证只在当时指数成分里选股</td></tr>
-                      <tr><td>行业</td><td>date, code, industry</td><td>行业中性和暴露分析</td></tr>
-                      <tr><td>因子</td><td>date, code, value_bp, momentum_60, low_vol_60, quality_roe</td><td>生成综合分数</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p>第一版项目,上面这些表就够跑了。别一上来就追求字段大而全,先保证每个字段你能解释它是什么、能检查它对不对、能追溯它从哪来。</p>
+        <h2>1. 从数据到报告怎么组织</h2>
 
-        <h2>2. 别让今天的名单穿越回过去</h2>
-<p>先想一个坑:你今天打开行情软件看到的<span class="term">中证 500</span> 成分股名单,和 <span class="num">2018 年</span>的那份一样吗?当然不一样,成分股会定期调整、进进出出。股票池决定你在哪个市场里选股,指数增强项目必须使用历史当时的指数成分,而不是今天的成分回填过去。比如你要回测 <span class="num">2018 年</span>,就得知道 <span class="num">2018 年</span>每一个调仓日,<span class="term">中证 500</span> 里装的到底是哪五百只股票。拿今天的名单回填过去,等于提前知道了谁以后会混得好,这是回测里最隐蔽的作弊方式之一。</p><p>有了池子,还要设可交易过滤。上市未满一定天数的新股可以剔除;ST 股票可以剔除;停牌的股票不能买入;涨停的股票通常买不进,不能假设买入;跌停的股票不能假设卖出;成交额太低的股票要小心容量,纸面上买一层,实盘可能只买得到零星几单。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>最关键的纪律是:过滤规则要同时用在回测和未来的模拟盘里。回测里剔除了流动性差的股票,实盘也要剔除;实盘不能买 ST,回测里也不能买。否则你训练的是一个假目标——回测里拳打脚踢,实场上等着你的是另一套规则。</p></div><div class="callout callout--note reveal"><span class="callout__title">名册也有生日:只用今天的名单,就是未来函数</span><p>指数成分会定期调整,<span class="num">2018 年</span>的<span class="term">中证 500</span> 和今天的<span class="term">中证 500</span> 是两份不同的名册。拿今天的名册回测 <span class="num">2018 年</span>,等于提前知道了这些年谁混得好——回测自然替你“挑”出一批赢家,漂亮得毫无意外。所以成分股入库时要给每份名册打上生效日期,回测只查调仓日当天的那一份。日期错一格,整条曲线都是租来的。</p></div>
-
-        <h2>3. 让时间线先立正</h2>
-<p>价格数据是第一大宗原料,至少备齐这些:交易日、代码、开盘价、收盘价、成交量、成交额、复权因子、涨停价、跌停价和停牌状态。两个口径从一开始就要分清:收益计算可以用复权价格,不然一次分红除权就能给你造出一个假暴跌;交易模拟要用真实价格口径,因为你下单时面对的就是那个没复权的价格。</p><p>数据到手先别急着用,先验货。有没有 0 价格?有没有重复日期?复权因子有没有异常跳变?停牌日成交量是不是 0?涨跌停价格和昨收的关系合不合理?数据检查不是可选项,它是门卫——这道检查会替你挡住成批的假收益。</p><p>调仓时点同样不能含糊。标准做法是:每月最后一个交易日收盘后生成信号,下一个交易日才能买卖。千万别干这种事:用调仓日收盘价算特征,又假设自己按调仓日收盘价成交。这等于用收盘后才知道的信息,做了收盘时的决策,是教科书级别的未来函数。</p>
-                <div class="table-wrap">
-                  <table>
-                    <thead><tr><th>时间点</th><th>动作</th><th>允许看到什么</th></tr></thead>
-                    <tbody>
-                      <tr><td>T 日收盘后</td><td>计算因子和目标组合</td><td>T 日收盘及以前已公开数据</td></tr>
-                      <tr><td>T+1 开盘</td><td>按规则提交订单</td><td>不能改变 T 日已经确定的信号</td></tr>
-                      <tr><td>T+1 盘中</td><td>模拟成交和未成交</td><td>涨跌停、停牌、成交额约束</td></tr>
-                      <tr><td>T+1 收盘后</td><td>更新持仓和净值</td><td>成交回报、收盘估值、费用</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p>把这张时间线钉在墙上,它能挡住最常见的未来函数。以后每次你想在某个价格上成交,先问自己一句:信号是不是也用了这个价格?这个数据在那个时刻真的已经公开了吗?</p>
+        <h3>1.1. 目录结构先分层</h3>
+<p>拿到一个新项目,第一件事不是写因子,而是开目录。就像接手一个后端服务,你总得先知道代码、配置和日志各住哪个房间。一个最小化的量化项目,可以分成这么几层:data 保存原始数据和处理后的数据,features 保存因子构造,backtest 保存回测逻辑,models 保存训练和预测,reports 保存图表和结论,configs 保存参数,logs 保存运行记录。七个目录,各管一段,谁也不越界。</p><p>目录分得这么讲究,不是为了看着整齐,而是为了隔离责任——工程师听到<span class="hl">“隔离责任”</span>这四个字,应该条件反射般地舒服。原始数据不该被实验脚本随手改掉;因子计算不该和回测撮合搅在一起;报告不该靠手工复制粘贴拼出来。每层的边界都清清楚楚,出错了你才知道去哪一层抓人;边界糊成一锅粥,debug 就变成全链路推理小说。</p><p>入门阶段完全不必上什么复杂框架,但有一条铁律:别把所有东西都塞进一个脚本。量化研究是要反复试错的,结构一乱,你很快就会发现一个致命问题——收益率变了,你却分不清它是来自模型改进、数据更新,还是某次手抖的手工操作。分不清功劳和 bug 的项目,比没有项目还危险,因为它会给你虚假的信心。</p>
+                <pre><code>quant_project/
+    configs/base.yaml
+    data/raw/              # 原始下载,不手改
+    data/processed/        # 清洗后的价格、成分、财务
+    features/              # 因子计算脚本
+    backtest/              # 账户、订单、撮合、指标
+    models/                # 训练、预测、模型版本
+    reports/               # 自动生成的图表和结论
+    tests/                 # 数据、因子、回测状态测试
+    logs/                  # 每次实验和模拟盘日志</code></pre>
+                <p>上面这棵目录树不是行业唯一标准,但它给了第一版项目一个可以照抄的形状。务实一点的做法是:先只实现 `configs`、`data`、`features`、`backtest`、`reports` 这五层,让研究流程能完整跑一圈;等到了模拟盘阶段,再把 `models`、`logs` 和更完整的测试补进来。骨架先立住,肌肉慢慢长。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="回测单日时间线:T日收盘后计算因子和目标组合(只见T日收盘前公开数据),T+1开盘提交订单(不得改信号),T+1盘中模拟成交受涨跌停停牌成交额约束,T+1收盘后更新持仓净值;红卡警示用T日收盘价又算特征又成交是教科书级未来函数">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回测里的一天:T 日算什么,T+1 做什么,钉死不许挪</text>
-            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">标准做法:每月最后一个交易日收盘后生成信号,下一个交易日才买卖——每个动作只允许看到当时已公开的数据</text>
-            <defs><marker id="f19a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker></defs>
-            <rect x="37" y="84" width="190" height="132" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="132" y="112" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">T 日收盘后</text>
-            <text x="132" y="146" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">计算因子和目标组合</text>
-            <text x="132" y="174" text-anchor="middle" fill="#8499bd" font-size="11">只能见 T 日收盘</text>
-            <text x="132" y="194" text-anchor="middle" fill="#8499bd" font-size="11">及以前已公开数据</text>
-            <path d="M 229 150 L 247 150" stroke="#7aa7f0" stroke-width="2.5" fill="none" marker-end="url(#f19a)"/>
-            <rect x="249" y="84" width="190" height="132" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="344" y="112" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">T+1 开盘</text>
-            <text x="344" y="146" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">按规则提交订单</text>
-            <text x="344" y="174" text-anchor="middle" fill="#8499bd" font-size="11">不得修改 T 日</text>
-            <text x="344" y="194" text-anchor="middle" fill="#8499bd" font-size="11">已经确定的信号</text>
-            <path d="M 441 150 L 459 150" stroke="#7aa7f0" stroke-width="2.5" fill="none" marker-end="url(#f19a)"/>
-            <rect x="461" y="84" width="190" height="132" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="556" y="112" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">T+1 盘中</text>
-            <text x="556" y="146" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">模拟成交和未成交</text>
-            <text x="556" y="174" text-anchor="middle" fill="#8499bd" font-size="11">涨跌停 · 停牌</text>
-            <text x="556" y="194" text-anchor="middle" fill="#8499bd" font-size="11">成交额约束</text>
-            <path d="M 653 150 L 671 150" stroke="#7aa7f0" stroke-width="2.5" fill="none" marker-end="url(#f19a)"/>
-            <rect x="673" y="84" width="190" height="132" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="768" y="112" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">T+1 收盘后</text>
-            <text x="768" y="146" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">更新持仓和净值</text>
-            <text x="768" y="174" text-anchor="middle" fill="#8499bd" font-size="11">成交回报 · 收盘估值</text>
-            <text x="768" y="194" text-anchor="middle" fill="#8499bd" font-size="11">费用入账</text>
-            <rect x="60" y="240" width="780" height="86" rx="12" fill="rgba(232,120,120,0.08)" stroke="rgba(232,136,136,0.5)"/>
-            <text x="88" y="268" fill="#ffb4b4" font-size="13" font-weight="800">教科书级未来函数长这样:</text>
-            <text x="88" y="292" fill="#eef4f8" font-size="12.5">用 T 日收盘价算特征,又假设自己按 T 日收盘价成交</text>
-            <text x="88" y="314" fill="#bcc9dd" font-size="12">= 用收盘后才知道的信息,做了收盘时的决策</text>
-            <circle cx="790" cy="283" r="24" fill="none" stroke="#e88" stroke-width="2.5"/>
-            <text x="790" y="293" text-anchor="middle" fill="#e88" font-size="26" font-weight="800">×</text>
-            <text x="450" y="354" text-anchor="middle" fill="#c9d4e8" font-size="13" font-weight="600"><tspan x="450" y="354">每次你想按某个价格成交,先问自己:信号是不是也用了这个价格?这个数据在那个时刻真的已经公开了吗?</tspan></text>
+          <svg class="chapter-diagram" viewBox="0 0 900 315" role="img" aria-label="量化项目分层结构示意:data、factors、backtest、config、reports 各司其职">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化项目要分层,别塞进一个大 notebook</text>
+            <!-- 分层结构 -->
+            <rect x="120" y="60" width="660" height="40" rx="8" fill="rgba(122,167,240,0.20)" stroke="#a8c6ff" stroke-width="1.5"/>
+            <text x="140" y="85" fill="#eef4ff" font-size="14">data/  原始与清洗后的数据,来源和口径清楚</text>
+            <rect x="120" y="106" width="660" height="40" rx="8" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
+            <text x="140" y="131" fill="#eef4ff" font-size="14">factors/  因子计算,每个因子一个可复现脚本</text>
+            <rect x="120" y="152" width="660" height="40" rx="8" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="140" y="177" fill="#eef4ff" font-size="14">backtest/  回测引擎与成交、成本、约束假设</text>
+            <rect x="120" y="198" width="660" height="40" rx="8" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="140" y="223" fill="#eef4ff" font-size="14">config/  参数与实验配置,可重复、可追溯</text>
+            <rect x="120" y="244" width="660" height="40" rx="8" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
+            <text x="140" y="269" fill="#eef4ff" font-size="14">reports/  自动生成的净值、指标和归因报告</text>
+            <text x="450" y="300" text-anchor="middle" fill="#8499bd" font-size="12.5">每层职责单一,换人接手也能看懂,几周后自己也不会迷路</text>
           </svg>
-          <p class="figure__cap">把这张时间线钉在墙上:T 日收盘后算因子、订目标;T+1 开盘交订单、盘中按涨跌停和成交额约束模拟成交、收盘后再记账。最常见的未来函数就一种长相——用 T 日收盘价算特征,又假设自己按 T 日收盘价成交。</p>
+          <p class="figure__cap">把项目按职责拆成清晰的几层,而不是全写进一个越拉越长的 notebook。数据、因子、回测、配置、报告各归各位,几周后你和接手的人都还能看懂。</p>
         </div>
-        <h2>4. 先落地,再谈花活</h2>
-<p>因子听起来玄,教学版其实四类就够开张。第一是估值,比如 <span class="term">PB</span> 或 <span class="term">PE</span> 的倒数,越便宜分越高;第二是<span class="term">动量</span>,比如过去 <span class="num">60 日</span>收益率,涨得顺的分高;第三是波动,取过去 <span class="num">60 日</span>日收益标准差的负值,走得稳的分高;第四是质量,比如 <span class="term">ROE</span>(净资产收益率),赚钱效率高的分高。</p><p>原始因子值还不能直接上战场,先处理脏数据。每个因子都要处理极端值和缺失值:常见做法是 winsorize 截尾,把最离谱的那部分按回边界,再做标准化。行业差异明显的因子,还可以在每个行业内部各自标准化——不然有的行业天生估值低、有的行业天生估值高,你的组合做着做着就变成一把行业押注,你还以为自己在认真选股。</p><p>还有一个新手必踩的坑:方向统一。先立好规矩:分数越高代表越看好。低 <span class="term">PB</span> 如果代表便宜,可以使用 <span class="term">PB</span> 的负值,或者干脆用 BP = 1 / <span class="term">PB</span>;波动越低越好,可以使用负波动。方向不统一就急着合成,就像把正着数和倒着数的排行榜直接相加,结果什么意义都没有。</p>
-                <pre><code>value_bp = 1 / pb
-    momentum_60 = close_adj[t] / close_adj[t-60] - 1
-    low_vol_60 = -std(daily_return[t-59:t])
-    quality_roe = net_profit_ttm / equity</code></pre>
-                <p>要强调一句:这些公式只是教学口径。真实项目里到处是边角:<span class="term">PB</span> 为负怎么办、上市不满 <span class="num">60 天</span>怎么算<span class="term">动量</span>、财务数据按公告日还是报告期对齐、行业差异和极端值怎么收敛,每一个都能写一页。但先把第一版公式白纸黑字写出来,读者才知道因子不是一句抽象口号,而是一行能运行的代码。</p>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 415" role="img" aria-label="量化项目目录三层图:raw 原始层只读、features 特征层可算、reports 报告层只产,层间只允许向下读写,右侧红色虚线表示禁止反向回流">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">把目录当地层:每一层只许干一件事</text>
+            <!-- 三层地层,像地质剖面 -->
+            <rect x="80" y="70" width="740" height="84" rx="8" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="110" y="102" fill="#a8c6ff" font-size="14" font-weight="800">data/raw 原始层</text>
+            <text x="110" y="128" fill="#bcc9dd" font-size="12">落地之后一个字都不许改——改坏了没人知道,所有脏活留给下一层</text>
+            <rect x="80" y="166" width="740" height="84" rx="8" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="110" y="198" fill="#f0c96a" font-size="14" font-weight="800">data/features 特征层</text>
+            <text x="110" y="224" fill="#bcc9dd" font-size="12">清洗、对齐、算因子全在这里;每个因子一张登记表:定义、公式、值域、频率</text>
+            <rect x="80" y="262" width="740" height="84" rx="8" fill="rgba(238,136,119,0.13)" stroke="#ee8877"/>
+            <text x="110" y="294" fill="#ffb4b4" font-size="14" font-weight="800">reports 报告层</text>
+            <text x="110" y="320" fill="#bcc9dd" font-size="12">回测曲线、指标表、报错日志只从这里出;截图从贴自动生成,杜绝手工美图</text>
+            <!-- 层间箭头:只许向下 -->
+            <line x1="450" y1="156" x2="450" y2="164" stroke="#8499bd" stroke-width="3"/>
+            <line x1="450" y1="252" x2="450" y2="260" stroke="#8499bd" stroke-width="3"/>
+            <text x="470" y="161" fill="#8499bd" font-size="11">只许向下读</text>
+            <text x="470" y="257" fill="#8499bd" font-size="11">只许向下写</text>
+            <!-- 右侧红线:禁止反向 -->
+            <path d="M 800 330 Q 860 220 800 100" fill="none" stroke="#ee8877" stroke-width="3" stroke-dasharray="8 6"/>
+            <line x1="786" y1="88" x2="814" y2="112" stroke="#ee8877" stroke-width="3"/>
+            <line x1="786" y1="112" x2="814" y2="88" stroke="#ee8877" stroke-width="3"/>
+            <text x="450" y="388" text-anchor="middle" fill="#bcc9dd" font-size="12.5">吃过亏的项目最后都长成一个样:原始层只读、特征层可算、报告层只产,箭头一律向下</text>
+          </svg>
+          <p class="figure__cap">把目录当地质层:data/raw 落地后一个字不许改;data/features 负责清洗和算因子,每个因子都有登记表;reports 只负责产出回测曲线和报错日志。吃亏的项目最后都长成一个样——箭头一律向下,谁也不许反向回流。</p>
+        </div>
+        <h3>1.2. 配置文件比硬编码可靠</h3>
+<p>打开很多新手的量化代码,随手一搜就能搜出十几个魔法数字:日期写死在第三行,路径写死在循环里,费率藏在一个谁也想不起来的函数深处。这是给自己埋雷。正确的做法是:股票池、回测区间、调仓频率、交易成本、滑点、因子列表、模型参数,统统收进配置文件或显式参数里,不让任何关键数字散落在代码各处。写代码时你对它们了如指掌,三个月后它们就是你读不懂的甲骨文。</p><p>配置真正的价值,是让实验可重复。设想一下:你今天跑了一个<span class="term">中证 500</span> 月频低估值策略,一个月后你应该能用同一份配置跑出同样的结果;如果结果不一样,你必须能回答到底是数据更新了、代码改动了,还是依赖环境变了。回答不出这个问题,你做的就不是研究,是许愿——每次跑出来的都是许来的新愿。</p><p>配置还有个大用场:做对比实验。只改一个参数,比如把交易成本从 <span class="num">0.1%</span> 调到 <span class="num">0.2%</span>,其余一概不动,观察结果怎么变——这才是干净的单变量实验。要是参数散在代码里,对比实验就退化成了手工记忆大赛:刚才那次我到底改没改滑点来着?想不起来,实验就白费了。</p>
+                <pre><code>universe: csi500
+    start_date: 2016-01-01
+    end_date: 2024-12-31
+    rebalance: monthly
+    trade_price: next_open
+    cost:
+    buy_bps: 8
+    sell_bps: 13
+    constraints:
+    max_weight: 0.03
+    min_avg_amount: 20000000
+    factors:
+    - value_bp
+    - momentum_60
+    - quality_roe</code></pre>
+                <p>这份配置写的是一个研究项目的完整边界。以后报告里只要引用它,读者一眼就能知道:股票池是什么、日期从哪到哪、多久调一次仓、成本怎么扣、约束有几条、用了哪几个因子。配置写得越清楚,越难在事后偷偷改规则——它既是给别人的说明书,也是给未来那个容易心软的自己上的一把锁。</p>
 
-        <h2>5. 四个分数怎么拧成一个</h2>
-<p>手里有四个因子,怎么变成一个总分?最简单的多因子合成是等权平均:先把每个因子标准化成均值 0、标准差 1,方向统一后直接相加或求平均,得到综合分数。分数越高,模型越看好。别小看这个土办法,它是检验因子质量的基准线。</p><p>当然也可以给不同因子设置权重,比如价值 <span class="num">30%</span>、质量 <span class="num">30%</span>、<span class="term">动量</span> <span class="num">20%</span>、低波 <span class="num">20%</span>。但初学时不要急着优化权重。权重优化的本质是拿历史数据调参,你不断挑历史最好的组合,调出来的往往是最会讨好过去、而不是最懂未来的那一组。这件事有个大家熟知的名字:过拟合。</p><p>合成完先别急着选股,看看分数分布长什么样:有没有极端值?是不是某个因子一枝独秀主导了总分?是不是某些行业整体高分?缺失覆盖的股票是不是太多?用工程师的话说:模型输出之前,先把输入和中间结果打日志看分布,别直接接到下游。</p>
-
-        <h2>6. 分数高不等于能买成</h2>
-<p>教学版最朴素的组合:挑综合分数最高的 50 只股票,等权持有。等权的好处是简单透明,问题也明显:小市值股票和大市值股票拿一样的权重,组合整体长相可能偏离基准较大。</p><p>更接近指数增强的做法是加入约束,把组合往基准上拉一拉:单只股票不超过 <span class="num">3%</span>;行业权重相对基准不超过一定范围;组合股票数不少于 80 只;永远保留 <span class="num">1%</span> 或 <span class="num">2%</span> 的现金;成交额过低的股票降低权重,免得纸面上买得下、实盘买不到。</p><p>请按台阶上楼:先从简单组合开始,再逐步加约束。每加一个约束,都比较收益、回撤、换手和<span class="term">跟踪误差</span>的变化。一口气堆上十条限制,出了问题你根本不知道哪个限制在起作用、哪个在帮倒忙。</p>
-                <pre><code>candidates = tradable_universe[date]
-    score = z(value_bp) + z(momentum_60) + z(quality_roe) + z(low_vol_60)
-    selected = top_n(score, n=50)
-    target_weight = 0.98 / len(selected)
-    for code in selected:
-        target[code] = min(target_weight, 0.03)</code></pre>
-                <p>这段伪代码故意写得很笨:先选前 50,再等权,再保留 <span class="num">2%</span> 现金,再限制单票 <span class="num">3%</span>。它不是最优组合,但足够让第一版回测从一列分数走到一份真实的仓位清单。</p><div class="callout callout--note reveal"><span class="callout__title">给策略加约束,也要走灰度发布</span><p>一次只加一个约束,先看收益、回撤、换手的变化,再加下一个——这和上线灰度是同一个道理:变量一次只动一个,出问题才知道是谁引起的。一口气堆上十条限制,组合赚钱了你说不清谁立的功,不赚钱更说不清谁闯的祸。慢一步不是保守,是保住归因能力。</p></div>
-
-        <h2>7. 纸面组合落地的第一道关</h2>
-<p>每个调仓日,流程是这样的:先读取当时股票池和因子,生成目标组合;再和当前持仓比较,得到需要买卖的数量。接下来的细节不性感但必须做:买入普通 A 股通常按 <span class="num">100 股</span>整数取整;卖出还要处理历史持仓产生的零股;<span class="term">ETF</span>、可转债等品种交易单位不完全相同,需要按品种另行建模;资金不足时要按比例缩减。</p><p>下单前逐只检查:买入时要看股票是否停牌、是否涨停、成交额是否足够;卖出时要看是否停牌、是否跌停、是否有可卖持仓。任何一项不满足,交易就发生不了。如果某只股票卖不掉,它会继续赖在组合里——从这一刻起,目标组合和真实组合就是两个东西了。</p><p>调仓模拟一定要保存未成交原因。很多回测只记录成功交易,相当于一份把所有报错都吞掉的日志系统:跑起来岁月静好,问题全被掩盖。真实市场里,买不到、卖不出、部分成交,每一种都会实打实地改变策略。</p>
-                <p>前面说的这条<span class="hl">“T 日收盘出信号、<span class="term">T+1</span> 才生效”</span>的时间线,落到代码里只有一个循环——<code>examples/ex02_index_enhance.py</code> 的回测主循环,拆开看:</p>
-                <figure class="code-walk reveal">
-                  <figcaption class="code-walk__file">examples/ex02_index_enhance.py</figcaption>
-                  <pre class="code-walk__code"><code>for t in range(1, n_days + 1):
-    day_ret = 旧持仓按 T 日收益结算          <b class="cw-tag">1</b>
-    nav = strat_nav[-1] * (1 + day_ret)
-
-    if t > WARMUP and t % 20 == 0:
-        score = factors_at(stocks, t)        <b class="cw-tag">2</b>
-        target = 等权买入综合分前 30 名
-        nav *= 1 - apply_cost(turnover)      <b class="cw-tag">3</b>
-        holdings = target                    <b class="cw-tag">4</b>
-    strat_nav.append(nav)</code></pre>
-                  <ol class="code-walk__notes">
-                    <li><strong>旧持仓先结算</strong>:今天的第一件事是“昨天拿着的仓位”吃完 T 日的涨跌。顺序写反(先调仓再结算)是回测新手最常见的隐蔽 bug——相当于每次都能在开盘前瞬移进今天涨的股票。</li>
-                    <li><strong>信号只碰 <code>[0, t]</code></strong>:同一个 <code>factors_at</code>(第 9 章那个函数),T 日晚上能算出来的,今天才算。</li>
-                    <li><strong>成本跟着换手逐笔扣</strong>:不是事后给净值打个折。换得越多、摩擦越大,这个设计让“少调仓”自然变成策略的一部分。</li>
-                    <li><strong>这一行看着像立刻换仓,其实不是</strong>;<code>holdings</code> 此时替换,新组合要下一圈循环才吃到第一笔收益——也就是 T+1 才生效。书里那张调仓时间线图,对应的就是这个时序。</li>
-                  </ol>
-                </figure>
-                <p>完整脚本是自包含的:加载合成行情、按时点算因子、月频调仓、双边万 13 扣成本、最后输出一张体检报告(年化、回撤、超额、<span class="term">跟踪误差</span>、<span class="term">IR</span>、换手)。对着本章的每一节自查,你会发现书里讲的纪律一条都没少。</p><div class="callout callout--note reveal"><span class="callout__title">资金的下限,可能比策略更早卡住你</span><p>账户小影响的不只是收益数字,还影响交易能不能成立:A 股买入按 <span class="num">100 股</span>取整,一只 <span class="num">50 元</span>的股票一手就要 <span class="num">5000 元</span>。十万元账户想做 50 只等权,每只目标才 <span class="num">2000 元</span>,连一手都不够——这套组合在回测纸上成立,在券商柜台根本不成立。资金越小,交易单位、股价高低和取整规则越先决定你能做什么,策略聪明与否反而排第二。</p></div>
-
-        <h2>8. 先算清摩擦,再谈赚钱</h2>
-<p>只要交易就有摩擦。成本至少包括佣金、卖出印花税、过户费和滑点。教学版可以先设一个统一单边成本,比如买入 <span class="num">0.08%</span>、卖出 <span class="num">0.13%</span>,后面再做成本敏感性测试。</p><p>想算得更细一点,可以让滑点和成交额相关:成交额大的股票滑点低,成交额小的股票滑点高;订单金额占当天成交额比例越高,冲击越大。</p><p>成本敏感性测试是照妖镜。把成本乘以 0、1、2、<span class="num">3 倍</span>分别跑一遍看结果。如果策略只在 0 成本下赚钱,现实意义很弱——那只是信号在纸面上恰好追上了摩擦;如果成本翻倍后仍有稳定超额,才值得继续研究。</p><p>第一版成本公式可以写得很朴素: 买入成本 = 买入金额 × 买入成本率,卖出成本 = 卖出金额 × 卖出成本率。拿数字演一遍:买入 <span class="num">10000 元</span>,买入成本率 <span class="num">0.08%</span>,成本 <span class="num">8 元</span>;卖出 <span class="num">10000 元</span>,卖出成本率 <span class="num">0.13%</span>,成本 <span class="num">13 元</span>。净收益必须在扣掉这 <span class="num">21 元</span>后再算,顺序不能反。</p><p>如果要加入冲击,可以把订单金额除以当天成交额作为参与率。参与率越高,滑点越高。教学版不必复杂,但至少要知道:大单和小单面对的不是同一个成本世界。
-                <div class="figure reveal">
-                          <div data-lab="cost"></div>
-                          <p class="figure__cap">成本敏感性实验台:把换手和成本各自推高,看毛收益被吞掉多少——照妖镜就是这么照的。</p>
-                        </div>
-                </p><div class="callout callout--note reveal"><span class="callout__title">成本要按 0、1、2、3 倍各压一遍</span><p>只在零成本下赚钱的策略,是信号只比摩擦快了纸面上的一点点;成本翻倍后超额还稳,才配谈下一步。更细一点,把佣金、印花税、滑点拆开各自加压——有的策略只怕滑点,有的只怕换手,拆不开就永远不知道该治哪一处。这关的成本预算很低,多跑几次而已,别省。</p></div>
-
-        <h2>9. 别报流水账,要出体检报告</h2>
-<p>回测跑完,先出一份体检报告。结果评价至少包括净值、基准净值、超额净值、<span class="term">年化收益</span>、<span class="term">最大回撤</span>、<span class="term">波动率</span>、<span class="term">夏普</span>、年化超额、<span class="term">跟踪误差</span>、<span class="term">信息比率</span>、<span class="term">换手率</span>和交易成本,一项都别少。</p><p>然后按年份拆开看。某个策略总收益不错,拆开才发现全部来自 <span class="num">2019 年</span>和 <span class="num">2020 年</span>,之后持续失效。年度表能暴露这个问题;月度收益热力图也能显示收益是否过度集中在少数月份。</p><p>行业和风格暴露也要查。你以为自己做多因子选股,打开报告一看,组合长期超配某个上涨行业——那<span class="term">超额收益</span>就不全是模型能力,里面有相当一块是你无意中押中的行业方向。</p>
+        <h3>1.3. 原始、清洗和特征分开</h3>
+<p>数据进来之后,最不该发生的就是<span class="hl">“边洗边用边覆盖”</span>。数据层至少要分出三个区:raw、processed 和 feature。raw 是原始下载或导入的数据,尽量一个字节都不改——它是案发现场的原貌;processed 是清洗后的标准表,比如统一了代码、日期、复权和停牌字段;feature 则是从 processed 算出来的因子和模型输入。三层各司其职,污染才不会顺着管道一路扩散。</p><p>这么分的用意是:每一步都要可追溯。某天你发现某个因子值异常,必须能沿着管道倒回去——从因子值,到清洗后的字段,到原始价格,再到处理脚本——一路查到源头。查不回去,模型输出错了你就只能猜;研究里“猜”这个字,比亏损本身更贵。</p><p>还有一件事要单独拎出来:数据检查脚本必须独立存在、随更随跑。缺失率、重复日期、异常价格、停牌状态、复权跳变、财报发布日期、指数成分变化,每一项都要能自动检查。数据检查绝不是开工那天跑一次就完事的仪式,每次更新数据都要重跑一遍——它更像 CI 而不是剪彩,何况脏数据最喜欢趁你不检查的时候溜进来。</p>
                 <div class="table-wrap">
                   <table>
-                    <thead><tr><th>报告模块</th><th>必须输出</th><th>看什么问题</th></tr></thead>
+                    <thead><tr><th>表</th><th>关键字段</th><th>用途</th></tr></thead>
                     <tbody>
-                      <tr><td>收益</td><td>策略净值、基准净值、超额净值</td><td>是否真的跑赢基准</td></tr>
-                      <tr><td>风险</td><td>最大回撤、波动、夏普、信息比率</td><td>收益路径是否可承受</td></tr>
-                      <tr><td>交易</td><td>换手率、成本、未成交数量</td><td>纸面收益能否落地</td></tr>
-                      <tr><td>暴露</td><td>行业权重、单票集中度、风格倾向</td><td>是否偷偷押了别的风险</td></tr>
+                      <tr><td>prices</td><td>date, code, open, close, volume, amount, adj_factor, paused, limit_up, limit_down</td><td>行情、成交限制、收益计算</td></tr>
+                      <tr><td>universe</td><td>date, code, index_code, weight</td><td>点时股票池和基准权重</td></tr>
+                      <tr><td>features</td><td>date, code, factor_name, value, available_at</td><td>因子矩阵和可见时间</td></tr>
+                      <tr><td>orders</td><td>date, code, side, qty, limit_price, status</td><td>回测和模拟盘订单状态</td></tr>
+                      <tr><td>positions</td><td>date, code, qty, sellable_qty, market_value</td><td>持仓、T+1 和风险暴露</td></tr>
                     </tbody>
                   </table>
                 </div>
-                <p>报告模板固定后,每次实验都用同一套指标。好处有二:你不会下意识地只挑对自己有利的图看,不同因子和不同约束之间也有了可比性。</p>
+                <p>有了上面这几张最小字段表,你就能把研究从一堆散落的 DataFrame,升级成一个可以逐表检查的数据层。字段不必一上来就追求齐全,但每个字段都必须说得出含义和口径——你今天省掉的注释,就是明年 debug 时流的泪。</p>
 
-        <h2>10. 最后交付的是结论,不是曲线</h2>
-<p>项目最后要写复盘。不要只说策略好或不好,要正面回答:哪些因子有贡献?哪些阶段失效?成本吃掉多少?<span class="term">跟踪误差</span>是否可接受?组合是否过度集中?结果是否稳健?</p><p>复盘还要落到下一步行动:比如加入行业约束、降低换手、替换财务因子数据源、增加样本外、加入风险模型,或者直接放弃这个方向。写不出行动项的复盘只是一份抒情散文——研究结论要能指导行动。</p><p>如果你能把这个项目完整做完,你已经跨过量化入门最重要的一道门。不是因为策略一定赚钱——很可能不赚钱——而是因为你开始用可验证流程替代感觉。流程对了,策略可以慢慢变好;流程错了,曲线再美都是租来的。</p>
+        <h3>1.4. 每个因子都要有定义</h3>
+<p>因子代码最怕写成一句<span class="hl">“反正就是这么算的”</span>。每个因子都要白纸黑字写清楚:输入是什么,输出是什么,时间口径是什么。拿 momentum_20 举例:它用过去 <span class="num">20 个交易日</span>的复权收益,是否跳过最近 <span class="num">1 天</span>?做没做行业中性?极端值怎么处理?缺失值怎么填?这些问题不回答,同一个名字下可能住着三四种不同的因子,而你还以为它们是一个。</p><p>每个因子最好配两样小东西:一段文档和一个小测试。测试不用复杂,给它一段极小的假数据,算出预期结果,断言对上就行。别小看这几行——将来你重构代码时,它就是那个能在你手滑把 shift 方向改错的瞬间、立刻报警的哨兵。方向错了一位,因子就整个反了,而回测曲线照样会画出图来,绝不主动提醒你。</p><p>因子层还要舍得存中间结果。训练模型时不要每次临时把全部因子重算一遍:又慢,又难复现,还会让<span class="hl">“同一次实验”</span>变成玄学概念。工程上很简单:按日期和股票把因子矩阵落盘,记好生成它的代码和数据版本。因子矩阵就是研究世界的 checkpoint,存了它,你才能随时读档重来。</p>
+
+        <h3>1.5. 账户、订单和指标分开</h3>
+<p>回测层里至少住着三个角色,千万别让它们合体:策略负责生成目标仓位,撮合模块负责模拟成交,账户模块负责更新现金和持仓。最怕的写法是让策略函数直接改净值——看起来少写几十行,实际上你把成本、停牌、<span class="term">T+1</span> 和部分成交这些现实,全都挡在了门外。爽一时,假一世:这种回测越漂亮,离市场越远。</p><p>指标计算同样要独立出来。<span class="term">年化收益</span>、<span class="term">最大回撤</span>、<span class="term">夏普</span>、<span class="term">换手率</span>、超额、<span class="term">跟踪误差</span>、<span class="term">信息比率</span>、行业暴露,这些统统可以从净值、持仓和交易记录里算出来,干嘛塞在回测主循环里?指标一旦独立,所有策略就能共用同一套评价体系——谁都别想给自己定制一把对自己有利的尺子。评价口径统一,是实验可比性的前提。</p><p>交易记录必须老老实实保存,这一条没有商量余地。只留一条净值曲线是远远不够的:你要知道每一次买卖了什么、数量多少、价格多少、费用多少、有没有失败。净值曲线是结果,交易记录是证据;复盘时不看证据只看结果,和破案时只看心情不看监控,本质上是一回事。</p>
+                <pre><code>for date in trading_calendar:
+    data = load_point_in_time_data(date)
+    if is_rebalance_day(date):
+        score = compute_score(data.features)
+        target = build_target_portfolio(score, constraints)
+        orders = diff_to_orders(account.positions, target)
+    orders = risk_check(orders, account, market_rules)
+    fills = match_orders(orders, data.next_bar, cost_model)
+    account.update(fills, data.close_price)
+    recorder.save(date, account, orders, fills)</code></pre>
+                <p>这段伪代码的重点只有两个字:顺序。先取当时可见的数据,再算分数和目标组合,再生成订单,再过风控,再撮合成交,最后更新账户并记录——一环扣一环。这个顺序只要乱一环,未来函数或账户状态错误就会从裂缝里爬进来,而且通常不会报错,只会安静地给你一个好看得不真实的收益。回测引擎的全部尊严,都在这个循环里。</p>
+
+        <h3>1.6. 训练、预测和回测不要混</h3>
+<p>引入机器学习之后,有一条分工红线必须焊死:训练脚本负责用训练区间拟合模型,预测脚本负责在指定日期输出分数,回测脚本负责把分数变成组合。三件事,三个入口。一旦混在一起写,样本泄漏几乎是必然结局——它不会轰隆一声炸掉,而是悄悄把<span class="hl">“未来”</span>揉进训练集,让你的回测成绩好看到值得怀疑人生。</p><p>模型文件必须带版本,这是底线工程素养:用了哪些特征、训练区间到哪、参数是什么、随机种子是什么、代码是哪个版本,全部记录在案。要求是实盘的硬标准——模拟盘或实盘里某一天做出的预测,必须能一路追溯到当时那个具体的模型。追溯不到,那次预测就是一次无法复盘的悬案。</p><p>预测结果也要落盘,别让每次回测都临时训一遍模型然后直接交易。真实生产流程里,每天是先生成一份预测文件,组合构建和交易系统再去读它。照这个流程做模拟,一来更贴近真实生产,二来每一步都有档可查。回测里<span class="hl">“图省事”</span>省掉的每一步,未来都会变成你选择困难与互相矛盾的实验结果。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 335" role="img" aria-label="回测循环示意:读取可见数据、算信号、生成持仓、模拟成交扣成本、更新持仓、记录净值,每天重复">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回测就是在历史里,一天天重放这个循环</text>
-            <!-- 环形流程 6 步 -->
-            <rect x="360" y="60" width="180" height="46" rx="10" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
-            <text x="450" y="88" text-anchor="middle" fill="#eef4ff" font-size="13.5">① 读取当时可见数据</text>
-            <rect x="640" y="120" width="180" height="46" rx="10" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
-            <text x="730" y="148" text-anchor="middle" fill="#eef4ff" font-size="13.5">② 计算信号</text>
-            <rect x="640" y="210" width="180" height="46" rx="10" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
-            <text x="730" y="238" text-anchor="middle" fill="#eef4ff" font-size="13.5">③ 生成目标持仓</text>
-            <rect x="360" y="270" width="180" height="46" rx="10" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
-            <text x="450" y="298" text-anchor="middle" fill="#eef4ff" font-size="13.5">④ 模拟成交+扣成本</text>
-            <rect x="80" y="210" width="180" height="46" rx="10" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
-            <text x="170" y="238" text-anchor="middle" fill="#eef4ff" font-size="13.5">⑤ 更新现金持仓</text>
-            <rect x="80" y="120" width="180" height="46" rx="10" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
-            <text x="170" y="148" text-anchor="middle" fill="#eef4ff" font-size="13.5">⑥ 记录净值</text>
-            <!-- 环形箭头 -->
-            <g stroke="#8499bd" stroke-width="2" fill="none">
-              <path d="M 540 84 C 610 92 630 105 660 118" marker-end="url(#bl)"/>
-              <path d="M 730 166 L 730 208" marker-end="url(#bl)"/>
-              <path d="M 640 240 C 600 258 570 262 542 268" marker-end="url(#bl)"/>
-              <path d="M 360 296 C 300 300 265 285 250 258" marker-end="url(#bl)"/>
-              <path d="M 170 210 L 170 168" marker-end="url(#bl)"/>
-              <path d="M 240 118 C 270 100 300 92 358 85" marker-end="url(#bl)"/>
-            </g>
-            <text x="450" y="192" text-anchor="middle" fill="#f0c96a" font-size="13">下一天,重复</text>
-            <defs><marker id="bl" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8499bd"/></marker></defs>
+          <svg class="chapter-diagram" viewBox="0 0 920 385" role="img" aria-label="量化项目分层流水线图:原始数据、清洗、特征因子、训练、预测、回测报告六个方框单向排列,训练到因子之间画红色禁止回流线和叉号,下方三栏口诀分别为配置外置、失败也留档、测试断言守门">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化项目流水线:每一层只管自己的事</text>
+            <!-- 六层管道 -->
+            <rect x="40" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#7aa7f0"/>
+            <text x="100" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">原始数据</text>
+            <text x="100" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">只读,不改</text>
+            <rect x="190" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#7aa7f0"/>
+            <text x="250" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">清洗</text>
+            <text x="250" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">对齐·去重·补缺</text>
+            <rect x="340" y="70" width="120" height="56" rx="8" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+            <text x="400" y="94" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">特征/因子</text>
+            <text x="400" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">每个有定义</text>
+            <rect x="490" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#8fb37a"/>
+            <text x="550" y="94" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">训练</text>
+            <text x="550" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">只用历史段</text>
+            <rect x="640" y="70" width="100" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#ee8877"/>
+            <text x="690" y="94" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">预测</text>
+            <text x="690" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">滚到样本外</text>
+            <rect x="770" y="70" width="110" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#ee8877"/>
+            <text x="825" y="94" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">回测/报告</text>
+            <text x="825" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">自动生成</text>
+            <!-- 箭头 -->
+            <line x1="160" y1="98" x2="188" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="310" y1="98" x2="338" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="460" y1="98" x2="488" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="610" y1="98" x2="638" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="740" y1="98" x2="768" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <!-- 数据不可回流红线 -->
+            <path d="M 690 128 Q 550 190 400 168" fill="none" stroke="#ee8877" stroke-width="3" stroke-dasharray="8 6"/>
+            <line x1="380" y1="160" x2="420" y2="176" stroke="#ee8877" stroke-width="3"/>
+            <line x1="380" y1="176" x2="420" y2="160" stroke="#ee8877" stroke-width="3"/>
+            <text x="545" y="186" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">禁止:未来信息回流训练——一跨线就是前视偏差</text>
+            <!-- 底部三栏口诀 -->
+            <rect x="60" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="80" y="246" fill="#a8c6ff" font-size="13" font-weight="800">配置外置</text>
+            <text x="80" y="270" fill="#bcc9dd" font-size="12">路径·参数全进配置文件</text>
+            <text x="80" y="292" fill="#bcc9dd" font-size="12">代码里不许硬编码</text>
+            <rect x="330" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.4)"/>
+            <text x="350" y="246" fill="#f0c96a" font-size="13" font-weight="800">失败也留档</text>
+            <text x="350" y="270" fill="#bcc9dd" font-size="12">跑挂的实验记参数和报错</text>
+            <text x="350" y="292" fill="#bcc9dd" font-size="12">失败的坑只值记一次</text>
+            <rect x="600" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(238,136,119,0.4)"/>
+            <text x="620" y="246" fill="#ffb4b4" font-size="13" font-weight="800">测试断言守门</text>
+            <text x="620" y="270" fill="#bcc9dd" font-size="12">因子值域、收益单位、</text>
+            <text x="620" y="292" fill="#bcc9dd" font-size="12">截面覆盖率,进 CI 每天查</text>
+            <text x="450" y="352" text-anchor="middle" fill="#bcc9dd" font-size="12.5">工程骨架的正确性不看代码多聪明,看三条纪律:数据单向流、配置全外置、结果可复现</text>
           </svg>
-          <p class="figure__cap">回测的本质就是这个每天重放的循环。每一步都可能藏坑:数据当时真可见吗?信号偷看未来了吗?成交价真实吗?成本扣了吗?循环里任何一环失真,收益就是假的。</p>
+          <p class="figure__cap">量化项目的正确性靠的是三条纪律而不是代码聪明:数据只能从原始层一路单向流到报告层,训练绝不允许偷看样本外(一跨线就是前视偏差);路径参数全部外置到配置文件;跑挂的实验也要留档,同样的坑只值记一次。</p>
         </div>
+        <h3>1.7. 自动生成比手工截图可靠</h3>
+<p>回测跑完了,接下来这一幕你肯定不陌生:打开 notebook,挑几张好看的图截下来,贴进文档——收工。问题恰恰出在“挑”字上。报告必须尽量自动生成:回测一结束,脚本就该自动输出净值图、回撤图、年度收益、月度收益、<span class="term">IC</span>、分层、换手、持仓、行业暴露和成本敏感性,一个都不许少。流程固定了,才轮不到人性出场挑肥拣瘦。</p><p>手工截图有两个原罪:一是容易只挑对自己有利的图,二是容易漏掉不利的结果——而这两者往往同时发生,且当事人毫无自觉。自动报告的价值就在于把固定指标一股脑全摆在你面前,逼你直面策略的真实长相,包括它卸妆后的部分。研究里最贵的能力不是发现机会,而是不对自己撒谎。</p><p>报告里还要保留元信息:用的是哪份配置、哪个数据版本。别人(包括三个月后的你)看到一条曲线,应该立刻能知道它出自哪个实验、哪组参数、哪版数据。没有元信息的图表,复盘价值趋近于零——一条来历不明的漂亮曲线,和一张没写日期的化验单一样,看着精密,毫无用处。</p>
+
+        <h3>1.8. 记录失败比记录成功更重要</h3>
+<p>说一个不浪漫的事实:量化研究里,大多数想法都会失败。那么你失败的想法去哪了?如果不记录失败,两个后果等着你:一是反复在同一个方向上徒劳尝试,二是记忆里只剩下成功案例,完美患上幸存者偏差。实验日志应该老老实实记这些:日期、想法、配置、结果、结论、下一步。它不贵,每次十分钟,换的是不再原地打转。</p><p>日志不需要长,但必须诚实。举个例子,一条合格的记录长这样:尝试 <span class="num">60 日</span><span class="term">动量</span>,样本内有效,<span class="num">2021 年</span>后失效,换手偏高,扣完成本超额为负,暂不加入组合。几句话,信息量齐全。这样的记录攒上半年,它比任何一本交易秘籍都懂你——因为它记录的恰恰是你亲手撞过的每一堵墙。</p><p>记录失败还有个隐藏收益:它能训练你的研究判断力。翻着翻着,规律自己会浮出来——哪些方向总是死在成本上,哪些因子扒光了看其实只是市值暴露,哪些模型对参数敏感到一碰就变脸。这些<span class="hl">“伤亡名单”</span>攒起来,才是你区别于新手的真正护城河。没写过失败日志的研究员,永远都在交同一笔学费。</p>
+
+        <h3>1.9. 测试和断言</h3>
+<p>你写出过一个收益年化翻倍的策略,结果第二天发现是复权因子用反了吗?写过的举手的人很多,承认的没几个。量化代码要和任何工程项目一样写测试,至少备齐四类:数据测试、因子测试、回测状态测试和指标测试。收益率算得对不对、复权处理合不合理、持仓会不会变成负数、现金和交易记录对不对得上账,每一项都要有测试兜底。</p><p>断言则是挡低级错误的廉价保险:禁止使用未来日期的数据,禁止下单数量不是交易单位的整数倍,禁止组合权重突破上限,禁止净值出现非数字,禁止成交发生在停牌日。写起来一条一行,抓 bug 一抓一个准。这些门槛再简单不过,可它们拦住的,恰恰是历史上无数<span class="hl">“漂亮回测”</span>的真实死因。</p><p>这些测试看着不像金融研究,倒像是软件工程的杂务——没错,它们就是杂务,但它们会救你的命。说三遍也不嫌多:很多漂亮回测来自 bug,不是来自 <span class="term">Alpha</span>。测试写得越早,你被假收益欺骗的次数就越少;等到实盘才发现,就不叫学费,叫赔偿金。</p>
+                <pre><code>def test_momentum_uses_only_past_prices():
+    prices = [10, 11, 12, 13]
+    # asof=3 是第 4 天,只能看到第 4 天之前的可见价格
+    assert momentum(prices, asof=3, window=2) == 12 / 10 - 1
+
+def test_no_trade_when_limit_up():
+    order = Buy(code="000001", qty=100)
+    bar = Bar(open=10.0, limit_up=10.0, sell_volume=0)
+    assert match(order, bar).filled_qty == 0</code></pre>
+                <div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>注意这些测试样例的共同特点:小到一眼能算出答案。它们不追求覆盖金融现实的全部复杂度,目标很聚焦——挡住最常见的方向错误、未来数据和非法成交。测试的价值不在宏大,在于每个都简单到无可辩驳:对就是对,错就是错,没有辩解空间。</p></div>
+
+        <h3>1.10. 从教学项目到生产系统</h3>
+<p>教学项目可以舒舒服服跑在你自己的笔记本上,生产系统则要直面一堆残酷的新世界:调度、监控、权限、容错、备份、日志、告警和人工接管。这里要替你按一下刹车:千万别一上来就奔着复杂生产系统去造——但也要知道,未来某天你会需要它们。方向要看清,步子要放慢,这两件事不矛盾。</p><p>一条合理的过渡路线是循序渐进的:本地脚本先跑通,然后配置化;接着让报告每天定时自动生成;然后模拟盘自动更新;再然后小资金半自动下单;最后才谈全自动。注意每一级的共同点:都恰好比上一级多一个真实约束。这就像给游戏逐级解锁难度——跳级的人,通常会被市场用最贵的方式补课。</p><p>最后把工程化这件事的动机说透:它不是为了炫技术,而是为了让策略在时间里可维护。量化项目会持续迭代,没有结构、没有记录的项目,几个月之后就会退化成一台没人敢碰的黑箱——包括你自己。今天你嫌工程化麻烦,明天它就是你和<span class="hl">“推倒重来”</span>之间唯一的距离。</p>
+
+        <h2>2. 别背公式,要知道它在问什么</h2>
+        <p>金融公式一摆出来,很多小白条件反射式地紧张,仿佛又回到了被高数支配的岁月。其实大可不必——入门级公式没有一条是故弄玄虚,它们每个都在问一个朴素的问题:赚了多少?扛了多大波动?从最高点摔下来多深?有没有跑赢该跑赢的基准?这个价格相对利润算贵吗?这只债券对利率变化有多敏感?公式的存在,不是为了显得专业,而是为了把这些问题说清楚、算清楚、比清楚。这一章我们把常用公式和指标逐个拆开,只看一件事:它到底在问什么。</p>
+
+        <h3>2.1. 收益率</h3>
+<p><span class="num">100 元</span>变成 <span class="num">105 元</span>,和 <span class="num">100 万</span>变成 <span class="num">105 万</span>,哪笔更厉害?直觉告诉你后者赚得多,但“多”是本金堆出来的。要把它们放上同一把尺子,就得算出比例——这就是收益率:单期收益率 = 结束价值 / 开始价值 - 1。<span class="num">100 元</span>变成 <span class="num">105 元</span>,收益率 <span class="num">5%</span>;<span class="num">100 元</span>变成 <span class="num">95 元</span>,收益率 <span class="num">-5%</span>。收益率存在的全部意义,就是抹平本金规模的差异,让大钱小钱可以同框比较。</p><p>但多期收益千万别简单相加,得按复利相乘。第一期赚 <span class="num">10%</span>,第二期亏 <span class="num">10%</span>,最终是 1.1 × 0.9 - 1 = <span class="num">-1%</span>——涨跌幅看着对称,账户结果并不对称。这和写代码一个道理:字符串拼接和真正的数值计算,长得像,结果完全两码事。收益是在变化后的新本金上继续滚动,乘法才是它的母语。</p><p>量化代码里最容易栽跟头的,反而不是公式,而是价格口径:用未复权价格算长期收益,会把分红除权误读成股价下跌;用复权价格模拟真实成交,又对不上当时市场里的真实价格。收益公式两行就写完,数据口径却能坑你一整个回测。写第一行代码之前,先问自己:我手里的价格,到底是哪种价格?</p>
+
+        <h3>2.2. 年化收益</h3>
+<p>某个策略跑了一周,赚了 <span class="num">2%</span>。朋友兴奋地一把按下计算器:一年 50 多周,那年化不得翻倍?先按住他的手——这就是<span class="term">年化收益</span>最常被滥用的姿势。年化的本意很单纯:把不同长度的投资结果换算成<span class="hl">“一年”</span>这个公共口径,方便比较。比如 <span class="num">3 个月</span>收益 <span class="num">5%</span>,复利年化大约是 1.05 的 <span class="num">4 次</span>方再减一。它是个换算器,不是个许愿池。</p><p>请把这句话抄在屏幕上:年化不是预测。一个策略一周赚 <span class="num">2%</span>,绝不能据此外推一年能赚多少。那一周的收益,可能来自运气,可能来自正好刮过你持仓的市场风格,也可能来自一次性事件——年化之后,这些短期波动都会被放大成吓人的天文数字。短期样本年化=拿着一天的天气预告一年的收成。</p><p>所以看<span class="term">年化收益</span>时,必须同时摆出回撤、波动和样本长度,三者是年化的法定监护人。没有风险指标陪跑的<span class="term">年化收益</span>,就像有人只告诉你这辆车极速能跑 350,绝口不提刹车灵不灵——数字越大,你越该警惕,而不是越兴奋。</p>
+
+        <h3>2.3. 波动率</h3>
+<p>两台机器,一台每天稳定输出 1 单,一台有时 10 单有时 -8 单,长期平均相同——你会把生产任务交给哪台?<span class="term">波动率</span>量的就是这种<span class="hl">“忽上忽下”</span>的程度:它通常是收益率的标准差,衡量收益围绕平均值上下摆动的幅度。日收益稳稳的,<span class="term">波动率</span>低;大涨大跌交替上演,<span class="term">波动率</span>高。</p><p>日<span class="term">波动率</span>怎么年化?常用方法是乘以交易日数量的平方根。A 股严谨回测可以按实际交易日数算,行业报告也常统一用 252 作为近似。这背后有个假设要心里有数:它来自独立同分布近似——每一天的收益被假设成互不影响的独立抽样——现实市场并不完美满足这个假设,但作为粗略的比较工具,它简单、好用、行业通行,够用就先拿来用。</p><p>不过<span class="term">波动率</span>有个<span class="hl">“政策性歧视”</span>要知道:它把上涨和下跌一视同仁,全算成波动。可投资者并不讨厌上涨时的波动,真正让人睡不着觉的,是下跌、回撤和尾部亏损。所以<span class="term">波动率</span>是个有用的粗筛,却不是风险的完整画像——它告诉你车在晃,但分不清是在上坡还是在坠崖。</p>
+
+        <h3>2.4. 最大回撤</h3>
+<p>净值一路爬到 1.5,你还没来得及截图炫耀,它掉头跌到 1.2——这一段的疼痛值怎么量?用<span class="term">最大回撤</span>:净值从历史高点跌到之后低点的最大跌幅,1.2 / 1.5 - 1 = <span class="num">-20%</span>,<span class="term">最大回撤</span>就是 <span class="num">-20%</span>。所有风险指标里,只有它天然带着<span class="hl">“曾经拥有”</span>的心碎感。</p><p><span class="term">最大回撤</span>之所以贴近真实投资体验,是因为人不是从起点看账户的,而是牢牢记得那个最高点。净值从高点掉下来,账面亏的是钱,心里亏的是落差,压力大到一定程度,很多人就会在回撤中赎回、停掉策略——而且恰恰停在最不该停的底部附近。一个策略你拿不拿得住,看回撤比看收益更准。</p><p>回撤还拖着一条复利的尾巴:跌 <span class="num">50%</span>,要涨 <span class="num">100%</span> 才回本。刀砍得越深,爬回来的坡越长。所以策略控制回撤,从来不是为了净值曲线好看,而是为了不让复利被一次深亏拦腰打断——复利最怕的不是慢,是重头再来。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 380" role="img" aria-label="最大回撤示意:净值曲线从1.0爬到高点1.5后跌到低点1.2,落差括号标-20%,公式为1.2除以1.5减1;复利尾巴是跌50%要涨100%才回本">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">最大回撤怎么量:净值从 1.5 跌回 1.2,疼多少?</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">最大回撤 = 净值从历史高点跌到之后低点的最大跌幅——人不是从起点看账户,是牢牢记得那个最高点</text>
+            <line x1="120" y1="300" x2="830" y2="300" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="120" y1="300" x2="120" y2="60" stroke="#46587a" stroke-width="1.5"/>
+            <text x="812" y="322" text-anchor="end" fill="#8499bd" font-size="12">时间</text>
+            <text x="96" y="66" text-anchor="end" fill="#8499bd" font-size="12">净值</text>
+            <path d="M 150 280 L 230 238 L 310 196 L 390 150 L 480 120 L 560 180 L 640 216 L 720 192 L 800 170" fill="none" stroke="#7aa7f0" stroke-width="3"/>
+            <line x1="120" y1="120" x2="480" y2="120" stroke="rgba(240,201,106,0.5)" stroke-width="1.5" stroke-dasharray="6 5"/>
+            <circle cx="480" cy="120" r="5" fill="#f0c96a"/>
+            <text x="112" y="116" text-anchor="end" fill="#f0c96a" font-size="12" font-weight="800">高点 1.5</text>
+            <text x="480" y="98" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">你记得的是它</text>
+            <line x1="120" y1="216" x2="640" y2="216" stroke="rgba(232,136,136,0.5)" stroke-width="1.5" stroke-dasharray="6 5"/>
+            <circle cx="640" cy="216" r="5" fill="#e88"/>
+            <text x="112" y="212" text-anchor="end" fill="#ffb4b4" font-size="12" font-weight="800">低点 1.2</text>
+            <text x="640" y="242" text-anchor="middle" fill="#ffb4b4" font-size="12">很多人恰恰停在这附近</text>
+            <text x="112" y="276" text-anchor="end" fill="#8499bd" font-size="12">起点 1.0</text>
+            <line x1="664" y1="120" x2="664" y2="216" stroke="#e88" stroke-width="2"/>
+            <line x1="656" y1="120" x2="672" y2="120" stroke="#e88" stroke-width="2"/>
+            <line x1="656" y1="216" x2="672" y2="216" stroke="#e88" stroke-width="2"/>
+            <text x="684" y="172" fill="#e88" font-size="15" font-weight="800">落差 −20%</text>
+            <rect x="140" y="62" width="300" height="52" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="156" y="84" fill="#eef4f8" font-size="12.5" font-weight="800">最大回撤 = 低点 ÷ 高点 − 1</text>
+            <text x="156" y="105" fill="#bcc9dd" font-size="12">= 1.2 ÷ 1.5 − 1 = −20%(跌了五分之一)</text>
+            <text x="450" y="338" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="600"><tspan x="450" y="338">拿不拿得住一个策略,看回撤比看收益更准——账面亏的是钱,心里亏的是落差</tspan></text>
+            <text x="450" y="364" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">复利的尾巴:跌 50%,要涨 100% 才回本;刀砍得越深,爬回来的坡越长</text>
+          </svg>
+          <p class="figure__cap">净值一路爬到 1.5,你还没来得及截图炫耀,它掉头跌到 1.2——最大回撤就是 1.2 ÷ 1.5 − 1 = −20%。拖着一条复利的尾巴:跌 50% 要涨 100% 才回本。控回撤不是为曲线好看,是不让复利被一次深亏拦腰打断。</p>
+        </div>
+        <h3>2.5. 夏普比率</h3>
+<p>两个策略摆面前:A <span class="term">年化收益</span> <span class="num">15%</span>,B <span class="term">年化收益</span> <span class="num">25%</span>,选谁?先别急,问一句各自冒了多大风险。<span class="term">夏普比率</span>就是干这个的:它大致等于超出无风险收益的部分,除以收益的<span class="term">波动率</span>。翻译成人话:每承担一份波动,你换来多少<span class="term">超额收益</span>。它不问<span class="hl">“赚没赚”</span>,问的是<span class="hl">“赚得值不值”</span>。</p><p>代几个数字感受一下:A 策略<span class="term">年化收益</span> <span class="num">15%</span>,无风险收益 <span class="num">3%</span>,年化波动 <span class="num">12%</span>,<span class="term">夏普</span>约为 1;B 策略<span class="term">年化收益</span> <span class="num">25%</span>,波动 <span class="num">44%</span>,<span class="term">夏普</span>约 0.5。B 赚的绝对数字更多,但每一单位波动换来的收益质量更差——一个像匀速巡航的高铁,一个像半夜狂飙的摩托,终点都是<span class="hl">“到了”</span>,过程体验天差地别。</p><p>还要警惕<span class="term">夏普</span>的盲区:它会系统性低估<span class="hl">“小赚大亏”</span>型策略的风险。卖期权、加<span class="term">杠杆</span>、吃流动性尾部风险的策略,平时风平浪静、<span class="term">夏普</span>可能很好,可一次极端行情就能亏掉几年的积累——<span class="term">夏普</span>只看得见日常的抖动,看不见悬崖。<span class="term">夏普</span>高到离谱的策略,第一件事不是兴奋,是检查它的风险藏哪了。</p>
+
+        <h3>2.6. 信息比率</h3>
+<p>跑赢指数 <span class="num">5%</span>,听起来不错——但如果这 <span class="num">5%</span> 是东一榔头西一棒子、上下乱窜着跑出来的呢?<span class="term">信息比率</span>就是给<span class="hl">“跑赢基准”</span>打质量分的:它等于年化<span class="term">超额收益</span>除以年化<span class="term">跟踪误差</span>,专门评价相对基准的主动管理能力,尤其贴合指数增强那一类产品。<span class="term">夏普</span>看的是绝对收益的性价比,<span class="term">信息比率</span>看的是<span class="term">超额收益</span>的性价比,别记混。</p><p>拆开看两个零件:<span class="term">超额收益</span> = 组合收益 - 基准收益;<span class="term">跟踪误差</span> = <span class="term">超额收益</span>的波动。把它俩一除,<span class="term">信息比率</span>的含义就清楚了:你每偏离基准一份、每承担一份<span class="hl">“跟丢指数”</span>的风险,换回多少超额。<span class="term">信息比率</span>高,说明偏离得值;比率低,说明你在为基准免费增加了心跳。</p><p>和<span class="term">夏普</span>一样,<span class="term">信息比率</span>也得看样本长度和稳定性。一个产品短期超额很高,但<span class="term">跟踪误差</span>也高、超额回撤又深,未必比一个稳定小超额的产品更好——前者像一场暴扣集锦,后者像一支赛季胜率稳定的球队。教练(和投资人)真正想要的,通常是后者。</p>
+
+        <h3>2.7. IC 和 RankIC</h3>
+<p>你造了一个因子,怎么知道它有没有用?最直接的体检:看看因子打分和未来收益是否同向相关——这就是 <span class="term">IC</span>,它衡量因子值和未来收益之间的相关性。<span class="term">RankIC</span> 是它的近亲,改用排序相关:不看数值差多少,只看因子排名和未来收益排名是否一致,天然对极端值不敏感,实际研究里更常用。</p><p>先泼好冷水,免得期望虚高:股票横截面噪声极大,<span class="term">IC</span> 通常不会高。长期平均 <span class="term">RankIC</span> 只有 0.02 或 0.03,听着像废铁?别急着扔——如果它够稳定、成本够低、容量够大,照样可能有价值。这就像大规模系统里的微弱信号:单次几乎听不见,架不住每天重复几千遍,聚沙成塔。判断因子,看的是细水长流,不是单日暴击。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>但记住:<span class="term">IC</span> 只是第一层检验,不是合格证书。一个因子 <span class="term">IC</span> 漂亮,还要过五关:分层收益是否单调、换手是否扛得住、成本后还剩多少、行业暴露干不干净、样本外是否还活着,外加它在组合里的边际贡献。单科状元不等于全能选手,因子入组合前,六关一关都别省。</p></div>
+
+        <h3>2.8. 跟踪误差</h3>
+<p>指数基金的管理员最怕什么?偏离指数——<span class="term">跟踪误差</span>就是给这种<span class="hl">“偏离程度”</span>量的体温:它衡量组合收益相对基准收益的波动。指数基金希望它越低越好,贴着基准走;指数增强则故意留出一部分<span class="term">跟踪误差</span>,用它换取<span class="term">超额收益</span>的空间。</p><p>所以<span class="term">跟踪误差</span>不是坏东西,它是主动管理自由度的代价——一分偏离,一分机会。完全不偏离基准,组合就是个复制品,很难产生任何超额;偏离太大,客户拿到的风险就可能不再是他签字时以为买的那种产品。自由度本身是中性工具,错的是你以为它免费。</p><p>评价指数增强产品时,<span class="term">跟踪误差</span>必须和<span class="term">超额收益</span>结伴看,绝不能单看<span class="hl">“超额高”</span>。超额很高但偏离也很大的组合,可能只是把指数的外衣穿在了一个主动豪赌的身上。买指增买的就是<span class="hl">“受控的偏离”</span>,失控的偏离等于花了被动钱、担了主动险。</p>
+
+        <h3>2.9. 久期</h3>
+<p>手里握着一只债券,听说要加息,该慌几分?久期就是回答这个问题的<span class="hl">“利率敏感度计”</span>:它可以粗略理解为债券价格对利率变化的敏感程度。久期为 7 的债券,收益率上升 <span class="num">1 个百分点</span>,价格大约下跌 <span class="num">7%</span>。这是近似值,但是极其好用的近似值——久期 7,利率动 <span class="num">1%</span>,价格约动 <span class="num">7%</span>,一句话记住了九成功夫。</p><p>结论很直白:久期越长,债券越怕利率上升,也越受益于利率下降,是个对称的放大器。有个常见误区值得敲黑板:长期国债没有信用违约风险,这话没错,但它有明显的利率风险——政府的信用不会跑,利率的波动照样让你的账面疼。安全≠不波动,很多新手在这一格上栽过。</p><p>以后读债券基金报告,看到<span class="hl">“久期较长”</span>四个字,就要自动翻译成:这只基金对利率变化敏感。别把债券基金默认理解成<span class="hl">“不会跌的产品”</span>——它不违约,但它会回撤。看债基先看久期,就像租车先看刹车,几秒的事,省一堆麻烦。</p>
+
+        <h3>2.10. VaR</h3>
+<p>老板问你:<span class="hl">“这组合最多会亏多少?”</span>这个问题其实问得不精确,精确的问法是:在某个置信水平和期限下,正常情况下可能亏多少——这就是 <span class="term">VaR</span>(在险价值)。比如 <span class="num">1 日</span> <span class="num">95%</span> <span class="term">VaR</span> 为 <span class="num">100 万</span>,意思是模型估计:<span class="num">95%</span> 的日子里,单日亏损不超过 <span class="num">100 万</span>。它给了风险一个可以开会讨论的数字。</p><p><span class="term">VaR</span> 有几种常见口径:历史模拟、参数法、蒙特卡洛,各自对收益分布和尾部形状的假设不同,算出来的数自然不同。它适合做风险沟通,让非技术同事秒懂量级;但它有一个天生说不出口的秘密:超过 <span class="term">VaR</span> 之后会亏多惨,它一概不说。<span class="term">VaR</span> 告诉你护栏有多高,从不告诉你护栏外面是草坪还是悬崖。</p><p>所以 <span class="term">VaR</span> 绝不能单挂上岗,必须和压力测试、<span class="term">最大回撤</span>、尾部损失、<span class="term">杠杆</span>、流动性组队。只甩出一个 <span class="term">VaR</span> 数字,证明不了风险被充分控制——那更像是风险报告的精装修,而不是结构安全检测。真想知道最坏情况,得请压力测试出马,那是它的岗位。</p>
+
+        <h3>2.11. PE、PB 和股息率</h3>
+<p>一只股票 <span class="num">100 元</span>,贵还是便宜?单看价格回答不了,得问<span class="hl">“<span class="num">100 元</span>买到了什么”</span>——估值三兄弟就是干这个的。<span class="term">PE</span> 是市值除以净利润,问的是市场愿意为一元利润付多少钱;<span class="term">PB</span> 是市值除以净资产,问的是愿意为一元账面净资产付多少钱;股息率是分红除以价格,问的是按当前价格买入,分红回报大约多少。三个问题,三种<span class="hl">“相对贵贱”</span>的视角。</p><p>不过这三个指标都必须防机械使用:低 <span class="term">PE</span>、低 <span class="term">PB</span>、高股息率常被看作便宜,但低估值可能来自真实风险(便宜得有道理),高股息可能不可持续(今年分完明年没得分),<span class="term">PB</span> 对轻资产公司解释力有限(人家值钱的资产根本不在账上)。便宜货和坑,从外表看是双胞胎,区别藏在基本面里。</p><p>正确的打开方式,是把估值指标和行业、质量、成长、现金流放在一起看——估值负责回答<span class="hl">“贵不贵”</span>,其他维度负责回答<span class="hl">“值不值”</span>。量化里的标准动作是做行业中性和极端值处理,避免把行业之间的天然差异,误当成某只股票的便宜。估值是雷达,不是自动导航,方向还得你把。</p>
+
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>指数增强项目的核心是一个闭环:基准、股票池、因子、组合、成本和报告,一环都不能缺。</li>
-            <li>教学项目要先把时间顺序、交易规则和成本做对,再追求模型复杂度——顺序反了,得到的只是漂亮的假象。</li>
+            <li>量化项目要按数据、因子、回测、模型、报告和日志分层组织,把所有逻辑塞进一个 notebook,等于放弃复盘能力。</li>
+            <li>配置、版本、交易记录和自动报告,是可复现研究的四根支柱,缺一根,结论就立不住。</li>
+            <li>公式的作用是把收益、风险、基准和估值问题算清楚、说清楚、比清楚——它们是尺子,不需要跪拜,只需要用对。</li>
+            <li>同一个指标各有适用边界:夏普、VaR、PE、IC 单独使用都会骗人,必须结伴出场、交叉验证。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.</strong> 先把项目目标和边界钉死</li>
-            <li><strong>2.</strong> 别让今天的名单穿越回过去</li>
-            <li><strong>3.</strong> 让时间线先立正</li>
-            <li><strong>4.</strong> 先落地,再谈花活</li>
-            <li><strong>5.</strong> 四个分数怎么拧成一个</li>
-            <li><strong>6.</strong> 分数高不等于能买成</li>
-            <li><strong>7.</strong> 纸面组合落地的第一道关</li>
-            <li><strong>8.</strong> 先算清摩擦,再谈赚钱</li>
-            <li><strong>9.</strong> 别报流水账,要出体检报告</li>
-            <li><strong>10.</strong> 最后交付的是结论,不是曲线</li>
+            <li><strong>1.1.</strong> 目录结构先分层</li>
+            <li><strong>1.2.</strong> 配置文件比硬编码可靠</li>
+            <li><strong>1.3.</strong> 原始、清洗和特征分开</li>
+            <li><strong>1.4.</strong> 每个因子都要有定义</li>
+            <li><strong>1.5.</strong> 账户、订单和指标分开</li>
+            <li><strong>1.6.</strong> 训练、预测和回测不要混</li>
+            <li><strong>1.7.</strong> 自动生成比手工截图可靠</li>
+            <li><strong>1.8.</strong> 记录失败比记录成功更重要</li>
+            <li><strong>1.9.</strong> 测试和断言</li>
+            <li><strong>1.10.</strong> 从教学项目到生产系统</li>
+            <li><strong>2.1.</strong> 收益率</li>
+            <li><strong>2.2.</strong> 年化收益</li>
+            <li><strong>2.3.</strong> 波动率</li>
+            <li><strong>2.4.</strong> 最大回撤</li>
+            <li><strong>2.5.</strong> 夏普比率</li>
+            <li><strong>2.6.</strong> 信息比率</li>
+            <li><strong>2.7.</strong> IC 和 RankIC</li>
+            <li><strong>2.8.</strong> 跟踪误差</li>
+            <li><strong>2.9.</strong> 久期</li>
+            <li><strong>2.10.</strong> VaR</li>
+            <li><strong>2.11.</strong> PE、PB 和股息率</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>为什么指数增强项目要使用历史当时成分股?</summary>
-            <p>用今天的成分回填过去,等于提前知道谁以后会进指数,会产生幸存者偏差和成分回填偏差,回测直接失真。</p>
+            <summary>为什么不建议把量化项目写成一个长 notebook?</summary>
+            <p>运行顺序、临时文件和手工操作全都难以复现,时间一长,连你自己也分不清结果到底来自模型、数据还是手滑。</p>
           </details>
           <details class="quiz__item">
-            <summary>多因子合成前为什么要统一方向和标准化?</summary>
-            <p>因子尺度和朝向各不相同;不标准化、不统一方向就相加,合成分数是混乱的,没有可解释意义。</p>
+            <summary>回测为什么必须保存交易记录?</summary>
+            <p>净值只能告诉你结果,交易记录才能让你复盘每一笔买卖、费用、失败单和持仓变化——证据比结论重要。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么多期收益率要用乘法而不是简单相加?</summary>
+            <p>因为每期收益都作用在变化后的新本金上,投资是一条复利链,只有乘法能正确描述它。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>夏普比率为什么不能单独用来判断策略好坏?</summary>
+            <p>它拿波动率当风险的全部,会低估尾部亏损、杠杆和“小赚大亏”结构的危险。</p>
           </details>
         </section>
       </div>
     </main>
     <script src="assets/book.js"></script>
-    <script src="assets/labs.js"></script>
   </body>
 </html>

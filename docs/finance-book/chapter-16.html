@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 16 章 · 收益、风险与市场为什么难赢 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="把投资报告里最常见的收益风险指标讲成可理解、可手算的东西。 / 讲清股票、债券、现金、商品等资产如何组合,以及分散化为什么能降低风险但不能消灭风险。" />
+    <title>第 16 章 · 看懂行情:屏幕上的数字和基准 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="解释股票软件里最常见的价格、成交量、K 线、盘口和复权概念。 / 从指数编制、指数基金、ETF 申赎、跟踪误差和基准意识讲起。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
@@ -12,262 +12,193 @@
     <main class="chapter">
       <div class="chapter__inner">
         <p class="chapter__eyebrow">第二部分 · A 股市场与交易机器 · 第 16 章</p>
-        <h1>收益、风险与市场为什么难赢</h1>
-        <p class="lead">一条收益曲线好不好,不能只看最后赚了多少。这一章先讲怎么量化收益和风险:年化、波动、最大回撤、夏普比率,让“赚钱的体验发生在时间里”这件事变得可测量;再讲资产配置和分散化,为什么不该把判断全押在一处;最后借有效市场、随机游走和行为偏差,解释一个残酷的现实——赚超额收益为什么这么难。</p>
+        <h1>看懂行情:屏幕上的数字和基准</h1>
+        <p class="lead">第一次打开行情软件,满屏的最新价、涨跌幅、成交量、换手率、买一卖一、K 线、均线、复权很容易把人吓住。这一章先不急着学指标,而是讲清这些数字从哪里来、表示什么、又不能说明什么;再讲指数、ETF 和基准,回答一个常被忽略的问题:你的收益到底在和谁比较?看懂行情,才谈得上理解交易和量化数据。</p>
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>收益率是复利链条,不能把涨跌简单相加。</li>
-            <li>年化、波动、最大回撤、夏普、胜率和盈亏比分别回答不同问题,不能互相替代。</li>
-            <li>资产配置先决定风险大方向,选股和择时是在这个框架里的局部决策。</li>
-            <li>分散化利用低相关风险来源降低组合波动,但不能消灭系统性风险。</li>
-            <li>有效市场不是说价格永远正确,而是说公开信息很难被低成本反复利用。</li>
+            <li>行情数字是交易结果的记录,不是公司价值和未来走势的直接答案。</li>
+            <li>K 线、成交量、盘口、换手率、复权和技术指标都要先理解口径,再谈使用。</li>
+            <li>指数是一组证券按规则合成的市场尺子,不是单只股票或官方估值。</li>
+            <li>ETF 既有基金净值,也有交易所价格,折溢价和流动性会影响真实交易成本。</li>
           </ul>
         </section>
 
 
-        <h2>1. 年化、波动、回撤和夏普</h2>
+        <h2>1. 先看懂屏幕上的数字</h2>
 
-        <h3>1.1. 最小的积木</h3>
-<p>衡量投资的一切指标,都从一块最小的积木搭起:收益率。它的定义朴素到不能再朴素,赚到的钱除以投入的钱。为什么非要除这一下?因为<span class="hl">“赚了 <span class="num">500 元</span>”</span>本身没有可比性:本金 <span class="num">1 万元</span>时,这是笔不错的收成;本金 <span class="num">100 万元</span>时,这只是账户一天的呼吸。换成收益率,不同规模的成绩才能摆到同一张桌上比较。这和工程里看错误率而不看错误总数是一个道理:一天失败 <span class="num">500 次</span>调用,对日调用量 <span class="num">1 万</span>和日调用量 <span class="num">1 亿</span>的两个系统,是两种完全不同的严重程度。</p><p>股票和基金最常用的是简单收益率:本期结束净值除以本期开始净值再减 1。算一笔账:你用 <span class="num">10000 元</span>买入基金,期末变成 <span class="num">10500 元</span>,收益率就是 500 除以 10000,等于 <span class="num">5%</span>;反算验证,10000 乘 1.05 恰是 10500,账目闭合。再看两天的走法:昨天净值 1.00,今天 1.02,今天的收益率是 <span class="num">2%</span>;明天从 1.02 跌到 1.01,明天的收益率是 1.01 除以 1.02 再减 1,约 <span class="num">-0.98%</span>。一个除法一个减法,就这么简单,后面所有复杂指标都从它一层层长出来。</p><p>但有一个反直觉的点,必须从第一天就刻进脑子:收益率是相对变化,分母一直在变。净值从 1.00 涨到 1.10,是涨 <span class="num">10%</span>;可从 1.10 跌回 1.00,不是跌 <span class="num">10%</span>,而是 1.00 除以 1.10 再减 1,约 <span class="num">-9.09%</span>。反算回去:1.10 乘 0.9091,约回到 1.00。常有人以为涨 <span class="num">10%</span> 和跌 <span class="num">10%</span> 正好对冲,其实同一段路,上去和下来的百分比从来不对称——这正是收益要按乘法链条理解、涨跌百分点不能当普通加减法算的原因。</p>
+        <h3>1.1. 最新价不是公司真实价值</h3>
+<p>行情软件把哪个数字放得最大最显眼,哪个数字就最容易被误解——最新价就是这么个角色。先弄清它从哪来:交易所的撮合引擎按价格优先、时间优先的规则,把不断涌入的买单和卖单两两配对,每配出一对就产生一笔成交;最新价就是最近这一笔被撮合出来的价格。它既不是交易所给这家公司盖的官方估值章,也不是把公司资产负债表里里外外算一遍得到的精确价值。</p><p>既然是最后一笔成交,它的局限也很明显:那一笔可能只有一百股,背后可能是一笔情绪单、一次误操作,或者一条还没被消化的消息。算一笔账:某股全天成交额 <span class="num">2 亿元</span>,尾盘有人用市价单扫走卖一上的 <span class="num">100 手</span>,价格从 <span class="num">20.00 元</span>被打到 <span class="num">20.10 元</span>。这一单金额约 <span class="num">20 万元</span>,只占全天成交的万分之一,却把最新价抬高了 <span class="num">0.5%</span>——反算一下,20.10 除以 20.00 再减 1,正好 <span class="num">0.5%</span>。常有人以为最新价是全市场共识的体现,其实它只是边际上最后一笔的价格,有足够耐心的资金足以挪动它。</p><p>量化研究每天要吃进海量价格数据,入门的第一个纪律就是尊重价格的含义:价格是可观察的结果,不是因果解释。用程序员的话说,它是系统输出的日志,不是源代码。策略不能因为价格涨了,就自动推导<span class="hl">“公司变好了”</span>;也不能因为跌了,就自动宣布<span class="hl">“公司变差了”</span>。价格变化的背后,可能是基本面,可能是资金流,可能是交易限制、情绪、指数调仓,也可能只是流动性被临时抽走了。看到日志先别急着下结论,这是读行情的第一课。</p>
 
-        <h3>1.2. 钱一路滚到哪里</h3>
-<p>先来一道小测:第一天赚 <span class="num">10%</span>,第二天亏 <span class="num">10%</span>,两天下来总共是赚、是亏,还是不赚不亏?大量新手的直觉答案是<span class="hl">“不赚不亏”</span>,而真实答案是亏了 <span class="num">1%</span>。<span class="num">100 元</span>第一天变 <span class="num">110 元</span>,第二天是在 <span class="num">110 元</span>的新本金上亏 <span class="num">10%</span>,只剩 <span class="num">99 元</span>。乘法链条写清楚是 (1 + <span class="num">10%</span>) 乘 (1 - <span class="num">10%</span>) 再减 1,等于 <span class="num">-1%</span>;反算验证,110 乘 0.9 恰是 99。起点终点一摆,累计收益 <span class="num">-1%</span>:加法会骗你,乘法不会。</p><p>为什么会这样?因为收益在本金上复利滚动:每一天的涨跌,都作用在前一天的新本金上,而不是作用在最初的 <span class="num">100 元</span>上。把机制再推一步:算术平均和几何平均在这里会说出相反的话。策略甲两年分别赚 <span class="num">50%</span>、亏 <span class="num">30%</span>,算术平均每年 <span class="num">10%</span>,听起来很漂亮;策略乙两年各赚 <span class="num">2.5%</span>,听起来平平。实际路径呢?甲是 100 到 150 再到 105,乙是 100 到 102.5 再到约 105.06,两者累计收益几乎相同,都约 <span class="num">5%</span>。反算验证:1.5 乘 0.7 是 1.05,1.025 的平方约是 1.0506,账目闭合。</p><p>常有人以为涨跌各一半、算术平均收益高,长期就一定赚得多,其实乘法链条里波动本身是税:振幅越大,几何平均被算术平均甩开的距离越远,高波动会悄悄拖累长期复利。投资的体验不是每天独立抽签再把结果加总,而是本金不断变化的一场乘法接力。谁理解了这一节,谁就不会再被<span class="hl">“涨跌各半所以总体打平”</span>这类话术骗到,也更能看懂为什么量化报告总把<span class="term">波动率</span>印在收益旁边。</p>
-
-        <h3>1.3. 把不同时间长度拉到同一把尺子</h3>
-<p>策略 A 拿 <span class="num">3 个月</span>赚了 <span class="num">5%</span>,策略 B 用 <span class="num">2 年</span>赚了 <span class="num">20%</span>,哪个更好?直接比 5 和 20 是不公平的,两个数字挂在不同的时间长度上。<span class="term">年化收益</span>就是一把换算尺,它问的是:假如按同样的速度持续滚动一整年,相当于赚多少。先把时间对齐,再谈谁强谁弱——这一步比的是速度,不是路程。</p><p>换算为什么用乘方,而不是线性放大?因为收益是接着新本金继续滚的:半年赚 <span class="num">10%</span>,资金从 100 变 110;下半年若按同样速度再赚 <span class="num">10%</span>,赚的是 110 的 <span class="num">10%</span>,即 <span class="num">11 元</span>,全年合计 <span class="num">121 元</span>。线性年化张口就说半年 <span class="num">10%</span> 所以一年 <span class="num">20%</span>,它漏掉的正是下半年那 <span class="num">1 元</span>利滚利;复利年化的写法是 (1 + <span class="num">10%</span>) 的 <span class="num">2 次</span>方再减 1,恰等于 <span class="num">21%</span>,和逐段滚出来的账分毫不差。期限越长,线性口径漏掉的利滚利越多。</p><p>反向换算用的是同一台机器,只是把乘方换成开方。某策略两年累计收益 <span class="num">21%</span>,年化就是把 1.21 开平方再减 1,得 <span class="num">10%</span>;反算验证,1.1 的平方恰是 1.21。<span class="num">3 个月</span>赚 <span class="num">5%</span> 的复利年化,是 1.05 的 <span class="num">4 次</span>方再减 1,约 <span class="num">21.55%</span>。但常有人以为年化是在预测全年能赚多少,其实它只是比较工具,不是魔法放大器:一个策略只跑了一周、赚了 <span class="num">2%</span>,年化会吐出一个夸张到离谱的数字——样本越短、波动越大,年化的数字越不稳定,看着越惊艳,越要打问号。</p>
-
-        <h3>1.4. 这条路颠不颠</h3>
-<p>两条路终点相同,一条平坦,一条颠簸,坐起来完全是两回事——<span class="term">波动率</span>就是给投资之路测颠簸程度的仪表。它刻画收益率围绕平均值上下摆动的程度:每天的收益都差不多,<span class="term">波动率</span>低;今天涨 <span class="num">5%</span>、明天跌 <span class="num">4%</span>、后天涨 <span class="num">6%</span>,<span class="term">波动率</span>就高。拿工程打比方:甲接口延迟稳定 50 毫秒,乙接口平均也是 50 毫秒、却常在 10 到 300 毫秒之间弹跳,两者的均值相同、体验天差地别,<span class="term">波动率</span>量的就是这种弹跳幅度,而极端情况要看 P99 那样的尾部指标。注意,<span class="term">波动率</span>不是亏损本身,它刻画的是不确定性和持有过程的摇晃感。</p><p>常见算法是先算日收益率的标准差,再换算成年化口径。这里值得把机制推一步:为什么乘的是根号 252,而不是 252?因为在各日收益近似独立的假设下,按时间线性相加的是方差,不是标准差——<span class="num">252 个交易日</span>的总方差约是日方差的 <span class="num">252 倍</span>,而标准差是方差的平方根,所以只放大根号 <span class="num">252 倍</span>,约 <span class="num">15.87 倍</span>。常有人以为年化波动就是日波动直接乘 252,其实那样会把风险高估十几倍。按 252 口径举例:日波动 <span class="num">1%</span>,年化波动就是 <span class="num">1%</span> 乘 15.87,约 <span class="num">15.9%</span>;反算验证,<span class="num">15.9%</span> 除以根号 252,恰回到约 <span class="num">1%</span>。</p><p>口径上还要多一句嘴:A 股一年实际约 240 多个交易日,严谨的回测可以按实际交易日数年化,行业报告里则常统一取 252 作为近似,看数字时最好知道对方用的是哪个。这个仪表还有两个盲区:第一,它把上涨和下跌一视同仁,都算<span class="hl">“波动”</span>,可投资者分明只讨厌下跌那半边;第二,它对极端尾部迟钝——一个策略平时四平八稳、偶尔爆一次雷,爆雷之前,普通<span class="term">波动率</span>大概率不会发出任何警告。反直觉的是,低波动不等于低风险:天气预报说今天风力温和,不代表你不会遇上百年一遇的台风,这两个刻画的根本不是同一件事。</p>
+        <h3>1.2. 一天被压成四个价格</h3>
+<p>一天四五个小时的交易,几千笔、几万笔成交,最后落到日线数据里只剩四个数:开盘价、最高价、最低价、收盘价,英文缩写 OHLC。这四个数不是谁拍脑袋登记的,而是从全天逐笔成交里聚合出来的:开盘价来自早盘集合竞价的撮合一锤,最高价和最低价是全天成交价格扫出来的上下边界,收盘价来自收盘阶段的集合竞价或最后几笔成交。用程序员的话说,这是按交易日这个窗口对逐笔日志做了一次 first、last、max、min 聚合——压缩得很优雅,但压掉的东西你得心里有数。</p><p>动手算一遍就明白聚合的含义。假设某股第一笔成交 <span class="num">9.90 元</span>,随后依次是 <span class="num">10.05 元</span>、<span class="num">10.20 元</span>、<span class="num">9.95 元</span>,尾盘定在 <span class="num">10.10 元</span>,这一天的 OHLC 就是开 9.90、高 10.20、低 9.90、收 10.10。反着验证:开盘取第一笔、收盘取最后一笔、高低取极值,四个数各有出处。再假设另一只股票同一天也收出完全相同的 OHLC,但它是上午一路拉升、下午跳水后尾盘才拉回——两根 K 线骨架一模一样,股民的心跳曲线天差地别,只看聚合结果根本分不出来。</p><p>这对量化不是小事,而是坑。日线策略通常只能假设自己在某些价格附近成交,可真实成交发生在分钟、秒甚至逐笔层面。最典型的错误是:策略信号用当天收盘价计算,回测里却假设自己也按当天收盘价买入——可收盘价是收盘那一刻才知道的,你等于先看到了答案再答题。反直觉的是,数据压缩得越狠、回测代码越简洁,这种偷看的机会反而越多。这类未来函数,是全书反复要防的头号敌人。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 350" role="img" aria-label="波动率聚集示意:净值曲线上平静期与风暴期交替,风暴期单日 -6%、+7% 扎堆出现,价格围绕长期中枢上下枢转、但分布并不均匀">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">波动率聚集:平静期和大风大浪是扎堆来的</text>
-            <rect x="70" y="60" width="210" height="210" fill="rgba(122,167,240,0.07)"/>
-            <rect x="300" y="60" width="140" height="210" fill="rgba(232,120,120,0.07)"/>
-            <rect x="460" y="60" width="160" height="210" fill="rgba(122,167,240,0.07)"/>
-            <rect x="640" y="60" width="140" height="210" fill="rgba(232,120,120,0.07)"/>
-            <text x="175" y="76" text-anchor="middle" fill="#a8c6ff" font-size="11.5" font-weight="700"><tspan x="175" y="76">平静期日波动~0.3%</tspan></text>
-            <text x="370" y="76" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="700"><tspan x="370" y="69">风暴期单日±5%</tspan><tspan x="370" y="84">连发</tspan></text>
-            <text x="540" y="76" text-anchor="middle" fill="#a8c6ff" font-size="11.5" font-weight="700"><tspan x="540" y="76">又一段平静</tspan></text>
-            <text x="710" y="76" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="700"><tspan x="710" y="76">又一阵风暴</tspan></text>
-            <path d="M 70 215 L 110 212 L 150 216 L 190 210 L 230 213 L 270 208 L 300 206 L 330 150 L 360 238 L 390 132 L 420 222 L 450 162 L 470 158 L 510 156 L 550 160 L 590 155 L 620 152 L 650 206 L 680 120 L 710 190 L 740 104 L 770 176 L 800 168 L 830 162" fill="none" stroke="#eef4f8" stroke-width="2.5"/>
-            <circle cx="360" cy="238" r="5" fill="#e88"/>
-            <text x="360" y="258" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">单日 -6%</text>
-            <circle cx="740" cy="104" r="5" fill="#f0c96a"/>
-            <text x="740" y="90" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">单日 +7%</text>
-            <line x1="70" y1="208" x2="830" y2="150" stroke="#f0c96a" stroke-width="1.5" stroke-dasharray="7 6"/>
-            <text x="545" y="130" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">长期中枢:偏离远了会被拉回</text>
-            <line x1="70" y1="60" x2="70" y2="270" stroke="#46587a" stroke-width="1.5"/>
-            <line x1="70" y1="270" x2="830" y2="270" stroke="#46587a" stroke-width="1.5"/>
-            <text x="60" y="66" text-anchor="end" fill="#8499bd" font-size="12">净值</text>
-            <text x="828" y="290" text-anchor="end" fill="#8499bd" font-size="12">时间</text>
-            <text x="450" y="312" text-anchor="middle" fill="#c9d4e8" font-size="12.5">大涨大跌喜欢扎堆,而不是均匀撒开:刚刮过风暴的市场,往往还要再晃一阵——波动会聚集</text>
-            <text x="450" y="336" text-anchor="middle" fill="#8499bd" font-size="12">拿「最近 20 天」估风险要记住这回事:风暴刚过时高估、平静太久时低估</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 305" role="img" aria-label="K线构成示意:阳线收盘高于开盘,阴线收盘低于开盘,上下影线是最高价和最低价">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一根 K 线,记录一段时间里的四个价格</text>
+            <!-- 阳线 -->
+            <text x="250" y="76" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">阳线(收盘 &gt; 开盘)</text>
+            <line x1="250" y1="96" x2="250" y2="130" stroke="#a8c6ff" stroke-width="2"/>
+            <line x1="250" y1="230" x2="250" y2="262" stroke="#a8c6ff" stroke-width="2"/>
+            <rect x="222" y="130" width="56" height="100" rx="3" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff" stroke-width="2"/>
+            <text x="300" y="104" fill="#c9d4e8" font-size="12.5">最高价</text>
+            <text x="300" y="140" fill="#c9d4e8" font-size="12.5">收盘价(上沿)</text>
+            <text x="300" y="228" fill="#c9d4e8" font-size="12.5">开盘价(下沿)</text>
+            <text x="300" y="262" fill="#c9d4e8" font-size="12.5">最低价</text>
+            <!-- 阴线 -->
+            <text x="620" y="76" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">阴线(收盘 &lt; 开盘)</text>
+            <line x1="620" y1="96" x2="620" y2="130" stroke="#ffb4b4" stroke-width="2"/>
+            <line x1="620" y1="230" x2="620" y2="262" stroke="#ffb4b4" stroke-width="2"/>
+            <rect x="592" y="130" width="56" height="100" rx="3" fill="rgba(232,120,120,0.28)" stroke="#ffb4b4" stroke-width="2"/>
+            <text x="670" y="104" fill="#c9d4e8" font-size="12.5">最高价</text>
+            <text x="670" y="140" fill="#c9d4e8" font-size="12.5">开盘价(上沿)</text>
+            <text x="670" y="228" fill="#c9d4e8" font-size="12.5">收盘价(下沿)</text>
+            <text x="670" y="262" fill="#c9d4e8" font-size="12.5">最低价</text>
+            <text x="450" y="292" text-anchor="middle" fill="#8499bd" font-size="13">实体是开盘和收盘,上下影线是这段时间摸到的最高和最低</text>
           </svg>
-          <p class="figure__cap">收益率长期围着一条中枢转,但波动本身一阵一阵:平静期每天零点几个百分点,风暴期单日 ±5% 起步且接连不断。市场难赢的原因之一就在这——用最近一段外推风险,总会在错误的时间大意。</p>
+          <p class="figure__cap">一根 K 线把一段时间压缩成四个数:开盘、收盘、最高、最低。实体两端是开盘和收盘,细细的影线是期间摸到过的最高和最低价。</p>
         </div>
-        <h3>1.5. 从高点跌到低点有多痛</h3>
-<p>所有风险指标里,<span class="term">最大回撤</span>是投资者最容易秒懂、也最容易低估的一个。它衡量的是从净值的某个历史最高点,到之后最低点的最大跌幅。净值从 1.00 涨到 1.50,然后跌到 1.05,这段回撤是 1.05 除以 1.50 再减 1,等于 <span class="num">-30%</span>;反算验证,1.50 乘 0.7 恰是 1.05。一句话:在你最难受的那一刻打开账户,你比曾经的最高点亏了多少。用工程的话说,它像一次事故里服务从峰值跌到谷底的最大落差,而修复过程对应的就是故障持续时长。</p><p>回撤里藏着一笔必须会算的不对称账。常有人以为跌多少、再涨同样多就回本,其实完全不是这么回事:跌 <span class="num">50%</span> 之后,要涨 <span class="num">100%</span> 才能回到原点。算法是 0.5 除以 0.5 再减 1,恰等于 <span class="num">100%</span>;反算验证,0.5 乘 2 恰好归 1。把亏损阶梯摆出来更触目惊心:跌 <span class="num">10%</span>,回本要 <span class="num">11.1%</span>;跌 <span class="num">20%</span>,要 <span class="num">25%</span>;跌 <span class="num">30%</span>,要 <span class="num">42.9%</span>;跌 <span class="num">50%</span>,要 <span class="num">100%</span>。每一格都能反算:剩余净值乘 (1 + 回本涨幅),恰好回到跌前水平。坑越深,修复的坡度越陡,这就是乘法链条的两面:跌下来是打折,爬回去是加倍。</p><p>为什么<span class="term">最大回撤</span>比<span class="term">波动率</span>更贴近真实体验?因为它直接对准人的心理压力。一个策略年化 <span class="num">30%</span>、听着诱人,可<span class="term">最大回撤</span>是 <span class="num">60%</span> 的话,意味着你眼睁睁看着账户从高点缩水六成——绝大多数人根本熬不到长期收益兑现的那天,会在最深的坑里割肉离场。回撤还有一个常被忽略的维度:恢复时间,坑越深耗时越久,这中间你的资金、心态和外部约束都在被持续消耗。所以风险控制从来不是胆小者的护身符,而是复利这台机器能不能继续运转的前提——机器先别坏,才谈得上跑得快。</p>
+        <h3>1.3. K 线实体和影线只是压缩图</h3>
+<p>很多新手看 K 线的姿势,像极了古人看星象:这根是<span class="hl">“仙人指路”</span>,那根是<span class="hl">“乌云盖顶”</span>,仿佛每根线里都藏着预言。我们先把这份神秘感拆掉。K 线只是把开、收、高、低四个价格画成一根柱子:实体是开盘和收盘之间的区间,影线是全天最高和最低摸到的位置。收盘高于开盘,画成上涨颜色;收盘低于开盘,画成下跌颜色。注意,红绿的含义各地习惯不同,A 股里常见的是红涨绿跌,和外盘正好相反,别记岔了。</p><p>看一根具体的线。某股当天开 <span class="num">10.00 元</span>、收 <span class="num">11.00 元</span>、最高 <span class="num">11.50 元</span>、最低 <span class="num">9.80 元</span>:实体高 <span class="num">1.00 元</span>,上影线 <span class="num">0.50 元</span>,下影线 <span class="num">0.20 元</span>,全天区间 <span class="num">1.70 元</span>,实体占了约 <span class="num">59%</span>。反算验证:1.00 加 0.50 加 0.20,恰好等于 1.70,账目自洽。稳妥的读法是把 K 线当成交易过程的压缩记录:大实体说明多空打得激烈且一方明显占优,上影线说明冲高过但没守住,下影线说明跳水过但被拉了回来。常有人以为长上影是见顶预告,其实它只是<span class="hl">“冲高未守住”</span>这五个字的事后记录,本身不预测明天。</p><p>对量化来说,K 线形态确实可以变成特征:实体长度、上下影线比例、开盘跳空幅度、收盘在全天区间里的位置,都能变成数值喂给模型。但这些特征必须经过样本外检验和交易成本检验,绝不能靠翻十几张漂亮的图就拍脑袋相信。图形语言适合建立直觉,统计检验才决定它有没有资格进入策略——这条界线,贯穿全书。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 315" role="img" aria-label="两条净值曲线终点相同,A平稳上行,B先深跌再涨回,B的最大回撤更大、夏普更低">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">同样终点,体验完全不同:回撤决定能不能拿得住</text>
-            <line x1="70" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <line x1="70" y1="60" x2="70" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">时间</text>
-            <text x="52" y="70" fill="#8499bd" font-size="13">净值</text>
-            <!-- 平稳曲线 A -->
-            <path d="M 70 230 Q 300 190 500 150 T 830 90" fill="none" stroke="#a8c6ff" stroke-width="3"/>
-            <text x="700" y="110" fill="#a8c6ff" font-size="14" font-weight="800">A:平稳上行(夏普高)</text>
-            <!-- 大起大落曲线 B,同终点 -->
-            <path d="M 70 230 C 180 120 240 300 340 250 C 440 200 520 300 600 180 C 680 90 760 160 830 90" fill="none" stroke="#f0c96a" stroke-width="3"/>
-            <text x="150" y="300" fill="#f0c96a" font-size="14" font-weight="800">B:先跌一半再涨回(夏普低)</text>
-            <!-- 回撤标注 -->
-            <line x1="340" y1="150" x2="340" y2="250" stroke="#e88" stroke-width="1.5" stroke-dasharray="5 4"/>
-            <text x="360" y="215" fill="#ffb4b4" font-size="13">最大回撤:从高点跌下来的最深幅度</text>
-            <circle cx="830" cy="90" r="6" fill="#eef4ff"/>
-            <text x="812" y="78" text-anchor="end" fill="#eef4ff" font-size="12">终点相同</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 340" role="img" aria-label="OHLC 聚合示意:五笔成交 9.90/10.05/10.20/9.95/10.10 聚合成一根阳线,开 9.90、高 10.20、低 9.90、收 10.10,实体约 +2.0%">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">五笔真实成交,聚合成一根 K 线</text>
+            <defs><marker id="c7a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker><marker id="c7b" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
+            <rect x="40" y="56" width="400" height="232" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="240" y="82" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800">全天 5 笔成交(按时间顺序)</text>
+            <path d="M 90 250 L 155 175 L 220 100 L 285 225 L 350 150" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>
+            <circle cx="90" cy="250" r="6" fill="#f0c96a"/>
+            <circle cx="155" cy="175" r="4.5" fill="#a8c6ff"/>
+            <circle cx="220" cy="100" r="6" fill="#f0c96a"/>
+            <circle cx="285" cy="225" r="4.5" fill="#a8c6ff"/>
+            <circle cx="350" cy="150" r="6" fill="#f0c96a"/>
+            <text x="76" y="254" text-anchor="end" fill="#f0c96a" font-size="11.5" font-weight="800">① 9.90</text>
+            <text x="147" y="197" text-anchor="middle" fill="#eef4f8" font-size="11.5">② 10.05</text>
+            <text x="232" y="104" fill="#f0c96a" font-size="11.5" font-weight="800">③ 10.20 最高</text>
+            <text x="293" y="249" text-anchor="middle" fill="#eef4f8" font-size="11.5">④ 9.95</text>
+            <text x="362" y="152" fill="#f0c96a" font-size="11.5" font-weight="800">⑤ 10.10</text>
+            <line x1="60" y1="270" x2="398" y2="270" stroke="#46587a" stroke-width="1.5" marker-end="url(#c7b)"/>
+            <text x="402" y="274" fill="#8499bd" font-size="11">时间</text>
+            <path d="M 448 165 L 512 165" stroke="#f0c96a" stroke-width="3" fill="none" marker-end="url(#c7a)"/>
+            <text x="480" y="148" text-anchor="middle" fill="#f0c96a" font-size="11.5">聚合</text>
+            <rect x="520" y="56" width="340" height="232" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="690" y="82" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800">得到一根阳线(收盘 &gt; 开盘)</text>
+            <line x1="640" y1="100" x2="640" y2="250" stroke="#a8c6ff" stroke-width="2.5"/>
+            <rect x="612" y="150" width="56" height="100" rx="3" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff" stroke-width="2"/>
+            <text x="692" y="104" fill="#eef4f8" font-size="12">最高 10.20 ← 第③笔</text>
+            <text x="692" y="154" fill="#eef4f8" font-size="12">收盘 10.10 ← 末笔⑤</text>
+            <text x="692" y="254" fill="#eef4f8" font-size="12">开盘=最低 9.90 ← 首笔①</text>
+            <text x="640" y="278" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">实体 +0.20 元 ≈ +2.0%</text>
+            <text x="450" y="320" text-anchor="middle" fill="#c9d4e8" font-size="12.5">四个数各有着落:开=首笔、高低=极值、收=末笔;被压掉的是路径——上午拉升下午跳水,也可能得到同样的四个数</text>
           </svg>
-          <p class="figure__cap">两条曲线赚的钱一样多,但 B 中途跌掉一半,多数人拿不住会在低点割肉。最大回撤和夏普比率,衡量的正是这种“时间里的体验”,不是只看终点。</p>
+          <p class="figure__cap">日线上的四个价格来自一次 first/max/min/last 聚合:开是首笔、收是末笔、高低是极值。这只股票恰好最低=开盘,所以下影线长度为零。聚合很优雅,但路径被压掉了——看 K 线时心里要装着这个前提。</p>
         </div>
-        <h3>1.6. 每承担一份波动赚多少超额收益</h3>
-<p>评价策略不能光看赚了多少,还得问:这份收益是背着多大的晃荡换来的?<span class="term">夏普比率</span>干的就是这笔除法:(组合收益 - 无风险收益) / 组合<span class="term">波动率</span>。机制上为什么非要先扣无风险利率?因为那是地板收益:买点货币基金或短债,不承担任何波动也能拿到。把它从分子里剔掉,剩下的才是你扛晃荡换来的报酬;不扣的话,钱的时间价值会被错记成你冒险的功劳。想清这一步,<span class="term">夏普</span>才不是一道好看的除法,而是<span class="hl">“超额报酬除以代价”</span>的诚实账。</p><p>拿两个策略算一遍就明白了。策略 A <span class="term">年化收益</span> <span class="num">15%</span>,无风险收益 <span class="num">3%</span>,年化波动 <span class="num">12%</span>,<span class="term">夏普</span>是 (<span class="num">15%</span> - <span class="num">3%</span>) 除以 <span class="num">12%</span>,恰等于 1;反算验证,无风险 <span class="num">3%</span> 加上波动 <span class="num">12%</span> 乘<span class="term">夏普</span> 1,恰好拼回 <span class="num">15%</span>。策略 B <span class="term">年化收益</span> <span class="num">25%</span>,同样扣 <span class="num">3%</span>,年化波动却高达 <span class="num">44%</span>,<span class="term">夏普</span>是 <span class="num">22%</span> 除以 <span class="num">44%</span>,只有 0.5。B 赚的总量看着更多,可它每扛一份颠簸换来的报酬,只有 A 的一半——坐 B 这趟车,你得先问问自己晕不晕车,还得再问一句:B 多出来的那截收益,会不会只是某段行情里运气好?</p><p>警告必须跟上:<span class="term">夏普</span>不是万能指标。它假设<span class="hl">“波动能代表风险”</span>,可真实风险不止晃荡这一种;它对收益分布的偏态、对那种<span class="hl">“平时小赚、偶尔暴雷”</span>的尾部风险不够敏感——卖期权类策略在暴雷之前,<span class="term">夏普</span>可以一直好看得很。常有人以为高收益一定是承担风险的合理补偿,其实它可能只是运气,或者藏着一颗还没爆的雷。所以看<span class="term">夏普</span>的同时,还必须把回撤、偏度、尾部损失、<span class="term">杠杆</span>和策略逻辑一起摆上桌。</p>
+        <h3>1.4. 有多少筹码换了手</h3>
+<p>价格告诉你成交在什么位置,成交量和成交额告诉你那个位置上到底有多少<span class="hl">“真金白银的交接”</span>。成交量是成交了多少股或多少手,成交额是成交了多少钱,两者联动:成交额等于每笔成交价格乘数量再加总,<span class="term">换手率</span>则是成交量除以流通股本。一个价格蹭蹭上涨但成交量很小,可能只是几笔小单推上去的,地基不稳;同样上涨若伴随巨大成交,说明大量资金在那个价格区域完成了换手,这个价是被真金白银投票投出来的。</p><p>算一笔联动账:某股流通股本 <span class="num">2 亿</span>股,今天成交 <span class="num">2000 万</span>股,成交均价 <span class="num">15 元</span>,那么成交额就是 <span class="num">2000 万</span>乘 15,等于 <span class="num">3 亿元</span>,<span class="term">换手率</span>就是 <span class="num">2000 万</span>除以 <span class="num">2 亿</span>,等于 <span class="num">10%</span>。反算验证:成交额除以均价回到 <span class="num">2000 万</span>股的成交量,两个口径互相咬合。再纠正一个最常见的误读:成交量放大,不等于<span class="hl">“买的人比卖的人多”</span>——每一笔成交都是一个买家配一个卖家,缺一不可。成交量放大的真正含义是分歧加大、交易活跃:多空两边在这个价位上激烈地互道珍重。</p><p>量化拿成交量主要干两件事:判断流动性,估算容量。流动性好的股票,策略进出如风;流动性差的股票,你一点资金就能掀起波浪。举个回测里必须算清楚的账:策略计划买入 <span class="num">1000 万元</span>的小盘股,可这只股票当天总成交额只有 <span class="num">3000 万元</span>——你一笔就买走全天三分之一的量,价格不可能纹丝不动地等你成交。回测里假装自己毫无冲击,实盘就会教你做人。</p>
 
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 340" role="img" aria-label="夏普比率直觉对比:两条净值曲线到同一终点年化+8%,平稳的 A 波动率 6% 夏普 1.00,毛刺多的 B 波动率 24% 夏普 0.25">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">夏普比率的直觉:同样的终点,颠簸的价格不同</text>
-            <line x1="70" y1="60" x2="70" y2="260" stroke="#46587a" stroke-width="1.5"/>
-            <line x1="70" y1="260" x2="520" y2="260" stroke="#46587a" stroke-width="1.5"/>
-            <text x="60" y="66" text-anchor="end" fill="#8499bd" font-size="12">净值</text>
-            <text x="518" y="280" text-anchor="end" fill="#8499bd" font-size="12">时间</text>
-            <path d="M 70 235 C 190 215 340 160 500 120" fill="none" stroke="#a8c6ff" stroke-width="3"/>
-            <path d="M 70 235 L 115 150 L 165 265 L 225 105 L 285 250 L 345 140 L 405 230 L 455 165 L 500 120" fill="none" stroke="#f0c96a" stroke-width="2.5"/>
-            <circle cx="500" cy="120" r="5" fill="#eef4f8"/>
-            <text x="448" y="104" text-anchor="middle" fill="#eef4f8" font-size="12" font-weight="800">同一终点</text>
-            <line x1="92" y1="288" x2="116" y2="288" stroke="#a8c6ff" stroke-width="3"/>
-            <text x="124" y="292" fill="#a8c6ff" font-size="12.5" font-weight="800">A 平稳:波动率 6%</text>
-            <line x1="300" y1="288" x2="324" y2="288" stroke="#f0c96a" stroke-width="3"/>
-            <text x="332" y="292" fill="#f0c96a" font-size="12.5" font-weight="800">B 毛刺:波动率 24%</text>
-            <rect x="560" y="70" width="300" height="190" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="710" y="94" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800"><tspan x="710" y="94">夏普=(年化-无风险2%)/波动率</tspan></text>
-            <text x="584" y="128" fill="#a8c6ff" font-size="13" font-weight="800">A:(8% - 2%) / 6% = 1.00</text>
-            <text x="584" y="156" fill="#f0c96a" font-size="13" font-weight="800">B:(8% - 2%) / 24% = 0.25</text>
-            <line x1="584" y1="174" x2="836" y2="174" stroke="rgba(122,167,240,0.2)" stroke-width="1"/>
-            <text x="584" y="200" fill="#bcc9dd" font-size="12">赚的总数一样,但 B 每扛一份颠簸,</text>
-            <text x="584" y="224" fill="#bcc9dd" font-size="12">换来的超额报酬只有 A 的 1/4</text>
-            <text x="450" y="322" text-anchor="middle" fill="#c9d4e8" font-size="12.5">夏普把收益摊到每份波动上:它衡量「每扛一份晃荡换来多少超额」,所以卖期权这类「平时小赚、偶尔暴雷」的策略,暴雷前夏普会很好看</text>
-          </svg>
-          <p class="figure__cap">终点相同不等于质量相同:A 波动 6% 夏普 1.00,B 波动 24% 夏普 0.25——B 每扛一份颠簸只换来 A 四分之一的超额报酬。看收益先问颠簸价格,这是「每个数字回答不同问题」里夏普负责的那个。</p>
-        </div>
-        <h3>1.7. 经常赢不等于长期赚</h3>
-<p>新手打听策略,最爱问的一句是<span class="hl">“胜率多少”</span>。胜率高听着确实舒服,但它单独什么也证明不了。算一笔极端的账:某策略 <span class="num">90%</span> 的交易每次赚 <span class="num">1 元</span>,<span class="num">10%</span> 的交易每次亏 <span class="num">20 元</span>,胜率九成、风光无限。算期望:0.9 乘 1 加 0.1 乘 -20,等于 -1.1,平均每笔亏 <span class="num">1.1 元</span>;换成 10 笔反算验证,9 笔共赚 <span class="num">9 元</span>,1 笔亏 <span class="num">20 元</span>,净亏 <span class="num">11 元</span>,除以 10 恰是 -1.1。账目自洽,结论扎心:经常赢,和长期赚,是两码事。</p><p>缺的那块拼图叫盈亏比:平均每次盈利除以平均每次亏损。胜率和盈亏比绑在一起,还能直接推出保本线。假设盈亏比是 1:2,赚 <span class="num">1 元</span>、亏 <span class="num">2 元</span>,保本胜率 p 满足 p 乘 1 等于 (1 - p) 乘 2,解出来 p 恰为 2/3,约 <span class="num">66.7%</span>;反算验证,胜率 <span class="num">66.7%</span> 时期望恰好为零。于是两种反常识组合都说得通了:趋势跟踪策略胜率常不到四成,靠少数大盈利覆盖大量小止损,照样长期赚钱;而那种天天<span class="hl">“卖保险”</span>式小赚的策略,碰上极端行情一次大亏,可能把几年利润一把清零。</p><p>所以量化评价看的是期望值:胜率乘平均盈利,减去亏损率乘平均亏损,最后别忘了再扣交易成本。机器学习背景的读者对这个味道应该不陌生:只看胜率,就像评估分类模型只看准确率,却不看类别不平衡和不同错误的代价——在 <span class="num">99%</span> 是正常样本的数据里永远猜<span class="hl">“正常”</span>,准确率能到 <span class="num">99%</span>,模型却毫无用处。常有人以为九成胜率就等于稳赚,其实金融市场里的错误,代价常常严重不对称。</p>
+        <h3>1.5. 同一批股票换了多少主人</h3>
+<p>把成交量再除以流通股本,就得到<span class="term">换手率</span>。它大致回答一个问题:在一个时间段里,这批可以自由买卖的股票里,有多大比例的筹码换了主人。<span class="term">换手率</span>高,说明这只股票门庭若市;<span class="term">换手率</span>低,说明持有人和观望者都在按兵不动。这个指标的妙处是把成交量标准化:不看绝对股数,看相对盘子的比例。</p><p>举个具体例子。某公司有 <span class="num">1 亿</span>股流通股,今天成交 <span class="num">1000 万</span>股,<span class="term">换手率</span>就是 <span class="num">10%</span>。再体会成交量和<span class="term">换手率</span>的联动:换一只流通盘只有 <span class="num">2000 万</span>股的小盘股,同样成交 <span class="num">300 万</span>股,<span class="term">换手率</span>是 <span class="num">15%</span>;换成流通盘 <span class="num">60 亿</span>股的大蓝筹,同样 <span class="num">300 万</span>股,换手只有 <span class="num">0.05%</span>。反算:<span class="num">300 万</span>除以 <span class="num">2000 万</span>是 0.15,除以 <span class="num">60 亿</span>是 0.0005,都对得上。同一笔成交量,在不同盘子上讲出完全不同的故事——这就是两个口径必须联动着看的原因。</p><p>反直觉的是,<span class="num">10%</span> 的<span class="term">换手率</span>绝不等于<span class="hl">“十分之一的股东换人了”</span>:同一只股票一天之内可能被反复买卖多次,成交量统计的是流转次数,不是不同的股东数;也不能反过来说剩下 <span class="num">90%</span> 的持有人不关心后市,他们只是今天没出手。<span class="term">换手率</span>在小盘股、题材股和事件驱动行情里特别常用,但也最容易被读歪:高换手可能是资金蜂拥关注,也可能是多空分歧大到掀桌子;低换手可能是筹码锁定良好,也可能是根本没人愿意来交易。所以它从不能孤立地用,要拉上市值、<span class="term">波动率</span>、涨跌幅和公告事件一起看。</p>
 
-        <h3>1.8. 先扣掉市场给你的那部分</h3>
-<p>如果你的组合满仓股票,赶上大牛市赚了钱,这到底是你的本事,还是水涨浴缸、船都高了?分辨靠的是<span class="term">超额收益</span>:把基准给的那部分先扣掉。算一笔:组合收益 <span class="num">18%</span>,基准收益 <span class="num">12%</span>,简单口径超额 <span class="num">6 个百分点</span>;更严格的几何口径是 1.18 除以 1.12 再减 1,约 <span class="num">5.4%</span>,反算验证,1.12 乘 1.054 约回到 1.18。再换一个情形:组合收益 <span class="num">-5%</span>,基准 <span class="num">-15%</span>,表面亏钱,简单口径的超额却有 <span class="num">10 个百分点</span>,几何口径是 0.95 除以 0.85 再减 1,约 <span class="num">11.8%</span>。数字小的时候两种口径很接近,周期拉长,差距会越滚越大。</p><p>这笔账对量化策略尤其要紧,必须把绝对收益和<span class="term">超额收益</span>分开记。拿一个中证 1000 指数增强产品来说,客户买它本身就承担了中小盘市场的 <span class="term">Beta</span>——这部分涨跌是<span class="hl">“买就送的”</span>。客户真正该关心的,是它相对中证 1000 多赚了多少,而不是绝对涨跌。把市场的账和自己的账算在一起,评价永远会失真:牛市里人人都是股神,熊市里才发现谁在裸泳。</p><p>再往下还得追问一层:<span class="term">超额收益</span>从哪儿来?是选股能力?是行业偏离?是小市值暴露?是<span class="term">动量</span>风格?还是纯粹的运气?这不是抬杠。常有人以为牛市里跑赢就是自己能力强,其实可能只是一次风格暴露恰好踩中了风口。如果策略的超额完全来自长期重仓某一种风格,那么风格一旦<span class="term">反转</span>,超额就可能连本带利回吐回去。来源说不清的超额,拿在手里是不踏实的。</p>
+        <h3>1.6. 买一卖一不是装饰</h3>
+<p>行情软件右上方那两列跳动的价格和数量——买一到买五、卖一到卖五——很多新手当它们是装饰。其实那是此刻市场上最真实的<span class="hl">“讨价还价现场”</span>。买一是当前最高的买入报价和排队的数量,卖一是当前最低的卖出报价和排队数量。买一和卖一之间的缝隙,叫买卖价差:缝越小,交易越顺畅;缝越大,你一进一出就要白送市场一笔钱。</p><p>拿一组数字感受一下。假设买一 <span class="num">9.99 元</span>,卖一 <span class="num">10.00 元</span>。你想立刻买入,就得去敲卖一的 <span class="num">10.00 元</span>;想立刻卖出,就得去敲买一的 <span class="num">9.99 元</span>。买完马上后悔卖出,哪怕行情纹丝不动,你也因为这道价差亏了每股 <span class="num">0.01 元</span>,相对 <span class="num">10 元</span>的成本就是 <span class="num">0.1%</span>。若一个短周期策略一天来回 <span class="num">20 次</span>,光价差就磨掉约 <span class="num">2%</span> 的本金,还没算佣金——反算:<span class="num">0.1%</span> 乘 <span class="num">20 次</span>,恰是 <span class="num">2%</span>。反直觉的是,同一道窄缝,拿三年的长线投资者几乎无感,对高频或短周期策略却是决定生死的成本线,毒性全看你的交易频率。</p><p>盘口上的数量也不是你看到的静态表格。卖一挂着 <span class="num">10 万</span>股,不代表你下单买 <span class="num">10 万</span>股就能全按卖一价拿走:行情数据有延迟,你前面排着别人的订单,挂单的还随时可以撤单。实盘交易系统必须处理部分成交、排队未成交、撤单失败这些破事——盘口更像一张不断刷新的弹幕,而不是一张静止的报价单。</p>
 
-        <h3>1.9. 杠杆会同时放大收益和风险</h3>
-<p><span class="term">杠杆</span>是一台放大器:借钱或用<span class="term">保证金</span>放大仓位,让同样的价格波动在你的本金上砸出更大的坑,或者堆出更高的山。算笔基础账:<span class="num">1 倍</span>本金买 <span class="num">100 元</span>资产,资产涨 <span class="num">10%</span>,你赚 <span class="num">10 元</span>;同样 <span class="num">100 元</span>本金去控制 <span class="num">200 元</span>资产,涨 <span class="num">10%</span> 你就赚 <span class="num">20 元</span>,本金收益 <span class="num">20%</span>;反算另一面,资产跌 <span class="num">10%</span>,你的本金也亏 <span class="num">20%</span>。放大器没有立场,涨跌一视同仁。</p><p><span class="term">杠杆</span>还牵着两笔隐形的账。第一笔是融资成本:借 <span class="num">100 元</span>、年息 <span class="num">6%</span>,<span class="num">2 倍</span><span class="term">杠杆</span>下资产涨 <span class="num">8%</span>,毛收益 <span class="num">16 元</span>、利息 <span class="num">6 元</span>,净赚 <span class="num">10 元</span>,本金收益率 <span class="num">10%</span>,只比无<span class="term">杠杆</span>的 <span class="num">8%</span> 好一点;若资产只涨 <span class="num">3%</span>,毛收益 <span class="num">6 元</span>刚够付利息,白忙一年。反算验证,<span class="num">8%</span> 乘 2 再减 <span class="num">6%</span>,恰是 <span class="num">10%</span>。第二笔是爆仓线:<span class="num">3 倍</span><span class="term">杠杆</span>时,资产反向波动约 <span class="num">33.3%</span> 就把本金亏光,因为 <span class="num">100%</span> 除以 3 恰是 <span class="num">33.3%</span>;反算,<span class="num">33.3%</span> 乘 3 约是 <span class="num">100%</span>。数学谁都算得明白,危险不在数学。</p><p><span class="term">杠杆</span>真正危险的地方,在于它把<span class="hl">“波动问题”</span>升级成了<span class="hl">“生存问题”</span>。没有<span class="term">杠杆</span>时,资产跌了你可以装死等反弹;有<span class="term">杠杆</span>时,下跌可能触发追加<span class="term">保证金</span>、强制平仓或风控止损——你很可能在黎明前的黑暗里被迫离场,后面的反弹再也与你无关。看对方向却死在半路,是<span class="term">杠杆</span>玩家的标准结局之一。常有人以为<span class="term">杠杆</span>只是让收益曲线更陡,其实它改的是你的存活概率。所以比较策略时,无<span class="term">杠杆</span>年化 <span class="num">12%</span> 和 <span class="num">3 倍</span><span class="term">杠杆</span>年化 <span class="num">20%</span>,后者未必更强:极端行情来了,活不下来的 <span class="num">20%</span>,不如活得下来的 <span class="num">12%</span>。</p>
+        <h3>1.7. 一天波动有多大</h3>
+<p>涨跌幅回答的是<span class="hl">“终点比起点走了多远”</span>:当前价格或收盘价相对昨收价的变化比例。昨天收盘 <span class="num">10 元</span>,今天收盘 <span class="num">10.5 元</span>,涨幅就是 <span class="num">5%</span>——反算,10.5 除以 10 再减 1,正是 <span class="num">5%</span>。振幅回答的是<span class="hl">“过程有多颠簸”</span>:用当天最高价和最低价的差相对某个基准价格计算。假设今天最高 <span class="num">11 元</span>、最低 <span class="num">9.5 元</span>,振幅就是 11 减 9.5 再除以 10,等于 <span class="num">15%</span>。一个看结果,一个看过程。</p><p>常有人以为振幅大就意味着涨跌幅大,其实两者完全可以分离。一只股票收盘只涨了 <span class="num">1%</span>,看着岁月静好;可它盘中最高冲到过涨 <span class="num">8%</span>、最惨时跌到 <span class="num">-5%</span>,振幅巨大——这说明持有人这一天坐了一整圈过山车,抄底的人和追高的人心情完全不同。终点平静,不代表路上平静。</p><p>这条直觉在量化里会被一再用到:不能只看最终收益,还要看过程风险。两个策略一年下来都赚 <span class="num">10%</span>,一个中间<span class="term">最大回撤</span>只有 <span class="num">3%</span>,另一个中间<span class="term">最大回撤</span>达到 <span class="num">40%</span>——纸面收益相同,持有体验和承担的风险完全是两个物种。价格数据从第一天起就在提醒你:到达终点的路径本身,就是风险的一部分。</p>
 
-        <h3>1.10. 一张收益报告应该怎么读</h3>
-<p>下次再有人递给你一条漂亮的上扬净值曲线,别急着心动,先按顺序抛出五个问题。第一,它的基准是什么?第二,<span class="term">年化收益</span>和累计收益各是多少?第三,<span class="term">最大回撤</span>和<span class="term">波动率</span>是多少?第四,<span class="term">夏普</span>和<span class="term">超额收益</span>是否稳定?第五,这些数字扣没扣真实交易成本?五问下来,八成的好看曲线都会开始露怯。</p><p>自己上手核对其实也花不了几分钟。一条 <span class="num">5 年</span>翻倍的曲线,累计收益 <span class="num">100%</span>,年化是多少?把 2 开 <span class="num">5 次</span>方再减 1,约 <span class="num">14.9%</span>;反算验证,1.149 的 <span class="num">5 次</span>方约是 2。再配两个风险数字就有判断力了:若它<span class="term">最大回撤</span> <span class="num">45%</span>,回本需要涨 <span class="num">81.8%</span>——反算,0.55 乘 1.818 约回到 1;若<span class="term">夏普</span>只有 0.4,每扛一份波动只多赚 0.4 份超额。常有人以为曲线越陡策略越强,其实它可能只是回测区间恰好截了好时段,或者数字压根没扣费。</p><p>如果还想问得更专业,继续追问第二层:样本有多长?中间经历过牛市、熊市和震荡市吗?有没有样本外数据?持仓集中吗?<span class="term">换手率</span>高吗?最大亏损发生在什么市场环境里?策略逻辑在经济上讲得通吗?每一个问题,都对应一类藏在曲线背后的风险。记住这句话:只给一条向上曲线、基准回撤成本换手容量样本外一概没有的报告,更像广告而不是研究。量化研究的第一层专业性,不是模型多复杂,而是愿意把收益拆成风险、成本和比较基准来审视——也包括审视自己。</p>
+        <h3>1.8. 分红送股后,价格为什么要重新调整</h3>
+<p>为什么分红送股之后,名义价格非要跳空一下?因为公司确实把一部分钱或权益还给了股东:每股派现 <span class="num">0.5 元</span>,公司账上就少了这笔现金,每股权益相应薄了 <span class="num">0.5 元</span>,交易所便把除息基准价从 <span class="num">10 元</span>直接调成 <span class="num">9.5 元</span>;10 送 10 之后股数翻倍,每股理论价对折。这个跳空是计量口径的规则性调整,不是市场当天恐慌抛售——你的总资产一分没少,只是每股价格的计量单位换了。</p><p>算一笔完整账。你持有 <span class="num">1000 股</span>,成本每股 <span class="num">10 元</span>,总资产 <span class="num">1 万元</span>。除息后价格 <span class="num">9.5 元</span>,市值变成 <span class="num">9500 元</span>,但账户里多了 <span class="num">500 元</span>现金分红,合计仍是 <span class="num">1 万元</span>。可如果直接把原始价格 9.5 除以 10 算收益率,会算出 <span class="num">-5%</span> 的假亏损;反算验证:9500 加 500,再除以 10000,恰好等于 1,真实回报是 <span class="num">0%</span>。常有人以为那个断崖是暴跌,其实它全由口径造成。要让收益率算得对,历史价格必须按每一次分红送股逐次调整——这就是复权存在的理由。</p><p>于是有了前复权和后复权:前复权把历史价格调整到和当前同一口径,方便你看长期走势的形状;后复权把当前价格折算到历史持有收益口径,方便算长期累计回报,不同数据源的算法和精度还可能有差异,用时务必写清楚。对量化这是高频错题:用未复权价格算收益,会把分红硬生生算成亏损;拿前复权价格模拟成交,又会用到历史上根本不存在的价格——那是事后调整出来的,当时的交易者从没见过。通常的做法是:算收益、算因子用复权口径,模拟成交、算订单用当时真实可交易的价格口径,混用必出问题。</p>
 
-        <h2>2. 不要把所有判断押在一个地方</h2>
-        <p>投资里最容易犯的错,其实很少是“买错了某只股票”这种技术失误,而是把自己的全部身家押在同一个判断上。你可能看对了公司,但买得太贵;看对了行业,但撞上流动性危机;看对了长期,但短期回撤先把你赶出场——变量太多,判断总有失手的时候。资产配置和分散化要解决的,不是让你每次都赚得最凶,而是让你在充满不确定的世界里活得够久:几类风险各押多少,它们出事时会不会一起倒,比例跑偏了怎么拉回来。活得久,复利才有机会替你工作。这一章把这套“活得久”的方法论,连同它背后的数学一起讲清楚。</p>
+        <h3>1.9. 先理解它只是加工后的价格</h3>
+<p>行情软件里层层叠叠的彩色均线,看着高深,拆开看其实朴素得很:<span class="num">5 日</span>均线就是最近 <span class="num">5 个交易日</span>收盘价的平均值。亲手算一条:最近 <span class="num">5 日</span>收盘依次是 10.0、10.2、10.1、10.4、<span class="num">10.3 元</span>,和为 51.0,均线就是 <span class="num">10.2 元</span>。明天若收在 <span class="num">11.0 元</span>,旧窗口里最老的 <span class="num">10.0 元</span>退出,新均线就是 51 减 10 加 11 再除以 5,等于 <span class="num">10.4 元</span>——反算,10.2 加 10.1 加 10.4 加 10.3 加 11.0 是 52,除以 5 正好 10.4。均线的作用只是平滑短期抖动,让趋势的轮廓更清楚。</p><p>所以指标不是水晶球,它们不会凭空创造信息,只是把已有的数据换个方式摆给你看。均线向上倾斜,说明过去一段时间价格整体在走高;短期均线上穿长期均线的<span class="hl">“金叉”</span>,说明短期平均涨速超过了长期平均。常有人以为金叉出现就该涨,其实它只陈述一个关于过去的事实,没有一条能保证<span class="hl">“未来”</span>一定上涨。MACD、RSI、布林带这些也一样,本质上都是对价格、成交量或波动的数学加工。</p><p>对程序员来说,最准确的类比是特征工程:原始价格是一列数据,均线、涨跌幅、<span class="term">波动率</span>、成交量均值都是从这列数据加工出来的派生特征。一个特征有没有用,不看名字专不专业、写法玄不玄乎,只看它在严格回测和样本外测试里能不能稳定贡献信息。把技术指标当特征,而不是当信仰,是这门课的基本心法。</p>
 
-        <h3>2.1. 资产配置先回答钱放在哪里</h3>
-<p>大多数新手学投资,开口第一句是<span class="hl">“买哪只股票”</span>。但资产配置纠正了这个提问顺序:先别问买哪只,先问你的钱整体放在哪——股票、债券、现金、商品、黄金、<span class="term">REITs</span>、海外资产,各自占多少比例。这是一个比选股靠前得多的问题:你的钱整体承担什么风险、希望从哪些来源获取收益,在这一步就已经定下来了;<span class="hl">“选股”</span>只是每一个格子里的局部动作。</p><p>不同的放法,就是不同的命运剧本,算一笔长账感受下:<span class="num">10 万元</span>按三种配置放十年,全股票假设年化 <span class="num">8%</span>,到期约 <span class="num">21.6 万</span>;股债各半假设年化 <span class="num">5%</span>,约 <span class="num">16.3 万</span>;全放现金理财年化 <span class="num">2%</span>,约 <span class="num">12.2 万</span>。反算验证:1.08 的 <span class="num">10 次</span>方约 2.16,1.05 的 <span class="num">10 次</span>方约 1.63,1.02 的 <span class="num">10 次</span>方约 1.22,三笔账各自闭合。看清楚了吗?复利放大之下,起点的配置选择比中途任何一次选股都更决定结局——当然,最高收益那一行的代价,是途中可能要硬扛 <span class="num">40%</span> 以上的回撤。</p><p>真正在买股票之前,有一串更该先回答的问题:你能不能承受 <span class="num">30%</span> 的回撤?这笔钱几年内用不用得上?收入稳不稳定?有没有房贷和家庭开支等着现金流?常有人以为资产配置就是挑几个产品拼盘,其实它首先是自家资产负债表的管理:哪笔钱亏得起、哪笔亏不起、哪笔随时要动,先划清楚,再谈进攻。顺序一乱,后面的动作再漂亮也是空中楼阁。</p>
+        <h3>1.10. 时间戳、停牌、缺失和供应商差异</h3>
+<p>量化新人最大的幻觉,是以为行情数据是一张干干净净的 Excel:每只股票每天一行,开高低收成交量一应俱全,读进来就能跑。真实世界要粗糙得多:停牌的日子可能根本没有成交记录;新上市的股票历史短得可怜;退市的公司会悄悄从数据源里蒸发;不同供应商对复权算法、涨跌停处理、成交额口径、指数成分的历史版本,处理方式可能全都不一样。</p><p>时间戳是另一个重灾区。日线数据里的<span class="hl">“日期”</span>指交易日;到了分钟线和逐笔数据,还要分清交易所时间、接收时间、落库时间——三个时间可能互不相同。算一笔亏给你看:某公司今晚收盘后公布超预期财报,明天高开 <span class="num">5%</span>、盘中再涨 <span class="num">3%</span>。若回测让策略<span class="hl">“在公布当日收盘买入”</span>,全天 <span class="num">8%</span> 的收益就全记上了;可真实世界你最早只能明天开盘进场,能拿到手的只有 <span class="num">3%</span>——反算,高开已吃掉 <span class="num">5%</span>,8 减 5 剩 3。反直觉的是,报告漂亮得不像话,往往就因为这 <span class="num">5 个百分点</span>的偷看:这就是未来函数最隐蔽的一种长相。</p><p>所以<span class="hl">“看懂行情”</span>远不只是会看图。真正进入量化,你要对每一条数据连环发问:这条数据在当时的那个时点能不能被看到?价格是未复权还是复权口径?停牌的日子在数据里怎么表示?缺失值是当天没交易,还是数据本身坏了?指数成分是当时的真实成分,还是拿今天的名单回填的?这些问题的答案,决定了回测究竟是研究,还是自娱自乐。</p>
 
-        <h3>2.2. 分散化不是买很多名字</h3>
-<p><span class="hl">“不要把鸡蛋放在同一个篮子里”</span>这句话人人会背,但很多人执行成了<span class="hl">“买很多个名字的篮子”</span>。分散化的核心不是数量,而是:不要让组合被同一个风险因子一拳打穿。你买 30 只股票,听着很分散;可如果 30 只全在同一个行业,一项行业政策收紧,它们会同一天手拉手往下跳。数量很多,风险一处。</p><p>机制往深处推一步,问题出在协方差链上:组合的方差不是各资产方差的简单平均,它等于<span class="hl">“各权重平方乘各自方差”</span>之和,再加上<span class="hl">“每两对资产的权重乘积乘协方差”</span>之和。等权买入 N 只结构相似的股票,前一项随 N 急速摊薄,后一项却摊不掉。用数字看:设每只股票方差 400、两两协方差 200,持有 1 只时组合方差 400,2 只时 300,10 只时 220,N 趋于无穷时极限是 200——永远降不到零。反算验证 10 只那一格:400 除以 10 加 200 乘 9 除以 10,恰是 220。那条摊不掉的协方差,就是 30 个名字背后共同的风险。</p><p>这条链解释了所有伪分散。银行股、地产股、建筑股,名字各异,却都受信用周期和地产周期牵动,一遇风浪,三兄弟一起感冒;新能源车、锂矿、电池、光伏横跨四个细分市场,却拴在同一条产业链的景气线上,一荣俱荣、一损俱损。常有人以为分散就是数量多,其实分散的要义是相关性低、协方差小——名字是表面,风险来源才是里子。问组合分散没有之前,先别数名字,先数风险因子。</p>
+        <h2>2. 你到底在和谁比较</h2>
+        <p>刚学投资和量化的人,张口就问“这个能赚多少”。更成熟的问法是:和谁相比赚多少?想想两个场景:市场整体涨了 30%,你的策略涨 20%——你绝对赚钱了,但跑输了大盘;市场跌了 20%,你的策略只跌 5%——你账上亏钱,但防守做得漂亮。再往里追问一层:你拿来比较的“大盘”本身又是怎么算出来的?它按什么规则选股票、按什么口径配权重?你买的 ETF 为什么同时挂着两个价格?没有一把统一的尺子,这些问题根本说不清楚。指数、ETF 和基准,就是为“比较”而生的工具,这一章把它们讲透。</p>
 
-        <h3>2.3. 两条曲线是不是一起动</h3>
-<p>相关性这个指标,一句话就能说清:它衡量两个资产的收益是不是<span class="hl">“一起动”</span>。接近 1,像绑在一根绳子上的两个蚂蚱,经常同涨同跌;接近 0,各走各的路;接近 -1,像跷跷板的两头,一个涨的时候另一个常常跌。分散化想找的,就是往组合里塞一些相关性较低的资产。但塞进去效果到底多大,口说无凭,得算。</p><p>把整条坡算出来:资产 A 和 B 的年化波动都是 <span class="num">20%</span>,各投一半。组合方差是 0.5 的平方乘 20 的平方,加 0.5 的平方乘 20 的平方,再加 2 乘 0.5 乘 0.5 乘 20 乘 20 乘相关性,化简完是 200 加 200 乘相关性。相关性取 1,组合波动是根号 400,恰 <span class="num">20%</span>,等于完全没分散;取 0.5,是根号 300,约 <span class="num">17.3%</span>;取 0,是根号 200,约 <span class="num">14.1%</span>;取 -1,方差归零,理论上波动被完全对冲。反算验证:<span class="num">17.3%</span> 的平方约 300,<span class="num">14.1%</span> 的平方约 200。反直觉的是,两个各自波动 <span class="num">20%</span> 的资产,搭配得当竟能拼出零波动的组合——常有人以为高波动资产放进组合必然更晃,关键其实全在相关性上。</p><p>理想搭档的图景也清楚了:假设 A 在经济繁荣时表现亮眼,B 在经济放缓、利率下行时反而走强,放在一起,组合大概率不是每天拿第一,但颠簸程度明显减轻。为什么要这份平稳?不只是为了账户好看,而是为了降低你在最惨时刻被迫卖出的概率。但请把一个大写的警告贴在墙上:相关性是会变的。最坑人的情形是,平时看着互相分散的资产,一到危机时刻忽然齐刷刷一起下跌——恐慌中所有人同时去<span class="term">杠杆</span>、基金被集中赎回、流动性好的资产被抛售变现。历史相关性只是一份天气记录,不是刻在石头上的物理常数。</p>
+        <h3>2.1. 指数不是一只股票,而是一把尺子</h3>
+<p>先说一个新手常有的误会:<span class="term">沪深 300</span>、<span class="term">中证 500</span>、中证 1000、上证指数、创业板指,这些名字天天出现在新闻里,但它们没有一只是股票,背后也没有一家公司。它们是把一组证券按一套明确规则合成的一个数字,是市场某个局部的<span class="hl">“成绩摘要”</span>。指数存在的意义,就是给市场切片,让你有一把可观察、可比较的尺子。</p><p>同样的市场,用不同编制规则会得到不同的尺子,动手一算便知。假设一个迷你市场只有三只股票:A 股价 <span class="num">50 元</span>、市值 <span class="num">700 亿</span>,B 股价 <span class="num">30 元</span>、市值 <span class="num">200 亿</span>,C 股价 <span class="num">10 元</span>、市值 <span class="num">100 亿</span>。某天 A 涨 <span class="num">1%</span>、B 平盘、C 跌 <span class="num">2%</span>。按市值加权,权重 0.7、0.2、0.1,指数涨 0.7 乘 <span class="num">1%</span> 减 0.1 乘 <span class="num">2%</span>,等于 <span class="num">0.5%</span>;按等权,三只各算一票,指数跌约 <span class="num">0.33%</span>;按价格加权,价格之和从 90 变成 50.5 加 30 加 9.8 等于 90.3,指数涨约 <span class="num">0.33%</span>。反算三种加权,账目都对得上。常有人以为指数涨了就是多数股票涨了,其实在市值加权的世界里,几只巨头足以盖过几百只下跌的股票。</p><p>你可以把指数理解成体检报告里的单项指标:它描绘不了每家公司的具体情况,但能让你一眼看出某一类资产大概什么状态。<span class="term">沪深 300</span> 偏大市值龙头蓝筹,<span class="term">中证 500</span> 和中证 1000 偏中小市值。用这把尺子之前得先读懂刻度规则,也就是编制方案:选哪些股票进来?按市值加权还是等权?多久调整一次成分?停牌、退市怎么处理?自由流通市值怎么算?每一项规则都会改变指数的表现,所以看指数绝不能只看名字。</p>
 
-        <h3>2.4. 股票和债券为什么常被放在一起</h3>
-<p>翻开任何一本资产配置教材,股票和债券总是被摆在同一张桌上,这不是习惯,是有原因的。股票代表公司的权益,表现主要看盈利增长和市场风险偏好;债券代表合同约定的现金流,主要受利率、信用和通胀影响。两者的驱动因素不同,在很多环境里风险来源不完全重叠——用上一节的语言说,它们之间的协方差往往很小,有时甚至是负的,所以经常被搭配成组合。</p><p>缓冲效果算给你看。<span class="num">60%</span> 股票加 <span class="num">40%</span> 债券的组合,某年股票跌 <span class="num">20%</span>、债券涨 <span class="num">5%</span>:组合收益是 0.6 乘 <span class="num">-20%</span> 加 0.4 乘 <span class="num">5%</span>,等于 <span class="num">-10%</span>;反算验证,<span class="num">-12%</span> 加 <span class="num">2%</span> 恰是 <span class="num">-10%</span>,比纯股票的 <span class="num">-20%</span> 少跌一半,这就是逆风时债券垫的那层缓冲。但这套配合不是永远灵验的:遇上高通胀叠加利率大幅上行,股票因估值承压、债券因利率上行下跌,若同一年股跌 <span class="num">20%</span>、债跌 <span class="num">10%</span>,组合就是 0.6 乘 <span class="num">-20%</span> 加 0.4 乘 <span class="num">-10%</span>,等于 <span class="num">-16%</span>,反算,<span class="num">-12%</span> 减 <span class="num">4%</span> 恰是 <span class="num">-16%</span>,缓冲垫忽然就瘪了。常有人以为股债永远是跷跷板,其实在通胀高企、利率快升的年份里,它们会一起挨揍。</p><p>所以<span class="hl">“股债搭配”</span>口诀要背全:它是常见的风险平衡方法,不是万能公式。用不用、怎么用,要结合宏观环境、利率水平、债券的久期、信用质量和你的个人目标。另外别忘了一个前面章节的提醒:买债券基金也不是无风险,久期和信用风险一样会让债券基金的净值波动起来——缓冲垫的材质,本身也需要检查。</p>
+        <h3>2.2. 大公司说话更大声</h3>
+<p>市值加权这个名字听着唬人,其实就是一句话:公司里<span class="hl">“块头”</span>大的,在指数里嗓门也大。机制上,每只成分股的权重约等于它的自由流通市值除以全部成分股自由流通市值的总和,指数涨跌幅就是所有成分股涨跌幅按权重的加总。很多主流指数采用市值加权或自由流通市值加权,指数涨跌不是几千只股票一人一票投出来的,而是按<span class="hl">“吨位”</span>加权的合唱。</p><p>感受一下吨位差。假设某指数成分股总市值 <span class="num">10 万</span>亿元,其中一只 <span class="num">2 万</span>亿元的巨头权重 <span class="num">20%</span>,一只 <span class="num">50 亿元</span>的小票权重只有 <span class="num">0.05%</span>。今天巨头涨 <span class="num">1%</span>,对指数的拉动是 <span class="num">20%</span> 乘 <span class="num">1%</span>,等于 <span class="num">0.2 个百分点</span>;小票涨 <span class="num">5%</span>,拉动是 <span class="num">0.05%</span> 乘 <span class="num">5%</span>,只有 <span class="num">0.0025 个百分点</span>——前者的影响是后者的 <span class="num">80 倍</span>。反算验证:<span class="num">10 万</span>亿乘 <span class="num">0.2025%</span> 等于 <span class="num">202.5 亿元</span>,恰好是巨头增加的 <span class="num">200 亿</span>加小票增加的 <span class="num">2.5 亿</span>,严丝合缝。</p><p>反直觉的是,指数和多数个股的感受经常脱节:有时盘面上几千只股票绿油油一片,指数却没跌多少——多半是几只大权重股在硬扛;也有时指数跌得很难看,你手里的小股票却没怎么跌——因为砸盘的正是那几只大块头。记住,指数是加权平均,不是所有股票的简单平均;它先听见大公司的声音。</p>
 
-        <h3>2.5. 涨多了卖一点,跌多了补一点</h3>
-<p>一个偷懒的组合会慢慢背叛你。算这笔漂移账:定好 <span class="num">60%</span> 股票、<span class="num">40%</span> 债券的比例后不再管,若股票一波大涨 <span class="num">50%</span>、债券原地不动,60 份股票变成 90 份,债券还是 40 份,总盘子 130 份,股票占比升到 90 除以 130,约 <span class="num">69.2%</span>;反算验证,0.6 乘 1.5 恰是 0.9。你名义上还是<span class="hl">“稳健配置”</span>,实际上股票风险已经大幅超编。再平衡就是给组合做定期纠偏:按 130 份的 <span class="num">60%</span> 目标,股票应回到 78 份,于是卖出 12 份股票、补进 12 份债券,把权重拉回 60/40 的目标线。</p><p>再平衡的价值,首要是控制风险额度,其次才可能捎来一个副产品:它强迫你在上涨资产上兑现一部分,在下跌资产上补一点,纪律性地执行了<span class="hl">“低买高卖”</span>这个谁都懂却没人做得到的动作——因为情绪总让你反着来,而规则不会。用工程语言说,再平衡是一个周期性的校准任务,和给系统做容量均衡是同一类动作:不酷,但少了它,系统迟早漂移失控。</p><p>当然,再平衡不是免费午餐。频繁调仓产生交易费用,可能还有税费;在趋势很强的行情里,过早卖出上涨资产也会牺牲收益。常有人以为再平衡是为了多赚钱,其实它的主要贡献体现在风险控制上,收益上的<span class="hl">“再平衡红利”</span>时有时无。所以常见的做法是定规则而不是凭感觉:按时间再平衡,比如每季度或每年一次;或者按阈值再平衡,比如偏离目标超过 <span class="num">5 个百分点</span>才动手。选一个执行得下去的,长期坚持下去比选什么频率更重要。</p>
+        <h3>2.3. 承认市场很难战胜之后的选择</h3>
+<p>有一种基金,从设计之初就放弃了<span class="hl">“我要战胜市场”</span>的野心——指数基金。它的目标不是千里挑一找到最牛的股票,而是尽量复刻某个指数:买入指数的成分股,按规则调整权重,让基金净值紧紧跟着指数走。代价是它不会主动躲开指数里的烂公司,市场整体下跌时也不会自动空仓;换来的是透明、分散、费用较低。</p><p>这个思路背后有个深刻的观点,《漫步华尔街》反复强调过:对多数普通投资者来说,长期战胜市场非常难,低成本持有宽基指数,往往比追逐热门股票更可靠。注意,这不是说市场永远正确,而是一笔冷静的成本账:扣掉费用、税费、交易冲动和择时错误之后,普通人想持续跑赢市场,胜算真的很低。承认难,本身就是一种投资智慧。</p><p>把成本账算具体。假设投 <span class="num">10 万元</span>,市场<span class="term">年化收益</span> <span class="num">8%</span>:低费率指数基金按 <span class="num">0.2%</span> 收费,净年化约 <span class="num">7.8%</span>,<span class="num">30 年</span>后约是 <span class="num">10 万</span>乘 1.078 的 <span class="num">30 次</span>方,合计 <span class="num">95 万元</span>出头;一只按 <span class="num">1.5%</span> 收费的主动产品,净年化约 <span class="num">6.5%</span>,<span class="num">30 年</span>后约 <span class="num">66 万元</span>。仅仅 <span class="num">1.3 个百分点</span>的年费差,三十年后变成近 <span class="num">30 万元</span>的差距——反算两个终值相减,数字自洽。反直觉的是,投资里唯一确定能稳赚的 <span class="term">Alpha</span>,就是你主动选择不付出去的那部分费用。先低成本拿到市场平均收益,再掂量自己有没有能力、时间和纪律去争取超额,这个顺序不能反。</p>
 
-        <h3>2.6. 每类风险分到多少额度</h3>
-<p><span class="hl">“<span class="num">60%</span> 股票、<span class="num">40%</span> 债券”</span>,这句话像是在分钱——可它分的其实不是风险。先感受一下波动差:股票年化波动约 <span class="num">20%</span>,债券约 <span class="num">5%</span>,同样一块钱,股票的晃荡程度是债券的 <span class="num">4 倍</span>。金额上的六四开,换算到风险的账本上,会变成根本不同的另一个比例。</p><p>算到底:假设股债相关性为 0,组合方差等于 0.6 的平方乘 20 的平方,加 0.4 的平方乘 5 的平方,即 144 加 4,等于 148;组合波动是根号 148,约 <span class="num">12.2%</span>。再看风险贡献:股票的 144 除以总方差 148,约 <span class="num">97%</span>;债券占 <span class="num">40%</span> 的钱,只贡献了约 <span class="num">3%</span> 的风险。反算验证,144 加 4 恰是 148,<span class="num">12.2%</span> 的平方约是 148。常有人以为金额占比就是风险占比,其实金额只是表象,<span class="term">波动率</span>、相关性和<span class="term">杠杆</span>才决定风险的真实分布——一个名义上<span class="hl">“均衡”</span>的组合,可能九成以上的风险全押在一处。</p><p>这就是风险预算要盯的事:不看谁占了多少钱,看每类资产或策略实际贡献了多少风险。反过来也成立:一个股票占比看着不高的组合,如果加了<span class="term">杠杆</span>,实际承担的风险可能比满仓股票还大。量化的组合管理会把这笔账算得更细:<span class="term">波动率</span>、相关性、边际风险贡献、风格暴露,样样落数。新手不需要第一天就搭个优化器,但有一件事必须今天起换个眼光:钱的比例只是表面文章,风险的来源才是关键。以后看任何组合,先问<span class="hl">“它的风险都藏在哪几处”</span>,再问<span class="hl">“它的钱分别放在哪”</span>。</p>
+        <h3>2.4. 可以在交易所买卖的基金份额</h3>
+<p><span class="term">ETF</span> 是个混血儿,一半像基金,一半像股票。它是交易型开放式指数基金:说像基金,因为背后真持有一篮子资产、每天算得出净值;说像股票,因为它挂在交易所里,盘中随时买卖。你在券商账户买 <span class="term">ETF</span>,体验和买股票几乎一模一样:输代码、输价格、输数量,下单。</p><p>正因为有两副面孔,<span class="term">ETF</span> 身上时刻挂着两个价格。一个是基金份额净值,由它持有的那篮子资产算出来,代表<span class="hl">“它值多少钱”</span>;另一个是交易所的盘中成交价,由买卖双方撮合出来,代表<span class="hl">“大家愿意多少钱交易它”</span>。常有人以为 <span class="term">ETF</span> 标价多少就值多少,其实两个价格是两套系统各自算出来的。算一笔账:盘中净值 <span class="num">1.000 元</span>时,你在 <span class="num">1.006 元</span>买入,相当于为只值 <span class="num">1.000 元</span>的篮子多付了 <span class="num">0.6%</span> 的溢价——反算,1.006 除以 1.000 减 1,正是 <span class="num">0.6%</span>。正常情况下两个价格不会长期偏离太多,背后有申购赎回和套利机制当纠偏员,下一节细讲。</p><p><span class="term">ETF</span> 的申购赎回和普通开放式基金很不一样。很多股票 <span class="term">ETF</span> 的大额申赎,走的是<span class="hl">“以物易物”</span>:机构拿一篮子成分股票去换 <span class="term">ETF</span> 份额,或者拿 <span class="term">ETF</span> 份额换回一篮子股票,中间辅以现金替代等规则。普通个人投资者大多只在二级市场上买卖 <span class="term">ETF</span>,不直接参与这套复杂的申赎流程;但理解这套机制,你就明白 <span class="term">ETF</span> 的价格为什么通常能贴住净值,而不是放飞自我。</p>
 
-        <h3>2.7. 目标日期、生命周期和个人约束</h3>
-<p>同一个投资组合,对一个人是良药,对另一个人可能是烈酒。一个 25 岁、有稳定收入、短期不用钱的人,扛得住更高的股票波动;一个 60 岁、准备退休、往后生活主要靠资产支出的人,现金流和回撤控制就得摆到第一位。资产配置从来没有<span class="hl">“万能最优解”</span>,只有<span class="hl">“适合你当下约束的解”</span>。</p><p>用一笔账感受约束的分量:退休后计划每年从组合支取 <span class="num">4%</span> 当生活费,一个很常见的安全比例;可如果开局就遇上 <span class="num">30%</span> 的回撤,<span class="num">100 万</span>剩 <span class="num">70 万</span>,支取额照旧,实际支取率就变成 4 除以 70,约 <span class="num">5.7%</span>——反算验证,4 除以 0.7 约是 5.7。这个被抬高的支取率若持续几年,组合很难从坑里爬出来;而没有支取压力的年轻人,同样的坑只是账面波动。生命周期配置背后的直觉也在这里:年轻时,未来几十年的劳动收入像一张隐形债券,会源源不断提供现金流,所以可以承担更多权益风险;随着年龄增长,这张隐形债券快到期了,资产本身要扛起生活支出,组合自然应该调得更稳。</p><p>但千万别把它搞成按年龄查表的机械动作。职业稳不稳定、家庭负担重不重、房子贷了多少、健康状况怎样、心理能不能扛住亏损,每一项都会改写配置。常有人以为配置只和账户里的钱有关,其实你的收入结构本身就是组合的一部分。举个典型反例:一个收入高度依赖互联网股票期权的程序员,再把投资仓位重仓科技股,等于把饭碗和账户押在同一个风险上——行业一旦入冬,工资和股票一起给你颜色看。</p>
+        <h3>2.5. 折价、溢价和套利机制</h3>
+<p>既然 <span class="term">ETF</span> 有两个价格,两个价格就难免打架:二级市场的交易价格比净值高,叫溢价;比净值低,叫折价。小幅度的折溢价每天都在发生,尤其在市场剧烈波动、成分股停牌、跨境 <span class="term">ETF</span> 的海外市场休市,或者流动性本身就不充裕的时候,两个价格更容易闹分家。</p><p>套利方向用一笔账就能记清。假设某 <span class="term">ETF</span> 市价 <span class="num">1.012 元</span>、净值 <span class="num">1.000 元</span>,溢价 <span class="num">1.2%</span>:套利者按净值申购 <span class="num">100 万</span>份,成本 <span class="num">100 万元</span>,转手在二级市场卖出进账 <span class="num">101.2 万元</span>,毛利 <span class="num">1.2 万元</span>——新份额涌出、卖盘增加,价格被压回净值,这就是溢价时<span class="hl">“申购卖出”</span>的纠偏方向。反过来市价 <span class="num">0.988 元</span>、折价 <span class="num">1.2%</span> 时,就在二级市场用 <span class="num">98.8 万元</span>扫货 <span class="num">100 万</span>份再赎回换回底层资产,价值 <span class="num">100 万元</span>。反算两个方向,都围绕这 <span class="num">1.2%</span> 的缝做功。反直觉的是,这叫套利却不是无风险:申赎有门槛和时滞,底层资产在你持仓期间照常波动,涨跌停和现金替代规则还可能把你半路拦下,所以折溢价不会永远瞬间消失。</p><div class="callout callout--warn reveal"><span class="callout__title">提醒</span><p>给新手一个实用提醒:买 <span class="term">ETF</span> 不能只看名字顺不顺耳、涨跌幅猛不猛,还要看成交额、买卖价差、折溢价和它跟踪的到底是什么指数。一只流动性差的 <span class="term">ETF</span> 报价看着便宜,可你买一卖一之间价差很大,进出的真实成本一点不便宜——便宜只是幻觉。</p></div>
 
-        <h3>2.8. 分散化能降低非系统风险,不能消灭系统风险</h3>
-<p>必须先分清两种风险,才能知道分散化的边界在哪。单家公司财务造假、单个行业政策突变、单只股票流动性枯竭——这类风险可以通过分散化化解,叫非系统风险。而市场整体下跌、金融危机、利率大幅上行、战争、全球流动性冲击——这类风险你买再多股票也躲不掉,叫系统风险。前者是个体噪音,后者是地基晃动。</p><p>用协方差链把这条边界算成数字。假设每只股票的方差能拆成两块:共同的市场部分 400,个体特异部分 1200;等权持有 N 只时,组合方差是 400 加 1200 除以 N。持有 1 只时是 1600,波动 <span class="num">40%</span>;4 只时是 700,波动约 <span class="num">26.5%</span>;16 只时是 475,波动约 <span class="num">21.8%</span>;N 再大也快不过那条线——方差 400、波动 <span class="num">20%</span> 的底线,就是系统性风险,永远摊不掉。反算验证 4 只那一格:1200 除以 4 加 400,恰是 700。常有人以为买得够多就安全,其实分散只是把个体风险消到趋近于零,市场整体的底噪永远都在。</p><p>工程类比一句话到位:分散化像给系统加冗余,能扛住单机宕机,扛不住机房断电。正因为系统风险躲不开,组合里才会认真考虑债券、现金、黄金、商品、海外资产或者对冲策略——它们各自对系统性冲击的反应不同,有的天生抗揍,有的逆风上涨。把它们搭配起来,不是指望永远赚钱,而是让组合在多种宏观环境里都能保留生存空间:先求不死,再求活得好。</p>
+        <h3>2.6. 没有基准就没有评价</h3>
+<p>一句<span class="hl">“这个基金一年赚 <span class="num">12%</span>”</span>,你觉得算好还是算差?先别回答——这题缺条件。如果它常年满仓<span class="term">沪深 300</span>,而同期<span class="term">沪深 300</span> 涨了 <span class="num">20%</span>,那 <span class="num">12%</span> 其实是大幅落后;反过来看另一个基金一年跌 <span class="num">3%</span>,听着心疼,可如果它的基准同期跌了 <span class="num">20%</span>,那它可能藏着很强的防守或对冲能力。没有基准,成绩单一律无法批改。</p><p>相对强弱的算法也有讲究。基金一年涨 <span class="num">12%</span>、基准涨 <span class="num">20%</span>,很多人张口就说<span class="hl">“跑输 8 个点”</span>。严格口径是除法:1.12 除以 1.20 再减 1,等于 <span class="num">-6.7%</span>;反算验证,1.20 乘 0.9333 正好回到 1.12。单期看差距不大,复利几年就拉开:若连续三年如此,简单减法估的<span class="hl">“落后 <span class="num">24%</span>”</span>,与真实的 1.12 的三次方除以 1.20 的三次方再减 1 算出的约 <span class="num">-18.7%</span>,完全不是一个故事。常有人以为相对收益就是涨跌幅相减,其实那只是单期的粗略近似。</p><p>基准还得和产品匹配:买大盘股基金,拿<span class="term">沪深 300</span> 比;买中小盘的量化指数增强,拿<span class="term">中证 500</span> 或中证 1000 比;买债券基金,就得找合适的债券指数。拿错尺子量身高,结论必歪。量化行业最常挂嘴边的 <span class="term">Alpha</span> 和 <span class="term">Beta</span>,就是把这笔账拆开的语言:<span class="term">Beta</span> 是你承担市场或风格暴露换来的收益,水涨了船自然高;<span class="term">Alpha</span> 是把这些暴露全部扣掉之后仍多出来的那部分。没有基准,你根本说不清赚的是能力的钱,还是搭了市场上涨的顺风车。</p>
 
-        <h3>2.9. 量化里的组合优化不是公式崇拜</h3>
-<p>量化组合优化,听起来很唬人:把预期收益、风险、相关性、交易成本、行业暴露、风格暴露、个股上限、换手约束统统放进一个优化问题里,求解出一组目标权重。可剥掉数学外衣,它做的还是那件事:取舍。想多赚一点,你愿意多承担多少偏离和成本?公式只是把这笔账算得更整齐。</p><p>最小方差组合是唯一能手算到底的优化问题,值得试一遍:资产 A 波动 <span class="num">10%</span>,资产 B 波动 <span class="num">12%</span>,相关性为 0,要让组合方差最小,A 的权重等于 B 的方差除以两者方差之和,即 144 除以 244,约 <span class="num">59%</span>,B 约 <span class="num">41%</span>。组合波动约 <span class="num">7.7%</span>,比两个资产单拎出来都低;反算验证,0.59 的平方乘 100 约 34.8,0.41 的平方乘 144 约 24.2,相加约 59,根号 59 正好约 7.7。但行业里的人都知道两盆冷水:第一,预期收益极难估准;第二,协方差也在变,输入稍偏一点,输出权重可能差出十万八千里。常有人以为公式高级输出就可信,其实垃圾进、垃圾出,所以实际应用要加大量约束把组合按住。</p><p>个人做量化,完全不用一上来就啃优化器。可以先从几条朴素规则起步:单只股票不超过多少仓位、单个行业不超过多少、现金留多少、每次调仓的换手控制在多少以内、亏损到某个程度就停下来检查。这些规则看起来土,但比毫无约束地全信模型输出可靠得多。先做对简单规则,是一种工程审美:一切复杂的东西,都得搭在简单的地基上。</p>
+        <h3>2.7. 偏离基准的波动</h3>
+<p>买了指数基金,基金经理的 KPI 是什么?不是赚多少,而是<span class="hl">“跟得紧不紧”</span>。<span class="term">跟踪误差</span>刻画基金相对基准收益的波动:每天比指数多一点点或少一点点,这些差异如果一直很稳定、很小,<span class="term">跟踪误差</span>就小;如果忽而大幅领先、忽而大幅落后,<span class="term">跟踪误差</span>就大。</p><p>误差从哪里来?三个源头占大头:一是费用,管理费和托管费每天从净值里扣,拖出一段稳定落后;二是现金拖累,应对申赎的现金仓几乎不产生指数收益;三是复制偏差,抽样复制、成分股停牌、分红再投和调仓的时点差,让持仓与指数并非严丝合缝。算一笔账:指数一年涨 <span class="num">10%</span>,某基金费率合计 <span class="num">0.5%</span>,常年留 <span class="num">2%</span> 现金仓、现金收益 <span class="num">1.5%</span>,其余完美跟踪,则基金收益约为 0.98 乘 <span class="num">10%</span> 加 0.02 乘 <span class="num">1.5%</span>,再减 <span class="num">0.5%</span>,等于 <span class="num">9.33%</span>,一年落后 <span class="num">0.67 个百分点</span>。反算:<span class="num">9.8%</span> 加 <span class="num">0.03%</span> 减 <span class="num">0.5%</span>,正好 <span class="num">9.33%</span>。</p><p>有意思的是,不同产品对<span class="term">跟踪误差</span>的态度截然相反:普通指数基金把它当敌人,指数增强产品却故意保留一定<span class="term">跟踪误差</span>去换<span class="term">超额收益</span>。反直觉的是,一个每天稳定落后指数 <span class="num">0.002%</span> 的基金,<span class="term">跟踪误差</span>几乎为零,一年却落后约 <span class="num">0.5%</span>——<span class="num">0.002%</span> 乘约 <span class="num">250 个交易日</span>,恰是 <span class="num">0.5%</span>:误差量的是波动大小,不是输赢方向。所以好的指数增强,是在可接受的<span class="term">跟踪误差</span>内持续提供<span class="term">超额收益</span>;翻译成量化的语言,就是模型预测、组合优化和风险约束必须作为一个系统协同工作,谁掉链子都不行。</p>
 
-        <h3>2.10. 配置不是一次性决定</h3>
-<p>资产配置不是填写一次就长期有效的系统配置项,它更像一个需要持续运维的服务。市场在变,你也在变:收入变了、家庭支出变了、目标变了、估值变了、利率环境变了,配置都可能要跟着调。但调整绝不是每天追热点,而是定期巡检:当初那些假设,今天还成立吗?</p><p>漂移常常悄无声息。算一笔账:35 岁时定下 <span class="num">70%</span> 股票、<span class="num">30%</span> 债券,十年里股票翻倍、债券没怎么动,70 份变 140 份,总盘子 170 份,股票占比升到 140 除以 170,约 <span class="num">82.4%</span>;反算验证,0.7 乘 2 加 0.3 恰是 1.7。讽刺的是,这十年你的家庭支出变重、风险承受力反而在降——组合的风险方向和你的承受力可能在背道而驰。常有人以为配置设好就能一劳永逸,其实定期巡检的意义,就是在漂移撞墙之前把它拉回来。</p><p>想把配置执行下去,先把它写成一份看得见的计划:目标收益和风险是什么,各类资产目标权重是多少,再平衡规则是哪一条,什么情况才允许动长期配置,什么情况只是短期噪音。没有这套成文规则,人很容易上涨时贪婪激进、下跌时恐慌保守——情绪是最大的配置漂移源。量化研究者面对的问题结构一模一样:好的策略组合不是把一堆<span class="hl">“历史回测赚钱”</span>的模型堆在一起,而是要管理不同收益来源之间的相关性、容量、回撤和失效风险。本章的资产配置思维,就是你理解多策略平台的地基:先学会在资产层面取舍,再学会在策略层面取舍。</p>
+        <h3>2.8. 宽基、行业、主题和策略指数</h3>
+<p>指数家族很大,买之前先认清你抱的是哪一款。宽基指数覆盖广,比如<span class="term">沪深 300</span>、<span class="term">中证 500</span>、中证 1000,大致代表市场整体;行业指数聚焦单一行业,比如医药、消费、银行、电子;主题指数围绕一个概念,比如新能源、人工智能、红利低波;策略指数则按某种选股规则办事,比如红利、价值、质量、低波动、<span class="term">动量</span>。</p><p>规律是:指数越窄,暴露越集中。算一笔集中度账:某主题指数第一大权重股占比 <span class="num">25%</span>,若这只股票跌 <span class="num">40%</span>,其余成分原地不动,指数也要被拖下水 <span class="num">25%</span> 乘 <span class="num">40%</span>,整整 <span class="num">10%</span>。反算:假设指数 <span class="num">1000 点</span>,这只权重股贡献 <span class="num">250 点</span>,跌后缩到 <span class="num">150 点</span>,指数自然落在 <span class="num">900 点</span>,恰是 <span class="num">-10%</span>。常有人以为买主题指数等于<span class="hl">“分散买下一个赛道”</span>,其实第一权重股的一跤就能把你带沟里。买医药行业 <span class="term">ETF</span> 的那一刻,你承担的不只是基金的风险,还有整个行业的景气度、估值和政策风险。</p><p>在量化研究里,这些指数还是拆收益的解剖刀。一个策略赚了钱,要一层层拆开问:是市场整体涨了?是小盘股涨了?是某个行业恰好起飞了?还是模型真的选对了股票?如果收益拆开一看,只是重仓了一个热门行业,那不是稳定的 <span class="term">Alpha</span>,而是行业 <span class="term">Beta</span>——风一停,就会还回去。</p>
 
-        <h2>3. 为什么赚钱这么难</h2>
-        <p>学量化之前,你得先咽下一个不太舒服的事实:市场里挤满了聪明人、大资金、高速机器和海量信息源。你看到的新闻,别人多半也看到了;你灵机一动想到的简单规律,别人可能早就回测过几百遍。有效市场和随机游走这两套理论,不是来劝你放弃研究的,而是来给你立规矩的:任何一种赚钱方法,都必须先解释清楚两个问题——你的优势从哪儿来?为什么它还没被竞争者消灭?行为金融再补上题目的另一半:人不是理性机器,市场里确实常年漏着一些机会,但每个机会都要先过成本、竞争和风险这三道筛子,筛完还能剩下的才叫收益。这一章,我们把这份清醒补给你。</p>
+        <h3>2.9. 指数会换成分,数据也会骗人</h3>
+<p>很多人默认指数里装的股票名单是固定的,这是个危险的想当然。指数公司会定期调整成分:不符合规则的老股票被剔除,新符合规则的被纳入。每次调整,指数基金得跟着调仓;而你要做量化回测,这件事会直接影响结果的真实性。</p><p>看一个最常见的错误:拿今天的指数成分股去回测过去。比如用现在的<span class="term">沪深 300</span> 名单回测十年前的表现——那份名单里,十年前真正在指数里、后来经营恶化被踢出去的股票,全都不见了;留在名单里的,都是活到今天的胜利者。正确做法是使用点时成分数据:在每个历史日期,只用当时已经公布、已经生效的指数成分。</p><p>把这份偏差算成数字。假设等权持有 10 只股票、各 <span class="num">1 亿元</span>,五年间 2 只各跌 <span class="num">60%</span> 被剔除,剩下 8 只平均涨 <span class="num">50%</span>。真实结局是 2 乘 0.4 加 8 乘 1.5 等于 <span class="num">12.8 亿元</span>,赚 <span class="num">28%</span>;拿今天的 8 只名单回测,则是 <span class="num">8 亿</span>变 <span class="num">12 亿</span>,赚 <span class="num">50%</span>。反算:12.8 除以 10 减 1 与 12 除以 8 减 1,相差的 <span class="num">22 个百分点</span>全是幸存者填出来的。坑还不止成分:分红怎么处理、停牌怎么算点、新股第几天纳入——不尊重这些规则,基准是错的,<span class="term">超额收益</span>自然错,整个研究的数学基础就塌了。</p>
 
-        <h3>3.1. 有效市场到底在说什么</h3>
-<p>很多人一听<span class="hl">“有效市场”</span>就以为是迷信市场永远正确,这是个天大的误会。有效市场假说真正说的是:市场价格会快速反映可获得的信息。一条消息如果人人都能看到、又有足够的资金愿意据此交易,它的影响往往几分钟甚至几秒钟内就被打进价格。想靠一条公开、简单、人尽皆知的信息稳定捡钱?对不起,来晚了,肉已经被先到场的人吃完了。</p><p>看一个每天都在发生的场景,顺便算笔账。一家公司发布业绩预告,利润大幅超预期,熟悉它的交易员估算合理价位从 <span class="num">20 元</span>抬到 <span class="num">21 元</span>;消息挂网几秒内,大单已经把价格推到 <span class="num">20.9 元</span>。最早反应的资金赚走的是 21 除以 20 再减 1 的 <span class="num">5%</span>;等你刷到新闻、打开软件、在 <span class="num">20.9 元</span>慢条斯理下单,到 <span class="num">21 元</span>只剩约 <span class="num">0.5%</span>——反算验证,21 除以 20.9 再减 1,约是 <span class="num">0.48%</span>。同一条消息,先到者吃主菜,后到者分汤汁:它的主要收益,在你看到标题的那一刻就已经与你无关。</p><p>所以有效市场不是信仰,而是一种竞争视角,帮你估计<span class="hl">“捡钱难度”</span>。市场越开放、流动性越好、参与者越专业、交易成本越低,公开信息钻进价格的速度通常越快;越是小众、不透明、限制多的市场,信息摩擦和错误定价可能越多——但相应的,交易成本和风险也水涨船高。便宜的市场不便宜,冷清的市场有机会但不好进。</p><p>说到这里,有一个绕不开的著名争论。如果市场真那么难战胜,沃伦·巴菲特怎么解释?他掌管的伯克希尔,几十年年化回报约 <span class="num">20%</span>,长期远远跑赢大盘,把最初的每一块钱变成了几万块。有效市场的支持者不服:几万人里总有人纯靠运气连赢几十年,就像几万人不停抛硬币,总会有几个家伙连出几十次正面,这证明不了技术。巴菲特本人的反驳同样精彩:如果这些赢家大多来自同一个村子——他指的是那批师承价值投资、出自同一师门的人——再用运气解释,就说不过去了。</p><p>这场争论至今没有标准答案,但两边合起来给你留下两条都要记住的教训。第一,战胜市场极其困难,绝大多数人做不到,所以别轻易把自己当成例外;第二,极少数人可能真的拥有可持续的优势,但那需要罕见的方法、纪律和耐心。常有人以为有效市场假说宣判了<span class="hl">“研究无用”</span>,其实它宣判的是<span class="hl">“简单的研究无用”</span>。量化想干的,正是用数据和纪律去争取那一点点别人没有、又可重复的优势——同时时刻清醒:在这场抛硬币大赛里,自己更可能是那个普通的参赛者。</p>
-
-        <h3>3.2. 弱式、半强式和强式</h3>
-<p><span class="hl">“市场有效”</span>其实分三个挡位,像竞争的三个难度等级。最简单的弱式有效说:历史价格和成交量里的信息,已经全部反映在当前价格里——所以简单对着过去走势画几条线,很难稳定赚钱。中间挡半强式有效说:公开信息也反映完了,包括财报、公告、新闻和公开研究报告。最高挡强式有效说:连内幕消息都进了价格——不过现实中这个要求强得离谱,基本没人当真。</p><p>这三挡不是并列的三个标签,而是层层递进的嵌套关系,机制值得想透:公开信息里天然包含历史价量,所以半强式一旦成立,弱式自动成立;内幕信息又包含一切公开信息,强式一旦成立,半强式自动成立。反过来,想反驳哪一挡,只要在那个信息集里找到还能稳定赚钱的方法。检验半强式最常用的招数是事件研究:某公司公告大超预期,当天股价从 <span class="num">10 元</span>跳到 <span class="num">11 元</span>;如果统计发现这类公司在公告后 <span class="num">20 个交易日</span>内平均还能再涨 <span class="num">5%</span>——反算,11 乘 1.05 是 11.55——那这点稳稳可赚的<span class="hl">“公告后漂移”</span>,就是对半强式有效的实锤反驳。</p><p>这三层不只是课本名词,是评估策略难度用的:只用历史 K 线做个简单规则,挑战的是弱式有效;拿公开财报选股,挑战的是半强式有效;靠未公开内幕赚钱,已不是<span class="hl">“投资能力”</span>的范畴,还可能直接违法。常有人以为三层次是给市场打分的评级,其实是三个强度递增的假设——越往上要求越多,越容易被现实反驳。现实中量化研究大多在弱式和半强式之间讨生活:用价格、财报、公告、另类数据等公开合规的数据,寻找还没被市场完全消化的信息。但留意残酷趋势:用同类数据、同类模型的人越多,机会被挤压得越快——别人学得越多,你面前的墙就越高。</p>
-
-        <h3>3.3. 随机游走不是说价格没有原因</h3>
-<p><span class="hl">“股价随机游走”</span>这句话,被误解得比谁都深——太多人把它听成<span class="hl">“价格乱走,没有原因”</span>,然后理直气壮地嗤之以鼻。更准确的说法是:如果新信息本身就难以预测,那么价格对新信息的反应自然也会显得难以预测。今天的价格已经打包了市场当前知道的一切;明天价格的变动,主要来自明天才冒出来的新信息和新情绪。随机的是信息流的到来,不是价格的反应机制。</p><p>机制再推一步:价格对<span class="hl">“预期”</span>定价,不是对<span class="hl">“事实”</span>定价。假设全市场都预期某公司明年利润增长 <span class="num">20%</span>,这 <span class="num">20%</span> 今天就已经被买进了价格。明天财报公布,恰好增长 <span class="num">20%</span>,股价可以原地不动,因为消息里零意外;若增长 <span class="num">30%</span>,多出的那 <span class="num">10 个百分点</span>才是新信息,市场只为这一部分补涨。反过来说,利好兑现当天股价反而下跌,也是同一台机器:常有人以为出好消息就必然涨,其实价格只跟着<span class="hl">“意外”</span>走,不跟着<span class="hl">“旧闻”</span>走——旧闻的账,昨天就结清了。</p><div class="callout callout--warn reveal"><span class="callout__title">提醒</span><p>所以随机游走真正提醒你的,是预测和解释之间的巨大鸿沟:收盘之后讲一个“今天为什么涨”的故事,人人都会;开盘之前下注“明天会涨”,难上加难,两者差着整个科学方法论。量化研究必须用严格的样本外测试,把“事后解释”和“事前可用信号”分开——前者是故事,后者才可能变成策略。下次再听到一个讲得热血沸腾的涨跌故事,先问一句:这个故事在事前,能不能写成一条可检验的规则?</p></div>
-
-        <h3>3.4. 市场不完美,但不完美不等于好赚钱</h3>
-<p>市场会不会错?当然会。泡沫、恐慌、流动性冲击、机构约束、投资者情绪、监管变化,都能把价格推离长期价值。但从<span class="hl">“市场会错”</span>到<span class="hl">“我能赚钱”</span>,中间隔着一条鸿沟,很多人都自信地跳了进去。你要说清错在哪、估计多久才会修正、用什么工具表达你的观点,还得扛得住期间的所有回撤——四件事,缺一不可。</p><p>举一个让人冷静的账。你研究后认定一只股票被低估 <span class="num">30%</span>:合理价值 <span class="num">13 元</span>,现价 <span class="num">10 元</span>,而且你的判断完全正确。可市场拖了两年才认可,期间你的资金成本每年约 <span class="num">6%</span>,两年合计约 <span class="num">12%</span>;更磨人的是,第二年股价一度继续跌到 <span class="num">8 元</span>,账面浮亏 <span class="num">20%</span>,你的资金、你的心态、你的老板都得扛住。两年后价格真回到 <span class="num">13 元</span>:总收益 <span class="num">30%</span>,扣掉资金成本剩约 <span class="num">18%</span>,年化约 <span class="num">8.7%</span>——反算验证,1.087 的平方约 1.18。看对了方向,只吃回年化 <span class="num">8.7%</span>,还得中途不退场。常有人以为看对了就该赚到那份差价,其实<span class="hl">“低估”</span>只是机会的入场券,兑现它要另付时间这份票价,还要能扛住波动这份颠簸。</p><p>这也是价值投资和量化因子共同面对的煎熬:长期有效,不代表每个月有效。你的策略如果连续跑输一年,你怎么判断?是暂时失效、永久失效,还是当初回测就过拟合了?回答这个问题所需要的,远不止是写个回测脚本——你需要的是对策略逻辑的信仰、统计上的证据,和扛住怀疑的仓位管理。记住,市场保持不对劲的时间,完全可能长过你保持留在牌桌上的时间。</p>
-
-        <h3>3.5. 人不是理性机器</h3>
-<p>教科书里的投资者是台精密计算机,现实中的投资者是带着情绪刷盘的血肉之躯。行为金融研究的就是系统性的<span class="hl">“人性 bug”</span>:过度自信,让人高估自己的判断;损失厌恶,让人死扛着亏损单不肯止损;锚定效应,让人天天盯着自己的买入价,而不是公司本身;羊群效应,让人忍不住追热门;近因效应,让人把最近发生的事看得过重。这些 bug 人人都有,包括此刻读这行字的你。</p><p>这些偏差的强度是能算出来的。行为金融的估算里,亏 <span class="num">1000 元</span>的痛感,大约需要赚 2000 到 <span class="num">2500 元</span>的快感才抵得平。代入一个五五开、输赢各 <span class="num">1000 元</span>的赌局:若赚的效用按 +1 计、亏的按 -2.25 计,期望效用是 (1 减 2.25) 除以 2,约 -0.63,于是多数人拒绝这个数学上占优的赌局——反算验证,0.5 乘 1 加 0.5 乘 -2.25,账目就是这么歪的。这套机制能解释一大堆市场现象:涨疯了,资金排队追进来;跌惨了,大家夺路而逃;亏损的股票攥在手里舍不得卖,刚赚一点就迫不及待落袋。这些都不是金融公式,而是赤裸裸的人性,原封不动地投射在每个人的账户曲线上。</p><p>反直觉的是,知道偏差存在,不等于就有人给你送钱。常有人以为散户爱追涨杀跌,写个反着来的策略就能躺赚——可反向策略可能长期有效,也可能在汹涌的趋势行情里被一波打穿:逆向抄底抄在半山腰的账户,比比皆是。每一个<span class="hl">“人性解释”</span>,最终都得落到数据检验、交易成本和风险控制的秤上,称一称才作数。</p>
-
-        <h3>3.6. 异常收益为什么会消失</h3>
-<p>金融市场里隔三差五就有人<span class="hl">“发现规律”</span>:低估值股票长期表现更好,小市值股票有溢价,公告之后价格会延续惯性,过去涨的股票会继续涨。学术界把这些规律叫异象,行业把它们做成因子。但发现一个规律,和保住这个规律的收益,完全是两回事。常有人以为规律一旦被写进论文和研报,收益还能照旧躺赚,其实公开发表往往正是收益衰减的起点——一旦它被大量资金发现并蜂拥交易,收益就可能日渐萎缩。</p><p>背后的机制直白得残酷,算给你看。某类股票真实价值 <span class="num">10 元</span>,长期被忽视,只卖 <span class="num">8 元</span>,低估 <span class="num">20%</span>。异象公开之后,资金提前冲进去抢筹,价格先被推到 9.5,再推到 10。先行者从 <span class="num">8 元</span>拿到 <span class="num">10 元</span>,赚走 <span class="num">25%</span>;而闻风赶来、在 <span class="num">9.8 元</span>才上车的人,低估空间只剩 10 除以 9.8 再减 1,约 <span class="num">2%</span>——反算验证,8 乘 1.25 恰是 10,9.8 乘 1.02 约是 10。同一条规律,收益按到场顺序一层层变薄,就像一家隐蔽的宝藏小店,一旦被探店博主曝光,排队和下架也就接踵而至。竞争越充分,简单的机会越难存活。</p><p>可有些收益,却能顽强地长期存在,为什么?因为它们背后往往站着实打实的风险补偿、顽固的行为偏差或制度约束。比如小盘股长期可能承担更高的风险,价值股长期可能背着基本面的压力,<span class="term">动量</span>策略会在市场急转弯时狠狠亏一笔。反直觉的是,能不能拿得住本身就是门槛:能长期活下来的<span class="term">超额收益</span>,通常拿得不舒服——要么不好拿,要么很难坚持,要么容量装不下几个人。舒舒服服就能赚、还永远不消失的钱,市场里基本不存在。</p>
-
-        <h3>3.7. 信息优势、分析优势和执行优势</h3>
-<p>量化到底靠什么赚钱?剥开来看,大致是三类优势的排列组合。第一是信息优势:你比别人更早、更准、更完整地拿到数据。第二是分析优势:同样的数据,你能从中挤出更干净、更有力的信号。第三是执行优势:同样的信号,你能用更低的成本、更小的冲击、更稳的风控把它变成成交。三条腿,缺一条都站不稳。</p><p>执行这条腿最容易被个人忽视,先算笔摩擦账:你的信号年化毛利 <span class="num">12%</span>,看着不错;可单边交易成本约 <span class="num">0.15%</span>,一进一出就是 <span class="num">0.3%</span>,一年换手 20 遍,摩擦成本是 <span class="num">0.3%</span> 乘 20,整整 <span class="num">6%</span>——<span class="num">12%</span> 的毛利只剩 <span class="num">6%</span>;要是换手升到一年 100 遍,摩擦高达 <span class="num">30%</span>,毛利直接被磨成负数。反算验证,12 减 6 与 12 减 30,盈亏立判。对个人投资者来说,现实的策略是认清牌桌再入座:拼信息速度和交易基础设施,你拼不过机构,但可以选战场,避开最拥挤的赛道——不必一上来就扎进高频盘口那种毫秒级绞肉机,先从日频数据清洗、指数配置、简单因子、基金分析和风险控制做起,这些地方的竞争密度友好得多。</p><p>也别把机构量化想成<span class="hl">“一个模型定江山”</span>。数据采购、清洗、特征工程、组合优化、交易执行、监控告警、合规、硬件、团队流程——每一环都是优势的一部分。常有人以为量化拼的就是一个神模型,其实模型分数再漂亮,如果成交成本吞掉收益,或者系统上线三天两头挂掉,照样一分钱赚不到。这和工程世界的道理一模一样:单机 benchmark 漂亮不算数,端到端的系统表现才作数。</p>
-
-        <h3>3.8. 套利和无风险套利不是一回事</h3>
-<p><span class="hl">“套利”</span>这个词,大概是金融圈里被用滥最严重的词之一。严格意义上的无风险套利是:同一笔现金流在两个市场价格不一致,你能锁定收益而且不承担风险。而现实中大家常挂在嘴边的各种<span class="hl">“套利”</span>,多半其实是相对价值交易,里面藏着<span class="term">基差</span>风险、流动性风险、模型风险和执行风险。常有人以为沾上<span class="hl">“套利”</span>两个字就等于稳赚,其实风险一个没少,只是藏得比较深。</p><p>拿 <span class="term">ETF</span> 折溢价套利这个<span class="hl">“教科书案例”</span>来拆。某 <span class="term">ETF</span> 市价 <span class="num">10.05 元</span>、净值 <span class="num">10.00 元</span>,溢价 <span class="num">0.5%</span>,看似白捡。可真下单你会发现:申赎费用加冲击成本合计约 <span class="num">0.3%</span>,扣完只剩 <span class="num">0.2%</span> 的缝隙;而底层资产日内正常波动就有正负 <span class="num">0.4%</span>,你操作的几小时里,一次反向波动就能把缝隙碾成亏损。反算验证,0.5 减 0.3 恰是 0.2,经不起 0.4 的颠簸。再看执行层:申赎有门槛,成分股可能停牌买不齐,涨跌停把你挡在门外——一个<span class="hl">“稳赚”</span>的价差,落地全是缺口。价差看起来挂在那里,不代表你能无风险揣进兜里。</p><p>再记一笔历史的账:有顶级团队把小概率风险当成不存在,加约 <span class="num">30 倍</span><span class="term">杠杆</span>反复赚 <span class="num">0.2%</span> 的小价差,一次循环赚 30 乘 <span class="num">0.2%</span>,约 <span class="num">6%</span>,岁月静好很多年;直到一次 <span class="num">2%</span> 的反向波动,资本金被抹掉 30 乘 <span class="num">2%</span>,整整 <span class="num">60%</span>,多年积累一夜归零。反算验证,6 和 60 本来就是同一枚<span class="term">杠杆</span>的两面。给量化新手一句防身咒:少说<span class="hl">“无风险”</span>,多问<span class="hl">“风险藏在哪”</span>。金融史上不少大灾难都是同一个剧本——看不见的风险,不叫消失,叫潜伏。</p>
-
-        <h3>3.9. 市场有效性怎样指导个人学习</h3>
-<p>绕了一圈,有效市场理论对个人最实用的价值,其实是四个字:保持谦逊。你发现一个简单规律,先默认别人早就看过;你觉得一个策略好到离谱,先问一句它为什么还没被套利者消灭;你觉得自己比市场聪明,先拿基准对比和样本外数据检验一下。怀疑在先,下单在后。</p><p>谦逊不是躺平,它有可操作的检查量规。模拟盘一年赚 <span class="num">15%</span>,先别庆功:若同期<span class="term">沪深 300</span> 涨 <span class="num">18%</span>,你的几何超额是 1.15 除以 1.18 再减 1,约 <span class="num">-2.5%</span>——反算验证,1.18 乘 0.975 约是 1.15——你其实跑输了最懒的基线。想实打实进步,三条稳妥战线:第一,学会低成本指数化投资,把不依赖预测的市场 <span class="term">Beta</span> 先稳稳拿到手;第二,用小资金或模拟盘做量化研究,把数据意识和风险意识练成肌肉记忆;第三,在实战中慢慢寻找自己真正理解、也能执行的优势,而不是追别人的故事。谦逊不是收兵,是帮你把弹药集中到有希望的地方。</p><p>观察身边的人你会发现:大多数人亏钱,不是因为市场太有效,而是因为败在基本纪律上——追涨杀跌、重仓单票、听风就是雨、借钱加<span class="term">杠杆</span>、不记录决策、从来不复盘。常有人以为亏钱是认知不够、需要更神的模型,其实把这些低级错误一条条消灭,往往比苦苦寻找神奇模型更能改变你的收益曲线。先不输给自己,再谈赢市场。</p>
-
-        <h3>3.10. 怀疑,验证,再怀疑</h3>
-<p>量化研究的真正态度,既不是信<span class="hl">“市场有效”</span>教,也不是拜<span class="hl">“市场无效”</span>神,而是一套工作循环:提出一个可以检验的假设,用历史数据验证,期间严防未来函数和过拟合,然后再扔到样本外、模拟盘和小规模实盘上继续锤炼。怀疑驱动研究,验证筛掉幻觉,再怀疑让你活下来。</p><p>这套循环为什么非走不可?一笔统计账就说明白:就算你毫无规律,随机生成 100 个交易规则回测历史数据,按 <span class="num">5%</span> 的显著性标准,纯靠运气也该有约 5 个<span class="hl">“显著赚钱”</span>的策略浮现——反算验证,100 乘 <span class="num">5%</span> 恰是 5。不做样本外检验,你分不清手里的宝贝是那 5 个幸运废物,还是真规律;常有人以为回测赚钱就等于实盘赚钱,多重检验的坑专等这种自信。合格的研究问题还得过拷问清单:信号为什么可能存在?数据在交易当时能不能看到?扣完成本还有剩吗?在哪些市场环境里会失效?容量能装多少资金?用的人多了收益会不会被挤掉?能从容答完的策略,才有资格谈<span class="hl">“上线”</span>。</p><p>这一章的结论朴素至极:市场不完美,但极难打败。正因为难,量化才需要统计、工程、金融直觉和风险管理一起上,缺一门都不行。只靠一个指标、一个故事、一个神秘模型闯市场,就像只带一把螺丝刀去修数据中心——勇气可嘉,结局堪忧。</p>
+        <h3>2.10. 个人怎么用指数建立投资纪律</h3>
+<p>说了这么多工具,落到你个人身上,指数最朴素的用法是当一面<span class="hl">“照妖镜”</span>。下次想买个股之前,先对自己三连问:我为什么不直接买一只低成本的宽基 <span class="term">ETF</span>?我承担这只个股的特有风险,指望换来什么额外收益?我是真有能力判断这家公司,还是只是被它最近的涨跌勾住了注意力?能答好这三问,你的下单才站得住。</p><p>如果你做量化练习,指数还是你的第一条及格线:买入并持有某个宽基指数,就这。你的策略要是长期跑不赢这个傻瓜基线,或者跑赢的部分全靠承担更大回撤、更集中的行业暴露,那就先别急着宣布自己挖到了 <span class="term">Alpha</span>。</p><p>把及格线量化一下:一只宽基 <span class="term">ETF</span> 综合费率约 <span class="num">0.15%</span>,而自己做策略,佣金、冲击成本、税费加研究折算,一年摩擦 <span class="num">1.5%</span> 都算客气——你的能力必须每年稳定补上这 <span class="num">1.35 个百分点</span>,才刚够和<span class="hl">“躺平”</span>打平,反算:<span class="num">1.5%</span> 减 <span class="num">0.15%</span>,恰是 <span class="num">1.35%</span>。反直觉的是,有时什么都不做、只买指数,反而是最优解。所以指数化投资不是躺平,更不是懒惰,而是承认难度之后的纪律:先用低成本工具把市场 <span class="term">Beta</span> 稳稳拿到手,再拿少量资金、少量研究时间去探索主动策略和量化策略。这条路远比一上来就满仓追逐复杂信号走得稳。</p>
 
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>收益率是复利链条,不能把涨跌简单相加。</li>
-            <li>年化、波动、最大回撤、夏普、胜率和盈亏比分别回答不同问题,不能互相替代。</li>
-            <li>资产配置先决定风险大方向,选股和择时是在这个框架里的局部决策。</li>
-            <li>分散化利用低相关风险来源降低组合波动,但不能消灭系统性风险。</li>
-            <li>有效市场不是说价格永远正确,而是说公开信息很难被低成本反复利用。</li>
+            <li>行情数字是交易结果的记录,不是公司价值和未来走势的直接答案。</li>
+            <li>K 线、成交量、盘口、换手率、复权和技术指标都要先理解口径,再谈使用。</li>
+            <li>指数是一组证券按规则合成的市场尺子,不是单只股票或官方估值。</li>
+            <li>ETF 既有基金净值,也有交易所价格,折溢价和流动性会影响真实交易成本。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.1.</strong> 最小的积木</li>
-            <li><strong>1.2.</strong> 钱一路滚到哪里</li>
-            <li><strong>1.3.</strong> 把不同时间长度拉到同一把尺子</li>
-            <li><strong>1.4.</strong> 这条路颠不颠</li>
-            <li><strong>1.5.</strong> 从高点跌到低点有多痛</li>
-            <li><strong>1.6.</strong> 每承担一份波动赚多少超额收益</li>
-            <li><strong>1.7.</strong> 经常赢不等于长期赚</li>
-            <li><strong>1.8.</strong> 先扣掉市场给你的那部分</li>
-            <li><strong>1.9.</strong> 杠杆会同时放大收益和风险</li>
-            <li><strong>1.10.</strong> 一张收益报告应该怎么读</li>
-            <li><strong>2.1.</strong> 资产配置先回答钱放在哪里</li>
-            <li><strong>2.2.</strong> 分散化不是买很多名字</li>
-            <li><strong>2.3.</strong> 两条曲线是不是一起动</li>
-            <li><strong>2.4.</strong> 股票和债券为什么常被放在一起</li>
-            <li><strong>2.5.</strong> 涨多了卖一点,跌多了补一点</li>
-            <li><strong>2.6.</strong> 每类风险分到多少额度</li>
-            <li><strong>2.7.</strong> 目标日期、生命周期和个人约束</li>
-            <li><strong>2.8.</strong> 分散化能降低非系统风险,不能消灭系统风险</li>
-            <li><strong>2.9.</strong> 量化里的组合优化不是公式崇拜</li>
-            <li><strong>2.10.</strong> 配置不是一次性决定</li>
-            <li><strong>3.1.</strong> 有效市场到底在说什么</li>
-            <li><strong>3.2.</strong> 弱式、半强式和强式</li>
-            <li><strong>3.3.</strong> 随机游走不是说价格没有原因</li>
-            <li><strong>3.4.</strong> 市场不完美,但不完美不等于好赚钱</li>
-            <li><strong>3.5.</strong> 人不是理性机器</li>
-            <li><strong>3.6.</strong> 异常收益为什么会消失</li>
-            <li><strong>3.7.</strong> 信息优势、分析优势和执行优势</li>
-            <li><strong>3.8.</strong> 套利和无风险套利不是一回事</li>
-            <li><strong>3.9.</strong> 市场有效性怎样指导个人学习</li>
-            <li><strong>3.10.</strong> 怀疑,验证,再怀疑</li>
+            <li><strong>1.1.</strong> 最新价不是公司真实价值</li>
+            <li><strong>1.2.</strong> 一天被压成四个价格</li>
+            <li><strong>1.3.</strong> K 线实体和影线只是压缩图</li>
+            <li><strong>1.4.</strong> 有多少筹码换了手</li>
+            <li><strong>1.5.</strong> 同一批股票换了多少主人</li>
+            <li><strong>1.6.</strong> 买一卖一不是装饰</li>
+            <li><strong>1.7.</strong> 一天波动有多大</li>
+            <li><strong>1.8.</strong> 分红送股后,价格为什么要重新调整</li>
+            <li><strong>1.9.</strong> 先理解它只是加工后的价格</li>
+            <li><strong>1.10.</strong> 时间戳、停牌、缺失和供应商差异</li>
+            <li><strong>2.1.</strong> 指数不是一只股票,而是一把尺子</li>
+            <li><strong>2.2.</strong> 大公司说话更大声</li>
+            <li><strong>2.3.</strong> 承认市场很难战胜之后的选择</li>
+            <li><strong>2.4.</strong> 可以在交易所买卖的基金份额</li>
+            <li><strong>2.5.</strong> 折价、溢价和套利机制</li>
+            <li><strong>2.6.</strong> 没有基准就没有评价</li>
+            <li><strong>2.7.</strong> 偏离基准的波动</li>
+            <li><strong>2.8.</strong> 宽基、行业、主题和策略指数</li>
+            <li><strong>2.9.</strong> 指数会换成分,数据也会骗人</li>
+            <li><strong>2.10.</strong> 个人怎么用指数建立投资纪律</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>100 元先涨 10% 再跌 10%,最后是多少钱?</summary>
-            <p>先变成 110 元,再在 110 元的基础上跌 10%,变成 99 元,累计收益是 -1%。收益作用在不断变化的本金上,涨跌百分点不能直接对冲。</p>
+            <summary>最新价为什么不等于公司真实价值?</summary>
+            <p>它只是最近一笔成交的价格,会受流动性、情绪、消息和单笔订单的影响,而估值还要看利润、资产、行业、利率和风险偏好,它代替不了完整体检。</p>
           </details>
           <details class="quiz__item">
-            <summary>最大回撤为什么比单日波动更贴近投资体验?</summary>
-            <p>它衡量从净值历史高点跌到后续低点的最大损失,正好对应投资者心理压力最大、最容易割肉离场的持有阶段。</p>
+            <summary>为什么日 K 线会丢失信息?</summary>
+            <p>它把一天成千上万笔交易压缩成开高低收四个价和成交量,盘中的路径、拉扯过程和排队细节全都被压掉了。</p>
           </details>
           <details class="quiz__item">
-            <summary>买很多股票为什么不一定真正分散?</summary>
-            <p>如果这些股票暴露在同一行业、同一风格或同一宏观因子上,风浪一来会一起下跌——数量分散不等于风险分散。</p>
+            <summary>为什么没有基准就很难评价收益?</summary>
+            <p>因为绝对赚钱不代表跑赢了市场,绝对亏钱也不一定代表做得差——必须拿它和所承担的市场暴露去比较,绝对收益和相对收益要分开记账。</p>
           </details>
           <details class="quiz__item">
-            <summary>再平衡解决什么问题?</summary>
-            <p>它把组合权重拉回目标比例,防止涨多的资产自动占用越来越高的风险额度,顺便形成纪律性的低买高卖。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>有效市场假说为什么不等于市场永远正确?</summary>
-            <p>它说的是信息会快速进入价格,而不是价格永远等于价值——价格仍会因为情绪、交易限制和新信息的变化而偏离。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>随机游走想提醒投资者什么?</summary>
-            <p>如果当前信息已经进了价格,未来的价格变化主要来自难以预测的新信息,所以事前预测远比事后解释困难。</p>
+            <summary>ETF 为什么可能出现折价或溢价?</summary>
+            <p>二级市场价格由盘中买卖撮合出来,净值由底层资产算出来,两者会因为流动性、交易成本、申赎门槛、涨跌停或跨市场时间差而暂时分家。</p>
           </details>
         </section>
       </div>

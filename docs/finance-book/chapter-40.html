@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 40 章 · 附录:每次研究前先读这张纸 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="把全书压成一张研究前检查纸,用于防止冲动开始、冲动交易和冲动实盘。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="40">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第七部分 · 路线、复盘与检查清单 · 第 40 章</p>
+        <h1>附录:每次研究前先读这张纸</h1>
+        <p class="lead">最后给你一张可以反复看的纸。每次你想做一个策略、买一个产品、写一个模型、跑一次回测,或者把模拟盘推向实盘之前,先把这一章读一遍。它不提供新概念,只帮你把手刹拉住几分钟——很多亏损不是因为不懂高深理论,而是因为忘了最基本的问题:问题是否足够小、数据是否可信、成本是否算够、风险是否扛得住。</p>
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>每次研究前先缩小问题,每次交易前先想最坏情况。</li>
+            <li>每次回测前先检查可见性和成本,每次实盘前先写停止规则。</li>
+          </ul>
+        </section>
+
+
+        <h2>1. 研究前先问问题是否足够小</h2>
+<p>第一个检查点:你的研究问题够不够小。不要一上来就问<span class="hl">“我能不能预测股市”</span>——这个问题大到无法检验,也没有任何行动含义。把它压小:限定到某个市场、某个频率、某类资产、某个信号、某个基准。比如:在<span class="term">沪深 300</span> 成分股范围内,低估值因子按月调仓,能不能带来<span class="term">超额收益</span>。压到这个颗粒度,才算能开工。</p><p>小的好处在于,问题越小,你越容易回答那三件后勤问题:数据需要什么样的?回测要怎么写?结果该怎么解释?大问题最害人之处,是它允许你用宏大词汇把细节糊弄过去;小问题恰恰相反,它会逼着你直面每一个口径——而研究的对错,几乎都藏在口径里。</p><p>启动前一秒,做个口语测试:能不能用一句话说清自己的研究问题?说不利落,就先别碰代码。动手写代码解决不了<span class="hl">“不知道自己要研究什么”</span>,只会让你错得更有效率。</p>
+                <div class="table-wrap">
+                  <table>
+                    <tbody>
+                      <tr><th>研究问题一句话</th><td>我想检验: ________ 在 ________ 股票池/资产中,以 ________ 频率是否能带来 ________。</td></tr>
+                      <tr><th>基准</th><td>我要比较的基准是: ________。</td></tr>
+                      <tr><th>成功标准</th><td>通过标准是: 超额收益 ________, 最大回撤 ________, 成本后仍为 ________。</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>这三行空格填不出来,说明你的问题还没缩小到可研究的状态,那就继续缩小,而不是开跑。<span class="hl">“先试试看”</span>这四个字,听起来灵活,做起来就是用忙碌掩住没想清楚。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 470" role="img" aria-label="六问检查牌:问题足够小、最坏情况知道、当时可见、成本算过、能随时停止、能复盘写三行;六关都过才准开始">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">研究动手前,先刷六道闸</text>
+            <line x1="118" y1="86" x2="118" y2="396" stroke="rgba(240,201,106,0.35)" stroke-width="2"/>
+            <rect x="78" y="58" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="86" r="16" fill="#f0c96a"/>
+            <text x="118" y="92" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="83" fill="#eef4f8" font-size="15.5" font-weight="800">问题足够小?</text>
+            <text x="150" y="105" fill="#bcc9dd" font-size="12.5">一句话说清:哪个池子 · 哪个因子 · 哪个频率</text>
+            <text x="812" y="90" text-anchor="end" fill="#8499bd" font-size="12">第 1 闸</text>
+            <rect x="78" y="120" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="148" r="16" fill="#f0c96a"/>
+            <text x="118" y="154" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="145" fill="#eef4f8" font-size="15.5" font-weight="800">最坏情况知道?</text>
+            <text x="150" y="167" fill="#bcc9dd" font-size="12.5">先想「全亏光那天」长什么样,再谈收益</text>
+            <text x="812" y="152" text-anchor="end" fill="#8499bd" font-size="12">第 2 闸</text>
+            <rect x="78" y="182" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="210" r="16" fill="#f0c96a"/>
+            <text x="118" y="216" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="207" fill="#eef4f8" font-size="15.5" font-weight="800">当时可见?</text>
+            <text x="150" y="229" fill="#bcc9dd" font-size="12.5">从下单到成交,不能让代码看到未来</text>
+            <text x="812" y="214" text-anchor="end" fill="#8499bd" font-size="12">第 3 闸</text>
+            <rect x="78" y="244" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="272" r="16" fill="#f0c96a"/>
+            <text x="118" y="278" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="269" fill="#eef4f8" font-size="15.5" font-weight="800">成本算过?</text>
+            <text x="150" y="291" fill="#bcc9dd" font-size="12.5">佣金 · 印花税 · 滑点 · 冲击:先算成本再看收益</text>
+            <text x="812" y="276" text-anchor="end" fill="#8499bd" font-size="12">第 4 闸</text>
+            <rect x="78" y="306" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="334" r="16" fill="#f0c96a"/>
+            <text x="118" y="340" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="331" fill="#eef4f8" font-size="15.5" font-weight="800">能随时停止?</text>
+            <text x="150" y="353" fill="#bcc9dd" font-size="12.5">停止线开工前写死:数据坏停 · 对不上账停</text>
+            <text x="812" y="338" text-anchor="end" fill="#8499bd" font-size="12">第 5 闸</text>
+            <rect x="78" y="368" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="396" r="16" fill="#f0c96a"/>
+            <text x="118" y="402" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="393" fill="#eef4f8" font-size="15.5" font-weight="800">能复盘写三行?</text>
+            <text x="150" y="415" fill="#bcc9dd" font-size="12.5">数据版本 · 参数 · 成交记录,环环说清</text>
+            <text x="812" y="400" text-anchor="end" fill="#8499bd" font-size="12">第 6 闸</text>
+            <text x="450" y="452" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">六关都过,才准开始</text>
+          </svg>
+          <p class="figure__cap">每次研究、交易、回测、实盘之前,先把这六张牌从上到下刷一遍:问题要小到一句话说清,先想最坏那一天,每个字段按当时可见性对齐,先算成本再看收益,停止线提前写死,资料留到能复盘——六关都过,才准开始。</p>
+        </div>
+        <h2>2. 交易前先问最坏情况</h2>
+<p>第二个检查点:下单之前,不许先算能赚多少,先算错了会怎样。这一笔可能亏多少钱?亏了能不能卖得出去?会不会需要追加<span class="term">保证金</span>?会不会动到生活费?会不会触发强制平仓?这一串问题,才是每一次交易的真正入场券。</p><p>算最坏情况不是为了把自己吓住,而是为了校准仓位。结论可能很直白:最坏情况我承受不住——那不用讨论,就是仓位太大,或者这个工具根本不适合你。仓位从来不是靠胆子定的,是靠可承受的最坏结局倒推出来的。</p><p>市场里有个常见误会:人们是被一次方向判断错给毁掉的。实际上,毁掉绝大多数人的不是一次错误,而是他们从没给错误留过空间——全仓而无冗余,错一次就没下一场了。</p>
+                <div class="table-wrap">
+                  <table>
+                    <tbody>
+                      <tr><th>最大可亏金额</th><td>本项目最多允许亏: ________ 元。</td></tr>
+                      <tr><th>最坏成交情景</th><td>如果跌停/停牌/流动性枯竭,我预计退出需要: ________ 天。</td></tr>
+                      <tr><th>仓位上限</th><td>单策略仓位不超过总资产: ________%。</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>别小看这张表的分量,它自带一个试金石:只要<span class="hl">“最大可亏金额”</span>填下去的瞬间你心慌了一下,那就说明现在的仓位太大了——心慌是边界在报警,听它的。</p>
+
+        <h2>3. 回测前先问当时是否可见</h2>
+<p>第三个检查点:每一个数据字段,都要过一次安检——在你做出交易决策的那一刻,这个数据真的已经可见了吗?价格、财报、公告、指数成分、宏观数据、分析师预测,统统按真实的发布时间对齐,一个也不许例外。</p><p>碰上答不清可见性的字段,处理原则没有中间态:先别把它放进模型。用得不明不白,比不用更糟——因为你不知道它身上是不是就带着未来函数,而它一旦带毒,将会在回测里给你发一朵大红花。</p><p>这条规则听起来是小动作,但它挡住的假回测,比任何复杂方法论挡住的都多。它简单到只有一步,因此也特别容易被跳过;被跳过一次的代价,前面整整一本书都在展示。</p>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>字段</th><th>数据日期</th><th>可见日期</th><th>用于哪天决策</th></tr></thead>
+                    <tbody>
+                      <tr><td>价格/成交量</td><td>________</td><td>________</td><td>________</td></tr>
+                      <tr><td>财报/公告</td><td>________</td><td>________</td><td>________</td></tr>
+                      <tr><td>指数成分</td><td>________</td><td>________</td><td>________</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>填表时只认一条死规矩:可见日期必须早于决策日期,晚一点都不行。哪一格填得含糊,就把对应字段先从模型里拿出来——模型可以少一点特征,不能多一份毒药。</p>
+
+        <h2>4. 看收益前先看成本</h2>
+<p>第四个检查点:先算成本,再看收益。成本不是结尾顺手补上的小数,而是策略本身的一部分。佣金、印花税、滑点、市场冲击、<span class="term">基差</span>、融资成本、融券成本,这些项目排开,每一项都在干同一件事:把毛收益一栏一栏地啃成净收益。</p><p>警惕一类报告:策略只有在<span class="hl">“成本压得足够低”</span>的假设下才赚钱。这种结果说明,它的优势薄得连成本假设的误差都扛不住——那不叫稳定优势,只是一种对费用的敏感表态。成本敏感性检查不能放在收益曲线后面当附录,永远要并排摆在一起看。</p><p>真正算得上好的策略,是能讲清楚成本付完之后为什么还剩收益的那一个。讲的是机制,不是运气;扣的是现实,不是想象。</p>
+                <div class="table-wrap">
+                  <table>
+                    <tbody>
+                      <tr><th>买入成本假设</th><td>佣金 ________ + 滑点 ________ + 冲击 ________。</td></tr>
+                      <tr><th>卖出成本假设</th><td>佣金 ________ + 印花税 ________ + 滑点 ________ + 冲击 ________。</td></tr>
+                      <tr><th>敏感性</th><td>我要测试 0 倍、1 倍、2 倍、3 倍成本后的结果。</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>这条及格线画得很低:报告里只要没写明成本假设,那这个策略就还停留在幻觉阶段——谈的是毛收益,信的是理想国,离可以讨论实盘还差着一整个成本清单。</p>
+
+        <h2>5. 实盘前先问能否停止</h2>
+<p>第五个检查点,也是上线前最后一道闸:你知道自己什么时候必须停吗?具体写下来:数据坏了,停;对账对不上,停;订单出现异常,停;亏损超过预设上限,停;模型指标长期反向,停。没有这套停止规则,自动化就不是效率工具,而是一台可以全天候放大错误的机器。</p><p>别把<span class="hl">“停止”</span>当成承认失败。停止是系统的自我保护动作,和烟雾报警器响一个性质——不是大楼失败了,是大楼的防护还在工作。真正的失败只剩一种:明明所有指标都在报警,系统还在继续交易,最后用真金白银向世界证明,自己确实没有风控。</p><p>所以上线前的自问只有一句:我能不能说清怎么停?说不清,就还不该开始。这与勇气和智慧都无关,只与顺序有关——先是退出方案,然后才谈入场。</p>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>触发条件</th><th>动作</th><th>恢复条件</th></tr></thead>
+                    <tbody>
+                      <tr><td>数据缺失/异常超过 ________</td><td>停止生成新单</td><td>数据检查连续 ________ 次通过</td></tr>
+                      <tr><td>对账不一致</td><td>暂停交易</td><td>差异解释并修复</td></tr>
+                      <tr><td>回撤超过 ________</td><td>降仓/停用</td><td>完成复盘并人工确认</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>停止规则必须在还没赚钱也没亏钱的时候写好,这一点没有商量。等到亏损已经发生再去补写,你写出来的通常不是规则,是情绪——而情绪化的规则,往往是用来合理化下一次冲动的。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 440" role="img" aria-label="实盘前停止规则表:数据缺失或异常超阈值就停止生成新单、数据检查连续通过才恢复;对账不一致就暂停交易、差异解释清楚并修复后恢复;回撤超过预设上限就降仓或停用、完成复盘并人工确认后恢复">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">上线前最后一道闸:三行停止规则,写下来才算数</text>
+            <text x="220" y="72" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">触发条件(开工前写死)</text>
+            <text x="515" y="72" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">触发后动作</text>
+            <text x="730" y="72" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">恢复条件</text>
+            <rect x="60" y="90" width="320" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="220" y="125" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800"><tspan x="220" y="125">①数据缺失/异常超阈值</tspan></text>
+            <text x="395" y="130" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">→</text>
+            <rect x="420" y="90" width="190" height="58" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="515" y="125" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800"><tspan x="515" y="125">停止生成新单</tspan></text>
+            <text x="625" y="130" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">→</text>
+            <rect x="650" y="90" width="210" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="730" y="125" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="400"><tspan x="730" y="125">数据检查连续通过才恢复</tspan></text>
+            <rect x="60" y="158" width="320" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="220" y="193" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800"><tspan x="220" y="193">②对账对不上(不一致)</tspan></text>
+            <text x="395" y="198" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">→</text>
+            <rect x="420" y="158" width="190" height="58" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="515" y="193" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800"><tspan x="515" y="193">暂停交易</tspan></text>
+            <text x="625" y="198" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">→</text>
+            <rect x="650" y="158" width="210" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="730" y="193" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="400"><tspan x="730" y="193">差异解释清楚并修复</tspan></text>
+            <rect x="60" y="226" width="320" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="220" y="261" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800"><tspan x="220" y="261">③回撤超过预设上限</tspan></text>
+            <text x="395" y="266" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">→</text>
+            <rect x="420" y="226" width="190" height="58" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="515" y="261" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800"><tspan x="515" y="261">降仓或停用</tspan></text>
+            <text x="625" y="266" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">→</text>
+            <rect x="650" y="226" width="210" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="730" y="261" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="400"><tspan x="730" y="261">完成复盘并人工确认</tspan></text>
+            <text x="60" y="322" fill="#8499bd" font-size="12.5">正文还点名两个扳机:</text>
+            <rect x="200" y="300" width="310" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="355" y="321" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800"><tspan x="355" y="321">订单出现异常→停</tspan></text>
+            <rect x="530" y="300" width="310" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="685" y="321" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800"><tspan x="685" y="321">模型指标长期反向→停</tspan></text>
+            <rect x="60" y="358" width="800" height="66" rx="12" fill="rgba(240,201,106,0.06)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="384" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">停止规则必须在还没赚钱也没亏钱的时候写好——等亏了再补写的,通常是情绪,不是规则</text>
+            <text x="450" y="408" text-anchor="middle" fill="#c9d4e8" font-size="12.5">别把停止当失败:它和烟雾报警器响一个性质,说明防护还在工作</text>
+          </svg>
+          <p class="figure__cap">上线前把停止规则写成三行表:触发条件、触发后动作、恢复条件——数据异常停止生成新单,对账不一致暂停交易,回撤超上限降仓或停用;另外订单异常、模型指标长期反向也得停。规则要在没赚钱也没亏钱时写好,亏着补写出来的通常是情绪。</p>
+        </div>
+        <h2>6. 最后问自己是否能复盘</h2>
+<p>最后一个检查点在每个项目、每笔交易结束之时:你能不能完整地讲清楚发生了什么?当时用的是哪个版本的数据、哪个版本的模型、哪一组参数?订单实际怎么成交的?成本一共付了多少?赚的部分从哪来?亏的部分又从哪去?一环一环,都说得出来吗?</p><p>为什么不能复盘就等于白做?因为不复盘就没法进步。一笔讲不清来源的盈利,本质上只是运气打卡上班;一笔讲不清来源的亏损,更可惜——学费照样交了,课却根本没上。市场收学费痛快,但从不负责讲课。</p><p>说句公道话:金融市场不会因为你态度认真就奖励你,它没那么温情。但认真的复盘有一个确定的效果——同样的错误,别人错三次,你只错一次。长期看,这就是复利。</p>
+                <div class="table-wrap">
+                  <table>
+                    <tbody>
+                      <tr><th>复盘材料路径</th><td>配置: ________; 数据版本: ________; 交易记录: ________; 报告: ________。</td></tr>
+                      <tr><th>收益来源</th><td>市场/行业/风格/选股/基差/执行: ________。</td></tr>
+                      <tr><th>下一步</th><td>继续/降权/停用/重做数据/重做模型: ________。</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>表里的路径必须是真实存在的路径,当场能打开的那种。只要配置、数据版本、交易记录有任何一样找不着,这次实验就进了不可审计名单——不可审计的盈利与亏损,都不计入能力的增长。</p>
+
+        <h2>7. 这张纸怎么用</h2>
+<p>纸上得来终觉浅,这张纸也一样:只在心里默答,等于没答。正确用法是把空格真正填进去——填到你的研究笔记或者项目 README 里,成为留档。并且,每次改策略都要更新它:研究问题、数据、成本、停止规则,哪一样变了,旧答案就自动作废,不能再代表新策略。</p><p>它还可以反过来用,去检查别人的报告。拿到任何一份策略报告,就照着这张纸逐条问:有没有一句话研究问题?有没有写清决策时点?成本假设列出来了吗?停止规则有没有?复盘材料齐不齐?对照答案打分——缺一项,可信度降一档,立场就这么简单。</p><p>最后澄清一个误解:这张纸不是为了拖慢你的研究,而是帮你避免在错误的方向上跑太远。每次开工花十分钟填表,最坏的结果是浪费了十分钟;最好的结果,是替你省几个月错误方向的回测,或者挡下一次本不该发生的实盘亏损。十分钟对几个月,这个交换,每次做都是赚的。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>每次研究前先缩小问题,每次交易前先想最坏情况。</li>
+            <li>每次回测前先检查可见性和成本,每次实盘前先写停止规则。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 研究前先问问题是否足够小</li>
+            <li><strong>2.</strong> 交易前先问最坏情况</li>
+            <li><strong>3.</strong> 回测前先问当时是否可见</li>
+            <li><strong>4.</strong> 看收益前先看成本</li>
+            <li><strong>5.</strong> 实盘前先问能否停止</li>
+            <li><strong>6.</strong> 最后问自己是否能复盘</li>
+            <li><strong>7.</strong> 这张纸怎么用</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>研究问题为什么一定要压小?</summary>
+            <p>小问题边界清晰,数据需求、交易规则和结果解读都能逐一检查;大问题只会用大词盖住细节,错了都查不出来。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>实盘之前为什么必须先想清楚怎么停?</summary>
+            <p>因为在异常状态下继续交易,自动化会放大错误;停止规则是保护系统和本金的安全带,说不清怎么停就不该开始。</p>
+          </details>
+        </section>
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>
