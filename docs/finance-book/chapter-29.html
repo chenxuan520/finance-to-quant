@@ -38,6 +38,57 @@
                 </div>
                 <p>第一版项目,上面这些表就够跑了。别一上来就追求字段大而全,先保证每个字段你能解释它是什么、能检查它对不对、能追溯它从哪来。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 340" role="img" aria-label="指数增强最小回测流水线:数据入库→写因子→打分→生成名单→模拟调仓→扣成本→出报告→复盘结论">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">指数增强的最小回测:八步流水</text>
+            <g>
+              <rect x="60" y="80" width="170" height="70" rx="8" fill="rgba(122,167,240,0.22)" stroke="#7aa7f0"/>
+              <text x="145" y="106" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">① 数据入库</text>
+              <text x="145" y="128" text-anchor="middle" fill="#bcc9dd" font-size="11.5">股票池、历史 K 线、成分股权重表;</text>
+              <text x="145" y="146" text-anchor="middle" fill="#bcc9dd" font-size="11.5">特别强调:必须是点时可见版本</text>
+              <rect x="250" y="80" width="170" height="70" rx="8" fill="rgba(122,167,240,0.22)" stroke="#7aa7f0"/>
+              <text x="335" y="106" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">② 写因子</text>
+              <text x="335" y="128" text-anchor="middle" fill="#bcc9dd" font-size="11.5">选一两个简单因子比如 20 日动量</text>
+              <text x="335" y="146" text-anchor="middle" fill="#bcc9dd" font-size="11.5">先写一个,再多写</text>
+              <rect x="440" y="80" width="170" height="70" rx="8" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+              <text x="525" y="106" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">③ 打分</text>
+              <text x="525" y="128" text-anchor="middle" fill="#bcc9dd" font-size="11.5">把因子值标准化后加起来,</text>
+              <text x="525" y="146" text-anchor="middle" fill="#bcc9dd" font-size="11.5">给每只股票算总分</text>
+              <rect x="630" y="80" width="170" height="70" rx="8" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+              <text x="715" y="106" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">④ 调仓名单</text>
+              <text x="715" y="128" text-anchor="middle" fill="#bcc9dd" font-size="11.5">选出高分股前100名</text>
+              <text x="715" y="146" text-anchor="middle" fill="#bcc9dd" font-size="11.5">按权重排比例</text>
+              <!-- 第二行 -->
+              <rect x="60" y="200" width="170" height="70" rx="8" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+              <text x="145" y="226" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">⑧ 复盘结论</text>
+              <text x="145" y="248" text-anchor="middle" fill="#bcc9dd" font-size="11.5">把结果告诉下一步要修正的部分,</text>
+              <text x="145" y="266" text-anchor="middle" fill="#bcc9dd" font-size="11.5">形成报告</text>
+              <rect x="250" y="200" width="170" height="70" rx="8" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+              <text x="335" y="226" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">⑦ 出报告</text>
+              <text x="335" y="248" text-anchor="middle" fill="#bcc9dd" font-size="11.5">净值、年化、夏普、最大回撤</text>
+              <text x="335" y="266" text-anchor="middle" fill="#bcc9dd" font-size="11.5">按指标出</text>
+              <rect x="440" y="200" width="170" height="70" rx="8" fill="rgba(143,179,122,0.15)" stroke="#8fb37a"/>
+              <text x="525" y="226" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">⑥ 扣成本</text>
+              <text x="525" y="248" text-anchor="middle" fill="#bcc9dd" font-size="11.5">双边佣金 + 滑点 + 印花,</text>
+              <text x="525" y="266" text-anchor="middle" fill="#bcc9dd" font-size="11.5">合在一起算总成本</text>
+              <rect x="630" y="200" width="170" height="70" rx="8" fill="rgba(143,179,122,0.15)" stroke="#8fb37a"/>
+              <text x="715" y="226" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">⑤ 模拟调仓</text>
+              <text x="715" y="248" text-anchor="middle" fill="#bcc9dd" font-size="11.5">日频推进,不过未来的数据,</text>
+              <text x="715" y="266" text-anchor="middle" fill="#bcc9dd" font-size="11.5">形成串行序列</text>
+            </g>
+            <!-- 箭头 -->
+            <line x1="232" y1="115" x2="248" y2="115" stroke="#8499bd" stroke-width="2"/>
+            <line x1="422" y1="115" x2="438" y2="115" stroke="#8499bd" stroke-width="2"/>
+            <line x1="612" y1="115" x2="628" y2="115" stroke="#8499bd" stroke-width="2"/>
+            <line x1="715" y1="152" x2="715" y2="198" stroke="#8499bd" stroke-width="2"/>
+            <line x1="715" y1="235" x2="612" y2="235" stroke="#8499bd" stroke-width="2"/>
+            <line x1="422" y1="235" x2="438" y2="235" stroke="#8499bd" stroke-width="2" stroke-dasharray="3 3" opacity="0"/>
+            <line x1="438" y1="235" x2="422" y2="235" stroke="#8499bd" stroke-width="2"/>
+            <line x1="248" y1="235" x2="232" y2="235" stroke="#8499bd" stroke-width="2"/>
+            <text x="450" y="310" text-anchor="middle" fill="#bcc9dd" font-size="12.5">数据→因子→打分→名单→模拟→成本→报告→复盘——少任何一步,结论都能被某个隐藏的坑拆掉</text>
+          </svg>
+          <p class="figure__cap">最小回测不是一段代码精灵,是八个环节的传导链。数据到结论全对一条龙才有意义,中间断掉任何一环都可能变成“模型很好但那只是没上纲上线”。</p>
+        </div>
         <h2>2. 别让今天的名单穿越回过去</h2>
 <p>先想一个坑:你今天打开行情软件看到的<span class="term">中证 500</span> 成分股名单,和 <span class="num">2018 年</span>的那份一样吗?当然不一样,成分股会定期调整、进进出出。股票池决定你在哪个市场里选股,指数增强项目必须使用历史当时的指数成分,而不是今天的成分回填过去。比如你要回测 <span class="num">2018 年</span>,就得知道 <span class="num">2018 年</span>每一个调仓日,<span class="term">中证 500</span> 里装的到底是哪五百只股票。拿今天的名单回填过去,等于提前知道了谁以后会混得好,这是回测里最隐蔽的作弊方式之一。</p><p>有了池子,还要设可交易过滤。上市未满一定天数的新股可以剔除;ST 股票可以剔除;停牌的股票不能买入;涨停的股票通常买不进,不能假设买入;跌停的股票不能假设卖出;成交额太低的股票要小心容量,纸面上买一层,实盘可能只买得到零星几单。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>最关键的纪律是:过滤规则要同时用在回测和未来的模拟盘里。回测里剔除了流动性差的股票,实盘也要剔除;实盘不能买 ST,回测里也不能买。否则你训练的是一个假目标——回测里拳打脚踢,实场上等着你的是另一套规则。</p></div><div class="callout callout--note reveal"><span class="callout__title">名册也有生日:只用今天的名单,就是未来函数</span><p>指数成分会定期调整,<span class="num">2018 年</span>的<span class="term">中证 500</span> 和今天的<span class="term">中证 500</span> 是两份不同的名册。拿今天的名册回测 <span class="num">2018 年</span>,等于提前知道了这些年谁混得好——回测自然替你“挑”出一批赢家,漂亮得毫无意外。所以成分股入库时要给每份名册打上生效日期,回测只查调仓日当天的那一份。日期错一格,整条曲线都是租来的。</p></div>
 

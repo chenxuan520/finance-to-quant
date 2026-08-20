@@ -68,6 +68,33 @@
         <h2>4. 做市商桌上的四块表</h2>
 <p>做市商的桌上没有股评,没有 K 线故事,只有四块仪表盘:Delta、Gamma、Vega、Theta,行话叫希腊字母。期权基础那一章你已经见过它们的名字;这一节换个视角,不看公式,看一个做市商每天怎么被这四块表折腾——因为他每天收盘都要拿这四块表对账。</p><p>Delta 回答方向问题:标的涨一块钱,期权价格跟着动多少。它也是做市商的对冲指令单——每卖出一份期权,立刻按 Delta 买入对应份额的标的,把方向风险当场抵消。理想状态下,标的涨也好、跌也好,组合的理论盈亏被抹平,做市商赚的是买卖价差这份流水钱,不是赌方向的钱。你把他想成一个只收手续费的庄家:赌客谁赢谁输不重要,池子别翻就行。</p><p>Gamma 回答加速问题:Delta 自己变得有多快。行情平缓时,对冲安安静静,一天调不了几次仓;标的剧烈跳动时,Gamma 让对冲误差成倍放大——刚按旧 Delta 补完仓,新 Delta 已经跑到另一边去了,再补,又错。这是做市商最怕跳空的原因:他从来不怕方向,怕的是方向变得太快,快到对冲的手速跟不上。Gamma 越大,那张<span class="hl">“盈亏已抹平”</span>的桌子晃得越厉害。</p><p>Vega 和 Theta 管另外两维。Vega 是隐含<span class="term">波动率</span>每抬一档,期权增值多少,它量的是市场的恐慌情绪;Theta 是时间每过一天,期权白蚀掉多少,越贴近到期日蚀得越快。买期权的人天天被 Theta 咬,卖期权的人天天收 Theta——所以卖方真正睡不着的不是时间,是 Vega 和 Gamma:平时稳稳收租,恐慌情绪一起来,账面平白无故开始浮动,浮动的方向还经常和你收租的方向对着干。</p><p>现在把雪球放回这张桌子上:在做市商眼里,它从来不是理财产品,而是一团需要动态管理的 Vega 和 Gamma。指数安稳时,对冲仓安安静静,票息背后是持续的小额收割;指数逼近敲入线时,Delta 突然奔向 1,反向加速的对冲盘倾巢出动。普通投资者看不到这张桌子,只看得到宣传页上的票息——这就是买卖双方信息差真正所在的位置。</p><div class="callout callout--note reveal"><span class="callout__title">四块表的一句话版</span><p>Delta 是方向,Gamma 是加速,Vega 是情绪,Theta 是时间。做市商每天的盈亏约等于:价差收入 + Theta 收割 - Vega 和 Gamma 带来的惊吓。他不关心你看对看错,只关心自己有没有被这四块表咬到。</p></div>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="期权四希腊字母表:Delta 管方向、Gamma 管加速度、Vega 管波动预期、Theta 管时间流逝">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期权做市商桌上的四块表</text>
+            <rect x="70" y="80" width="360" height="125" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="250" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">Delta · 标的价格每变 1 元</text>
+            <text x="250" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">买平值看涨时 Delta ≈ 0.5:标涨 1 元,期权约赚 0.5</text>
+            <text x="250" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">看跌在 -1~0 之间</text>
+            <text x="250" y="188" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">对冲要用它调仓位</text>
+            <rect x="470" y="80" width="360" height="125" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="650" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">Gamma · 行情的加速度</text>
+            <text x="650" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">标的价格每变一格,Delta 自身变多少</text>
+            <text x="650" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">临近到期、平值附近的 Gamma 最大</text>
+            <text x="650" y="188" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">大 Gamma 意味着仓位会越错越快</text>
+            <rect x="70" y="220" width="360" height="125" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="250" y="248" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">Vega · 波动率预期每变 1%</text>
+            <text x="250" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">隐含波动率不是历史波动,是大家对未来的定价</text>
+            <text x="250" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">恐慌时 IV 上冲,期权价格被动抬升</text>
+            <text x="250" y="328" text-anchor="middle" fill="#8499bd" font-size="12">做市商对冲它,就要卖进买保险</text>
+            <rect x="470" y="220" width="360" height="125" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="650" y="248" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">Theta · 每天时间价值衰减多少</text>
+            <text x="650" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">到期越近,沙漏漏得越快</text>
+            <text x="650" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">买方每天都在输 Theta,卖方每天都在收</text>
+            <text x="650" y="328" text-anchor="middle" fill="#8499bd" font-size="12">最后一个月衰减最快</text>
+            <text x="450" y="372" text-anchor="middle" fill="#bcc9dd" font-size="12.5">方向、加速度、波动、时间——期权的全部价格行为,疏散成这四块表就够了</text>
+          </svg>
+          <p class="figure__cap">期权的复杂不在名字,在维度——方向、加速度、波动预期、时间衰减各占一块。把四块钱读懂,希腊字母就不再是密室术语。</p>
+        </div>
         <h2>5. 给别人的债券买违约保险</h2>
 <p>假设你手里一张 A 公司的债券都没有,却想买一份<span class="hl">“A 公司一违约、你就赚大钱”</span>的合同。这门生意真实存在,合同的名字叫 CDS,信用违约掉期。拆开看它一点也不神秘,就是一张保险单——只不过投保的对象不是天灾人祸,是别人家的违约;保费按年收,出险按约定赔。</p><p>先把正当用途说清楚:你确实持有 A 的债,怕它违约,于是每年付给 B 一笔保费,行话叫 CDS 价差,按面值的百分比报价,比如每年 <span class="num">1.5%</span>。合同里白纸黑字写死什么情况算违约——破产、拒付、重组,一条不含糊。真出了事,B 按<span class="hl">“面值减去残值”</span>赔给你:面值 <span class="num">1000 万</span>,残值按 <span class="num">40%</span> 算,赔 <span class="num">600 万</span>。从结构上看,这就是一张贴在债券上的保险单,它让债券持有人第一次能把违约风险单独拆出来交易。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>关键的变异在于:你不持有 A 的债,也能买这份保险。这叫裸 CDS,动作和借股票裸空一模一样——纯粹做空。从此,“赌一家公司会倒”成了一件标准化、可交易的工具,不再需要先借到它的债。保险被发明出来是为了分散风险,裸 CDS 却把它变成了一块放大对赌的场地:一张保单下面有没有对应的真实资产,合同不管,市场也不管。</p></div><p>把账算清楚:面值 <span class="num">1000 万</span>,年保费 <span class="num">1.5%</span>,即每年 <span class="num">15 万</span>。如果 A 一年内违约,你用 <span class="num">15 万</span>换回 <span class="num">600 万</span>,扣掉保费净赚 <span class="num">585 万</span>;如果 A 平平安安,这 <span class="num">15 万</span>保费白交。赔率大约四十比一。危机年份里,这就是金融圈空头的主力武器:花零花钱级别的保费,押注一个巨头倒下——新闻里那些<span class="hl">“做空全世界”</span>的传奇头寸,拆到底,很多就是这么搭出来的。</p><p>再站到卖方的桌上算同一笔账:每年收 <span class="num">15 万</span>,代价是随时准备掏出 <span class="num">600 万</span>——四十年不出事才勉强回本,一次踩雷全部归零还要倒贴。保费只要定错一丁点,窟窿就是几十倍的大。所以卖 CDS 的机构本质上在开保险公司:精算对了,是躺着收租的好生意;精算错了,破产只是时间问题,区别只在最后赔给谁。看懂这一层,你就知道该用什么眼光,去打量那些<span class="hl">“靠收保费过好日子”</span>的资产负债表。</p><div class="callout callout--note reveal"><span class="callout__title">同一张保单的两张脸</span><p>买方视角:<span class="num">15 万</span>博 <span class="num">600 万</span>,是用小钱对冲灾难,或押注灾难;卖方视角:<span class="num">600 万</span>的或有负债,换来 <span class="num">15 万</span>现金流,是<span class="hl">“大概率小赚、小概率巨亏”</span>的典型负偏结构。评价任何收保费的生意,先问那笔小概率赔付谁来扛、扛不扛得住。</p></div>
 

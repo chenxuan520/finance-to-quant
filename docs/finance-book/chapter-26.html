@@ -98,6 +98,25 @@
           </svg>
           <p class="figure__cap">配对交易永远两腿各算各的:开多被低估的 A、同时空等额的被高估的 B,赌的是它们重新贴合。赚的不是谁涨,是价差回归;方向涨不涨跟你没关系,风格切换才是你的风险。</p>
         </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 365" role="img" aria-label="配对交易图:跟踪同行两股的价差,拉到异常区间就做空高开买低收,恢复正常就收手">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">配对交易:两只同行的股,只赌价差收敛</text>
+            <line x1="80" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <line x1="80" y1="60" x2="80" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <text x="92" y="66" fill="#bcc9dd" font-size="12">价格</text>
+            <text x="820" y="318" fill="#bcc9dd" font-size="12">时间</text>
+            <path d="M 85 100 Q 200 120 320 110 Q 450 100 590 130 Q 700 150 815 120" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <text x="830" y="125" fill="#a8c6ff" font-size="12">股 A(银行)</text>
+            <path d="M 85 140 Q 210 170 330 150 Q 460 140 600 170 Q 710 190 815 150" fill="none" stroke="#ee8877" stroke-width="3"/>
+            <text x="830" y="155" fill="#ee8877" font-size="12">股 B(银行)</text>
+            <ellipse cx="240" cy="145" rx="50" ry="40" fill="none" stroke="#f0c96a" stroke-width="3" stroke-dasharray="6 4"/>
+            <text x="240" y="212" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">价差异常拉开:做空 A,买入 B</text>
+            <ellipse cx="560" cy="150" rx="50" ry="40" fill="none" stroke="#8fb37a" stroke-width="3" stroke-dasharray="6 4"/>
+            <text x="560" y="217" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">价差收敛至正常:平仓</text>
+            <text x="450" y="338" text-anchor="middle" fill="#bcc9dd" font-size="12.5">同行业两只股价长期高度正相关。只有当价差拉到历史均值±2σ之外才出手;回到区间内就收工——赌的是相关性回归,不是股票涨跌</text>
+          </svg>
+          <p class="figure__cap">统计学套利的原型:同行业的股票走势通常同步;当价差落到历史正常区间外,就有价值修复的机会。你赚的是价差回归的那一块,不是牛熊方向。</p>
+        </div>
         <h3>1.6. 统计套利</h3>
 <p>统计套利是一大类策略的统称,它不要求每笔交易都确定赚钱,而是寄希望于大量小优势交易合起来有正期望。多因子市场中性、短期<span class="term">反转</span>、配对交易、价差回归,都可能被归进这个筐。它的商业模式有点像开保险公司:单单的赔付不确定,拼的是大数定律站不站在你这边。</p><p>统计套利最怕两件事。第一,历史统计关系失效——过去成立的规律,未来悄悄失效。第二,小优势被成本吃掉:一个每天看起来有 <span class="num">0.03%</span> 边际收益的信号,滑点和费用稍微高一点,就直接变亏损。这种策略的毛利润本来就薄,成本表就是生死簿。</p><p>因此统计套利必须配上大量样本、严格成本、样本外验证和风险控制四件套。看到过去胜率高就放心,是这里最常见的死法:少数几次极端损失,完全可能抵消很多次小盈利——前面赢了一整年,最后一个月全还回去,还倒贴。</p><div class="callout callout--note reveal"><span class="callout__title">一丁点拥挤,反身性就来敲门</span><p>价差为什么会回归?往往是因为一群套利者在买低卖高,把它推回去。可当太多钱挤进同一个价差,事情就变味了:你不再是修正价格的力量之一,你就是价格本身。赚钱时大家一起快进,回撤时大家一起夺门——本来赚均值回归的钱,最后被自己人挤出了新的偏离。研究时你盯着地图,一进场,你就成了地形。</p></div>
 

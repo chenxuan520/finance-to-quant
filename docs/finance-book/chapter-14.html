@@ -132,6 +132,34 @@
           </svg>
           <p class="figure__cap">屏幕上的“买一卖一”来自订单簿。所有人的买卖意愿在这里按价格和时间排队,成交价就是买卖力量碰在一起的结果。只用收盘价回测,会忽略排队和盘口深度。</p>
         </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="订单簿双列排布图:买单从高到低排列、卖单从低到高排列,价格优先同价时间优先">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">盘口簿:买几档卖几档,谁排在前面</text>
+            <text x="200" y="76" fill="#eef4f8" font-size="14" font-weight="800">买单(从优到次)</text>
+            <rect x="60" y="86" width="280" height="44" rx="6" fill="rgba(143,179,122,0.32)" stroke="#8fb37a"/>
+            <text x="80" y="114" fill="#b5d3a0" font-size="13" font-weight="800">买1: 10.50 元 × 5000 股</text>
+            <rect x="60" y="134" width="280" height="44" rx="6" fill="rgba(143,179,122,0.18)" stroke="#8fb37a"/>
+            <text x="80" y="162" fill="#8fb37a" font-size="13">买2: 10.49 元 × 2000 股</text>
+            <rect x="60" y="182" width="280" height="44" rx="6" fill="rgba(143,179,122,0.1)" stroke="#8fb37a"/>
+            <text x="80" y="210" fill="#8fb37a" font-size="13">买3: 10.48 元 × 9000 股</text>
+            <text x="200" y="244" fill="#8499bd" font-size="11.5">价高者排前——出价力最强的先成交</text>
+            <text x="640" y="76" fill="#eef4f8" font-size="14" font-weight="800">卖单(从优到次)</text>
+            <rect x="560" y="86" width="280" height="44" rx="6" fill="rgba(238,136,119,0.32)" stroke="#ee8877"/>
+            <text x="580" y="114" fill="#ffb4b4" font-size="13" font-weight="800">卖1: 10.51 元 × 1000 股</text>
+            <rect x="560" y="134" width="280" height="44" rx="6" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="580" y="162" fill="#ee8877" font-size="13">卖2: 10.52 元 × 3000 股</text>
+            <rect x="560" y="182" width="280" height="44" rx="6" fill="rgba(238,136,119,0.1)" stroke="#ee8877"/>
+            <text x="580" y="210" fill="#ee8877" font-size="13">卖3: 10.55 元 × 2500 股</text>
+            <text x="640" y="244" fill="#8499bd" font-size="11.5">价低者排前</text>
+            <text x="450" y="118" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">撮合规则钳</text>
+            <text x="450" y="148" text-anchor="middle" fill="#bcc9dd" font-size="12">买1 价 ≥ 卖1 价?</text>
+            <text x="450" y="170" text-anchor="middle" fill="#bcc9dd" font-size="12">是 → 配对成交(以先斩到的价格为准)</text>
+            <text x="450" y="192" text-anchor="middle" fill="#bcc9dd" font-size="12">否 → 一起待着,价差就自己保留</text>
+            <text x="450" y="222" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">同价?先到的先成交(时间优先)</text>
+            <text x="450" y="250" text-anchor="middle" fill="#8499bd" font-size="12">你下单后只是进入这条队伍,不一定立刻成交;流动性浅的股,两个买1卖1差的可能超过你想象的宽度</text>
+          </svg>
+          <p class="figure__cap">盘口的两条队伍:买的一边价高者优先,卖的一边价低者优先。你下的单子只是被系统挂在某个格子上排队,“我喊到了这个价”还远远不等于“我就能成交”。</p>
+        </div>
         <h3>2.5. 它限制价格,不保证风险消失</h3>
 <p>A 股很多股票有日涨跌幅限制。普通股票常见的是上一交易日收盘价上下一个比例范围,但不同板块、ST 股票、新股上市初期、退市整理、北交所股票等规则可能不同。这里最重要的不是背一个固定数字,而是知道:涨跌幅限制要按日期、市场、板块和证券状态判断。背错版本,比不背更糟。</p><p>涨跌停价是怎么来的?机制很直白:拿上一交易日收盘价乘上规则给定的比例,再处理到最小报价单位上。用简化数字走一遍:昨收 <span class="num">20.00 元</span>,按 <span class="num">10%</span> 计算,涨停价 <span class="num">22.00 元</span>,跌停价 <span class="num">18.00 元</span>,今天所有申报和成交都只能落在 18.00 到 22.00 之间,越界的委托直接无效。这个区间还藏着一个常被忽略的数:从跌停到涨停,当日最大振幅是 4 除以 20,也就是 <span class="num">20%</span>——栏杆每天一开盘就焊好,但笼子里的腾挪空间并不小。</p><p>再算一笔让人清醒的账。常有人以为有了 <span class="num">10%</span> 的限制,单日最多亏 <span class="num">10%</span>,其实账不是这样算的:如果你在涨停价 <span class="num">22.00 元</span>追进去,当天股价掉头砸到跌停 <span class="num">18.00 元</span>,你的浮亏是 4 除以 22,约 <span class="num">18.2%</span>,远大于 <span class="num">10%</span>。要是次日继续跌停,亏损还会叠加,而且跌停时买盘稀少,你想卖也未必排得上。涨跌幅限制按住的是申报和成交的价格,不是按住风险本身——笼子关住了报价,关不住恐慌。</p><p>涨跌幅限制的作用,是限制当日交易价格的申报范围和成交范围,不是给投资者发安全垫。股票今天跌停,明天还可能继续跌;今天涨停,你不一定买得到。价格被限制住了,流动性风险反而会更突出。量化回测必须处理这个问题。策略不能假设跌停时还能按跌停价卖出全部持仓,也不能假设涨停时还能随便买入。很多纸面收益漂亮的策略,一旦加入涨跌停不可成交、排队和滑点,结果会明显变差——丑小鸭变不回天鹅,因为原来的天鹅是 P 出来的。</p>
 

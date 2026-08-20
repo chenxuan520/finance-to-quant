@@ -55,6 +55,25 @@
           </svg>
           <p class="figure__cap">这张图是“活下来比赚快钱更重要”的数学原因:亏 10% 涨 11% 就回本,但亏 50% 要涨整整 100%,亏 80% 得涨 400%。控制回撤,不是胆小,是保命。</p>
         </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 365" role="img" aria-label="回撤不对称复原图:净值从 1.2 跌到 0.6 又是怎么必须再涨 100% 才能回本">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回撤不对称:跌 50% 要涨 100% 才能回本</text>
+            <line x1="80" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <line x1="80" y1="60" x2="80" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <text x="92" y="66" fill="#bcc9dd" font-size="12">净值</text>
+            <path d="M 85 200 Q 200 170 330 190 Q 420 200 450 205 Q 500 285 620 275 Q 740 260 815 220" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <circle cx="85" cy="200" r="5" fill="#8fb37a"/>
+            <text x="85" y="188" fill="#8fb37a" font-size="12" font-weight="800">起点 1.0</text>
+            <circle cx="450" cy="205" r="5" fill="#f0c96a"/>
+            <text x="450" y="193" fill="#f0c96a" font-size="12" font-weight="800">高点 1.2</text>
+            <circle cx="620" cy="275" r="5" fill="#ee8877"/>
+            <text x="620" y="295" fill="#ee8877" font-size="12" font-weight="800">谷底 0.6(-50%)</text>
+            <line x1="450" y1="205" x2="810" y2="205" stroke="#8fb37a" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="810" y="200" fill="#8fb37a" font-size="12">得回到 1.2 才算回本</text>
+            <text x="450" y="338" text-anchor="middle" fill="#bcc9dd" font-size="12.5">数学只有一句:1.2 → 0.6 是 -50%,0.6 → 1.2 是 +100%;从深坑里爬出的代价比你想象贵上一倍——这就是止损要卡的死死的原因</text>
+          </svg>
+          <p class="figure__cap">跌 50% 不是利润的一半失去,是必须再赚 100% 才回得来。同哲学只能弥补的是止损和仓位——越往下亏,能回到起点的天数越长,这就是何时控制的设置在绝对值上。</p>
+        </div>
         <h3>1.5. 盈利后也会犯错</h3>
 <p>连续赚钱是另一种危险。赚的多了,人容易过度自信:觉得策略已经被充分证明,于是加仓、放宽风控、减少检查、懒得看成本。很多大亏不是发生在策略刚上线的时候,而是发生在连续成功之后。</p><p>所以盈利阶段同样要复盘,问的问题比亏损时更扎心:收益来自模型能力,还是市场风格顺风?风险暴露有没有悄悄上升?换手和成本有没有变化?规模大了之后滑点有没有增加?如果答案是顺风,那此刻加仓,很可能刚好加在风格的尾部。</p><p>资金管理里要写清加仓条件,比如:模拟盘已经稳了多久,小实盘跑了多久,<span class="term">最大回撤</span>是否在预期内,对账是否稳定,成本是否符合假设。条件没到就跳级加仓,和没压测就扩十倍流量是同一个味道。</p>
 

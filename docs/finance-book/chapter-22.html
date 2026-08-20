@@ -79,6 +79,37 @@
         <h3>1.3. 风险模型在估计什么</h3>
 <p>风险模型试图解释一个朴素问题: 你的组合为什么会波动? 它通常把股票收益拆成四层——市场、行业、风格和个股特有风险。市场风险来自大盘整体涨跌;行业风险来自行业共同变化;风格风险来自市值、价值、<span class="term">动量</span>、波动、质量等共同因子;个股风险来自公司自身的事件。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>这个拆分的关键用处在于: 你持有很多股票,个股特有风险会被分散掉一部分,但行业和风格风险不会自动消失。你以为买了 100 只股票已经很分散,风险模型却可能告诉你: 组合其实重仓小市值和高波动风格,一旦这些风格<span class="term">反转</span>,100 只股票会手拉手一起跌。</p></div><p>所以要明白,风险模型不是为了让投资没有风险,而是让你知道自己在承担什么风险。没有风险模型,很多收益归因会变成错觉: 看起来像选股能力,实际可能只是刚好押中了某个风格。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="风险模型三维度图:波动率、相关系数(协方差)、因子暴露,分别描述绝对风险、分散程度、赌博方向">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">风险模型在算哪三件事</text>
+            <rect x="90" y="90" width="220" height="230" rx="12" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="200" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 波动率</text>
+            <text x="200" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">每只个股或资产自然波动多大</text>
+            <text x="200" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">窗口滞后的历史扰动</text>
+            <text x="200" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">方差 / 标准差</text>
+            <text x="200" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是绝对风险的上限付罗</text>
+            <text x="200" y="252" text-anchor="middle" fill="#8499bd" font-size="12">高波动 · 高风险</text>
+            <text x="200" y="280" text-anchor="middle" fill="#8499bd" font-size="12">模型理解也被这块表所影响</text>
+            <rect x="340" y="90" width="220" height="230" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="118" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">② 相关系数</text>
+            <text x="450" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">股和股之间起落有多同步</text>
+            <text x="450" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">不同行业不同景度</text>
+            <text x="450" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">协方差矩阵</text>
+            <text x="450" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是分散的杠杆——</text>
+            <text x="450" y="246" text-anchor="middle" fill="#bcc9dd" font-size="12">相关性越高,收益越像</text>
+            <text x="450" y="274" text-anchor="middle" fill="#8499bd" font-size="12">极度时她完全不分散</text>
+            <rect x="590" y="90" width="220" height="230" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="700" y="118" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 暴露程度</text>
+            <text x="700" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">你持有的小整组合</text>
+            <text x="700" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">对某个因子的平均评价</text>
+            <text x="700" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">行业暴露 * 风格暴露</text>
+            <text x="700" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是你在赌什么——</text>
+            <text x="700" y="246" text-anchor="middle" fill="#bcc9dd" font-size="12">赌价值,赌成长,赌消费</text>
+            <text x="700" y="274" text-anchor="middle" fill="#8499bd" font-size="12">过度集中就是赌注过巫</text>
+            <text x="450" y="360" text-anchor="middle" fill="#bcc9dd" font-size="12.5">风险不是一个总数,是这三个维度的题项之合;这三个合在一起才叫卫刻风险献</text>
+          </svg>
+          <p class="figure__cap">说“这个组合风险大”没有意义;要说“哪个维度”的风险大。先看波动、再看关联、最后看暴露——三层都过了,才算真正把风险看透了。</p>
+        </div>
         <h3>1.4. 行业和风格暴露</h3>
 <p>行业暴露很好理解: 组合里医药、银行、电子、消费各占多少,摊开持仓一看便知。风格暴露稍微抽象一些,它描述的是组合在市值、估值、成长、<span class="term">动量</span>、<span class="term">波动率</span>、流动性这些维度上的倾向。</p><p>举个例子。一个组合看起来买了很多行业,挺分散,但翻开来全部偏小市值、高波动、高换手。它的行业是分散了,风格却一点没分散。市场如果切换到大盘蓝筹行情,这个组合可能长期跑输,而你还以为只是运气不好。</p><p>所以量化组合常会主动限制风格暴露。不是因为风格一定不好,而是因为你要知道自己想赚的是什么钱。如果策略号称靠模型选股,却主要靠小市值暴露赚钱,那模型能力就被夸大了——这是诚实问题,不只是技术问题。</p>
 

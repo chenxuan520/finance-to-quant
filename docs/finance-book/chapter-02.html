@@ -138,6 +138,34 @@
         <h3>2.3. 成交不是终点,后面还有清算和交收</h3>
 <p>你点了买入,屏幕上跳出<span class="hl">“已成交”</span>——完事了吗?对你是图标变绿,对系统才是上半场结束。成交,只是说买卖双方在某个价格和数量上达成一致。接下来,后台要开始算账:这笔、那笔,全天成千上万笔——谁该付多少钱,谁该收多少证券。这个算账过程,叫清算。</p><p>为什么要先算账?看三笔交易:甲卖给乙 <span class="num">1 万</span>股,乙卖给丙 <span class="num">1 万</span>股,丙又卖给甲 <span class="num">5000 股</span>。笔笔都搬,得过户三次;先清算轧一轧:甲净卖 <span class="num">5000 股</span>,乙一买一卖正好扯平,丙净买 <span class="num">5000 股</span>,最后只需甲向丙过户一次。成千上万笔交易压成少数几个净额,资金和证券的搬运量骤减——这就是清算存在的理由。</p><div class="callout callout--note reveal"><span class="callout__title">三笔交易,一次过户</span><p>划重点:甲卖给乙 <span class="num">1 万</span>股,乙卖给丙 <span class="num">1 万</span>股,丙又卖给甲 <span class="num">5000 股</span>——笔笔都搬,得过户三次。先清算轧一轧:甲净卖 <span class="num">5000 股</span>,乙一买一卖正好扯平,丙净买 <span class="num">5000 股</span>,最后只需甲向丙过户一次。全天成千上万笔交易压成少数几个净额,资金和证券的搬运量骤减,这就是清算存在的理由。</p></div><p>算完账还要真正搬家:资金从买方划给卖方,证券从卖方过户给买方。这一步叫交收。交收完成,你的账户才正式更新持仓和余额。而证券到底记在谁名下,由登记结算体系统一维护;基金和机构的资产,还有托管人专门保管、核对。一环都不能少。</p><p>这些词听起来像后台琐事,但做量化的人必须当真。一套交易系统只知道<span class="hl">“我想买一万股”</span>是远远不够的,它还得知道:订单到底成交没有?成交了多少?资金哪天扣?证券哪天能卖?费用怎么记账?券商的记录和我自己的记录对不对得上?这些问题的答案,分分毫毫都是真的钱。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 365" role="img" aria-label="成交、清算、交收三步流程图:T 日撮合合同成立,T+1 轧算划拨,此刻才算持有">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">成交只是承诺,交收才算完成</text>
+            <rect x="60" y="80" width="230" height="130" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="175" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">T 日 · 撮合成交</text>
+            <text x="175" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">交易所确认:谁买谁卖</text>
+            <text x="175" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">双方价格锁定</text>
+            <text x="175" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">合同成立,钱货未动</text>
+            <rect x="335" y="80" width="230" height="130" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">T+1 日 · 清算</text>
+            <text x="450" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">中国结算做净额轧算</text>
+            <text x="450" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">算清每户净该收/付多少</text>
+            <text x="450" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">证券、资金都在划拨途中</text>
+            <rect x="610" y="80" width="230" height="130" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="725" y="108" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">T+1 日 · 交收</text>
+            <text x="725" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">股票划到买方证券账户</text>
+            <text x="725" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">现金划到卖方资金账户</text>
+            <text x="725" y="184" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">此刻才算真正持有</text>
+            <line x1="292" y1="145" x2="333" y2="145" stroke="#8499bd" stroke-width="3" marker-end="url(#arrR1)"/>
+            <line x1="567" y1="145" x2="608" y2="145" stroke="#8499bd" stroke-width="3" marker-end="url(#arrR1)"/>
+            <defs><marker id="arrR1" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8499bd"/></marker></defs>
+            <rect x="60" y="240" width="780" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="84" y="268" fill="#f0c96a" font-size="13" font-weight="800">为什么先过账的规则不可逆</text>
+            <text x="84" y="294" fill="#bcc9dd" font-size="12">交易所要求券商先冻结资金与证券再挂单,是把“打白条”的风险挡在交易系统之外;A 股之所以 T+1,是要给中央对手方留出清算窗口</text>
+            <text x="84" y="318" fill="#bcc9dd" font-size="12">看懂这三步,后面讲停牌、交割日期、甚至国债期货的交割规则,全都是这一条逻辑的延伸</text>
+          </svg>
+          <p class="figure__cap">成交只是合同锁价,清算是按净额算账,交收才是真正把钱和票过户。A 股 T+1 的本质,是让中央对手方有一天时间核对完账本。</p>
+        </div>
         <h3>2.4. 券商、交易所、登记结算、托管分别做什么</h3>
 <div class="callout callout--note reveal"><span class="callout__title">关键</span><p>这条链上有四家关键机构,职责常被搞混,挨个对号入座。先看券商:它是投资者进入市场的通道。开户找它,委托报给它,它先检查你的资金、持仓、权限和风控,再把合规的订单送进交易所。你软件上的每一个按钮,背后都是券商的系统在跑。</p></div><p>再看交易所:它负责制定交易规则、接收订单、撮合买卖、监控异常交易。给交易所去两根错误的想象:它不是你的银行账户,也不是上市公司的财务科。它更像一个规则化的撮合系统——一台只认规则、不认人情的大机器。</p><p>成交之后的活,交给另外两家。登记结算机构负责清算、交收和证券权属登记;托管人负责保管基金或机构资产,核对估值和资金划转。整条链上没有人彼此相识,交易却能做到可信——靠的就是这几道<span class="hl">“各管一段、互相核对”</span>的分工。</p><p>为什么管投资的和管资产的非要分开?想想财务室的规矩:会计管账,出纳管钱,两个人互相核对,谁想挪用都过不了对方那关。基金层面也一样:管理人管<span class="hl">“怎么投”</span>,托管人管<span class="hl">“东西还在不在”</span>。顺带记住:你的股票也不是躺在券商的机房里,权属由登记结算体系统一记账——券商是通道,不是仓库。</p>
 

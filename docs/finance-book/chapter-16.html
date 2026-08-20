@@ -148,6 +148,35 @@
         <h3>2.10. 个人怎么用指数建立投资纪律</h3>
 <p>说了这么多工具,落到你个人身上,指数最朴素的用法是当一面<span class="hl">“照妖镜”</span>。下次想买个股之前,先对自己三连问:我为什么不直接买一只低成本的宽基 <span class="term">ETF</span>?我承担这只个股的特有风险,指望换来什么额外收益?我是真有能力判断这家公司,还是只是被它最近的涨跌勾住了注意力?能答好这三问,你的下单才站得住。</p><p>如果你做量化练习,指数还是你的第一条及格线:买入并持有某个宽基指数,就这。你的策略要是长期跑不赢这个傻瓜基线,或者跑赢的部分全靠承担更大回撤、更集中的行业暴露,那就先别急着宣布自己挖到了 <span class="term">Alpha</span>。</p><p>把及格线量化一下:一只宽基 <span class="term">ETF</span> 综合费率约 <span class="num">0.15%</span>,而自己做策略,佣金、冲击成本、税费加研究折算,一年摩擦 <span class="num">1.5%</span> 都算客气——你的能力必须每年稳定补上这 <span class="num">1.35 个百分点</span>,才刚够和<span class="hl">“躺平”</span>打平,反算:<span class="num">1.5%</span> 减 <span class="num">0.15%</span>,恰是 <span class="num">1.35%</span>。反直觉的是,有时什么都不做、只买指数,反而是最优解。所以指数化投资不是躺平,更不是懒惰,而是承认难度之后的纪律:先用低成本工具把市场 <span class="term">Beta</span> 稳稳拿到手,再拿少量资金、少量研究时间去探索主动策略和量化策略。这条路远比一上来就满仓追逐复杂信号走得稳。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="市值加权示意图:三巨头权重 50/30/20,大公司 1% 变动比小公司 10% 变动对指数影响更大">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">市值加权:大公司涨 1%,比小公司涨 10% 更厉害</text>
+            <!-- 指数的三个代表权 -->
+            <rect x="90" y="90" width="200" height="200" rx="14" fill="rgba(122,167,240,0.3)" stroke="#7aa7f0"/>
+            <text x="190" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">成分 1</text>
+            <text x="190" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">市值 1000 亿</text>
+            <text x="190" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">权重 50%</text>
+            <rect x="330" y="110" width="120" height="160" rx="12" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+            <text x="390" y="138" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">成分 2</text>
+            <text x="390" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">市值 600 亿</text>
+            <text x="390" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">权重 30%</text>
+            <rect x="490" y="140" width="90" height="130" rx="10" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
+            <text x="535" y="168" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">成分 3</text>
+            <text x="535" y="196" text-anchor="middle" fill="#bcc9dd" font-size="12">市值 400 亿</text>
+            <text x="535" y="218" text-anchor="middle" fill="#bcc9dd" font-size="12">权重 20%</text>
+            <!-- 箭头与数字 -->
+            <text x="670" y="130" fill="#bcc9dd" font-size="13">成分1 涨 1%</text>
+            <text x="670" y="156" fill="#f0c96a" font-size="15" font-weight="800">→ 指数涨 0.50 点</text>
+            <text x="670" y="188" fill="#bcc9dd" font-size="13">成分2 涨 1%</text>
+            <text x="670" y="210" fill="#f0c96a" font-size="15" font-weight="800">→ 指数涨 0.30 点</text>
+            <text x="670" y="244" fill="#bcc9dd" font-size="13">成分3 涨 10%</text>
+            <text x="670" y="266" fill="#f0c96a" font-size="15" font-weight="800">→ 指数只涨 0.20 点</text>
+            <rect x="60" y="310" width="780" height="80" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="84" y="334" fill="#f0c96a" font-size="13" font-weight="800">结论</text>
+            <text x="84" y="360" fill="#bcc9dd" font-size="12">宽基指数(上证50/沪深300)头部效应极强;不是“市场”听投票多少,是大公司方向决定主方向。要读“市场宽度”得看涨跌家数,不能只看指数曲线</text>
+          </svg>
+          <p class="figure__cap">市值加权的含义:尽管指数看起来是数理平均,实际是“大公司说话更大声”。当你听说“指数涨了”,决定答案的大部分是前二十大成分股,不是大多数公司。</p>
+        </div>
 
         <section class="summary reveal">
           <h2>小结</h2>

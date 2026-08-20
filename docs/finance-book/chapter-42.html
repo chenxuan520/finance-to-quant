@@ -89,6 +89,27 @@
           </svg>
           <p class="figure__cap">一个稳妥的个人量化项目按八步长大:问题先要小到一句话说清,数据先体检再谈策略,基线先立住、因子单独过堂、组合先等权;样本外「普通而不崩」才上模拟盘,小资金半自动跑顺之后,依然先加仪表再谈放大资金。</p>
         </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 490" role="img" aria-label="量化项目八步闭环:小问题、数据检查、基线、单因子、组合、样本外模拟、小资金半自动、再提问——循环运行">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一个稳妥个人量化项目的成长路径:八步闭环</text>
+            <circle cx="450" cy="230" r="160" fill="rgba(122,167,240,0.1)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="450" y="225" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">你 · 主理人</text>
+            <text x="450" y="247" text-anchor="middle" fill="#bcc9dd" font-size="12">外界的问题:下一步去哪儿?</text>
+            <!-- 环绕的八步 -->
+            <g font-size="12.5" font-weight="800">
+              <text x="90" y="80" fill="#f0c96a">① 问题足够小</text>
+              <text x="300" y="46" fill="#a8c6ff">② 先做数据检查</text>
+              <text x="560" y="46" fill="#8fb37a">③ 做最简单基线</text>
+              <text x="760" y="80" fill="#ee8877">④ 单因子报告</text>
+              <text x="790" y="240" fill="#ee8877">⑤ 他如何判断下一步</text>
+              <text x="70" y="240" fill="#f0c96a">⑥ 小资金半自动</text>
+              <text x="300" y="420" fill="#a8c6ff">⑦ 样本外与模拟盘</text>
+              <text x="560" y="420" fill="#f0c96a">⑧ 多因子组合</text>
+            </g>
+            <text x="450" y="462" text-anchor="middle" fill="#bcc9dd" font-size="12.5">圈不是闭环,是循环——走在第八步时,又回到第一步问自己“这个新问题能不能再压小一点”</text>
+          </svg>
+          <p class="figure__cap">这是一张闭环图:问题变小→查数据→做基线→出单因子→组合→模拟盘→小实盘→再问下一个更小的问题。终点不存在,每一圈都是一次被修炼。</p>
+        </div>
         <h3>1.2. 先做数据检查</h3>
 <p>换作心急的人,此时已经开始写策略了。小周没有,他先写数据检查脚本:交易日是否连续?股票代码有没有重复?指数成分股是不是按日期在变化?复权收益算出来合不合理?停牌、涨跌停这些字段在不在?——全都查一遍。</p><p>一查就出了发现:在某个数据供应商的数据里,有些股票停牌那天,仍然带着前收盘价。如果直接拿来回测,引擎会假设你在停牌日也能以这个价格成交——这在真实市场里是不可能的。这个发现还没给他带来一分钱收益,但它拆掉了一颗迟早要爆的雷。</p><p>这一步想说的是:好的量化研究,不是从模型开始,而是从数据可信开始。先把地基验过再继续盖,慢一点,但每一步都站得住。</p>
 

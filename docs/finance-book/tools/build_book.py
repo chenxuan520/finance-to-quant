@@ -3859,6 +3859,1039 @@ PATCH_N = {
          ("国家、企业、自己各扛一部分", _fig_n13_pillars)],
 }
 
+def _fig_r30_checklist():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">上线前的回测-实盘一致性检查</text>
+            <rect x="60" y="80" width="360" height="260" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="240" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">七条硬检验(任一答“不确定”就停)</text>
+            <text x="85" y="140" fill="#bcc9dd" font-size="12">① 数据是同一家供应商、同一个更新时点吗</text>
+            <text x="85" y="166" fill="#bcc9dd" font-size="12">② 时间线是逻辑时序对齐的吗</text>
+            <text x="85" y="192" fill="#bcc9dd" font-size="12">③ 股票池是历史时点的名单吗</text>
+            <text x="85" y="218" fill="#bcc9dd" font-size="12">④ 交易规则(涨跌停/停牌/最小手数)被完整包含了吗</text>
+            <text x="85" y="244" fill="#bcc9dd" font-size="12">⑤ 成本估算里滑点跟清仓精度按压线测过吗</text>
+            <text x="85" y="270" fill="#bcc9dd" font-size="12">⑥ 因子是否单独出过单因子报告</text>
+            <text x="85" y="296" fill="#bcc9dd" font-size="12">⑦ 基准模型和假定的简单基线比较过了吗</text>
+            <rect x="480" y="80" width="360" height="260" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="660" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">稳态运营的三块长期检查</text>
+            <text x="505" y="140" fill="#bcc9dd" font-size="12">⑧ 组合约束跟仓位上限跟风险预算一致吗</text>
+            <text x="505" y="166" fill="#bcc9dd" font-size="12">⑨ 同一行报告,两周以后你还能复现出来吗</text>
+            <text x="505" y="192" fill="#bcc9dd" font-size="12">⑩ 模拟盘至少跑过两周且有正当收益你才能上实盘吗</text>
+            <text x="505" y="226" fill="#ee8877" font-size="13" font-weight="800">清单写进代码,不写进脑子</text>
+            <text x="505" y="254" fill="#bcc9dd" font-size="12">每次上线前跑一遍 PYTHON 脚本,</text>
+            <text x="505" y="278" fill="#bcc9dd" font-size="12">任何一项没过就不允许 git commit</text>
+            <text x="505" y="308" fill="#bcc9dd" font-size="12">这不是要让机器聪明,是让制度顽固</text>"""
+    return concept_figure(body, "0 0 900 365",
+        "上线前十问检查图:从数据时间线股池规则成本到因子基线模拟全盘的一盘检测清单",
+        "上线检查清单不是安慰品,是制度化的不相信——既有信心不敬重'我相信是有料的',而是制度让'上线看好不我不相信'。七条硬检验加三块长期检查,过不了的就不允许提交。")
+
+
+def _fig_r31_five():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">读研究报告的第一件事:先问五个问题,再看结论</text>
+            <text x="80" y="70" fill="#8499bd" font-size="12" font-weight="800">哪点子数据不在于你看到丽性 —— 而在于你问对了什么</text>
+            <text x="80" y="108" fill="#f0c96a" font-size="13" font-weight="800">① 它要证明的核心命题是什么?</text>
+            <text x="120" y="130" fill="#bcc9dd" font-size="12">看不懂要证明什么就别跟着看结果—先弄懂假设与结论的逻辑.</text>
+            <text x="80" y="168" fill="#f0c96a" font-size="13" font-weight="800">② 数据从哪里来,时间窗多长,中爻巴克?</text>
+            <text x="120" y="190" fill="#bcc9dd" font-size="12">数据口径、历史时段、修正方向都会影响结论,必须透出来.</text>
+            <text x="80" y="228" fill="#f0c96a" font-size="13" font-weight="800">③ 股票池是什么,跟谁比?</text>
+            <text x="120" y="250" fill="#bcc9dd" font-size="12">与沪深 300 比跟与创业板比,完全是两种结论.</text>
+            <text x="80" y="288" fill="#f0c96a" font-size="13" font-weight="800">④ 成本被算完了吗?冲击成本、滑点、容量上边上足过吗?</text>
+            <text x="120" y="310" fill="#bcc9dd" font-size="12">单纯的低换手高阿尔法,往往在放大执行成本后被砸裸奔.</text>
+            <text x="80" y="348" fill="#f0c96a" font-size="13" font-weight="800">⑤ 样本外令人满意吗?作者又赚不到这里提到的钱?</text>
+            <text x="120" y="370" fill="#bcc9dd" font-size="12">如果作者的基金早已把钱从这里赚走了,这一笔能被一分钱留给你吗?</text>
+            <text x="450" y="410" text-anchor="middle" fill="#bcc9dd" font-size="12.5">回答这五个问题之前,漂亮结论越多越警惕——它们往往不是诱你跳过这五问的廚化剂</text>"""
+    return concept_figure(body, "0 0 900 435",
+        "阅读研究报告五问清单:命题、数据、对比、成本容量、样本外",
+        "真正能防御假研究的,是看之前先问五个问题。报告里没填这五个空的,圧石头有心写多长,或很多结论都是给你看的“添油堵反”。")
+
+
+PATCH_R7 = {
+    30: [("别让两套代码各跑各的", _fig_r30_checklist)],
+    31: [("它到底想证明什么", _fig_r31_five)],
+}
+
+
+
+def _fig_r38_eyefund():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">招募书先看这五行,不看宣传册</text>
+            <rect x="80" y="80" width="740" height="48" rx="8" fill="rgba(122,167,240,0.15)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="104" y="110" fill="#a8c6ff" font-size="13" font-weight="800">① 投资范围:能买什么、比例多少、有没有“可投其他工具”的活口</text>
+            <rect x="80" y="138" width="740" height="48" rx="8" fill="rgba(240,201,106,0.12)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="104" y="168" fill="#f0c96a" font-size="13" font-weight="800">② 申购赎回:开放日、最低赎回额、管理人是否有权暂停赎回</text>
+            <rect x="80" y="196" width="740" height="48" rx="8" fill="rgba(143,179,122,0.15)" stroke="rgba(143,179,122,0.5)"/>
+            <text x="104" y="226" fill="#b5d3a0" font-size="13" font-weight="800">③ 风控线:预警线、止损线、清盘线分别设在净值多少</text>
+            <rect x="80" y="254" width="740" height="48" rx="8" fill="rgba(238,136,119,0.12)" stroke="rgba(238,136,119,0.4)"/>
+            <text x="104" y="284" fill="#ffb4b4" font-size="13" font-weight="800">④ 费率结构:申购/赎回/管理/托管/销售服务费,合计一年要被吃掉多少</text>
+            <rect x="80" y="312" width="740" height="48" rx="8" fill="rgba(132,153,189,0.12)" stroke="rgba(132,153,189,0.4)"/>
+            <text x="104" y="342" fill="#bcc9dd" font-size="13">⑤ 基金经理:从业年限、在任多久、之前的代表作业绩</text>
+            <text x="450" y="392" text-anchor="middle" fill="#bcc9dd" font-size="12.5">读完这五处再决定要不要看宣传图——顺序不能反</text>"""
+    return concept_figure(body, "0 0 900 415",
+        "招募说明书五处必看:投资范围、申购赎回、风控线、费率、基金经理",
+        "两百页招募书里,能决定一款产品能不能买的,就是五处的条款。不用苦算数据,也不用看完所有报表——把这五处看透,你已跑赢大多数被广告糊弄的人。")
+
+
+def _fig_r39_small():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">小资金实盘纪律:先把亏损的上限写死</text>
+            <rect x="70" y="80" width="360" height="260" rx="12" fill="rgba(122,167,240,0.18)" stroke="#7aa7f0"/>
+            <text x="250" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">三条资金上限</text>
+            <text x="250" y="142" text-anchor="middle" fill="#bcc9dd" font-size="12">本金上限:5 万元封顶</text>
+            <text x="250" y="170" text-anchor="middle" fill="#bcc9dd" font-size="12">单笔亏损上限:每笔最多 -1%本金</text>
+            <text x="250" y="198" text-anchor="middle" fill="#bcc9dd" font-size="12">日内总亏损上限:-2% 强制关单收工</text>
+            <text x="250" y="226" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">连续亏 3 天,当天不许再开新仓</text>
+            <text x="250" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">周末必须做一次对账</text>
+            <text x="250" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">在第一步是习惯而不是收益</text>
+            <rect x="470" y="80" width="360" height="260" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="650" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">四个周期信号</text>
+            <text x="650" y="142" text-anchor="middle" fill="#bcc9dd" font-size="12">月度亏损超 10%:仓位减半</text>
+            <text x="650" y="170" text-anchor="middle" fill="#bcc9dd" font-size="12">月度收益超 20%:手数减半</text>
+            <text x="650" y="198" text-anchor="middle" fill="#bcc9dd" font-size="12">连续 4 周横盘:微调参数不追加资金</text>
+            <text x="650" y="226" text-anchor="middle" fill="#bcc9dd" font-size="12">4 周以上不回撤:可加一档资金</text>
+            <text x="650" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">任意信号之间不许同情绪交易</text>
+            <text x="650" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">规则写下来才可信,搭讪日拱一卒</text>
+            <text x="450" y="376" text-anchor="middle" fill="#bcc9dd" font-size="12.5">每一条都是用来跟自己交朋友:趁自己没在市场里虚惊时先把规则写好——真实情绪来的时候,不会听你从容的道理</text>"""
+    return concept_figure(body, "0 0 900 400",
+        "小资金实盘规则图:本金上限五万,单笔亏一百分点,连亏三日强制收工",
+        "实盘亏的不只是钱,是心态。小资金的真正价值是练纪律——上限的目的不是顾虑亏损,是给你在最想加杠杆时,一个按得住自己的理由。")
+
+
+def _fig_r40_two_lists():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">最终清单的两列:能说明白才算懂</text>
+            <rect x="70" y="80" width="360" height="265" rx="12" fill="rgba(122,167,240,0.18)" stroke="#7aa7f0"/>
+            <text x="250" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">金融直觉列</text>
+            <text x="250" y="138" text-anchor="middle" fill="#bcc9dd" font-size="12">钱和财富的区别</text>
+            <text x="250" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">银行为什么又脆弱又有用</text>
+            <text x="250" y="194" text-anchor="middle" fill="#bcc9dd" font-size="12">股票与债券的风险结构差异</text>
+            <text x="250" y="222" text-anchor="middle" fill="#bcc9dd" font-size="12">基金与 ETF 的基本结构</text>
+            <text x="250" y="250" text-anchor="middle" fill="#bcc9dd" font-size="12">收益风险指标到底反映什么</text>
+            <text x="250" y="278" text-anchor="middle" fill="#bcc9dd" font-size="12">有效市场与行为偏差的关系</text>
+            <text x="250" y="310" text-anchor="middle" fill="#8499bd" font-size="12">口舌讲不明白的就是没掌握</text>
+            <rect x="470" y="80" width="360" height="265" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="650" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">工程纪律列</text>
+            <text x="650" y="138" text-anchor="middle" fill="#bcc9dd" font-size="12">股票池必须点时确定</text>
+            <text x="650" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">回测必须包含真实成本</text>
+            <text x="650" y="194" text-anchor="middle" fill="#bcc9dd" font-size="12">因子必须单独出具报告</text>
+            <text x="650" y="222" text-anchor="middle" fill="#bcc9dd" font-size="12">模型必须和田农药基线对比</text>
+            <text x="650" y="250" text-anchor="middle" fill="#bcc9dd" font-size="12">组合必须有明确的约束</text>
+            <text x="650" y="278" text-anchor="middle" fill="#bcc9dd" font-size="12">报告必须能被复现</text>
+            <text x="650" y="310" text-anchor="middle" fill="#8499bd" font-size="12">没写出来的不允许操作</text>
+            <text x="450" y="378" text-anchor="middle" fill="#bcc9dd" font-size="12.5">能写下来就是能证明,能说服小白就是能讲透——从这个列开始一步步推进到最后的仓位和决策</text>"""
+    return concept_figure(body, "0 0 900 400",
+        "最终清单双列:金融直觉说人话,工程纪律写代码式约束",
+        "毕业考试不是背定义,是把它们写给你不看行不辿;工程侧同理:把规则说得出来才算真的理解,讲得出来就要拿模拟盘认证。")
+
+
+def _fig_r41_overfit():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">判断题里最容易翻车的四道</text>
+            <rect x="70" y="80" width="360" height="195" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="250" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">题A:钱多了,社会一定更富?</text>
+            <text x="250" y="140" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:多一个零就是财富加量</text>
+            <text x="250" y="168" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">✗</text>
+            <text x="250" y="200" text-anchor="middle" fill="#bcc9dd" font-size="12">钱只是调动真实财富的工具,</text>
+            <text x="250" y="228" text-anchor="middle" fill="#bcc9dd" font-size="12">池子不宽,水位再涨也只是表面热闹</text>
+            <rect x="470" y="80" width="360" height="195" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="650" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">题B:债券一定比股票安全?</text>
+            <text x="650" y="140" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:情歌一样稳的债比股票保险</text>
+            <text x="650" y="168" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">✗</text>
+            <text x="650" y="200" text-anchor="middle" fill="#bcc9dd" font-size="12">利率上涨时债价下跌,违约能蚀损的是票面,</text>
+            <text x="650" y="228" text-anchor="middle" fill="#bcc9dd" font-size="12">美债负责涨收益不负责保本金</text>
+            <rect x="70" y="290" width="360" height="120" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="250" y="318" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">题C:高胜率策略 = 好策略?</text>
+            <text x="250" y="346" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:稳赢的对</text>
+            <text x="250" y="374" text-anchor="middle" fill="#bcc9dd" font-size="12">正确的区别:期望值与回撤组合</text>
+            <text x="250" y="398" text-anchor="middle" fill="#bcc9dd" font-size="12">99 次小赚 vs 1 次大亏是高胜率低 EV</text>
+            <rect x="470" y="290" width="360" height="120" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="650" y="318" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">题D:回测曲线好 ⇒ 能实盘?</text>
+            <text x="650" y="346" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:谷仓曲线 = 能力</text>
+            <text x="650" y="374" text-anchor="middle" fill="#bcc9dd" font-size="12">史论速率不清仓生产、成本、样本外</text>
+            <text x="650" y="398" text-anchor="middle" fill="#bcc9dd" font-size="12">实盘跟排练完全不同</text>
+            <text x="450" y="450" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这四道题不是用来考的,是用来在你每一次要下手前重新对一次答案</text>"""
+    return concept_figure(body, "0 0 900 475",
+        "四道最易翻车判断题:钱多不一定富、债券不一定稳赢、胜率高不一定好、回测好不等于实盘",
+        "把它们做对,比会做 100 道计算题更难——因为收益曲线是冷冰冰的,而直觉是热的。")
+
+
+def _fig_r42_lifecycle():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一个稳妥个人量化项目的成长路径:八步闭环</text>
+            <circle cx="450" cy="230" r="160" fill="rgba(122,167,240,0.1)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="450" y="225" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">你 · 主理人</text>
+            <text x="450" y="247" text-anchor="middle" fill="#bcc9dd" font-size="12">外界的问题:下一步去哪儿?</text>
+            <!-- 环绕的八步 -->
+            <g font-size="12.5" font-weight="800">
+              <text x="90" y="80" fill="#f0c96a">① 问题足够小</text>
+              <text x="300" y="46" fill="#a8c6ff">② 先做数据检查</text>
+              <text x="560" y="46" fill="#8fb37a">③ 做最简单基线</text>
+              <text x="760" y="80" fill="#ee8877">④ 单因子报告</text>
+              <text x="790" y="240" fill="#ee8877">⑤ 他如何判断下一步</text>
+              <text x="70" y="240" fill="#f0c96a">⑥ 小资金半自动</text>
+              <text x="300" y="420" fill="#a8c6ff">⑦ 样本外与模拟盘</text>
+              <text x="560" y="420" fill="#f0c96a">⑧ 多因子组合</text>
+            </g>
+            <text x="450" y="462" text-anchor="middle" fill="#bcc9dd" font-size="12.5">圈不是闭环,是循环——走在第八步时,又回到第一步问自己“这个新问题能不能再压小一点”</text>"""
+    return concept_figure(body, "0 0 900 490",
+        "量化项目八步闭环:小问题、数据检查、基线、单因子、组合、样本外模拟、小资金半自动、再提问——循环运行",
+        "这是一张闭环图:问题变小→查数据→做基线→出单因子→组合→模拟盘→小实盘→再问下一个更小的问题。终点不存在,每一圈都是一次被修炼。")
+
+
+def _fig_r43_checkpaper():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">附录这张纸不是讲知识,是上手前要问到位的口语化检查</text>
+            <rect x="60" y="80" width="780" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="84" y="108" fill="#a8c6ff" font-size="14" font-weight="800">研究前(动理念)</text>
+            <text x="84" y="134" fill="#bcc9dd" font-size="12">① 这个问题是不是小到一周之内能给个答案?</text>
+            <text x="84" y="158" fill="#bcc9dd" font-size="12">② 最坏情况是亏钱 -2% 还是 -10% 或 -50%?</text>
+            <text x="84" y="182" fill="#bcc9dd" font-size="12">③ 这一次的核算成本,是不是认真算过印花税和滑点?</text>
+            <rect x="60" y="220" width="780" height="100" rx="10" fill="rgba(240,201,106,0.12)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="84" y="248" fill="#f0c96a" font-size="14" font-weight="800">回测前(动机器)</text>
+            <text x="84" y="274" fill="#bcc9dd" font-size="12">④ 在那个历史时点,我到底有没有看到要用到的数据?</text>
+            <text x="84" y="298" fill="#bcc9dd" font-size="12">⑤ 这套代码跟我后面模拟盘运行的是不是同一套?</text>
+            <rect x="60" y="340" width="780" height="90" rx="10" fill="rgba(238,136,119,0.12)" stroke="rgba(238,136,119,0.4)"/>
+            <text x="84" y="368" fill="#ffb4b4" font-size="14" font-weight="800">实盘前(动钱包)</text>
+            <text x="84" y="394" fill="#bcc9dd" font-size="12">⑥ 策略疯起来(或者静下来)我能不能马上停,且机身和弹药都还在手里?</text>"""
+    return concept_figure(body, "0 0 900 450",
+        "启动前六问图:研究三问、回测两问、实盘一问",
+        "这张纸不是给你背下来的,是给你每次动手前要问到位的——六问里有任意一问答不出来,就先不要下手。")
+
+
+PATCH_R6 = {
+    38: [("招募说明书先翻五处", _fig_r38_eyefund)],
+    39: [("先定资金上限", _fig_r39_small)],
+    40: [("能管住自己的资金边界", _fig_r40_two_lists)],
+    41: [("高胜率策略一定好吗", _fig_r41_overfit)],
+    42: [("问题很小", _fig_r42_lifecycle)],
+    43: [("研究前先问问题是否足够小", _fig_r43_checkpaper)],
+}
+
+
+
+def _fig_r32_drawdown():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回撤不对称:跌 50% 要涨 100% 才能回本</text>
+            <line x1="80" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <line x1="80" y1="60" x2="80" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <text x="92" y="66" fill="#bcc9dd" font-size="12">净值</text>
+            <path d="M 85 200 Q 200 170 330 190 Q 420 200 450 205 Q 500 285 620 275 Q 740 260 815 220" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <circle cx="85" cy="200" r="5" fill="#8fb37a"/>
+            <text x="85" y="188" fill="#8fb37a" font-size="12" font-weight="800">起点 1.0</text>
+            <circle cx="450" cy="205" r="5" fill="#f0c96a"/>
+            <text x="450" y="193" fill="#f0c96a" font-size="12" font-weight="800">高点 1.2</text>
+            <circle cx="620" cy="275" r="5" fill="#ee8877"/>
+            <text x="620" y="295" fill="#ee8877" font-size="12" font-weight="800">谷底 0.6(-50%)</text>
+            <line x1="450" y1="205" x2="810" y2="205" stroke="#8fb37a" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="810" y="200" fill="#8fb37a" font-size="12">得回到 1.2 才算回本</text>
+            <text x="450" y="338" text-anchor="middle" fill="#bcc9dd" font-size="12.5">数学只有一句:1.2 → 0.6 是 -50%,0.6 → 1.2 是 +100%;从深坑里爬出的代价比你想象贵上一倍——这就是止损要卡的死死的原因</text>"""
+    return concept_figure(body, "0 0 900 365",
+        "回撤不对称复原图:净值从 1.2 跌到 0.6 又是怎么必须再涨 100% 才能回本",
+        "跌 50% 不是利润的一半失去,是必须再赚 100% 才回得来。同哲学只能弥补的是止损和仓位——越往下亏,能回到起点的天数越长,这就是何时控制的设置在绝对值上。")
+
+
+def _fig_r33_tenlayer():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化十层金字塔:底下坏一点,上面就动一片</text>
+            <path d="M 60 400 L 840 400 L 790 340 L 110 340 Z" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="450" y="378" text-anchor="middle" fill="#bcc9dd" font-size="13">① 真实财富与生产力 · ② 信用与时间 · ③ 权利与资产</text>
+            <path d="M 110 340 L 790 340 L 740 280 L 160 280 Z" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.45)"/>
+            <text x="450" y="318" text-anchor="middle" fill="#bcc9dd" font-size="13">④ 市场制度 · ⑤ 数据可见性</text>
+            <path d="M 160 280 L 740 280 L 690 220 L 210 220 Z" fill="rgba(122,167,240,0.25)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="450" y="258" text-anchor="middle" fill="#bcc9dd" font-size="13">⑥ 因子与模型 · ⑦ 回测与验证</text>
+            <path d="M 210 220 L 690 220 L 640 160 L 260 160 Z" fill="rgba(240,201,106,0.2)" stroke="rgba(240,201,106,0.5)"/>
+            <text x="450" y="198" text-anchor="middle" fill="#bcc9dd" font-size="13">⑧ 组合与风险 · ⑨ 交易与实盘</text>
+            <path d="M 260 160 L 640 160 L 590 100 L 310 100 Z" fill="rgba(238,136,119,0.2)" stroke="rgba(238,136,119,0.5)"/>
+            <text x="450" y="138" text-anchor="middle" fill="#bcc9dd" font-size="13">⑩ 人和纪律</text>
+            <path d="M 310 100 L 590 100 L 450 40 Z" fill="rgba(240,201,106,0.3)" stroke="#f0c96a"/>
+            <text x="450" y="76" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">你自己的决策</text>
+            <text x="450" y="438" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这不是组织架构图,是知识依赖图——底座塔基稍微不稳,上面那些数据、意外与模型都会跟着晃</text>"""
+    return concept_figure(body, "0 0 900 465",
+        "十层金字塔图:真实财富、信用、制度、数据、因子、组合、执行,塔顶是人的纪律",
+        "这本书的全部内容可以画成一座十层金字塔。底下几层日暮存心,上面三层人人都盯屏幕。当你看到模型失效时,要检查的不是模型,是底下九层之一。“技术要求”的它本身没问题。”")
+
+
+def _fig_r34_portfolio():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化职业三线的技能栈与性格匹配</text>
+            <rect x="70" y="80" width="240" height="250" rx="12" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="190" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 开发(QD)</text>
+            <text x="190" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">交易系统、回测框架</text>
+            <text x="190" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">负责写工具,不写信号</text>
+            <text x="190" y="186" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">指标的低压/可复现性</text>
+            <text x="190" y="214" text-anchor="middle" fill="#bcc9dd" font-size="12">压力与变动相对低</text>
+            <text x="190" y="242" text-anchor="middle" fill="#bcc9dd" font-size="12">对代码热爱的人</text>
+            <text x="190" y="268" text-anchor="middle" fill="#8499bd" font-size="12">年限上率先久远</text>
+            <text x="190" y="296" text-anchor="middle" fill="#8fb37a" font-size="12.5">上下限最优法工程师</text>
+            <rect x="330" y="80" width="240" height="250" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">② 研究(QR)</text>
+            <text x="450" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">因子、数据、模型</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">负责写信号与策略</text>
+            <text x="450" y="186" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">IC 与统计严谨性</text>
+            <text x="450" y="214" text-anchor="middle" fill="#bcc9dd" font-size="12">对 PNL 功绩直负责</text>
+            <text x="450" y="242" text-anchor="middle" fill="#bcc9dd" font-size="12">对学术推理更敏感</text>
+            <text x="450" y="268" text-anchor="middle" fill="#8499bd" font-size="12">入门难度最高</text>
+            <text x="450" y="296" text-anchor="middle" fill="#8fb37a" font-size="12.5">上下限最高</text>
+            <rect x="600" y="80" width="240" height="250" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="720" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 交易(QT)</text>
+            <text x="720" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">盯盘、仓位、风险恶化</text>
+            <text x="720" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">负责运行与决断</text>
+            <text x="720" y="186" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">成交叉和天天 PNL</text>
+            <text x="720" y="214" text-anchor="middle" fill="#bcc9dd" font-size="12">压力下坚持与服纪律</text>
+            <text x="720" y="242" text-anchor="middle" fill="#bcc9dd" font-size="12">对市场直觉和执行力</text>
+            <text x="720" y="268" text-anchor="middle" fill="#8499bd" font-size="12">最像运动成绩</text>
+            <text x="720" y="296" text-anchor="middle" fill="#8fb37a" font-size="12.5">成长中魔术点最多</text>
+            <text x="450" y="358" text-anchor="middle" fill="#bcc9dd" font-size="12.5">三个角色需要的不是同一颗脑袋不是级别阶梯,而是性格岔置;不是先升 QR 再升 QT,是先看你愿意文思、写码、还是执手实盘</text>"""
+    return concept_figure(body, "0 0 900 390",
+        "量化职业三路线对比:开发缺代码,研究缺信号,交易缺决断",
+        "三条路线哪个上下限高,全看你口里的 PnL 挂的是谁:开发挂系统年资、研究挂因子技能、交易挂执行心态。天个岗位必备的技能栈完全不同。")
+
+
+def _fig_r35_terms():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">术语地图:按你要做的事拉出来,不是按字母背</text>
+            <text x="80" y="70" fill="#8499bd" font-size="12" font-weight="800">不竖书里的“只要被背什么”顺序;而是拉进工作时想用就能捡哪种场景</text>
+            <text x="80" y="110" fill="#f0c96a" font-size="13" font-weight="800">入门看病(市场结构)</text>
+            <text x="200" y="110" fill="#bcc9dd" font-size="12">货币、信用、利率、通胀、股债基等基本利差</text>
+            <text x="80" y="160" fill="#f0c96a" font-size="13" font-weight="800">买之前(行情基础)</text>
+            <text x="200" y="160" fill="#bcc9dd" font-size="12">股票、债券、基金、ETF、期货、期权的基本是怎么样的</text>
+            <text x="80" y="210" fill="#f0c96a" font-size="13" font-weight="800">做模型之前(机器思维)</text>
+            <text x="200" y="210" fill="#bcc9dd" font-size="12">Alpha、Beta、因子、IC、RankIC、回测</text>
+            <text x="80" y="260" fill="#f0c96a" font-size="13" font-weight="800">执行时(成本与误差)</text>
+            <text x="200" y="260" fill="#bcc9dd" font-size="12">滑点、容量、跟踪误差、归因、风险、风控</text>
+            <text x="80" y="310" fill="#f0c96a" font-size="13" font-weight="800">谁错了说什么(复盘)</text>
+            <text x="200" y="310" fill="#bcc9dd" font-size="12">真实成交价差、未来函数、幸存者偏差、过拟合、样本外</text>
+            <text x="450" y="350" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这章不是一个表,而是按「我现在多做什么事」准出问题;字母表是字典顺序,场景序是查词顺序</text>"""
+    return concept_figure(body, "0 0 900 375",
+        "术语按交易场景分组:入门看病、买之前、做模型之前、执行时、复盘问题,各用一个对应主题",
+        "别按字母背术语——按$$面处境去查:在选股前,在看策略时,在准备做执行时,在复盘的时候。口诀多了不佑,但每一个都要在你能使用它们的时候,保伪证明你能召回。")
+
+
+def _fig_r36_account():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">开户首页的三个框框:不管你用哪家券商,这三个读法稳定</text>
+            <rect x="70" y="80" width="240" height="200" rx="12" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="190" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 总资产 VS 可用 VS 可取</text>
+            <text x="190" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">总资产 = 持仓市值 + 现金</text>
+            <text x="190" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">可用 = 今天能下单动用的</text>
+            <text x="190" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">可取 = 能从证券转回银行卡的</text>
+            <text x="190" y="216" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">三个别混为一谈</text>
+            <text x="190" y="244" text-anchor="middle" fill="#8499bd" font-size="12">差额是还在途的钱:刚才挂单、在途道来未走峻</text>
+            <rect x="340" y="80" width="240" height="200" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="460" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">② 成本价 VS 当前价</text>
+            <text x="460" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">成本价是你当时买的均价</text>
+            <text x="460" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">当前价是今天最新的全市场成交</text>
+            <text x="460" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">两者之差是浮盈浮亏</text>
+            <text x="460" y="216" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">把成本价看成心理也会错</text>
+            <text x="460" y="244" text-anchor="middle" fill="#8499bd" font-size="12">所谓“套着”是错觉而已——持仓未来下一步到哪里,不能以成交价格为判断标准</text>
+            <rect x="610" y="80" width="240" height="200" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="730" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 今日收益 VS 累计收益</text>
+            <text x="730" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">今日收益只今天的变动</text>
+            <text x="730" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">累计收益是总盈亏的总额</text>
+            <text x="730" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">两个数字不要混看就好</text>
+            <text x="730" y="216" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">同样当日涨零点零、累计收益可以是高点落半里</text>
+            <text x="730" y="244" text-anchor="middle" fill="#8499bd" font-size="12">分两个表看才不会把今天惘因为当天暴跌说明起点壤里</text>
+            <text x="450" y="322" text-anchor="middle" fill="#bcc9dd" font-size="12.5">除此三框之外:成交额、换手率、震幅,都是辅助理解今天市场活跃程度的旁证——你也可以拒絕它们扰晄交易成本与费用</text>"""
+    return concept_figure(body, "0 0 900 360",
+        "账户创世纪首页阅读规范:总资产/可用/可取、成本价/当前价、今日收益/累计收益",
+        "开户首页六态:三对概念不要混,熟悉希望的读法对每一家券商都是稳定如一的。否则你会把浮亏当成已经亏、把今日涨幅当成总收益。")
+
+
+def _fig_r37_datasanity():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回测第一天的四个数据坑:你踩过的四大不会被版</text>
+            <rect x="70" y="80" width="360" height="130" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="250" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">坑1:幸存者偏差</text>
+            <text x="250" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">取今日 SP500 成分股去测 2015-2019 年数据</text>
+            <text x="250" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">等于把当年退市股票自动剔除</text>
+            <text x="250" y="186" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">存活偏向导致回测很好看</text>
+            <rect x="470" y="80" width="360" height="130" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="650" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">坑2:未来信息泄漏</text>
+            <text x="650" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">构造因子引用了今天收盘后才发布的报表</text>
+            <text x="650" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">也是变量时点(PIT)不同步</text>
+            <text x="650" y="186" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">处理时间线时不能苟同</text>
+            <rect x="70" y="220" width="360" height="130" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="250" y="248" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">坑3:交易成本估低</text>
+            <text x="250" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">1 万元以下股票要加涨 3 万一计</text>
+            <text x="250" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">大笔多股换成小规模仓库还要考虑冲击成本</text>
+            <text x="250" y="326" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">小资金大单交换流动性会被打</text>
+            <rect x="470" y="220" width="360" height="130" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="650" y="248" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">坑4:过度拟合</text>
+            <text x="650" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">反复调参数直到 2018-2022 年表现最好</text>
+            <text x="650" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">等于是把这几年背诵下来,不是预测出行情</text>
+            <text x="650" y="326" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">样本外测试不能只算业绩指标,也要看容量</text>
+            <text x="450" y="372" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这四个坑每一个具体是怎么发生的,都放在本书关于回溯实例的第一章节里起来了——今天的遇见,是明天多写一行断言的依据</text>"""
+    return concept_figure(body, "0 0 900 400",
+        "回测四坑:幸存者偏差、未来泄漏、低事成本、过度拟合,都梁在第一天写回测",
+        "第一天写回测最容易缺的不是代码工整,是这四个认知坑——今天在上面避免,明天就是一个断言、一个校验、一个拉平板模式的写真。")
+
+
+PATCH_R5 = {
+    32: [("回撤里最容易做错决定", _fig_r32_drawdown)],
+    33: [("人和纪律", _fig_r33_tenlayer)],
+    34: [("先分清岗位", _fig_r34_portfolio)],
+    35: [("通胀", _fig_r35_terms)],
+    36: [("总资产不是可花的钱", _fig_r36_account)],
+    37: [("数据没有按时到", _fig_r37_datasanity)],
+}
+
+
+
+def _fig_r25_neutral():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">Beta 对冲:把大盘的潮水拉平成溪流</text>
+            <line x1="80" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <line x1="80" y1="60" x2="80" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <text x="92" y="66" fill="#bcc9dd" font-size="12">净值</text>
+            <text x="820" y="318" fill="#bcc9dd" font-size="12">时间</text>
+            <path d="M 85 200 Q 200 260 330 240 Q 450 210 550 250 Q 650 285 810 230" fill="none" stroke="#ee8877" stroke-width="3"/>
+            <text x="220" y="260" fill="#ee8877" font-size="12" font-weight="800">裸仓做多(整轮波谷浪拍下来)</text>
+            <line x1="85" y1="170" x2="810" y2="170" stroke="#8fb37a" stroke-width="3.5"/>
+            <text x="220" y="162" fill="#8fb37a" font-size="12" font-weight="800">对冲后 + 股指期货做空(贴近水平)</text>
+            <rect x="100" y="360" width="740" height="85" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="124" y="386" fill="#f0c96a" font-size="13" font-weight="800">对冲的账</text>
+            <text x="124" y="414" fill="#bcc9dd" font-size="12">多头组合的收益 = α(选股的磨炼) + β(大盘的浪)——加上反向股指期货,β 被对冲,剩下的只有 α</text>
+            <text x="124" y="436" fill="#bcc9dd" font-size="12">代价是空头端的基差和资金成本——所以中性产品的收益,通常比纯多头低两三个百分点,但回撤也小一大截</text>"""
+    return concept_figure(body, "0 0 900 460",
+        "Beta 对冲效果图:大盘浪线起伏明显,对冲后近似水平,屏蔽 Beta 只留 Alpha",
+        "中性策略不是神秘术,是用股指期货把大盘水位抽走,让每次涨跌的原因只剩“你选的股能不能跑赢平均”;代价是要付对冲成本,长期通常拿回 Alpha 减 2-3% 对冲费。")
+
+
+def _fig_r26_pairs():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">配对交易:两只同行的股,只赌价差收敛</text>
+            <line x1="80" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <line x1="80" y1="60" x2="80" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <text x="92" y="66" fill="#bcc9dd" font-size="12">价格</text>
+            <text x="820" y="318" fill="#bcc9dd" font-size="12">时间</text>
+            <path d="M 85 100 Q 200 120 320 110 Q 450 100 590 130 Q 700 150 815 120" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <text x="830" y="125" fill="#a8c6ff" font-size="12">股 A(银行)</text>
+            <path d="M 85 140 Q 210 170 330 150 Q 460 140 600 170 Q 710 190 815 150" fill="none" stroke="#ee8877" stroke-width="3"/>
+            <text x="830" y="155" fill="#ee8877" font-size="12">股 B(银行)</text>
+            <ellipse cx="240" cy="145" rx="50" ry="40" fill="none" stroke="#f0c96a" stroke-width="3" stroke-dasharray="6 4"/>
+            <text x="240" y="212" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">价差异常拉开:做空 A,买入 B</text>
+            <ellipse cx="560" cy="150" rx="50" ry="40" fill="none" stroke="#8fb37a" stroke-width="3" stroke-dasharray="6 4"/>
+            <text x="560" y="217" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">价差收敛至正常:平仓</text>
+            <text x="450" y="338" text-anchor="middle" fill="#bcc9dd" font-size="12.5">同行业两只股价长期高度正相关。只有当价差拉到历史均值±2σ之外才出手;回到区间内就收工——赌的是相关性回归,不是股票涨跌</text>"""
+    return concept_figure(body, "0 0 900 365",
+        "配对交易图:跟踪同行两股的价差,拉到异常区间就做空高开买低收,恢复正常就收手",
+        "统计学套利的原型:同行业的股票走势通常同步;当价差落到历史正常区间外,就有价值修复的机会。你赚的是价差回归的那一块,不是牛熊方向。")
+
+
+def _fig_r27_fees():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">基金费用的两层:看得见的收费和看不见的成本</text>
+            <rect x="70" y="80" width="360" height="130" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="250" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">看得见的四笔(写在合同里)</text>
+            <text x="250" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">认购费/申购费 0.15%-1.5%</text>
+            <text x="250" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">赎回费 0%-1.5%(持有时间越长越低)</text>
+            <text x="250" y="180" text-anchor="middle" fill="#bcc9dd" font-size="12">管理费 0.2%-1.5%/年</text>
+            <text x="250" y="202" text-anchor="middle" fill="#bcc9dd" font-size="12">托管费 0.05%-0.25%/年</text>
+            <rect x="470" y="80" width="360" height="130" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="650" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">看不见的两块(从你的收益里悄悄拿走)</text>
+            <text x="650" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">交易佣金 + 手续费—自己开仓时付交易对手</text>
+            <text x="650" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">冲击成本/滑点—大单买小票会移动价格</text>
+            <text x="650" y="180" text-anchor="middle" fill="#bcc9dd" font-size="12">换手率越高,这两块越重</text>
+            <text x="650" y="202" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">总量能占到管理费的 30%-100%</text>
+            <rect x="80" y="240" width="760" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="104" y="268" fill="#f0c96a" font-size="13" font-weight="800">长期持有的累计影响</text>
+            <text x="104" y="294" fill="#bcc9dd" font-size="12">假设基金年化 8%:总费用率是 1%,十年后是 2.16 倍;费用率 3%,十年后只有 1.85 倍——一年差 2%,十年差掉 15% 的累计财富</text>
+            <text x="104" y="318" fill="#bcc9dd" font-size="12">这就是“一年看收益,十年看费用”这句话为什么在每次长期选择里都重新一堆人取</text>"""
+    return concept_figure(body, "0 0 900 360",
+        "基金费用的两层结构:合同可见费四项,隐性摩擦两块,长期费用吞噬累计收益牢不可破",
+        "决定你十年后收益的,不只是年化这几个点,还有每年被悄悄加收的总费用率。市场宣传时一定会把总费用率裁下来,所以在签署前请一定会主动把它的每一层加总起来。")
+
+
+def _fig_r29_units():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">指数增强的最小回测:八步流水</text>
+            <g>
+              <rect x="60" y="80" width="170" height="70" rx="8" fill="rgba(122,167,240,0.22)" stroke="#7aa7f0"/>
+              <text x="145" y="106" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">① 数据入库</text>
+              <text x="145" y="128" text-anchor="middle" fill="#bcc9dd" font-size="11.5">股票池、历史 K 线、成分股权重表;</text>
+              <text x="145" y="146" text-anchor="middle" fill="#bcc9dd" font-size="11.5">特别强调:必须是点时可见版本</text>
+              <rect x="250" y="80" width="170" height="70" rx="8" fill="rgba(122,167,240,0.22)" stroke="#7aa7f0"/>
+              <text x="335" y="106" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">② 写因子</text>
+              <text x="335" y="128" text-anchor="middle" fill="#bcc9dd" font-size="11.5">选一两个简单因子比如 20 日动量</text>
+              <text x="335" y="146" text-anchor="middle" fill="#bcc9dd" font-size="11.5">先写一个,再多写</text>
+              <rect x="440" y="80" width="170" height="70" rx="8" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+              <text x="525" y="106" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">③ 打分</text>
+              <text x="525" y="128" text-anchor="middle" fill="#bcc9dd" font-size="11.5">把因子值标准化后加起来,</text>
+              <text x="525" y="146" text-anchor="middle" fill="#bcc9dd" font-size="11.5">给每只股票算总分</text>
+              <rect x="630" y="80" width="170" height="70" rx="8" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+              <text x="715" y="106" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">④ 调仓名单</text>
+              <text x="715" y="128" text-anchor="middle" fill="#bcc9dd" font-size="11.5">选出高分股前100名</text>
+              <text x="715" y="146" text-anchor="middle" fill="#bcc9dd" font-size="11.5">按权重排比例</text>
+              <!-- 第二行 -->
+              <rect x="60" y="200" width="170" height="70" rx="8" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+              <text x="145" y="226" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">⑧ 复盘结论</text>
+              <text x="145" y="248" text-anchor="middle" fill="#bcc9dd" font-size="11.5">把结果告诉下一步要修正的部分,</text>
+              <text x="145" y="266" text-anchor="middle" fill="#bcc9dd" font-size="11.5">形成报告</text>
+              <rect x="250" y="200" width="170" height="70" rx="8" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+              <text x="335" y="226" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">⑦ 出报告</text>
+              <text x="335" y="248" text-anchor="middle" fill="#bcc9dd" font-size="11.5">净值、年化、夏普、最大回撤</text>
+              <text x="335" y="266" text-anchor="middle" fill="#bcc9dd" font-size="11.5">按指标出</text>
+              <rect x="440" y="200" width="170" height="70" rx="8" fill="rgba(143,179,122,0.15)" stroke="#8fb37a"/>
+              <text x="525" y="226" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">⑥ 扣成本</text>
+              <text x="525" y="248" text-anchor="middle" fill="#bcc9dd" font-size="11.5">双边佣金 + 滑点 + 印花,</text>
+              <text x="525" y="266" text-anchor="middle" fill="#bcc9dd" font-size="11.5">合在一起算总成本</text>
+              <rect x="630" y="200" width="170" height="70" rx="8" fill="rgba(143,179,122,0.15)" stroke="#8fb37a"/>
+              <text x="715" y="226" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">⑤ 模拟调仓</text>
+              <text x="715" y="248" text-anchor="middle" fill="#bcc9dd" font-size="11.5">日频推进,不过未来的数据,</text>
+              <text x="715" y="266" text-anchor="middle" fill="#bcc9dd" font-size="11.5">形成串行序列</text>
+            </g>
+            <!-- 箭头 -->
+            <line x1="232" y1="115" x2="248" y2="115" stroke="#8499bd" stroke-width="2"/>
+            <line x1="422" y1="115" x2="438" y2="115" stroke="#8499bd" stroke-width="2"/>
+            <line x1="612" y1="115" x2="628" y2="115" stroke="#8499bd" stroke-width="2"/>
+            <line x1="715" y1="152" x2="715" y2="198" stroke="#8499bd" stroke-width="2"/>
+            <line x1="715" y1="235" x2="612" y2="235" stroke="#8499bd" stroke-width="2"/>
+            <line x1="422" y1="235" x2="438" y2="235" stroke="#8499bd" stroke-width="2" stroke-dasharray="3 3" opacity="0"/>
+            <line x1="438" y1="235" x2="422" y2="235" stroke="#8499bd" stroke-width="2"/>
+            <line x1="248" y1="235" x2="232" y2="235" stroke="#8499bd" stroke-width="2"/>
+            <text x="450" y="310" text-anchor="middle" fill="#bcc9dd" font-size="12.5">数据→因子→打分→名单→模拟→成本→报告→复盘——少任何一步,结论都能被某个隐藏的坑拆掉</text>"""
+    return concept_figure(body, "0 0 900 340",
+        "指数增强最小回测流水线:数据入库→写因子→打分→生成名单→模拟调仓→扣成本→出报告→复盘结论",
+        "最小回测不是一段代码精灵,是八个环节的传导链。数据到结论全对一条龙才有意义,中间断掉任何一环都可能变成“模型很好但那只是没上纲上线”。")
+
+
+PATCH_RMID = {
+    25: [("Beta 对冲的直觉", _fig_r25_neutral)],
+    26: [("配对交易", _fig_r26_pairs)],
+    27: [("费用结构会吃掉收益", _fig_r27_fees)],
+    29: [("先把项目目标和边界钉死", _fig_r29_units)],
+}
+
+
+
+def _fig_r16_index():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">市值加权:大公司涨 1%,比小公司涨 10% 更厉害</text>
+            <!-- 指数的三个代表权 -->
+            <rect x="90" y="90" width="200" height="200" rx="14" fill="rgba(122,167,240,0.3)" stroke="#7aa7f0"/>
+            <text x="190" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">成分 1</text>
+            <text x="190" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">市值 1000 亿</text>
+            <text x="190" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">权重 50%</text>
+            <rect x="330" y="110" width="120" height="160" rx="12" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+            <text x="390" y="138" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">成分 2</text>
+            <text x="390" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">市值 600 亿</text>
+            <text x="390" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">权重 30%</text>
+            <rect x="490" y="140" width="90" height="130" rx="10" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
+            <text x="535" y="168" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">成分 3</text>
+            <text x="535" y="196" text-anchor="middle" fill="#bcc9dd" font-size="12">市值 400 亿</text>
+            <text x="535" y="218" text-anchor="middle" fill="#bcc9dd" font-size="12">权重 20%</text>
+            <!-- 箭头与数字 -->
+            <text x="670" y="130" fill="#bcc9dd" font-size="13">成分1 涨 1%</text>
+            <text x="670" y="156" fill="#f0c96a" font-size="15" font-weight="800">→ 指数涨 0.50 点</text>
+            <text x="670" y="188" fill="#bcc9dd" font-size="13">成分2 涨 1%</text>
+            <text x="670" y="210" fill="#f0c96a" font-size="15" font-weight="800">→ 指数涨 0.30 点</text>
+            <text x="670" y="244" fill="#bcc9dd" font-size="13">成分3 涨 10%</text>
+            <text x="670" y="266" fill="#f0c96a" font-size="15" font-weight="800">→ 指数只涨 0.20 点</text>
+            <rect x="60" y="310" width="780" height="80" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="84" y="334" fill="#f0c96a" font-size="13" font-weight="800">结论</text>
+            <text x="84" y="360" fill="#bcc9dd" font-size="12">宽基指数(上证50/沪深300)头部效应极强;不是“市场”听投票多少,是大公司方向决定主方向。要读“市场宽度”得看涨跌家数,不能只看指数曲线</text>"""
+    return concept_figure(body, "0 0 900 400",
+        "市值加权示意图:三巨头权重 50/30/20,大公司 1% 变动比小公司 10% 变动对指数影响更大",
+        "市值加权的含义:尽管指数看起来是数理平均,实际是“大公司说话更大声”。当你听说“指数涨了”,决定答案的大部分是前二十大成分股,不是大多数公司。")
+
+
+def _fig_r18_overconfidence():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">过度自信的四个典型陷阱:你以为领先,其实平均</text>
+            <rect x="70" y="80" width="350" height="120" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="245" y="108" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">陷阱1:频繁换手</text>
+            <text x="245" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">散户研究显示:交易频率与净收益反相关,</text>
+            <text x="245" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">涨手最快的人群年化最低</text>
+            <text x="245" y="186" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">自信的代价常常是磨损</text>
+            <rect x="480" y="80" width="350" height="120" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="655" y="108" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">陷阱2:选股传奇</text>
+            <text x="655" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">“我去年赚到了 XX” 一旦指数上升,</text>
+            <text x="655" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">归因到能力还在,归因到市场不存在</text>
+            <text x="655" y="186" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">这是跑偏的典型信号</text>
+            <rect x="70" y="230" width="350" height="120" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="245" y="258" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">陷阱3:绝佳择时</text>
+            <text x="245" y="284" text-anchor="middle" fill="#bcc9dd" font-size="12">同一股票同一天同価决断,同一人也不一定能连续做对</text>
+            <text x="245" y="306" text-anchor="middle" fill="#bcc9dd" font-size="12">“稍快或稍慢也它都不灵”不是真技能</text>
+            <text x="245" y="336" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">自信里用户凯转机在开仓位</text>
+            <rect x="480" y="230" width="350" height="120" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="655" y="258" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">陷阱4:大户牛托</text>
+            <text x="655" y="284" text-anchor="middle" fill="#bcc9dd" font-size="12">股市赚钱时说“我看对了”,春耕东渐;</text>
+            <text x="655" y="306" text-anchor="middle" fill="#bcc9dd" font-size="12">亏钱时“今天消息”或“今天不灵”</text>
+            <text x="655" y="336" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">这叫自己说谎,归因偏差</text>
+            <text x="450" y="382" text-anchor="middle" fill="#f0c96a" font-size="12.5">把这四条做成检查清单交易前核一遍,发现其中一条就要停手</text>"""
+    return concept_figure(body, "0 0 900 410",
+        "过度自信四陷阱图:过度换手、选股全能、绝佳择时、事帮他人的归因偏差",
+        "过度自信不是雄心,是系统性装修——越自信的部分越是成本。最好的手艺人的共同点是把自己的交易频率压得低,把仓位上限定压。")
+
+
+def _fig_r19_buckets():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">先分桶,再钱讨——三个桶都被同一份收入打败</text>
+            <path d="M 90 100 L 100 280 Q 190 300 280 280 L 290 100 Z" fill="rgba(122,167,240,0.22)" stroke="#7aa7f0"/>
+            <text x="190" y="130" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">桶① 生活费与应急金</text>
+            <text x="190" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">6 个月刚性支出</text>
+            <text x="190" y="180" text-anchor="middle" fill="#bcc9dd" font-size="12">货基/活期 确保随时可用</text>
+            <text x="190" y="208" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">优先级最高</text>
+            <text x="190" y="234" text-anchor="middle" fill="#8499bd" font-size="12">破裂:有急用钱会逼你斩仓</text>
+            <path d="M 350 100 L 360 280 Q 455 300 550 280 L 560 100 Z" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+            <text x="455" y="130" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">桶② 风险对冲(保险)</text>
+            <text x="455" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">家庭支柱定寿 + 全家重疾 + 百万医疗</text>
+            <text x="455" y="180" text-anchor="middle" fill="#bcc9dd" font-size="12">一年保费 ≈ 年收入 3-8%</text>
+            <text x="455" y="208" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">“怕什么”的钱罐</text>
+            <text x="455" y="234" text-anchor="middle" fill="#8499bd" font-size="12">破裂:风险要步宽,躲闪不了责任</text>
+            <path d="M 620 100 L 630 280 Q 700 300 770 280 L 780 100 Z" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="700" y="130" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">桶③ 长期增值</text>
+            <text x="700" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">宽基指数、股票、多类资产定投</text>
+            <text x="700" y="180" text-anchor="middle" fill="#bcc9dd" font-size="12">目标是跑赢通胀 3-6%</text>
+            <text x="700" y="208" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">五年以上不动</text>
+            <text x="700" y="234" text-anchor="middle" fill="#8499bd" font-size="12">破裂:货股两难,先法上法</text>
+            <text x="450" y="330" text-anchor="middle" fill="#bcc9dd" font-size="12.5">你不能同时进行住“急用 $$ 取出生活”和“这三年亏还能赚”——挑一个优先主调</text>"""
+    return concept_figure(body, "0 0 900 360",
+        "家庭资产三桶图:生活应急、保险对冲、长期增值按优先级分桶负责",
+        "投资的次序永远不是先挑股票。先有 6 个月生活备付,再把家里突发风险付掉,剩下闲钱才有资格进股海。三桶顺序翻铺一次,混乱是以十年兆的。")
+
+
+def _fig_r20_factor_ic():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">IC:每颗因子技能摆一条？检验一切是否“态一致”</text>
+            <!-- 排序 VS 下月收益坐标;正相关散开 -->
+            <rect x="80" y="80" width="380" height="300" rx="10" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="270" y="106" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">IC 的秒定义</text>
+            <text x="270" y="132" text-anchor="middle" fill="#bcc9dd" font-size="12">因子按分数给全市场若干股排队;</text>
+            <text x="270" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">看上个月谁最后;</text>
+            <text x="270" y="176" text-anchor="middle" fill="#bcc9dd" font-size="12">计算两个名次表的相关系数</text>
+            <text x="270" y="206" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">IC = {-1 ~ +1 的相关数}</text>
+            <text x="270" y="234" text-anchor="middle" fill="#bcc9dd" font-size="12">+ 表示分数高能涨(买高分好)</text>
+            <text x="270" y="256" text-anchor="middle" fill="#bcc9dd" font-size="12">- 表示分数高能跌(低分好)</text>
+            <text x="270" y="278" text-anchor="middle" fill="#bcc9dd" font-size="12">0 表示因子不预测未来</text>
+            <text x="270" y="308" text-anchor="middle" fill="#8499bd" font-size="12">行业经验:稳定的 IC 在 0.03~0.05 尤属珍贵</text>
+            <!-- 右边 曲线 -->
+            <text x="630" y="90" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">IC 为什么要滚一个季度到一年</text>
+            <line x1="500" y1="330" x2="820" y2="330" stroke="#8499bd" stroke-width="2"/>
+            <line x1="500" y1="130" x2="500" y2="330" stroke="#8499bd" stroke-width="2"/>
+            <path d="M 505 210 Q 560 200 620 220 Q 680 240 740 200 Q 790 170 820 190" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <line x1="505" y1="235" x2="820" y2="235" stroke="#f0c96a" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="820" y="232" fill="#f0c96a" font-size="12">均值的均值</text>
+            <text x="820" y="330" fill="#bcc9dd" font-size="12">月份</text>
+            <text x="510" y="140" fill="#bcc9dd" font-size="12">IC(+)/-</text>
+            <text x="650" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12">任何单月可能都正,但趋势摆动围绕“均值的均值”上下;真正信号看 IC 摊平后的水平是否稳定轩抬高位</text>"""
+    return concept_figure(body, "0 0 900 385",
+        "IC 曲线图:因子排序与未来收益的相关性起伏,需要看一年摊平后才能判断有没有资产质量",
+        "IC 是量化界的成绩单——波动大是常态,稳定上斜才是真迹。单月出来一个 0.2 不能保证是真因子,一年的平均 IC 0.03-0.05 才能写进策略池。")
+
+
+def _fig_r22_greek():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">风险模型在算哪三件事</text>
+            <rect x="90" y="90" width="220" height="230" rx="12" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="200" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 波动率</text>
+            <text x="200" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">每只个股或资产自然波动多大</text>
+            <text x="200" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">窗口滞后的历史扰动</text>
+            <text x="200" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">方差 / 标准差</text>
+            <text x="200" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是绝对风险的上限付罗</text>
+            <text x="200" y="252" text-anchor="middle" fill="#8499bd" font-size="12">高波动 · 高风险</text>
+            <text x="200" y="280" text-anchor="middle" fill="#8499bd" font-size="12">模型理解也被这块表所影响</text>
+            <rect x="340" y="90" width="220" height="230" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="118" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">② 相关系数</text>
+            <text x="450" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">股和股之间起落有多同步</text>
+            <text x="450" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">不同行业不同景度</text>
+            <text x="450" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">协方差矩阵</text>
+            <text x="450" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是分散的杠杆——</text>
+            <text x="450" y="246" text-anchor="middle" fill="#bcc9dd" font-size="12">相关性越高,收益越像</text>
+            <text x="450" y="274" text-anchor="middle" fill="#8499bd" font-size="12">极度时她完全不分散</text>
+            <rect x="590" y="90" width="220" height="230" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="700" y="118" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 暴露程度</text>
+            <text x="700" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">你持有的小整组合</text>
+            <text x="700" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">对某个因子的平均评价</text>
+            <text x="700" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">行业暴露 * 风格暴露</text>
+            <text x="700" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是你在赌什么——</text>
+            <text x="700" y="246" text-anchor="middle" fill="#bcc9dd" font-size="12">赌价值,赌成长,赌消费</text>
+            <text x="700" y="274" text-anchor="middle" fill="#8499bd" font-size="12">过度集中就是赌注过巫</text>
+            <text x="450" y="360" text-anchor="middle" fill="#bcc9dd" font-size="12.5">风险不是一个总数,是这三个维度的题项之合;这三个合在一起才叫卫刻风险献</text>"""
+    return concept_figure(body, "0 0 900 385",
+        "风险模型三维度图:波动率、相关系数(协方差)、因子暴露,分别描述绝对风险、分散程度、赌博方向",
+        "说“这个组合风险大”没有意义;要说“哪个维度”的风险大。先看波动、再看关联、最后看暴露——三层都过了,才算真正把风险看透了。")
+
+
+def _fig_r23_career():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化研究员 ≠ 量化工程师 ≠ 交易员</text>
+            <rect x="70" y="80" width="240" height="250" rx="12" fill="rgba(240,201,106,0.18)" stroke="#f0c96a"/>
+            <text x="190" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">研究员</text>
+            <text x="190" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">每天:读论文、算数据</text>
+            <text x="190" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">写因子、试模型</text>
+            <text x="190" y="186" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">产出:信号和因子</text>
+            <text x="190" y="214" text-anchor="middle" fill="#8499bd" font-size="12">核心能力:统计学+金融理解</text>
+            <text x="190" y="242" text-anchor="middle" fill="#bcc9dd" font-size="12">指标: IC, RankIC</text>
+            <text x="190" y="270" text-anchor="middle" fill="#bcc9dd" font-size="12">假设定理与实验设计</text>
+            <text x="190" y="298" text-anchor="middle" fill="#8499bd" font-size="11.5">工资净累,压力重寝发</text>
+            <rect x="340" y="80" width="240" height="250" rx="12" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="460" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">工程师</text>
+            <text x="460" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">每天:设工具、搭开仓</text>
+            <text x="460" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">优化延迟、提架构</text>
+            <text x="460" y="186" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">产出:高效的执现环境</text>
+            <text x="460" y="214" text-anchor="middle" fill="#8499bd" font-size="12">核心能力:代码质量+系统御决</text>
+            <text x="460" y="242" text-anchor="middle" fill="#bcc9dd" font-size="12">指标: 延迟、成熟度</text>
+            <text x="460" y="270" text-anchor="middle" fill="#bcc9dd" font-size="12">如何低延迟不堑误</text>
+            <text x="460" y="298" text-anchor="middle" fill="#8499bd" font-size="11.5">高级语言与异恈工程语言</text>
+            <rect x="610" y="80" width="240" height="250" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="730" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">交易员</text>
+            <text x="730" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">每天:盯盘、改仓位</text>
+            <text x="730" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">监控风险、调整策略</text>
+            <text x="730" y="186" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">产出: 盘中仓位与决断</text>
+            <text x="730" y="214" text-anchor="middle" fill="#8499bd" font-size="12">核心能力:市场直觉+备压</text>
+            <text x="730" y="242" text-anchor="middle" fill="#bcc9dd" font-size="12">指标: PnL, 成交量实现</text>
+            <text x="730" y="270" text-anchor="middle" fill="#bcc9dd" font-size="12">执行与微结构决策</text>
+            <text x="730" y="298" text-anchor="middle" fill="#8499bd" font-size="11.5">执行心理负载最大</text>
+            <text x="450" y="358" text-anchor="middle" fill="#bcc9dd" font-size="12.5">三个人殊不等于三个级别,同级别但天天处理的是完全不同的对象</text>"""
+    return concept_figure(body, "0 0 900 385",
+        "量化行业三岗位对比:研究员产出因子、工程师产出系统、交易员产出决断,三种不同的工作对象",
+        "三种技能栈完全不同:一个读学术找信号,一个写代码跟微秒赛跑,一个盯盘压手。你选哪个方向,先看你爱处理的是符号、系统还是决策者。")
+
+
+PATCH_R3 = {
+    16: [("市值加权: 大公司说话更大声", _fig_r16_index)],
+    18: [("过度自信:九成司机自认为中上水平", _fig_r18_overconfidence)],
+    19: [("长期资产按目标分钱:先分桶,不是先选股", _fig_r19_buckets)],
+    20: [("IC: 因子排序和未来收益是否同向", _fig_r20_factor_ic)],
+    22: [("风险模型在估计什么", _fig_r22_greek)],
+    23: [("量化机构不是只有研究员", _fig_r23_career)],
+}
+
+
+
+def _fig_r10_run():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">挤兑的速度档位:批发清算比零售存款快上百倍</text>
+            <rect x="60" y="80" width="230" height="155" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="175" y="108" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">零售存款挤兑</text>
+            <text x="175" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">居民在营业点ATM排队</text>
+            <text x="175" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">存款保险让他们不必太快</text>
+            <text x="175" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">酝酿来要几天到几周</text>
+            <rect x="335" y="80" width="230" height="155" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="108" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">同业拆借挤兑</text>
+            <text x="450" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">机构之间“今天别再借给它了”</text>
+            <text x="450" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">瞬时的通知,没有门铃</text>
+            <text x="450" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">几小时就完成断流</text>
+            <rect x="610" y="80" width="230" height="155" rx="10" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
+            <text x="725" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">批发回购挤兑</text>
+            <text x="725" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">对方从“押品抽责”开始:</text>
+            <text x="725" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">原来的折扣率 2% → 45%</text>
+            <text x="725" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">等于抵押品瞬间被折价一半</text>
+            <text x="725" y="206" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">按小时-日日落实,分钟里有生死</text>
+            <rect x="60" y="260" width="780" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="84" y="288" fill="#f0c96a" font-size="13" font-weight="800">这就是 2008 年雷曼的死法</text>
+            <text x="84" y="314" fill="#bcc9dd" font-size="12">雷曼需要的“明天开运”资金是靠回购融资。回购对手一旦在它身上加码新折扣率、或要求追加抵押,雷曼的钱立刻不够付到期的账单——结果 48 小时就场倒闭</text>
+            <text x="84" y="338" fill="#bcc9dd" font-size="12">存款保险是零售预防挤兑的疫苗;批发机构挤兑至今靠壮机构互相“不要廷同时逼债”这种非正式愿望,脆弱得多</text>"""
+    return concept_figure(body, "0 0 900 385",
+        "挤兑三级速度图:零售几天几月、同业几小时、批发回购分钟级,雷曼 48 小时倒闭",
+        "同样是挤兑,批发机构之间的速度比居民排队快上三个数量级。2008 年雷曼之所以两天就死,根源正是它被回购市场瞬间断水。")
+
+
+def _fig_r11_corridor():
+    """ch11:利率走廊,锚“货币政策三件套: 政策利率、准备金率、公开市场操作”。"""
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">利率走廊:央行不是出一个点数,是画一条通道</text>
+            <!-- 走廊 -->
+            <rect x="120" y="90" width="660" height="220" rx="10" fill="rgba(122,167,240,0.1)" stroke="rgba(122,167,240,0.5)"/>
+            <line x1="120" y1="140" x2="780" y2="140" stroke="#ee8877" stroke-width="2.5" stroke-dasharray="8 5"/>
+            <text x="130" y="132" fill="#ee8877" font-size="13" font-weight="800">上限:贴现利率/紧急贷款利率(央行贷款给你的价格)</text>
+            <line x1="120" y1="250" x2="780" y2="250" stroke="#8fb37a" stroke-width="2.5" stroke-dasharray="8 5"/>
+            <text x="130" y="270" fill="#8fb37a" font-size="13" font-weight="800">下限:超额准备金利率(银行闲钱存央行的价格)</text>
+            <!-- 政策利率 -->
+            <line x1="120" y1="195" x2="780" y2="195" stroke="#f0c96a" stroke-width="3"/>
+            <text x="130" y="188" fill="#f0c96a" font-size="13" font-weight="800">目标:政策利率(联邦基金利率/七天逆回购)</text>
+            <!-- 市场利率游荡 -->
+            <path d="M 200 210 Q 300 170 400 195 Q 500 220 600 185 Q 700 165 760 195" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <text x="560" y="168" fill="#a8c6ff" font-size="12">市场利率(Shibor/同业存单利率)</text>
+            <!-- 说明 -->
+            <rect x="80" y="330" width="740" height="70" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(132,153,189,0.4)"/>
+            <text x="104" y="354" fill="#bcc9dd" font-size="12">走廊比点数重要:上限是让市场知道利率再贵也不超过这条线,下限是让市场知道钱再便宜央行也不让它跌穿。两层线一变,市场利率自然就会容许在中间游荡</text>
+            <text x="104" y="378" fill="#bcc9dd" font-size="12">美联储加息 = 整条走廊上移;QE/缩表 = 央行直接买/卖资产把走廊内的市场利率压缩到底,两种是不同工具</text>"""
+    return concept_figure(body, "0 0 900 420",
+        "利率走廊图:上下限两条虚线夹着政策利率,市场利率在其中游荡,人民银行用走廊来控制资金价格",
+        "理解央行的加息/降息不要记“数字变几点”,要看走廊整体搬上了几条台阶——墙根动了、普通利率就会跟随加动上限/下限的位移。")
+
+
+def _fig_r12_solvency():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">偿付能力充足率:保险公司的救生衣气压表</text>
+            <rect x="90" y="80" width="330" height="110" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="255" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">分子:实际资本</text>
+            <text x="255" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">经审计认可的净资产 + 认可资产价值</text>
+            <text x="255" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">减掉风险折价以上,这就是缓冲底</text>
+            <text x="255" y="182" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">它是一块保险气录,要在风险中发现</text>
+            <rect x="480" y="80" width="330" height="110" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="645" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">分母:最低资本</text>
+            <text x="645" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">监管按你的保单风险、资产风险算出的最低要求</text>
+            <text x="645" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">风险越大 → 分母越高 → 充足率越低</text>
+            <text x="645" y="182" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">它是风险大小,不是风险的绝对开销</text>
+            <text x="450" y="224" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">充足率 = 实际资本 / 最低资本</text>
+            <rect x="90" y="252" width="220" height="110" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="200" y="280" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">&gt;150%</text>
+            <text x="200" y="304" text-anchor="middle" fill="#bcc9dd" font-size="12">监管信任的监督级别</text>
+            <text x="200" y="328" text-anchor="middle" fill="#8fb37a" font-size="12">允许加大分红和新产品</text>
+            <rect x="340" y="252" width="220" height="110" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="280" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">100% - 150%</text>
+            <text x="450" y="304" text-anchor="middle" fill="#bcc9dd" font-size="12">开始被“屯促管”</text>
+            <text x="450" y="328" text-anchor="middle" fill="#bcc9dd" font-size="12">规范新增资产和新保单</text>
+            <rect x="590" y="252" width="220" height="110" rx="10" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
+            <text x="700" y="280" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">&lt;100%</text>
+            <text x="700" y="304" text-anchor="middle" fill="#bcc9dd" font-size="12">监管可以直接接管</text>
+            <text x="700" y="328" text-anchor="middle" fill="#ee8877" font-size="12">公司被视为有问题</text>
+            <text x="450" y="398" text-anchor="middle" fill="#bcc9dd" font-size="12.5">看充足率别只记百分比,要看“与 100% 的距离”;距离越小,你买的保险听起来越安心,但承受突然赔款的工作能力越糟</text>"""
+    return concept_figure(body, "0 0 900 420",
+        "偿付能力公式与门槛图:实际资本除以最低资本,临界值 50%、100%、150%",
+        "偿付能力充足率就是保险公司的资本密度表:低于 100% 监管有权接管,150% 以上是舒服区。买长期险前一眼这栏,高于看条款的遗漏收集。")
+
+
+def _fig_r13_pillars3():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">养老三支柱,你在哪根上</text>
+            <rect x="70" y="80" width="240" height="230" rx="12" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="190" y="110" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">①国家底:基本养老</text>
+            <text x="190" y="138" text-anchor="middle" fill="#bcc9dd" font-size="12">现收现付、覆盖面广</text>
+            <text x="190" y="160" text-anchor="middle" fill="#bcc9dd" font-size="12">你只要缴朋雷城就累积</text>
+            <text x="190" y="188" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">替代率 ≈ 50%</text>
+            <text x="190" y="216" text-anchor="middle" fill="#8499bd" font-size="12">按就业期的姬蓝文化序列绂押</text>
+            <text x="190" y="244" text-anchor="middle" fill="#8499bd" font-size="12">越多越多交,退休长缴费</text>
+            <text x="190" y="272" text-anchor="middle" fill="#8fb37a" font-size="12.5">饿不死</text>
+            <rect x="350" y="80" width="240" height="230" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="470" y="110" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">②单位加:企业/职业年金</text>
+            <text x="470" y="138" text-anchor="middle" fill="#bcc9dd" font-size="12">单位自愿搭配</text>
+            <text x="470" y="160" text-anchor="middle" fill="#bcc9dd" font-size="12">覆盖率 &lt; 10%(中国)</text>
+            <text x="470" y="188" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">贡献 ~10-20%</text>
+            <text x="470" y="216" text-anchor="middle" fill="#8499bd" font-size="12">招比直接配套本单位才有</text>
+            <text x="470" y="244" text-anchor="middle" fill="#8499bd" font-size="12">国家给税优</text>
+            <text x="470" y="272" text-anchor="middle" fill="#f0c96a" font-size="12.5">过得还行</text>
+            <rect x="630" y="80" width="240" height="230" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="750" y="110" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③个人搂:个人养老金</text>
+            <text x="750" y="138" text-anchor="middle" fill="#bcc9dd" font-size="12">自愿·税延·合出</text>
+            <text x="750" y="160" text-anchor="middle" fill="#bcc9dd" font-size="12">年上限 12000 元</text>
+            <text x="750" y="188" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">你的决定权重夷一块</text>
+            <text x="750" y="216" text-anchor="middle" fill="#8499bd" font-size="12">可以买养老目标基金/存款/保险</text>
+            <text x="750" y="244" text-anchor="middle" fill="#8499bd" font-size="12">三十年久期复利主场</text>
+            <text x="750" y="272" text-anchor="middle" fill="#ee8877" font-size="12.5">活得体面</text>
+            <text x="450" y="330" text-anchor="middle" fill="#bcc9dd" font-size="12.5">日本、美国、欧洲的叠加:①+②还不够,得③补上;别等老后才发现那道缺口</text>
+            <text x="450" y="355" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">自测:你的工资之外,还存了多少你自己不动声色的离退休金?这才是宝素</text>"""
+    return concept_figure(body, "0 0 900 385",
+        "养老三支柱对比图:国家基础、单位年金、个人养老金,替代率分别50%、10-20%、自负",
+        "三支柱分工拆开:国家保证不饿死,单位决定你能不能活得还行,个人养老金决定你老后能不能活出选择适合自己的生活方式。中国 70% 替代率的缺口,头一个要补的就是第三根柱。")
+
+
+def _fig_r14_bidask():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">盘口簿:买几档卖几档,谁排在前面</text>
+            <text x="200" y="76" fill="#eef4f8" font-size="14" font-weight="800">买单(从优到次)</text>
+            <rect x="60" y="86" width="280" height="44" rx="6" fill="rgba(143,179,122,0.32)" stroke="#8fb37a"/>
+            <text x="80" y="114" fill="#b5d3a0" font-size="13" font-weight="800">买1: 10.50 元 × 5000 股</text>
+            <rect x="60" y="134" width="280" height="44" rx="6" fill="rgba(143,179,122,0.18)" stroke="#8fb37a"/>
+            <text x="80" y="162" fill="#8fb37a" font-size="13">买2: 10.49 元 × 2000 股</text>
+            <rect x="60" y="182" width="280" height="44" rx="6" fill="rgba(143,179,122,0.1)" stroke="#8fb37a"/>
+            <text x="80" y="210" fill="#8fb37a" font-size="13">买3: 10.48 元 × 9000 股</text>
+            <text x="200" y="244" fill="#8499bd" font-size="11.5">价高者排前——出价力最强的先成交</text>
+            <text x="640" y="76" fill="#eef4f8" font-size="14" font-weight="800">卖单(从优到次)</text>
+            <rect x="560" y="86" width="280" height="44" rx="6" fill="rgba(238,136,119,0.32)" stroke="#ee8877"/>
+            <text x="580" y="114" fill="#ffb4b4" font-size="13" font-weight="800">卖1: 10.51 元 × 1000 股</text>
+            <rect x="560" y="134" width="280" height="44" rx="6" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="580" y="162" fill="#ee8877" font-size="13">卖2: 10.52 元 × 3000 股</text>
+            <rect x="560" y="182" width="280" height="44" rx="6" fill="rgba(238,136,119,0.1)" stroke="#ee8877"/>
+            <text x="580" y="210" fill="#ee8877" font-size="13">卖3: 10.55 元 × 2500 股</text>
+            <text x="640" y="244" fill="#8499bd" font-size="11.5">价低者排前</text>
+            <text x="450" y="118" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">撮合规则钳</text>
+            <text x="450" y="148" text-anchor="middle" fill="#bcc9dd" font-size="12">买1 价 ≥ 卖1 价?</text>
+            <text x="450" y="170" text-anchor="middle" fill="#bcc9dd" font-size="12">是 → 配对成交(以先斩到的价格为准)</text>
+            <text x="450" y="192" text-anchor="middle" fill="#bcc9dd" font-size="12">否 → 一起待着,价差就自己保留</text>
+            <text x="450" y="222" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">同价?先到的先成交(时间优先)</text>
+            <text x="450" y="250" text-anchor="middle" fill="#8499bd" font-size="12">你下单后只是进入这条队伍,不一定立刻成交;流动性浅的股,两个买1卖1差的可能超过你想象的宽度</text>"""
+    return concept_figure(body, "0 0 900 280",
+        "订单簿双列排布图:买单从高到低排列、卖单从低到高排列,价格优先同价时间优先",
+        "盘口的两条队伍:买的一边价高者优先,卖的一边价低者优先。你下的单子只是被系统挂在某个格子上排队,“我喊到了这个价”还远远不等于“我就能成交”。")
+
+
+def _fig_r15_broken():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">退市三条触发门:财务、交易、重大违法</text>
+            <rect x="60" y="90" width="240" height="185" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="180" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">财务指标门</text>
+            <text x="180" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">连续两年亏损 + 营收 &lt; 1 亿</text>
+            <text x="180" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">净资产为负</text>
+            <text x="180" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">先看真是小账</text>
+            <text x="180" y="224" text-anchor="middle" fill="#8499bd" font-size="11">扣非后的业绩才算数</text>
+            <text x="180" y="252" text-anchor="middle" fill="#8499bd" font-size="11">“脱胎换骨”前科要退市</text>
+            <rect x="330" y="90" width="240" height="185" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="450" y="118" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">交易指标门</text>
+            <text x="450" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">连续 20 个交易日收盘价 &lt; 1 元</text>
+            <text x="450" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">总市值 &lt; 3 亿元</text>
+            <text x="450" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">“市场用脚投票”这条最直接</text>
+            <text x="450" y="224" text-anchor="middle" fill="#8499bd" font-size="11">2023-2024 年最后的主流退市入口</text>
+            <rect x="600" y="90" width="240" height="185" rx="10" fill="rgba(143,179,122,0.15)" stroke="#8fb37a"/>
+            <text x="720" y="118" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">重大违法门</text>
+            <text x="720" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">财务造假主业务收入金额大</text>
+            <text x="720" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">欺诈发行被追刑责</text>
+            <text x="720" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">一眼就踢出沒商议</text>
+            <text x="720" y="224" text-anchor="middle" fill="#8499bd" font-size="11">触发即停牌 → 终止上市</text>
+            <text x="450" y="316" text-anchor="middle" fill="#bcc9dd" font-size="12.5">三条门加起来的结果:2019-2024 年年均退市数是注册制前的几倍——“上市就不是质保铭牌,上市也不是永生”</text>"""
+    return concept_figure(body, "0 0 900 350",
+        "退市三条门示意图:财务指标、交易指标、重大违法,注册制后门都打开了",
+        "戴帽不是结束、退市才是一致结果。注册制把“进来”的门放宽,必须把“出去”的门也打开——这就是我为什么要盯涨跌幅红线为什么警惕。")
+
+
+PATCH_R2 = {
+    10: [("挤兑的队伍排在回购市场上", _fig_r10_run)],
+    11: [("政策利率、准备金率、公开市场操作", _fig_r11_corridor)],
+    12: [("保险公司自己的救生衣", _fig_r12_solvency)],
+    13: [("国家、企业、自己各扛一部分", _fig_r13_pillars3)],
+    14: [("价格优先和时间优先", _fig_r14_bidask)],
+    15: [("戴帽、*ST 与强制退出的三条路", _fig_r15_broken)],
+}
+
+
+
+def _fig_r02_clearing():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">成交只是承诺,交收才算完成</text>
+            <rect x="60" y="80" width="230" height="130" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="175" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">T 日 · 撮合成交</text>
+            <text x="175" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">交易所确认:谁买谁卖</text>
+            <text x="175" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">双方价格锁定</text>
+            <text x="175" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">合同成立,钱货未动</text>
+            <rect x="335" y="80" width="230" height="130" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">T+1 日 · 清算</text>
+            <text x="450" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">中国结算做净额轧算</text>
+            <text x="450" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">算清每户净该收/付多少</text>
+            <text x="450" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">证券、资金都在划拨途中</text>
+            <rect x="610" y="80" width="230" height="130" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="725" y="108" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">T+1 日 · 交收</text>
+            <text x="725" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">股票划到买方证券账户</text>
+            <text x="725" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">现金划到卖方资金账户</text>
+            <text x="725" y="184" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">此刻才算真正持有</text>
+            <line x1="292" y1="145" x2="333" y2="145" stroke="#8499bd" stroke-width="3" marker-end="url(#arrR1)"/>
+            <line x1="567" y1="145" x2="608" y2="145" stroke="#8499bd" stroke-width="3" marker-end="url(#arrR1)"/>
+            <defs><marker id="arrR1" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8499bd"/></marker></defs>
+            <rect x="60" y="240" width="780" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="84" y="268" fill="#f0c96a" font-size="13" font-weight="800">为什么先过账的规则不可逆</text>
+            <text x="84" y="294" fill="#bcc9dd" font-size="12">交易所要求券商先冻结资金与证券再挂单,是把“打白条”的风险挡在交易系统之外;A 股之所以 T+1,是要给中央对手方留出清算窗口</text>
+            <text x="84" y="318" fill="#bcc9dd" font-size="12">看懂这三步,后面讲停牌、交割日期、甚至国债期货的交割规则,全都是这一条逻辑的延伸</text>"""
+    return concept_figure(body, "0 0 900 365",
+        "成交、清算、交收三步流程图:T 日撮合合同成立,T+1 轧算划拨,此刻才算持有",
+        "成交只是合同锁价,清算是按净额算账,交收才是真正把钱和票过户。A 股 T+1 的本质,是让中央对手方有一天时间核对完账本。")
+
+
+def _fig_r04_convert():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">可转债 = 一张普通债券 + 一个认购期权</text>
+            <rect x="70" y="90" width="360" height="110" rx="10" fill="rgba(122,167,240,0.22)" stroke="#7aa7f0"/>
+            <text x="250" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">债底(纯债价值)</text>
+            <text x="250" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">公司正常还本付息,它就该值多少钱</text>
+            <text x="250" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">例如面值 100 元的转债,纯债底约 95 元</text>
+            <text x="250" y="190" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">下跌有底,提供安全边际</text>
+            <rect x="470" y="90" width="360" height="110" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="650" y="118" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">期权顶(转股价值)</text>
+            <text x="650" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">按转股价转成股票后能值多少</text>
+            <text x="650" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">正股涨 30%,它按比例跟涨</text>
+            <text x="650" y="190" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">上方收益不设限</text>
+            <path d="M 250 205 Q 450 268 650 205" fill="none" stroke="#8fb37a" stroke-width="3"/>
+            <text x="450" y="258" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">转债市价 = 债底 + 期权溢价</text>
+            <rect x="70" y="290" width="760" height="80" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(132,153,189,0.4)"/>
+            <text x="94" y="316" fill="#f0c96a" font-size="13" font-weight="800">用它判断贵贱</text>
+            <text x="94" y="340" fill="#bcc9dd" font-size="12">先看债底能兜住多少(下方保护有多厚),再看转股溢价率(上方买股票饭要加多少钱);两个数都合理,这张转债才算便宜</text>"""
+    return concept_figure(body, "0 0 900 395",
+        "可转债结构拆解图:债底提供下行保护,转股权提供上行弹性,价格是两份之和",
+        "先看债底给不给你兜,再看期权溢价替波动买了多少单。这样看转债的贵贱,就不只是一个百分比涨跌的事。")
+
+
+def _fig_r06_greeks():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期权做市商桌上的四块表</text>
+            <rect x="70" y="80" width="360" height="125" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="250" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">Delta · 标的价格每变 1 元</text>
+            <text x="250" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">买平值看涨时 Delta ≈ 0.5:标涨 1 元,期权约赚 0.5</text>
+            <text x="250" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">看跌在 -1~0 之间</text>
+            <text x="250" y="188" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">对冲要用它调仓位</text>
+            <rect x="470" y="80" width="360" height="125" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="650" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">Gamma · 行情的加速度</text>
+            <text x="650" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">标的价格每变一格,Delta 自身变多少</text>
+            <text x="650" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">临近到期、平值附近的 Gamma 最大</text>
+            <text x="650" y="188" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">大 Gamma 意味着仓位会越错越快</text>
+            <rect x="70" y="220" width="360" height="125" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="250" y="248" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">Vega · 波动率预期每变 1%</text>
+            <text x="250" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">隐含波动率不是历史波动,是大家对未来的定价</text>
+            <text x="250" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">恐慌时 IV 上冲,期权价格被动抬升</text>
+            <text x="250" y="328" text-anchor="middle" fill="#8499bd" font-size="12">做市商对冲它,就要卖进买保险</text>
+            <rect x="470" y="220" width="360" height="125" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="650" y="248" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">Theta · 每天时间价值衰减多少</text>
+            <text x="650" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">到期越近,沙漏漏得越快</text>
+            <text x="650" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">买方每天都在输 Theta,卖方每天都在收</text>
+            <text x="650" y="328" text-anchor="middle" fill="#8499bd" font-size="12">最后一个月衰减最快</text>
+            <text x="450" y="372" text-anchor="middle" fill="#bcc9dd" font-size="12.5">方向、加速度、波动、时间——期权的全部价格行为,疏散成这四块表就够了</text>"""
+    return concept_figure(body, "0 0 900 400",
+        "期权四希腊字母表:Delta 管方向、Gamma 管加速度、Vega 管波动预期、Theta 管时间流逝",
+        "期权的复杂不在名字,在维度——方向、加速度、波动预期、时间衰减各占一块。把四块钱读懂,希腊字母就不再是密室术语。")
+
+
+def _fig_r07_roe():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">杜邦拆解:ROE = 利润率 × 周转率 × 杠杆</text>
+            <rect x="360" y="70" width="180" height="80" rx="10" fill="rgba(240,201,106,0.25)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="450" y="100" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">ROE 18%</text>
+            <text x="450" y="124" text-anchor="middle" fill="#bcc9dd" font-size="12">净利润 / 股东权益</text>
+            <rect x="70" y="200" width="230" height="110" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="185" y="228" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">① 净利润率</text>
+            <text x="185" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">每 100 元收入净赚多少</text>
+            <text x="185" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是经营水准</text>
+            <text x="185" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">利润驱动型公司</text>
+            <rect x="335" y="200" width="230" height="110" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="450" y="228" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">② 资产周转率</text>
+            <text x="450" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">一块资产一年转销出多少收入</text>
+            <text x="450" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是运营效率</text>
+            <text x="450" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">效率驱动型公司</text>
+            <rect x="600" y="200" width="230" height="110" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="715" y="228" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">③ 杠杆倍数</text>
+            <text x="715" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">总资产 / 股东权益</text>
+            <text x="715" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是财务风险</text>
+            <text x="715" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">杠杆驱动型公司</text>
+            <path d="M 400 152 Q 300 178 250 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <path d="M 450 152 Q 450 178 450 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <path d="M 500 152 Q 580 178 680 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <rect x="70" y="340" width="760" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="94" y="366" fill="#f0c96a" font-size="13" font-weight="800">同 ROE ≠ 同质</text>
+            <text x="94" y="390" fill="#bcc9dd" font-size="12">A: 18% 利润率 × 1 周转 × 1 杠杆 = 18%,凭经营;B: 3% 利润率 × 1.2 周转 × 5 杠杆 = 18%,凭负债</text>
+            <text x="94" y="412" fill="#bcc9dd" font-size="12">两种 18 一旦利率上行表现完全相反——这就是必须拆开看的原因</text>"""
+    return concept_figure(body, "0 0 900 450",
+        "杜邦三联拆解图:ROE拆成利润率、资产周转率、杠杆倍数,同 ROE 不同质,经营型与杠杆型天差地别",
+        "ROE 的数字好看不代表质量好——先拆开看是挣钱挣的、效率挣的,还是负债堆的。只有能拆开的 ROE,才是撑得住下行的 ROE。")
+
+
+def _fig_r08_demographic():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">人口从红利走向老龄化,资产定价规则就被重写</text>
+            <line x1="80" y1="200" x2="820" y2="200" stroke="#8499bd" stroke-width="2"/>
+            <text x="92" y="224" fill="#8499bd" font-size="11">1980</text>
+            <text x="280" y="224" fill="#8499bd" font-size="11">2000</text>
+            <text x="480" y="224" fill="#8499bd" font-size="11">2015</text>
+            <text x="680" y="224" fill="#8499bd" font-size="11">2030+</text>
+            <rect x="80" y="70" width="220" height="110" rx="10" fill="rgba(143,179,122,0.22)" stroke="#8fb37a"/>
+            <text x="190" y="96" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">人口红利期</text>
+            <text x="190" y="122" text-anchor="middle" fill="#bcc9dd" font-size="12">劳动力充足廉价,储蓄率高</text>
+            <text x="190" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">资金持续涌入生产性资产</text>
+            <text x="190" y="172" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">股票、工厂、房产各自受益</text>
+            <rect x="350" y="70" width="220" height="110" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="460" y="96" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">人口拐点(刘易斯拐点)</text>
+            <text x="460" y="122" text-anchor="middle" fill="#bcc9dd" font-size="12">农村廉价劳力被吸尽</text>
+            <text x="460" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">中国大约 2004-2010 跨过</text>
+            <text x="460" y="172" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">工资开始加速上涨</text>
+            <rect x="620" y="70" width="220" height="110" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="730" y="96" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">老龄化承重期</text>
+            <text x="730" y="122" text-anchor="middle" fill="#bcc9dd" font-size="12">领养老金的人 ≥ 缴费人口的一半</text>
+            <text x="730" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">财富持有重心转移</text>
+            <text x="730" y="172" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">债券、现金、保险需求上升</text>
+            <rect x="80" y="260" width="760" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(132,153,189,0.4)"/>
+            <text x="104" y="288" fill="#f0c96a" font-size="14" font-weight="800">两大长期后果</text>
+            <text x="104" y="314" fill="#bcc9dd" font-size="12">利率中枢被压低:庞大储蓄人群争抢固定收益资产,长期债价被持续买高;养老金权益仓位减轻:大量退休人口同时抛售股票换生活费,股市长期承压</text>
+            <text x="104" y="336" fill="#bcc9dd" font-size="12">看利率下行别只怪央行——人口结构本身就是汪洋里那股最深的水流</text>"""
+    return concept_figure(body, "0 0 900 385",
+        "人口周期三阶段图:红利→拐点→老龄化,资产偏好从股票房产转向债券现金保险",
+        "刘易斯拐点一过,全社会从“赚工资”切成“领退休金”,债券和保险被推起来,股票被长期拖住。人口不是远问题,是利率每天跳动后面那只看不见的手。")
+
+
+def _fig_r09_leverage_run():
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">2015 A 股杠杆清算:从杠杆最高的那层开始向下挤</text>
+            <text x="80" y="66" fill="#8499bd" font-size="12" font-weight="800">层级越高越安全,越低越最先被迫卖;清算顺序不是你选的,是合同替你选的</text>
+            <rect x="80" y="80" width="740" height="48" rx="6" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="100" y="111" fill="#b5d3a0" font-size="13" font-weight="800">① 自有资金大仓位</text>
+            <text x="440" y="111" fill="#bcc9dd" font-size="12">没有利息、没有平仓线 → 可以穿越周期等回资产价值</text>
+            <rect x="80" y="136" width="740" height="48" rx="6" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+            <text x="100" y="167" fill="#f0c96a" font-size="13" font-weight="800">② 两融仓位(券商融资)</text>
+            <text x="440" y="167" fill="#bcc9dd" font-size="12">维持担保比例不足而不补仓 → 券商依法强平</text>
+            <rect x="80" y="192" width="740" height="48" rx="6" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
+            <text x="100" y="223" fill="#ffb4b4" font-size="13" font-weight="800">③ 场外配资(5-10 倍杠杆)</text>
+            <text x="440" y="223" fill="#bcc9dd" font-size="12">月息 1.5-2%,只要标的跌 5-10% 就触发平仓</text>
+            <rect x="80" y="248" width="740" height="48" rx="6" fill="rgba(238,136,119,0.4)" stroke="#ee8877"/>
+            <text x="100" y="279" fill="#ee8877" font-size="13" font-weight="800">④ 结构化优先级/高度聚集的多策略产品</text>
+            <text x="440" y="279" fill="#ee8877" font-size="12">市场一反,同一位置上的杠杆全部指向同一出口</text>
+            <text x="450" y="332" text-anchor="middle" fill="#bcc9dd" font-size="12.5"></text>
+            <text x="450" y="332" text-anchor="middle" fill="#bcc9dd" font-size="12.5">清算一旦连锁,无杠杆的① 也会被③④ 拖跌——因为价格本身已经被强平卖压砸穿了</text>"""
+    return concept_figure(body, "0 0 900 360",
+        "2015 A股杠杆清算顺序图:自有资金最安全,场外配资最先被迫卖,连锁溃败会把自信资金连坐拖垮",
+        "清算的层级不是好的坏的排而是资金结构深浅。在连锁强平里,哪怕你没加杠杆,只要你也持有同样资产,价格也会被别人的平仓砸下来。")
+
+
+PATCH_R1 = {
+    2: [("成交不是终点,后面还有清算和交收", _fig_r02_clearing)],
+    4: [("可转债为什么复杂", _fig_r04_convert)],
+    6: [("做市商桌上的四块表", _fig_r06_greeks)],
+    7: [("股东的钱赚得怎么样", _fig_r07_roe)],
+    8: [("红利、拐点、老龄化", _fig_r08_demographic)],
+    9: [("杠杆的清算顺序踩死流动性", _fig_r09_leverage_run)],
+}
+
+
+
 def _fig_p15_ipo():
     """ch15:打新从红包到技术活的前后对比。"""
     body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">打新经济学:从制度红包到技术活</text>
@@ -4100,6 +5133,13 @@ _merge_figures(CONCEPT_FIGURES, PATCH_K)
 _merge_figures(CONCEPT_FIGURES, PATCH_L)
 _merge_figures(CONCEPT_FIGURES, PATCH_M)
 _merge_figures(CONCEPT_FIGURES, PATCH_N)
+_merge_figures(CONCEPT_FIGURES, PATCH_R1)
+_merge_figures(CONCEPT_FIGURES, PATCH_R2)
+_merge_figures(CONCEPT_FIGURES, PATCH_R3)
+_merge_figures(CONCEPT_FIGURES, PATCH_RMID)
+_merge_figures(CONCEPT_FIGURES, PATCH_R5)
+_merge_figures(CONCEPT_FIGURES, PATCH_R6)
+_merge_figures(CONCEPT_FIGURES, PATCH_R7)
 _merge_figures(CONCEPT_FIGURES, PATCH_P)
 
 

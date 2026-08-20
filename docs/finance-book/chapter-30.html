@@ -186,6 +186,30 @@ neutral_nav.append(neutral_nav[-1] * (1 + neutral_ret))
         <h3>2.3. 别让两套代码各跑各的</h3>
 <p>很多策略实盘跑不过回测,不是市场变了,而是两边跑的压根不是同一个策略。上线前要逐项对齐:回测用下日开盘成交,实盘就不能按当天收盘下单;回测剔除停牌和涨跌停,实盘也要检查;回测按 <span class="num">100 股</span>取整,实盘也要取整。规则差一条,就是另一个策略,成绩自然对不上。</p><p>差距还不止规则。回测里随手能买到的小票,实盘可能成交额太低根本买不进去;回测里假设全额成交,实盘可能只成交一半;回测里成本忽略不计,实盘里成本高得吓人。这些差异叠在一起,两条曲线当然分道扬镳。</p><p>最硬核的检查方式,是拿同一天的历史数据,用实盘流程完整跑一遍,再拿回测流程跑一遍,把两边的订单和持仓做个 diff。同样的输入如果产出不同的结果,必须解释清楚每一笔差异来自哪里。解释不出来的那部分,就是你带着上线的盲区。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 365" role="img" aria-label="上线前十问检查图:从数据时间线股池规则成本到因子基线模拟全盘的一盘检测清单">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">上线前的回测-实盘一致性检查</text>
+            <rect x="60" y="80" width="360" height="260" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="240" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">七条硬检验(任一答“不确定”就停)</text>
+            <text x="85" y="140" fill="#bcc9dd" font-size="12">① 数据是同一家供应商、同一个更新时点吗</text>
+            <text x="85" y="166" fill="#bcc9dd" font-size="12">② 时间线是逻辑时序对齐的吗</text>
+            <text x="85" y="192" fill="#bcc9dd" font-size="12">③ 股票池是历史时点的名单吗</text>
+            <text x="85" y="218" fill="#bcc9dd" font-size="12">④ 交易规则(涨跌停/停牌/最小手数)被完整包含了吗</text>
+            <text x="85" y="244" fill="#bcc9dd" font-size="12">⑤ 成本估算里滑点跟清仓精度按压线测过吗</text>
+            <text x="85" y="270" fill="#bcc9dd" font-size="12">⑥ 因子是否单独出过单因子报告</text>
+            <text x="85" y="296" fill="#bcc9dd" font-size="12">⑦ 基准模型和假定的简单基线比较过了吗</text>
+            <rect x="480" y="80" width="360" height="260" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="660" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">稳态运营的三块长期检查</text>
+            <text x="505" y="140" fill="#bcc9dd" font-size="12">⑧ 组合约束跟仓位上限跟风险预算一致吗</text>
+            <text x="505" y="166" fill="#bcc9dd" font-size="12">⑨ 同一行报告,两周以后你还能复现出来吗</text>
+            <text x="505" y="192" fill="#bcc9dd" font-size="12">⑩ 模拟盘至少跑过两周且有正当收益你才能上实盘吗</text>
+            <text x="505" y="226" fill="#ee8877" font-size="13" font-weight="800">清单写进代码,不写进脑子</text>
+            <text x="505" y="254" fill="#bcc9dd" font-size="12">每次上线前跑一遍 PYTHON 脚本,</text>
+            <text x="505" y="278" fill="#bcc9dd" font-size="12">任何一项没过就不允许 git commit</text>
+            <text x="505" y="308" fill="#bcc9dd" font-size="12">这不是要让机器聪明,是让制度顽固</text>
+          </svg>
+          <p class="figure__cap">上线检查清单不是安慰品,是制度化的不相信——既有信心不敬重&#x27;我相信是有料的&#x27;,而是制度让&#x27;上线看好不我不相信&#x27;。七条硬检验加三块长期检查,过不了的就不允许提交。</p>
+        </div>
         <h3>2.4. 发出去之前先过一遍安检</h3>
 <p>订单生成之后、发出之前,先过一遍安检:证券能不能交易,价格在不在涨跌停范围内,数量符不符合交易单位,资金够不够,持仓可不可卖,单笔金额有没有超限,方向是不是和目标仓位一致。任何一道不过,这张单子就不该出门。</p><p>然后重点防重复。系统重启、网络重试、脚本被手动再跑一次,都可能让同一个目标仓位被下两次单。做过支付的工程师对这套很熟:订单要有唯一标识,下单逻辑要做幂等处理,不能因为重试就把同一笔交易买了两遍。交易系统在这一条上和支付系统没有任何区别。</p><p>订单发出去,不等于成交,更不能自己假设成功。成交、拒单、撤单、部分成交,每一种回报都要更新内部状态。下单系统最怕的就是内部状态和券商那边的真实状态分叉——你以为持有 <span class="num">1000 股</span>,账户里其实只有 <span class="num">600 股</span>,后面所有决策都会跟着错下去。</p>
 

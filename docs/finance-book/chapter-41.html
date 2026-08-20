@@ -98,6 +98,35 @@
           </svg>
           <p class="figure__cap">胜率 90% 的策略可以亏钱:九笔各 +1%、一笔 −12%,合计 −3%;胜率 40% 的趋势策略可以赚钱:四笔各 +2%、六笔各 −0.5%,合计 +5%。评价策略要把期望值、盈亏比、最大回撤、尾部风险和杠杆五件套摆在一起——只看胜率,等于选车不看刹车。</p>
         </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 475" role="img" aria-label="四道最易翻车判断题:钱多不一定富、债券不一定稳赢、胜率高不一定好、回测好不等于实盘">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">判断题里最容易翻车的四道</text>
+            <rect x="70" y="80" width="360" height="195" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="250" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">题A:钱多了,社会一定更富?</text>
+            <text x="250" y="140" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:多一个零就是财富加量</text>
+            <text x="250" y="168" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">✗</text>
+            <text x="250" y="200" text-anchor="middle" fill="#bcc9dd" font-size="12">钱只是调动真实财富的工具,</text>
+            <text x="250" y="228" text-anchor="middle" fill="#bcc9dd" font-size="12">池子不宽,水位再涨也只是表面热闹</text>
+            <rect x="470" y="80" width="360" height="195" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="650" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">题B:债券一定比股票安全?</text>
+            <text x="650" y="140" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:情歌一样稳的债比股票保险</text>
+            <text x="650" y="168" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">✗</text>
+            <text x="650" y="200" text-anchor="middle" fill="#bcc9dd" font-size="12">利率上涨时债价下跌,违约能蚀损的是票面,</text>
+            <text x="650" y="228" text-anchor="middle" fill="#bcc9dd" font-size="12">美债负责涨收益不负责保本金</text>
+            <rect x="70" y="290" width="360" height="120" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="250" y="318" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">题C:高胜率策略 = 好策略?</text>
+            <text x="250" y="346" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:稳赢的对</text>
+            <text x="250" y="374" text-anchor="middle" fill="#bcc9dd" font-size="12">正确的区别:期望值与回撤组合</text>
+            <text x="250" y="398" text-anchor="middle" fill="#bcc9dd" font-size="12">99 次小赚 vs 1 次大亏是高胜率低 EV</text>
+            <rect x="470" y="290" width="360" height="120" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="650" y="318" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">题D:回测曲线好 ⇒ 能实盘?</text>
+            <text x="650" y="346" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:谷仓曲线 = 能力</text>
+            <text x="650" y="374" text-anchor="middle" fill="#bcc9dd" font-size="12">史论速率不清仓生产、成本、样本外</text>
+            <text x="650" y="398" text-anchor="middle" fill="#bcc9dd" font-size="12">实盘跟排练完全不同</text>
+            <text x="450" y="450" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这四道题不是用来考的,是用来在你每一次要下手前重新对一次答案</text>
+          </svg>
+          <p class="figure__cap">把它们做对,比会做 100 道计算题更难——因为收益曲线是冷冰冰的,而直觉是热的。</p>
+        </div>
         <h3>1.8. 市场中性是不是无风险</h3>
 <p>不是。中性两个字听上去像把风险清零了,其实它只是试图把大盘方向的暴露压到很低。剩下的风险一点不少:行业没配比好会暴露,风格有偏向会暴露,期货<span class="term">基差</span>波动会暴露,融资利率会暴露,流动性会暴露,当然,模型本身也会出错。</p><p>再具体一点。多头那篮子可能偏偏跑输基准,空头对冲的<span class="term">股指期货</span>可能被<span class="term">基差</span>来回割,融券可能借不到券,<span class="term">保证金</span>一催还可能触发压力。中性策略的收益曲线可以很漂亮,但这些问题的答案决定了它是因为聪明而美,还是因为暂时没出事而美。</p><p>以后看到<span class="hl">“中性”</span>两个字,标准动作是三问:中性化了什么?还剩下哪些风险?对冲的成本是多少?三问答齐再继续看,答不齐就先放下。</p>
 

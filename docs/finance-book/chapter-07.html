@@ -112,6 +112,37 @@
         <h3>1.6. 股东的钱赚得怎么样</h3>
 <p>你掏 <span class="num">100 万</span>入股一家店,年底它给你赚了 <span class="num">20 万</span>——这笔买卖算不算好?这就是 <span class="term">ROE</span> 在回答的问题。<span class="term">ROE</span> 是净利润除以股东权益,表示股东投入的净资产一年产出了多少收益。<span class="term">ROE</span> 高,通常说明公司盈利能力强;但注意了,高只是结果,来源才是重点:它可能来自真本事的高利润率,也可能来自玩命借钱的高<span class="term">杠杆</span>。</p><p>想把来源拆开,就用经典的杜邦分析:把 <span class="term">ROE</span> 拆成净利率、资产周转率和权益乘数三块。净利率看每一元收入留下多少利润;资产周转率看家当用得勤不勤、效率高不高;权益乘数看<span class="term">杠杆</span>放得多大。三家公司 <span class="term">ROE</span> 都是 <span class="num">20%</span>,背后的风险可能天差地别——一家靠产品赚钱,一家靠勤快周转赚钱,一家靠借钱赌博赚钱,同分不同命。</p><p>量化里的质量因子,常用 <span class="term">ROE</span>、ROA、毛利率、现金流质量、盈利稳定性这些维度。但请把这句话刻在脑门上:高 <span class="term">ROE</span> 的股票如果估值已经贵上天,未来收益未必高——好公司和好股票之间,永远隔着一个价格。质量,必须和价格放在一起看。</p><p>给杜邦三件套各配一家公司,<span class="term">ROE</span> 都是 <span class="num">20%</span>:A 靠利润率,净利率 <span class="num">20%</span> × 资产周转 <span class="num">1 次</span> × 权益乘数 1,相乘得 <span class="num">20%</span>;B 靠周转,净利率 <span class="num">4%</span> × 周转 <span class="num">2.5 次</span> × 乘数 2,也是 <span class="num">20%</span>;C 靠<span class="term">杠杆</span>,净利率 <span class="num">4%</span> × 周转 <span class="num">1 次</span> × 乘数 5,还是 <span class="num">20%</span>。三个 <span class="num">20%</span> 站一排,风险立判:A 的产品赚头跌一点还能活;C 的收入只要波动,<span class="num">5 倍</span>乘数会连本带息放大颠簸。同样分数不同命,拆开乘一遍,才知道谁在裸泳。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 450" role="img" aria-label="杜邦三联拆解图:ROE拆成利润率、资产周转率、杠杆倍数,同 ROE 不同质,经营型与杠杆型天差地别">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">杜邦拆解:ROE = 利润率 × 周转率 × 杠杆</text>
+            <rect x="360" y="70" width="180" height="80" rx="10" fill="rgba(240,201,106,0.25)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="450" y="100" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">ROE 18%</text>
+            <text x="450" y="124" text-anchor="middle" fill="#bcc9dd" font-size="12">净利润 / 股东权益</text>
+            <rect x="70" y="200" width="230" height="110" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="185" y="228" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">① 净利润率</text>
+            <text x="185" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">每 100 元收入净赚多少</text>
+            <text x="185" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是经营水准</text>
+            <text x="185" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">利润驱动型公司</text>
+            <rect x="335" y="200" width="230" height="110" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="450" y="228" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">② 资产周转率</text>
+            <text x="450" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">一块资产一年转销出多少收入</text>
+            <text x="450" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是运营效率</text>
+            <text x="450" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">效率驱动型公司</text>
+            <rect x="600" y="200" width="230" height="110" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="715" y="228" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">③ 杠杆倍数</text>
+            <text x="715" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">总资产 / 股东权益</text>
+            <text x="715" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是财务风险</text>
+            <text x="715" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">杠杆驱动型公司</text>
+            <path d="M 400 152 Q 300 178 250 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <path d="M 450 152 Q 450 178 450 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <path d="M 500 152 Q 580 178 680 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <rect x="70" y="340" width="760" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="94" y="366" fill="#f0c96a" font-size="13" font-weight="800">同 ROE ≠ 同质</text>
+            <text x="94" y="390" fill="#bcc9dd" font-size="12">A: 18% 利润率 × 1 周转 × 1 杠杆 = 18%,凭经营;B: 3% 利润率 × 1.2 周转 × 5 杠杆 = 18%,凭负债</text>
+            <text x="94" y="412" fill="#bcc9dd" font-size="12">两种 18 一旦利率上行表现完全相反——这就是必须拆开看的原因</text>
+          </svg>
+          <p class="figure__cap">ROE 的数字好看不代表质量好——先拆开看是挣钱挣的、效率挣的,还是负债堆的。只有能拆开的 ROE,才是撑得住下行的 ROE。</p>
+        </div>
         <h3>1.7. 价格相对什么贵</h3>
 <p>买菜你会问<span class="hl">“多少钱一斤”</span>,买股票要问的是<span class="hl">“价格相对什么贵”</span>——估值指标就是干这个的,它把市场价格和公司基本面绑在一起。<span class="term">PE</span> 是市值 / 净利润,问市场愿意为一元利润付多少钱;<span class="term">PB</span> 是市值 / 净资产,问愿意为一元账面净资产付多少钱;PS 是市值 / 收入,问愿意为一元收入付多少钱;股息率是每股分红 / 股价,问按当前价格买进,分红回报大约多少。</p><p>但每个指标都有它的脾气。<span class="term">PE</span> 低不一定便宜——可能是市场已经预见利润即将下滑,提前把价格打了折;<span class="term">PE</span> 高也不一定泡沫——可能是利润涨得快,分母在追分子。<span class="term">PB</span> 对银行、地产、周期类资产更常用,拿来量轻资产科技公司却常常失灵;PS 适合还没稳定盈利的早期公司,但你不能忽略它未来到底能不能赚钱。指标没有好坏,只有用没用对地方。</p><p>量化在造估值因子时,通常会把这些指标先标准化、再行业中性化,然后和质量、成长、<span class="term">动量</span>搭伙使用。特别提醒一句:单纯闭眼买低 <span class="term">PE</span>,很容易一脚踩进价值陷阱——那种长期便宜、便宜得很有道理的坑。想让估值信号真有用,组合构建和风险控制必须跟上。</p><p>低 <span class="term">PE</span> 还会自己凭空消失:市值 <span class="num">100 亿</span>、净利 <span class="num">5 亿</span>,<span class="term">PE</span> = 100 ÷ 5 = 20,看着不贵;下年利润滑到 <span class="num">2.5 亿</span>,股价一动不动,<span class="term">PE</span> 自动变 100 ÷ 2.5 = 40。分子没动,分母腰斩,便宜就这么蒸发了。所以看 <span class="term">PE</span> 必须多问一句:这个利润是常态、高点还是低点?把周期顶点的利润当常态,<span class="num">20 倍</span>的便宜其实是 <span class="num">40 倍</span>的贵;反过来,周期底部的烂利润也会把 <span class="term">PE</span> 顶得很高,那一头同样是假信号。</p>
 

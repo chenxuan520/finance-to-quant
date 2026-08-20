@@ -169,6 +169,33 @@
         <h3>2.10. 从数据表到训练样本</h3>
 <p>铺垫了这么多防线,最后一步该真的搭样本了。一个股票日频训练样本,可以想象成三维结构:日期、股票、特征。每个交易日,操场上站着一批股票,每只身上挂着几十个特征值,标签是未来一段收益。喂给模型时,把这个立体结构拍平成一张大表:每一行是<span class="hl">“某天某只股票”</span>,列是特征和标签。</p><p>但拍平这张表之前,要过一串安检门:当天是否可交易?是否停牌?是否涨跌停到无法买卖?上市天数够不够?财务数据是否已披露?是否在股票池内?最关键的是:这套过滤规则,必须在训练、回测和实盘三处完全一致——三套规则各说各话,训练出来的就是<span class="hl">“三次元模型在二次元考试”</span>。</p><p>过滤不一致的结局是什么?如果训练样本里混着大量实盘根本买不到的股票,模型会津津有味地学习一堆不可执行的机会——纸上高手,实盘废物;如果回测过滤得严、训练过滤得松,训练目标和交易目标从一开始就南辕北辙。量化的细节不会浮现在 PPT 里,它们藏在每一行过滤规则里,最后统统反映在收益曲线上。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="IC 曲线图:因子排序与未来收益的相关性起伏,需要看一年摊平后才能判断有没有资产质量">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">IC:每颗因子技能摆一条？检验一切是否“态一致”</text>
+            <!-- 排序 VS 下月收益坐标;正相关散开 -->
+            <rect x="80" y="80" width="380" height="300" rx="10" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="270" y="106" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">IC 的秒定义</text>
+            <text x="270" y="132" text-anchor="middle" fill="#bcc9dd" font-size="12">因子按分数给全市场若干股排队;</text>
+            <text x="270" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">看上个月谁最后;</text>
+            <text x="270" y="176" text-anchor="middle" fill="#bcc9dd" font-size="12">计算两个名次表的相关系数</text>
+            <text x="270" y="206" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">IC = {-1 ~ +1 的相关数}</text>
+            <text x="270" y="234" text-anchor="middle" fill="#bcc9dd" font-size="12">+ 表示分数高能涨(买高分好)</text>
+            <text x="270" y="256" text-anchor="middle" fill="#bcc9dd" font-size="12">- 表示分数高能跌(低分好)</text>
+            <text x="270" y="278" text-anchor="middle" fill="#bcc9dd" font-size="12">0 表示因子不预测未来</text>
+            <text x="270" y="308" text-anchor="middle" fill="#8499bd" font-size="12">行业经验:稳定的 IC 在 0.03~0.05 尤属珍贵</text>
+            <!-- 右边 曲线 -->
+            <text x="630" y="90" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">IC 为什么要滚一个季度到一年</text>
+            <line x1="500" y1="330" x2="820" y2="330" stroke="#8499bd" stroke-width="2"/>
+            <line x1="500" y1="130" x2="500" y2="330" stroke="#8499bd" stroke-width="2"/>
+            <path d="M 505 210 Q 560 200 620 220 Q 680 240 740 200 Q 790 170 820 190" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <line x1="505" y1="235" x2="820" y2="235" stroke="#f0c96a" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="820" y="232" fill="#f0c96a" font-size="12">均值的均值</text>
+            <text x="820" y="330" fill="#bcc9dd" font-size="12">月份</text>
+            <text x="510" y="140" fill="#bcc9dd" font-size="12">IC(+)/-</text>
+            <text x="650" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12">任何单月可能都正,但趋势摆动围绕“均值的均值”上下;真正信号看 IC 摊平后的水平是否稳定轩抬高位</text>
+          </svg>
+          <p class="figure__cap">IC 是量化界的成绩单——波动大是常态,稳定上斜才是真迹。单月出来一个 0.2 不能保证是真因子,一年的平均 IC 0.03-0.05 才能写进策略池。</p>
+        </div>
 
         <section class="summary reveal">
           <h2>小结</h2>

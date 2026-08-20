@@ -30,6 +30,40 @@
         <h3>1.1. 量化机构不是只有研究员</h3>
 <p>一个成熟的量化团队,角色比外人想象的多得多。研究员负责发现信号、做因子和模型、写回测报告;数据工程师负责接入、清洗、校验和维护数据;平台工程师负责研究平台、回测框架、任务调度、存储和权限;交易系统工程师负责订单、执行、券商接口和实盘稳定。</p><p>这还没完,后面还站着一串人: 组合经理、交易员、风控、合规、运营、产品和客户服务。组合经理决定策略怎么组合、风险怎么分配;交易员处理执行和异常;风控盯暴露、回撤、限额和模型失效;合规确保交易行为和信息使用符合监管;运营负责估值、清算、对账、产品资料。</p><p>所以量化不是<span class="hl">“一个模型训练完就结束”</span>,它是研究、数据、工程、交易、风控、合规、运营共同维持的一套系统。任何一个环节薄弱,策略收益都会打折,甚至直接变成事故。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="量化行业三岗位对比:研究员产出因子、工程师产出系统、交易员产出决断,三种不同的工作对象">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化研究员 ≠ 量化工程师 ≠ 交易员</text>
+            <rect x="70" y="80" width="240" height="250" rx="12" fill="rgba(240,201,106,0.18)" stroke="#f0c96a"/>
+            <text x="190" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">研究员</text>
+            <text x="190" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">每天:读论文、算数据</text>
+            <text x="190" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">写因子、试模型</text>
+            <text x="190" y="186" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">产出:信号和因子</text>
+            <text x="190" y="214" text-anchor="middle" fill="#8499bd" font-size="12">核心能力:统计学+金融理解</text>
+            <text x="190" y="242" text-anchor="middle" fill="#bcc9dd" font-size="12">指标: IC, RankIC</text>
+            <text x="190" y="270" text-anchor="middle" fill="#bcc9dd" font-size="12">假设定理与实验设计</text>
+            <text x="190" y="298" text-anchor="middle" fill="#8499bd" font-size="11.5">工资净累,压力重寝发</text>
+            <rect x="340" y="80" width="240" height="250" rx="12" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="460" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">工程师</text>
+            <text x="460" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">每天:设工具、搭开仓</text>
+            <text x="460" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">优化延迟、提架构</text>
+            <text x="460" y="186" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">产出:高效的执现环境</text>
+            <text x="460" y="214" text-anchor="middle" fill="#8499bd" font-size="12">核心能力:代码质量+系统御决</text>
+            <text x="460" y="242" text-anchor="middle" fill="#bcc9dd" font-size="12">指标: 延迟、成熟度</text>
+            <text x="460" y="270" text-anchor="middle" fill="#bcc9dd" font-size="12">如何低延迟不堑误</text>
+            <text x="460" y="298" text-anchor="middle" fill="#8499bd" font-size="11.5">高级语言与异恈工程语言</text>
+            <rect x="610" y="80" width="240" height="250" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="730" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">交易员</text>
+            <text x="730" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">每天:盯盘、改仓位</text>
+            <text x="730" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">监控风险、调整策略</text>
+            <text x="730" y="186" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">产出: 盘中仓位与决断</text>
+            <text x="730" y="214" text-anchor="middle" fill="#8499bd" font-size="12">核心能力:市场直觉+备压</text>
+            <text x="730" y="242" text-anchor="middle" fill="#bcc9dd" font-size="12">指标: PnL, 成交量实现</text>
+            <text x="730" y="270" text-anchor="middle" fill="#bcc9dd" font-size="12">执行与微结构决策</text>
+            <text x="730" y="298" text-anchor="middle" fill="#8499bd" font-size="11.5">执行心理负载最大</text>
+            <text x="450" y="358" text-anchor="middle" fill="#bcc9dd" font-size="12.5">三个人殊不等于三个级别,同级别但天天处理的是完全不同的对象</text>
+          </svg>
+          <p class="figure__cap">三种技能栈完全不同:一个读学术找信号,一个写代码跟微秒赛跑,一个盯盘压手。你选哪个方向,先看你爱处理的是符号、系统还是决策者。</p>
+        </div>
         <h3>1.2. 研究员每天在做什么</h3>
 <p>想到量化研究员,你可能脑补的是每天灵感爆发、发现一个神奇公式。真实的日常远没有这么浪漫: 提出假设、取数据、清洗样本、构造特征、跑回测、看风险、写报告、和已有因子比较、解释为什么失效,然后重复迭代。</p><p>一个典型问题长这样: 某类财务质量指标在中证 1000 里有没有选股效果? 研究员要定义指标口径,处理公告日期,做行业中性和市值中性,看 <span class="term">IC</span>、分层、换手、成本、容量,最后再判断它够不够格加入现有模型。每一步都是体力活加细致活。</p><p>研究员还得习惯一个现实: 大多数想法最后没用。不是每个因子都有增量,不是每个模型都能上线。好的研究流程会认真保存失败记录——失败不是白干,它告诉团队哪些方向已经拥挤、哪些数据有坑、哪些假设站不住。</p><div class="callout callout--note reveal"><span class="callout__title">研究端比的是“失误率”,工程端要的是“零失误”</span><p>同一家公司里有两张完全不同的成绩单。研究端允许甚至需要大量失败:十个想法九个没用很正常,关键是把每次失败记下来、讲清楚、不再重犯。工程和交易端则相反,一个重复下单的 bug,可能把一年的超额一把亏光。看懂这种不对称,你就看懂了量化机构的钱从哪来:一半是赚来的,另一半是没出错省下来的。</p></div>
 
