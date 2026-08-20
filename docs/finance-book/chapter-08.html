@@ -3,165 +3,146 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 8 章 · 国家为什么有穷有富: 从起飞到中等收入陷阱 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="把国家当一家公司读:增长的三个阶段、出口与进口替代两条路线、刘易斯拐点、全要素生产率、资源诅咒、日本化和人口红利,最后是投资视角怎么用。" />
+    <title>第 8 章 · 期货、远期与互换: 把未来价格写进合约 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清远期、期货、保证金、基差、期限结构和互换。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="8">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第一部分 · 金融世界的底层结构 · 第 8 章</p>
-        <h1>国家为什么有穷有富: 从起飞到中等收入陷阱</h1>
-        <p class="lead">新闻里常听到“中等收入陷阱”“人口红利”“产业转移”,它们到底是什么意思?这一章把国家当成一家公司来读:起飞靠人力,扩张靠投资,长期只能靠效率。每一次换发动机都有国家翻车——拉美翻在关起门来自己造,日本翻在泡沫破了之后所有人只顾还债。看懂这些路径,再看中国现在讲的“高质量发展”“内循环”“新质生产力”,你就接得住它们在回应哪道坎。</p>
+        <p class="chapter__eyebrow">第二部分 · 资产如何承载现金流与风险 · 第 8 章</p>
+        <h1>期货、远期与互换: 把未来价格写进合约</h1>
+        <p class="lead">从这一章开始,我们正式进入衍生品的世界。这个词听起来吓人,其实可以先用一句话降服它:衍生品的价值,来自另一个东西——鱼、股票、利率、汇率,凡是能作价的东西,都能被衍生品“关联”上。期货、远期和互换做的是同一件事:把未来某种价格、利率或现金流关系,提前写进今天的合同。为什么要提前写?因为真实世界里最折磨人的,往往不是价格本身,而是“不知道价格会怎样”——怕跌的渔民、怕涨的饭店、怕利率调皮的公司,这些睡不着觉的人凑到一起,就有了这一章的全部工具。它们可以管理风险,也可以放大风险,全看拿在谁手里。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线二</span>
+            <span>本部分第 4 / 7 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?</p>
+          <p class="chapter-context__outcome">读完后,你能先拆现金流、权利、期限和最坏情况,再讨论价格涨跌。 </p>
+        </section>
+
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>增长靠三样东西:人、资本、生产率,越靠后越难啃,但只有生产率不会减速。</li>
-            <li>出口导向和进口替代是两条命运岔路,东亚和拉美各选了一条,结局天差地别。</li>
+            <li>远期和期货都是把未来交易价格写进合约,区别是期货更标准化。</li>
+            <li>保证金让期货占用资金少,也让盈亏被同比例放大。</li>
           </ul>
         </section>
 
 
-        <h2>1. 人力、资本、生产率</h2>
-<p>经济学家算国家增长的账,有个很朴素的拆法:产出 = 投入了多少人 × 投入了多少资本 × 还剩一块叫<span class="hl">“效率”</span>。一个国家刚起步时只有第一样:人多、工资低、肯干。把农民从田里请进工厂,接全世界的订单,这就是<span class="hl">“要素驱动”</span>——孟加拉、越南今天走的正是这条路,中国 <span class="num">1980 年</span>代也走这条路。门槛低,天花板也低:人不可能无限增加,工资一涨,订单立刻跑去下一个更便宜的地方。</p><p>赚到第一桶金后,国家会把钱投到设备、铁路、电网和厂房上,进入<span class="hl">“投资驱动”</span>。中国 1990 到 <span class="num">2010 年</span>就是样板:高铁、港口、开发区修出来的速度,全世界没见过第二家。但资本会饱和——第一条高铁连通两个城市,第十条可能只是装点门面;楼盖到空置的时候,再盖一栋只是浪费钢筋水泥。靠加投资的增长,迟早撞上回报率递减的墙。</p><p>能让人均收入一直涨下去的是第三条腿:全要素生产率(TFP)。同样的人和机器,产出能多出多少,取决于技术、管理、制度和品牌。它不依赖<span class="hl">“投入更多”</span>,所以不会自我减速。一国能不能跨过中等收入这道坎,本质看它有没有完成这次切换:从<span class="hl">“多干多得”</span>,换成<span class="hl">“巧干多得”</span>。</p>
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 航空公司为什么要在油价上涨前先买未来</h2>
+<p>航空公司的机票往往提前卖出,燃油却要在未来每天购买。假如票价已经锁死,油价突然翻倍,一架坐满乘客的飞机也可能越飞越亏。美国西南航空曾长期使用燃油衍生品锁定部分成本,在油价急升的年份里,这层保护一度让它比许多同行更从容。</p><p>但<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>不是免费预测。油价下跌时,同行在现货市场享受便宜燃料,提前锁价的一方反而要承受合约损失。公司买期货或互换的目的不是每次都赢过市场,而是把最怕的那条成本曲线压平,让已经卖出去的机票不至于变成一串未知负债。</p><p>这也是衍生品最朴素的用途:把无法承受的价格波动交给愿意承担它的人。量化评估套保时,不能只盯衍生品账户本身的盈亏;现货端省下的钱和合约端亏掉的钱必须合并看。只截一条腿,好对冲也会被误判成坏交易。</p>
+        </section>
 
-        <h2>2. 拿出口给自己造血</h2>
-<p>韩国、新加坡、中国台湾起飞时用同一套打法:把产品卖到国外,换回外汇,再拿钱买技术、买设备、把产业往上游拱。丰田和三星走过,台积电也走过。出口导向有双重好处:外汇回补血库,企业被丢进全球竞争里天天挨打——产品不行就卖不出去,反而长得最快。</p><p>反面教材是拉美的进口替代:自己造、自己用、用高关税把外国货挡在门外。听上去自主,麻烦在于没了竞争压力,企业可以安静地落伍。<span class="num">1960 年</span>韩国人均 GDP 约一百美元,还低于阿根廷;到 <span class="num">2023 年</span>,韩国超过 <span class="num">3.3 万美元</span>,阿根廷停在约 <span class="num">1.3 万美元</span>。同一条起跑线,六十年差出两个世界——差就差在敢不敢把企业丢进全球市场。</p>
+        <h2>2. 先从一个卖鱼的人说起</h2>
+<p>还记得那座小岛吗?这次的主角是一位渔民:三个月后他有一批鱼可以卖,可他眼下就睡不着——万一三个月后鱼价大跌,这几个月就白忙了。岛的另一头,一位饭店老板也在发愁:万一三个月后鱼价大涨,菜单成本就压不住了。两个发愁的人一碰头,今天就把话说死:三个月后,不管市场价多少,都按每条十元成交。</p><p>这个<span class="hl">“十元”</span>是从哪儿来的?不是谁拍脑袋预测未来,而是两个人各自算账的结果。渔民想:这批鱼的饲料、人工、船油折下来,每条成本假设七元,十元成交就稳赚。老板想:菜单价格摆在那里,十元进货毛利还撑得住。双方都把最坏情况摆上桌,远期合约里那个数,就是两张预算表的交集,而不是对未来的预言。</p><p>这个约定,就是远期合约的直觉。远期不是今天立刻买卖鱼,而是今天把未来交易的价格写下来。渔民锁定了未来卖价,饭店锁定了未来买价。三个月后市场价格无论涨跌,他们都按约定价格交易——谁也别惊喜,谁也别惊吓。</p><p>把两种结局推演一遍。如果三个月后市场价涨到十二元,饭店按十元拿货,赚到了便宜,渔民少赚了两元;如果市场价跌到八元,渔民按十元出货,躲开了下跌,饭店多付了两元。注意这句话:风险没有消失,只是从一方转到了另一方。远期合约从来不消灭风险,它只是给风险换了个肩膀。</p><p>顺便拆掉两个常见误会。第一,签远期不是为了赌赢行情:买卖双方买的都是<span class="hl">“确定”</span>这两个字,而不是<span class="hl">“最便宜”</span>。第二,三个月后看到市场价更划算就后悔,大可不必——就当它是份保险单:你希望火灾永远不发生,却不会因此觉得保费白交。</p><div class="callout callout--note reveal"><span class="callout__title">远期买的是确定,不是便宜</span><p>两个误会一起拆。第一,签远期不是为了赌赢行情:买卖双方买的都是<span class="hl">“确定”</span>这两个字,而不是<span class="hl">“最便宜”</span>。第二,三个月后看到市场价更划算就后悔,大可不必——就当它是份保险单:你希望火灾永远不发生,却不会因此觉得保费白交。远期从来不消灭风险,它只是给风险换了个肩膀。</p></div>
 
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 440" role="img" aria-label="出口造血循环图:开工厂接订单、外汇流进来、结汇变本币、发工资扩内需四个方框围成顺时针循环,中心圆写造血机越转越壮">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">拿出口给自己造血:一个国家的造血循环</text>
-            <!-- 中心循环四个节点 -->
-            <rect x="360" y="70" width="180" height="56" rx="8" fill="rgba(122,167,240,0.25)" stroke="#7aa7f0"/>
-            <text x="450" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">开工厂接订单</text>
-            <text x="450" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">先把东西卖出去</text>
-            <rect x="640" y="196" width="180" height="56" rx="8" fill="rgba(143,179,122,0.25)" stroke="#8fb37a"/>
-            <text x="730" y="220" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">外汇流进来</text>
-            <text x="730" y="240" text-anchor="middle" fill="#bcc9dd" font-size="11">美元/欧元落袋</text>
-            <rect x="360" y="320" width="180" height="56" rx="8" fill="rgba(240,201,106,0.25)" stroke="#f0c96a"/>
-            <text x="450" y="344" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">结汇变本币</text>
-            <text x="450" y="364" text-anchor="middle" fill="#bcc9dd" font-size="11">央行/银行系统放大</text>
-            <rect x="80" y="196" width="180" height="56" rx="8" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
-            <text x="170" y="220" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">发工资扩内需</text>
-            <text x="170" y="240" text-anchor="middle" fill="#bcc9dd" font-size="11">工人有钱再消费</text>
-            <!-- 循环箭头 -->
-            <path d="M 540 100 Q 660 130 716 192" fill="none" stroke="#8499bd" stroke-width="3" marker-end="url(#arrowM)"/>
-            <path d="M 700 252 Q 620 306 544 336" fill="none" stroke="#8499bd" stroke-width="3"/>
-            <path d="M 360 350 Q 240 320 190 256" fill="none" stroke="#8499bd" stroke-width="3"/>
-            <path d="M 200 196 Q 260 130 356 104" fill="none" stroke="#8499bd" stroke-width="3"/>
-            <defs><marker id="arrowM" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8499bd"/></marker></defs>
-            <!-- 循环中心 -->
-            <circle cx="450" cy="212" r="46" fill="rgba(18,29,49,0.9)" stroke="#f0c96a" stroke-width="2"/>
-            <text x="450" y="208" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">造血机</text>
-            <text x="450" y="228" text-anchor="middle" fill="#bcc9dd" font-size="11">越转越壮</text>
-            <text x="450" y="412" text-anchor="middle" fill="#bcc9dd" font-size="12.5">循环一旦转起来,工人变消费者,消费者养活更多工厂;反之订单一断,整个环跟着收缩</text>
-          </svg>
-          <p class="figure__cap">一个国家拿出口给自己造血的完整循环:开工厂接订单,外汇流进来,结汇变成本币,发工资扩内需,工人变消费者再养活更多工厂——越转越壮。反过来,订单一断,整个环跟着收缩。</p>
-        </div>
-        <h2>3. 卡在不高不低的那一档</h2>
-<p>世界银行把经济体按人均收入分档:低收入约千美元以下,高收入约一万三千美元以上。所谓<span class="hl">“中等收入陷阱”</span>,就是卡在中间的那批国家——廉价劳动力优势已被更穷的国家抢走,创新能力又还够不着发达国家,涨的涨不动、省的省不了,像三明治一样被两头挤压。<span class="num">1960 年</span>以来,真正跨过这道坎的经济体屈指可数,最出名的是东亚那几个。</p><p>卡住的根源是发动机没换:起飞靠<span class="hl">“人便宜”</span>,中等靠<span class="hl">“投资堆”</span>,再往上只能靠<span class="hl">“知识密集”</span>——技术、品牌、规则。发动机不换,车照样跑,只是越来越慢,慢到债务还不动、就业稳不住、社会情绪跟着变坏。所以<span class="hl">“中等收入陷阱”</span>不是玄学名词,是三件事一起到期:工资不低了,资本边际回报降了,创新还没接上。</p>
+        <h2>3. 远期和期货有什么区别</h2>
+<p>远期合约通常是双方私下约定的。你和我约好三个月后按十元买卖鱼,细节可以很灵活:数量、质量、交货地点、付款方式,全都能定制——像项目制外包,需求随便提,合同现写现签。问题也明显:万一到了日子有一方反悔,另一方只能实打实咽下对手方风险。</p><p>期货可以理解成标准化远期。交易所把合约规格全部定好:标的是什么、每手多少、什么时候到期、怎么结算、<span class="term">保证金</span>多少,没空跟你讨价还价。大家在交易所里交易这些标准化合约,交易所和清算体系站在中间,负责把对手方违约风险降下来。</p><p>清算体系具体怎么降风险?两步。第一步,清算所站到每笔交易中间:对所有买方它是卖方,对所有卖方它是买方,你担心的是清算所的<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>,而不是某个陌生对手的钱包。第二步,每日结算:每天收盘按结算价把盈亏当场结清,亏的从<span class="term">保证金</span>里扣,赚的当天到账,风险最多只积累一天,没机会滚成大雪球。</p><p>一句话对比:远期更灵活,但对手方风险更强;期货更标准,<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>更好,代价是必须接受<span class="term">保证金</span>和每日结算这一套更严格的规则。像选软件:定制系统合身但怕乙方跑路,标准产品死板但稳定可续费——各有价格,各取所需。</p>
+
+        <h2>4. 为什么期货会放大盈亏</h2>
+<p>期货最容易让新手受伤的地方,藏在<span class="hl">“<span class="term">保证金</span>”</span>三个字里。假设一份期货合约名义价值一百万元,<span class="term">保证金</span>比例是百分之十。你不需要掏出一百万元,只需拿出十万元<span class="term">保证金</span>,就能控制这一百万元的名义合约。十万元指挥一百万元,听上去是不是有点像咒语?</p><p>感受一下放大效应。如果标的价格上涨百分之一,合约名义盈利一万元。相对于一百万元,这只是百分之一;可相对于你掏出的十万元<span class="term">保证金</span>,就是百分之十。再翻一面:标的下跌百分之一,你的<span class="term">保证金</span>同样亏掉百分之十。标的才晃了一小下,你的账户已经坐了一整格电梯。</p><p>把每日结算用数字走一遍。第一天标的跌百分之一:合约亏一万元,当天从<span class="term">保证金</span>里划走,账户剩九万。第二天再跌百分之一:再划一万,剩八万。假设交易所的维持线是八万,第三天开盘前,追加<span class="term">保证金</span>的电话就来了。注意,不是到期才算总账,而是每天结一次——你连<span class="hl">“装死等反弹”</span>这个选项都没有。</p><p>这就是<span class="term">杠杆</span>。<span class="term">杠杆</span>不会提高你判断正确的概率,它只负责把结果放大:方向对时赚得快,方向错时亏得也快。<span class="term">保证金</span>不足时,你会被要求追加<span class="term">保证金</span>;拿不出或者不肯拿,强平就找上门,连带你翻身的机会一起清仓。</p><p>金融史上最惨烈的一课,偏偏由一群公认最聪明的人主演。<span class="num">1994 年</span>,一家叫<span class="hl">“长期<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>管理公司”</span>(LTCM)的对冲基金成立,合伙人名单金光闪闪:两位后来在 <span class="num">1997 年</span>拿下诺贝尔经济学奖的经济学家——他们正是期权定价理论的奠基人,外加一位前美联储副主席。这支梦之队架起几十倍<span class="term">杠杆</span>,加上规模巨大的衍生品合约,前几年赚得盆满钵满。</p><p>但 <span class="num">1998 年</span>,俄罗斯突然债务违约,市场朝着他们模型里<span class="hl">“几乎不可能”</span>的方向剧烈运动,高<span class="term">杠杆</span>瞬间把亏损放大到无法承受。短短一百多天,基金净值跌去约九成、亏掉近 <span class="num">46 亿美元</span>,最后要美联储出面牵头救助,才没有把整个金融系统一起拖下水。</p><p>把这个故事钉在心里:诺贝尔奖级别的聪明,配上过高的<span class="term">杠杆</span>,照样爆仓。<span class="term">杠杆</span>的问题从来不是<span class="hl">“你会不会算”</span>,而是“万一算错、或者世界不按你的模型走,你还活不活得下来”。这也是本书后面反复强调的顺序:先学会活下来,再谈赚多少。</p><div class="callout callout--note reveal"><span class="callout__title">LTCM:聪明顶配照样爆仓</span><p>划重点:LTCM 的合伙人里有两位后来的诺贝尔经济学奖得主、一位前美联储副主席,架起几十倍<span class="term">杠杆</span>。<span class="num">1998 年</span>俄罗斯突然债务违约,市场朝模型里<span class="hl">“几乎不可能”</span>的方向剧烈一动,一百多天净值跌去约九成、亏掉近 <span class="num">46 亿美元</span>,最后要美联储牵头救助。<span class="term">杠杆</span>的问题从来不是会不会算,而是算错时你还活不活得下来。</p></div><div class="callout callout--note reveal"><span class="callout__title">不要把占用资金少理解成风险小</span><p>期货占用<span class="term">保证金</span>少,不是因为风险小,而是因为它用<span class="term">保证金</span>制度放大了账户波动。</p></div>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 430" role="img" aria-label="中等收入陷阱楼梯图:农业起步、出口代工、中等收入三级台阶,通向高收入的梯子断掉,一条绿色路线升级接上去,一条红色路线原地打转">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">中等收入陷阱:楼梯爬到一半,梯子撤了</text>
-            <!-- 楼梯 -->
-            <rect x="80" y="330" width="160" height="40" rx="6" fill="rgba(122,167,240,0.25)" stroke="#7aa7f0"/>
-            <text x="160" y="355" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">农业起步</text>
-            <rect x="240" y="280" width="160" height="40" rx="6" fill="rgba(122,167,240,0.35)" stroke="#7aa7f0"/>
-            <text x="320" y="305" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">出口代工</text>
-            <rect x="400" y="230" width="160" height="40" rx="6" fill="rgba(240,201,106,0.3)" stroke="#f0c96a"/>
-            <text x="480" y="255" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">中等收入(卡壳高发区)</text>
-            <rect x="640" y="180" width="160" height="40" rx="6" fill="rgba(143,179,122,0.3)" stroke="#8fb37a"/>
-            <text x="720" y="205" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">高收入</text>
-            <!-- 断梯 -->
-            <line x1="560" y1="280" x2="640" y2="190" stroke="#ee8877" stroke-width="4" stroke-dasharray="10 8"/>
-            <text x="600" y="160" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">梯子撤了:工资涨了,廉价优势没了</text>
-            <!-- 两条路 -->
-            <path d="M 480 230 Q 560 150 700 128" fill="none" stroke="#8fb37a" stroke-width="4"/>
-            <text x="620" y="120" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">A:技术升级接上去(日韩)</text>
-            <path d="M 480 272 Q 560 320 700 330" fill="none" stroke="#ee8877" stroke-width="4"/>
-            <text x="620" y="352" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">B:靠借债和老本打转(拉美)</text>
-            <text x="450" y="400" text-anchor="middle" fill="#bcc9dd" font-size="12.5">判断看点:工人工资涨得比效率快,债务堆得比技术快,就是 B 路线的前兆</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 380" role="img" aria-label="期货逐日盯市时间线:缴 10 万保证金控制 100 万合约;标的每天跌 1% 就划走 1 万,余额 10 万、9 万、8 万,触到维持线 8 万后第三天开盘前必须追加,否则强平">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期货逐日盯市:10 万保证金,两天亏到维持线</text>
+            <text x="450" y="58" text-anchor="middle" fill="#8499bd" font-size="12.5">名义 100 万合约 · 保证金比例 10% → 缴 10 万;标的每跌 1%,合约当天就亏 1 万</text>
+            <defs><marker id="c5m" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>
+            <rect x="60" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="150" y="101" text-anchor="middle" fill="#7aa7f0" font-size="14" font-weight="800"><tspan x="150" y="101">开仓日</tspan></text>
+            <text x="150" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">缴保证金 10 万</text>
+            <text x="150" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">控制名义 100 万</text>
+            <text x="150" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">当日余额 10 万</text>
+            <path d="M 242 151 L 266 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
+            <rect x="270" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="360" y="101" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800"><tspan x="360" y="101">第1天收盘</tspan></text>
+            <text x="360" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">结算价 -1%</text>
+            <text x="360" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">当日划走 1 万</text>
+            <text x="360" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">余额 9 万</text>
+            <path d="M 452 151 L 476 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
+            <rect x="480" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(232,120,120,0.45)"/>
+            <text x="570" y="101" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800"><tspan x="570" y="101">第2天收盘</tspan></text>
+            <text x="570" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">再跌 -1%</text>
+            <text x="570" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">又划走 1 万</text>
+            <text x="570" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">余额 8 万</text>
+            <text x="570" y="204" text-anchor="middle" fill="#c9d4e8" font-size="12">触到维持线 8 万</text>
+            <path d="M 662 151 L 686 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
+            <rect x="690" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="780" y="101" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800"><tspan x="780" y="101">第3天开盘前</tspan></text>
+            <text x="780" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">追加保证金电话</text>
+            <text x="780" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">补足 10 万 → 留下</text>
+            <text x="780" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">拿不出 → 强平清仓</text>
+            <text x="100" y="252" fill="#8499bd" font-size="11">账户保证金余额 ↓</text>
+            <line x1="100" y1="316" x2="830" y2="316" stroke="#e88" stroke-width="1.5" stroke-dasharray="6 5"/>
+            <text x="100" y="308" fill="#ffb4b4" font-size="12">维持线 8 万:低于它就要追加</text>
+            <path d="M 150 278 L 360 297 L 570 316 L 780 316" fill="none" stroke="#f0c96a" stroke-width="2"/>
+            <circle cx="150" cy="278" r="5" fill="#f0c96a"/>
+            <text x="150" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">10 万</text>
+            <circle cx="360" cy="297" r="5" fill="#f0c96a"/>
+            <text x="360" y="283" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">9 万</text>
+            <circle cx="570" cy="316" r="5" fill="#f0c96a"/>
+            <text x="570" y="302" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">8 万</text>
+            <circle cx="780" cy="316" r="8" fill="none" stroke="#e88" stroke-width="2"/>
+            <text x="780" y="336" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">第 3 天开盘前:触发追加电话</text>
+            <text x="450" y="364" text-anchor="middle" fill="#c9d4e8" font-size="13">每天收盘按结算价当场结清:连「等反弹再说」的选项都没有——划走的是现金,不是浮亏数字</text>
           </svg>
-          <p class="figure__cap">爬楼前半段靠的是便宜劳动力和出口代工,谁都能爬;难的是工资涨起来之后那一级——梯子(廉价优势)撤了,要么靠技术升级接上去(日韩路线),要么靠借债在原地打转(拉美路线)。判断前兆就看两条:工资涨得比效率快、债务堆得比技术快。</p>
+          <p class="figure__cap">把每日结算用数字走一遍:第一天亏 1 万剩 9 万,第二天再亏 1 万剩 8 万,正好触到维持线——第三天开盘前追加电话就到。杠杆不提高判断胜率,只放大结果,而且你连「装死等反弹」的选项都没有。</p>
         </div>
-        <h2>4. 廉价劳动力用光的那一天</h2>
-<p>起飞模式有一个明确的失效时刻,叫刘易斯拐点。农村里有大量过剩劳动力时,城市工厂用很低的工资就能一直扩张;一旦农村剩余劳动力被吸干,再加人就得涨工资——工资一涨,价格优势就没了。中国大约在 2004 到 <span class="num">2010 年</span>之间迈过这个拐点:那几年珠三角的工厂大规模内迁或搬去越南,不是经营不善,是红利吃完了。</p><p>拐点之后,不涨工资就招不到人;涨工资,工厂就只有两条路:上自动化设备,或者搬去更便宜的地方。所以这些年才会冒出<span class="hl">“工程师红利”</span>这个词——它要接的就是人口红利的下一棒。劳动力从<span class="hl">“多而廉”</span>转向<span class="hl">“少而专”</span>,国家要么去干更高级的活,要么掉队。</p>
+        <h2>5. 套期保值、投机和套利</h2>
+<p>期货有三种常见用途,动机完全不同,别把它们混成一锅。第一种是套期保值。渔民怕鱼价跌,饭店怕鱼价涨,他们用期货锁定未来价格。注意这个目的:不是赚大钱,而是把未来的不确定性切掉一块——像给系统加熔断,不为跑分,只为不出事。</p><p>把套保用数字走完整。渔民今天按十元卖出三个月期货。三个月后现货跌到八元:现货这批鱼每条少卖两元,期货空头按十元卖出、八元平仓买回,每条赚回两元——两笔一抵,每条净收入还是十元。反过来现货涨到十二元:现货多赚两元,期货亏两元,还是十元。看明白了吗?套保画出来的收益线是一条水平线,好坏都锁死。</p><div class="callout callout--note reveal"><span class="callout__title">套保的收益线是一条水平线</span><p>手算:渔民今天按十元卖出三个月期货。到期现货跌到八元——现货每条少卖两元,期货空头按十元卖出、八元平仓买回,每条赚回两元,两笔一抵,净收入还是十元。现货涨到十二元:现货多赚两元,期货亏两元,还是十元。好坏都锁死,套保画出来的收益线是一条水平线:目标不是多赚,是把不确定性切掉一块。</p></div><p>第二种是投机。投机者既不生产鱼、也不需要鱼,他只是判断鱼价会涨或会跌,通过期货表达观点。骂投机者之前先停一秒:他们承担了价格波动的风险,也给市场提供了流动性——一个没人愿意接盘的市场,想保值的人也保不了值。</p><p>第三种是套利。比如同一种商品在两个市场价格差得不合理,或者现货和期货之间的关系偏离常态,套利者尝试买便宜的、卖贵的,等待价差收敛。听上去稳赚?别太乐观:价差可能继续扩大,<span class="term">保证金</span>可能先扛不住——<span class="hl">“看到收敛”</span>和<span class="hl">“活到收敛”</span>之间,隔着一条河。</p>
 
-        <h2>5. 家里有矿,可能反而长不好</h2>
-<p>资源多是好事吗?<span class="num">1977 年</span>荷兰发现大油气田,石油美元滚滚而来,政府福利开足马力,结果十年下来制造业反而萎缩——本币被油钱推高,实体出口变贵、失去竞争力,厂房闲置,这就是<span class="hl">“荷兰病”</span>。苏联和俄罗斯吃同一副药更久:油价高时百事无忧,油价一崩,经济立刻打摆,因为整个国家只有一根拐杖。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>可以记住两条资源收入的使用规则:一是直接撒出去发福利,二是隔离起来换生产率。挪威选了后者——设石油主权基金,钱全部投到海外资产,不让热钱冲击国内产业。到 <span class="num">2024 年</span>,这只基金规模超过 <span class="num">1.7 万</span>亿美元,是全球最大的主权基金。海湾国家学了一半,卡塔尔、阿联酋跟上——差别从来不在有没有资源,而在拿钱换什么。</p></div>
+        <h2>6. 基差和期限结构</h2>
+<p>混商品期货圈,绕不开<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>这个词。基差是现货价格和期货价格之间的差。比如今天鱼的现货价格是十元,三个月期货价格是十点五元,中间差的零点五元,就和仓储、资金成本、供需预期有关——它不是谁拍脑袋定的,而是时间、仓库和资金一起开出来的价。</p><p>拆开推演一遍这零点五元。你今天花十元买一条鱼冻进仓库:仓储费假设两毛,买鱼的十元被占用三个月,利息假设一毛——这批货的全成本是十点三元。假如三个月期货报到十二元,马上有人借钱买现货、囤起来、同时卖出期货,到期交割稳赚差价;做的人一多,期货价就被压回持有成本附近。所以基差不是情绪,它先是仓储和资金开出的发票,上面再叠一点供需预期。</p><p>期限结构说的是另一层关系:不同到期月份的期货价格之间怎么排列。有时远月价格高于近月,有时近月价格高于远月。商品市场里,库存、运输、季节性和资金成本,都会在这张排列表上留下自己的指纹。</p><p>这里有个经典的读反。近月比远月贵,未必是<span class="hl">“大家看跌未来”</span>,更可能是眼下的货太紧:工厂急着开工,宁愿为现货付溢价。把这张库存晴雨表当成涨跌投票器,方向可能就拧反了。</p><p>量化 CTA 和商品策略经常会研究基差和期限结构。它们不只问价格会涨会跌,还问不同合约之间的相对关系——像做时间序列分析之余再看截面结构,结构与结构之间的错位里,往往藏着信号。</p>
 
-        <h2>6. 泡沫破了之后,人人先还债</h2>
-<p><span class="num">1989 年</span>日本股市见顶,<span class="num">1990 年</span>楼市跟进,之后资产价格一落千丈。麻烦不止价格跌:企业赚到的钱优先还债,家庭多贵也要存钱,利率降到零也没人借钱——经济掉进通缩。一拖就是<span class="hl">“失落的三十年”</span>,年均增长不到 <span class="num">1%</span>,物价长期贴着零线走。经济学家辜朝明给这个病起了名字,叫<span class="hl">“资产负债表衰退”</span>:资产坏了,债务还在,所有人都在修报表,没人在扩张。</p><p>日本化留了两条教训。一条是应对通缩必须快、必须持续——研究大萧条出身的伯南克后来用这套模板带美国过 2008;日本自己的失误恰在于收紧得太猛、救助得太晚。另一条是资产泡沫破灭后,别指望市场自己一夜修复——企业不借钱,就得政府顶上,否则大家一起节衣缩食,结果是把衰退过成了常态。</p>
+        <h2>7. 交换未来现金流</h2>
+<p>互换听起来更抽象,其实本质还是合同。最常见的是<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>互换。A 公司背着浮动利率债务,天天担心未来利率上升;B 公司则更愿意承担浮动利率。两家坐下来约定:A 向 B 支付固定利率,B 向 A 支付浮动利率。一纸合同签下,两家的烦恼各得其所。</p><p>用一亿元名义本金走一遍。约定 A 每年付固定利率百分之三,即三百万元;B 付当年的浮动利率。第一年浮动利率是百分之二点八:A 付三百万、收两百八十万,净支出二十万,单看像小亏。第二年浮动利率涨到百分之三点五:A 仍付三百万,却能收三百五十万,净进账五十万。</p><p>效果是什么?A 把未来利率上升的风险转移出去,换成更确定的固定支付,终于可以睡安稳觉;B 则把浮动利率风险接到自己手里,希望从中获得补偿。还是那句老话:风险没有消失,只是换了个肩膀——金融工程的很大一部分,干的就是这个搬运动作。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>关键点要配上第二张账:A 自己就背着浮动利率债务。利率涨到百分之三点五,债务利息多付了,互换那头恰好净收五十万补回来——两边一抵,A 的总利息支出被熨成一条直线。所以别把互换单截出来看,那像赌局;放回它对冲的债务旁边,它是把浮动的账单换成固定的预算。</p></div><p>互换通常在场外市场交易,条款可以定制,灵活得像私聊敲定的口头协作;但灵活的账单随后就到:对手方风险、估值复杂和抵押品管理问题,一样不少。对新手来说,先把它理解成<span class="hl">“交换未来现金流”</span>就够了,工程细节留给以后。</p>
 
-        <h2>7. 红利、拐点、老龄化</h2>
-<p>增长短期看投资,中期看产业,长期看人口。中国 15 到 64 岁劳动年龄人口在 <span class="num">2013 年</span>前后见顶,约十亿出头,从此一路回落;日本的劳动人口早在 <span class="num">1995 年</span>见顶,随后紧接着就是长期低迷。直白地说:干活的人是分子,要养的人是分母——分子缩小、分母变大,分式不好算是所有老龄化国家的共同难题。</p><p>应对的牌有几张:延迟退休、提高女性劳动参与率、自动化和机器人、移民、技术替代——没有万灵药,但可以组合打。日本的今天约等于很多国家的明天,它的体检表值得提前读:生育率 1.3 上下、退休年龄一延再延、机器人密度全球第一。看它踩过的坑,就是替自己省学费。</p>
-
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="人口周期三阶段图:红利→拐点→老龄化,资产偏好从股票房产转向债券现金保险">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">人口从红利走向老龄化,资产定价规则就被重写</text>
-            <line x1="80" y1="200" x2="820" y2="200" stroke="#8499bd" stroke-width="2"/>
-            <text x="92" y="224" fill="#8499bd" font-size="11">1980</text>
-            <text x="280" y="224" fill="#8499bd" font-size="11">2000</text>
-            <text x="480" y="224" fill="#8499bd" font-size="11">2015</text>
-            <text x="680" y="224" fill="#8499bd" font-size="11">2030+</text>
-            <rect x="80" y="70" width="220" height="110" rx="10" fill="rgba(143,179,122,0.22)" stroke="#8fb37a"/>
-            <text x="190" y="96" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">人口红利期</text>
-            <text x="190" y="122" text-anchor="middle" fill="#bcc9dd" font-size="12">劳动力充足廉价,储蓄率高</text>
-            <text x="190" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">资金持续涌入生产性资产</text>
-            <text x="190" y="172" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">股票、工厂、房产各自受益</text>
-            <rect x="350" y="70" width="220" height="110" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
-            <text x="460" y="96" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">人口拐点(刘易斯拐点)</text>
-            <text x="460" y="122" text-anchor="middle" fill="#bcc9dd" font-size="12">农村廉价劳力被吸尽</text>
-            <text x="460" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">中国大约 2004-2010 跨过</text>
-            <text x="460" y="172" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">工资开始加速上涨</text>
-            <rect x="620" y="70" width="220" height="110" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
-            <text x="730" y="96" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">老龄化承重期</text>
-            <text x="730" y="122" text-anchor="middle" fill="#bcc9dd" font-size="12">领养老金的人 ≥ 缴费人口的一半</text>
-            <text x="730" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">财富持有重心转移</text>
-            <text x="730" y="172" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">债券、现金、保险需求上升</text>
-            <rect x="80" y="260" width="760" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(132,153,189,0.4)"/>
-            <text x="104" y="288" fill="#f0c96a" font-size="14" font-weight="800">两大长期后果</text>
-            <text x="104" y="314" fill="#bcc9dd" font-size="12">利率中枢被压低:庞大储蓄人群争抢固定收益资产,长期债价被持续买高;养老金权益仓位减轻:大量退休人口同时抛售股票换生活费,股市长期承压</text>
-            <text x="104" y="336" fill="#bcc9dd" font-size="12">看利率下行别只怪央行——人口结构本身就是汪洋里那股最深的水流</text>
-          </svg>
-          <p class="figure__cap">刘易斯拐点一过,全社会从“赚工资”切成“领退休金”,债券和保险被推起来,股票被长期拖住。人口不是远问题,是利率每天跳动后面那只看不见的手。</p>
-        </div>
-        <h2>8. 怎么判断一个国家在哪个阶段</h2>
-<p>给一个国家做体检,问自己四个问题:劳动年龄人口还在涨吗?新增投资还能换来多少产出?企业拼的是成本还是创新?外贸赚的是辛苦钱还是定价权?四个问题排出来,它处于哪一档、下一步要过什么坎,大致就有数了。这套框架不只管宏观研究,量化做多资产、做汇率、做国别轮动时,它就是你的<span class="hl">“国情因子”</span>——模型可以不喊口号,但不能没有国情。</p>
+        <h2>8. 衍生品条款怎样进入策略</h2>
+<p>量化里有一大类策略叫 CTA,也叫管理期货。它们在商品、股指、国债、外汇等期货市场上,做趋势、期限结构、跨品种关系和风险配置——期货合约对它们来说,像一盒可以任意组合的积木。</p><p>但期货数据和<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>数据是两种生物。你要处理合约到期、移仓、主力合约切换、<span class="term">保证金</span>、夜盘、涨跌停、交割规则。一个看起来简单的趋势策略,如果移仓和成本处理错了,<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>会非常失真——你看到的不是策略的本事,而是数据处理的 bug。</p><p>举个最容易踩的坑:移仓换月。你做多近月合约,价格五百八十元;到期前卖掉它、买入远月合约,远月六百元。这一步你贵二十元接回同样的货,但这二十元不是亏损,是期限结构的价差。可如果把两个合约的收盘价直接首尾相接,这二十元就会被回测算成一次凭空大涨,策略平白多出一截利润——那不是市场的馈赠,是数据拼接的裂缝。</p><div class="callout callout--note reveal"><span class="callout__title">贵二十元接回,不是多亏二十元</span><p>划重点:你做多近月合约,价格五百八十元;到期前卖掉它、买入远月合约,远月六百元——贵二十元接回同样的货。这二十元不是亏损,是期限结构的价差。可如果把两个合约的收盘价直接首尾相接,回测会把这二十元算成一次凭空大涨,策略平白多出一截利润。那不是市场的馈赠,是数据拼接的裂缝。</p></div><p>所以这一章的重点,不是怂恿你去开期货账户,而是往你脑子里装四句话:未来价格可以被合约化,风险可以被转移,<span class="term">杠杆</span>会放大一切,而量化系统必须尊重这些制度——不尊重的下场,是制度用追加<span class="term">保证金</span>通知亲自教你。</p>
 
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>增长靠三样东西:人、资本、生产率,越靠后越难啃,但只有生产率不会减速。</li>
-            <li>出口导向和进口替代是两条命运岔路,东亚和拉美各选了一条,结局天差地别。</li>
+            <li>远期和期货都是把未来交易价格写进合约,区别是期货更标准化。</li>
+            <li>保证金让期货占用资金少,也让盈亏被同比例放大。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.</strong> 人力、资本、生产率</li>
-            <li><strong>2.</strong> 拿出口给自己造血</li>
-            <li><strong>3.</strong> 卡在不高不低的那一档</li>
-            <li><strong>4.</strong> 廉价劳动力用光的那一天</li>
-            <li><strong>5.</strong> 家里有矿,可能反而长不好</li>
-            <li><strong>6.</strong> 泡沫破了之后,人人先还债</li>
-            <li><strong>7.</strong> 红利、拐点、老龄化</li>
-            <li><strong>8.</strong> 怎么判断一个国家在哪个阶段</li>
+            <li><strong>1.</strong> 航空公司为什么要在油价上涨前先买未来</li>
+            <li><strong>2.</strong> 先从一个卖鱼的人说起</li>
+            <li><strong>3.</strong> 远期和期货有什么区别</li>
+            <li><strong>4.</strong> 为什么期货会放大盈亏</li>
+            <li><strong>5.</strong> 套期保值、投机和套利</li>
+            <li><strong>6.</strong> 基差和期限结构</li>
+            <li><strong>7.</strong> 交换未来现金流</li>
+            <li><strong>8.</strong> 衍生品条款怎样进入策略</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>什么叫刘易斯拐点?</summary>
-            <p>农村剩余劳动力被吸光的那一刻,从此制造业不涨工资就招不到人。</p>
+            <summary>远期和期货的核心区别是什么?</summary>
+            <p>远期更定制化、私下签;期货更标准化,并由交易所和清算体系降低对手方违约风险。</p>
           </details>
           <details class="quiz__item">
-            <summary>家里有矿为什么可能反而做不好经济?</summary>
-            <p>资源收入推高本币、挤垮实体出口(荷兰病);隔离起来换生产率才是正道,挪威主权基金是样板。</p>
+            <summary>为什么期货保证金会放大盈亏?</summary>
+            <p>因为你用较少保证金控制较大名义资产,标的一小幅波动,折算到保证金上就是一大幅波动。</p>
           </details>
         </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>期权: 把不对称收益结构变成可交易产品</h2>
+          <p>讲清看涨、看跌、权利金、买方卖方、时间价值和卖期权风险。</p>
+        </section>
+
       </div>
     </main>
     <script src="assets/book.js"></script>

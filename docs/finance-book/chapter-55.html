@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 55 章 · 概念复盘: 用人话重走金融与量化关键词 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="沿着因果关系复盘货币、信用、股票、债券、因子、回测、滑点、容量、归因与风控。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="55">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">附录 · 随时回来查 · 第 55 章</p>
+        <h1>概念复盘: 用人话重走金融与量化关键词</h1>
+        <p class="lead">这一章不是网站那份按词查找的术语表,而是一次按因果关系组织的概念复盘。忘记某个词时,先找它对应的真实问题:谁拿到现金流,谁承担风险,数据怎样计算,结果怎样进入仓位。能用自己的话把词连成机制,比背住定义更重要;只想查单个定义时,直接使用页头的术语表。</p>
+
+        <section class="chapter-context chapter-context--appendix">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">工具箱</span>
+            <span>本部分第 1 / 3 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>哪些内容不必顺序阅读,但研究前值得反复核对?</p>
+          <p class="chapter-context__outcome">术语、公式和最终检查表集中在这里,不再打断正文的收束。 工具型内容,需要时回来查。</p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>每个基础术语都能放回四个问题里消化:现金流是什么,权利是什么,风险是什么,价格在哪里。</li>
+            <li>货币、信用、利率、通胀是金融的地基;股票、债券、基金、衍生品则是把不同权利和风险打包出的不同形态。</li>
+            <li>量化术语没那么玄:它们都在回答四件朴素的事——收益从哪来,信号灵不灵,交易做不做得到,风险从哪里冒。</li>
+            <li>Alpha 要扣掉 Beta 和常见风险暴露后再谈;因子要过 IC、分层、成本和样本外的层层检验才算数。</li>
+          </ul>
+        </section>
+
+
+        <h2>1. 金融基础词汇用人话再讲一遍</h2>
+
+        <h3>1.1. 货币</h3>
+<p>先回答那个最根本的问题:钱能不能当饭吃?不能。货币不是财富本身,它是交换和记账的工具。没有它,你得抱着鱼去换鞋、再抱着鞋去换药;有了它,所有东西都用同一个单位标价,买卖一次搞定。货币之所以好用,靠的不是那张纸,而是所有人都相信:今天我收下它,明天别人也会收下它。</p><p>标准说法是货币有三个基本功能。交易媒介——让买卖不用物物交换;记账单位——让所有价格能放进同一张表里比较;价值储藏——让今天的购买力能存到明天再花。三个功能一个都不能缺,缺了哪个,钱就「不好使」了。</p><p>学金融时最要戒掉的混淆,就是把货币数量当成<a class="term term-link" href="glossary.html#g-真实财富" title="查看术语：真实财富">真实财富</a>。真实财富是商品、服务和生产力,货币只是表示和转移这些财富的工具。账户数字变大,不等于锅里米变多。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 455" role="img" aria-label="两组术语速查卡:上卡十个金融词,下卡十个量化词,每个词配一句人话注解">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">二十个词速查:先用人话记住,再回去抠定义</text>
+            <!-- 上卡:10 个金融词 -->
+            <rect x="40" y="56" width="820" height="172" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="84" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">金融词 · 先看懂市场在说什么</text>
+            <rect x="57" y="100" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="131" y="121" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">货币</text><text x="131" y="140" text-anchor="middle" fill="#bcc9dd" font-size="11">交换的通用筹码</text>
+            <rect x="214" y="100" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="288" y="121" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">信用</text><text x="288" y="140" text-anchor="middle" fill="#bcc9dd" font-size="11">先拿后还的凭证</text>
+            <rect x="371" y="100" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="445" y="121" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">利率</text><text x="445" y="140" text-anchor="middle" fill="#bcc9dd" font-size="11">钱的时间价格</text>
+            <rect x="528" y="100" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="602" y="121" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">通胀</text><text x="602" y="140" text-anchor="middle" fill="#bcc9dd" font-size="11">钱变薄了</text>
+            <rect x="685" y="100" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="759" y="121" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">股票</text><text x="759" y="140" text-anchor="middle" fill="#bcc9dd" font-size="11">公司的一小片</text>
+            <rect x="57" y="160" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="131" y="181" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">债券</text><text x="131" y="200" text-anchor="middle" fill="#bcc9dd" font-size="11">写进合同的借条</text>
+            <rect x="214" y="160" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="288" y="181" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">基金</text><text x="288" y="200" text-anchor="middle" fill="#bcc9dd" font-size="11">凑钱请人代投</text>
+            <rect x="371" y="160" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="445" y="181" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">ETF</text><text x="445" y="200" text-anchor="middle" fill="#bcc9dd" font-size="11">像股票买的篮子</text>
+            <rect x="528" y="160" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="602" y="181" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">期货</text><text x="602" y="200" text-anchor="middle" fill="#bcc9dd" font-size="11">锁住未来的价</text>
+            <rect x="685" y="160" width="148" height="50" rx="10" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/><text x="759" y="181" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">期权</text><text x="759" y="200" text-anchor="middle" fill="#bcc9dd" font-size="11">一份选择的权利</text>
+            <!-- 下卡:10 个量化词 -->
+            <rect x="40" y="244" width="820" height="172" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="272" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">量化词 · 再看懂策略在说什么</text>
+            <rect x="57" y="288" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="131" y="309" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">Alpha</text><text x="131" y="328" text-anchor="middle" fill="#bcc9dd" font-size="11">跑赢市场的部分</text>
+            <rect x="214" y="288" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="288" y="309" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">Beta</text><text x="288" y="328" text-anchor="middle" fill="#bcc9dd" font-size="11">跟着大盘的部分</text>
+            <rect x="371" y="288" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="445" y="309" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">因子</text><text x="445" y="328" text-anchor="middle" fill="#bcc9dd" font-size="11">挑股票的依据</text>
+            <rect x="528" y="288" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="602" y="309" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">IC</text><text x="602" y="328" text-anchor="middle" fill="#bcc9dd" font-size="11">验因子灵不灵</text>
+            <rect x="685" y="288" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="759" y="309" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">回测</text><text x="759" y="328" text-anchor="middle" fill="#bcc9dd" font-size="11">用历史试跑策略</text>
+            <rect x="57" y="348" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="131" y="369" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">滑点</text><text x="131" y="388" text-anchor="middle" fill="#bcc9dd" font-size="11">预期价与成交的缝</text>
+            <rect x="214" y="348" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="288" y="369" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">容量</text><text x="288" y="388" text-anchor="middle" fill="#bcc9dd" font-size="11">最多装多少钱</text>
+            <rect x="371" y="348" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="445" y="369" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">跟踪误差</text><text x="445" y="388" text-anchor="middle" fill="#bcc9dd" font-size="11">偏离基准有多远</text>
+            <rect x="528" y="348" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="602" y="369" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">归因</text><text x="602" y="388" text-anchor="middle" fill="#bcc9dd" font-size="11">把盈亏拆出原因</text>
+            <rect x="685" y="348" width="148" height="50" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.30)"/><text x="759" y="369" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">风控</text><text x="759" y="388" text-anchor="middle" fill="#bcc9dd" font-size="11">先想好会怎么亏</text>
+            <text x="450" y="440" text-anchor="middle" fill="#8499bd" font-size="12.5">先记住这 20 个,后面翻任何一章都用得上</text>
+          </svg>
+          <p class="figure__cap">二十个高频词,每个配一句人话:通胀是钱变薄了,滑点是预期价与成交价的缝,跟踪误差是偏离基准有多远。先用这些口语版本在脑子里占位,再去抠严格定义,术语就不再生疏。</p>
+        </div>
+        <h3>1.2. 信用</h3>
+<p>假设街角的小店让你先拿走东西、月底再结账,你们之间发生了什么?发生了<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>。信用就是今天先拿资源,未来按承诺偿还。贷款、<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>、赊账、信用卡,名目不同,内核全是这同一个动作。它的魔力在于让经济「提前做事」:企业今天借钱把厂盖起来,未来用赚到的收入还——要是没有信用,厂得等攒够钱才动工。</p><p>但提前做事是有代价的:未来未必兑现。收入没实现,债务就成了违约。所以金融系统有相当大一部分工作,就是在反复回答三个问题:谁值得信任?信任到什么程度?收多少利息才够补偿这份风险?你办信用卡要填资料、借大额要抵押,都是在回答这三个问题。</p><p>信用还有宏观的一面。信用扩张时,借钱容易,经济看起来更热闹;信用收缩时,融资变难,资产价格和企业现金流会一起承压。读新闻时看到「宽信用」「紧信用」,说的就是这扇门的开和关。</p>
+
+        <h3>1.3. 利率</h3>
+<p>今天借走 <span class="num">100 元</span>,一年后还 <span class="num">105 元</span>。多出来的那 <span class="num">5 元</span>是什么?是这一百块钱被你占用一年的「租金」。<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>就是钱的时间价格,也是风险补偿的一部分——对方把钱给你,要放弃自己的使用,还要承担你还不上的可能,这 <span class="num">5 元</span>买的就是这些。</p><p>利率的影响无处不在。债券价格会随市场利率变化,<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>估值会受<a class="term term-link" href="glossary.html#g-折现" title="查看术语：折现">折现</a>率影响,你的房贷月供、企业的融资成本,全都挂在利率这根线上。利率动一动,几乎所有资产的定价都要跟着重新算一遍。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>还要记住:利率不是一个数,是一族数。市场上有短端利率、长端利率、贷款利率、存款利率、国债收益率、信用债收益率,不同利率代表不同期限和不同风险。新闻里只说「利率变了」却不说是哪一个,你得多追问一句。</p></div>
+
+        <h3>1.4. 通胀</h3>
+<p>如果去年 <span class="num">100 元</span>能买十碗面,今年只够买八碗,而你账户余额一分没少——你变穷了吗?答案是:数字上没变,购买力上确实变穷了。<a class="term term-link" href="glossary.html#g-通胀" title="查看术语：通胀">通胀</a>就是整体价格水平上升,同一个现象换个说法,就是同样的钱能买到的东西变少。</p><p>通胀不是一个孤立的物价新闻,它会影响利率、工资、企业成本、消费和资产估值。温和通胀常常和经济扩张结伴出现;高通胀则是另一码事,它会持续侵蚀购买力,最后往往逼得政策出手收紧。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>对投资者来说,关键是分清名义和实际。名义收益 <span class="num">5%</span>,通胀 <span class="num">4%</span>,实际收益大约只有 <span class="num">1%</span>。看收益时脑海里先默默做一次减法,是这一节最重要的肌肉记忆。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 375" role="img" aria-label="术语按交易场景分组:入门看病、买之前、做模型之前、执行时、复盘问题,各用一个对应主题">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">术语地图:按你要做的事拉出来,不是按字母背</text>
+            <text x="80" y="70" fill="#8499bd" font-size="12" font-weight="800">不竖书里的“只要被背什么”顺序;而是拉进工作时想用就能捡哪种场景</text>
+            <text x="80" y="110" fill="#f0c96a" font-size="13" font-weight="800">入门看病(市场结构)</text>
+            <text x="200" y="110" fill="#bcc9dd" font-size="12">货币、信用、利率、通胀、股债基等基本利差</text>
+            <text x="80" y="160" fill="#f0c96a" font-size="13" font-weight="800">买之前(行情基础)</text>
+            <text x="200" y="160" fill="#bcc9dd" font-size="12">股票、债券、基金、ETF、期货、期权的基本是怎么样的</text>
+            <text x="80" y="210" fill="#f0c96a" font-size="13" font-weight="800">做模型之前(机器思维)</text>
+            <text x="200" y="210" fill="#bcc9dd" font-size="12">Alpha、Beta、因子、IC、RankIC、回测</text>
+            <text x="80" y="260" fill="#f0c96a" font-size="13" font-weight="800">执行时(成本与误差)</text>
+            <text x="200" y="260" fill="#bcc9dd" font-size="12">滑点、容量、跟踪误差、归因、风险、风控</text>
+            <text x="80" y="310" fill="#f0c96a" font-size="13" font-weight="800">谁错了说什么(复盘)</text>
+            <text x="200" y="310" fill="#bcc9dd" font-size="12">真实成交价差、未来函数、幸存者偏差、过拟合、样本外</text>
+            <text x="450" y="350" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这章不是一个表,而是按「我现在多做什么事」准出问题;字母表是字典顺序,场景序是查词顺序</text>
+          </svg>
+          <p class="figure__cap">别按字母背术语——按$$面处境去查:在选股前,在看策略时,在准备做执行时,在复盘的时候。口诀多了不佑,但每一个都要在你能使用它们的时候,保伪证明你能召回。</p>
+        </div>
+        <h3>1.5. 股票</h3>
+<p>买入一只股票,你买到的到底是什么?不是一串会跳动的代码,也不是手机屏幕上的红绿,而是这家公司未来剩余收益的一部分。股票代表公司股权。注意「剩余」两个字:公司赚到钱,先付员工工资、供应商货款、债权人的利息和税费,全部付完,剩下的才轮到股东。</p><p>这个「排在最后」的位置,解释了股票为什么风险高:债权人排在你前面,公司利润本身又忽高忽低。但硬币的另一面是,公司要是长期变强,剩余的蛋糕变大,股东能完整分享这份增长。风险和弹性,都来自同一个排位。</p><p>至于股价,短期它被情绪、<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>和消息推着走,什么离谱的样子都有;但把时间拉长,它很难长时间脱离盈利、现金流和估值这三块地基。短期看投票,长期看称重,说的就是这回事。</p>
+
+        <h3>1.6. 债券</h3>
+<p>如果说股票是「入伙」,债券就是「立字据」。债券是一张标准化的借条:发行人向你借钱,按事先写好的规则付利息、到期还本金。买债券的你是债权人,不是公司老板——经营好坏你无权插手,但按约定收钱是你的权利。</p><p>债券看起来比股票稳,但稳不等于无风险。它的风险清单至少有四项:利率风险、信用风险、流动性风险和通胀风险。长期债对利率特别敏感,利率一升价格就掉;信用债则背着违约的可能,承诺得再好也可能兑现不了。</p><p>还有一个反直觉但必须焊死的规律:债券价格和收益率反向变动。市场要求的收益率上升,旧债的固定利息就不香了,价格通常下跌。记不牢的话,把它当跷跷板——收益率那头上去,价格这头就下来。</p>
+
+        <h3>1.7. 基金</h3>
+<p>一个人选股票太累,把钱交给专业的人行不行?基金就是这个形态:把很多投资者的钱集合起来,交给管理人按合同写好的规则去投资。你拿到的不是股票,是基金份额;钱也不躺在管理人口袋里,而是由托管人保管。</p><p>请先撕掉一个误解:基金不是保本工具。基金投什么,你就承担什么风险。股票基金身上是股票的风险,债券基金背着利率和信用风险,量化基金则带着模型、交易和市场风险。「交给了专业人士」这句话,只转移了操作,没有转移风险。</p><p>看一只基金,要看净值、基准、费用、回撤、持仓、策略和申赎规则。只盯着历史收益排名买基金,相当于只看百公里加速买车——其他维度迟早让你补课。怎么系统地读一份基金报告,后文的产品阅读场景会带你完整过一遍。</p>
+
+        <h3>1.8. ETF</h3>
+<p>有没有一种东西,既能像基金一样打包一篮子资产,又能像股票一样在交易软件里随时点买?有,<a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a>。它是在交易所买卖的基金份额,最常见的用途是追踪指数。说它像基金,因为背后真金白银持有一篮子资产;说它像股票,因为盘中挂牌交易,输入代码就能下单。</p><p>ETF 身上有两个价格:净值是它持有的资产算出来的价值,交易价格是市场上<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>出来的价。二者通常贴得很近,但会偶尔劈叉,出现折价或溢价。流动性差、跨境、底层资产停牌或市场剧烈波动时,这种偏离可能更明显。</p><p>对个人投资者来说,ETF 是做配置的顺手工件,但下单前还是要看四样:成交额、买卖价差、<a class="term term-link" href="glossary.html#g-跟踪误差" title="查看术语：跟踪误差">跟踪误差</a>和费用。便宜和便利之外,这些小字决定你实际拿到手的效果。</p>
+
+        <h3>1.9. 期货</h3>
+<p>先打个预防针:期货不是更刺激的股票,它是另一物种。期货是约定未来按规则买卖某个标的的标准化合约,而且它用<span class="term">保证金</span>交易——只押一部分钱,就能撬动一整份合约的涨跌,也就是自带<span class="term">杠杆</span>。</p><p>它的玩法和用途都比股票宽:可以做多,也可以做空;可以用来套保,也可以用来投机和套利。标的也不只一种,商品、股指、国债都可以有对应的期货合约。</p><p>但如果你真去交易,会遇到一堆股票里不存在的规则:合约会到期,要换月;<span class="term">保证金</span>不足会被追要;有涨跌停;极端情况还有强平风险。把它当普通股票来下单,是新手最常见的翻车姿势。</p>
+
+        <h3>1.10. 期权</h3>
+<p>期权这个词听着唬人,拆开看就是「未来的一张权利凭证」。看涨期权给你未来按约定价格买入的权利,看跌期权给你未来按约定价格卖出的权利。关键是一买一卖不对等:买方手握权利,可以行使也可以放弃;卖方收了钱,背上的是义务。</p><p>这种结构带来期权最独特的气质:不对称。买期权,最多亏掉付出的期权费,但上行空间可能很大;卖期权,大多数日子安安稳稳收小钱,可一旦行情翻脸,承担的是大风险。经常赢小钱、偶尔输大的生意,看着舒服,尾巴很重。</p><p>期权价格由六样东西决定:标的价格、行权价、到期时间、<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>、利率和分红。你最该警惕的新手误区是:把「高胜率的卖期权」误当成「低风险」。胜率再高,也回答不了一件事——输的那次亏多少。</p>
+
+        <h2>2. 量化词汇用人话再讲一遍</h2>
+        <p>量化圈有一套自己的「黑话」。刚入行听人聊天,Alpha、Beta、IC、RankIC、回测、滑点、容量、跟踪误差、归因,一个词一顿,像在听加密通话。其实每个词都在回答一个很朴素的问题:你赚的是市场的钱还是自己的本事?信号有没有排序能力?历史排练算不算数?交易能不能真做出来?风险从哪儿来?这一章逐个拆给你看。</p>
+
+        <h3>2.1. Alpha</h3>
+<p>牛市里人人赚钱,都觉得自己是股神。怎么分辨潮水和你自己的泳技?<a class="term term-link" href="glossary.html#g-alpha" title="查看术语：Alpha">Alpha</a> 就是干这个的。它通常指扣除市场、行业、风格这些常见风险暴露之后,仍然多出来的那部分收益。市场本身涨了,你跟着赚的是贝塔,不算本事;在合适基准之上还多赚的那一块,才可能叫 Alpha。</p><p>所以千万别把账户收益全当 Alpha。一个满仓股票的组合在牛市大赚,里面很大一块是市场 <a class="term term-link" href="glossary.html#g-beta" title="查看术语：Beta">Beta</a>。要谈 Alpha,必须先干两件事:选一个合适的基准,做一次风险归因。跳过去直接吹收益,等于没减去地心引力就吹自己的弹跳高度。</p><p>量化研究的核心目标,常常是寻找可重复的 Alpha。但找到一个就高枕无忧了吗?不能。Alpha 会被竞争、成本、容量和市场自身的变化一点点侵蚀。今天有效的信号,明天可能被更多人用烂——Alpha 更像会融化的冰,不像刻好的碑。</p>
+
+        <h3>2.2. Beta</h3>
+<p>一只组合涨的时候跟着大盘涨、跌的时候跟着大盘跌,这叫什么?这叫身上有 Beta。Beta 说的是你的组合对市场或某类风险暴露的敏感度:股票组合 Beta 接近 1,意思是它大体跟市场同涨同跌;Beta 接近 0,则市场往哪边走,对它影响都不大。</p><p>Beta 不是贬义词。你买一只指数基金,就是在明明白白地主动拿市场 Beta,这完全正当。真正的问题只有一个:你知不知道自己在拿 Beta、拿了多少。把 Beta 带来的收益误认为 Alpha,是普通投资者和从业者最常犯的智力错误之一。</p><p>量化产品甚至会专门「管理」Beta:指数增强接受一定的 Beta,目标是比指数多赚一点;<a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>想方设法压低 Beta,尽量与市场方向脱钩;多资产配置则是在不同 Beta 之间分配风险预算。</p>
+
+        <h3>2.3. 因子</h3>
+<p>每只股票的方方面面,都能变成一列数字:估值高低、近期涨跌、盈利质量、波动大小、成交活跃度、市值规模……这一列列数字,就是<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>。一句话说:因子是描述资产特征、风险暴露或预测信息的一列数字。估值、<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>、质量、波动率、流动性、市值,都是常见因子。</p><p>但要泼盆冷水:一堆数字摆在那,不代表能赚钱。因子可能真能预测,也可能只是在解释某类风险,甚至纯属噪声。研究因子要像过安检:有没有说得通的经济解释?<a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">IC</a> 如何?分层收益漂不漂亮?成本高不高?容量够不够?样本外还成立吗?</p><p>因子研究里最重要的两个字其实是「口径」。用什么数据、数据哪天可见、缺失和极端值怎么处理、在哪个股票池里用——这些口径问题直接决定因子的样子。同一个想法,两套口径,会产出两个看起来毫不相干的因子。</p>
+
+        <h3>2.4. IC 和 RankIC</h3>
+<p>因子给每只股票打了个分,然后呢?得验证分数有没有用。IC 衡量因子值和未来收益之间的相关性,回答「分数高低跟未来涨跌有没有关系」;<span class="term">RankIC</span> 看排序关系,回答「排在前面的高分股票,未来是不是真能排在前面」。前者看数值,后者只看名次,更粗糙,也更抗极端值。</p><p>先给一个反直觉的事实:IC 很少很大。金融市场噪声太强,一个长期稳定的小 IC,就值得认真对待。判断 IC 有没有价值,别只看数字大小,要看四件事:稳不稳定,能不能交易,成本高不高,容量够不够。</p><p>再提个醒:IC 好,不等于策略能赚钱。IC 只说明排序信息,从排序到真金白银之间,还隔着组合构建、换手、成本和风险暴露好几道关。</p>
+
+        <h3>2.5. 回测</h3>
+<p>如果三年前就按这套规则买卖,现在会怎样?回答这个问题的工具,就是<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>——在历史数据里把策略重新「演」一遍。先记住一个比方:回测是消防演习,不是真实火场。演习顺利,不代表你能扑灭未来的每一场火。它是排练,不是承诺。</p><p>什么样的回测算可信?好回测只用当时可见的数据、遵守真实交易规则、扣除合理成本。坏回测有三个经典死法:偷看未来(用了当天才能看到的行情决定当天的买卖)、悄悄删掉失败样本、假设永远能以理想价格成交。第一条也叫<a class="term term-link" href="glossary.html#g-未来函数" title="查看术语：未来函数">未来函数</a>,是方向性错误。</p><p>看回测报告的顺序:先看假设,再看收益。假设不真实的回测,净值曲线再漂亮,也只是把精修的自拍当成了体检报告。后文的研究审查章节会带你按顺序完整审一份回测报告。</p>
+
+        <h3>2.6. 滑点</h3>
+<p>你以为能 <span class="num">10 元</span>买到,下单后实际成交在 <span class="num">10.03 元</span>。这多出来的 <span class="num">0.03 元</span>,没人给你开发票,但钱实实在在少了——这就是<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>:预期成交价和实际成交价之间的差。它是纸面收益和真实收益之间最不起眼、也最磨人的那条缝。</p><p>滑点从哪来?买卖价差、盘口深度不够、自己的订单砸出冲击、行情数据延迟、执行方式粗糙,都会贡献一份。规律很朴素:交易越频繁、标的流动性越差、订单金额越大,滑点就越要命。小单偶尔滑一点无所谓;高频大额,滑点能把整个策略滑穿。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>所以请记住:任何不算滑点的量化策略,账面利润都要打个问号。很多纸面上闪闪发光的小优势,一进真实成交就蒸发——不是市场骗了谁,是回测里忘了放滑点这块「摩擦力」。</p></div>
+
+        <h3>2.7. 容量</h3>
+<p>同样一条窄门,一个人侧身能过,一卡车就卡住了。策略的资金容量,就是这扇门的宽度:它最多能容纳多少资金而不被自己压垮。小资金能做的机会,大资金未必做得了——钱一多,买进就把价格推高,卖出就把价格压低,交易还没做完,收益先被自己吃掉一截。</p><p>容量受哪些因素约束?标的的成交额、持仓的分散程度、策略的<a class="term term-link" href="glossary.html#g-换手率" title="查看术语：换手率">换手率</a>、以及市场冲击。一个逮低流动性小盘股机会的策略,可能天生只适合小资金,规模一大,窄门先卡死它自己。</p><p>看任何策略都要多问一句:这份收益,是在多大的资金规模下做出来的?如果规模扩大十倍,成本和冲击会变成什么样?问完这句话,很多「小而美」的策略会现出「美只是因为小」的原形。</p>
+
+        <h3>2.8. 跟踪误差</h3>
+<p>指数增强产品的目标是「比指数好」,这引出下一个问题:允许离指数多远?度量这个距离的尺子,就是跟踪误差——组合相对基准的偏离波动。误差小,说明紧跟指数;误差大,说明经常走出自己的路。</p><p>这把尺子两头各有一笔账。跟踪误差低,产品更像指数,让人踏实,但超额空间可能也被勒得小;跟踪误差高,自由度大、想象空间大,可一旦跑反方向,跑输基准的幅度也可能更大。</p><p>所以跟踪误差从来不单独看,要和<span class="term">超额收益</span>放一起:同样的偏离,换来了多少额外收益?这个「每单位偏离换多少超额」的比值,就是后面反复要打交道的<a class="term term-link" href="glossary.html#g-信息比率" title="查看术语：信息比率">信息比率</a>。</p>
+
+        <h3>2.9. 归因</h3>
+<p>这个月组合赚了 <span class="num">3%</span>。且慢庆祝——先回答一个问题:钱到底从哪来的?归因就是把收益拆开的手术刀:市场涨了多少,行业配置贡献多少,风格贡献多少,选股贡献多少,交易成本又扣掉多少。一笔总额,拆成几张来源清单。</p><p>没有归因,你只知道账户变多或变少,不知道原因。尤其在亏损的时候,归因是你的排查工具:是模型失效了,是风格逆风了,是行业暴露踩坑了,还是执行成本超支了?不同答案对应完全不同的动作——先确诊再吃药,和有病乱吃药,结局天差地别。</p><p>一句话说透归因的价值:它让一条神秘的收益曲线,变成一个讲得清楚的系统。程序员都懂这句话的分量——只有拆得开的系统,才修得好、改得动。</p>
+
+        <h3>2.10. 风控</h3>
+<p>对风控最大的误解,是以为它在预测「明天会不会跌」。不是。风控干的事是限制损失扩大,让系统的异常状态可见、可处理。它更像你程序里的熔断器和监控告警:不预测事故,但事故一旦发生,先把火情控制住,把信息亮出来。</p><p>风控是一整套家伙:仓位、<span class="term">杠杆</span>、个股上限、行业上限、回撤、<a class="term term-link" href="glossary.html#g-var" title="查看术语：VaR">VaR</a>、<a class="term term-link" href="glossary.html#g-压力测试" title="查看术语：压力测试">压力测试</a>、数据监控、模型监控、订单限额、灾难开关。每一件都对应一类具体的失控方式——仓位管押多大,限额管一笔错单闯多大祸,灾难开关管「先拉闸再说」。</p><p>好的风控不是让策略不亏——那不叫风控,叫许愿。它的目标是让策略在亏损和异常发生时不失控:亏得明明白白,停得有条不紊。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="风控工具箱:仓位、杠杆、个股上限、行业上限、回撤、VaR、压力测试、数据监控、模型监控、订单限额各管一类失控,灾难开关管先拉闸再说">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">风控不预测明天跌不跌:它是熔断器和监控告警</text>
+            <rect x="60" y="54" width="780" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="79" text-anchor="middle" fill="#c9d4e8" font-size="13">不预测事故——事故一旦发生,先把火情控制住,把信息亮出来,让异常可见、可处理</text>
+            <rect x="41" y="112" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="118" y="140" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="118" y="140">仓位</tspan></text>
+            <text x="118" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="118" y="166">管押多大</tspan></text>
+            <rect x="207" y="112" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="284" y="140" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="284" y="140">杠杆</tspan></text>
+            <text x="284" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="284" y="166">管放大几倍</tspan></text>
+            <rect x="373" y="112" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="140" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="450" y="140">个股上限</tspan></text>
+            <text x="450" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="450" y="166">管单票爆雷</tspan></text>
+            <rect x="539" y="112" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="616" y="140" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="616" y="140">行业上限</tspan></text>
+            <text x="616" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="616" y="166">管押单一赛道</tspan></text>
+            <rect x="705" y="112" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="782" y="140" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="782" y="140">回撤</tspan></text>
+            <text x="782" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="782" y="166">管从峰值亏多深</tspan></text>
+            <rect x="41" y="200" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="118" y="228" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="118" y="228">VaR</tspan></text>
+            <text x="118" y="254" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="118" y="254">管常态日子亏多少</tspan></text>
+            <rect x="207" y="200" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="284" y="228" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="284" y="228">压力测试</tspan></text>
+            <text x="284" y="254" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="284" y="254">管极端行情亏多惨</tspan></text>
+            <rect x="373" y="200" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="228" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="450" y="228">数据监控</tspan></text>
+            <text x="450" y="254" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="450" y="254">管喂错的料</tspan></text>
+            <rect x="539" y="200" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="616" y="228" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="616" y="228">模型监控</tspan></text>
+            <text x="616" y="254" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="616" y="254">管信号悄悄漂移</tspan></text>
+            <rect x="705" y="200" width="154" height="76" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="782" y="228" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="782" y="228">订单限额</tspan></text>
+            <text x="782" y="254" text-anchor="middle" fill="#bcc9dd" font-size="11" font-weight="400"><tspan x="782" y="254">管一笔错单闯多大祸</tspan></text>
+            <rect x="180" y="292" width="540" height="56" rx="12" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="312" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800"><tspan x="450" y="312">灾难开关·管「先拉闸再说」</tspan></text>
+            <text x="450" y="334" text-anchor="middle" fill="#bcc9dd" font-size="11.5">不管原因先把交易停下来——像烟雾报警器响,响不是失败,是防护还在工作</text>
+            <text x="450" y="382" text-anchor="middle" fill="#c9d4e8" font-size="13">好风控不是让策略不亏——那不叫风控,叫许愿;它要的是亏得明明白白,停得有条不紊</text>
+          </svg>
+          <p class="figure__cap">风控不是预测明天跌不跌,而是一整套家伙:仓位管押多大,限额管一笔错单闯多大祸,灾难开关管先拉闸再说——每一件都对应一类具体的失控方式。目标是策略在亏损和异常发生时不失控:亏得明明白白,停得有条不紊。</p>
+        </div>
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>每个基础术语都能放回四个问题里消化:现金流是什么,权利是什么,风险是什么,价格在哪里。</li>
+            <li>货币、信用、利率、通胀是金融的地基;股票、债券、基金、衍生品则是把不同权利和风险打包出的不同形态。</li>
+            <li>量化术语没那么玄:它们都在回答四件朴素的事——收益从哪来,信号灵不灵,交易做不做得到,风险从哪里冒。</li>
+            <li>Alpha 要扣掉 Beta 和常见风险暴露后再谈;因子要过 IC、分层、成本和样本外的层层检验才算数。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.1.</strong> 货币</li>
+            <li><strong>1.2.</strong> 信用</li>
+            <li><strong>1.3.</strong> 利率</li>
+            <li><strong>1.4.</strong> 通胀</li>
+            <li><strong>1.5.</strong> 股票</li>
+            <li><strong>1.6.</strong> 债券</li>
+            <li><strong>1.7.</strong> 基金</li>
+            <li><strong>1.8.</strong> ETF</li>
+            <li><strong>1.9.</strong> 期货</li>
+            <li><strong>1.10.</strong> 期权</li>
+            <li><strong>2.1.</strong> Alpha</li>
+            <li><strong>2.2.</strong> Beta</li>
+            <li><strong>2.3.</strong> 因子</li>
+            <li><strong>2.4.</strong> IC 和 RankIC</li>
+            <li><strong>2.5.</strong> 回测</li>
+            <li><strong>2.6.</strong> 滑点</li>
+            <li><strong>2.7.</strong> 容量</li>
+            <li><strong>2.8.</strong> 跟踪误差</li>
+            <li><strong>2.9.</strong> 归因</li>
+            <li><strong>2.10.</strong> 风控</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么钱不是财富本身?</summary>
+            <p>因为真实财富是商品、服务和生产力,钱只是交换、记账和储藏价值的工具——数字变大,不等于东西变多。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>债券为什么不等于无风险?</summary>
+            <p>因为它背着至少四类风险:利率风险、信用风险、流动性风险和通胀风险,稳是相对的,不是绝对的。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>Alpha 和 Beta 最大的区别是什么?</summary>
+            <p>Beta 来自市场或风格暴露,水涨船高你跟着涨;Alpha 是扣掉这些暴露之后还多出来的部分,那才可能真是你的本事。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么 IC 好,不等于策略能赚钱?</summary>
+            <p>IC 只说明排序信息,中间还要过组合构建、换手、成本、容量和风险约束好几关——排序灵不等于落地赚。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>公式和指标速查: 别背公式,要知道它在问什么</h2>
+          <p>把收益率、年化、波动、回撤、夏普、IC、跟踪误差、久期和估值公式统一解释。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

@@ -3,231 +3,145 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 3 章 · 股票:你买的到底是什么 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="讲清股票、股东、剩余索取权、市值、分红和股票收益来源。 / 讲清增发、回购、分红、拆股、复权、市盈率、市净率和现金流估值。" />
+    <title>第 3 章 · 银行和央行: 钱不是都躺在保险柜里 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清银行资产负债表、贷款创造存款、挤兑、央行和货币政策传导。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="3">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第一部分 · 金融世界的底层结构 · 第 3 章</p>
-        <h1>股票:你买的到底是什么</h1>
-        <p class="lead">很多人第一次接触股票,看到的只是一串代码、一个价格和红绿涨跌。但股票的本质是公司所有权的一小份,你买的是未来分享公司剩余收益的权利。这一章先讲清“买股票到底买了什么”,再解释分红、送股、回购这些公司行为如何影响你手里的股份,以及为什么股价不是只看当期利润,而是看市场对未来的整体判断。</p>
+        <p class="chapter__eyebrow">第一部分 · 金融为什么存在 · 第 3 章</p>
+        <h1>银行和央行: 钱不是都躺在保险柜里</h1>
+        <p class="lead">说起银行,多数人脑子里浮起的画面是一个巨大的保险柜:大家把钱放进去,银行帮忙看着。这个想象只对了一小截。真实的现代银行更像一张时时刻刻在动的资产负债表:一边欠着储户的钱,一边把钱贷给别人;一边提供支付便利,一边扛着信用和流动性风险。央行也不是遥控所有资产涨跌的按钮,它更像整个金融系统的水位调节器。这一章,我们把这两样东西讲透。读完再看“银行暴雷”“央行降准”的新闻,你脑子里浮起的将不再是神秘操作,而是一张表和一串传导链。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线一</span>
+            <span>本部分第 4 / 5 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>真实财富有限,为什么人类还需要货币、信用、银行和市场?</p>
+          <p class="chapter-context__outcome">读完后,你能沿着资源、时间和风险解释金融系统,不再把金融理解成一堆产品名词。 </p>
+        </section>
+
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>股票代表公司所有权的一小份,不是固定收益合同。</li>
-            <li>股东拿剩余收益,所以风险更高,上行空间也更大。</li>
-            <li>增发、配股、可转债、回购、分红都会改变股东的权利和现金流。</li>
-            <li>PE、PB 等估值倍数是语言,不是自动答案。</li>
+            <li>银行不是保险柜,而是一张连接存款、贷款和资本的资产负债表。</li>
+            <li>贷款会创造存款,但资本、流动性、监管和坏账风险把它牢牢拴着。</li>
           </ul>
         </section>
 
 
-        <h2>1. 买股票到底买了什么</h2>
+        <section class="case-study reveal">
+          <span class="case-study__label">概念现场</span>
+          <h2>1. 银行明明没破产,大家为什么还是要抢着跑</h2>
+<p>假设一家银行资产本来够还钱,只是大量贷款要几年后才收回。街上忽然传出一句<span class="hl">“它可能有事”</span>,你站在队尾会怎么选?如果所有人都不取,银行能慢慢收回贷款;可只要你相信别人会先取,最安全的动作就是抢在他们前面。结果人人都做了对自己最稳的选择,银行却被当场挤倒。</p><p>这叫协调博弈。事情有两个可能的落点:大家相信它安全,它就能继续安全;大家相信别人会跑,奔跑本身就制造危险。存款保险、最后贷款人和公开的<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>支持,作用不只是往金库里塞钱,更是在改每个人对<span class="hl">“别人会不会跑”</span>的判断。</p><p>风险模型最容易漏掉的正是这一步:平时每个储户、基金和银行看起来彼此独立,恐慌时却会被同一个信念绑成一支队伍。量化<a class="term term-link" href="glossary.html#g-压力测试" title="查看术语：压力测试">压力测试</a>不能只给单个账户安排随机提款,还要模拟相关性突然升高、所有出口同时变窄的协调失败。</p>
+        </section>
 
-        <h3>1.1. 先从一家小店说起</h3>
-<p>把上市公司缩到最小,就是楼下那家生意不错的小店。店主想开第二家店,租金、装修、设备、库存、员工工资,样样要钱。他面前摆着两条路:一是向别人借,事后按约定还本付息;二是拉几个人一起出钱,让他们当股东,以后一起分店里赚下来的钱。</p><p>两种出钱的,心思完全不同。借钱的那位叫债权人,他最关心一件事:你能不能按时还钱?店赚得再多,他也只拿合同里那份利息。入股的那位叫股东,他只关心另一件事:店未来能不能越做越好?扣掉成本、债务之后,还剩多少归自己?</p><p>股票做的事情,就是把<span class="hl">“入股”</span>切成很多个小份,拿到市场上交易。你买一股,就是买了这家公司极小的一份所有权。份额小得不起眼,逻辑却和大股东一模一样:公司经营得好,你跟着受益;经营得差,你照样承担风险。</p><p>把<span class="hl">“一小份”</span>落成具体数字:店主把整家店作价 <span class="num">100 万</span>,切成 <span class="num">10 万</span>股,每股 <span class="num">10 元</span>。你花 <span class="num">1 万</span>买下 <span class="num">1000 股</span>,就占了这家店 <span class="num">1%</span>。年底店里净赚 <span class="num">10 万</span>,论份额有 <span class="num">1000 元</span>归你——但注意,论份额不等于进口袋:分多少、留在店里继续开店多少,由店里的治理说了算。</p><p>顺手拆掉第一个误区:买股票不是存钱。存款有银行承诺还本付息,股票没有任何人向你承诺保本。你手里攥的是一张<span class="hl">“未来剩余收益的分配凭证”</span>,值不值钱,全看店后面的经营。</p>
+        <h2>2. 银行不是保险柜</h2>
+<p>还是从岛上的仓库说起。老仓开的其实是个<span class="hl">“银行雏形”</span>:岛民把鱼存进来,他开鱼票。最老实的仓库,只干保管这一件事——你存一条,架上就放一条;你拿票来,他原样还你。银行要真成这样,说它是保险柜没毛病。</p><p>但现代银行早就不这么运转了。你把钱存进银行,银行不会给每张纸币贴上你的名字锁进柜子。它只留下一部分流动资金应付日常取现,剩下的大头,要么贷给企业和居民,要么拿去买<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>。同一时刻,账上挂着两条关系:银行欠你一笔存款,借款人欠银行一笔贷款。</p><p>所以要练一个新的视角,而且它和普通人正好相反:对银行来说,你的存款是它的负债——它欠你的;放出去的贷款才是它的资产——别人欠它的。你眼里的<span class="hl">“我的钱”</span>,在银行账本上写在欠债那一栏。第一次看有点反直觉,想通这一下,银行这门生意就懂了一半。</p><p>把这个反直觉拆成三小步,它就一点也不玄。第一步,你存进一百元:银行资产端多一百元现金,同一瞬间负债端多一笔<span class="hl">“欠你一百元”</span>——你随时能取,这就是欠条。第二步,银行把其中八十元贷出去:资产端现金减八十、贷款加八十,负债端欠你的那笔账原地不动。两边一摆你就看清:你的存款从头到尾写在银行的欠账栏里。</p><div class="callout callout--note reveal"><span class="callout__title">换一个视角</span><p>理解银行的第一步,是站到银行<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>上看:谁欠银行钱,银行又欠谁钱。</p></div>
 
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="股票所有权示意:公司被切成很多股,持有一股即拥有对应比例的分红权、投票权和剩余索取权">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">买一股,就是把公司切成很多份、你拿其中一份</text>
-            <!-- 公司大饼 -->
-            <circle cx="230" cy="160" r="95" fill="rgba(18,29,49,0.6)" stroke="#f0c96a" stroke-width="2"/>
-            <path d="M 230 160 L 230 65 A 95 95 0 0 1 315 200 Z" fill="rgba(240,201,106,0.28)" stroke="#f0c96a"/>
-            <path d="M 230 160 L 315 200 A 95 95 0 0 1 175 249 Z" fill="rgba(122,167,240,0.22)" stroke="#7aa7f0"/>
-            <path d="M 230 160 L 175 249 A 95 95 0 0 1 149 100 Z" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0"/>
-            <path d="M 230 160 L 149 100 A 95 95 0 0 1 230 65 Z" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0"/>
-            <text x="230" y="285" text-anchor="middle" fill="#c9d4e8" font-size="13">一家公司 = 总股本</text>
-            <text x="272" y="130" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">你的1股</text>
-            <!-- 右:你这一份意味着什么 -->
-            <text x="600" y="86" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">持有这一份,你就有</text>
-            <rect x="440" y="104" width="410" height="40" rx="8" fill="rgba(122,167,240,0.12)"/>
-            <text x="460" y="130" fill="#eef4ff" font-size="14">· 分红权:公司赚钱后按份额分你一部分</text>
-            <rect x="440" y="152" width="410" height="40" rx="8" fill="rgba(122,167,240,0.12)"/>
-            <text x="460" y="178" fill="#eef4ff" font-size="14">· 投票权:重大事项按份额投票</text>
-            <rect x="440" y="200" width="410" height="40" rx="8" fill="rgba(122,167,240,0.12)"/>
-            <text x="460" y="226" fill="#eef4ff" font-size="14">· 剩余索取权:还完债、剩下的才归股东</text>
-            <text x="645" y="270" text-anchor="middle" fill="#ffb4b4" font-size="13">上不封顶,但也可能归零</text>
-          </svg>
-          <p class="figure__cap">买股票不是买一个会涨的数字,而是买下公司的一小片所有权。公司做大,你这一份跟着变值钱;公司倒了,你排在债主后面,可能血本无归。</p>
-        </div>
-        <h3>1.2. 股东排在最后,所以风险和机会都大</h3>
-<p>公司赚到钱了,股东是不是第一个伸手?恰恰相反,股东排最后。钱进账后,要先付员工工资、供应商货款、房租、税费、银行利息和债券利息。一圈付完如果还有剩,才可能轮到股东——要么分到手,要么留在公司里继续滚。</p><p>这个位置有个学名:剩余索取权——股东拿的是<span class="hl">“剩下”</span>的那部分。它天然不如债券踏实:债券合同上通常白纸黑字写着固定利息和本金,股票却从不承诺你每年一定拿多少。公司亏损,股东可能没有分红;公司破产清算,股东也要排在债权人后头再上桌。</p><p>可世界很公平:正因为拿的是<span class="hl">“剩下的”</span>,一旦公司越飞越高,收入和利润持续增长,债权人的收益仍然只有合同里那点利息,股东却能分享成倍放大的增长。股票的上行空间来自这里,风险也来自这里——同一个<span class="hl">“排最后”</span>,既是诅咒,也是奖赏。</p><p>用一组最小的数字感受一下。公司有银行借款 <span class="num">100 万</span>、约定每年利息 <span class="num">5 万</span>,股东自己投了 <span class="num">100 万</span>。今年利润 <span class="num">10 万</span>:先付银行 <span class="num">5 万</span>,剩下 <span class="num">5 万</span>全归股东。明年生意变旺,利润跳到 <span class="num">30 万</span>:银行雷打不动还是 <span class="num">5 万</span>,剩下 <span class="num">25 万</span>统统归股东——公司多赚的钱,几乎全数流向股东,这就是<span class="hl">“上行空间”</span>的样子。可再看反面:今年利润只有 <span class="num">4 万</span>,连利息都不够付,银行照样有权先拿走它的 <span class="num">5 万</span>,股东不仅一分没有,还可能要往里贴亏损。股东排在最后,分得到最大的甜,也咽得下最苦的药。</p><p>把这组账换个角度看,放大效应会看得更清。股东本金 <span class="num">100 万</span>:利润 <span class="num">10 万</span>那年他拿到 <span class="num">5 万</span>,回报率 <span class="num">5%</span>;利润 <span class="num">30 万</span>那年他拿到 <span class="num">25 万</span>,回报率 <span class="num">25%</span>。利润只翻了 <span class="num">3 倍</span>,股东的回报却翻了 <span class="num">5 倍</span>。债主的 <span class="num">5 万</span>雷打不动,利润的全部波动都被挤到股东一个人身上——这就是<span class="hl">“<span class="term">杠杆</span>”</span>最朴素的直觉:拿走固定收益的人不陪你坐过山车,拿走剩余的人坐全程。</p>
+        <h2>3. 一张极简资产负债表</h2>
+<p>光说不练假把式,我们亲手摆一家极简小银行。资产端总共一百元,掰成两块:二十元是现金和准备金,随取随用;八十元是放出去的贷款,负责生息。钱的来路也两条:九十元是客户存款,十元是股东自己投进来的<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>。</p><p>这张表两边各回答一个问题。资产端回答<span class="hl">“钱去了哪儿”</span>:现金随时应付提款,贷款赚取利息。负债和资本端回答<span class="hl">“钱从哪儿来”</span>:存款是客户借给银行的钱,资本则是股东垫在最底下、先挨刀的那一层。</p><p>先背下这张表的铁律:资产永远等于负债加资本,左右两边必须严丝合缝。坏账五元砸下来,资产缩到九十五,可存款还是九十,差额只能由资本补——十减五剩五,等号重新立住。任何损失都是先砍资本,资本砍光才轮到存款,这就是<span class="hl">“股东垫在最底下”</span>的精确含义。</p><div class="callout callout--note reveal"><span class="callout__title">损失进场,先烧资本</span><p>划重点:资产永远等于负债加资本,任何损失都先砍资本。八十元贷款出五元坏账,资本从十元掉到五元,储户的九十元毫发无损;坏账到十二元,资本打穿,才轮到储户。所以<span class="hl">“储户替银行担风险”</span>是误读——看一家银行稳不稳,先看垫在底下的资本有多厚,不是看招牌有多大。</p></div><p>看个压力测试。八十元贷款里出了五元坏账,收不回来——资本先从十元掉到五元,储户的九十元暂时毫发无损。可如果坏账膨胀到十二元,十元资本被整个打穿还不够,银行就出大事了。资本的作用一句话说清:在损失砸到储户头上之前,先由股东扛一层。</p><p>顺带纠一个高频误解:“银行拿储户的钱去投资,所以储户在替银行担风险。”不对。只要结构正常,损失先烧股东的资本,资本打穿之前,储户分毫不动。真正让储户暴露在风险里的,是资本太薄加坏账太猛这个组合。所以看一家银行稳不稳,先看它垫在底下的资本有多厚,而不是看招牌有多大。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="平价与波动对照:商品 A 常年 100±1,商品 B 100±30;右账卡写债主雷打不动拿 5 万,股东回报从 5% 到 25% 再到倒贴;风险看波动带宽度不看价格高低">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">同样都在 100 附近,谁的风险大?</text>
-            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">左:两件商品一年走势;右:1.2 节那家公司的两笔真账——债主与股东</text>
-            <rect x="70" y="70" width="490" height="232" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="305" y="92" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">A:借出去的钱:常年 100 ± 1</text>
-            <text x="305" y="112" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">B:当股东拿的回报:100 ± 30</text>
-            <rect x="84" y="162" width="452" height="138" fill="rgba(232,120,120,0.09)"/>
-            <rect x="84" y="229" width="452" height="4" fill="rgba(122,167,240,0.14)"/>
-            <path d="M 80 231 L 138 231 L 196 229 L 254 231 L 312 233 L 370 231 L 428 231 L 486 229 L 544 231" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>
-            <path d="M 80 231 L 138 180 L 196 268 L 254 171 L 312 277 L 370 203 L 428 245 L 486 217 L 544 254" fill="none" stroke="#ffb4b4" stroke-width="2.5"/>
-            <line x1="84" y1="231" x2="536" y2="231" stroke="rgba(201,212,232,0.35)" stroke-width="1" stroke-dasharray="4 5"/>
-            <text x="90" y="178" fill="#8499bd" font-size="11">基准 100</text>
-            <text x="548" y="212" fill="#a8c6ff" font-size="11.5" font-weight="800">±1</text>
-            <text x="548" y="240" fill="#ffb4b4" font-size="11.5" font-weight="800">±30</text>
-            <rect x="600" y="70" width="260" height="232" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="730" y="96" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">同一家公司,两笔账</text>
-            <text x="730" y="122" text-anchor="middle" fill="#c9d4e8" font-size="12">公司借 100 万,年息 5 万</text>
-            <text x="730" y="148" text-anchor="middle" fill="#8499bd" font-size="12">利润 10 万那年:</text>
-            <text x="730" y="168" text-anchor="middle" fill="#eef4f8" font-size="12">债主 5 万(5%) · 股东 5 万(5%)</text>
-            <text x="730" y="194" text-anchor="middle" fill="#8499bd" font-size="12">利润 30 万那年:</text>
-            <text x="730" y="214" text-anchor="middle" fill="#a8c6ff" font-size="12">债主还是 5 万(雷打不动 5%)</text>
-            <text x="730" y="234" text-anchor="middle" fill="#ffb4b4" font-size="12">股东 25 万 → 回报 25%</text>
-            <text x="730" y="262" text-anchor="middle" fill="#ffb4b4" font-size="12">利润 4 万那年:股东一分没有还倒贴</text>
-            <text x="730" y="286" text-anchor="middle" fill="#f0c96a" font-size="12">利润的全部波动,都挤到股东身上</text>
-            <text x="450" y="336" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">哪个风险大,不看价格高低,看波动带宽度:±1 vs ±30,差出 30 倍</text>
-            <text x="450" y="362" text-anchor="middle" fill="#c9d4e8" font-size="12.5">波动率就是把这种不确定数字化;拿走固定收益的人不坐过山车,拿剩余收益的人坐全程</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 290" role="img" aria-label="银行资产负债表:左边资产以贷款为主,右边负债以存款为主,两侧金额相等">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">银行资产负债表:钱不是躺在保险柜里</text>
+            <!-- 资产侧 -->
+            <rect x="70" y="70" width="330" height="200" rx="14" fill="rgba(122,167,240,0.10)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="235" y="98" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">资产(钱用到哪去了)</text>
+            <rect x="92" y="116" width="286" height="52" rx="8" fill="rgba(122,167,240,0.18)"/>
+            <text x="104" y="148" fill="#eef4ff" font-size="15">发放的贷款(最大一块,不在柜里)</text>
+            <rect x="92" y="176" width="286" height="34" rx="8" fill="rgba(122,167,240,0.14)"/>
+            <text x="104" y="198" fill="#eef4ff" font-size="14">债券等投资</text>
+            <rect x="92" y="218" width="286" height="34" rx="8" fill="rgba(122,167,240,0.14)"/>
+            <text x="104" y="240" fill="#eef4ff" font-size="14">准备金/现金(只留一小部分)</text>
+            <!-- 负债侧 -->
+            <rect x="500" y="70" width="330" height="200" rx="14" fill="rgba(240,201,106,0.10)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="665" y="98" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">负债+资本(钱从哪来的)</text>
+            <rect x="522" y="116" width="286" height="76" rx="8" fill="rgba(240,201,106,0.16)"/>
+            <text x="534" y="150" fill="#eef4ff" font-size="15">储户存款(你以为随时能全取)</text>
+            <text x="534" y="174" fill="#c9d4e8" font-size="13">这其实是银行欠你的钱</text>
+            <rect x="522" y="200" width="286" height="52" rx="8" fill="rgba(240,201,106,0.12)"/>
+            <text x="534" y="232" fill="#eef4ff" font-size="14">银行自有资本(缓冲垫)</text>
+            <text x="450" y="70" text-anchor="middle" fill="#c9d4e8" font-size="13">左右恒等</text>
           </svg>
-          <p class="figure__cap">两件商品都围着 100 转:A 带宽 ±1,B 带宽 ±30,风险差 30 倍。1.2 节的账就是这条:B 是股东,利润 10 万拿 5 万(5%),利润 30 万拿 25 万(25%),利润 4 万就倒贴——波动率是把不确定性数字化。</p>
+          <p class="figure__cap">银行把大部分存款放成了贷款和投资,柜里只留一小部分准备金。存款是银行欠储户的钱,所以“钱躺在保险柜里”是错觉。</p>
         </div>
-        <h3>1.3. 股价、股份数和市值</h3>
-<p><span class="hl">“这只股票才十块,便宜!”</span>——股票新手的高频错觉,就是只看股价。试想:A 公司股价一百元,B 公司股价十元,能直接说 A 更贵吗?不能。还得看两家公司各有<span class="hl">“多少份”</span>。</p><p>把份数乘上去,真相立现。市值等于股价乘以总股数:A 公司股价一百元、总股数一亿股,市值一百亿元;B 公司股价十元、总股数二十亿股,市值二百亿元。股价低的 B,公司整体反而更“贵”。单看股价比大小,就像用一份披萨的价格比两家店,却忘了数各自切成了几块。</p><div class="callout callout--note reveal"><span class="callout__title">十元股不比百元股便宜</span><p>常见误区:A 股价一百元、B 股价十元,就说 B 便宜。把份数乘上去——A 总股数一亿股、市值一百亿;B 二十亿股、市值二百亿,股价低的那个,公司整体反而更贵。涨幅也要看百分比:同样涨一元,A 只动 <span class="num">1%</span>,B 动了 <span class="num">10%</span>。单看股价比大小,就像只问一份披萨多少钱,却忘了数各自切了几块。</p></div><p>再拆一层<span class="hl">“便宜”</span>的幻觉:A 公司股价从 <span class="num">100 元</span>涨到 <span class="num">101 元</span>,涨 <span class="num">1 元</span>,涨幅 <span class="num">1%</span>,市值从 <span class="num">100 亿</span>到 <span class="num">101 亿</span>;B 公司股价从 <span class="num">10 元</span>涨到 <span class="num">11 元</span>,同样涨 <span class="num">1 元</span>,涨幅却是 <span class="num">10%</span>,市值从 <span class="num">200 亿</span>到 <span class="num">220 亿</span>。涨跌看的是百分比,不是元数——<span class="hl">“低价股涨得快”</span>的错觉,多半是这么来的。</p><p>别小看市值这个字段,量化建模会经常用到它,因为公司规模牵扯甚广:风险、流动性、市场关注度,乃至因子的表现。一般来说,小市值股票波动更大、流动性更差;大市值股票买卖更顺畅,但想象空间未必相同。同样的策略,套在不同市值区间的股票上,脾气可能完全不一样。</p><p><span class="hl">“流动性更差”</span>到底是什么意思?算一笔冲击账:你拿 <span class="num">1 亿</span>去建仓,投进市值 <span class="num">20 亿</span>的小公司,相当于要买走 <span class="num">5%</span> 的股权,一出手就把价格顶上天;投进市值 <span class="num">2 万</span>亿的巨头,只占 <span class="num">0.005%</span>,水面不起一丝涟漪。同一笔钱,冲击成本天差地别——这就是规模在交易层面的真实含义。</p>
+        <h2>4. 贷款为什么会创造存款</h2>
+<p>下面这件事,第一次听的人都会愣一下。银行批准给一家小店放贷一百万元。很多人以为流程是:银行从某个储户的账户里搬出一百万,转给小店。现实完全不是这么记账的——银行在资产端直接记上一笔一百万元的贷款,同时在负债端往小店的账户里写入一百万元存款。两笔账在同一瞬间凭空长出来。</p><p>也就是说,贷款发放的同时,银行体系里的存款变多了。钱不是搬过去的,是记出来的。当然故事还有后续:小店拿这笔钱付给装修公司,装修公司的账户可能开在另一家银行,于是银行之间要动用准备金互相清算——这套银行间对账的管道,保证了<span class="hl">“记出来的钱”</span>能真正花出去。</p><div class="callout callout--note reveal"><span class="callout__title">存款是记出来的</span><p>划重点:放一百万贷款时,银行资产端记一笔一百万贷款,负债端同时往借款人账户写入一百万存款——两笔账在同一瞬间凭空长出来,没有谁的存款被搬走。所以<span class="hl">“先收够存款再放贷”</span>是街头想象,账本的顺序恰好反过来。分析银行体系,盯贷款往往比盯存款更接近源头。</p></div><p>把后续这步再拆细一点。小店把一百万转给装修公司,对方开户行是另一家银行:于是第一家银行在央行的准备金减一百万,第二家的加一百万。看清了吗?<span class="hl">“记出来的钱”</span>要花得出去,靠的是准备金这座桥。存款只是影子,准备金才是硬通货——所以银行不能闭眼放贷,每一笔清算时都得拿准备金真刀真枪地兑付。</p><p>那银行岂不是能无限印钱?不能。它被套着一串缰绳:资本充足率、流动性、准备金、监管规则、借款人<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>、贷款需求、坏账风险。缰绳的用意很直白——贷款放出去收不回来,损失会先吞掉资本,吞穿资本,就是危机。贷款创造存款是真的,但<span class="hl">“随意创造”</span>是假的。</p><p>再纠一个课堂里常见的旧印象:<span class="hl">“银行先收够存款,再把存款贷出去。”</span>顺序恰好反过来——先有放贷这个动作,存款才被同时记出来。<span class="hl">“先吸收、再投放”</span>是街头的想象,不是账本的真实顺序。所以分析银行体系,盯住贷款往往比盯住存款更接近源头。</p>
 
-        <h3>1.4. 分红不是白送钱</h3>
-<p>公司赚了钱,可以拿一部分现金直接分给股东,这叫分红。不少新手眼睛一亮:这不就是白送钱吗?先算笔账再欢呼:分红,只是公司资产中的一部分,从公司账户搬进了股东账户。</p><p>看具体的:一只股票价格十元,每股分红一元。分红后,公司账上少了每股一元的现金,股价理论上要做除息调整——你手里多了一元现金,股票却相应便宜了约一元。合起来算总财富,并没有凭空多出一元。钱没有变多,只是换了个地方放。</p><div class="callout callout--note reveal"><span class="callout__title">除息:提前扣掉那份白赚</span><p>划重点:股价十元,每股分红一元。除息后,你手里多了一元现金,股价相应便宜约一元,总财富一分没多——钱只是从公司账户搬进了股东账户。为什么不调整不行?若不除息,前一天十元买入、第二天拿一元再十元卖回,一天无风险白赚一元。除息,就是市场把这份<span class="hl">“白赚”</span>提前扣掉的机制。</p></div><p>为什么股价非要做这个除息调整?假设不调整:你在分红前一天花 <span class="num">10 元</span>买入,第二天拿走 <span class="num">1 元</span>现金,再以 <span class="num">10 元</span>卖回,一天白赚 <span class="num">1 元</span>。全天下的资金都盯着这种无风险漏洞,它不可能存在——除息,就是市场价格把这份<span class="hl">“白赚”</span>提前扣掉的机制。</p><p>还有个流行的说法要拆开:分红后股价再涨回 <span class="num">10 元</span>,叫<span class="hl">“填权”</span>,听起来像分红的钱最终还会回来。错。股价能不能涨回去,靠的是公司继续被市场看好、利润继续增长,跟分红这个动作本身没有关系。把<span class="hl">“分红”</span>和<span class="hl">“填权”</span>当成同一笔钱赚了两次,是同一份钱想花两回。</p><p>既然不白送,分红为什么还受重视?因为它传递的是另一个信号:公司账上有真现金,而且愿意把现金还给股东。一般来说,成熟公司更常分红;高速成长公司更愿意把钱留在体内、继续投资。<span class="hl">“分不分”</span>没有绝对好坏,标准只有一个:留在公司里的这笔钱,能不能用出比股东自己投更高的回报。</p>
+        <h2>5. 银行靠什么赚钱,又怕什么</h2>
+<p>传统银行赚钱的方式,一句话就能说完:吃利差。用较低的成本把钱收进来,再用较高的<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>把钱放出去买收益。比如存款平均成本百分之二,贷款平均收益百分之五,中间三个百分点的落差,就是利差。听着像躺赚?往下看。</p><p>把那家极简小银行的年度账算一遍。八十元贷款按百分之五收息,进账四元;九十元存款按百分之二付息,支出一点八元;毛利差二点二元。再扣掉假设的坏账损失零点五元、运营成本零点八元,净利润只剩零点九元——用十元资本换来零点九元利润,股东回报约百分之九。利差字面上有三个百分点,落到股东口袋里,要一路过关斩将。</p><p>表面之下,银行要付的代价不少:坏账损失、运营成本、资本成本、监管成本,样样都从利差里扣。还有两件糟心事专挑银行下手。一是短期利率上升时,存款成本马上升,可早年放出去的长期贷款,利率往往锁死了、暂时升不动——两头一挤,利差被压扁。二是经济下行时,借款人成批还不上钱,银行得提前计提损失。</p><p><span class="hl">“两头一挤”</span>为什么躲不掉?因为存款和贷款的<span class="hl">“刷新频率”</span>天生不一致。存款是短钱,利率随行就市,市场一变马上涨;贷款是长钱,利率早年签合同时就锁死了。成本端是浮动价,收益端是固定价——用程序员的话说,这是接口两侧刷新频率错位,行情平静时相安无事,利率一变,错位立刻现形。</p><p>银行最害怕的剧本,是两件事同时发生:资产端的贷款收不回来,负债端的储户又挤着取钱。前一个叫信用风险,后一个叫流动性风险。拆开看都还能应付,可怕的是它们互相点火——历史上多数银行危机,都是这两件事螺旋放大的结果。</p>
 
-        <h3>1.5. 股票收益来自哪里</h3>
-<p>买股票赚到钱,账能拆成三份。第一,公司盈利增长:赚得越来越多,每股对应的利润水涨船高。第二,估值变化:同样一块利润,市场愿意出的价格变了。第三,分红和回购:公司把现金直接还给股东,或出钱买回自家的股票。你的每一笔盈亏,基本都能归入这三类。</p><p>举个简单例子。某公司今年每股赚五元,市场给它二十倍<span class="term">市盈率</span>——<span class="term">市盈率</span>就是<span class="hl">“股价是每股盈利的多少倍”</span>,二十倍的意思是:投资者愿意为这家公司每一元年利润掏二十元,所以股价大约一百元。明年每股赚六元,市场若仍给二十倍,股价约一百二十元。但如果市场变脸、只肯给十五倍,哪怕利润涨了,股价反而只剩九十元。利润往上走、股价往下走,听起来拧巴,市场天天在演。</p><p>把这笔账写成乘法,就不再拧巴:每股盈利从 <span class="num">5 元</span>到 <span class="num">6 元</span>,涨 <span class="num">20%</span>;<span class="term">市盈率</span>从 <span class="num">20 倍</span>到 <span class="num">15 倍</span>,跌 <span class="num">25%</span>。股价 = 每股盈利 × <span class="term">市盈率</span>,1.2 乘 0.75 等于 0.9——盈利涨两成、估值缩四分之一,合计股价反跌 <span class="num">10%</span>,<span class="num">100 元</span>变 <span class="num">90 元</span>。你的总回报,就是这两根线的乘积,再加上到手的分红。</p><div class="callout callout--note reveal"><span class="callout__title">盈利涨两成,股价跌一成</span><p>手算:每股盈利从 <span class="num">5 元</span>到 <span class="num">6 元</span>,涨 <span class="num">20%</span>;<span class="term">市盈率</span>从 <span class="num">20 倍</span>被砍到 <span class="num">15 倍</span>,跌 <span class="num">25%</span>。股价 = 每股盈利 × <span class="term">市盈率</span>,1.2 乘 0.75 得 0.9——股价从 <span class="num">100 元</span>变 <span class="num">90 元</span>。盈利这根线往上走,估值那根线往下走,合力照样是跌。<span class="hl">“业绩明明在涨,为什么我还亏”</span>,答案就藏在这条乘法里。</p></div><p>这也直接回答了那个经典困惑:“公司业绩明明在涨,为什么我的股票还亏?”盈利这根线往上走,估值那根线往下走,合力照样是跌。好公司不等于好股票——市场对它的预期一旦提前打满,你买入的价格里,已经替未来的好消息付过费了。</p><p>所以别把股价当成利润的提线木偶——它身上有两根线:一根是盈利,一根是市场愿意给多少倍的估值。而估值这根线,被利率、行业景气、竞争格局、风险偏好共同拽着。想赚到股票的钱,先想清楚自己赚的是哪一根线上的钱。</p>
-
-        <h3>1.6. 一级市场和二级市场再回看股票</h3>
-<p>上一章的两个市场概念,现在落到股票上再看一眼,会更清楚。公司 <span class="term">IPO</span> 或增发时,发行新股募集资金,钱流进公司——这是一级市场。公司上市之后,你在软件里买入股票,通常是另一个投资者卖给你的,钱去了卖方手里——这是二级市场。同样叫<span class="hl">“买股票”</span>,钱的去向完全不同。</p><p>钱虽未进公司,公司却天天盯着股价,不是虚荣,是利害。股价高,公司再融资更容易,员工手里的股权激励更诱人,并购时拿自家股票当货币也更硬气。股价低,融资变难,市场信心跟着打摆。二级市场的报价,会实实在在影响一级战场上公司的行动能力。</p><p><span class="hl">“利害”</span>有多大?算一算再融资的账:公司想再募 <span class="num">10 亿</span>。股价 <span class="num">50 元</span>时,新发 <span class="num">2000 万</span>股就够;股价跌到 <span class="num">25 元</span>,得新发 <span class="num">4000 万</span>股——募到同样的钱,老股东的持股比例被多摊薄了一倍。股价高低,直接决定公司融资的<span class="hl">“汇率”</span>,这就是管理层盯报价屏的真正原因。</p><p>所以别把二级市场想成<span class="hl">“赌场外壳”</span>。它是公司股权被持续定价、被提供流动性的地方,缺之不可。只是这个定价过程并不纯粹,里面混着情绪、资金、预期和短期噪声——懂它的人赚定价的钱,被噪声牵着走的人买单。</p>
+        <h2>6. 信心为什么这么重要</h2>
+<p>银行身上有个天生的结构矛盾:负债很短,资产很长。储户觉得存款随时能取,这是短;放出去的贷款三年、五年、十年到期,这是长。平时没事,因为储户不会约好了同一天来取钱——用短期负债扛长期资产,游戏玩得转。</p><p>可一旦人心变了,游戏瞬间翻盘。只要大家突然不信任这家银行,一窝蜂涌去取钱,银行就算长期资产最终都能收回来,短期也拿不出那么多现金。这就是挤兑。它最阴险的地方在于:能把一家<span class="hl">“也许没事”</span>的银行,活活挤成<span class="hl">“马上出事”</span>——光是恐慌本身,就足以致命。</p><p>把这个死亡螺旋慢放一遍。第一天,储户取走银行手头那二十元现金,架子见底;第二天再涌来三十元,银行只能把长期贷款打折甩卖——十年后本可收回一百元的资产,今天七十元忍痛出手。贱卖本身就在制造亏损,消息一传开,更多人赶来排队,又逼出更狠的贱卖。可怕的是每一环都<span class="hl">“理性”</span>:你不知道别人跑不跑,但你知道自己该先跑。个体理性,叠出了集体踩踏。</p><div class="callout callout--note reveal"><span class="callout__title">人人理性,叠出踩踏</span><p>划重点:第一天取现挤干手头那二十元;第二天再涌来三十元,只能贱卖长期贷款——十年后本可收回一百的资产,今天七十忍痛出手。贱卖制造亏损,亏损吓来更多排队,更多排队逼出更狠的贱卖。每个储户都只是怕自己跑晚了,个体个个理性,叠出来的却是集体踩踏。</p></div><p>这不是教科书编出来吓人的桥段。<span class="num">2008 年</span>全球金融危机,拥有 150 多年历史的华尔街巨头雷曼兄弟轰然倒塌;更早的 <span class="num">2007 年</span>,英国北岩银行门口排起长队,储户冒雨挤着只为把自己的钱取出来——那是英国上百年来头一回大规模银行挤兑。这些机构并非一夜之间资产归零,而是当所有人同时要现金、又没人敢再借钱给它时,再大的银行也会当场断气。信心崩塌的速度,快得超乎想象。</p><p>为了拦住这种恐慌传染,人类给银行体系装了一套安全垫:存款保险、央行流动性支持、资本监管、流动性覆盖率。它们不能点石成金、把坏贷款变好,但能为系统争取时间,挡住那种<span class="hl">“所有人一起往门口挤”</span>的死亡踩踏。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="股票生命周期五站:发行切 10 万股每股 10 元(100 万的店),换手 1 万买 1000 股占 1%,分红 10 元派 1 元靠除息扣掉白赚 1 元的洞,增发 0.2 亿把占比从千分之 1 摊到约万分之 8.3,回购注销 20 股把每股利润从 10 元抬到 12.5 元">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一只股票的一生:钱只进公司那一次</text>
-            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">发行 → 换手 → 分红 → 增发 → 回购,五站各动一笔账——看懂每站把钱和权利搬给谁,才看懂"你这一份"</text>
-            <rect x="16" y="76" width="156" height="206" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="94" y="102" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="94" y="102">①发行</tspan></text>
-            <text x="94" y="124" text-anchor="middle" fill="#8499bd" font-size="11">一级市场</text>
-            <text x="94" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">股份第一次见人</text>
-            <text x="94" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">店作价 100 万</text>
-            <text x="94" y="202" text-anchor="middle" fill="#eef4f8" font-size="12">切成 10 万股</text>
-            <text x="94" y="226" text-anchor="middle" fill="#eef4f8" font-size="12">每股 10 元</text>
-            <text x="94" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">钱进公司账:变产线</text>
-            <rect x="194" y="76" width="156" height="206" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="272" y="102" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="272" y="102">②换手</tspan></text>
-            <text x="272" y="124" text-anchor="middle" fill="#8499bd" font-size="11">二级市场</text>
-            <text x="272" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">你买 = 另一位卖</text>
-            <text x="272" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">1 万买 1000 股</text>
-            <text x="272" y="202" text-anchor="middle" fill="#eef4f8" font-size="12">= 店里 1% 的份额</text>
-            <text x="272" y="226" text-anchor="middle" fill="#eef4f8" font-size="12">钱去卖方手里</text>
-            <text x="272" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">公司一分没多收</text>
-            <rect x="372" y="76" width="156" height="206" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="450" y="102" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800"><tspan x="450" y="102">③分红</tspan></text>
-            <text x="450" y="124" text-anchor="middle" fill="#8499bd" font-size="11">公司行动 · 除息</text>
-            <text x="450" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">10 元买入,派 1 元</text>
-            <text x="450" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">次日 10 元卖出</text>
-            <text x="450" y="202" text-anchor="middle" fill="#eef4f8" font-size="12">白赚 1 元的洞</text>
-            <text x="450" y="226" text-anchor="middle" fill="#eef4f8" font-size="12">除息提前扣掉</text>
-            <text x="450" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">分红不是白送钱</text>
-            <rect x="550" y="76" width="156" height="206" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="628" y="102" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800"><tspan x="628" y="102">④增发</tspan></text>
-            <text x="628" y="124" text-anchor="middle" fill="#8499bd" font-size="11">公司行为 · 再融资</text>
-            <text x="628" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">总股本 1 亿股</text>
-            <text x="628" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">你 10 万股=千分之 1</text>
-            <text x="628" y="202" text-anchor="middle" fill="#eef4f8" font-size="12">增发 0.2 亿→1.2 亿股</text>
-            <text x="628" y="226" text-anchor="middle" fill="#eef4f8" font-size="12">占比掉到约</text>
-            <text x="628" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">万分之 8.3,股没少、份薄了</text>
-            <rect x="728" y="76" width="156" height="206" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="806" y="102" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800"><tspan x="806" y="102">⑤回购</tspan></text>
-            <text x="806" y="124" text-anchor="middle" fill="#8499bd" font-size="11">公司行为 · 注销</text>
-            <text x="806" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">100 股,年利 1000 元</text>
-            <text x="806" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">买回注销 20 股</text>
-            <text x="806" y="202" text-anchor="middle" fill="#eef4f8" font-size="12">剩 80 股,利不变</text>
-            <text x="806" y="226" text-anchor="middle" fill="#eef4f8" font-size="12">每股利润 10→12.5</text>
-            <text x="806" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">+25% 是拿现金换的</text>
-            <path d="M 176 176 L 191 176" fill="none" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#hr3a)"/>
-            <path d="M 354 176 L 369 176" fill="none" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#hr3a)"/>
-            <path d="M 532 176 L 547 176" fill="none" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#hr3a)"/>
-            <path d="M 710 176 L 725 176" fill="none" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#hr3a)"/>
-            <text x="450" y="316" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="750">钱的路:发行那天进公司一次 → 之后每天在股民之间换手 → 分红时现金才出公司进你账户</text>
-            <text x="450" y="344" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="750">"你这一份"的路:千分之 1 被增发摊到约万分之 8.3,回购又把每股利润从 10 元抬成 12.5 元</text>
-            <line x1="120" y1="360" x2="780" y2="360" stroke="rgba(122,167,240,0.18)"/>
-            <text x="450" y="386" text-anchor="middle" fill="#ffb4b4" font-size="12.5">别误读两处:+25% 的每股利润是拿真金白银换的,不是白赚;你点买入那一刻,钱多半进的是卖方口袋</text>
-            <defs><marker id="hr3a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
+          <svg class="chapter-diagram" viewBox="0 0 900 275" role="img" aria-label="挤兑示意:正常时准备金够付,所有人同时取钱时准备金瞬间见底">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">挤兑:为什么信心一崩,好银行也会倒</text>
+            <text x="230" y="72" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">正常时</text>
+            <rect x="120" y="90" width="220" height="120" rx="12" fill="rgba(122,167,240,0.12)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="230" y="120" text-anchor="middle" fill="#eef4ff" font-size="14">少数人来取钱</text>
+            <text x="230" y="150" text-anchor="middle" fill="#eef4ff" font-size="14">准备金够付</text>
+            <text x="230" y="184" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">银行照常运转</text>
+            <text x="670" y="72" text-anchor="middle" fill="#ffb4b4" font-size="16" font-weight="800">恐慌时</text>
+            <rect x="560" y="90" width="220" height="120" rx="12" fill="rgba(232,120,120,0.12)" stroke="#e88" stroke-width="2"/>
+            <text x="670" y="118" text-anchor="middle" fill="#eef4ff" font-size="14">所有人同时来取钱</text>
+            <text x="670" y="146" text-anchor="middle" fill="#eef4ff" font-size="14">贷款一时收不回</text>
+            <text x="670" y="180" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">准备金瞬间见底</text>
+            <path d="M 355 150 L 545 150" fill="none" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#runarrow)"/>
+            <defs><marker id="runarrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
+            <text x="450" y="140" text-anchor="middle" fill="#c9d4e8" font-size="13">信心消失</text>
+            <text x="450" y="250" text-anchor="middle" fill="#eef4f8" font-size="15">部分准备金制度下,银行本就没留够全额现金;挤兑是信心问题,不只是资产问题</text>
           </svg>
-          <p class="figure__cap">钱只在发行那天进公司一次,之后天天换手都在投资者之间;分红要除息、增发会摊薄、回购的账面好看是拿现金换的。看懂每站把钱和权利搬给谁,才算看懂你买的这一份。</p>
+          <p class="figure__cap">银行只留部分准备金,平时够用;一旦所有人同时来取,贷款收不回、准备金见底,连经营正常的银行也可能倒下。这就是存款保险和央行存在的原因之一。</p>
         </div>
-        <h3>1.7. 股票和量化有什么关系</h3>
-<p>很多人以为股票量化就是撸 K 线。格局小了。量化研究真正做的,是把公司的属性和市场的交易行为,逐项落成一列列数据:估值、盈利质量、增长、<span class="term">动量</span>、<span class="term">波动率</span>、成交额、行业、市值、分析师预期、资金流——把一家公司活生生拆成一张表。</p><p>这些列组合起来,就成了因子,每个因子都替人问一个问题。价值因子问:这个价格够不够便宜?质量因子问:公司赚钱稳不稳得住?<span class="term">动量</span>因子问:市场是不是正在持续重新评估它?流动性因子问:买卖它的成本高不高?问法不同,捕捉的机会也不同。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>但记住:因子不是魔法。一个因子能赚钱,原因不外乎三种——补偿了某种风险、利用了某种行为偏差,或捕捉了某种信息与市场结构。所以看到因子历史上排得好,先别急着梭哈,多问两句:它为什么在未来还有效?扣掉交易成本,还剩多少?想清楚这两个问题,因子才从“玄学指标”变成“研究工具”。</p></div><div class="callout callout--note reveal"><span class="callout__title">因子赚钱只有三种来路</span><p>划重点:一个因子能赚钱,原因不外乎三种——补偿了某种风险,利用了某种行为偏差,或捕捉了某种信息与市场结构。看到历史上排得好,先别急着梭哈,多问两句:它为什么在未来还有效?扣掉交易成本还剩多少?两问都答得清,因子才从玄学指标变成研究工具。</p></div><p><span class="hl">“扣掉成本还剩多少”</span>必须真算,不能拍脑袋。假设一个因子回测里年化<span class="term">超额收益</span> <span class="num">8%</span>,听着诱人;可它调仓频繁,一年双边换手产生的佣金、税费、冲击成本合计约 <span class="num">3%</span>——净超额只剩 <span class="num">5%</span> 左右。回测里排得好只是毛收入,扣完成本才是你到手的工资条。</p><p>还有一种更隐蔽的自欺:回测时用到了明天才公布的数据——比如用今天收盘后才披露的公告去<span class="hl">“预测”</span>今天白天的涨跌。历史曲线因此漂亮得像印钞机,实盘里却根本没这一列数据可用。这类<span class="hl">“偷看未来”</span>的坑,后面讲回测时会专门拆,这里先把警惕心立起来。</p>
+        <h2>7. 央行像金融系统的水位调节器</h2>
+<p>央行常常上新闻,但它不是给普通人办存款贷款的普通银行。它管的是更底层的东西:基础货币、短端利率、支付清算、金融稳定。要找一个形象的说法——央行是整个金融系统的水位调节器,拧的是总阀门。</p><p>把央行的动作到市场之间的距离,一格一格画出来。政策利率一动,先变的是银行之间互相借钱的利率;跟着变的是银行对企业和居民的存贷款利率,以及债券收益率;再往后,融资贵了还是便宜了,资产价格和信贷规模才开始接招。链条每多一环,效果就弱一分、也慢一拍——所以别指望央行一拧阀门,股市立刻照办。</p><p>阀门一松:政策利率下调、流动性投放进来,水位上升,银行和机构融资更容易,债券收益率往往走低,<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>估值也可能被水流托一把。阀门一紧:融资成本变贵,最先难受的是高<span class="term">杠杆</span>玩家。所谓<span class="term">杠杆</span>,就是借钱放大仓位——自己只有 <span class="num">10 万</span>,再借 <span class="num">90 万</span>凑成 <span class="num">100 万</span>买资产:涨 <span class="num">10%</span>,你赚走的是自有本金的 <span class="num">100%</span>;跌 <span class="num">10%</span>,本金也可能瞬间亏光。借得越多<span class="term">杠杆</span>越高,融资一贵,<span class="term">杠杆</span>玩家最先被按进水里。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>但请记住央行的能力边界:它调得了水位,变不出真实生产率。水位高一点,破船也能暂时浮起来;可船底有洞、货卖不出去,水位再高也修不好船。货币政策能改变金融条件,替代不了企业经营、技术进步和真实需求。以后看央行新闻,先问一句:它拧的是哪个阀门,又管不到哪里。</p></div><div class="callout callout--note reveal"><span class="callout__title">水位不是生产率</span><div class="callout callout--tip reveal"><span class="callout__title">一句话记住</span><p>一句话记住:央行调得了水位,变不出真实生产率。水位高一点,破船也能暂时浮起来;可船底有洞、货卖不出去,水位再高也修不好船。货币政策能改变的是金融条件——融资成本、信贷松紧、资产价格;它替代不了企业经营、技术进步和真实需求。</p></div></div>
 
-        <h2>2. 股价为什么不是只看利润</h2>
-        <p>上一章讲了股票是什么,这一章继续问:公司会对手里的股票做什么动作?市场又凭什么愿意为一家公司掏某个价?先说结论:估值不是算命,也不是把数字塞进公式就弹真理。估值,是在一堆假设条件下,对未来现金流、风险和增长所做的判断。条件一换,结论就换——这正是它难的地方,也是它有意思的地方。</p>
-
-        <h3>2.1. 公司为什么还会再融资</h3>
-<p>公司都上市融过一轮了,怎么还伸手要钱?因为日子还长:要建新工厂、要收购别家公司、要补充流动资金、要还到期的旧债。常见工具箱里有四件:增发股票、配股、发行可转债、发行普通债券。</p><p>先看增发:公司发行更多股份来融资。原股东的第一反应往往是紧张——蛋糕没有立刻变大,切蛋糕的刀数却多了,每份占的比例自然变薄,这就是稀释。但先别急着骂:如果融来的钱能创造出更高回报,蛋糕后来做大了,长期看每股反而可能增值。稀释是眼前账,回报是长远账。</p><p>把稀释摊成数字,脑中就清楚了。假设公司总股本一亿股,你持有十万股,占千分之一。现在公司增发两千万股,总股本变成一亿两千万股,你的十万股占比掉到约万分之八点三。你的股数一股没少,比例却被摊薄了。这次稀释冤不冤,全看下一幕:这两千万股融回来的钱,赚利润的速度能不能跑赢被摊薄的比例。</p><div class="callout callout--note reveal"><span class="callout__title">一次增发摊薄多少</span><p>手算:总股本一亿股,你持十万股,占千分之一。增发两千万股,总股本变一亿两千万,你的十万股一股没少,占比却掉到约万分之八点三。这就是稀释的真实形状。冤不冤,取决于下一幕:这两千万股融回来的钱,赚利润的速度能不能跑赢被摊薄的比例。</p></div><p>配股呢,可以理解成公司优先问老股东一句:<span class="hl">“要不要继续出钱?”</span>可转债则更绕一点:它起初是张债券,未来满足条件能转成股票——一半债性、一半股性,两张面孔,估值自然也更复杂。认识每一种再融资动作,你才算看懂公司在对股东做什么。</p>
-
-        <h3>2.2. 回购和分红有什么不同</h3>
-<p>公司账上趴着一笔现金,想还给股东,有两条路:分红,是把现金直接打进股东账户;回购,是拿这笔钱去市场上买回自家股票。殊途同归,动作和后果却很不一样。</p><p>回购之后,市面上流通的股份变少了。公司总利润不变、分母变小,每股利润自然抬高。听上去很美?先别鼓掌。公司若在股价很贵时回购,等于拿股东的钱去买昂贵资产;若在股价便宜、而公司又没有更好投资机会时回购,才算把钱花在了刀刃上。同一个动作,时机不对就成了冤大头。</p><p>把这段话算一遍。假设公司有<span class="num">100股</span>,一年利润<span class="num">1000元</span>,回购前每股利润<span class="num">10元</span>。公司掏现金从市场买回并注销<span class="num">20股</span>,剩下<span class="num">80股</span>,利润还是那<span class="num">1000元</span>,每股利润变成<span class="num">12.5元</span>——账面上每股好看了<span class="num">25%</span>。可公司总利润一分没多,只是分母小了,而且是拿真金白银的现金换的。所以判断回购,眼睛要盯住当时的股价贵不贵,而不是每股利润变美的幻觉。</p><p>说到底,分红和回购都绕回一个根本问题:这笔现金留在公司手里,还能不能创造更高回报?公司自己的再投资回报很高,把钱留着发展更好;公司已成熟、增长机会寥寥,把钱还给股东更好。钱由谁掌管,取决于谁用这笔钱更值钱。</p>
-
-        <h3>2.3. 拆股、送股和复权</h3>
-<p>假设你手里的股票突然一股变两股,是不是该高兴?先坐稳。所谓拆股,比如一股拆成两股:股数翻倍,理论价格减半——你手里从一股变两股,每股价从一百变五十,合计价值还是一百。拆股本身不创造一分钱财富,它只是把计量单位改小了。</p><p>送股、转增同理,也是新手容易踩的误会:股数看着变多了,公司真实资产并没有凭空增加,价格会做相应调整。天上不会掉股,账上不会生钱。</p><p>但麻烦留给做数据的人:分红、送股、拆股之后,历史价格就没法直接比了——一百元时代的股价和五十元时代的股价放在一张图上,你以为见过一次腰斩。于是有了复权:把历史价格按这些公司行动换算调整,让前后可比。做量化时有两条铁律要分开背:算收益,通常要用复权价格;模拟真实成交,又不能拿复权价当成交价。这两个口径一旦串线,回测结果立刻失真——这个区别,非常重要。</p><div class="callout callout--note reveal"><span class="callout__title">复权的两条铁律</span><p>划重点:分红、送股、拆股之后,一百元时代的股价和五十元时代的股价没法直接比,于是有了复权。做量化要分开背两条铁律:算收益,通常要用复权价格;模拟真实成交,又不能拿复权价当成交价——当时的市场根本不认这个价。两个口径一旦串线,回测结果立刻失真。</p></div><p>复权具体怎么换算?沿用上面的例子:拆股前一年,历史上记的是一百元;拆股后变成五十元。前复权的做法,是把拆股之前的历史价格统统除以二——那张旧图上的<span class="hl">“一百”</span>改写成<span class="hl">“五十”</span>,曲线就连成一条可比的线,腰斩的假象随之消失。方向反过来,把新价格全部乘以二,叫后复权。两种口径算出的收益率是一样的,选哪个都行,关键是全程只用一种口径,别半路换。</p>
-
-        <h3>2.4. 倍数不是答案,是语言</h3>
-<p>谈估值,第一个绕不开的词是<span class="term">市盈率</span>,简称 <span class="term">PE</span>:股价除以每股盈利。公司每股赚五元、股价一百元,<span class="term">PE</span> 就是二十倍。它粗略回答一个朴素的问题:市场愿意为这家公司每赚一元的利润,掏出多少钱?二十倍,就是掏二十元。</p><p>第二个常用的是<span class="term">市净率</span>,简称 <span class="term">PB</span>:股价除以每股净资产。谁最爱看它?银行、保险、周期行业——这些玩家资产负债表就是命根子。除此之外,还有市销率、股息率、企业价值倍数等等,各自管一片。</p><p>顺手拆一个新手最常踩的坑:低<span class="term">市盈率</span>陷阱。周期行业的公司,在利润登上山顶的那一年,每股盈利特别高,<span class="term">PE</span> 算出来反而特别低,看着像捡便宜。可一旦行业转冷,利润从山顶滑落,同样的股价对应缩水的盈利,<span class="term">PE</span> 被动抬高,股价往往先跌为敬。所以看倍数,先问一句:眼下这份盈利,站在周期的什么位置?</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>但请记住这些倍数的定位:它们不是估值答案,而是估值语言。二十倍 <span class="term">PE</span> 贵不贵?答案永远是“看情况”——看公司增长、利润质量、行业空间、利率环境、风险。一家公司利润稳定但不增长,二十倍可能嫌贵;另一家公司高质量增长了很多年,二十倍反而可能不贵。倍数只能帮你把话说清,不能替你把决定做了。</p></div>
-
-        <h3>2.5. 把未来的钱折回今天</h3>
-<p>倍数之外,还有一条更底层的估值思路:一家公司值多少钱,取决于它未来能给股东的现金流,折算回今天值多少钱。这个方法叫折现现金流。不必急着学复杂模型,先立住一个直觉:未来的钱不等于今天的钱——越晚到手的钱、越没把握的钱,今天看就越不值钱。</p><p>配一组数字找感觉。假设一家公司未来每年能稳定给股东十元现金,而大家要求的回报是百分之十,那么这串未来现金流,今天大概值一百元上下。现在只改一个变量:要求回报降到百分之五,估值立刻抬高;升到百分之十五,估值马上缩水。现金流一分还没变,价格却随<span class="hl">“要求回报”</span>起舞。</p><p>这<span class="hl">“一百元上下”</span>是怎么来的?你自己就能复算:想每年回报百分之十、且每年拿到十元,需要投的本金正好是一百元——一百元的百分之十就是十元。要求回报降到百分之五呢?一百元的百分之五只有五元,不够,得投两百元,两百元的百分之五才够每年十元,于是估值抬到约两百元。要求回报升到百分之十五,倒过来算,十元除以 0.15 约等于六十七元,估值立马缩水到约六十七元。</p><p>盯住这条算式链:现金流一个字没改,动的只是<span class="hl">“要求回报”</span>这一个旋钮,估值却从约六十七元荡到约两百元,差出近三倍。所以折现现金流模型的输出,对输入的折现率几乎过敏——这正是后面要讲的<span class="hl">“假设管理”</span>的第一个现场。</p><div class="callout callout--note reveal"><span class="callout__title">一个旋钮,三倍估值差</span><p>手算复现:公司每年稳定给股东十元。要求回报百分之十,这串现金流值一百元——一百的百分之十正好是十。要求回报降到百分之五,得投两百元才够每年十元,估值抬到约两百;升到百分之十五,十元除以 0.15 约等于六十七元。现金流一个字没改,只拧了<span class="hl">“要求回报”</span>这一个旋钮,估值从约六十七荡到约两百,差出近三倍。</p></div><p>这就解释了为什么利率能遥控股票估值:利率越高,投资者要求的回报越高,未来的现金流折回今天就打折越狠。那些利润大头在很远未来的公司,对折现率尤为敏感——他们的故事讲得再漂亮,利率一起风,估值先着凉。</p>
-
-        <h3>2.6. 估值不是精确答案,而是条件判断</h3>
-<p>估值最害人的用法,是把模型算出来的那个数当真理。你以为在做物理,其实在做假设管理:增长率换一个数,利润率换一个数,折现率换一个数,结果可能差出好远。模型的精确,常常是一种错觉。</p><p>更靠谱的用法,是把估值变成一连串条件判断:如果公司未来五年保持增长,现在的价格大概合不合理?如果增长放慢,还剩多少安全边际?如果利率上升,估值要被压缩掉几成?别求一个<span class="hl">“算准”</span>的数,求对各种<span class="hl">“如果”</span>都心里有数。</p><p>什么叫<span class="hl">“对各种如果心里有数”</span>?教你一个倒推法:先别问<span class="hl">“它值多少钱”</span>,先问<span class="hl">“现在的价格隐含了什么假设”</span>。比如你按合理折现率倒算,发现现价需要公司未来五年每年增长百分之二十才撑得住——问题立刻从<span class="hl">“贵不贵”</span>变成<span class="hl">“百分之二十你信不信”</span>。一个模糊的估值争论,被换成一个能查证、能辩论的具体判断,这才是估值模型真正的用法。</p><p>投资的本质,不是在不确定的世界里找一个永远正确的估值数字,而是判断赔率。更关键的是想清楚:我赚的到底是哪一种钱——公司增长的钱、估值修复的钱、分红的钱,还是市场情绪的钱?前三种能算账,最后一种靠的是人心。</p><p>人心的凶险,有个专门讲给程序员听的故事,主角是人类历史上最聪明的大脑之一:艾萨克·牛顿。<span class="num">1720 年</span>,英国南海公司的股票被炒得飞起,牛顿早期买入,获利约翻倍、赚了几千英镑,冷静离场——到这一步,他都是对的。可眼见股价还在往上冲,身边人一个个暴富,他坐不住了,在接近顶部的位置高价杀了回去。随后泡沫破裂,他亏掉约两万英镑,相当于他好几年的收入,换算成今天是三百多万英镑。据说余生里,他不许任何人在他面前提起<span class="hl">“南海”</span>两个字。</p><div class="callout callout--note reveal"><span class="callout__title">牛顿两次出手,一对一错</span><p>划重点:<span class="num">1720 年</span>南海泡沫,牛顿早期买入、获利约翻倍、冷静离场——这一步他是对的;亏钱的是第二次:眼看身边人暴富,他在接近顶部高价杀回,随后亏掉约两万英镑,相当于他好几年的收入。第一次卖,是看清了贵;第二次买,是败给<span class="hl">“别人都在赚,就我没赚”</span>。</p></div><p>牛顿算得清天体运行,却算不准人心的疯狂。他第一次卖,是看清了贵;真正亏钱的,是第二次追高——那个<span class="hl">“别人都在赚,就我没赚”</span>的念头。这正是<span class="hl">“市场情绪的钱”</span>最凶险的地方:它专挑最热的时刻诱惑你进场。记住牛顿这门课的板书:估值一半是算账,另一半是管住自己不被情绪带走。</p>
-
-        <h3>2.7. 估值和公司行为怎样进入模型</h3>
-<p>量化股票研究会成吨地使用估值和公司行为数据:<span class="term">PE</span>、<span class="term">PB</span>、股息率、回购、增发、分红、盈利增速、现金流质量……它们能变成因子,也能变成控制变量,几乎是股票量化的每日口粮。</p><p>但这些数据,恰恰是最容易出错的一批。财报有披露日,公司行动有除权除息日,复权因子会随时间变化——今天数据库里那份<span class="hl">“看起来早就知道”</span>的数据,回到当时根本不存在。你绝不能拿着今天修正好的完整数据,回到过去<span class="hl">“假装知道”</span>、做交易。</p><p>这种<span class="hl">“假装知道”</span>具体怎么发生?最常见的入口是财报。一份年报的报表截止日是十二月三十一日,但市场真正读到它,是几个月之后的披露日。你回测次年一月的买入信号时,如果顺手用了这份年报的利润,等于让模型在一月就读到了几个月后才公开的数字——收益曲线随即漂亮得失真。这就是前面章节警告过的未来函数:偷看未来,回测就撒谎。</p><p>所以估值因子这东西,看起来简单,真正做对很难。公式人人会算,难的是两条纪律:第一,保证模型当时看到的,只是当时真实可得的数据;第二,交易价格和复权收益的口径不混用。守住这两条,数据才肯说实话。</p>
+        <h2>8. 为什么量化也要懂银行和央行</h2>
+<p>有人觉得量化就是盯着股票价格找规律,银行的事离自己很远。错。利率、信用、银行资产负债表、流动性,全都会渗进市场:银行体系一紧张,<a class="term term-link" href="glossary.html#g-信用利差" title="查看术语：信用利差">信用利差</a>可能扩大,股市风险偏好可能跳水,货币市场利率可能异常,高<span class="term">杠杆</span>策略可能被迫割肉减仓。水面以下的机关,水面上的每个价格都感觉得到。</p><p>拆开看就更具体了:做债券策略,绕不开<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>、信用和央行政策;做股票策略,得懂利率为什么会影响估值;做多资产配置,必须跟踪信用周期和流动性松紧。懂不懂这一层,策略的稳健性差得很远。</p><p>这层知识落到策略细节上,甚至会救命。带<span class="term">杠杆</span>的策略,<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>里常默认融资利率恒定;可真实世界里流动性一紧,融资利率飙升、额度收紧,甚至被强制平仓。把这些机制从模型里删掉,等于假设海永远平静。只教你看价格曲线的课程,给你的只是半张地图——另外半张,画着利率、信用和水位。</p><p>最怕的是这种模型:只看历史价格,训练期风平浪静、回测曲线漂亮,可它完全不知道自己活在什么样的利率、信用和流动性环境里。等金融条件一变天,它束手无策——不是模型笨,是它从没见过海的另一副脸色。</p>
 
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>股票代表公司所有权的一小份,不是固定收益合同。</li>
-            <li>股东拿剩余收益,所以风险更高,上行空间也更大。</li>
-            <li>增发、配股、可转债、回购、分红都会改变股东的权利和现金流。</li>
-            <li>PE、PB 等估值倍数是语言,不是自动答案。</li>
+            <li>银行不是保险柜,而是一张连接存款、贷款和资本的资产负债表。</li>
+            <li>贷款会创造存款,但资本、流动性、监管和坏账风险把它牢牢拴着。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.1.</strong> 先从一家小店说起</li>
-            <li><strong>1.2.</strong> 股东排在最后,所以风险和机会都大</li>
-            <li><strong>1.3.</strong> 股价、股份数和市值</li>
-            <li><strong>1.4.</strong> 分红不是白送钱</li>
-            <li><strong>1.5.</strong> 股票收益来自哪里</li>
-            <li><strong>1.6.</strong> 一级市场和二级市场再回看股票</li>
-            <li><strong>1.7.</strong> 股票和量化有什么关系</li>
-            <li><strong>2.1.</strong> 公司为什么还会再融资</li>
-            <li><strong>2.2.</strong> 回购和分红有什么不同</li>
-            <li><strong>2.3.</strong> 拆股、送股和复权</li>
-            <li><strong>2.4.</strong> 倍数不是答案,是语言</li>
-            <li><strong>2.5.</strong> 把未来的钱折回今天</li>
-            <li><strong>2.6.</strong> 估值不是精确答案,而是条件判断</li>
-            <li><strong>2.7.</strong> 估值和公司行为怎样进入模型</li>
+            <li><strong>1.</strong> 银行明明没破产,大家为什么还是要抢着跑</li>
+            <li><strong>2.</strong> 银行不是保险柜</li>
+            <li><strong>3.</strong> 一张极简资产负债表</li>
+            <li><strong>4.</strong> 贷款为什么会创造存款</li>
+            <li><strong>5.</strong> 银行靠什么赚钱,又怕什么</li>
+            <li><strong>6.</strong> 信心为什么这么重要</li>
+            <li><strong>7.</strong> 央行像金融系统的水位调节器</li>
+            <li><strong>8.</strong> 为什么量化也要懂银行和央行</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>买股票是在借钱给公司吗?</summary>
-            <p>不是。买股票是买公司所有权的一小份;借钱给公司做债权人,那更像买债券或发放贷款。</p>
+            <summary>你账户里的存款,对银行来说为什么是负债?</summary>
+            <p>因为那是银行欠你的钱——你随时有权要求兑付,欠你的当然要记在负债端。</p>
           </details>
           <details class="quiz__item">
-            <summary>为什么股价低不代表公司便宜?</summary>
-            <p>因为还要乘上总股数看市值:十元股指不定对应一家二百亿市值的公司,一百元股整体反而可能只有一百亿。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>增发一定是坏事吗?</summary>
-            <p>不一定。它会稀释股份,但如果融来的钱能创造更高回报,蛋糕做大,长期反而可能有价值。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>拆股会让股东凭空变富吗?</summary>
-            <p>不会。股数变多、每股价格相应下调,总价值不因拆股本身增加——变的只是计量单位。</p>
+            <summary>贷款为什么会创造存款?</summary>
+            <p>银行放贷时不是搬钱,而是同时记两笔账:资产端多一笔贷款,负债端往借款人账户上写入一笔存款,体系里的存款因此变多。</p>
           </details>
         </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>金融系统与市场: 钱、风险和证券如何流动</h2>
+          <p>把金融系统的参与者、资金与风险流向,和证券发行、交易、清算、交收放进同一张地图。</p>
+        </section>
+
       </div>
     </main>
     <script src="assets/book.js"></script>

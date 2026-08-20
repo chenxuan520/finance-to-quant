@@ -3,245 +3,223 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 32 章 · 心理、资金管理与一次复盘 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="讲清仓位、杠杆、回撤承受力、执行纪律、策略停用和个人资金边界。 / 用故事方式复盘一个从年化很高到逐步修正为普通策略的过程,训练读者查错顺序。" />
+    <title>第 32 章 · 从预测到仓位: 组合优化和风险模型 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="解释为什么量化模型输出分数后,还要经过风险约束、成本模型和组合优化。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="32">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第六部分 · 项目实战与工程化 · 第 32 章</p>
-        <h1>心理、资金管理与一次复盘</h1>
-        <p class="lead">技术之外,能不能活下来,往往取决于心理和资金管理。这一章先讲为什么“活下来比一次赚快钱更重要”:仓位怎么定、亏损怎么扛、情绪怎么不被行情牵着走;再用一个复盘案例,完整拆开一条看起来很漂亮的回测曲线,看它是怎么在偷看未来、幸存者偏差和成本假设上一步步被拆穿的。纸面收益和真实收益之间,隔着的正是这些。</p>
+        <p class="chapter__eyebrow">第五部分 · 量化研究如何产生可信结论 · 第 32 章</p>
+        <h1>从预测到仓位: 组合优化和风险模型</h1>
+        <p class="lead">量化研究员忙完一阵,手里通常是一列预测分数: 哪些股票更可能跑赢,哪些更可能跑输。你可能会以为下一步很简单——把分最高的买满就行。但真实投资恰恰不是这么干的。你还要控制行业、风格、市值、个股集中度、换手、交易成本和流动性。预测告诉你想要什么,组合优化决定你能以什么代价、承担什么风险去实现它。这一章讲的就是这中间隔着的那道工序。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线五</span>
+            <span>本部分第 5 / 10 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>一个金融判断怎样变成可证伪假设,再经过数据、回测、模型和实盘约束?</p>
+          <p class="chapter-context__outcome">读完后,你能从问题出发完成研究闭环,而不是先找模型、再给结果编故事。 </p>
+        </section>
+
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>个人量化必须先分清生活钱和风险钱,仓位高低决定你能不能扛过回撤。</li>
-            <li>杠杆、借钱和盈利后加仓都会放大错误,应对它们只能靠事前写好的规则。</li>
-            <li>漂亮回测先查错再欣赏,重点查股票池、时间顺序、成本、交易限制、容量和参数稳定性。</li>
-            <li>每补上一个现实约束,收益下降是正常的;真实结果比虚假高收益有价值得多。</li>
+            <li>模型分数不能直接等于仓位,中间还要过风险、成本、流动性和产品约束这几道关。</li>
+            <li>风险模型帮你拆出市场、行业、风格和个股特有风险,避免把暴露误认成能力。</li>
           </ul>
         </section>
 
 
-        <h2>1. 活下来比一次赚快钱重要</h2>
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 2007 年 8 月,互不相识的量化基金一起卖出了同样的股票</h2>
+<p><span class="num">2007 年</span> <span class="num">8 月</span>初,多家采用多空<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>策略的量化基金突然在几天内同步大亏。它们并没有共同收到一条公司坏消息,模型代码也不相同;真正的共同点藏在仓位里:许多团队都偏爱相似的便宜、优质或短期<span class="term">反转</span>股票,也在做空相似的另一侧。</p><p>当其中一些资金因别处亏损或风险限制开始去<span class="term">杠杆</span>,卖出的正是同行也持有的多头,买回的又是同行共同做空的股票。价格变化触发更多模型减仓,减仓继续制造价格变化。原本看似分散的独立策略,在同一扇出口前变成了一群人。</p><p>组合优化如果只用历史波动和相关性,很难看见<span class="hl">“别人也持有什么”</span>。拥挤度、容量、共同<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>暴露和强制减仓路径,都是风险模型必须补上的现实变量。市场最危险的相关性,有时不是资产天生相似,而是持有它们的人在同一天需要现金。</p>
+        </section>
 
-        <h3>1.1. 先分清生活钱和风险钱</h3>
-<p>个人投资的第一课不是选策略,是先给口袋里的钱打标签。房租、生活费、医疗、家庭应急、短期学费,以及未来确定要用的钱,都不该放进高波动策略里。只有那部分亏得起、等得起、长期用不上的钱,才有资格叫风险资金。</p><p>很多人亏大钱,不是因为策略多复杂,而是把不能亏的钱拿去赌。钱一旦带着明确用途,市场波动就不再是数字波动,而是生活压力:你会被迫在低点割肉,或者为了回本去加<span class="term">杠杆</span>,一步错,步步错,越陷越深。</p><p>量化项目实盘之前,先白纸黑字写资金边界:总资金多少,最多投入多少,最大可承受亏损多少,亏到哪里必须停,这笔钱多久之内用不上。没有这些边界,策略再科学也没用——真到了波动里,接管账户的是情绪,不是代码。</p>
-
-        <h3>1.2. 仓位决定你能不能坚持</h3>
-<p>同一个策略,仓位不同,完全是两种人生。<span class="num">10%</span> 仓位亏 <span class="num">20%</span>,账户只亏 <span class="num">2%</span>,你还有心情冷静复盘;<span class="num">100%</span> 仓位亏 <span class="num">20%</span>,账面直接掉五分之一,人很难不难受;加 <span class="num">2 倍</span><span class="term">杠杆</span>再亏 <span class="num">20%</span>,账户可能亏掉 <span class="num">40%</span>,甚至触发强平。策略没变,是你给情绪留的空间变了。</p><p>所以仓位不是收益旋钮,不是觉得策略好就一把拉满。仓位该由什么决定?策略的波动、历史<span class="term">最大回撤</span>、你个人的承受力、资金的用途,还有它和你其他持仓的相关性。这几样没算清之前,拉满仓位不叫自信,叫裸奔。</p><p>个人做量化,完全可以先用很小的仓位验证流程。小仓位赚得少,但它让你用真实市场学成交、费用、滑点、心理压力和复盘。先把流程跑稳,再慢慢谈加仓——顺序反过来,学费会贵得多。</p><div class="callout callout--note reveal"><span class="callout__title">仓位是波动率按钮,不是信心奖杯</span><p>同一个策略,仓位从一成到满仓再到<span class="term">杠杆</span>,体验从<span class="hl">“冷静复盘”</span>一路滑到<span class="hl">“强平出局”</span>——策略没变,变的是你给情绪留了多少空间。仓位该由策略波动、历史<span class="term">最大回撤</span>、资金用途和你的承受力共同决定,不由<span class="hl">“我最近感觉很好”</span>决定。信心好的时候更要把仓位交给事前写好的规则,因为那时恰恰是你最容易高估自己的时候。</p></div>
-
-        <h3>1.3. 杠杆会压缩犯错空间</h3>
-<p><span class="term">杠杆</span>表面上放大的是收益,实际上同步放大的是失败速度。没有<span class="term">杠杆</span>,策略回撤了你还有时间坐下来修;上了<span class="term">杠杆</span>,同样的回撤可能直接触发追加<span class="term">保证金</span>、强制平仓,或者你的心理先崩。时间这个缓冲垫,被<span class="term">杠杆</span>抽走了。</p><p><span class="term">杠杆</span>还会助长人性里的每个坏毛病:亏损之后想加仓一把回本,上涨之后想乘胜继续放大,连续赚钱之后觉得自己看懂了市场。这些冲动在无<span class="term">杠杆</span>时已经危险,叠上<span class="term">杠杆</span>,就是给自己装了个加速器。</p><p>新手别把<span class="term">杠杆</span>当入门工具。先在无<span class="term">杠杆</span>的环境里,把数据、回测、成本、风控和心理全部训练到位。什么时候你能说清楚最坏情况,能承受强制平仓,能处理<span class="term">保证金</span>和流动性问题,再来谈<span class="term">杠杆</span>也不迟。</p>
-
-        <h3>1.4. 回撤里最容易做错决定</h3>
-<p>策略一进入回撤,你心里那个声音就开始问:模型是不是失效了?问本身没错,因为每个策略都会回撤;真正的难题是判断——这是正常波动,还是策略逻辑坏了?没有事先写好的规则,这个问题就会被你的情绪抢答。</p><p>可以提前写三层规则。第一层:回撤在历史正常范围内,什么都不动,继续观察。第二层:回撤超过历史某个分位,或者持续时间长得反常,降低仓位并复盘。第三层:出现数据异常、模型反向、风险暴露越界、亏损超出承受能力,暂停策略。每一层的触发条件,都在冷静的时候写好。</p><p>这套规则的目的不是机械止损,而是把情绪决策改造成流程决策。回撤中最典型的错误,就是在最低点临时把策略停掉,等反弹起来又追回去——规则存在的意义,就是拦住那个深夜里想砸键盘的自己。</p><div class="callout callout--note reveal"><span class="callout__title">先把规则写下来,再让交易发生</span><p>回撤中最危险的问题——<span class="hl">“模型是不是失效了”</span>——绝不能留给当时的自己回答。冷静时把三层规则写好:正常波动,不动;回撤超历史分位或持续反常,降仓复盘;数据异常、模型反向、超出承受力,暂停。规则的意义不是预测,是把深夜那个想砸键盘的自己拦在键盘外面。</p></div>
+        <h2>2. 预测分数不是仓位</h2>
+<p>模型输出的通常是预期收益、排序分数或概率。它只能说明模型相对看好或看空哪些股票,并不直接等于买多少。分数最高的股票,可能<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>差,可能已经涨停买不到,可能和你组合里的已有持仓高度相关,也可能让行业暴露超标。</p><p>来看一个具体场景。模型给某只小盘股打了最高分,但它每天成交额只有 <span class="num">2000 万元</span>,而你的产品规模有 <span class="num">20 亿元</span>。直接按分数买入 <span class="num">5%</span> 仓位,就是要买 <span class="num">1 亿元</span>——相当于吃掉很多天的成交量,价格会被你自己一路推上去。预测再强,也绕不开成交能力这堵墙。</p><p>所以组合构建的目标,是把预测翻译成可执行仓位,在收益、风险、成本、流动性和约束之间折中。量化行业里,预测模型和组合优化通常是两层系统: 一层负责<span class="hl">“想要什么”</span>,一层负责<span class="hl">“能实现多少”</span>。把两层混成一个简单排序,是很多业余策略和专业策略的分水岭。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 305" role="img" aria-label="亏损回本非对称示意:亏损越大,回到本金需要的涨幅急剧变大">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">亏得越多,回本要涨得越狠(先活下来)</text>
-            <line x1="110" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <line x1="110" y1="55" x2="110" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <text x="90" y="60" text-anchor="end" fill="#8499bd" font-size="12.5">回本涨幅</text>
-            <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">亏损幅度</text>
-            <!-- 柱子:亏损 vs 需要涨幅 -->
-            <rect x="160" y="228" width="60" height="22" fill="rgba(122,167,240,0.5)"/><text x="190" y="222" text-anchor="middle" fill="#c9d4e8" font-size="12">亏10%→涨11%</text>
-            <rect x="320" y="200" width="60" height="50" fill="rgba(240,201,106,0.5)"/><text x="350" y="194" text-anchor="middle" fill="#c9d4e8" font-size="12">亏30%→涨43%</text>
-            <rect x="480" y="150" width="60" height="100" fill="rgba(240,150,90,0.6)"/><text x="510" y="144" text-anchor="middle" fill="#c9d4e8" font-size="12">亏50%→涨100%</text>
-            <rect x="640" y="75" width="60" height="175" fill="rgba(232,120,120,0.6)"/><text x="670" y="69" text-anchor="middle" fill="#ffb4b4" font-size="12">亏80%→涨400%</text>
-            <text x="450" y="290" text-anchor="middle" fill="#c9d4e8" font-size="13">亏损和回本不对称:亏 50% 要涨 100% 才回本,亏 80% 几乎回不来</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="五步流水线:模型打分、组合约束、目标组合、对比现持仓、拆成订单,每步标注输入输出">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">从分数到订单:五步流水线,每步都可能改形</text>
+            <defs>
+              <marker id="d11a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker>
+            </defs>
+            <!-- 五个步骤框 -->
+            <rect x="30" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="105" y="112" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">① 模型打分</text>
+            <text x="105" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">每只股一个分</text>
+            <text x="105" y="156" text-anchor="middle" fill="#8499bd" font-size="11">输入:因子值</text>
+            <text x="105" y="174" text-anchor="middle" fill="#8499bd" font-size="11">输出:预期收益排序</text>
+            <rect x="202" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="277" y="112" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">② 组合约束</text>
+            <text x="277" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">单票上限·行业上限</text>
+            <text x="277" y="156" text-anchor="middle" fill="#bcc9dd" font-size="11.5">跟踪误差预算</text>
+            <text x="277" y="174" text-anchor="middle" fill="#8499bd" font-size="11">分数不是仓位,先过笼头</text>
+            <rect x="374" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="449" y="112" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">③ 目标组合</text>
+            <text x="449" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">一张目标权重表</text>
+            <text x="449" y="156" text-anchor="middle" fill="#8499bd" font-size="11">它还不存在</text>
+            <text x="449" y="174" text-anchor="middle" fill="#8499bd" font-size="11">只是计算的结果</text>
+            <rect x="546" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="621" y="112" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">④ 对比现持仓</text>
+            <text x="621" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">目标 vs 实有</text>
+            <text x="621" y="156" text-anchor="middle" fill="#8499bd" font-size="11">差出来的才是交易</text>
+            <text x="621" y="174" text-anchor="middle" fill="#8499bd" font-size="11">差得多 = 换手高 = 成本高</text>
+            <rect x="718" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(232,120,120,0.45)"/>
+            <text x="793" y="112" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">⑤ 拆成订单</text>
+            <text x="793" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">按时间/价格平滑拆单</text>
+            <text x="793" y="156" text-anchor="middle" fill="#8499bd" font-size="11">市价·限价·算法单</text>
+            <text x="793" y="174" text-anchor="middle" fill="#8499bd" font-size="11">下单前三检查拦截</text>
+            <!-- 连线 -->
+            <line x1="180" y1="143" x2="198" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
+            <line x1="352" y1="143" x2="370" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
+            <line x1="524" y1="143" x2="542" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
+            <line x1="696" y1="143" x2="714" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
+            <text x="450" y="248" text-anchor="middle" fill="#eef4f8" font-size="14">每一步都在"变形":分数→满足约束的组合→和现在不同的差→一条条订单</text>
+            <text x="450" y="274" text-anchor="middle" fill="#c9d4e8" font-size="12.5">失误排查从后往前查:先看订单是不是下错,再看持仓对没对,最后才怪模型分数</text>
           </svg>
-          <p class="figure__cap">这张图是“活下来比赚快钱更重要”的数学原因:亏 10% 涨 11% 就回本,但亏 50% 要涨整整 100%,亏 80% 得涨 400%。控制回撤,不是胆小,是保命。</p>
+          <p class="figure__cap">分数一路到订单要经过五道工序:打分、过约束、成目标、比现仓、拆订单。故事从后往前排查:订单下错最先看订单系统,组合走形先看约束,最后才轮到怪模型。</p>
         </div>
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 365" role="img" aria-label="回撤不对称复原图:净值从 1.2 跌到 0.6 又是怎么必须再涨 100% 才能回本">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回撤不对称:跌 50% 要涨 100% 才能回本</text>
-            <line x1="80" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
-            <line x1="80" y1="60" x2="80" y2="300" stroke="#8499bd" stroke-width="2"/>
-            <text x="92" y="66" fill="#bcc9dd" font-size="12">净值</text>
-            <path d="M 85 200 Q 200 170 330 190 Q 420 200 450 205 Q 500 285 620 275 Q 740 260 815 220" fill="none" stroke="#a8c6ff" stroke-width="3"/>
-            <circle cx="85" cy="200" r="5" fill="#8fb37a"/>
-            <text x="85" y="188" fill="#8fb37a" font-size="12" font-weight="800">起点 1.0</text>
-            <circle cx="450" cy="205" r="5" fill="#f0c96a"/>
-            <text x="450" y="193" fill="#f0c96a" font-size="12" font-weight="800">高点 1.2</text>
-            <circle cx="620" cy="275" r="5" fill="#ee8877"/>
-            <text x="620" y="295" fill="#ee8877" font-size="12" font-weight="800">谷底 0.6(-50%)</text>
-            <line x1="450" y1="205" x2="810" y2="205" stroke="#8fb37a" stroke-width="2" stroke-dasharray="8 6"/>
-            <text x="810" y="200" fill="#8fb37a" font-size="12">得回到 1.2 才算回本</text>
-            <text x="450" y="338" text-anchor="middle" fill="#bcc9dd" font-size="12.5">数学只有一句:1.2 → 0.6 是 -50%,0.6 → 1.2 是 +100%;从深坑里爬出的代价比你想象贵上一倍——这就是止损要卡的死死的原因</text>
-          </svg>
-          <p class="figure__cap">跌 50% 不是利润的一半失去,是必须再赚 100% 才回得来。同哲学只能弥补的是止损和仓位——越往下亏,能回到起点的天数越长,这就是何时控制的设置在绝对值上。</p>
-        </div>
-        <h3>1.5. 盈利后也会犯错</h3>
-<p>连续赚钱是另一种危险。赚的多了,人容易过度自信:觉得策略已经被充分证明,于是加仓、放宽风控、减少检查、懒得看成本。很多大亏不是发生在策略刚上线的时候,而是发生在连续成功之后。</p><p>所以盈利阶段同样要复盘,问的问题比亏损时更扎心:收益来自模型能力,还是市场风格顺风?风险暴露有没有悄悄上升?换手和成本有没有变化?规模大了之后滑点有没有增加?如果答案是顺风,那此刻加仓,很可能刚好加在风格的尾部。</p><p>资金管理里要写清加仓条件,比如:模拟盘已经稳了多久,小实盘跑了多久,<span class="term">最大回撤</span>是否在预期内,对账是否稳定,成本是否符合假设。条件没到就跳级加仓,和没压测就扩十倍流量是同一个味道。</p>
+        <h2>3. 你承诺偏离多少</h2>
+<p>如果产品是指数增强,组合就要围绕某个指数基准来建。比如<span class="term">中证 500</span> 指数增强: 客户掏钱买的是一个承诺——大体跟住<span class="term">中证 500</span>,同时多赚一些<span class="term">超额收益</span>。组合不能因为模型一时看好银行股,就把大量仓位搬进银行,完全跑出<span class="term">中证 500</span> 的形状。那不叫指数增强,叫换了底仓。</p><p>这类承诺落到纸面上,就是基准约束: 个股相对权重、行业偏离、风格偏离和<a class="term term-link" href="glossary.html#g-跟踪误差" title="查看术语：跟踪误差">跟踪误差</a>。跟踪误差用大白话讲,就是组合收益偏离基准收益的幅度有多大。跟踪误差越小,组合越像指数,超额空间也可能越小;跟踪误差越大,组合越自由,但客户承担的偏离风险也越大。</p><p>这就是指数增强的核心取舍: 想多赚 <a class="term term-link" href="glossary.html#g-alpha" title="查看术语：Alpha">Alpha</a>,就得允许一些偏离;但偏离太大,产品就不再像它承诺的那个东西。组合优化器的活儿,就是把这种<span class="hl">“承诺”</span>翻译成数学约束,写进求解过程里。</p><div class="callout callout--note reveal"><span class="callout__title">跟踪误差预算,是写给未来自己的借条</span><p>定下 <span class="num">4%</span> 的跟踪误差上限,等于提前签好一张借条:平时风平浪静没人看,等组合连续跑输基准三个月,客户和渠道都会拿着这张纸来敲门。教训通常集中在那天到齐:预算定小了,超额施展不开;定大了,持有人先熬不住。定预算别拍脑袋——<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>里把历史上最难熬的几段偏离翻出来,看自己睡得着觉的上限到底在哪一格。</p></div>
 
-        <h3>1.6. 借钱投资为什么危险</h3>
-<p>借钱投资,本质是把市场风险变成了债务风险。投资亏了,你眼睁睁看着账户变少,同时每个月还得照还固定的债务。市场不会因为你下个月要还款,就好心地涨一波救你。</p><p>很多投资灾难的剧本都是借钱加仓:上涨时显得格外聪明,下跌时,现金流压力和心理压力一起爆炸。哪怕你的策略长期真有优势,短期的亏损也可能先把你赶出局——长期收益再美,也只属于活到长期的人。</p><p>个人学量化,尤其不要拿借来的钱实盘。学习本身必然附带错误成本,再用借来的钱去付这笔学费,等于给学习过程加了利息,风险高得完全没有必要。</p>
-
-        <h3>1.7. 策略停用和重新启用</h3>
-<p>策略不是上线之后就永远跑下去。它可能需要降权、暂停、修复、下线,停用规则必须提前写好,比如:数据异常,交易成本超过阈值,滚动 <span class="term">IC</span> 长期为负,回撤超出预期范围,风控边界被踩。触发哪条,执行什么动作,事先定死。</p><p>重新启用同样要有规矩。不能策略一停、第二天看见它反弹,就手痒立刻恢复——那等于停用白停了。恢复的前提是逐项确认:数据恢复正常,模型表现解释得清楚,风险回到范围内,模拟运行稳定。</p><p>停用和启用都要留痕:什么时候停的,为什么停,停之后发生了什么,什么时候恢复的,恢复依据是什么。没有这些记录,团队也好、个人也好,都会在同一个坑里反复摔。</p>
-
-        <h3>1.8. 把投资当长期训练</h3>
-<p>学量化不是几周之内找到一台提款机。更现实的目标是把它当长期训练:看懂金融机制,搭起研究系统,发现并修正错误,最后形成一套适合自己的投资纪律。进度慢不可怕,跑偏才可怕。</p><p>把每个项目都看成训练样本:一个失败的因子,教会你数据对齐;一个亏损的模拟盘,教会你成本和执行;一次回撤,教会你认识自己的风险承受力。只要本金和心态还在,每一次失败都是训练材料,不是终点。</p><p>这就是为什么<span class="hl">“活下来”</span>排在<span class="hl">“赚快钱”</span>前面。一次重仓爆亏,会直接剥夺你继续学习的资格。稳健推进看起来慢,但它让你活着留在牌桌上,让能力有时间复利。</p>
-
-        <h3>1.9. 写给计算机背景读者的提醒</h3>
-<p>工程世界里,系统出错可以回滚版本;投资世界里,亏损不能回滚。你可以修代码,市场不会退钱。就这一条差异,决定了金融系统必须比普通项目更谨慎——发布之前,把回滚不了的部分多检查几遍。</p><p>还要早点接受一件事:模型准确率高,不代表账户舒服。策略会有回撤,实盘会有滑点,数据会坏,你会紧张。把这些统统当作系统设计的一部分,而不是上线后的意外,才算真正从工程跨进了金融。</p><p>最后一句,别用聪明替代纪律。聪明负责发现想法,纪律负责不让这些想法变成灾难。两者分工明确,一个都不能翘班。</p><div class="callout callout--note reveal"><span class="callout__title">成功率代替不了期望值</span><p>发布十次成功九次,第十次把库删了,前面的成功全部清零——金融里没有回滚键,同理格律更硬:一个策略可以七成交易都赚钱,最后一次大亏就把利润全数归还。所以别只数成功率,要算期望:平均赚多少、平均亏多少、最坏一次多深,三笔账放一起再谈仓位。坏情况的尺寸,永远比好情况的频率值钱。</p></div>
-
-        <h3>1.10. 个人资金管理清单</h3>
-<p>第一,这笔钱多久不用?第二,最大能亏多少还不影响生活?第三,单个策略最多占总资产多少?第四,是否使用<span class="term">杠杆</span>?第五,亏到哪里暂停?第六,盈利到哪里才允许加仓?</p><p>第七,多久复盘一次?第八,每次手工干预是否记录在案?第九,几个策略之间是否高度相关?第十,如果连续三个月亏损,你还能不能按规则执行?把这十题答完,比纠结下一只股票买什么重要得多。</p><p>把清单写下来,放在实盘脚本旁边。市场剧烈波动的时候,你需要看到的不是行情,而是自己冷静时亲手写下的规则。</p>
-
-        <h2>2. 一条漂亮回测曲线是怎样被拆穿的</h2>
-        <p>这一章讲一个虚构但你一定会觉得眼熟的故事。一个新手做出一条年化 45%、最大回撤 8% 的股票策略曲线,兴奋得以为自己摸到了量化圣杯。别急,我们一起当他的代码审查员,一步步检查:数据时间、股票池、成交价格、成本、停牌涨跌停、容量、样本外。每揪出一个错误,曲线就掉一截。故事结束时,策略不再神奇,但研究终于变得真实——而后者值钱得多。</p>
-
-        <h3>2.1. 曲线好得不像真的</h3>
-<p>故事主角是个量化新手,策略简单到三句话能讲完:每月底,选过去 <span class="num">20 日</span>涨幅最高的 30 只股票,下个月持有,每月换仓一次。跑完十年回测,他盯着屏幕愣住了:<span class="term">年化收益</span> <span class="num">45%</span>,<span class="term">最大回撤</span>只有 <span class="num">8%</span>,<span class="term">夏普</span> 2 以上,几乎每年都跑赢指数。</p><p>看到这种曲线,第一反应不该是庆祝,而该是怀疑。想想这组条件的含金量:A 股公开日线数据、烂大街的简单<span class="term">动量</span>、月频调仓。如果这样就能做出低回撤高收益,市场上无数双眼睛早就挤进来把收益压薄了,哪轮得到一个新手躺着捡?</p><p>好回测不是不可能出现,但越好越要查。尤其当策略简单、数据公开、成本假设宽松、结果还异常漂亮——几件事凑齐时,大概率不是挖到了金矿,而是哪里埋着 bug。</p>
-
-        <h3>2.2. 用了今天的成分股</h3>
-<p>第一刀切向股票池。一查,新手用的是当前的<span class="term">中证 500</span> 成分股名单,回测的是过去十年。也就是说,那些当时还没纳入、后来被剔除的股票全被错误处理了;表现差的、退市的、长期低迷的样本,很多被悄悄排除在外。他回测的根本不是历史,是幸存者的历史。</p><p>改成历史当时的成分股再跑:<span class="term">年化收益</span>从 <span class="num">45%</span> 直降到 <span class="num">31%</span>,<span class="term">最大回撤</span>从 <span class="num">8%</span> 升到 <span class="num">15%</span>。策略看上去还不错,但圣杯的光环已经褪了一半。</p><p>这一步的教训值得抄下来贴在墙上:股票池不是无关紧要的背景设置,它直接决定你看的是不是真实历史。凡是用到指数成分的策略,都必须用历史当时的点时成分,今天的名单只配回测今天。</p>
-
-        <h3>2.3. 当天收盘信号当天成交</h3>
-<p>接着查时间线,第二处错误浮出来:策略用每月底的收盘价计算过去 <span class="num">20 日</span>涨幅,然后假设按同一个收盘价买入。等等——收盘价是收盘之后才有的。你不能先知道收盘价,再按它成交;这就像先看到骰子点数再下注,稳赢,但赌场不允许。</p><p>把成交改成下一个交易日的开盘价,再跑:<span class="term">年化收益</span>降到 <span class="num">24%</span>,<span class="term">最大回撤</span>升到 <span class="num">18%</span>。原因很现实——月底冲得最猛的那批股票,第二天常常高开,真实买入成本比昨晚的收盘价贵出一截。</p><p>时间顺序在这里不是可以四舍五入的小数点。信号生成时间和成交时间只隔一个交易日,结果却天差地别。回测里每一条<span class="hl">“先算出数再假设成交”</span>的捷径,几乎都在偷偷使用未来信息付账。</p>
-
-        <h3>2.4. 没扣真实成本</h3>
-<p>然后翻成本设置:第一版只扣了万分之一佣金,印花税、过户费、滑点全没算。而这个策略每月整仓换一次,年换手不低——成本每补上一项,收益就要掉一截。</p><p>先加简化成本:买入 <span class="num">0.08%</span>、卖出 <span class="num">0.13%</span>,<span class="term">年化收益</span>降到 <span class="num">18%</span>。再把滑点按成交额和订单参与率动态估计,年化进一步降到 <span class="num">15%</span>。注意,到这一步策略还活着,但它已经从<span class="hl">“圣杯”</span>降级成了<span class="hl">“还行”</span>。</p><p>教训是,成本不是事后糊上去的修饰层,它是策略结构的一部分。高换手策略在扣成本前和扣成本后,完全可以是两个策略:一个富豪,一个打工人。</p>
-<p><span class="term">动量</span>策略天生偏爱近期强势股,而强势股最爱干的一件事就是涨停。第一版回测假设,只要股票存在就能按价格买入;真实市场里,涨停板一封,卖盘稀稀拉拉,你挂着买单排队,未必轮得到你。</p><p>卖出端同理:手里的弱势股一旦跌停,回测说卖就卖,实盘里你只能对着没人接的卖一排队干瞪眼。把三条规则加进去——涨停不可买、跌停不可卖、停牌不可交易——<span class="term">年化收益</span>降到 <span class="num">11%</span>,<span class="term">最大回撤</span>飙到 <span class="num">24%</span>。</p><p>这一刀扎得非常现实:很多纸面上的<span class="term">动量</span>收益,来自<span class="hl">“买到”</span>了实盘根本买不到的封板强势股。回测可以不尊重交易制度,市场可不会迁就回测。</p>
-
-        <h3>2.5. 容量过高</h3>
-<p>再看资金假设:策略设定资金规模 <span class="num">1 亿元</span>,却完全不限制成交额参与率。有些目标股票当天全市场成交额只有几千万,策略却假设自己可以稳稳买入几百万元而不惊动价格——这不是交易,这是瞬移。</p><p>加上约束:单只股票单日参与率不超过 <span class="num">10%</span>。结果是一部分订单在执行周期里根本无法完全成交,组合持仓偏离目标。<span class="term">年化收益</span>降到 <span class="num">8%</span>,<span class="term">最大回撤</span>接近 <span class="num">27%</span>。</p><p>小资金回测和大资金回测,压根不是同一个问题。容量这道坎,会把很多小票上的机会变成看得见、吃不着的纸面收益——你在图上拥有的,市场里未必领得到。</p>
-
-        <h3>2.6. 参数挑选</h3>
-<p>最后一个问题要回头追问:为什么是 <span class="num">20 日</span><span class="term">动量</span>?为什么是 30 只?为什么月频?新手挠头承认:<span class="term">动量</span>窗口试过 <span class="num">5 日</span>、<span class="num">10 日</span>、<span class="num">20 日</span>、<span class="num">60 日</span>,持仓数试过 10 只、30 只、50 只,最后从参数网格里挑了最好看的一组。</p><p>这就是参数过拟合。把完整的参数网格画出来,真相有点刺眼:只有少数几组组合表现出色,周围的参数全部平平;换到最近两年样本外,策略<span class="term">超额收益</span>接近 0。好参数不是被发现出来的,是被挑出来的。</p><p>参数当然能调,但过程必须记录、全部留痕。试了一百组只展示最好的那一组,性质和考试前偷看答案、再声称自己会做题,没有区别。</p>
-
-        <h3>2.7. 修正后的策略还能不能用</h3>
-<p>所有修正跑完,盘一下总账:策略从年化 <span class="num">45%</span>、回撤 <span class="num">8%</span>,变成年化 <span class="num">8%</span><span class="num">-12%</span>、回撤 <span class="num">25%</span> 左右,样本外还不稳定。圣杯是当不成了,但它未必一无是处,仍可能作为一个偏弱的<span class="term">动量</span>信号,进多因子模型里尽一份力。</p><p>这就是研究最真实的样子:一个想法不一定能独挑大梁,但可能贡献一点信息。量化组合往往不是靠一个神奇因子打天下,而是让许多弱信号在成本和风险约束下合力。</p><p>对新手来说,这一轮最大的进步不是保住漂亮曲线,而是学会把曲线拆开。拆完桌上还能剩下的东西,才配得上<span class="hl">“继续研究”</span>四个字。</p><div class="callout callout--note reveal"><span class="callout__title">从“圣杯”掉到“还行”,研究才算真的开始</span><p>年化从 <span class="num">45%</span> 掉到 <span class="num">8%</span>,不是研究失败了,是研究刚上路:前面那 37 个点本来就不属于你,拆穿它们等于省下一大笔实盘学费。一个研究者的成长刻度,从来不是做出多漂亮的曲线,而是把所有假象剔干净之后,桌上剩下的东西越来越少、越来越真。</p></div>
-
-        <h3>2.8. 复盘顺序</h3>
-<p>以后再遇到漂亮回测,照这个顺序查:第一,股票池是否点时;第二,数据在当时是否可见;第三,信号时间和成交时间对不对得上;第四,成本是否完整;第五,涨跌停、停牌、<span class="term">T+1</span> 是否处理。</p><p>第六,容量假设合不合理;第七,参数是否稳定;第八,样本外有没有留、有没有被污染;第九,收益是否集中在少数年份;第十,收益能不能用风险暴露解释清楚。</p><p>这个顺序比闷头调模型有用得多。很多策略根本不需要更复杂的模型,只需要先把假收益一样一样剔出去——剔完还活着的,才值得被复杂化。</p>
-<p>一轮又一轮修正,曲线一掉再掉,说不沮丧是假的。但请换个角度:你不是从 <span class="num">45%</span> 亏到了 <span class="num">8%</span>,你是从一个不真实的好结果,走到了一个可以相信的普通结果。普通但真实,永远比惊艳但虚假值钱。</p><p>专业研究的日常,就是把不真实收益一样一样拿掉:未来函数拿掉,幸存者偏差拿掉,漏算的成本补上,虚高的容量砍掉,过拟合挤掉。桌上最后剩下的那一小撮,才可能是你真正的优势。</p><p>如果修到最后什么都不剩,同样不是失败。它明明白白告诉你:这条路不值得一分钱实盘。一份诚实的回测帮你省下一大笔真金白银的亏损,这是研究阶段能做成最划算的买卖。</p>
+        <h2>4. 风险模型在估计什么</h2>
+<p>风险模型试图解释一个朴素问题: 你的组合为什么会波动? 它通常把股票收益拆成四层——市场、行业、风格和个股特有风险。市场风险来自大盘整体涨跌;行业风险来自行业共同变化;风格风险来自市值、价值、<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>、波动、质量等共同因子;个股风险来自公司自身的事件。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>这个拆分的关键用处在于: 你持有很多股票,个股特有风险会被分散掉一部分,但行业和风格风险不会自动消失。你以为买了 100 只股票已经很分散,风险模型却可能告诉你: 组合其实重仓小市值和高波动风格,一旦这些风格<span class="term">反转</span>,100 只股票会手拉手一起跌。</p></div><p>所以要明白,风险模型不是为了让投资没有风险,而是让你知道自己在承担什么风险。没有风险模型,很多收益归因会变成错觉: 看起来像选股能力,实际可能只是刚好押中了某个风格。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 395" role="img" aria-label="拆穿漂亮回测曲线十步顺序:股票池点时、数据当时可见、信号与成交时点、成本完整、涨跌停停牌T加1、容量、参数稳定、样本外、收益集中度、风险暴露解释;故事卡年化45%回撤8%夏普大于2,修正后年化8%至12%回撤约25%">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一条漂亮回测曲线,照这个顺序被拆穿</text>
-            <rect x="40" y="58" width="410" height="80" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="58" y="82" fill="#f0c96a" font-size="12" font-weight="800">故事:月频 · 过去 20 日涨幅选 30 只 · 十年回测</text>
-            <rect x="58" y="94" width="114" height="32" rx="8" fill="rgba(122,167,240,0.10)" stroke="rgba(122,167,240,0.30)"/>
-            <text x="115" y="115" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">年化 +45%</text>
-            <rect x="184" y="94" width="114" height="32" rx="8" fill="rgba(122,167,240,0.10)" stroke="rgba(122,167,240,0.30)"/>
-            <text x="241" y="115" text-anchor="middle" fill="#a8c6ff" font-size="12.5" font-weight="800">回撤仅 8%</text>
-            <rect x="310" y="94" width="114" height="32" rx="8" fill="rgba(122,167,240,0.10)" stroke="rgba(122,167,240,0.30)"/>
-            <text x="367" y="115" text-anchor="middle" fill="#a8c6ff" font-size="12.5" font-weight="800">夏普 > 2</text>
-            <rect x="470" y="58" width="390" height="80" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="488" y="82" fill="#a8c6ff" font-size="12" font-weight="800">剔完假收益,盘一下总账:</text>
-            <text x="488" y="104" fill="#eef4f8" font-size="12.5" font-weight="800">年化 8%~12% · 回撤约 25% · 样本外不稳</text>
-            <text x="488" y="126" fill="#bcc9dd" font-size="11">还能当一个偏弱动量信号,进多因子模型尽一份力</text>
-            <rect x="27" y="162" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="43" cy="178" r="10" fill="rgba(240,201,106,0.85)"/>
-            <text x="43" y="182" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">1</text>
-            <text x="110" y="202" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">股票池</text>
-            <text x="110" y="220" text-anchor="middle" fill="#bcc9dd" font-size="11">是否点时</text>
-            <rect x="195" y="162" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="211" cy="178" r="10" fill="rgba(240,201,106,0.85)"/>
-            <text x="211" y="182" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">2</text>
-            <text x="278" y="202" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">数据在当时</text>
-            <text x="278" y="220" text-anchor="middle" fill="#bcc9dd" font-size="11">是否可见</text>
-            <rect x="363" y="162" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="379" cy="178" r="10" fill="rgba(240,201,106,0.85)"/>
-            <text x="379" y="182" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">3</text>
-            <text x="446" y="202" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">信号与成交</text>
-            <text x="446" y="220" text-anchor="middle" fill="#bcc9dd" font-size="11">时点对吗</text>
-            <rect x="531" y="162" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="547" cy="178" r="10" fill="rgba(240,201,106,0.85)"/>
-            <text x="547" y="182" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">4</text>
-            <text x="614" y="202" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">成本</text>
-            <text x="614" y="220" text-anchor="middle" fill="#bcc9dd" font-size="11">是否完整</text>
-            <rect x="699" y="162" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="715" cy="178" r="10" fill="rgba(240,201,106,0.85)"/>
-            <text x="715" y="182" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">5</text>
-            <text x="782" y="202" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">涨跌停·停牌</text>
-            <text x="782" y="220" text-anchor="middle" fill="#bcc9dd" font-size="11">T+1 处理了吗</text>
-            <rect x="27" y="246" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="43" cy="262" r="10" fill="rgba(240,201,106,0.85)"/>
-            <text x="43" y="266" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">6</text>
-            <text x="110" y="286" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">容量假设</text>
-            <text x="110" y="304" text-anchor="middle" fill="#bcc9dd" font-size="11">合理吗</text>
-            <rect x="195" y="246" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="211" cy="262" r="10" fill="rgba(240,201,106,0.85)"/>
-            <text x="211" y="266" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">7</text>
-            <text x="278" y="286" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">参数</text>
-            <text x="278" y="304" text-anchor="middle" fill="#bcc9dd" font-size="11">是否稳定</text>
-            <rect x="363" y="246" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="379" cy="262" r="10" fill="rgba(240,201,106,0.85)"/>
-            <text x="379" y="266" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">8</text>
-            <text x="446" y="286" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">样本外留了没</text>
-            <text x="446" y="304" text-anchor="middle" fill="#bcc9dd" font-size="11">有没有污染</text>
-            <rect x="531" y="246" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="547" cy="262" r="10" fill="rgba(240,201,106,0.85)"/>
-            <text x="547" y="266" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">9</text>
-            <text x="614" y="286" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">收益集中在</text>
-            <text x="614" y="304" text-anchor="middle" fill="#bcc9dd" font-size="11">少数年份吗</text>
-            <rect x="699" y="246" width="150" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="715" cy="262" r="10" fill="rgba(240,201,106,0.85)"/>
-            <text x="715" y="266" text-anchor="middle" fill="#101420" font-size="11" font-weight="900">10</text>
-            <text x="782" y="286" text-anchor="middle" fill="#eef4f8" font-size="11" font-weight="700">风险暴露</text>
-            <text x="782" y="304" text-anchor="middle" fill="#bcc9dd" font-size="11">能解释吗</text>
-            <text x="450" y="352" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="600"><tspan x="450" y="352">这个顺序比闷头调模型有用:把假收益一样一样剔掉,剔完还活着的,才值得被复杂化</tspan></text>
-            <text x="450" y="378" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">你不是从 45% 亏到 8%——是从假的好结果,走到了真的普通结果</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="风险模型三维度图:波动率、相关系数(协方差)、因子暴露,分别描述绝对风险、分散程度、赌博方向">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">风险模型在算哪三件事</text>
+            <rect x="90" y="90" width="220" height="230" rx="12" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="200" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 波动率</text>
+            <text x="200" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">每只个股或资产自然波动多大</text>
+            <text x="200" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">窗口滞后的历史扰动</text>
+            <text x="200" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">方差 / 标准差</text>
+            <text x="200" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是绝对风险的上限付罗</text>
+            <text x="200" y="252" text-anchor="middle" fill="#8499bd" font-size="12">高波动 · 高风险</text>
+            <text x="200" y="280" text-anchor="middle" fill="#8499bd" font-size="12">模型理解也被这块表所影响</text>
+            <rect x="340" y="90" width="220" height="230" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="118" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">② 相关系数</text>
+            <text x="450" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">股和股之间起落有多同步</text>
+            <text x="450" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">不同行业不同景度</text>
+            <text x="450" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">协方差矩阵</text>
+            <text x="450" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是分散的杠杆——</text>
+            <text x="450" y="246" text-anchor="middle" fill="#bcc9dd" font-size="12">相关性越高,收益越像</text>
+            <text x="450" y="274" text-anchor="middle" fill="#8499bd" font-size="12">极度时她完全不分散</text>
+            <rect x="590" y="90" width="220" height="230" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="700" y="118" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 暴露程度</text>
+            <text x="700" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">你持有的小整组合</text>
+            <text x="700" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">对某个因子的平均评价</text>
+            <text x="700" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">行业暴露 * 风格暴露</text>
+            <text x="700" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是你在赌什么——</text>
+            <text x="700" y="246" text-anchor="middle" fill="#bcc9dd" font-size="12">赌价值,赌成长,赌消费</text>
+            <text x="700" y="274" text-anchor="middle" fill="#8499bd" font-size="12">过度集中就是赌注过巫</text>
+            <text x="450" y="360" text-anchor="middle" fill="#bcc9dd" font-size="12.5">风险不是一个总数,是这三个维度的题项之合;这三个合在一起才叫卫刻风险献</text>
           </svg>
-          <p class="figure__cap">十年回测年化 45%、回撤 8%、夏普 2 以上——第一反应不该是庆祝,而该按十步顺序查:股票池、数据可见性、成交时点、成本、交易规则、容量、参数、样本外、收益集中度、风险解释。剔完假收益还剩年化 8%~12%、回撤约 25%:普通但真实,永远比惊艳但虚假值钱。</p>
+          <p class="figure__cap">说“这个组合风险大”没有意义;要说“哪个维度”的风险大。先看波动、再看关联、最后看暴露——三层都过了,才算真正把风险看透了。</p>
         </div>
+        <h2>5. 行业和风格暴露</h2>
+<p>行业暴露很好理解: 组合里医药、银行、电子、消费各占多少,摊开持仓一看便知。风格暴露稍微抽象一些,它描述的是组合在市值、估值、成长、<span class="term">动量</span>、<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>、流动性这些维度上的倾向。</p><p>举个例子。一个组合看起来买了很多行业,挺分散,但翻开来全部偏小市值、高波动、高换手。它的行业是分散了,风格却一点没分散。市场如果切换到大盘蓝筹行情,这个组合可能长期跑输,而你还以为只是运气不好。</p><p>所以量化组合常会主动限制风格暴露。不是因为风格一定不好,而是因为你要知道自己想赚的是什么钱。如果策略号称靠模型选股,却主要靠小市值暴露赚钱,那模型能力就被夸大了——这是诚实问题,不只是技术问题。</p>
+
+        <h2>6. 个股上限和集中度</h2>
+<p>个股上限是最直白的风险约束,比如单只股票不超过组合 <span class="num">2%</span>,或者相对基准不超过 <span class="num">1%</span>。它防的是单点爆雷: 财务造假、停牌、黑天鹅、流动性枯竭,这些事都可能发生在单个股票上,仓位越重,炸得越疼。</p><p>集中度还能用很多指标看: 前十大持仓占比、行业前几大占比、Herfindahl 指数等。集中度越高,组合越依赖少数判断;集中度越低,组合更分散,但也可能把最强信号摊薄。两个方向都有代价。</p><p>所以量化不是永远越分散越好。太分散,预测优势被稀释;太集中,单点风险被放大。组合构建要在这两头之间找平衡——信号强度说话,风险控制兜底。</p>
+
+        <h2>7. 换手约束和交易成本模型</h2>
+<p>组合优化不能只看<span class="hl">“今天理想持仓是什么”</span>,还得看另一个问题: 从昨天的持仓走到今天的持仓,路上要付多少过路费? 调仓越大,换手越高,成本越高。交易成本包括显性费用、买卖价差、<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>和市场冲击。</p><p>成本模型负责估计每笔交易大概会漏掉多少钱。流动性好的大盘股成本低,流动性差的小盘股成本高;小单成本低,大单成本高;平稳成交成本低,急着成交成本高。同样是“买”,代价差别很大。</p><p>于是会出现一个反直觉的结论: 如果新组合比旧组合只多一点点预期收益,却需要大量换仓,优化器很可能选择不交易。很多时候,最优动作不是追今天分数最高的组合,而是在收益提升和交易成本之间,找到净收益最高的那个变化。</p>
+
+        <h2>8. 约束优化的直觉</h2>
+<p>组合优化听起来公式味很重,其实一句话就能说清: 最大化预期收益,减去风险惩罚,减去交易成本,同时满足一堆约束。约束包括仓位总和、个股上下限、行业偏离、风格暴露、换手、现金比例、禁买名单和流动性限制。</p><p>这套机制不是为了把金融变成数学游戏,而是为了让所有取舍都摊开写清楚。想象同一张会议桌: 模型说这只股票好,风险模型说它会增加小盘暴露,成本模型说买它很贵,产品合同说不能偏离行业太多——优化器的工作,就是让这几方当场把架吵完,吵出一个可执行的结论。</p><p>而且在实际机构里,优化器的输出还要过交易员、风控和合规的检查。因为模型和约束都可能漏掉现实问题: 临时停牌、公告风险、监管限制、交易通道异常、赎回压力,这些常常不在数学式子里,却在市场里真实发生。</p><div class="callout callout--note reveal"><span class="callout__title">约束优化的直觉,是把所有反对意见请上桌</span><p>优化的式子一句话就能写完:收益减风险减成本,再满足一堆约束。真正的工夫全在<span class="hl">“一堆约束”</span>那一栏——每一条背后都站着一个会真的来索赔的人:合同承诺、流动性、成本、合规。约束少写一条,数学上照样有最优解,只是那个解下了单就可能被停牌、涨停或通道异常当场打回。所谓组合优化,就是让这些反对意见在成交之前把架吵完。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 295" role="img" aria-label="量化流水线示意:数据到信号到组合到执行到风控,风控持续反馈回整条链路">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化是一条流水线,算法只是其中一环</text>
+            <!-- 5 个流程块 -->
+            <rect x="30" y="90" width="150" height="90" rx="12" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="105" y="126" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">数据</text>
+            <text x="105" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">采集·清洗·对齐</text>
+            <rect x="205" y="90" width="150" height="90" rx="12" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="280" y="126" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">信号/因子</text>
+            <text x="280" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">研究员建模</text>
+            <rect x="380" y="90" width="150" height="90" rx="12" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="455" y="126" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">组合</text>
+            <text x="455" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">优化·约束</text>
+            <rect x="555" y="90" width="150" height="90" rx="12" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="630" y="126" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">交易执行</text>
+            <text x="630" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">下单·成交</text>
+            <rect x="730" y="90" width="140" height="90" rx="12" fill="rgba(232,120,120,0.14)" stroke="#e88" stroke-width="2"/>
+            <text x="800" y="126" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">风控</text>
+            <text x="800" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">盯边界·止损</text>
+            <!-- 箭头 -->
+            <g stroke="#8499bd" stroke-width="2.5" fill="none">
+              <path d="M 180 135 L 203 135" marker-end="url(#qp)"/>
+              <path d="M 355 135 L 378 135" marker-end="url(#qp)"/>
+              <path d="M 530 135 L 553 135" marker-end="url(#qp)"/>
+              <path d="M 705 135 L 728 135" marker-end="url(#qp)"/>
+            </g>
+            <!-- 风控反馈回路 -->
+            <path d="M 800 180 C 800 240 105 240 105 182" fill="none" stroke="#e88" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#qpr)"/>
+            <text x="450" y="235" text-anchor="middle" fill="#ffb4b4" font-size="12.5">风控和监控持续反馈,发现问题就减仓、停用、回炉</text>
+            <text x="450" y="278" text-anchor="middle" fill="#8499bd" font-size="13">任何一环出错,再强的模型也赚不到钱</text>
+            <defs>
+              <marker id="qp" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8499bd"/></marker>
+              <marker id="qpr" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e88"/></marker>
+            </defs>
+          </svg>
+          <p class="figure__cap">量化不是“写个模型就赚钱”,而是一条流水线:数据、因子、组合、执行、风控环环相扣。任何一环掉链子,前面做得再好也白搭。</p>
+        </div>
+        <h2>9. 多头、空头和市场中性</h2>
+<p>普通多头组合只做一件事: 买入资产。所以它的收益跟着市场整体涨跌大起大落。<a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>策略则想换个活法: 买入看好的资产,同时卖空或用<span class="term">股指期货</span><a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>掉市场暴露,让组合主要赚相对选股收益——大盘涨跌,理论上与我无关。</p><p><span class="hl">“中性”</span>听起来很稳,但绝不等于无风险。空头或对冲工具有成本;融券可能借不到;<span class="term">股指期货</span>有<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>;多空两边可能一起亏;极端行情里,资产之间的相关性和平时完全不是一个物种。</p><p>组合优化在多空策略里也更复杂: 要同时控制多头和空头规模、净暴露、总<span class="term">杠杆</span>、行业中性、风格中性、融资融券成本和强平风险。个人投资者通常不适合一上来就玩复杂多空,先把单纯多头走通再说。</p>
+
+        <h2>10. 赚的钱从哪里来</h2>
+<p>策略跑了一段时间,赚了或亏了,接下来该做归因。归因就是把收益拆开对账: 市场贡献多少,行业贡献多少,风格贡献多少,选股贡献多少,交易成本扣掉多少。不做归因,你只知道盈亏结果,不知道原因——赚了不知道怎么赚的,下次就守不住。</p><p>举个例子。一个指数增强产品本月跑赢 <span class="num">2%</span>,归因一做,发现 <span class="num">1.5%</span> 来自超配了上涨行业,<span class="num">0.3%</span> 来自小市值风格,真正的个股选择只贡献了 <span class="num">0.2%</span>。这结果不一定坏,但它告诉你一件事: 收益来源和你对外宣称的能力,到底一不一致。</p><p>归因还是判断失效的雷达。模型亏钱时,是所有因子一起失效,还是某个行业暴露拖累? 是成本上升,还是预测本身反向? 是风险模型低估了暴露,还是交易执行变差? 每个答案都指向不同的修法,不归因就只能说一句<span class="hl">“行情不好”</span>,然后继续亏钱。</p>
+
+        <h2>11. 个人项目怎么简化组合优化</h2>
+<p>个人做第一个量化项目,不必一上来就写优化器。先用简单规则就够: 选分数最高的 30 只股票,等权持有;单只不超过 <span class="num">5%</span>;剔除停牌、ST、涨跌停无法买入、成交额太低的股票;每月调仓;扣固定成本和滑点。这套规则土,但每一步你都能看懂。</p><p>然后再逐步加约束。先加行业上限,再加市值暴露控制,再加换手限制,再加成本敏感性。每加一层,都观察收益、回撤、换手和超额有没有改善。这样你能真正理解每个约束在干什么,而不是把一堆参数扔进优化器,对着输出结果一脸懵。</p><p>等规则组合跑通了,再去学 cvxpy、二次规划或商用优化器都不迟。工具从来不是重点,重点是知道从预测分数到真实仓位之间,横着多少现实约束。</p>
+
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>个人量化必须先分清生活钱和风险钱,仓位高低决定你能不能扛过回撤。</li>
-            <li>杠杆、借钱和盈利后加仓都会放大错误,应对它们只能靠事前写好的规则。</li>
-            <li>漂亮回测先查错再欣赏,重点查股票池、时间顺序、成本、交易限制、容量和参数稳定性。</li>
-            <li>每补上一个现实约束,收益下降是正常的;真实结果比虚假高收益有价值得多。</li>
+            <li>模型分数不能直接等于仓位,中间还要过风险、成本、流动性和产品约束这几道关。</li>
+            <li>风险模型帮你拆出市场、行业、风格和个股特有风险,避免把暴露误认成能力。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.1.</strong> 先分清生活钱和风险钱</li>
-            <li><strong>1.2.</strong> 仓位决定你能不能坚持</li>
-            <li><strong>1.3.</strong> 杠杆会压缩犯错空间</li>
-            <li><strong>1.4.</strong> 回撤里最容易做错决定</li>
-            <li><strong>1.5.</strong> 盈利后也会犯错</li>
-            <li><strong>1.6.</strong> 借钱投资为什么危险</li>
-            <li><strong>1.7.</strong> 策略停用和重新启用</li>
-            <li><strong>1.8.</strong> 把投资当长期训练</li>
-            <li><strong>1.9.</strong> 写给计算机背景读者的提醒</li>
-            <li><strong>1.10.</strong> 个人资金管理清单</li>
-            <li><strong>2.1.</strong> 曲线好得不像真的</li>
-            <li><strong>2.2.</strong> 用了今天的成分股</li>
-            <li><strong>2.3.</strong> 当天收盘信号当天成交</li>
-            <li><strong>2.4.</strong> 没扣真实成本</li>
-            <li><strong>2.5.</strong> 容量过高</li>
-            <li><strong>2.6.</strong> 参数挑选</li>
-            <li><strong>2.7.</strong> 修正后的策略还能不能用</li>
-            <li><strong>2.8.</strong> 复盘顺序</li>
+            <li><strong>1.</strong> 2007 年 8 月,互不相识的量化基金一起卖出了同样的股票</li>
+            <li><strong>2.</strong> 预测分数不是仓位</li>
+            <li><strong>3.</strong> 你承诺偏离多少</li>
+            <li><strong>4.</strong> 风险模型在估计什么</li>
+            <li><strong>5.</strong> 行业和风格暴露</li>
+            <li><strong>6.</strong> 个股上限和集中度</li>
+            <li><strong>7.</strong> 换手约束和交易成本模型</li>
+            <li><strong>8.</strong> 约束优化的直觉</li>
+            <li><strong>9.</strong> 多头、空头和市场中性</li>
+            <li><strong>10.</strong> 赚的钱从哪里来</li>
+            <li><strong>11.</strong> 个人项目怎么简化组合优化</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>为什么说仓位比策略名字更重要?</summary>
-            <p>同一策略在不同仓位下,账户回撤和心理压力天差地别;仓位决定了你能不能坚持到策略兑现。</p>
+            <summary>为什么预测最高的股票不能直接满仓买?</summary>
+            <p>它可能流动性差、风险暴露过高、违反个股或行业约束,也可能根本买不到,或者买起来成本太高。</p>
           </details>
           <details class="quiz__item">
-            <summary>回撤时为什么不能临时拍脑袋?</summary>
-            <p>情绪最强的时刻最容易在低点停掉策略或乱改规则,正确动作是按事前写好的分层规则执行。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>为什么异常漂亮的简单策略要先怀疑?</summary>
-            <p>公开数据加简单规则若真能长期高收益低回撤,收益早被市场挤薄;更可能是数据或交易假设里埋着错。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>动量策略为什么特别要处理涨停买入?</summary>
-            <p>强势股最容易涨停封板,回测假设买得到,会把根本执行不了的收益算进来。</p>
+            <summary>风险模型主要拆解哪些风险?</summary>
+            <p>市场风险、行业风险、风格风险和个股特有风险。</p>
           </details>
         </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>交易执行和实盘系统: 策略如何真的下到市场里</h2>
+          <p>讲清订单生命周期、执行算法、拒单、部分成交、撤单、风控和盘后对账。</p>
+        </section>
+
       </div>
     </main>
     <script src="assets/book.js"></script>

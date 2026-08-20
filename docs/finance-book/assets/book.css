@@ -283,6 +283,60 @@ a:hover { text-decoration: underline; }
   font-size: 2rem;
 }
 .toc-section__hint { color: var(--text-soft); }
+.book-roadmap {
+  margin-bottom: 3.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(122, 167, 240, 0.28);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(122, 167, 240, 0.11), rgba(240, 201, 106, 0.06));
+}
+.book-roadmap > p { max-width: 58rem; color: var(--text-soft); }
+.book-roadmap__eyebrow {
+  margin: 0 0 0.25rem;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 1.25rem;
+}
+.roadmap-card {
+  display: grid;
+  gap: 0.3rem;
+  min-height: 10rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  background: rgba(12, 18, 29, 0.48);
+  color: var(--text);
+}
+.roadmap-card:hover { text-decoration: none; border-color: rgba(240, 201, 106, 0.45); }
+.roadmap-card span { color: var(--primary); font-size: 0.78rem; font-weight: 850; }
+.roadmap-card strong { line-height: 1.35; }
+.roadmap-card small { color: var(--text-dim); line-height: 1.55; }
+.book-roadmap__aside { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+.toc-heading { margin-bottom: 2rem; }
+.toc-heading > p:last-child { color: var(--text-soft); }
+.toc-part-block { margin: 0 0 3.5rem; scroll-margin-top: calc(var(--header-height) + 1.5rem); }
+.toc-part-header {
+  margin-bottom: 1rem;
+  padding: 1rem 1.1rem;
+  border-left: 3px solid var(--primary);
+  background: rgba(255,255,255,0.025);
+}
+.toc-part-header h2 { margin: 0.2rem 0 0.45rem; font-size: 1.65rem; }
+.toc-part-header p { margin: 0.25rem 0; color: var(--text-soft); }
+.toc-part-header .toc-part-question { color: var(--text); font-weight: 720; }
+.toc-part-badge { color: var(--primary); font-size: 0.8rem; font-weight: 850; }
+.toc-part-block--special .toc-part-header { border-left-color: var(--accent); }
+.toc-part-block--special .toc-part-badge { color: var(--accent); }
+.toc-part-block--appendix .toc-part-header { border-left-color: var(--text-dim); }
+.toc-part-block--appendix .toc-part-badge { color: var(--text-dim); }
 .toc-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -362,6 +416,22 @@ a:hover { text-decoration: underline; }
   font-size: 1.18rem;
   line-height: 1.8;
 }
+.chapter-context {
+  margin: -0.8rem 0 2rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(122, 167, 240, 0.24);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: rgba(122, 167, 240, 0.06);
+}
+.chapter-context p { margin: 0.45rem 0; }
+.chapter-context__meta { display: flex; flex-wrap: wrap; gap: 0.75rem; color: var(--text-dim); font-size: 0.84rem; }
+.chapter-context__badge { color: var(--accent); font-weight: 850; }
+.chapter-context__outcome { font-size: 0.95rem; }
+.chapter-context--special { border-left-color: var(--primary); background: rgba(240, 201, 106, 0.055); }
+.chapter-context--special .chapter-context__badge { color: var(--primary); }
+.chapter-context--appendix { border-left-color: var(--text-dim); background: rgba(255,255,255,0.03); }
+.chapter-context--appendix .chapter-context__badge { color: var(--text-dim); }
 .chapter p {
   margin: 1rem 0;
   color: var(--text-soft);
@@ -379,6 +449,31 @@ a:hover { text-decoration: underline; }
   font-size: 1.28rem;
   color: var(--text);
 }
+.case-study {
+  margin: 2.6rem 0;
+  padding: 1.2rem 1.25rem 1.25rem;
+  border: 1px solid rgba(240, 201, 106, 0.24);
+  border-left: 4px solid var(--primary);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(240, 201, 106, 0.09), rgba(122, 167, 240, 0.045));
+}
+.case-study__label {
+  display: inline-flex;
+  padding: 0.2rem 0.52rem;
+  border-radius: 999px;
+  background: rgba(240, 201, 106, 0.15);
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+.case-study h2,
+.case-study h3 {
+  margin-top: 0.65rem;
+  padding-top: 0;
+  border-top: 0;
+}
+.case-study p:last-child { margin-bottom: 0; }
 .summary, .quiz, .glossary-list, .references {
   border-left: 2px solid rgba(240, 201, 106, 0.28);
   padding-left: 1.1rem;
@@ -465,6 +560,20 @@ code {
   color: var(--accent);
   font-weight: 700;
   border-bottom: 1px dotted rgba(122, 167, 240, 0.55);
+}
+.term-link {
+  text-decoration: none;
+  text-underline-offset: 0.18em;
+}
+.term-link:hover {
+  color: #a9c8ff;
+  border-bottom-style: solid;
+  text-decoration: none;
+}
+.term-link:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
 }
 
 /* 数值锚点:数字+单位 */
@@ -553,6 +662,19 @@ strong .hl, strong .term, strong .num { color: #ffd97a; }
   color: var(--text);
 }
 .quiz__item p { color: var(--text-soft); }
+.chapter-handoff {
+  margin: 3rem 0 0;
+  padding: 1.2rem 1.3rem;
+  border: 1px solid rgba(122, 167, 240, 0.28);
+  border-radius: 12px;
+  background: rgba(122, 167, 240, 0.065);
+}
+.chapter-handoff h2 { margin: 0.2rem 0 0.5rem; padding: 0; border: 0; font-size: 1.35rem; }
+.chapter-handoff p { margin: 0.45rem 0 0.75rem; }
+.chapter-handoff__label { color: var(--accent); font-size: 0.8rem; font-weight: 850; }
+.chapter-handoff__actions { display: flex; flex-wrap: wrap; gap: 0.7rem 1.1rem; }
+.chapter-handoff--choice { border-color: rgba(240, 201, 106, 0.3); background: rgba(240, 201, 106, 0.06); }
+.chapter-handoff--choice .chapter-handoff__label { color: var(--primary); }
 
 .map-grid {
   display: grid;
@@ -577,6 +699,14 @@ strong .hl, strong .term, strong .num { color: #ffd97a; }
 .glossary-list li {
   padding: 1rem 0;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
+}
+.glossary-list li:target {
+  margin-inline: -0.75rem;
+  padding-inline: 0.75rem;
+  border-radius: 8px;
+  background: rgba(240, 201, 106, 0.1);
+  box-shadow: inset 3px 0 0 var(--primary);
 }
 .glossary-list p { margin: 0.2rem 0 0; color: var(--text-soft); }
 .references li { overflow-wrap: anywhere; }
@@ -606,7 +736,9 @@ strong .hl, strong .term, strong .num { color: #ffd97a; }
   .cover { min-height: 72vh; padding-top: 6rem; }
   .cover h1 { font-size: 3rem; }
   .cover__lead, .lead { font-size: 1.08rem; }
-  .toc-grid, .map-grid { grid-template-columns: 1fr; }
+  .toc-grid, .map-grid, .roadmap-grid { grid-template-columns: 1fr; }
+  .book-roadmap { padding: 1.1rem; }
+  .roadmap-card { min-height: auto; }
   .toc-card { min-height: auto; }
   .chapter { padding-left: 1rem; padding-right: 1rem; }
   .chapter h1 { font-size: 2.25rem; }

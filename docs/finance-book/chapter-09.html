@@ -3,198 +3,161 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 9 章 · 危机四百年:从郁金香到硅谷银行 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="把过去四百年最惨烈的十二场崩盘并排放在一起读:郁金香、南海、大萧条、1987、日本、亚洲金融风暴、互联网泡沫、2008、欧债、2015 年的 A 股、2020 与 2022、2023 硅谷银行与瑞信——每一次都由不同的故事开场,退场姿势却惊人一致。" />
+    <title>第 9 章 · 期权: 把不对称收益结构变成可交易产品 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清看涨、看跌、权利金、买方卖方、时间价值和卖期权风险。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="9">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第一部分 · 金融世界的底层结构 · 第 9 章</p>
-        <h1>危机四百年:从郁金香到硅谷银行</h1>
-        <p class="lead">四百年十二场崩盘,从郁金香到 LUNA,从南海到硅谷银行。每一场都由不同的故事开场,退场姿势却惊人一致——叙事发到一半、杠杆叠到上限、流动性一收,火就点起来了。这一章把这份病例从头到尾读一遍。</p>
+        <p class="chapter__eyebrow">第二部分 · 资产如何承载现金流与风险 · 第 9 章</p>
+        <h1>期权: 把不对称收益结构变成可交易产品</h1>
+        <p class="lead">期权大概是新手被名字吓住率最高的工具。先用一句话把它降服:期权买方买的,是一种未来的选择权;卖方收了钱,就要承担相应的义务。它和保险是亲戚:你交一笔小钱,把不想要的风险推给别人。期权最重要的知识点不是方向,而是收益和亏损的不对称——一边亏损有限,一边可能亏到看不见底。看懂这种不对称,你才不会被“胜率高”“稳健票息”“低成本博上涨”这些话术顺手带走。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线二</span>
+            <span>本部分第 5 / 7 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?</p>
+          <p class="chapter-context__outcome">读完后,你能先拆现金流、权利、期限和最坏情况,再讨论价格涨跌。 </p>
+        </section>
+
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>危机的剧本四百年没变过:叙事负责把人带进赌场,杠杆决定淘汰的快慢,流动性决定点火,政策决定灭火。</li>
-            <li>盯紧负债端而不是盯着价格:保证金、融资期限、强平线、赎回规则,这些比估值倍数更早告诉你谁会先死。</li>
+            <li>期权买方买的是权利,卖方收权利金之后承担的是义务。</li>
+            <li>期权收益结构天生不对称:买方亏损有限,卖方可能承担尾部风险。</li>
           </ul>
         </section>
 
 
-        <h2>1. 第一张脱离一切的价格表</h2>
-<p>故事发生在荷兰的黄金年代。<span class="num">1634 年</span>起,商人阶层涌入郁金香球茎市场;<span class="num">1636 年</span>冬天价格狂飙,一颗<span class="hl">“Viceroy”</span>要价三千到四千弗罗林,最名贵的<span class="hl">“Semper Augustus”</span>有一万弗罗林的成交记录——而当时一名熟练工匠的年收入只有三百弗罗林左右。一颗球茎,价格顶得上技术工人十年的薪水,或者阿姆斯特丹运河区的一栋宅子。</p><p><span class="num">1637 年</span> <span class="num">2 月</span> <span class="num">3 日</span>,哈勒姆的拍卖会上找不到买家,市场骤停;一个月内球茎价格跌了大约九成。这一次的崩塌快得反常,原因在于交易结构本身:球茎交割在夏天,其余季节大家买卖的是签了字的远期合约,撮合在酒馆里进行,每笔只收一点<span class="hl">“酒钱”</span>——没有初始<span class="term">保证金</span>,没有逐日盯市,没有中央清算所。荷兰人自己管它叫<span class="hl">“windhandel”</span>,空气交易。一旦有人流标,整条簿子上的合约要在同一个晚上重新问一句:对面那个人,给钱吗?</p><p>善后的方式更耐人寻味。<span class="num">1637 年</span> <span class="num">2 月</span> <span class="num">24 日</span>,花商公会宣布:<span class="num">1636 年</span> <span class="num">11 月</span> <span class="num">30 日</span>之后的合约,买方只要付合约价的 <span class="num">3.5%</span> 到 <span class="num">10%</span> 就可以撕约——远期合约被临时改成了期权。这是<span class="hl">“合约条款在压力下会被重写”</span>的最早案例,类似的戏码在 1987、2008、2023 反复上演。顺带一提,后来流传很广的<span class="hl">“郁金香狂热是全民疯了”</span>叙事,主要来自 <span class="num">1841 年</span>一本讽刺册子;二十世纪八十年代后的研究证明,参与者主要是商人,破产记录极少。读金融史料和读行情数据一样,先查数据来源。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p>没有<span class="term">保证金</span>、没有逐日盯市、没有中央清算的远期市场,崩盘时没有缓冲层,价格发现一夜到位。现代期货的<span class="term">保证金</span>结算制度,是几百年摔出来的。</p></div>
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. GameStop 的期权怎样把小火苗吹成火墙</h2>
+<p><span class="num">2021 年</span> <span class="num">1 月</span>,GameStop 成了全球市场的直播间。大量散户买入<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>和短期限看涨期权,高空头比例又让做空者不断回补。股价在很短时间里数倍上涨,社交媒体上的每一张成交截图都像往火里再扔一把木柴。</p><p>期权在其中扮演的是放大器,却不是唯一解释。<a class="term term-link" href="glossary.html#g-做市商" title="查看术语：做市商">做市商</a>卖出看涨期权后,通常会随着 Delta 上升买入股票<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>;股价越涨,部分对冲需求越大。与此同时,空头回补、散户追涨、交易限制和<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>变化一起作用,形成一条谁也无法用单个指标讲完的反馈链。</p><p>这个案例最适合用来理解 Gamma:风险不是静止的一格仓位,而是价格移动时仓位会逼着你继续交易。量化模型若只按开仓那一刻计算 Delta,却不模拟路径中的再对冲,就像只看火柴点燃前的温度,然后断言整栋楼不会热。</p>
+        </section>
 
-        <h2>2. 牛顿也踩不中的倒车镜</h2>
-<p>南海公司 <span class="num">1711 年</span>成立,生意模式听起来很现代:承接英国国债,换特许经营权,再把国债折价转成自家股票发行——股价涨得越高,公司结账留下的转股利润越多。注意这里:股价本身成了方案的利润来源。公司在 <span class="num">1720 年</span>提出承接全部约三千一百万英镑国债的方案,当时全英国的 GDP 才六千四百万英镑。</p><p>为了让股价只会涨、不能跌,公司给认购者配了<span class="term">杠杆</span>:先付一成定金就锁定整股,实际<span class="term">杠杆</span>五到十倍;还直接借钱给买家买它的股票,把筹码循环得更紧;同时向议员行贿送股。股价一年内从一百英镑涨到 <span class="num">1720 年</span> <span class="num">8 月</span>的一千英镑,然后年底跌回一百英镑。牛顿先赚了一笔,高位追回,最终亏损——考证至少亏一万英镑,是皇家铸币厂厂长的几十年薪水。“我能计算天体运行,却不能计算人类的疯狂。”这句名言的出处,是当年一位牧师转述的。</p><p>这场戏的金融学的名字叫反身性:股价涨,公司账上的转股利润真的变多,基本面<span class="hl">“改善”</span>又反过来推高股价。上涨不是对好消息的反映,上涨本身制造好消息。后来索罗斯把它理论化,而 <span class="num">1720 年</span>,英国人已经用真金白银交过一遍学费。<span class="term">杠杆</span>也不分聪明人笨人:分期认购有两批人的结局是注定的——缴款日到了还缴得起的,和缴不起必须卖的。识别市场里的<span class="hl">“被动卖家”</span>,比判断人群情绪更能预测拐点。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p>当一家公司(或一种资产)的利润来源,是自家股价的上涨本身,你面对的不是生意,是镜子。镜子里没有人。</p></div>
+        <h2>2. 先从一张买房选择权说起</h2>
+<p>从一个你大概率关心过的场景开始。假设你看中一套房,现在价格一百万元。你不确定三个月后到底要不要买,可又怕这期间房价涨上去。怎么办?你和房主约定:你今天付两万元,三个月内你有权按一百万元买下这套房;如果三个月后你不想买了,可以放弃,但两万元不退。</p><p>这两万元,就是期权里的权利金。你买到的不是房子本身,而是一个未来选择权。推演一下两种结局:三个月后房价涨到一百二十万元,你仍然可以按一百万元买,这份权利就很值钱;三个月后房价跌到九十万元,你不会按一百万元买,直接放弃权利,最多亏掉那两万元权利金。</p><div class="callout callout--note reveal"><span class="callout__title">权利金是不确定性的定价</span><p>划重点:你付两万元,买到的不是房子,是三个月内按一百万元买入的权利——涨了,你照约定价买;跌了,大不了放弃,最多亏掉这两万。房主肯签,因为他把这两万元当补偿收下。权利金的本质,是把<span class="hl">“涨价踏空”</span>这份风险外包出去的价格:不确定性也是一种商品,期权就是它的标价方式。</p></div><p>你可能会问:房主为什么肯签?他的账本也算得平。房价跌了,两万元白拿,聊补一点损失;房价小涨小跌,两万元安稳落袋;房价真大涨,他虽然只能按一百万元出手,但本来就做好了按这个价成交的准备。顺便看清权利金的本质:它是<span class="hl">“不确定性”</span>这种商品的定价——你花两万元,把<span class="hl">“涨价踏空”</span>的风险外包给了房主。</p><p>期权,就是这种结构的标准化版本。买方付权利金,获得未来在某个条件下买入或卖出的权利;卖方收权利金,同时背上一个义务:只要买方行权,他必须履约。一边花钱买<span class="hl">“可以”</span>,一边收钱保证<span class="hl">“一定”</span>——记住这句话,后面所有的不对称都从这里长出来。</p>
 
-        <h2>3. 三个政策失误把股灾变成十年煎熬</h2>
-<p><span class="num">1929 年</span> <span class="num">9 月</span> <span class="num">3 日</span>,道琼斯指数收于 381.17。接着是黑色星期四、黑色星期一、黑色星期二连环暴跌;<span class="num">1932 年</span> <span class="num">7 月</span> <span class="num">8 日</span>见底 41.22,自高点跌了 <span class="num">89.2%</span>。道指重回 <span class="num">381 点</span>,要等到 <span class="num">1954 年</span> <span class="num">11 月</span>——二十五年。实体经济同样惨:<span class="num">1933 年</span>失业率约 <span class="num">25%</span>,实际 GNP 缩水三成,1930 到 <span class="num">1933 年</span>约九千家银行倒闭,CPI 累计通缩约四分之一。</p><p>股灾为什么会变成<span class="hl">“大萧条”</span>这样级别的灾难,经济学给出的答案是三个政策失误加在一起。第一个:1928 到 <span class="num">1929 年</span>,联储为了防投机,把贴现率从 <span class="num">5%</span> 加到 <span class="num">6%</span>,在引擎过热时推了刹车。第二个:1930 到 <span class="num">1933 年</span>,联储放任银行疯倒,货币供应量收缩了约三分之一——这是个货币问题,弗里德曼和施瓦茨把它讲透了。第三个:<span class="num">1930 年</span>《斯穆特-霍利关税法》引发报复性关税,全球贸易额缩水约三分之二。三个错是同时犯的。</p><p>费雪在 <span class="num">1933 年</span>把那个恐怖的循环写成了方程:价格跌,名义债务不变,实际债务变重,债务人被迫抛售,价格跌得更狠——<span class="hl">“债务-通缩”</span>。伯南克补充了另一条通道:九千家银行可不是简单地关门,它们带走的是信贷组织能力,是<span class="hl">“认识借款人、愿意借钱给熟人”</span>的那张网络。理解大萧条,你就能看懂后人为什么那么怕通缩:处在物价下跌的环境里,名义上没做任何事,实际债务在每分钟变重。</p><p><span class="num">1933 年</span>罗斯福上台,做了三件事:宣布银行休假、关门清算;放弃金本位;让美元对黄金从 20.67 贬到 35——一次贬值 <span class="num">41%</span>。危机的重启键,是国家自己重定价货币,止住通缩预期。这层启示往后写进了教材,变成了今天央行<span class="hl">“不惜一切代价”</span>的原型。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p><span class="num">-89.2%</span> 和二十五年。<span class="term">最大回撤</span>控制的本质是负债结构设计:<span class="num">10 倍</span><span class="term">杠杆</span>下,组合 <span class="num">-10%</span> 就是清零,等不到修复的二十五年。场内的数学,先保证你能活到涨回来那天。</p></div><div class="callout callout--note reveal"><span class="callout__title">费雪的债务-通缩螺旋:越还债,越危险</span><p><span class="num">1933 年</span>费雪画了一张九步正反馈图:债务危机→抛售资产→通货收缩→实际利率上升→企业净值缩水→利润下降→产出下降→囤现金→再等物价更低——越努力还债,物价跌得比债务缩得快,真实债务负担反而更重。解救之道反直觉:不是继续还债,而是政府举国债、央行印钱把物价顶上去,砍掉<span class="hl">“价格下跌→实际债务变重”</span>这条链。这就是现代央行为什么坚持 <span class="num">2%</span> 通胀目标——零通胀站在螺旋的悬崖边上。</p></div>
-
-        <h2>4. 同样自救,走成了踩踏</h2>
-<p><span class="num">1987 年</span> <span class="num">10 月</span> <span class="num">19 日</span>,道琼斯单日跌 <span class="num">22.6%</span>(<span class="num">508 点</span>),标普 500 跌 <span class="num">20.5%</span>,至今都是单日跌幅纪录。当月全球 23 个主要市场全跌,香港最深跌去近一半,港交所为此闭市了四个工作日。全球市值一天蒸发 <span class="num">1.7 万</span>亿美元——但 <span class="num">1987 年</span>的美国经济并没有衰退,标普 <span class="num">1989 年</span> <span class="num">7 月</span>就回到前高。这场股灾来去只砸了一天,没有连续故事,说明扳机不在基本面,在市场机制本身。</p><p>放大器叫<span class="hl">“投资组合保险”</span>,来自三位学者(Leland、O'Brien、Rubinstein):不用真买看跌期权,而是做个自动程序,越跌越卖<span class="term">股指期货</span>,用程序复制一个看跌期权的保护效果。这个策略当时管着约六百到一千亿美元的资金,还有大量仿盘。模型在使用前做过回测,唯独没测过一种情形:周一早上所有人都来卖,谁来接?</p><p><span class="num">10 月</span> <span class="num">19 日</span>的瀑布流程是这样的:上周五已经跌了 <span class="num">5%</span>,周末模型统一算出周一要卖的量;周一开盘期货先被抛,期货和现货之间价格拉开,正常应该有人买期货卖股票把价差收敛——但多只个股延迟开盘,套利商下不去手,两个市场脱钩;<span class="term">贴水</span>逼模型再卖。这不是市场失灵,是成千上万家机构各自执行着<span class="hl">“正确”</span>的自救程序,走到同一个出口。风口怕的从来不是错误策略,是挤满了人的正确策略。</p><p>救场只用了一句话:<span class="num">10 月</span> <span class="num">20 日</span>格林斯潘发表声明,联储准备好作为流动性来源。本次只注入 <span class="num">170 亿美元</span>——超过银行体系总准备金的四分之一,联邦基金利率压了 <span class="num">50 个基点</span>。<span class="hl">“格林斯潘看跌期权”</span>从此诞生,央行一角开始被定价。<span class="num">1988 年</span>,纽交所引入熔断机制,今天 A 股和美股的熔断都出自这一天。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p>所有追涨杀跌型策略——<span class="term">波动率</span>目标、CPPI、趋势跟随——容量问题都不是业绩问题,是系统性风险本身。1987 不是异常日,是所有顺向程序挤到同一出口的必然样本。</p></div>
-
-        <h2>5. 被截断的抵押品循环</h2>
-<p>日经指数 <span class="num">1989 年</span> <span class="num">12 月</span> <span class="num">29 日</span>收于 38,915.87,为此后三十多年的顶。<span class="num">1990 年</span>这一年跌了 <span class="num">38%</span>;到 <span class="num">2003 年</span> <span class="num">4 月</span>最低 7,607.88,自顶点跌去八成;名义收复 <span class="num">1989 年</span>顶点要等到 <span class="num">2024 年</span> <span class="num">2 月</span>,三十四年。房地产更狠:六大城市商业用地价格指数从 1991 顶跌到 <span class="num">2000 年</span>代中,累计跌约 <span class="num">87%</span>——<span class="num">1989 年</span>那句<span class="hl">“东京皇居的地价可以买下整个加州”</span>,是世界上最贵的笑话之一。</p><p>火种是 <span class="num">1985 年</span>的广场协议。日元半年内从 240 升到 150,出口受挤压;央行连续五次降息,贴现率从 <span class="num">5%</span> 砍到 <span class="num">2.5%</span>,M2 与信贷放量。银行手里多了大量资金,靠土地抵押放贷,企业把自家土地拿去抵押,拿钱再去买地——地价涨、抵押物涨、银行更敢贷,一圈一圈自转,这就是桂木-穆尔机制的当代版。股市 <span class="term">PE</span> 炒到六七十倍,没人真信,但没人先停。</p><p>刹车在 <span class="num">1989 年</span>踩下。央行把贴现率从 <span class="num">2.5%</span> 一路加到 <span class="num">6%</span>,<span class="num">1990 年</span> <span class="num">4 月</span>大藏省对不动产贷款实施总量管制——抽掉的是抵押物-信贷循环的油。循环一断,所有环节反向:地价跌 → 抵押物减值 → 银行收回贷款 → 企业卖地还钱 → 地价跌更多。比下跌更致命的是拖延:坏账从<span class="hl">“不承认、不处置”</span>一路拖,拖到 1998 到 <span class="num">2005 年</span>才出清,累计核销约 <span class="num">100 万</span>亿日元——这是日本<span class="hl">“失去的二十年”</span>真正的账单。</p><p>给投资者的办法是学会读慢变量。<span class="num">1989 年</span> <span class="term">PE</span> 六七十倍时,这个估值没有告诉你哪天下跌,但它告诉你未来十年期收益的下限大概在什么位置——估值是期限的函数。政策收紧的信号 <span class="num">1989 年</span> <span class="num">5 月</span>就出来了,股市还涨了半年,说明收紧信号是减仓指令,不是清仓指令:择时要叠加资金流与信贷,单看政策就会下车太早。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p><span class="hl">“伟大的东西也能被高估到失血”</span>不是对质量的否定,是对期限的定价。买的时候,先问自己打算持有几年,再决定要不要接这个估值。</p></div>
-
-        <h2>6. 做空一个国家的完整手册</h2>
-<p><span class="num">1997 年</span>的剧本可以被一段话说清:盯住美元固定汇率 + 资本自由流动 + 外债极高。泰铢盯住美元在 25.25,泰国央行手里有约三百亿美元储备——但里面超八成已被远期空头义务占用,能动用的净弹药远小于表面数字。外债/GDP 从 <span class="num">100%</span> 升到危机顶点超过 <span class="num">180%</span>。对冲基金看到的不是宏观经济,是一块用钉子钉住的价格:这种形态下,做多的上限清晰,做空的尾部巨大,纯粹赌央行的储备够不够。</p><p>攻击方式分两种。单边攻击(泰国模式):从货币市场借入泰铢,在现汇市场抛出泰铢换美元,央行动用储备接盘;同时在离岸远期市场建仓把单子放大。央行可反制的只有三招:储备(有限)、加息(伤银行伤企业)、资本管制(信用代价高)。泰铢 <span class="num">1997 年</span> <span class="num">7 月</span> <span class="num">2 日</span>被迫浮动,到 <span class="num">1998 年</span> <span class="num">1 月</span>贬到 56 / 美元,一年内贬值幅度损失过半;泰国股指全年跌 <span class="num">75%</span>;IMF 三笔救助合计约一千一百至一千二百亿美元。</p><p>双边双击(香港模式)更精巧:<span class="num">1997 年</span> <span class="num">10 月</span>和 <span class="num">1998 年</span> <span class="num">8 月</span>,对冲基金同时做空港元、做空恒生指数期货。货币局制度下,央行被动收紧流动性,隔夜 HIBOR 从 <span class="num">8%</span> 一度拉到 <span class="num">280%</span>;利率飙升的所有代价由股市承担,恒指 <span class="num">10 月</span> 20 到 <span class="num">23 日</span>四个交易日跌了 <span class="num">23%</span>。两个仓位无论哪个兑现都赢,这双击的算计叫<span class="hl">“double play”</span>。港府最终动用外汇基金直接买下恒指成分股一千二百亿港元(占市值 <span class="num">6%</span>),把期货空头的结算价托住——<span class="num">1999 年</span>把这堆股票装进<span class="hl">“盈富基金”</span>逐步退出,还净赚约三百亿港元。马来西亚走了另一条路:<span class="num">1998 年</span> <span class="num">9 月</span>资本管制,把汇率定在 3.80,让离岸空头借不到令吉回补。</p><p>这一章告诉我们的核心洞察力:盯住汇率等于央行在免费向市场卖出认沽期权。保持代价是正利差,尾部兑现是一次性崩塌——carry 策略躺在钉子上睡得越香,钉子被拔掉那天越痛。识别这类机会的量化清单放在现在也不过时:储备(毛口径减去远期占用)、HIBOR 曲线形态、远期升<span class="term">贴水</span>率,三个指标早于 <span class="num">1997 年</span>就发着警告。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p>识别所有<span class="hl">“被防守的价格”</span>——无论是汇率下限、利率走廊还是指数熔断线。守者的弹药(储备、准备金、政策的代价承受力)是看得见的,盯住弹药比盯住基本面更早知道结局。</p></div>
+        <h2>3. 看涨期权和看跌期权</h2>
+<p>期权世界分两个门派。看涨期权,先理解成未来按约定价格买入的权利。比如行权价一百元的看涨期权,意思是到期时你有权按一百元买入标的。标的涨到一百二十元,这个权利有价值——市价一百二的东西,你能按一百拿走;标的跌到八十元,你可以不买,权利作废,仅此而已。</p><p>看跌期权正好反过来:未来按约定价格卖出的权利。比如行权价一百元的看跌期权,到期时你有权按一百元卖出标的。标的跌到八十元,你可以按一百元卖给别人,这个权利有价值;标的涨到一百二十元,你放弃权利就行——谁愿意放着市价一百二不卖,非要按一百出手呢。</p><p>记一个拆合同的动作:拿到一张期权,先问<span class="hl">“持有者有权做什么”</span>——有权买入,就是看涨;有权卖出,就是看跌;再问<span class="hl">“这个权利在哪种行情下值钱”</span>。方向判断只是最后一步。也别把看跌期权当成诅咒:手里捏着股票的人买一张看跌,是给持仓上了一份保底保险,跟看空是两码事。</p><p>所以看涨不只是<span class="hl">“看多”</span>两个字的情绪表达,看跌也不只是<span class="hl">“看空”</span>。它们都是带价格、期限和权利义务的合同:方向只是其中一个字段,行权价、到期日、权利金,一个字段都不能少。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 450" role="img" aria-label="1997 香港双击结构:左框做空港元、右框做空恒指期货,中间金管局的两种反应各喂饱一条腿,底部港府直接入市的反击">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">1997 香港双击:哪条腿赚钱,我都赢</text>
-            <!-- 左:第一腿 做空港元 -->
-            <rect x="60" y="76" width="350" height="110" rx="10" fill="rgba(122,167,240,0.16)" stroke="rgba(122,167,240,0.5)"/>
-            <text x="80" y="104" fill="#a8c6ff" font-size="14" font-weight="800">腿 ①:做空港元</text>
-            <text x="80" y="128" fill="#bcc9dd" font-size="12">借入港元,市场上抛港元换美元</text>
-            <text x="80" y="148" fill="#bcc9dd" font-size="12">赌联系汇率守不住,一旦改浮,</text>
-            <text x="80" y="168" fill="#bcc9dd" font-size="12">港元贬 30%,借出还入赚价差</text>
-            <!-- 右:第二腿 做空恒指期货 -->
-            <rect x="490" y="76" width="350" height="110" rx="10" fill="rgba(232,120,120,0.14)" stroke="rgba(232,120,120,0.5)"/>
-            <text x="510" y="104" fill="#ffb4b4" font-size="14" font-weight="800">腿 ②:做空恒生指数期货</text>
-            <text x="510" y="128" fill="#bcc9dd" font-size="12">预先卖空恒指</text>
-            <text x="510" y="148" fill="#bcc9dd" font-size="12">赌央行保汇率必须加息,一加息,</text>
-            <text x="510" y="168" fill="#bcc9dd" font-size="12">股市崩、期货空头赚翻</text>
-            <!-- 中央:港府的选项 -->
-            <text x="450" y="222" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">金管局只有两种反应,两种都被算计</text>
-            <path d="M 235 186 L 380 232 L 380 246" stroke="#41506b" fill="none" stroke-width="2"/>
-            <path d="M 665 186 L 520 232 L 520 246" stroke="#41506b" fill="none" stroke-width="2"/>
-            <rect x="140" y="252" width="300" height="86" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.5)"/>
-            <text x="160" y="280" fill="#ffe6a8" font-size="13" font-weight="800">若弃守:联系汇率浮动</text>
-            <text x="160" y="304" fill="#bcc9dd" font-size="12">腿 ①赚:港元贬值兑现</text>
-            <text x="160" y="324" fill="#bcc9dd" font-size="12">腿 ②平仓,结局=泰铢模式</text>
-            <rect x="460" y="252" width="300" height="86" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.5)"/>
-            <text x="480" y="280" fill="#ffe6a8" font-size="13" font-weight="800">若死守:隔夜 HIBOR 拉到 280%</text>
-            <text x="480" y="304" fill="#bcc9dd" font-size="12">腿 ②赚:恒指四天 -23%(1997.10)</text>
-            <text x="480" y="324" fill="#bcc9dd" font-size="12">腿 ①平仓,结局=汇率守住股市崩</text>
-            <!-- 底部结局 -->
-            <rect x="140" y="362" width="620" height="64" rx="10" fill="rgba(143,183,122,0.12)" stroke="rgba(143,183,122,0.5)"/>
-            <text x="450" y="388" text-anchor="middle" fill="#b8d6a3" font-size="13" font-weight="800">1998.8 港府第三反应:外汇基金直接买入 1200 亿港元恒指成分股,托住期货结算价</text>
-            <text x="450" y="414" text-anchor="middle" fill="#bcc9dd" font-size="12">1999 年打包成盈富基金退出,还盈利约 300 亿港元——防守方第一次用了空头没想到的招</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 285" role="img" aria-label="期权到期收益图:看涨和看跌期权买方的最大亏损都是权利金,收益随价格朝有利方向放大">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期权到期收益:亏损有底,盈利放大</text>
+            <!-- 看涨期权 -->
+            <text x="230" y="60" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">买入看涨期权</text>
+            <line x1="80" y1="240" x2="400" y2="240" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="240" y1="90" x2="240" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="398" y="262" text-anchor="end" fill="#8499bd" font-size="12">到期股价</text>
+            <text x="150" y="256" text-anchor="middle" fill="#8499bd" font-size="12">行权价 K</text>
+            <path d="M 100 210 L 240 210 L 380 110" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <line x1="100" y1="210" x2="240" y2="210" stroke="#ffb4b4" stroke-width="3"/>
+            <text x="150" y="200" text-anchor="middle" fill="#ffb4b4" font-size="12">亏损=权利金(有底)</text>
+            <text x="350" y="98" text-anchor="middle" fill="#a8c6ff" font-size="12">涨越多赚越多</text>
+            <!-- 看跌期权 -->
+            <text x="670" y="60" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">买入看跌期权</text>
+            <line x1="520" y1="240" x2="840" y2="240" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="680" y1="90" x2="680" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="838" y="262" text-anchor="end" fill="#8499bd" font-size="12">到期股价</text>
+            <text x="700" y="256" text-anchor="middle" fill="#8499bd" font-size="12">行权价 K</text>
+            <path d="M 540 110 L 680 210 L 820 210" fill="none" stroke="#f0c96a" stroke-width="3"/>
+            <line x1="680" y1="210" x2="820" y2="210" stroke="#ffb4b4" stroke-width="3"/>
+            <text x="760" y="200" text-anchor="middle" fill="#ffb4b4" font-size="12">亏损=权利金(有底)</text>
+            <text x="575" y="98" text-anchor="middle" fill="#f0c96a" font-size="12">跌越多赚越多</text>
           </svg>
-          <p class="figure__cap">双击的精髓:两条腿方向正交、情景互补,无论央行如何选择,总有一条腿在收钱。对抗它的唯一方式是打在它的算式之外:直接买入它的对手盘。</p>
+          <p class="figure__cap">期权买方最多亏掉权利金(收益曲线下方有一条水平底),但价格朝有利方向走时收益会放大。这种不对称结构,是期权和直接买卖股票最大的不同。</p>
         </div>
-        <h2>7. 伟大公司可以跌九成</h2>
-<p><span class="num">2000 年</span> <span class="num">3 月</span> <span class="num">10 日</span>纳斯达克收于 5,048.62,这是顶点。<span class="num">2002 年</span> <span class="num">10 月</span> <span class="num">9 日</span>谷底 1,114.11,跌 <span class="num">78%</span>;标普 500 跌 <span class="num">49%</span>。收复 <span class="num">2000 年</span>顶点,纳指用了十五年。当时全球市值第一的思科有真实利润、真实客户,也跌了 <span class="num">89%</span>;宠物电商 pets.com 从上市到清盘只有九个月。<span class="num">1999 年</span> <span class="num">12 月</span>标普的席勒 CAPE 约 <span class="num">44 倍</span>,为整个二十世纪的顶,纳指整体 P/E 超过 <span class="num">150 倍</span>。</p><p>爆破的不只是股价。一种商业模式被证伪:1997 到 <span class="num">2000 年</span>约八成 <span class="term">IPO</span> 公司当年亏损,靠<span class="hl">“以亏损换增长”</span>活着,前提是股权融资不能停——联储在 <span class="num">1999 年</span> <span class="num">6 月</span>到 <span class="num">2000 年</span> <span class="num">5 月</span>把联邦基金利率从 <span class="num">4.75%</span> 加到 <span class="num">6.5%</span>,恰好把这个前提收走。烧钱率(burn rate)这个指标在融资关闭后,直接变成清算表的行的。电信业用<span class="hl">“互联网流量每 <span class="num">100 天</span>翻一倍”</span>拉来资本铺光纤,实际只够年增两三倍,2001 到 <span class="num">2002 年</span>世通、环球电讯连环爆。</p><p>这一章留下两个至今好用的尺子。一把是估值纪律:被嘲笑的 P/S、EV/EBITDA、单位经济,在 <span class="num">2000 年</span>顶点之后重新统治市场——<span class="num">2000 年</span>后的七年,价值因子大幅跑赢成长因子,风格轮动从未这么干净过。做因子回测,<span class="num">2000-2002 年</span>这一段绝不能跳,且要用包含退市股的数据库,否则生存者偏差会让成长股看起来少死了八成。另一把是质量≠保护:思科在 <span class="num">130 倍</span> <span class="term">PE</span> 时跌了九成,公司的优秀与股价的安全边际是两件事,买伟大公司的人亏的钱,跟买烂公司的人完全一样。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p>因子研究要包含 2000-2002 这段样本,且用含退市股的数据库。只看幸存的赢家复盘,你的每一个成长因子都会被高估。</p></div>
-
-        <h2>8. 把分散的违约聚合成系统性挤兑</h2>
-<p>这场危机从前章的房贷故事开场,但让它能烧掉全球银行体系约一万亿美元的,是一条叫<span class="hl">“证券化”</span>的债务工具链。从底下往上一共六层:借款人贷款(<span class="num">2005-2006 年</span>次级加 Alt-A 占新发房贷约四分之一)→ RMBS 打包分层 → 把没人要的中间层再打包成 CDO → 在 CDO 之上再叠成 CDO 平方 → 用 CDS 给每层上保险 → 完全用 CDS 空壳堆出没有底层资产的合成 CDO。链条上每一家机构都赚手续费,风险从发起端被卖空,<span class="hl">“发起-分销”</span>模式下,放贷的第一反应是<span class="hl">“这单能转手吗”</span>而不是<span class="hl">“这人能还钱吗”</span>。</p><p>评级模型在这条链上犯了致命的假设错误:它假设各地房价的违约不相关,用高斯 copula 计算损失分布,把厚尾巴挪成小尾巴。于是明明是同一批加州、佛州次贷的 BBB 层,一层一层切,居然能产出大量 AAA——ABX 的 BBB- 指数在 <span class="num">2007 年</span>还能标价 100 面值,<span class="num">2008 年</span>跌到三十上下。放大的不是违约率,是相关性。尾部的真正变量从来不是<span class="hl">“会不会有人违约”</span>,是<span class="hl">“它们会不会一起违约”</span>。</p><p>CDS 把这个错误放大到天文量级。到 <span class="num">2007 年</span>底,CDS 名义本金约 <span class="num">62 万</span>亿美元(ISDA 统计),远超底层债券规模——一份债券可以被几十遍对赌。AIG 金融产品部用极薄资本卖出约五千亿美元的多资产 CDO 保护,没有逐日抵押安排,等于以卖入场券的姿态卖出一家巨型保险公司之外又一层敞口;<span class="num">2008 年</span> <span class="num">9 月</span> <span class="num">16 日</span>被联储 <span class="num">850 亿美元</span>接管,最终敞口到 <span class="num">1820 亿美元</span>。</p><p>崩溃的导火索落在货币市场。表外管道(SIV、conduit)发行短期 ABCP 去买长期结构化品,靠滚动融资;<span class="num">2007 年</span> <span class="num">8 月</span>巴黎银行冻结三只基金,拉开了<span class="hl">“回购市场挤兑”</span>——抵押品折扣率从 <span class="num">2%</span> 一夜上调到 <span class="num">40-50%</span> 以上。影子银行按市价结算,没有存款保险,一夜之间被批发端锁死。雷曼 <span class="num">9 月</span> <span class="num">15 日</span>破产(负债 <span class="num">6130 亿美元</span>,史上最大);货币市场基金 Reserve Primary 因拿着大量雷曼票据,净值跌破 0.97 美元,一周赎回潮约 <span class="num">3490 亿美元</span>,财政部紧急担保止血;TED 利差峰值从 <span class="num">30 个基点</span>冲到 460;标普 500 从 1565 跌到 677,跌 <span class="num">57%</span>。</p><p>救场的工具组合:<span class="num">7000 亿美元</span> TARP、联储资产负债表从 <span class="num">0.9 万</span>亿膨胀到 <span class="num">4.5 万</span>亿(四轮 QE)、房利美房地美被接管、货币市场基金临时保险。对照样本也值得记下:同样做证券化,<span class="term">杠杆</span>贷款打包的 CLO,<span class="num">7%</span> 违约率之下,AAA 层几乎零损失——同一个技术,资产分散度、入池激励和结构条款决定了完全不同的结局。工具无罪,愿你卖出的风险是你以为的那个。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p>评级是序数,不是基数。同一条瀑布上切出来的 AAA,和实体经济里的 AAA 不是同一个违约概率。任何把评级当连续定价输入的模型,都是埋着的雷。</p></div><div class="callout callout--note reveal"><span class="callout__title">合成谬误:单个做了对的事,集体一起做就是灾</span><p>合唱团里你一个人踮脚,看得最清楚;一万人同时踮脚,每个人看到的和坐着一样——个体最优合成集体最差。金融版同样:单家银行收紧放贷叫审慎,几千家银行同月收贷就叫大面积断链;个人止损是纪律,全市场同步击穿止损就是流动性危机。<span class="num">2018 年</span> A 股股票质押危机也是这东西:单家大股东平仓是合法避险,几千家一起触发强平线就是砸盘螺旋。监管最后只能窗口指导<span class="hl">“不要集中强平”</span>——合成谬误不能用市场纪律解,只能用协调解。</p></div>
-
-        <h2>9. 货币联盟里没有一国的爹</h2>
-<p><span class="num">2009 年</span> <span class="num">10 月</span>,希腊新政府把当年预计财政赤字从 <span class="num">6-8%</span> 大幅上修到 <span class="num">15.4%</span>,评级下调与抛压随之而来;<span class="num">2010 年</span> <span class="num">4-5 月</span>希腊失去市场融资,获得 <span class="num">1100 亿</span>欧元救助。恐慌像接力:爱尔兰(地产银行)、葡萄牙接盘,<span class="num">2011 年</span>火蔓延到意大利——<span class="num">10 年</span>期收益率 <span class="num">11 月</span> <span class="num">9 日</span>突破 <span class="num">7%</span>(收盘 <span class="num">7.48%</span>),跟德债利差超过 <span class="num">550 个基点</span>。希腊 <span class="num">10 年</span>期收益率从危机前约 <span class="num">4.5%</span>(对德债利差仅二三十个基点)一路到 <span class="num">2012 年</span> <span class="num">3 月</span>的 <span class="num">35%</span> 以上。</p><p>病根在欧元区的设计:十九个国家用一个货币,但财政、银行、国债是各国的。每个成员国政府举债,等于用自己的<span class="hl">“外币”</span>举债,因为央行不归自己管——没有谁会保证最后关头本币能印来还债。于是任何流动性问题,都能被市场预期自我实现为偿付问题,跟 <span class="num">1997 年</span>泰铢的盯住汇率同构。主权和银行还捆成另一条<span class="hl">“厄运循环”</span>:本国银行大量持有本国国债,利差扩大,银行资本金受损,需要国家注资,财政更差,利差更大。</p><p><span class="num">2012 年</span> <span class="num">3 月</span>的希腊 PSI 试图私人部门参与债务重组:名义减记 <span class="num">53.5%</span>,涉及约 <span class="num">2050 亿</span>欧元债券,债权人按净现值口径损失约 <span class="num">75%</span>。这一刀割伤了希腊和塞浦路斯银行,塞浦路斯 <span class="num">2013 年</span>被救助时开创<span class="hl">“bail-in”</span>先例——大额储户直接为银行注资买单。真正止血只在 <span class="num">2012 年</span> <span class="num">7 月</span> <span class="num">26 日</span>:德拉吉说出 <span class="hl">“whatever it takes”</span>,当天意大利 <span class="num">10 年</span>期利率回落 <span class="num">50 个基点</span>,<span class="num">9 月</span>推出 OMT 购债框架,利差趋势性收窄——一眼没花的口头干预,比一万亿欧元的 LTRO 还管用。</p><p>这一章给投资者的启示跨越几代人。最深的一课是收敛交易:1999 到 <span class="num">2007 年</span>靠<span class="hl">“外围-核心利差收敛”</span>赚了八年钱的策略,在 <span class="num">2010 年</span>被一次全部回吐——这是 LTCM (1998) 的同胞兄弟。做空<span class="term">波动率</span>的任何策略,左尾由制度可信度决定,不取决于你对基本面多准。极端时点,利差就是制度是否可信的价码。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p>央行的话本身就是资产。<span class="hl">“Whatever it takes”</span>一句话让意大利 <span class="num">10 年</span>利率当天回落 <span class="num">50 个基点</span>,这告诉你:把政策反应函数当成可交易的状态变量,不是技巧,是生存基本功。</p></div>
-
-        <h2>10. 杠杆的清算顺序踩死流动性</h2>
-<p>上证综指从 <span class="num">2014 年</span>中的二千点一路到 <span class="num">2015 年</span> <span class="num">6 月</span> <span class="num">12 日</span>的 5,166,一年涨了 <span class="num">150%</span>,创业板涨了三倍以上。<span class="term">杠杆</span>堆在三个层次上:场内两融,从 <span class="num">2014 年</span>中的四千亿膨胀到 <span class="num">2015 年</span> <span class="num">6 月</span> <span class="num">18 日</span>峰值约 <span class="num">2.27 万</span>亿,约占流通市值一成——是当时世界上<span class="term">保证金</span>占流通市值比最高的市场;场外配资,伞形信托加 HOMS 系统分仓,起步<span class="term">杠杆</span> 1:3 到 1:5,P2P 式资金端可到 1:10,规模约一至两万亿;再加上银行理财、股票质押一路嵌套。</p><p>踩踏从 <span class="num">6 月</span> <span class="num">15 日</span>开始。价格每跌一档,击穿一批 1:5 账户的平仓线,系统挂单卖出;但个股有 ±<span class="num">10%</span> 的跌停,卖不出去,只能卖别的,下一批 1:3 账户又被击穿——越接近跌停越多人挂卖单,<span class="hl">“千股跌停”</span>反复出现。停牌成了逃生口:<span class="num">7 月</span> <span class="num">8-9 日</span>,超过一半的上市公司、约 1400 家停牌自救,代价是把来临的卖压囤积到复牌日集中释放。整个八月上证又跌了 <span class="num">18%</span>。</p><p>政策出手力度空前:<span class="num">6 月</span> <span class="num">27 日</span>降息降准;<span class="num">7 月</span>起,证金公司牵头加券商出资,国家队入场直接买入约 <span class="num">1.5-1.6 万</span>亿元;暂停 <span class="term">IPO</span>、限制大股东减持、期货限仓、打击<span class="hl">“恶意做空”</span>;<span class="num">8 月</span> <span class="num">11 日</span>一次性贬值 <span class="num">2%</span> 的汇改(811 汇改)引发全球联想,道指盘中跌了一千点。市场 <span class="num">7 月</span> <span class="num">9 日</span>单日反弹 <span class="num">5.8%</span> 的原因,博的是政策,不是筹码出清——<span class="hl">“政策底”</span>和<span class="hl">“市场底”</span>的间隔,从此成了 A 股微观结构研究的一个专门问题。</p><p>下半场是熔断的插曲。<span class="num">2016 年</span> <span class="num">1 月</span> <span class="num">1 日</span>,指数熔断机制上线,设 <span class="num">5%</span> 和 <span class="num">7%</span> 两档;由于 A 股已有的个股 ±<span class="num">10%</span> 涨跌停,<span class="num">5%</span> 和 <span class="num">7%</span> 这两档对交易者形成<span class="hl">“磁吸效应”</span>——越接近阈值越抢着卖,把 <span class="num">7%</span> 变成了自带引力的终点。<span class="num">1 月</span> <span class="num">4 日</span>和 <span class="num">7 日</span>四天交易日内两度熔断,后者开盘约三十分钟就休市;<span class="num">1 月</span> <span class="num">8 日</span>,熔断被迫取消,当月前半月上证再跌 <span class="num">18%</span>。同一个制度在加拿大是安全带,在 A 股是磁铁,差别只在阈值距涨跌停多远——机制设计不能只看愿望。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p>两融余额、换手占比、开户数、配资利率——这组拥挤度仪表在 <span class="num">2015 年</span>左侧全部见顶。历史是最便宜的回测库,别再用真金白银学一次。</p></div>
+        <h2>4. 买方亏损有限,卖方风险更复杂</h2>
+<p>期权买方最大的好处,一句话讲完:亏损有限。你买看涨期权,如果标的大跌,你最多亏掉权利金;你买看跌期权,如果标的大涨,你最多也亏掉权利金。最坏的结果,在你掏出权利金的那一刻就封了顶。</p><p>卖方则是另一本账。他收了权利金,就得承担履约义务。卖出看涨期权时,如果标的暴涨,卖方可能要按低价把标的卖给买方,亏损可能很大;卖出看跌期权时,如果标的暴跌,卖方可能要按高价接下标的,亏损也可能很大。权利金是确定的小收入,义务是不确定的大窟窿。</p><p>把卖方的账算具体。你卖出一张行权价一百元的看涨,收五元权利金。标的涨到一百三十元:你要按一百元交出市价一百三的东西,亏三十元,扣掉权利金净亏二十五;涨到一百五十元,净亏四十五,理论上没有顶。卖出看跌同理:标的跌到六十元,你按一百元接下,亏四十,扣五元净亏三十五;极端情况标的一文不值,净亏九十五。买方的亏损是封了口的信封,卖方的亏损是没封底的井。</p><p>这就是为什么很多<span class="hl">“卖期权”</span>策略看起来胜率很高,但你不能简单把它理解成低风险。它可能平时一笔一笔收小钱,收得你心旷神怡,然后极端行情里一次亏掉大钱。胜率描述的是频率,从来描述不了幅度。</p><div class="callout callout--note reveal"><span class="callout__title">高胜率不等于低风险</span><p>常见误区:卖期权胜率高,所以风险低。算笔账——卖出一张行权价一百元的看涨,收五元权利金:标的涨到一百三十元,你按一百元交出市价一百三的东西,扣掉权利金净亏二十五;涨到一百五十元,净亏四十五,理论上没有顶。平时一笔一笔收小钱,极端行情一次亏掉大钱。胜率描述的是频率,从来描述不了幅度。</p></div>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 360" role="img" aria-label="2015 A股杠杆清算顺序图:自有资金最安全,场外配资最先被迫卖,连锁溃败会把自信资金连坐拖垮">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">2015 A 股杠杆清算:从杠杆最高的那层开始向下挤</text>
-            <text x="80" y="66" fill="#8499bd" font-size="12" font-weight="800">层级越高越安全,越低越最先被迫卖;清算顺序不是你选的,是合同替你选的</text>
-            <rect x="80" y="80" width="740" height="48" rx="6" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
-            <text x="100" y="111" fill="#b5d3a0" font-size="13" font-weight="800">① 自有资金大仓位</text>
-            <text x="440" y="111" fill="#bcc9dd" font-size="12">没有利息、没有平仓线 → 可以穿越周期等回资产价值</text>
-            <rect x="80" y="136" width="740" height="48" rx="6" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
-            <text x="100" y="167" fill="#f0c96a" font-size="13" font-weight="800">② 两融仓位(券商融资)</text>
-            <text x="440" y="167" fill="#bcc9dd" font-size="12">维持担保比例不足而不补仓 → 券商依法强平</text>
-            <rect x="80" y="192" width="740" height="48" rx="6" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
-            <text x="100" y="223" fill="#ffb4b4" font-size="13" font-weight="800">③ 场外配资(5-10 倍杠杆)</text>
-            <text x="440" y="223" fill="#bcc9dd" font-size="12">月息 1.5-2%,只要标的跌 5-10% 就触发平仓</text>
-            <rect x="80" y="248" width="740" height="48" rx="6" fill="rgba(238,136,119,0.4)" stroke="#ee8877"/>
-            <text x="100" y="279" fill="#ee8877" font-size="13" font-weight="800">④ 结构化优先级/高度聚集的多策略产品</text>
-            <text x="440" y="279" fill="#ee8877" font-size="12">市场一反,同一位置上的杠杆全部指向同一出口</text>
-            <text x="450" y="332" text-anchor="middle" fill="#bcc9dd" font-size="12.5"></text>
-            <text x="450" y="332" text-anchor="middle" fill="#bcc9dd" font-size="12.5">清算一旦连锁,无杠杆的① 也会被③④ 拖跌——因为价格本身已经被强平卖压砸穿了</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 350" role="img" aria-label="看涨期权买卖双方到期损益镜像图:行权价 10 元、权利金 0.5 元,盈亏平衡点 10.5 元;买方亏损有限盈利不封顶,卖方盈利有限亏损不见底,两条曲线关于零轴镜像">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">看涨期权:买方和卖方,同一条曲线的两面镜子</text>
+            <text x="450" y="56" text-anchor="middle" fill="#8499bd" font-size="12.5">例:行权价 K = 10 元,权利金 0.5 元/股 → 股价涨过 10.5 元,买方才真正开始赚钱</text>
+            <defs><marker id="c5x" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
+            <line x1="100" y1="190" x2="800" y2="190" stroke="#46587a" stroke-width="1.5" marker-end="url(#c5x)"/>
+            <line x1="100" y1="60" x2="100" y2="300" stroke="#46587a" stroke-width="1.5"/>
+            <text x="796" y="212" text-anchor="end" fill="#8499bd" font-size="12">到期股价</text>
+            <text x="88" y="64" text-anchor="end" fill="#8499bd" font-size="12">盈亏</text>
+            <text x="92" y="89" text-anchor="end" fill="#8499bd" font-size="11">+1.5</text>
+            <text x="92" y="159" text-anchor="end" fill="#8499bd" font-size="11">+0.5</text>
+            <text x="92" y="194" text-anchor="end" fill="#8499bd" font-size="11">0</text>
+            <text x="92" y="229" text-anchor="end" fill="#8499bd" font-size="11">-0.5</text>
+            <line x1="104" y1="155" x2="798" y2="155" stroke="rgba(122,167,240,0.14)" stroke-width="1"/>
+            <line x1="104" y1="225" x2="798" y2="225" stroke="rgba(122,167,240,0.14)" stroke-width="1"/>
+            <line x1="340" y1="70" x2="340" y2="310" stroke="rgba(122,167,240,0.35)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <text x="340" y="330" text-anchor="middle" fill="#c9d4e8" font-size="12">行权价 K = 10</text>
+            <line x1="440" y1="70" x2="440" y2="310" stroke="rgba(240,201,106,0.5)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <text x="440" y="330" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">盈亏平衡点 10.5</text>
+            <path d="M 140 225 L 340 225 L 740 85" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <path d="M 140 155 L 340 155 L 740 295" fill="none" stroke="#ffb4b4" stroke-width="3" stroke-dasharray="7 5"/>
+            <circle cx="440" cy="190" r="4.5" fill="#f0c96a"/>
+            <circle cx="740" cy="85" r="4" fill="#a8c6ff"/>
+            <circle cx="740" cy="295" r="4" fill="#ffb4b4"/>
+            <text x="752" y="89" fill="#a8c6ff" font-size="12" font-weight="800">+1.5</text>
+            <text x="752" y="299" fill="#ffb4b4" font-size="12" font-weight="800">-1.5</text>
+            <text x="612" y="70" text-anchor="end" fill="#a8c6ff" font-size="12" font-weight="800">买方(实线):盈利不封顶</text>
+            <text x="612" y="302" text-anchor="end" fill="#ffb4b4" font-size="12" font-weight="800">卖方(虚线):亏损不见底</text>
+            <text x="212" y="246" text-anchor="middle" fill="#a8c6ff" font-size="12">买方最坏:-0.5 权利金(有底)</text>
+            <text x="212" y="136" text-anchor="middle" fill="#ffb4b4" font-size="12">卖方最好:+0.5 权利金(有顶)</text>
+            <text x="450" y="348" text-anchor="middle" fill="#c9d4e8" font-size="12.5">两条线关于 0 轴严格镜像:买方赚的每一分都是卖方亏的——期权是零和的风险转移,不是一起赚钱的地方</text>
           </svg>
-          <p class="figure__cap">清算的层级不是好的坏的排而是资金结构深浅。在连锁强平里,哪怕你没加杠杆,只要你也持有同样资产,价格也会被别人的平仓砸下来。</p>
+          <p class="figure__cap">买方最多亏掉权利金 0.5 元(亏损有底),价格涨过平衡点 10.5 元后赚多少没有顶;卖方镜像相反:最多赚 0.5 元,亏损理论上看不到底。所以卖方收的「保费」,本质是替别人扛尾部风险的价格。</p>
         </div>
-        <h2>11. 挤兑已不需要排队</h2>
-<p><span class="num">2020 年</span>的危机是一堂<span class="hl">“流动性大于一切”</span>的课。标普 500 从 <span class="num">2 月</span> <span class="num">19 日</span>的 3,386 到 <span class="num">3 月</span> <span class="num">23 日</span>的 2,237,只用了 <span class="num">23 个交易日</span>跌了 <span class="num">34%</span>,是史上最快的 <span class="num">30%</span> 以上回撤。期间四个交易日三次(实际是 <span class="num">3 月</span> 9/12/16/18 四个交易日触发)美股熔断;<span class="num">3 月</span> <span class="num">16 日</span> VIX 收于 82.69,刷新 <span class="num">2008 年</span>的纪录。更扎眼的是<span class="hl">“Dash for Cash”</span>:连美国国债都被抛售,十年期收益率从 <span class="num">0.54%</span> 反而涨到 <span class="num">1.18%</span>,黄金同步下跌——市场不要避险资产,只要现金。<span class="num">4 月</span> <span class="num">20 日</span> WTI 油价收于每桶负 37.63 美元,价格不是<span class="hl">“石油没价值”</span>,是仓储物流约束在期货到期日的折现。</p><p>拉回这个故事的是弹药量级,不是话术:两周降息 <span class="num">150 个基点</span>到零、无限量 QE(首周购债约 <span class="num">3750 亿美元</span>,每天约 <span class="num">750 亿美元</span>)、PMCCF/SMCCF 直接下场买投资级公司债 <span class="term">ETF</span>、<span class="num">2.2 万</span>亿美元财政法案。对应结果是无量级别的<span class="term">反转</span>:<span class="num">60 个交易日</span> VIX 从 82 回到 27,标普 500 当年 <span class="num">8 月</span>就创新高。教训一:所谓避险资产在挤兑时不提供流动性,组合里每一腿都要单独回答<span class="hl">“危机时它贡献<span class="term">保证金</span>还是消耗<span class="term">保证金</span>”</span>。教训二:<span class="num">2020 年</span>之后,央行资产负债表与<span class="term">波动率</span>之间的镜像关系,进入了所有<span class="term">波动率</span>模型。</p><p><span class="num">2022 年</span>的 LUNA 崩塌,把<span class="hl">“反身性”</span>三个字写进了密码学。UST 是算法稳定币,机制规定 1 枚 UST 随时可以铸销互换为等值 1 美元的 LUNA。UST 一旦跌破 1 美元,套利者持有 UST 兑出 LUNA 来抛——每多卖一份 UST,就多印一批 LUNA 砸向市场。LUNA <span class="num">4 月</span>初 119 美元,五天内跌到近似归零,流通量从 <span class="num">3.5 亿</span>枚恶性增发到 <span class="num">6.5 万</span>亿枚。Anchor 协议提供的约 <span class="num">20%</span> 固定<span class="term">年化收益</span>,给了 UST 一层<span class="hl">“无风险”</span>的假象,把大部分 UST 锁在了里面。</p><p>守住过这道防线的资金,也不是随便的现金:<span class="num">3 月</span>起 LUNA 基金会买入约八万个比特币(约 <span class="num">30 亿美元</span>)作储备。问题在于,储备本身就是与 UST 高关联的风险资产——跌的时候一起跌,五天耗尽。同年 <span class="num">11 月</span>接着是 FTX:交易所发行自家代币 FTT,以 FTT 作抵押向旗下基金 Alameda 出借客户资产;Alameda 用利润回购 FTT 撑住币价,币价再放大抵押价值,循环自转。<span class="num">2022 年</span> <span class="num">11 月</span> <span class="num">2 日</span>媒体曝光资产负债表,<span class="num">6 日</span>币安宣布清仓 FTT,<span class="num">72 小时</span>内约 <span class="num">60 亿美元</span>挤兑→<span class="num">11 月</span> <span class="num">11 日</span> FTX/Alameda 破产,客户资金缺口约 <span class="num">80 亿美元</span>。</p><p>这一章可以只用一句话串:凡是<span class="hl">“抵押品=系统自身权益”</span>的结构,崩溃是确定的,只是时间问题。LUNA 的储备是 LUNA 体系内的资产,FTX 的抵押品是 FTX 自己刷的币,这类循环尽调时第一步就该识别。顺带一句:偿付能力(solvency)和流动性(liquidity)是两件不同的事,但挤兑不区分——任何一家换了买家,管你报表多健康,提款的 API 照样使你掏空。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p><span class="num">20%</span> 的<span class="hl">“无风险”</span>固定收益,风险不是藏着的,是被搬进了一个你没看见的制度。看不明白的固定票息,先默认期望为负,直到找到那个对面付钱的确定事实为止。</p></div>
+        <h2>5. 内在价值和时间价值</h2>
+<p>期权的价格通常可以拆成两部分:内在价值和时间价值。内在价值最好懂——如果现在立刻行权,这份权利值多少钱,一算是多少就是多少。它是期权的<span class="hl">“现货成色”</span>,不掺一点对未来的想象。</p><p>算一下就清楚。比如一只股票现在一百二十元,你手里有一张行权价一百元的看涨期权:立刻行权,按一百元买入、再按市价卖出,内在价值大约二十元。反过来,如果股票现在只有八十元,行权价一百元的看涨期权没有内在价值——没人会愿意花一百元去买市价八十元的东西。</p><p>把一张真实报价拆开看。假如这张看涨期权在市场上卖二十五元:二十元是内在价值,多出来的五元就是时间价值。之后股票如果原地不动,这五元会像冰块一样一天天化掉;到期那天,时间价值归零,期权只剩内在价值这具骨架。所以买期权像租着房子赌方向:方向之外,你每天都在为时间付租金。</p><div class="callout callout--note reveal"><span class="callout__title">五块钱的时间价值天天在化</span><p>划重点:股票现价一百二十元,行权价一百元的看涨期权卖二十五元——其中二十元是立刻行权就能兑现的内在价值,多出的五元是时间价值,是<span class="hl">“未来仍可能更有利”</span>这种可能性被定的价。此后股票原地不动,这五元会像冰块一样一天天化掉,到期归零。买期权像租着房子赌方向:方向之外,你每天都在为时间付租金。</p></div><p>没有内在价值,不代表期权一文不值。只要还没到期,未来标的仍可能涨到有利位置,这份可能性本身也值钱,它叫时间价值。留意时间价值的脾气:越接近到期,如果标的价格一直没动到有利位置,时间价值通常会流失。买期权的人经常输在这里:方向其实没看错太多,但时间不够了——哨声响了,比赛结束。</p>
 
-        <h2>12. 利率怎么杀人</h2>
-<p><span class="num">2023 年</span> <span class="num">3 月</span>,死亡率最高的不是股票、不是加密货币,是美国第 16 大银行。硅谷银行 <span class="num">2019 年</span>底存款约 <span class="num">620 亿美元</span>,<span class="num">2021 年</span>底涨到 <span class="num">1890 亿美元</span>——科技企业零利率时代的风投钱全搬进来了。SVB 把大额流入配置到长期美债与 MBS(平均票面 1.x 个点),<span class="num">2022 年</span>底债券组合 <span class="num">1170 亿美元</span>,久期约 <span class="num">5.6 年</span>。联邦基金利率 <span class="num">2022 年</span> <span class="num">3 月</span>到 <span class="num">2023 年</span> <span class="num">7 月</span>从 0 加到 <span class="num">5.25%</span>,幅度 <span class="num">525 个基点</span>——长久期资产亏损大约等于-D×Δy,数学上没有悬念:未实现亏损 <span class="num">2022 年</span>底超 <span class="num">150 亿美元</span>,超过全部有形普通股。</p><p>账面却风平浪静:这 <span class="num">913 亿美元</span>债券被归入 HTM(持有至到期)账户,会计上不计损益。账是平的,经济偿付能力已穿——这比 <span class="num">2008 年</span>的次贷难抓多了,次贷危机里资产坏在账上,SVB 是资产坏在经济里、好在报表里。<span class="num">3 月</span> <span class="num">8 日</span> SVB 宣布卖出 <span class="num">210 亿美元</span>债券实现 <span class="num">18 亿</span>亏损、并紧急增资 <span class="num">22.5 亿美元</span>,本想自救,适得其反——当晚头部 VC(Peter Thiel 的 Founders Fund 等)通知被投企业集体提款,消息通过群聊在两小时内传遍硅谷。<span class="num">3 月</span> <span class="num">9 日</span>单日挤兑 <span class="num">420 亿美元</span>,占存款四分之一;<span class="num">3 月</span> <span class="num">10 日</span>早上被接管,当天预计还有一千亿美元待提。挤兑时间尺度从<span class="hl">“以月计”</span>变成<span class="hl">“以小时计”</span>。</p><p>瑞信的故事相隔两周,但更古老:多年失血(Archegos 亏 <span class="num">55 亿美元</span>之类),<span class="num">2022 年</span> Q4 财富客户单季流出 <span class="num">1110 亿</span>瑞郎;<span class="num">3 月</span> <span class="num">15 日</span>沙特国家银行董事长一句<span class="hl">“绝对不再增资”</span>,盘中股价最深跌 <span class="num">31%</span>,一年期 CDS 从 <span class="num">799 个基点</span>拉到 <span class="num">3701 个基点</span>——大银行的定价,第一次被<span class="hl">“单点言论到资金流出”</span>直接量化。处置的格式已经标准化:周日 <span class="num">3 月</span> <span class="num">19 日</span>,在政府命令下由瑞银以 <span class="num">30 亿</span>瑞郎全换股收购(每股合 0.76 瑞郎,周五收 1.86),<span class="num">160 亿</span>瑞郎 AT1(CoCo)债全额减记为零。值得记住的是:与欧盟先股后债的默认顺序不同,瑞士这次让股东拿到了 <span class="num">30 亿</span>、AT1 归零——同一个资产类别,不同司法辖区,意味着截然不同的偿付顺序。</p><p>两家的统一语法:存贷业务最古老的死法是久期错配,现代版是<span class="hl">“久期×数字化挤兑”</span>。周末成了 <span class="num">48 小时</span>生死之窗(2008 贝尔斯登、2023 SVB 与瑞信都在周日定案),一切处置机构都被迫按这个节奏运营。这些不是金融八卦,是量化的工程参数:周末持仓的尾部溢价、负债端集中度因子(无保险存款占比、前十大存户占比)、国债组合的会计分类(HTM vs AFS 是治理质量信号),<span class="num">2023 年</span>之后都进了常规风控因子。紧缩周期里,“加息 200/300/<span class="num">400 个基点</span>情景下的银行筛选器”是 <span class="num">2023 年</span>最有效的空头因子之一。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p>利率不是抽象的数字,是一个物理量:资产端久期乘利率的变动,就是亏损;负债端跑得有多快,就是生死。利率风险从 2023 起,重新回到每一位权益研究员的必读清单。</p></div>
+        <h2>6. 波动率为什么重要</h2>
+<p>股票<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>主要看方向,期权不同:它特别关心<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>。波动率可以先理解成标的价格上下摆动的幅度。为什么它这么要紧?因为买方手里握着选择权:标的越可能大幅波动,这份选择权越有用,期权也就越有价值。</p><p>用两组数字看个透。还是行权价一百元的看涨。情形甲:股票到期要么一百零五、要么九十五,期权的行权价值是五元或零。情形乙:股票要么一百三、要么七十,行权价值变成三十元或零。注意坏结局:两种情形下都是零,买方大不了不行权。波动放大,只把好结局从五元养到三十元,坏结局原地不动——这份不对称,就是波动率值钱的根。</p><p>想极端一点就明白了。如果一只股票未来几乎不动,那看涨和看跌期权都不太值钱——权利再好,用不上也是闲的。可如果一只股票未来可能大涨也可能大跌,买方手里的选择权立刻身价倍增。</p><p>所以期权交易很多时候不是单纯交易方向,而是在交易波动率。有人买期权,不一定因为一定看涨,而是认为未来会大幅波动、赌市场低估了这个幅度;有人卖期权,也不一定因为看空,而是在赌未来波动不会超过市场预期。方向是一个维度的判断,波动率是另一个维度的生意。</p>
 
-        <h2>13. 危机的同一根脊柱</h2>
-<p>把十二场崩盘并排放,会看到同一个骨架:第一层<span class="hl">“叙事”</span>——一个故事把价格从现金流贴现的理性锚上抬走(郁金香、南海、互联网、LUNA);第二层<span class="hl">“<span class="term">杠杆</span>”</span>——负债端出现短期负债+长期资产(远期合约、分期认购、<span class="num">10 倍</span><span class="term">保证金</span>、组合保险、抵押品循环、盯住汇率、两融、期限错配);第三层是<span class="hl">“点火”</span>——利率上升或外部冲击,让<span class="term">杠杆</span>里的不对称性引爆;第四层是<span class="hl">“清算重写规则”</span>——银行休假、国债担保、熔断、央行购债、口头承诺,止损的从来不是价格本身,是规则被介入。</p><p>顺着这根脊柱,可以继续问几个问题。既然危机的规律这么稳定,为什么不能预测?因为点火时机由市场反馈决定:政策越有效,市场<span class="term">杠杆</span>越积,下一次崩溃的规模会更大——格林斯潘看跌期权 <span class="num">1987 年</span>诞生,三十五年后<span class="hl">“央行看跌期权”</span>已经写进了所有人的定价模型。这是学习体系的代价:学会防住 1987 的熔断机制,<span class="num">2015 年</span>就在 A 股变成了磁吸。任何教科书层面的解法,都在未来某处变成新的问题。</p><p>对个人投资者,这套史观有三件可操作的产物。第一件:把你的仓位估值用期限算——如果你打算持有十年,你买的其实是 CAPE 决定的长期收益,要是打算持有三个月,你买的是未来九十天是否有人会比你更傻。第二件:研究任何策略的负债端——<span class="term">保证金</span>、融资期限、强平条件、赎回规则;负债端的细节比你赚不赚钱先决定你死不死。第三件:在资产配置里为<span class="hl">“流动性极端冲击”</span>留仓位——美债、现金、稳定币(有风险),历史表格里每一行都在告诉你:危机里唯一不缺的,是便宜的资产;唯一缺的,是能出钱买它的人。</p><div class="callout callout--note reveal"><span class="callout__title">记住这一条</span><p>危机不需要新原因。你此生还会遇到的那次崩盘,大概率正躲在当今无人写进风险模型的一份合同里——看看谁在给自己发行抵押品,谁在许诺无风险固定票息,谁的高明策略占了市场上大半的成交量。</p></div><div class="callout callout--note reveal"><span class="callout__title">明斯基时刻:稳定本身就是最大的风险</span><p>明斯基发现,长期经济稳定会反生不稳定:太平日子久了,企业敢多借、银行敢多贷、监管定价里<span class="hl">“衰退概率”</span>悄悄趋零。他把融资分三档——对冲性(收入盖本息)、投机性(收入只付利息)、庞氏(收入连利息都不够,必须卖资产)。一个社会会慢慢从①滑到②再滑到③,直到某次外部扰动把续贷链条拉断,所有<span class="hl">“稳了十年”</span>的结构在三个月内一起崩——那个转折时点就叫<span class="hl">“明斯基时刻”</span>。给你的警句:太平越久积累的<span class="term">杠杆</span>越大、危机样本越少、风控模型越自信,而实际上危机倾向正和太平长度成正比。</p></div>
+        <h2>7. 一个到期收益小表</h2>
+<p>光听概念太空,直接算账。假设你花五元买入一张行权价一百元的看涨期权。到期时,如果标的价格是八十元,你不会行权,亏五元权利金;如果标的价格是一百元,行权不行权都没多赚,还是亏五元权利金;如果标的价格涨到一百二十元,你可以按一百元买入价值一百二十元的标的,权利价值二十元,扣掉五元权利金,净赚十五元。</p><p>把这张小表补几行。到期价八十元,净亏五;一百元,净亏五;一百零五元,不亏不赚——这就是盈亏平衡点;一百一十元,净赚五;一百二十元,净赚十五。再站到桌子对面看卖方的账:正五、正五、零、负五、负十五,恰好是买方数字翻一个负号。一张合约两本账,镜像得严丝合缝。</p><p>这个例子戳破一个新手最常见的误会:买看涨期权,不是标的上涨就一定赚钱。标的要涨过行权价和权利金成本之和,你才真正开始盈利——这个门槛叫盈亏平衡点,每一笔期权交易落笔之前,都该先把它算出来。</p><div class="callout callout--note reveal"><span class="callout__title">涨了也可能白涨</span><p>手算:五元买一张行权价一百元的看涨。到期标的八十元,净亏五;一百元,还是亏五;一百零五元,不亏不赚——这就是盈亏平衡点;一百一十元净赚五;一百二十元净赚十五。对面卖方的账:正五、正五、零、负五、负十五,恰好是买方数字翻个负号。标的要涨过行权价加权利金之和,买方才真正开始盈利。</p></div><p>看跌期权也完全同理。买入看跌期权时,标的跌得越多越有利;但如果跌幅不够,盖不住权利金成本,该亏照样亏。天下没有白送的<span class="term">杠杆</span>,期权的每一分便宜,都明码标价写在这张表里。</p>
 
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 440" role="img" aria-label="危机四步骨架:叙事、杠杆、点火、规则重写,右侧十二场危机的时间线从 1637 郁金香排到 2023 硅谷银行">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">危机的同一根脊柱:四百年,四步走</text>
-            <!-- 四步竖排 -->
-            <rect x="60" y="64" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.5)"/>
-            <text x="80" y="92" fill="#a8c6ff" font-size="15" font-weight="800">① 叙事</text>
-            <text x="80" y="118" fill="#bcc9dd" font-size="12.5">一个故事把价格抬离现金流的锚:球茎、南海股票、.com、算法稳定币</text>
-            <path d="M 225 136 L 225 156" stroke="#41506b" stroke-width="2" fill="none"/>
-            <path d="M 218 150 L 225 160 L 232 150 Z" fill="#41506b"/>
-            <rect x="60" y="160" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.5)"/>
-            <text x="80" y="188" fill="#f0c96a" font-size="15" font-weight="800">② 杠杆</text>
-            <text x="80" y="214" fill="#bcc9dd" font-size="12.5">短债长资:无保证金远期、分期认购、10 倍孖展、两融配资、90 天养 3 年</text>
-            <path d="M 225 232 L 225 252" stroke="#41506b" stroke-width="2" fill="none"/>
-            <path d="M 218 246 L 225 256 L 232 246 Z" fill="#41506b"/>
-            <rect x="60" y="256" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,120,120,0.5)"/>
-            <text x="80" y="284" fill="#ffb4b4" font-size="15" font-weight="800">③ 点火</text>
-            <text x="80" y="310" fill="#bcc9dd" font-size="12.5">利率上行或外部冲击,不对称性引爆:加息 525bp、储备耗光、千亿赎回</text>
-            <path d="M 225 328 L 225 348" stroke="#41506b" stroke-width="2" fill="none"/>
-            <path d="M 218 342 L 225 352 L 232 342 Z" fill="#41506b"/>
-            <rect x="60" y="352" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(143,183,122,0.5)"/>
-            <text x="80" y="380" fill="#b8d6a3" font-size="15" font-weight="800">④ 清算:规则被重写</text>
-            <text x="80" y="406" fill="#bcc9dd" font-size="12.5">期权化撕约、银行休假、废除金本位、熔断、无限 QE、周末 48 小时联姻</text>
-            <!-- 右侧:12 场危机时间线 -->
-            <text x="640" y="70" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">同一张脸,换了十二次妆</text>
-            <line x1="470" y1="96" x2="470" y2="410" stroke="#41506b" stroke-width="2"/>
-            <!-- 刻度点 -->
-            <circle cx="470" cy="104" r="5" fill="#7aa7f0"/><text x="486" y="108" fill="#bcc9dd" font-size="12.5">1637 郁金香:空气交易一夜流拍</text>
-            <circle cx="470" cy="128" r="5" fill="#7aa7f0"/><text x="486" y="132" fill="#bcc9dd" font-size="12.5">1720 南海:股价本身成了利润来源</text>
-            <circle cx="470" cy="152" r="5" fill="#7aa7f0"/><text x="486" y="156" fill="#bcc9dd" font-size="12.5">1929 大萧条:道指 -89%,25 年才回本</text>
-            <circle cx="470" cy="176" r="5" fill="#f0c96a"/><text x="486" y="180" fill="#bcc9dd" font-size="12.5">1987 黑色星期一:程序化自救的踩踏</text>
-            <circle cx="470" cy="200" r="5" fill="#f0c96a"/><text x="486" y="204" fill="#bcc9dd" font-size="12.5">1990 日本:抵押品循环被加息截断</text>
-            <circle cx="470" cy="224" r="5" fill="#f0c96a"/><text x="486" y="228" fill="#bcc9dd" font-size="12.5">1997 亚洲:做空一个国家的完整手册</text>
-            <circle cx="470" cy="248" r="5" fill="#e87878"/><text x="486" y="252" fill="#bcc9dd" font-size="12.5">2000 互联网:思科有利润也跌 -89%</text>
-            <circle cx="470" cy="272" r="5" fill="#e87878"/><text x="486" y="276" fill="#bcc9dd" font-size="12.5">2008 次贷:相关性假设值一万亿美元</text>
-            <circle cx="470" cy="296" r="5" fill="#e87878"/><text x="486" y="300" fill="#bcc9dd" font-size="12.5">2010 欧债:没有最后贷款人的货币联盟</text>
-            <circle cx="470" cy="320" r="5" fill="#8fb37a"/><text x="486" y="324" fill="#bcc9dd" font-size="12.5">2015 A 股:两融 2.27 万亿与千股跌停</text>
-            <circle cx="470" cy="344" r="5" fill="#8fb37a"/><text x="486" y="348" fill="#bcc9dd" font-size="12.5">2020/2022:抢现金与反身性死亡螺旋</text>
-            <circle cx="470" cy="368" r="5" fill="#8fb37a"/><text x="486" y="372" fill="#bcc9dd" font-size="12.5">2023 SVB/瑞信:单日挤兑 420 亿美元</text>
-            <text x="640" y="404" text-anchor="middle" fill="#8499bd" font-size="12.5">点火时间不可测,顺序永远一致。</text>
-          </svg>
-          <p class="figure__cap">四步永远按同一顺序发生:叙事先把价格抬离锚,杠杆把错配堆到极限,点火只需一根火柴,灭火靠的是规则被临时重写。危机无法预测,但每一步都有可监测的仪表盘。</p>
-        </div>
+        <h2>8. 期权风险怎样进入量化</h2>
+<p>到了量化世界,期权有一整套专属的研究对象:波动率、偏度、期限结构、希腊值、成交量、持仓量和做市价差。所谓希腊值,就是期权价格对标的价格、波动率、时间、<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>等变量的敏感度——名字来自希腊字母,直觉上可以理解成仪表盘上一排 indicator,分别告诉你价格对哪个输入最过敏。</p><p>最常用的三盏灯先混个脸熟:对标的价格的敏感度常叫 Delta,对波动率的叫 Vega,对时间流逝的叫 Theta。方向突变看 Delta,波动放大看 Vega,临近到期盯 Theta。不必背名词,但要知道哪盏灯会因为什么而亮——期权价格从来不只被涨跌牵着走。</p><p>期权策略特别容易在<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>里显得岁月静好,卖期权策略尤其如此。因为大部分时间市场不会极端波动,卖方会一笔一笔地收权利金,资金曲线平滑得像在存钱。可真正的风险全躲在少数极端时刻。所以一个严肃的回测必须做<a class="term term-link" href="glossary.html#g-压力测试" title="查看术语：压力测试">压力测试</a>:看看极端跳空、波动率飙升、流动性消失的时候,那条平滑曲线会被拉成什么形状。</p><p>对个人来说,先理解期权结构比急着交易更重要。给你一条硬标准:能徒手画出买看涨、卖看涨、买看跌、卖看跌这四条到期收益线,再来谈策略;画不出来,就不应该碰复杂的期权产品。市场的补考费,一向比纸笔贵得多。</p>
+
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>危机的剧本四百年没变过:叙事负责把人带进赌场,杠杆决定淘汰的快慢,流动性决定点火,政策决定灭火。</li>
-            <li>盯紧负债端而不是盯着价格:保证金、融资期限、强平线、赎回规则,这些比估值倍数更早告诉你谁会先死。</li>
+            <li>期权买方买的是权利,卖方收权利金之后承担的是义务。</li>
+            <li>期权收益结构天生不对称:买方亏损有限,卖方可能承担尾部风险。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.</strong> 第一张脱离一切的价格表</li>
-            <li><strong>2.</strong> 牛顿也踩不中的倒车镜</li>
-            <li><strong>3.</strong> 三个政策失误把股灾变成十年煎熬</li>
-            <li><strong>4.</strong> 同样自救,走成了踩踏</li>
-            <li><strong>5.</strong> 被截断的抵押品循环</li>
-            <li><strong>6.</strong> 做空一个国家的完整手册</li>
-            <li><strong>7.</strong> 伟大公司可以跌九成</li>
-            <li><strong>8.</strong> 把分散的违约聚合成系统性挤兑</li>
-            <li><strong>9.</strong> 货币联盟里没有一国的爹</li>
-            <li><strong>10.</strong> 杠杆的清算顺序踩死流动性</li>
-            <li><strong>11.</strong> 挤兑已不需要排队</li>
-            <li><strong>12.</strong> 利率怎么杀人</li>
-            <li><strong>13.</strong> 危机的同一根脊柱</li>
+            <li><strong>1.</strong> GameStop 的期权怎样把小火苗吹成火墙</li>
+            <li><strong>2.</strong> 先从一张买房选择权说起</li>
+            <li><strong>3.</strong> 看涨期权和看跌期权</li>
+            <li><strong>4.</strong> 买方亏损有限,卖方风险更复杂</li>
+            <li><strong>5.</strong> 内在价值和时间价值</li>
+            <li><strong>6.</strong> 波动率为什么重要</li>
+            <li><strong>7.</strong> 一个到期收益小表</li>
+            <li><strong>8.</strong> 期权风险怎样进入量化</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>为什么 1637 年的郁金香值得至今还在读?</summary>
-            <p>它是最早一份没有保证金、没有清算、没有锚的价格表。三个月后 -90% 的清算方式,是现代期货结算制度存在的反面教材。</p>
+            <summary>买入看涨期权,是不是标的上涨就一定赚钱?</summary>
+            <p>不一定。标的需要涨过行权价和权利金成本,买方才真正盈利——盈亏平衡点之下,涨了也可能白涨。</p>
           </details>
           <details class="quiz__item">
-            <summary>1987 年黑色星期一和大萧条的根本区别是什么?</summary>
-            <p>1987 没有基本面崩塌,是美国经济在涨,市场机制本身的自伤。证明了拥挤的顺向程序可以成为系统性风险;此后所有波动率目标策略都必须为拥挤度付费。</p>
+            <summary>卖期权为什么不能只看胜率?</summary>
+            <p>因为卖方可能平时一直小赚,极端行情一次大亏。胜率说的是频率,覆盖不了幅度。</p>
           </details>
         </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>跨资产入门: 外汇、商品与 REITs</h2>
+          <p>先用现金流、供需和计价货币理解外汇、商品与不动产份额,再建立跨资产研究的共同语言。</p>
+        </section>
+
       </div>
     </main>
     <script src="assets/book.js"></script>

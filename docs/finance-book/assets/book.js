@@ -2,53 +2,68 @@
 (function () {
   "use strict";
   var CHAPTERS = [
-    { num: 0, title: '货币与通胀:财富到底是什么', file: 'chapter-00.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 1, title: '信用、利率与银行体系', file: 'chapter-01.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 2, title: '金融系统地图:钱和风险怎么流动', file: 'chapter-02.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 3, title: '股票:你买的到底是什么', file: 'chapter-03.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 4, title: '债券与基金:把钱借出去或交给别人管', file: 'chapter-04.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 5, title: '衍生品与其他资产:把未来和风险变成合约', file: 'chapter-05.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 6, title: '结构性产品与另类资产:把风险和收益切开重卖', file: 'chapter-06.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 7, title: '基本面与宏观:数字背后的公司和经济', file: 'chapter-07.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 8, title: '国家为什么有穷有富: 从起飞到中等收入陷阱', file: 'chapter-08.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 9, title: '危机四百年:从郁金香到硅谷银行', file: 'chapter-09.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 10, title: '影子银行:银行不在银行里', file: 'chapter-10.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 11, title: '央行、利率与汇率:全球资金的水龙头', file: 'chapter-11.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 12, title: '保险: 把扛不住的灾难摊给几千人', file: 'chapter-12.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 13, title: '社保、公积金与养老金: 国家给你的那张底牌', file: 'chapter-13.html', part: '第一部分 · 金融世界的底层结构' },
-    { num: 14, title: 'A 股的交易机器:从下单到成交', file: 'chapter-14.html', part: '第二部分 · A 股市场与交易机器' },
-    { num: 15, title: '上市、打新与退市: 一只股票从出生到摘牌的路径', file: 'chapter-15.html', part: '第二部分 · A 股市场与交易机器' },
-    { num: 16, title: '看懂行情:屏幕上的数字和基准', file: 'chapter-16.html', part: '第二部分 · A 股市场与交易机器' },
-    { num: 17, title: '收益、风险与市场为什么难赢', file: 'chapter-17.html', part: '第三部分 · 收益、风险与投资评价' },
-    { num: 18, title: '行为金融: 人脑的出厂设置不适合做交易', file: 'chapter-18.html', part: '第三部分 · 收益、风险与投资评价' },
-    { num: 19, title: '家庭资产配置: 先把日子底盘站稳', file: 'chapter-19.html', part: '第三部分 · 收益、风险与投资评价' },
-    { num: 20, title: '量化的起点:因子和数据', file: 'chapter-20.html', part: '第四部分 · 量化研究从因子开始' },
-    { num: 21, title: '回测与机器学习:在历史里排练', file: 'chapter-21.html', part: '第四部分 · 量化研究从因子开始' },
-    { num: 22, title: '从预测到交易:组合、执行与风控', file: 'chapter-22.html', part: '第四部分 · 量化研究从因子开始' },
-    { num: 23, title: '量化行业和个人的路线', file: 'chapter-23.html', part: '第四部分 · 量化研究从因子开始' },
-    { num: 24, title: '量化策略版图与指数增强', file: 'chapter-24.html', part: '第五部分 · 量化行业与策略版图' },
-    { num: 25, title: '市场中性与 CTA 趋势', file: 'chapter-25.html', part: '第五部分 · 量化行业与策略版图' },
-    { num: 26, title: '套利与高频:更快更精细的战场', file: 'chapter-26.html', part: '第五部分 · 量化行业与策略版图' },
-    { num: 27, title: '量化产品、监管与合规', file: 'chapter-27.html', part: '第五部分 · 量化行业与策略版图' },
-    { num: 28, title: '量化项目的工程骨架与速查', file: 'chapter-28.html', part: '第五部分 · 量化行业与策略版图' },
-    { num: 29, title: '实战一:从零做一个指数增强回测', file: 'chapter-29.html', part: '第六部分 · 项目实战与工程化' },
-    { num: 30, title: '实战二:市场中性模拟盘与上线检查', file: 'chapter-30.html', part: '第六部分 · 项目实战与工程化' },
-    { num: 31, title: '避坑:常见错误和如何读研究', file: 'chapter-31.html', part: '第六部分 · 项目实战与工程化' },
-    { num: 32, title: '心理、资金管理与一次复盘', file: 'chapter-32.html', part: '第六部分 · 项目实战与工程化' },
-    { num: 33, title: '全书复盘:从一条鱼到一个量化系统', file: 'chapter-33.html', part: '第六部分 · 项目实战与工程化' },
-    { num: 34, title: '职业路线与长期学习', file: 'chapter-34.html', part: '第六部分 · 项目实战与工程化' },
-    { num: 35, title: '术语复盘:用人话再讲一遍', file: 'chapter-35.html', part: '第七部分 · 路线、复盘与检查清单' },
-    { num: 36, title: '场景练习:开户软件和基金月报', file: 'chapter-36.html', part: '第七部分 · 路线、复盘与检查清单' },
-    { num: 37, title: '场景练习:回测报告和模拟盘', file: 'chapter-37.html', part: '第七部分 · 路线、复盘与检查清单' },
-    { num: 38, title: '读产品文件: 招募书、定期报告和确认书先看哪五行', file: 'chapter-38.html', part: '第七部分 · 路线、复盘与检查清单' },
-    { num: 39, title: '场景练习:第一次小资金实盘', file: 'chapter-39.html', part: '第七部分 · 路线、复盘与检查清单' },
-    { num: 40, title: '最终清单:动手前必须真正懂的事', file: 'chapter-40.html', part: '第七部分 · 路线、复盘与检查清单' },
-    { num: 41, title: '自检判断题与一个反面案例', file: 'chapter-41.html', part: '第七部分 · 路线、复盘与检查清单' },
-    { num: 42, title: '一个稳妥的项目与结语', file: 'chapter-42.html', part: '第七部分 · 路线、复盘与检查清单' },
-    { num: 43, title: '附录:每次研究前先读这张纸', file: 'chapter-43.html', part: '第七部分 · 路线、复盘与检查清单' }
+    { num: 0, title: '钱不是财富: 从一座只有鱼的小岛讲起', file: 'chapter-00.html', part: '第一部分 · 金融为什么存在' },
+    { num: 1, title: '钱、价格和通胀: 鱼票为什么会缩水', file: 'chapter-01.html', part: '第一部分 · 金融为什么存在' },
+    { num: 2, title: '信用、利率和债: 借钱为什么要付利息', file: 'chapter-02.html', part: '第一部分 · 金融为什么存在' },
+    { num: 3, title: '银行和央行: 钱不是都躺在保险柜里', file: 'chapter-03.html', part: '第一部分 · 金融为什么存在' },
+    { num: 4, title: '金融系统与市场: 钱、风险和证券如何流动', file: 'chapter-04.html', part: '第一部分 · 金融为什么存在' },
+    { num: 5, title: '股票与估值: 你买的权利为什么值这个价', file: 'chapter-05.html', part: '第二部分 · 资产如何承载现金流与风险' },
+    { num: 6, title: '债券: 确定性更强,但绝不等于没有风险', file: 'chapter-06.html', part: '第二部分 · 资产如何承载现金流与风险' },
+    { num: 7, title: '基金、ETF、指数和私募: 把钱交给别人管理意味着什么', file: 'chapter-07.html', part: '第二部分 · 资产如何承载现金流与风险' },
+    { num: 8, title: '期货、远期与互换: 把未来价格写进合约', file: 'chapter-08.html', part: '第二部分 · 资产如何承载现金流与风险' },
+    { num: 9, title: '期权: 把不对称收益结构变成可交易产品', file: 'chapter-09.html', part: '第二部分 · 资产如何承载现金流与风险' },
+    { num: 10, title: '跨资产入门: 外汇、商品与 REITs', file: 'chapter-10.html', part: '第二部分 · 资产如何承载现金流与风险' },
+    { num: 11, title: '结构性产品深拆: 收益和风险怎样被切开重卖', file: 'chapter-11.html', part: '第二部分 · 资产如何承载现金流与风险' },
+    { num: 12, title: '账户与交易界面: 一笔委托从哪里出发', file: 'chapter-12.html', part: '第三部分 · 市场如何形成价格与数据' },
+    { num: 13, title: '股票怎样上市、交易与退市', file: 'chapter-13.html', part: '第三部分 · 市场如何形成价格与数据' },
+    { num: 14, title: '行情、K 线、成交量和复权: 先看懂屏幕上的数字', file: 'chapter-14.html', part: '第三部分 · 市场如何形成价格与数据' },
+    { num: 15, title: '指数、ETF 和基准: 你到底在和谁比较', file: 'chapter-15.html', part: '第三部分 · 市场如何形成价格与数据' },
+    { num: 16, title: '财务报表和基本面因子: 公司赚钱到底看哪里', file: 'chapter-16.html', part: '第三部分 · 市场如何形成价格与数据' },
+    { num: 17, title: '收益和风险怎么量化: 年化、波动、回撤和夏普', file: 'chapter-17.html', part: '第三部分 · 市场如何形成价格与数据' },
+    { num: 18, title: '资产配置和分散化: 不要把所有判断押在一个地方', file: 'chapter-18.html', part: '第三部分 · 市场如何形成价格与数据' },
+    { num: 19, title: '市场为什么难赢: 有效性与行为偏差', file: 'chapter-19.html', part: '第三部分 · 市场如何形成价格与数据' },
+    { num: 20, title: '国家为什么有穷有富: 从起飞到中等收入陷阱', file: 'chapter-20.html', part: '第四部分 · 宏观环境如何改变资产' },
+    { num: 21, title: '宏观数据和多资产: 利率、通胀、汇率和商品如何连起来', file: 'chapter-21.html', part: '第四部分 · 宏观环境如何改变资产' },
+    { num: 22, title: '央行、利率与汇率: 全球资金的水龙头', file: 'chapter-22.html', part: '第四部分 · 宏观环境如何改变资产' },
+    { num: 23, title: '世界经济形势: 美元、黄金和全球资金流', file: 'chapter-23.html', part: '第四部分 · 宏观环境如何改变资产' },
+    { num: 24, title: '危机四百年: 从郁金香到硅谷银行', file: 'chapter-24.html', part: '第四部分 · 宏观环境如何改变资产' },
+    { num: 25, title: '影子银行: 银行不在银行里', file: 'chapter-25.html', part: '第四部分 · 宏观环境如何改变资产' },
+    { num: 26, title: '保险: 把扛不住的灾难摊给几千人', file: 'chapter-26.html', part: '专题篇 · 个人金融的安全底盘' },
+    { num: 27, title: '社保、养老金与家庭资产配置', file: 'chapter-27.html', part: '专题篇 · 个人金融的安全底盘' },
+    { num: 28, title: '从问题到因子: 把投资判断变成可检验假设', file: 'chapter-28.html', part: '第五部分 · 量化研究如何产生可信结论' },
+    { num: 29, title: '数据、标签和样本切分: 量化模型从哪里学', file: 'chapter-29.html', part: '第五部分 · 量化研究如何产生可信结论' },
+    { num: 30, title: '回测: 在历史里排练,但不要把历史当答案', file: 'chapter-30.html', part: '第五部分 · 量化研究如何产生可信结论' },
+    { num: 31, title: '量化里的机器学习: 模型不是越复杂越好', file: 'chapter-31.html', part: '第五部分 · 量化研究如何产生可信结论' },
+    { num: 32, title: '从预测到仓位: 组合优化和风险模型', file: 'chapter-32.html', part: '第五部分 · 量化研究如何产生可信结论' },
+    { num: 33, title: '交易执行和实盘系统: 策略如何真的下到市场里', file: 'chapter-33.html', part: '第五部分 · 量化研究如何产生可信结论' },
+    { num: 34, title: '风险控制和组合监控: 什么时候该减仓、停用和复盘', file: 'chapter-34.html', part: '第五部分 · 量化研究如何产生可信结论' },
+    { num: 35, title: '一个量化项目的代码骨架: 从数据到报告怎么组织', file: 'chapter-35.html', part: '第五部分 · 量化研究如何产生可信结论' },
+    { num: 36, title: '识别回测幻觉: 错误清单与拆解案例', file: 'chapter-36.html', part: '第五部分 · 量化研究如何产生可信结论' },
+    { num: 37, title: '审查量化研究: 从论文到回测报告', file: 'chapter-37.html', part: '第五部分 · 量化研究如何产生可信结论' },
+    { num: 38, title: '量化策略全景: 指数增强、市场中性、CTA、套利和高频', file: 'chapter-38.html', part: '第六部分 · 策略如何变成产品' },
+    { num: 39, title: '指数增强策略: 在基准附近争取一点点超额', file: 'chapter-39.html', part: '第六部分 · 策略如何变成产品' },
+    { num: 40, title: '市场中性策略: 对冲大盘以后还剩什么', file: 'chapter-40.html', part: '第六部分 · 策略如何变成产品' },
+    { num: 41, title: 'CTA 和期货趋势: 用规则交易商品、股指和利率', file: 'chapter-41.html', part: '第六部分 · 策略如何变成产品' },
+    { num: 42, title: '套利和相对价值: 看起来确定的价差为什么也会亏', file: 'chapter-42.html', part: '第六部分 · 策略如何变成产品' },
+    { num: 43, title: '高频交易和市场微观结构: 毫秒里的价格、排队和风险', file: 'chapter-43.html', part: '第六部分 · 策略如何变成产品' },
+    { num: 44, title: '读懂量化产品: 净值、报告与合同', file: 'chapter-44.html', part: '第六部分 · 策略如何变成产品' },
+    { num: 45, title: '监管、合规和伦理: 技术能力不能越过市场规则', file: 'chapter-45.html', part: '第六部分 · 策略如何变成产品' },
+    { num: 46, title: '实战项目一: 从零做一个指数增强回测', file: 'chapter-46.html', part: '第七部分 · 把研究变成可运行项目' },
+    { num: 47, title: '市场中性模拟盘: 把策略放进真实时间', file: 'chapter-47.html', part: '第七部分 · 把研究变成可运行项目' },
+    { num: 48, title: '从模拟盘到小实盘: 上线前必须检查什么', file: 'chapter-48.html', part: '第七部分 · 把研究变成可运行项目' },
+    { num: 49, title: '投资心理和资金管理: 活下来比一次赚快钱重要', file: 'chapter-49.html', part: '第七部分 · 把研究变成可运行项目' },
+    { num: 50, title: '两条项目路径: 程序员怎样失败、怎样做稳', file: 'chapter-50.html', part: '第七部分 · 把研究变成可运行项目' },
+    { num: 51, title: '量化行业与职业路线: 你适合站在哪个位置', file: 'chapter-51.html', part: '第八部分 · 职业、复盘与长期成长' },
+    { num: 52, title: '长期学习路线: 从零到可展示的量化项目', file: 'chapter-52.html', part: '第八部分 · 职业、复盘与长期成长' },
+    { num: 53, title: '全书复盘与自检: 从一条鱼到一个量化系统', file: 'chapter-53.html', part: '第八部分 · 职业、复盘与长期成长' },
+    { num: 54, title: '结语: 你现在应该带走什么', file: 'chapter-54.html', part: '第八部分 · 职业、复盘与长期成长' },
+    { num: 55, title: '概念复盘: 用人话重走金融与量化关键词', file: 'chapter-55.html', part: '附录 · 随时回来查' },
+    { num: 56, title: '公式和指标速查: 别背公式,要知道它在问什么', file: 'chapter-56.html', part: '附录 · 随时回来查' },
+    { num: 57, title: '最终检查表: 研究、交易和实盘前先读', file: 'chapter-57.html', part: '附录 · 随时回来查' }
   ];
   var BOOK_TITLE = "从金融零基础到量化研究者";
-  var STORAGE_LAST = "financebook:last";
+  // 公开结构已经整体重排。使用新键避免把旧章号进度误映射到不同主题。
+  var STORAGE_LAST = "financebook:last:v2";
   var sectionNavigate = null;
   var HEADING_ANCHOR_RATIO = 0.28;
 
@@ -190,6 +205,10 @@
   }
   function scrollToSectionTarget(target, smooth) {
     if (!target) return;
+    if (target.matches && target.matches(".glossary-list li[id^='g-']")) {
+      scrollHeadingIntoView(target, smooth);
+      return;
+    }
     var heading = isSectionHeading(target) ? target : findSectionHeading(target);
     if (heading && sectionNavigate) {
       sectionNavigate(heading, smooth);

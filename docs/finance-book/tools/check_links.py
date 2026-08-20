@@ -21,8 +21,24 @@ def main():
     ids_by_file = {path: explicit_ids(open(path, encoding="utf-8").read()) for path in files}
     bad = []
     total = 0
+    term_links = 0
+    term_link_pages = set()
     for path in files:
         html = open(path, encoding="utf-8").read()
+        page_term_links = re.findall(
+            r'<a class="term term-link" href="glossary\.html#([^"]+)"',
+            html,
+        )
+        term_links += len(page_term_links)
+        if page_term_links:
+            term_link_pages.add(path)
+        duplicate_terms = sorted(
+            anchor
+            for anchor in set(page_term_links)
+            if page_term_links.count(anchor) > 1
+        )
+        for anchor in duplicate_terms:
+            bad.append((path, f"glossary.html#{anchor}", "term-link-duplicate"))
         for href in re.findall(r'href="([^"]+)"', html):
             if href.startswith(("http://", "https://", "mailto:", "#")):
                 continue
@@ -39,7 +55,19 @@ def main():
                 total += 1
                 if not os.path.exists(target):
                     bad.append((path, href, "asset-missing"))
+    if not term_links:
+        bad.append(("<generated-book>", "glossary.html", "term-links-missing"))
+    chapter_count = len([path for path in files if path.startswith("chapter-")])
+    if len(term_link_pages) != chapter_count:
+        bad.append(
+            (
+                "<generated-book>",
+                "glossary.html",
+                f"term-link-page-coverage:{len(term_link_pages)}/{chapter_count}",
+            )
+        )
     print(f"本地链接: {total}")
+    print(f"术语链接: {term_links} 条,覆盖 {len(term_link_pages)} 个页面")
     print(f"失效: {len(bad)}")
     for src, href, why in bad:
         print(f"  {src} -> {href} [{why}]")

@@ -3,132 +3,127 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 38 章 · 读产品文件: 招募书、定期报告和确认书先看哪五行 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="不看广告看文件:基金招募书五处必看,定期报告三个数,结构化产品确认书逐词拆。" />
+    <title>第 38 章 · 量化策略全景: 指数增强、市场中性、CTA、套利和高频 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="把常见量化策略按收益来源、交易频率、资产类别和风险暴露分清楚。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="38">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第七部分 · 路线、复盘与检查清单 · 第 38 章</p>
-        <h1>读产品文件: 招募书、定期报告和确认书先看哪五行</h1>
-        <p class="lead">销售的话术天花乱坠,合同的黑字白纸冷静得多。这一章讲一件整个金融市场最实用的小事:拿到一份产品文件,先看哪几行。三分钟能解决的事,为什么大多数人还是闭眼签字?因为没人教过顺序。报名文件分三层——招募说明书是一次性体检,定期报告是季度复查,确认书是结构化产品的生死状——每一层都给你一张“先看这几行”的短清单。读完以后你再面对任何一页宣传材料,手会自动先翻文件。</p>
+        <p class="chapter__eyebrow">第六部分 · 策略如何变成产品 · 第 38 章</p>
+        <h1>量化策略全景: 指数增强、市场中性、CTA、套利和高频</h1>
+        <p class="lead">走进挂着“量化”招牌的大饭店,菜单上文火老汤、三分钟快餐和穿实验服的分子料理印在同一页——它们都叫“做菜”,但食材、火候、后厨设备完全是两回事。量化也不是一种策略,而是一类用数据、模型和规则做交易的方法:有人做指数增强,有人做股指期货对冲,有人做商品趋势,有人做 ETF 套利,有人做高频做市。同一块招牌下,数据、频率、收益来源、风险和基础设施完全不同。先把地图铺开,你才知道自己该走哪条路。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线六</span>
+            <span>本部分第 1 / 8 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>不同量化策略赚的是什么钱,承担什么风险,最终怎样装进受约束的产品?</p>
+          <p class="chapter-context__outcome">读完后,你能按收益来源和风险结构比较策略,而不是只按历史年化排名。 </p>
+        </section>
+
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>合同黑字大于一切口头承诺;销售指不出文件页码就等于没说。</li>
-            <li>招募书五处:投资范围、申购赎回、风控线、费率表、限制条款;二十分钟够看出八成问题。</li>
+            <li>量化是一类方法而不是一种策略:要按收益来源、资产类别和交易频率分格子看,不能都混成“预测涨跌”。</li>
+            <li>指数增强、市场中性、CTA、套利、高频赚的是五种完全不同的钱,怕的也是五件完全不同的事。</li>
           </ul>
         </section>
 
 
-        <h2>1. 一切口头的承诺都不算数</h2>
-<div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>先立一个原则,不用记住任何法律条文就够用了:在中国,任何金融产品,只有写进合同、招募书、确认书的内容才算数。理财经理嘴里的“保本”“内部渠道”“过往回报”，只要没出现在文件里,法律意义等于零。这一条被写进监管规定反复重申,每年因“销售说的和合同不一致”引发的投资纠纷,最后都以文件为准判。</p></div><p>所以你的标准动作只有一句:把那句最动听的承诺,指给我看写在第几页。销售指得出来,你核对条款字眼和他说的是不是一回事;指不出来、说<span class="hl">“这是行业惯例”</span><span class="hl">“你放心”</span>的,立刻后撤。这个动作用不着懂金融,只需要一点点在客户面前不怕翻脸的礼貌——你的钱,你有权看条件。</p>
+        <h2>1. 它到底赚谁的钱</h2>
+<p>看量化产品的宣传材料,普通人第一眼盯住的是<span class="hl">“<span class="term">年化收益</span>”</span>;内行盯住的是另一件事:这钱到底是怎么赚来的。指数增强赚相对指数的选股超额;<a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>拆掉大盘因素,赚多空相对收益;CTA 赚期货趋势、期限结构或跨品种关系;套利赚价格关系偏离之后的那次回归;高频和做市赚微观结构里的价差、<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>和执行优势。五种钱,五种打法。</p><p>钱从哪来,风险就从哪来。指数增强怕跑输基准和风格失效;市场中性怕<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>成本和<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>;CTA 怕长期无趋势的震荡;套利怕极端价差扩大和流动性中断;高频怕技术延迟、交易规则变化和竞争挤压。宣传页不会写这些“怕”,但每一种怕背后,都有亏过真金白银的产品。</p><p>所以成熟投资者不会只问<span class="hl">“年化多少”</span>,而是追问:收益从哪里来、什么情况下会亏、容量多大、成本如何、能否长期复制。这五个问题,就是这张地图的坐标。</p><div class="callout callout--note reveal"><span class="callout__title">先看赚的是哪一种钱,再看年化多少</span><p>同样一条年化 <span class="num">10%</span> 的曲线,背后的钱可能来自五个完全不同的口袋:选股超额、多空相对收益、趋势、价差回归、微观结构。钱的来源决定了它会怎么亏、容量多大、对成本多敏感。所以拿到任何一份量化材料,先把收益归到正确的口袋,再谈数字——分类分错,后面的比较全是白比。</p></div>
+
+        <h2>2. 四个互不相通的世界</h2>
+<p>都挂着<span class="hl">“量化”</span>两个字,做<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>的人和做期权的人坐下来,可能聊十分钟就发现互相听不懂。股票量化是最常被讨论的方向,包括多<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>选股、指数增强、市场中性、事件驱动和高频股票交易;<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>量化盯<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>曲线、<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>、<a class="term term-link" href="glossary.html#g-信用利差" title="查看术语：信用利差">信用利差</a>、流动性和相对价值;期货量化在商品、股指、国债、外汇等合约上做趋势、价差和期限结构;期权量化研究<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>、希腊字母、波动率曲面和尾部风险。</p><p>用程序员的话说,每类资产都有自己的<span class="hl">“数据方言”</span>:股票有财报、行业、指数成分和公司事件;期货有主力合约切换、<span class="term">保证金</span>、<a class="term term-link" href="glossary.html#g-展期" title="查看术语：展期">展期</a>和夜盘;债券有久期、凸性、<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>评级和成交不连续;期权有行权价、到期日、隐含波动率和流动性。方言接错,解析出来全是乱码——拿股票的回填方式去拼期货价格,<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>从第一步就错了。</p><p>个人学习最好先挑一个资产类别扎进去。A 股日频股票是比较适合入门的方向:概念丰富、数据相对容易理解,光弄懂交易规则就能学到很多。基础扎实后,再扩展到期货、期权、债券或多资产。</p>
+
+        <h2>3. 从季度调仓到毫秒抢单</h2>
+<p>想象三个节奏完全不同的岗位:一个人每季度才做一次决定,一个人每天早上调一次仓,还有一个要在几毫秒内下完单。低频策略可能月度或季度调仓,主要用财务、估值、宏观和长期价格特征;中频策略可能每日或每周调仓,关注价格<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>、短期<span class="term">反转</span>、成交量、事件和资金流;高频在秒级、毫秒级甚至更短时间内交易,盯的是盘口、订单流、排队位置和延迟。</p><p>频率越高,工程和交易成本的戏份越重。低频像定时跑的批处理任务:慢慢算、慢慢执行,代价是承受较长持有期风险;高频像对延迟极度敏感的联机系统:单次收益极薄,需要极低延迟、稳定通道、精细风控和大量交易样本,链路任何一环抖一下,抖掉的都是真金白银。</p><p>计算机背景的人容易被高频吸引,因为它最像系统工程。但个人通常不适合从高频开始:没有交易通道、行情质量、低延迟基础设施和成本优势,高频回测很容易变成纸上游戏——你在自己电脑上跑赢了,只是因为回测里没有一整层专业机构在跟你抢单。</p>
+
+        <h2>4. 指数增强</h2>
+<p>买指数基金,相当于直接抄指数的<span class="hl">“作业”</span>;买指数增强,是抄作业时顺手改几个答案,赌自己改得比标准答案好。它围绕一个基准指数构建组合,目标是指数收益加<span class="term">超额收益</span>:通常持有一篮子股票,控制行业、风格、个股和<a class="term term-link" href="glossary.html#g-跟踪误差" title="查看术语：跟踪误差">跟踪误差</a>,用量化因子或模型在指数成分及相近股票中争取更好的排序。大方向跟着指数走,细节处偷偷使劲。</p><p>这个结构的好处是客户容易理解:买的是某个指数附近的增强版。风险同样清楚:模型选股失效、风格暴露不利或交易成本过高,产品就会跑输基准,<span class="hl">“增强”</span>两个字就变成了反话。</p><p>国内量化私募和公募都很重视指数增强,原因很实际:A 股股票数量多、散户占比和风格轮动明显、指数产品需求大。但另一面是竞争激烈,简单因子很难长期提供高超额——你能在公开资料里学到的套路,别人早就用上了。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 390" role="img" aria-label="产品文件三层图:招募书地基、定期报告体检、确认书生死状,各写一行对应你要顶的指标">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">产品文件三层:合同是地基,报告是例行体检</text>
-            <!-- 三层 -->
-            <rect x="90" y="80" width="720" height="70" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
-            <text x="120" y="108" fill="#a8c6ff" font-size="14" font-weight="800">第一层 地基(一次性)</text>
-            <text x="120" y="132" fill="#bcc9dd" font-size="12">基金招募书 / 产品说明书——写清楚能买什么、什么价可以买、什么价必须止损</text>
-            <rect x="90" y="170" width="720" height="70" rx="10" fill="rgba(240,201,106,0.12)" stroke="#f0c96a"/>
-            <text x="120" y="198" fill="#f0c96a" font-size="14" font-weight="800">第二层 体检(每季度)</text>
-            <text x="120" y="222" fill="#bcc9dd" font-size="12">定期报告:超额收益、份额变化、重仓集中度——超过三层信号都在这份文件里</text>
-            <rect x="90" y="260" width="720" height="70" rx="10" fill="rgba(238,136,119,0.12)" stroke="#ee8877"/>
-            <text x="120" y="288" fill="#ffb4b4" font-size="14" font-weight="800">第三层 生死状(结构化)</text>
-            <text x="120" y="312" fill="#bcc9dd" font-size="12">确认书:敲出/敲入/票息/观察频率/期限——这五个数决定你到底买了什么中间可以的结局</text>
-            <text x="450" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12.5">所有事项权重都在文档里,任何“销售说”的话却都不成立</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 305" role="img" aria-label="指数增强示意:增强曲线贴着指数基准走,并持续高出一小截超额收益">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">指数增强:紧贴指数,再想办法多赚一点点</text>
+            <line x1="70" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="70" y1="60" x2="70" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">时间</text>
+            <text x="52" y="70" fill="#8499bd" font-size="13">净值</text>
+            <!-- 指数基准线 -->
+            <path d="M 70 235 Q 300 195 520 165 T 830 120" fill="none" stroke="#8499bd" stroke-width="2.5" stroke-dasharray="7 5"/>
+            <text x="700" y="150" fill="#8499bd" font-size="14" font-weight="800">指数基准</text>
+            <!-- 增强线,略高于基准 -->
+            <path d="M 70 235 Q 300 182 520 145 T 830 92" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <text x="600" y="96" fill="#a8c6ff" font-size="14" font-weight="800">指数增强</text>
+            <!-- 超额区间标注 -->
+            <line x1="830" y1="92" x2="830" y2="120" stroke="#f0c96a" stroke-width="2"/>
+            <path d="M 830 92 L 825 102 M 830 92 L 835 102" stroke="#f0c96a" stroke-width="2" fill="none"/>
+            <text x="815" y="80" text-anchor="end" fill="#f0c96a" font-size="13">超额收益(Alpha)</text>
+            <text x="450" y="292" text-anchor="middle" fill="#c9d4e8" font-size="13">大方向跟着指数走(Beta),再靠选股在上面抠出一层薄薄的超额</text>
           </svg>
-          <p class="figure__cap">产品文件分列三层:地基是一次性体检(招募书),例行体检是季报,生死状是结构化条款清单。每层你只看自己负责的指标。黑字永远压倒言语。</p>
+          <p class="figure__cap">指数增强不追求暴利。它先老老实实跟住指数(拿到市场平均的 Beta),再用量化选股在基准之上多挤出一点超额收益(Alpha)。日积月累,这一点点也很可观。</p>
         </div>
-        <h2>2. 招募说明书先翻五处</h2>
-<p>基金招募书普遍两百页往上,但决定你要不要买的,压缩到五处。①投资范围:允许买什么、比例多少,条款里写着<span class="hl">“可投资其他金融工具”</span>这类开放性口子要警惕。②申购赎回条款:开放日怎么算、有没有封闭期、最低赎回额多少,以及那句关键的<span class="hl">“管理人有权暂停赎回”</span>——有这一条,就意味着极端行情下可能封门。③风险控制安排:预警线、止损线、清盘线,分别触及净值多少。</p><p>④费率结构:认购费、申购费、赎回费、管理费、托管费、销售服务费一一记下,主动偏股基金的总持有成本常见每年 <span class="num">2%</span> 上下,指数基金只有 <span class="num">0.2%</span><span class="num">-0.6%</span>——十年复利下来,这条差距就是十几个百分点的总收益差。⑤基金经理和历史上的离职记录:换帅频繁的产品,过往业绩基本没法当参照。五处合起来花不了二十分钟,这二十分钟省下的坑,往往比精心挑选几个月基金还多。</p>
+        <h2>5. 市场中性</h2>
+<p>普通买股票,本质是在赌天气:天晴大家一起赚,下雨大家一起挨浇。市场中性的想法是:我不赌天气,只赚自己选股的手艺钱。常见做法是买入看好的股票组合,同时用<span class="term">股指期货</span>或其他工具对冲市场 <a class="term term-link" href="glossary.html#g-beta" title="查看术语：Beta">Beta</a>。这样市场大涨大跌时,组合理论上更关注一件事:多头是否跑赢了空头或基准。</p><p>但请把<span class="hl">“中性”</span>和<span class="hl">“无风险”</span>彻底分开。<span class="term">股指期货</span>有基差,对冲比例可能不准,多头股票可能跌得比对冲工具更多,融券和期货成本会变化,极端行情里相关性会失效。大盘方向的风险被对冲掉了,其余风险还在原地站着。</p><p>它适合想降低市场方向暴露的资金,但对风控和执行要求很高。个人投资者如果不熟悉期货<span class="term">保证金</span>、基差和对冲误差,不应轻易模仿——这个策略看着温柔,真做起来全是细节,每个细节都要钱。</p>
 
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 415" role="img" aria-label="招募说明书五处必看:投资范围、申购赎回、风控线、费率、基金经理">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">招募书先看这五行,不看宣传册</text>
-            <rect x="80" y="80" width="740" height="48" rx="8" fill="rgba(122,167,240,0.15)" stroke="rgba(122,167,240,0.5)"/>
-            <text x="104" y="110" fill="#a8c6ff" font-size="13" font-weight="800">① 投资范围:能买什么、比例多少、有没有“可投其他工具”的活口</text>
-            <rect x="80" y="138" width="740" height="48" rx="8" fill="rgba(240,201,106,0.12)" stroke="rgba(240,201,106,0.45)"/>
-            <text x="104" y="168" fill="#f0c96a" font-size="13" font-weight="800">② 申购赎回:开放日、最低赎回额、管理人是否有权暂停赎回</text>
-            <rect x="80" y="196" width="740" height="48" rx="8" fill="rgba(143,179,122,0.15)" stroke="rgba(143,179,122,0.5)"/>
-            <text x="104" y="226" fill="#b5d3a0" font-size="13" font-weight="800">③ 风控线:预警线、止损线、清盘线分别设在净值多少</text>
-            <rect x="80" y="254" width="740" height="48" rx="8" fill="rgba(238,136,119,0.12)" stroke="rgba(238,136,119,0.4)"/>
-            <text x="104" y="284" fill="#ffb4b4" font-size="13" font-weight="800">④ 费率结构:申购/赎回/管理/托管/销售服务费,合计一年要被吃掉多少</text>
-            <rect x="80" y="312" width="740" height="48" rx="8" fill="rgba(132,153,189,0.12)" stroke="rgba(132,153,189,0.4)"/>
-            <text x="104" y="342" fill="#bcc9dd" font-size="13">⑤ 基金经理:从业年限、在任多久、之前的代表作业绩</text>
-            <text x="450" y="392" text-anchor="middle" fill="#bcc9dd" font-size="12.5">读完这五处再决定要不要看宣传图——顺序不能反</text>
-          </svg>
-          <p class="figure__cap">两百页招募书里,能决定一款产品能不能买的,就是五处的条款。不用苦算数据,也不用看完所有报表——把这五处看透,你已跑赢大多数被广告糊弄的人。</p>
-        </div>
-        <h2>3. 定期报告只看三个数</h2>
-<p>产品跑起来了,招募书就翻篇了,轮到季报年报。先别看首页那些漂亮话,直接找三个数。第一个:净值增长率与业绩比较基准的差——超额是正是负,比绝对涨跌重要;第二个:份额变动,规模是不是在稳定扩张或缩水,突然巨额赎回通常不是好兆头;第三个:前十大重仓股和<span class="term">换手率</span>——持仓集中度告诉你它有多敢赌,<span class="term">换手率</span>告诉你它有多爱折腾。</p><p>三个数之外翻一眼基金经理报告里的措辞变化:如果开始解释<span class="hl">“市场风格不利”</span><span class="hl">“短期波动”</span>，但过去四个季度主结构没变,说明他还守纪律;如果换来都是新故事、回避指标,八成在化妆。读定期报告的核心不是找惊喜,是找<span class="hl">“这还是不是我当初买的那只基金”</span>——风格漂移是排名表上看不见、但赎回单里最先疼的毛病。</p>
+        <h2>6. CTA 和趋势跟踪</h2>
+<p>长辈最爱教训股民的话是<span class="hl">“别追涨杀跌”</span>。CTA 趋势跟踪干的事,恰恰是把<span class="hl">“追涨杀跌”</span>写成规则、严格执行——只不过靠系统,不靠情绪。CTA 常指管理期货策略,覆盖商品、股指、国债、外汇等期货市场;趋势跟踪是其中最经典的方向:价格上涨趋势中做多,下跌趋势中做空,试图抓住持续行情。</p><p>背后的直觉是:市场有时会因为<a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>、资金和行为偏差形成持续趋势。所以趋势策略可能经常小亏——假突破来一下就止损;但逮住一波大趋势,赚的就够盖住前面所有小亏。难处也在这:震荡市会反复止损,长期无趋势阶段能把人磨到怀疑人生。</p><p>趋势之外,CTA 还有期限结构、跨品种套利、库存和供需逻辑等方向。做商品期货不能只看 K 线,还要理解合约换月、<span class="term">保证金</span>、夜盘、仓单、库存、基差和产业链。</p>
 
-        <h2>4. 雪球确认书逐词拆</h2>
-<p>结构化产品的交易确认书,比招募书薄得多,但每个字都是钱。拿最常见的雪球结构举例,确认书上有六个词必须逐字看:敲出价(常见为期初价的 <span class="num">100%</span><span class="num">-105%</span>)、敲入价(如 <span class="num">70%</span><span class="num">-80%</span>)、票息率、观察日频率、期限,以及自动赎回条款的触发方式。这五个数合起来就是你买的是什么东西的全部定义——任何销售不解释清楚这五个词,就还没懂你买的是什么。</p><p>先把四条命在纸上画出来:涨过敲出价,提前敲出,拿满期票息走人;没敲出也没敲入,到期拿票息;敲入没敲出,到期按标的跌幅赔;敲入又敲出,拿回本金加回调收益。每一条命对应一种市场路径,结构化产品的本质就是把这个路径依赖表换了个壳卖给你。书里第六章雪球那两节把推演演到过最小颗粒度,这里你只要会对照确认书读一遍,不掉进<span class="hl">“以为买的是固收”</span>这个坑就赢了大多数人。</p>
+        <h2>7. 套利和相对价值</h2>
+<p>楼下便利店可乐卖 3 块,对面超市卖 2 块 8,理论上你可以从超市搬货到便利店门口卖掉——这就是套利的直觉。区别是,金融市场里你扛货过马路的那几秒,两边价格可能已经变了。套利策略关注两个或多个相关资产价格关系的偏离,比如 <a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a> 和一篮子股票、期货和现货、<a class="term term-link" href="glossary.html#g-可转债" title="查看术语：可转债">可转债</a>和正股、同一公司不同上市地股票、不同期限债券利差。</p><p>必须泼一盆冷水:很多<span class="hl">“套利”</span>并不是无风险套利,更准确叫相对价值交易。价差可能继续扩大,流动性可能消失,融资成本可能上升,其中一边可能停牌或涨跌停。你以为在等价差回归,市场可能在告诉你:关系已经变了。</p><p>这类策略通常收益较薄,依赖低成本、快执行和强风控。个人做套利要特别小心交易规则和费用:你盯着的那个价差,可能刚好够<a class="term term-link" href="glossary.html#g-佣金" title="查看术语：佣金">佣金</a>、<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>和<a class="term term-link" href="glossary.html#g-冲击成本" title="查看术语：冲击成本">冲击成本</a>分着吃——扣完成本,肉没了,只剩骨头。</p>
 
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 920 330" role="img" aria-label="雪球确认书五关键词:敲出价、敲入价、票息率、观察频率、期限,五框匀排">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">雪球确认书的五个词</text>
-            <!-- 五个框 -->
-            <rect x="40" y="90" width="150" height="130" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
-            <text x="115" y="118" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">① 敲出价</text>
-            <text x="115" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">涨的门槛</text>
-            <text x="115" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">期初 × 100-105%</text>
-            <rect x="210" y="90" width="150" height="130" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
-            <text x="285" y="118" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">② 敲入价</text>
-            <text x="285" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">跌的陷阱</text>
-            <text x="285" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">期初 × 70-80%</text>
-            <rect x="380" y="90" width="150" height="130" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
-            <text x="455" y="118" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">③ 票息率</text>
-            <text x="455" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">承诺的年票息</text>
-            <text x="455" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">15%-20%是拉客价</text>
-            <rect x="550" y="90" width="150" height="130" rx="10" fill="rgba(143,179,122,0.15)" stroke="#8fb37a"/>
-            <text x="625" y="118" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">④ 观察频率</text>
-            <text x="625" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">每日 / 每月</text>
-            <text x="625" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">错颗粒度会错估概率</text>
-            <rect x="720" y="90" width="150" height="130" rx="10" fill="rgba(132,153,189,0.15)" stroke="#8499bd"/>
-            <text x="795" y="118" text-anchor="middle" fill="#bcc9dd" font-size="13" font-weight="800">⑤ 期限</text>
-            <text x="795" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">有多长</text>
-            <text x="795" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">长期票息更高但风险更长</text>
-            <text x="450" y="266" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">这五个数拼起来就是你买的东西;丢了任何一个,你都不知买的是什么</text>
-            <text x="450" y="300" text-anchor="middle" fill="#bcc9dd" font-size="12.5">回程资金账:敲入触发后,票息补不回敲入的下跌;第六章已把四条命拆解过了</text>
-          </svg>
-          <p class="figure__cap">雪球这类结构化产品的阅读绝不复杂:只要五处数字你能在确认书里找到,你就知道买了什么。腿不净判读不叫节省工夫,叫按运气发牌。</p>
-        </div>
-        <h2>5. 别买读三遍还读不懂的产品</h2>
-<p>把上面三份文件加在一起,你已经有了一整套肌肉记忆。但最后一条纪律比所有技巧都值钱:凡是读了三遍还说不清<span class="hl">“钱到底从哪来”</span>的产品,就不买。这不是保守,这是能力圈原则在金融里最朴素的用法——你的钱是你对家庭资产负债表的责任,对一个你看不懂现金流结构的产品支付信任,等于在没有仪表的飞机上让别人教你按按钮。</p><p>看清的还是看不懂的,各自都有对应的动作。看清的:把关键条款记进自己的账本(可按第六章 39、40 单元讲的项目目录结构,建一个 products/ 文件夹分门别类归档);看不懂的:进黑名单,无论收益怎么诱人都别碰——回头你只会感谢那条原则一次,但常常就是那一次,决定了所有其他的事有没有机会继续发生。</p>
+        <h2>8. 高频、做市和订单簿策略</h2>
+<p>把熟悉的 K 线图一直放大到毫秒级,你会看到一个新世界:价格不是一条光滑的线,而是一群人在排队抢位子。高频策略在非常短的时间尺度上利用订单簿信息、订单流、买卖价差和微观结构;做市策略同时挂出买单和卖单,提供流动性,希望赚取价差和流动性补偿——相当于在市场里摆摊,低买高卖做周转。</p><p>高频的竞争核心是一份长长的工程清单:低延迟行情、交易通道、<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>规则理解、硬件、网络、风险控制和大量微观数据。它单次收益极薄,靠海量次数积少成多;反过来,一次系统错误可能吃掉很久的利润——赚时像收租,亏时像水管爆裂。</p><p>个人可以了解高频思想,比如价差、盘口深度、排队和冲击成本,这些做日频策略也用得上;但不建议把高频实盘作为入门目标:没有基础设施优势去和专业机构同场竞技,结局基本是给对方送流动性。</p>
+
+        <h2>9. 多策略平台</h2>
+<p>一个策略像一门手艺:会补胎的补胎,会喷漆的喷漆。多策略平台想开的是一家综合修理厂:不只押一种模型,而是把不同策略放在一起——股票多因子、指数增强、市场中性、CTA、套利、期权、债券、事件策略。目标很朴素:收益来源分散开,单一策略失效时整体还稳得住。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>但多策略的关键不是把策略简单相加,像自助餐一样把盘子堆满。真功夫在管理:管理相关性、容量、资金分配、回撤、风险预算和交易冲突。两个策略单独看都好,放一起却可能同时买卖同一资产互相打架,或在同一类市场环境里一起亏——相关性在风平浪静时看不出来,出事那天才现形。</p></div><p>这也是机构和个人差距较大的地方:多策略需要数据、系统、风控和资金管理的一整套能力。个人可以学这个思想,但落到实际项目,先把一两个简单策略做扎实,胜过铺一桌子半成品。</p>
+
+        <h2>10. 你该从哪类策略开始</h2>
+<p>地图看完了,最实际的问题摆上桌:第一步迈到哪里?如果你是计算机背景、金融新手,更建议从低频股票因子和指数基准开始。它能完整训练金融概念、数据清洗、回测、风险指标、交易成本和报告能力,同时不需要高频那套昂贵的基础设施。</p><p>第二步可以做 ETF 和指数配置,理解资产配置和<a class="term term-link" href="glossary.html#g-再平衡" title="查看术语：再平衡">再平衡</a>;第三步可以尝试简单 CTA 趋势,借它学习期货合约和<span class="term">保证金</span>。至于高频、复杂期权和多空<span class="term">杠杆</span>策略,应放在更后面——它们是这张地图上的<span class="hl">“困难副本”</span>,装备没齐别硬闯。</p><p>归根结底,路线选择要和资源匹配。个人最大的资源不是低延迟服务器,而是时间、学习能力、工程能力和纪律。把这几样投到可复现、可解释、可控风险的项目里,比扛着家用电脑去追逐机构级战场,现实得多,也走得远得多。</p>
 
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>合同黑字大于一切口头承诺;销售指不出文件页码就等于没说。</li>
-            <li>招募书五处:投资范围、申购赎回、风控线、费率表、限制条款;二十分钟够看出八成问题。</li>
+            <li>量化是一类方法而不是一种策略:要按收益来源、资产类别和交易频率分格子看,不能都混成“预测涨跌”。</li>
+            <li>指数增强、市场中性、CTA、套利、高频赚的是五种完全不同的钱,怕的也是五件完全不同的事。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.</strong> 一切口头的承诺都不算数</li>
-            <li><strong>2.</strong> 招募说明书先翻五处</li>
-            <li><strong>3.</strong> 定期报告只看三个数</li>
-            <li><strong>4.</strong> 雪球确认书逐词拆</li>
-            <li><strong>5.</strong> 别买读三遍还读不懂的产品</li>
+            <li><strong>1.</strong> 它到底赚谁的钱</li>
+            <li><strong>2.</strong> 四个互不相通的世界</li>
+            <li><strong>3.</strong> 从季度调仓到毫秒抢单</li>
+            <li><strong>4.</strong> 指数增强</li>
+            <li><strong>5.</strong> 市场中性</li>
+            <li><strong>6.</strong> CTA 和趋势跟踪</li>
+            <li><strong>7.</strong> 套利和相对价值</li>
+            <li><strong>8.</strong> 高频、做市和订单簿策略</li>
+            <li><strong>9.</strong> 多策略平台</li>
+            <li><strong>10.</strong> 你该从哪类策略开始</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>合同哪一条比销售的承诺效力高?</summary>
-            <p>全部。金融产品的法律事实只有文件写明的那部分,口头表述不构成合同。让销售把每条承诺指到具体条款上,你的工作就从“信人”变成“核对字”。</p>
+            <summary>为什么看策略不能只问年化收益?</summary>
+            <p>因为年化数字不告诉你钱从哪来。必须弄清收益来源、什么情况下会亏、容量多大、成本如何、能否长期复制,才能判断好坏。</p>
           </details>
           <details class="quiz__item">
-            <summary>基金 A 类 C 类份额差在哪儿?</summary>
-            <p>费率结构不同:A 类收申购费适合长持,C 类不收申购费但抬销售服务费适合短持。读费率表时先问自己打算持有多久,再选类。</p>
+            <summary>市场中性为什么不是无风险?</summary>
+            <p>因为对冲本身有基差和成本,多空相对关系可能变化,极端行情里相关性会失效——它只拆掉了大盘方向,其余风险都在。</p>
           </details>
         </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>指数增强策略: 在基准附近争取一点点超额</h2>
+          <p>用完整流程讲清指数增强如何从股票池、因子、风险约束和交易成本中争取超额收益。</p>
+        </section>
+
       </div>
     </main>
     <script src="assets/book.js"></script>

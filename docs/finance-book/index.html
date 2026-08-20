@@ -33,8 +33,8 @@
         <p class="cover__eyebrow">给计算机背景读者的金融与量化入门书</p>
         <h1>从金融零基础到量化研究者</h1>
         <p class="cover__lead">
-          一本写给计算机背景金融小白的路线书。先把货币、银行、股票、债券、券商、基金、衍生品、A 股交易制度和宏观周期讲清楚,
-          再进入量化行业的因子、回测、机器学习、组合优化、交易执行、风控、机构案例、个人项目和上线检查清单。
+          一本写给计算机背景金融小白的路线书。沿着“真实财富 → 金融权利 → 市场价格与数据 →
+          研究假设 → 回测验证 → 组合交易 → 项目复盘”,一步步走到可信的量化研究。
         </p>
         <div class="cover__actions">
           <a class="button button--primary" data-continue href="chapter-00.html">开始阅读</a>
@@ -56,249 +56,452 @@
       </div>
     </header>
     <main class="toc-section" id="toc">
-      <h2>全书目录</h2>
-      <p class="toc-section__hint">建议顺序阅读。第 0-7 章建立金融和宏观地基,第 8-10 章理解 A 股交易、行情、指数、收益风险和有效市场,第 11-14 章进入量化研究生产线,第 15-20 章理解行业、策略、产品、监管和多资产,第 21-34 章完成项目、场景练习、检查清单和结语。</p>
-      <p class="toc-part">第一部分 · 金融世界的底层结构</p>
-      <div class="toc-grid">
+      <section class="book-roadmap reveal" aria-labelledby="roadmap-title">
+        <p class="book-roadmap__eyebrow">建议先看路线,再进目录</p>
+        <h2 id="roadmap-title">整本书只走一条主线</h2>
+        <p>先理解金融为什么存在,再认识资产、市场与宏观;随后把金融问题变成可验证研究,最后让策略穿过产品、项目和人的边界。专题篇可以跳过,附录按需查阅。</p>
+        <div class="roadmap-grid">
+        <a class="roadmap-card" href="#part-0">
+          <span>主线一</span>
+          <strong>金融为什么存在</strong>
+          <small>真实财富有限,为什么人类还需要货币、信用、银行和市场?</small>
+        </a>
+        <a class="roadmap-card" href="#part-1">
+          <span>主线二</span>
+          <strong>资产如何承载现金流与风险</strong>
+          <small>股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?</small>
+        </a>
+        <a class="roadmap-card" href="#part-2">
+          <span>主线三</span>
+          <strong>市场如何形成价格与数据</strong>
+          <small>一项金融权利怎样上市、成交、留下数据,又该怎样评价它的收益和风险?</small>
+        </a>
+        <a class="roadmap-card" href="#part-3">
+          <span>主线四</span>
+          <strong>宏观环境如何改变资产</strong>
+          <small>增长、通胀、央行、美元和金融危机怎样穿过市场,改变资产的现金流与折现率?</small>
+        </a>
+        <a class="roadmap-card" href="#part-5">
+          <span>主线五</span>
+          <strong>量化研究如何产生可信结论</strong>
+          <small>一个金融判断怎样变成可证伪假设,再经过数据、回测、模型和实盘约束?</small>
+        </a>
+        <a class="roadmap-card" href="#part-6">
+          <span>主线六</span>
+          <strong>策略如何变成产品</strong>
+          <small>不同量化策略赚的是什么钱,承担什么风险,最终怎样装进受约束的产品?</small>
+        </a>
+        <a class="roadmap-card" href="#part-7">
+          <span>主线七</span>
+          <strong>把研究变成可运行项目</strong>
+          <small>怎样让研究穿过代码、模拟盘、真实订单和人的情绪,仍然保持可信?</small>
+        </a>
+        <a class="roadmap-card" href="#part-8">
+          <span>主线八</span>
+          <strong>职业、复盘与长期成长</strong>
+          <small>做完第一个项目以后,怎样选择岗位、建设作品集并形成长期学习循环?</small>
+        </a>
+        </div>
+        <div class="book-roadmap__aside">
+          <a class="xref" href="#part-4">专题选读:个人金融的安全底盘</a>
+          <a class="xref" href="#part-9">工具箱:术语、公式与最终检查表</a>
+        </div>
+      </section>
+      <div class="toc-heading">
+        <p class="book-roadmap__eyebrow">共 58 章</p>
+        <h2>全书目录</h2>
+        <p>主线部分建议顺序阅读。每一章只回答一个核心问题;多单元章会在章内明确分层。</p>
+      </div>
+      <section class="toc-part-block toc-part-block--main" id="part-0">
+        <div class="toc-part-header">
+          <span class="toc-part-badge">主线一</span>
+          <h2>第一部分 · 金融为什么存在</h2>
+          <p class="toc-part-question">真实财富有限,为什么人类还需要货币、信用、银行和市场?</p>
+          <p>读完后,你能沿着资源、时间和风险解释金融系统,不再把金融理解成一堆产品名词。</p>
+        </div>
+        <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-00.html">
           <span class="toc-card__num">第 0 章</span>
-          <span class="toc-card__title">货币与通胀:财富到底是什么</span>
-          <span class="toc-card__desc">从真实财富、储蓄、资本和金融的起点讲起。 / 从小岛鱼票讲清货币、价格、购买力、通胀和实际收益。</span>
+          <span class="toc-card__title">钱不是财富: 从一座只有鱼的小岛讲起</span>
+          <span class="toc-card__desc">从真实财富、储蓄、资本和金融的起点讲起。</span>
         </a>
         <a class="toc-card reveal" href="chapter-01.html">
           <span class="toc-card__num">第 1 章</span>
-          <span class="toc-card__title">信用、利率与银行体系</span>
-          <span class="toc-card__desc">从借鱼讲到信用、利率、贷款、债券和违约风险。 / 讲清银行资产负债表、贷款创造存款、挤兑、央行和货币政策传导。</span>
+          <span class="toc-card__title">钱、价格和通胀: 鱼票为什么会缩水</span>
+          <span class="toc-card__desc">从小岛鱼票讲清货币、价格、购买力、通胀和实际收益。</span>
         </a>
         <a class="toc-card reveal" href="chapter-02.html">
           <span class="toc-card__num">第 2 章</span>
-          <span class="toc-card__title">金融系统地图:钱和风险怎么流动</span>
-          <span class="toc-card__desc">把居民、企业、银行、券商、基金、保险、交易所和监管者放进一张图里。 / 讲清发行、交易、成交、清算、交收、登记和托管。</span>
+          <span class="toc-card__title">信用、利率和债: 借钱为什么要付利息</span>
+          <span class="toc-card__desc">从借鱼讲到信用、利率、贷款、债券和违约风险。</span>
         </a>
         <a class="toc-card reveal" href="chapter-03.html">
           <span class="toc-card__num">第 3 章</span>
-          <span class="toc-card__title">股票:你买的到底是什么</span>
-          <span class="toc-card__desc">讲清股票、股东、剩余索取权、市值、分红和股票收益来源。 / 讲清增发、回购、分红、拆股、复权、市盈率、市净率和现金流估值。</span>
+          <span class="toc-card__title">银行和央行: 钱不是都躺在保险柜里</span>
+          <span class="toc-card__desc">讲清银行资产负债表、贷款创造存款、挤兑、央行和货币政策传导。</span>
         </a>
         <a class="toc-card reveal" href="chapter-04.html">
           <span class="toc-card__num">第 4 章</span>
-          <span class="toc-card__title">债券与基金:把钱借出去或交给别人管</span>
-          <span class="toc-card__desc">讲清债券字段、票息、到期收益率、久期、信用利差和可转债。 / 讲清基金份额、净值、指数基金、ETF、公募、私募、对冲和指数增强。</span>
+          <span class="toc-card__title">金融系统与市场: 钱、风险和证券如何流动</span>
+          <span class="toc-card__desc">把金融系统的参与者、资金与风险流向,和证券发行、交易、清算、交收放进同一张地图。</span>
         </a>
+        </div>
+      </section>
+      <section class="toc-part-block toc-part-block--main" id="part-1">
+        <div class="toc-part-header">
+          <span class="toc-part-badge">主线二</span>
+          <h2>第二部分 · 资产如何承载现金流与风险</h2>
+          <p class="toc-part-question">股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?</p>
+          <p>读完后,你能先拆现金流、权利、期限和最坏情况,再讨论价格涨跌。</p>
+        </div>
+        <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-05.html">
           <span class="toc-card__num">第 5 章</span>
-          <span class="toc-card__title">衍生品与其他资产:把未来和风险变成合约</span>
-          <span class="toc-card__desc">讲清远期、期货、保证金、基差、期限结构和互换。 / 讲清看涨、看跌、权利金、买方卖方、时间价值和卖期权风险。</span>
+          <span class="toc-card__title">股票与估值: 你买的权利为什么值这个价</span>
+          <span class="toc-card__desc">从股东权利、股票收益来源走到公司行为、估值倍数和现金流折现。</span>
         </a>
         <a class="toc-card reveal" href="chapter-06.html">
           <span class="toc-card__num">第 6 章</span>
-          <span class="toc-card__title">结构性产品与另类资产:把风险和收益切开重卖</span>
-          <span class="toc-card__desc">雪球、CDS、CDO、利率互换、希腊字母、加密资产、REITs 与大宗商品的进阶篇: 旧资产怎么被切开、拼贴、再卖一遍,以及你买到的那一截背后是谁在兜底。</span>
+          <span class="toc-card__title">债券: 确定性更强,但绝不等于没有风险</span>
+          <span class="toc-card__desc">讲清债券字段、票息、到期收益率、久期、信用利差和可转债。</span>
         </a>
         <a class="toc-card reveal" href="chapter-07.html">
           <span class="toc-card__num">第 7 章</span>
-          <span class="toc-card__title">基本面与宏观:数字背后的公司和经济</span>
-          <span class="toc-card__desc">用小白能懂的方式讲利润表、资产负债表、现金流量表、ROE、毛利率和基本面量化。 / 讲清宏观指标的发布时间、利率曲线、通胀、汇率、商品和多资产配置的量化用法。</span>
+          <span class="toc-card__title">基金、ETF、指数和私募: 把钱交给别人管理意味着什么</span>
+          <span class="toc-card__desc">讲清基金份额、净值、指数基金、ETF、公募、私募、对冲和指数增强。</span>
         </a>
         <a class="toc-card reveal" href="chapter-08.html">
           <span class="toc-card__num">第 8 章</span>
-          <span class="toc-card__title">国家为什么有穷有富: 从起飞到中等收入陷阱</span>
-          <span class="toc-card__desc">把国家当一家公司读:增长的三个阶段、出口与进口替代两条路线、刘易斯拐点、全要素生产率、资源诅咒、日本化和人口红利,最后是投资视角怎么用。</span>
+          <span class="toc-card__title">期货、远期与互换: 把未来价格写进合约</span>
+          <span class="toc-card__desc">讲清远期、期货、保证金、基差、期限结构和互换。</span>
         </a>
         <a class="toc-card reveal" href="chapter-09.html">
           <span class="toc-card__num">第 9 章</span>
-          <span class="toc-card__title">危机四百年:从郁金香到硅谷银行</span>
-          <span class="toc-card__desc">把过去四百年最惨烈的十二场崩盘并排放在一起读:郁金香、南海、大萧条、1987、日本、亚洲金融风暴、互联网泡沫、2008、欧债、2015 年的 A 股、2020 与 2022、2023 硅谷银行与瑞信——每一次都由不同的故事开场,退场姿势却惊人一致。</span>
+          <span class="toc-card__title">期权: 把不对称收益结构变成可交易产品</span>
+          <span class="toc-card__desc">讲清看涨、看跌、权利金、买方卖方、时间价值和卖期权风险。</span>
         </a>
         <a class="toc-card reveal" href="chapter-10.html">
           <span class="toc-card__num">第 10 章</span>
-          <span class="toc-card__title">影子银行:银行不在银行里</span>
-          <span class="toc-card__desc">把余额宝、银行理财、信托通道、P2P、回购市场串到一张图上:什么叫影子银行,错配怎么赚钱,挤兑怎么发生, 2008 年和硅谷银行怎么炸,以及监管为什么永远追着影子跑。</span>
+          <span class="toc-card__title">跨资产入门: 外汇、商品与 REITs</span>
+          <span class="toc-card__desc">先用现金流、供需和计价货币理解外汇、商品与不动产份额,再建立跨资产研究的共同语言。</span>
         </a>
         <a class="toc-card reveal" href="chapter-11.html">
           <span class="toc-card__num">第 11 章</span>
-          <span class="toc-card__title">央行、利率与汇率:全球资金的水龙头</span>
-          <span class="toc-card__desc">货币政策三件套、QE 与 QT、收益率曲线倒挂、实际利率、利率平价、汇率制度坐标、特里芬两难、不可能三角、央行沟通,到一套从央行日历出发的宏观研究工作流。</span>
+          <span class="toc-card__title">结构性产品深拆: 收益和风险怎样被切开重卖</span>
+          <span class="toc-card__desc">拆开雪球、CDS、CDO、互换和另类资产的内部齿轮,识别高票息背后被卖出的尾部风险。</span>
         </a>
+        </div>
+      </section>
+      <section class="toc-part-block toc-part-block--main" id="part-2">
+        <div class="toc-part-header">
+          <span class="toc-part-badge">主线三</span>
+          <h2>第三部分 · 市场如何形成价格与数据</h2>
+          <p class="toc-part-question">一项金融权利怎样上市、成交、留下数据,又该怎样评价它的收益和风险?</p>
+          <p>读完后,你能把交易界面上的数字还原为制度、现金流和可研究的数据口径。</p>
+        </div>
+        <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-12.html">
           <span class="toc-card__num">第 12 章</span>
-          <span class="toc-card__title">保险: 把扛不住的灾难摊给几千人</span>
-          <span class="toc-card__desc">从同船共济讲清保险的大数逻辑、精算定价、三差利润、逆向选择、偿付能力和保险资金的投资约束。</span>
+          <span class="toc-card__title">账户与交易界面: 一笔委托从哪里出发</span>
+          <span class="toc-card__desc">把账户、券商、交易所、登记结算和交易软件上的资金、持仓、委托、成交连成一条链。</span>
         </a>
         <a class="toc-card reveal" href="chapter-13.html">
           <span class="toc-card__num">第 13 章</span>
-          <span class="toc-card__title">社保、公积金与养老金: 国家给你的那张底牌</span>
-          <span class="toc-card__desc">拆开五险一金,讲清现收现付、个人账户、抚养比、三支柱和个人养老金账户值不值得买。</span>
+          <span class="toc-card__title">股票怎样上市、交易与退市</span>
+          <span class="toc-card__desc">沿着股票的一生理解注册制、IPO、打新、交易时间、涨跌幅、T+1、费用、ST 与退市。</span>
         </a>
-      </div>
-      <p class="toc-part">第二部分 · A 股市场与交易机器</p>
-      <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-14.html">
           <span class="toc-card__num">第 14 章</span>
-          <span class="toc-card__title">A 股的交易机器:从下单到成交</span>
-          <span class="toc-card__desc">把一笔股票交易背后的账户、通道、撮合、清算和托管讲清楚。 / 把 A 股最基础但最容易在回测里写错的交易规则讲清楚。</span>
+          <span class="toc-card__title">行情、K 线、成交量和复权: 先看懂屏幕上的数字</span>
+          <span class="toc-card__desc">解释股票软件里最常见的价格、成交量、K 线、盘口和复权概念。</span>
         </a>
         <a class="toc-card reveal" href="chapter-15.html">
           <span class="toc-card__num">第 15 章</span>
-          <span class="toc-card__title">上市、打新与退市: 一只股票从出生到摘牌的路径</span>
-          <span class="toc-card__desc">注册制怎么改写的 IPO 定价权,打新稳赚的时代为什么过去了,退市通道怎样决定 A 股的生态。</span>
+          <span class="toc-card__title">指数、ETF 和基准: 你到底在和谁比较</span>
+          <span class="toc-card__desc">从指数编制、指数基金、ETF 申赎、跟踪误差和基准意识讲起。</span>
         </a>
         <a class="toc-card reveal" href="chapter-16.html">
           <span class="toc-card__num">第 16 章</span>
-          <span class="toc-card__title">看懂行情:屏幕上的数字和基准</span>
-          <span class="toc-card__desc">解释股票软件里最常见的价格、成交量、K 线、盘口和复权概念。 / 从指数编制、指数基金、ETF 申赎、跟踪误差和基准意识讲起。</span>
+          <span class="toc-card__title">财务报表和基本面因子: 公司赚钱到底看哪里</span>
+          <span class="toc-card__desc">用小白能懂的方式讲利润表、资产负债表、现金流量表、ROE、毛利率和基本面量化。</span>
         </a>
-      </div>
-      <p class="toc-part">第三部分 · 收益、风险与投资评价</p>
-      <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-17.html">
           <span class="toc-card__num">第 17 章</span>
-          <span class="toc-card__title">收益、风险与市场为什么难赢</span>
-          <span class="toc-card__desc">把投资报告里最常见的收益风险指标讲成可理解、可手算的东西。 / 讲清股票、债券、现金、商品等资产如何组合,以及分散化为什么能降低风险但不能消灭风险。</span>
+          <span class="toc-card__title">收益和风险怎么量化: 年化、波动、回撤和夏普</span>
+          <span class="toc-card__desc">把投资报告里最常见的收益风险指标讲成可理解、可手算的东西。</span>
         </a>
         <a class="toc-card reveal" href="chapter-18.html">
           <span class="toc-card__num">第 18 章</span>
-          <span class="toc-card__title">行为金融: 人脑的出厂设置不适合做交易</span>
-          <span class="toc-card__desc">从卡尼曼的实验讲到损失厌恶、锚定、处置效应、过度自信、从众、确认偏误和框架效应,以及量化的反人性纪律。</span>
+          <span class="toc-card__title">资产配置和分散化: 不要把所有判断押在一个地方</span>
+          <span class="toc-card__desc">讲清股票、债券、现金、商品等资产如何组合,以及分散化为什么能降低风险但不能消灭风险。</span>
         </a>
         <a class="toc-card reveal" href="chapter-19.html">
           <span class="toc-card__num">第 19 章</span>
-          <span class="toc-card__title">家庭资产配置: 先把日子底盘站稳</span>
-          <span class="toc-card__desc">应急资金、保险、长期组合按什么顺序上,房子该压多少比例,一个普通家庭的完整拼图。</span>
+          <span class="toc-card__title">市场为什么难赢: 有效性与行为偏差</span>
+          <span class="toc-card__desc">从有效市场、随机游走走到损失厌恶、锚定、从众与纪律,解释超额收益为什么稀缺。</span>
         </a>
-      </div>
-      <p class="toc-part">第四部分 · 量化研究从因子开始</p>
-      <div class="toc-grid">
+        </div>
+      </section>
+      <section class="toc-part-block toc-part-block--main" id="part-3">
+        <div class="toc-part-header">
+          <span class="toc-part-badge">主线四</span>
+          <h2>第四部分 · 宏观环境如何改变资产</h2>
+          <p class="toc-part-question">增长、通胀、央行、美元和金融危机怎样穿过市场,改变资产的现金流与折现率?</p>
+          <p>读完后,你能把宏观新闻放回传导链,而不是用一个大词解释所有涨跌。</p>
+        </div>
+        <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-20.html">
           <span class="toc-card__num">第 20 章</span>
-          <span class="toc-card__title">量化的起点:因子和数据</span>
-          <span class="toc-card__desc">解释量化里常说的因子、信号、暴露、IC、分层回测和因子失效。 / 讲清行情、财务、另类数据、标签定义、点时数据和训练验证切分。</span>
+          <span class="toc-card__title">国家为什么有穷有富: 从起飞到中等收入陷阱</span>
+          <span class="toc-card__desc">把国家当一家公司读:增长的三个阶段、出口与进口替代两条路线、刘易斯拐点、全要素生产率、资源诅咒、日本化和人口红利,最后是投资视角怎么用。</span>
         </a>
         <a class="toc-card reveal" href="chapter-21.html">
           <span class="toc-card__num">第 21 章</span>
-          <span class="toc-card__title">回测与机器学习:在历史里排练</span>
-          <span class="toc-card__desc">讲清事件驱动、调仓、成交假设、交易成本、滑点、容量和回测陷阱。 / 从线性模型、树模型、深度学习和金融噪声讲清模型在量化中的位置。</span>
+          <span class="toc-card__title">宏观数据和多资产: 利率、通胀、汇率和商品如何连起来</span>
+          <span class="toc-card__desc">讲清宏观指标的发布时间、利率曲线、通胀、汇率、商品和多资产配置的量化用法。</span>
         </a>
         <a class="toc-card reveal" href="chapter-22.html">
           <span class="toc-card__num">第 22 章</span>
-          <span class="toc-card__title">从预测到交易:组合、执行与风控</span>
-          <span class="toc-card__desc">解释为什么量化模型输出分数后,还要经过风险约束、成本模型和组合优化。 / 讲清订单生命周期、执行算法、拒单、部分成交、撤单、风控和盘后对账。</span>
+          <span class="toc-card__title">央行、利率与汇率: 全球资金的水龙头</span>
+          <span class="toc-card__desc">货币政策三件套、QE 与 QT、收益率曲线倒挂、实际利率、利率平价、汇率制度坐标、特里芬两难、不可能三角、央行沟通,到一套从央行日历出发的宏观研究工作流。</span>
         </a>
         <a class="toc-card reveal" href="chapter-23.html">
           <span class="toc-card__num">第 23 章</span>
-          <span class="toc-card__title">量化行业和个人的路线</span>
-          <span class="toc-card__desc">把量化机构的角色分工、工作流、公开案例和监管环境讲清楚。 / 给计算机背景读者安排金融基础、数据、因子、回测、模型、模拟盘和小实盘路线。</span>
+          <span class="toc-card__title">世界经济形势: 美元、黄金和全球资金流</span>
+          <span class="toc-card__desc">讲清美元体系、美元指数、美元潮汐、黄金的定价逻辑、央行囤金和去美元化,给你一个读世界形势的仪表盘。</span>
         </a>
-      </div>
-      <p class="toc-part">第五部分 · 量化行业与策略版图</p>
-      <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-24.html">
           <span class="toc-card__num">第 24 章</span>
-          <span class="toc-card__title">量化策略版图与指数增强</span>
-          <span class="toc-card__desc">把常见量化策略按收益来源、交易频率、资产类别和风险暴露分清楚。 / 用完整流程讲清指数增强如何从股票池、因子、风险约束和交易成本中争取超额收益。</span>
+          <span class="toc-card__title">危机四百年: 从郁金香到硅谷银行</span>
+          <span class="toc-card__desc">把过去四百年最惨烈的十二场崩盘并排放在一起读:郁金香、南海、大萧条、1987、日本、亚洲金融风暴、互联网泡沫、2008、欧债、2015 年的 A 股、2020 与 2022、2023 硅谷银行与瑞信——每一次都由不同的故事开场,退场姿势却惊人一致。</span>
         </a>
         <a class="toc-card reveal" href="chapter-25.html">
           <span class="toc-card__num">第 25 章</span>
-          <span class="toc-card__title">市场中性与 CTA 趋势</span>
-          <span class="toc-card__desc">解释多空组合、Beta 对冲、股指期货、基差、融券和中性策略风险。 / 讲清期货保证金、主力合约、换月、趋势跟踪、期限结构和 CTA 风险。</span>
+          <span class="toc-card__title">影子银行: 银行不在银行里</span>
+          <span class="toc-card__desc">把余额宝、银行理财、信托通道、P2P、回购市场串到一张图上:什么叫影子银行,错配怎么赚钱,挤兑怎么发生, 2008 年和硅谷银行怎么炸,以及监管为什么永远追着影子跑。</span>
         </a>
+        </div>
+      </section>
+      <section class="toc-part-block toc-part-block--special" id="part-4">
+        <div class="toc-part-header">
+          <span class="toc-part-badge">专题选读</span>
+          <h2>专题篇 · 个人金融的安全底盘</h2>
+          <p class="toc-part-question">在研究收益之前,个人怎样先守住不能承受的风险?</p>
+          <p>这一篇不阻塞量化主线;它把保险、社保、养老金和家庭配置放回个人现金流。</p>
+        </div>
+        <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-26.html">
           <span class="toc-card__num">第 26 章</span>
-          <span class="toc-card__title">套利与高频:更快更精细的战场</span>
-          <span class="toc-card__desc">讲清 ETF 套利、期现套利、可转债套利、配对交易和相对价值中的隐藏风险。 / 解释订单簿、买卖价差、排队位置、做市、延迟、撤单和高频交易的真实门槛。</span>
+          <span class="toc-card__title">保险: 把扛不住的灾难摊给几千人</span>
+          <span class="toc-card__desc">从同船共济讲清保险的大数逻辑、精算定价、三差利润、逆向选择、偿付能力和保险资金的投资约束。</span>
         </a>
         <a class="toc-card reveal" href="chapter-27.html">
           <span class="toc-card__num">第 27 章</span>
-          <span class="toc-card__title">量化产品、监管与合规</span>
-          <span class="toc-card__desc">从投资者视角讲清量化基金产品说明、费用结构、申赎限制、净值曲线和报告解读。 / 讲清程序化交易监管、内幕信息、市场操纵、数据合规、模型留痕和个人交易边界。</span>
+          <span class="toc-card__title">社保、养老金与家庭资产配置</span>
+          <span class="toc-card__desc">从五险一金、养老三支柱走到应急资金、长期账户和家庭资产分桶。</span>
         </a>
+        </div>
+      </section>
+      <section class="toc-part-block toc-part-block--main" id="part-5">
+        <div class="toc-part-header">
+          <span class="toc-part-badge">主线五</span>
+          <h2>第五部分 · 量化研究如何产生可信结论</h2>
+          <p class="toc-part-question">一个金融判断怎样变成可证伪假设,再经过数据、回测、模型和实盘约束?</p>
+          <p>读完后,你能从问题出发完成研究闭环,而不是先找模型、再给结果编故事。</p>
+        </div>
+        <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-28.html">
           <span class="toc-card__num">第 28 章</span>
-          <span class="toc-card__title">量化项目的工程骨架与速查</span>
-          <span class="toc-card__desc">用工程视角讲清数据层、因子层、回测层、模型层、报告层和配置管理。 / 把收益率、年化、波动、回撤、夏普、IC、跟踪误差、久期和估值公式统一解释。</span>
+          <span class="toc-card__title">从问题到因子: 把投资判断变成可检验假设</span>
+          <span class="toc-card__desc">解释量化里常说的因子、信号、暴露、IC、分层回测和因子失效。</span>
         </a>
-      </div>
-      <p class="toc-part">第六部分 · 项目实战与工程化</p>
-      <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-29.html">
           <span class="toc-card__num">第 29 章</span>
-          <span class="toc-card__title">实战一:从零做一个指数增强回测</span>
-          <span class="toc-card__desc">用完整步骤拆解一个教学版指数增强项目,包括数据、因子、组合、成本、报告和复盘。</span>
+          <span class="toc-card__title">数据、标签和样本切分: 量化模型从哪里学</span>
+          <span class="toc-card__desc">讲清行情、财务、另类数据、标签定义、点时数据和训练验证切分。</span>
         </a>
         <a class="toc-card reveal" href="chapter-30.html">
           <span class="toc-card__num">第 30 章</span>
-          <span class="toc-card__title">实战二:市场中性模拟盘与上线检查</span>
-          <span class="toc-card__desc">用教学项目讲清多头组合、对冲工具、Beta、基差、保证金、净暴露和归因。 / 把数据、模型、回测、交易、风控、日志、权限和复盘逐项检查,避免把研究脚本误当实盘系统。</span>
+          <span class="toc-card__title">回测: 在历史里排练,但不要把历史当答案</span>
+          <span class="toc-card__desc">讲清事件驱动、调仓、成交假设、交易成本、滑点、容量和回测陷阱。</span>
         </a>
         <a class="toc-card reveal" href="chapter-31.html">
           <span class="toc-card__num">第 31 章</span>
-          <span class="toc-card__title">避坑:常见错误和如何读研究</span>
-          <span class="toc-card__desc">系统整理未来函数、幸存者偏差、成本低估、过拟合、样本外污染、容量忽略和心理误区。 / 教读者看懂券商研报、学术论文、基金月报和策略白皮书,识别样本、成本、基准和过拟合问题。</span>
+          <span class="toc-card__title">量化里的机器学习: 模型不是越复杂越好</span>
+          <span class="toc-card__desc">从线性模型、树模型、深度学习和金融噪声讲清模型在量化中的位置。</span>
         </a>
         <a class="toc-card reveal" href="chapter-32.html">
           <span class="toc-card__num">第 32 章</span>
-          <span class="toc-card__title">心理、资金管理与一次复盘</span>
-          <span class="toc-card__desc">讲清仓位、杠杆、回撤承受力、执行纪律、策略停用和个人资金边界。 / 用故事方式复盘一个从年化很高到逐步修正为普通策略的过程,训练读者查错顺序。</span>
+          <span class="toc-card__title">从预测到仓位: 组合优化和风险模型</span>
+          <span class="toc-card__desc">解释为什么量化模型输出分数后,还要经过风险约束、成本模型和组合优化。</span>
         </a>
         <a class="toc-card reveal" href="chapter-33.html">
           <span class="toc-card__num">第 33 章</span>
-          <span class="toc-card__title">全书复盘:从一条鱼到一个量化系统</span>
-          <span class="toc-card__desc">把前面所有概念按从真实财富到人与纪律的十层重新串起来。</span>
+          <span class="toc-card__title">交易执行和实盘系统: 策略如何真的下到市场里</span>
+          <span class="toc-card__desc">讲清订单生命周期、执行算法、拒单、部分成交、撤单、风控和盘后对账。</span>
         </a>
         <a class="toc-card reveal" href="chapter-34.html">
           <span class="toc-card__num">第 34 章</span>
-          <span class="toc-card__title">职业路线与长期学习</span>
-          <span class="toc-card__desc">把量化研究、量化开发、数据工程、交易系统、风控和产品岗位的能力要求讲清楚,并给出作品集路线。 / 把金融、统计、编程、机器学习、交易系统和投资心理安排成长期学习计划。</span>
+          <span class="toc-card__title">风险控制和组合监控: 什么时候该减仓、停用和复盘</span>
+          <span class="toc-card__desc">讲清暴露、集中度、VaR、压力测试、止损、模型失效和风险监控。</span>
         </a>
-      </div>
-      <p class="toc-part">第七部分 · 路线、复盘与检查清单</p>
-      <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-35.html">
           <span class="toc-card__num">第 35 章</span>
-          <span class="toc-card__title">术语复盘:用人话再讲一遍</span>
-          <span class="toc-card__desc">把货币、信用、利率、通胀、股票、债券、基金、期货、期权等基础术语重新用生活语言解释。 / 把 Alpha、Beta、因子、IC、回测、滑点、容量、风控、归因等量化高频词重新解释。</span>
+          <span class="toc-card__title">一个量化项目的代码骨架: 从数据到报告怎么组织</span>
+          <span class="toc-card__desc">用工程视角讲清数据层、因子层、回测层、模型层、报告层和配置管理。</span>
         </a>
         <a class="toc-card reveal" href="chapter-36.html">
           <span class="toc-card__num">第 36 章</span>
-          <span class="toc-card__title">场景练习:开户软件和基金月报</span>
-          <span class="toc-card__desc">用真实操作视角带读者看懂账户资产、可用资金、持仓、盈亏、委托、成交和风险提示。 / 用投资者视角拆解净值、基准、持仓、回撤、归因、费用和风险提示。</span>
+          <span class="toc-card__title">识别回测幻觉: 错误清单与拆解案例</span>
+          <span class="toc-card__desc">系统识别未来函数、幸存者偏差、成本低估、容量忽略和参数挑选,并拆穿一条漂亮曲线。</span>
         </a>
         <a class="toc-card reveal" href="chapter-37.html">
           <span class="toc-card__num">第 37 章</span>
-          <span class="toc-card__title">场景练习:回测报告和模拟盘</span>
-          <span class="toc-card__desc">带读者按顺序检查一份回测报告里的净值、基准、成本、换手、持仓、风险和样本外。 / 用一周模拟盘日志讲清数据更新、信号生成、订单模拟、净值记录、异常处理和周末复盘。</span>
+          <span class="toc-card__title">审查量化研究: 从论文到回测报告</span>
+          <span class="toc-card__desc">用同一套问题检查研报、论文和回测报告里的假设、数据、基准、成本、风险与样本外。</span>
         </a>
+        </div>
+      </section>
+      <section class="toc-part-block toc-part-block--main" id="part-6">
+        <div class="toc-part-header">
+          <span class="toc-part-badge">主线六</span>
+          <h2>第六部分 · 策略如何变成产品</h2>
+          <p class="toc-part-question">不同量化策略赚的是什么钱,承担什么风险,最终怎样装进受约束的产品?</p>
+          <p>读完后,你能按收益来源和风险结构比较策略,而不是只按历史年化排名。</p>
+        </div>
+        <div class="toc-grid">
         <a class="toc-card reveal" href="chapter-38.html">
           <span class="toc-card__num">第 38 章</span>
-          <span class="toc-card__title">读产品文件: 招募书、定期报告和确认书先看哪五行</span>
-          <span class="toc-card__desc">不看广告看文件:基金招募书五处必看,定期报告三个数,结构化产品确认书逐词拆。</span>
+          <span class="toc-card__title">量化策略全景: 指数增强、市场中性、CTA、套利和高频</span>
+          <span class="toc-card__desc">把常见量化策略按收益来源、交易频率、资产类别和风险暴露分清楚。</span>
         </a>
         <a class="toc-card reveal" href="chapter-39.html">
           <span class="toc-card__num">第 39 章</span>
-          <span class="toc-card__title">场景练习:第一次小资金实盘</span>
-          <span class="toc-card__desc">讲清小资金实盘的目标、仓位、下单、记录、复盘和停止规则,避免把验证流程变成赌博。</span>
+          <span class="toc-card__title">指数增强策略: 在基准附近争取一点点超额</span>
+          <span class="toc-card__desc">用完整流程讲清指数增强如何从股票池、因子、风险约束和交易成本中争取超额收益。</span>
         </a>
         <a class="toc-card reveal" href="chapter-40.html">
           <span class="toc-card__num">第 40 章</span>
-          <span class="toc-card__title">最终清单:动手前必须真正懂的事</span>
-          <span class="toc-card__desc">用检查清单复盘金融基础、市场制度、资产风险、产品费用和个人边界。 / 用清单复盘数据、因子、回测、模型、组合、交易、风控、报告和模拟盘的最低标准。</span>
+          <span class="toc-card__title">市场中性策略: 对冲大盘以后还剩什么</span>
+          <span class="toc-card__desc">解释多空组合、Beta 对冲、股指期货、基差、融券和中性策略风险。</span>
         </a>
         <a class="toc-card reveal" href="chapter-41.html">
           <span class="toc-card__num">第 41 章</span>
-          <span class="toc-card__title">自检判断题与一个反面案例</span>
-          <span class="toc-card__desc">用十个容易误判的问题复盘金融和量化核心直觉。 / 用反面故事总结技术自信、金融短板、回测幻觉、杠杆和执行失控如何叠加成亏损。</span>
+          <span class="toc-card__title">CTA 和期货趋势: 用规则交易商品、股指和利率</span>
+          <span class="toc-card__desc">讲清期货保证金、主力合约、换月、趋势跟踪、期限结构和 CTA 风险。</span>
         </a>
         <a class="toc-card reveal" href="chapter-42.html">
           <span class="toc-card__num">第 42 章</span>
-          <span class="toc-card__title">一个稳妥的项目与结语</span>
-          <span class="toc-card__desc">用正面故事展示从金融问题、数据、简单策略、回测、模拟盘到小实盘的稳妥路径。 / 用最后一章收束金融直觉、量化方法和个人实践边界。</span>
+          <span class="toc-card__title">套利和相对价值: 看起来确定的价差为什么也会亏</span>
+          <span class="toc-card__desc">讲清 ETF 套利、期现套利、可转债套利、配对交易和相对价值中的隐藏风险。</span>
         </a>
         <a class="toc-card reveal" href="chapter-43.html">
           <span class="toc-card__num">第 43 章</span>
-          <span class="toc-card__title">附录:每次研究前先读这张纸</span>
-          <span class="toc-card__desc">把全书压成一张研究前检查纸,用于防止冲动开始、冲动交易和冲动实盘。</span>
+          <span class="toc-card__title">高频交易和市场微观结构: 毫秒里的价格、排队和风险</span>
+          <span class="toc-card__desc">解释订单簿、买卖价差、排队位置、做市、延迟、撤单和高频交易的真实门槛。</span>
         </a>
-      </div>
+        <a class="toc-card reveal" href="chapter-44.html">
+          <span class="toc-card__num">第 44 章</span>
+          <span class="toc-card__title">读懂量化产品: 净值、报告与合同</span>
+          <span class="toc-card__desc">从净值、费用、回撤和归因走到基金月报、招募书、定期报告与结构化产品确认书。</span>
+        </a>
+        <a class="toc-card reveal" href="chapter-45.html">
+          <span class="toc-card__num">第 45 章</span>
+          <span class="toc-card__title">监管、合规和伦理: 技术能力不能越过市场规则</span>
+          <span class="toc-card__desc">讲清程序化交易监管、内幕信息、市场操纵、数据合规、模型留痕和个人交易边界。</span>
+        </a>
+        </div>
+      </section>
+      <section class="toc-part-block toc-part-block--main" id="part-7">
+        <div class="toc-part-header">
+          <span class="toc-part-badge">主线七</span>
+          <h2>第七部分 · 把研究变成可运行项目</h2>
+          <p class="toc-part-question">怎样让研究穿过代码、模拟盘、真实订单和人的情绪,仍然保持可信?</p>
+          <p>读完后,你会完成两类实战,并知道何时推进、何时停手、怎样复盘。</p>
+        </div>
+        <div class="toc-grid">
+        <a class="toc-card reveal" href="chapter-46.html">
+          <span class="toc-card__num">第 46 章</span>
+          <span class="toc-card__title">实战项目一: 从零做一个指数增强回测</span>
+          <span class="toc-card__desc">用完整步骤拆解一个教学版指数增强项目,包括数据、因子、组合、成本、报告和复盘。</span>
+        </a>
+        <a class="toc-card reveal" href="chapter-47.html">
+          <span class="toc-card__num">第 47 章</span>
+          <span class="toc-card__title">市场中性模拟盘: 把策略放进真实时间</span>
+          <span class="toc-card__desc">搭建多头、对冲、保证金和归因账本,再用一周日志处理数据、信号、成交与对账异常。</span>
+        </a>
+        <a class="toc-card reveal" href="chapter-48.html">
+          <span class="toc-card__num">第 48 章</span>
+          <span class="toc-card__title">从模拟盘到小实盘: 上线前必须检查什么</span>
+          <span class="toc-card__desc">逐项核对数据、模型、交易、风控、日志和权限,再用可承受的小资金验证真实链路。</span>
+        </a>
+        <a class="toc-card reveal" href="chapter-49.html">
+          <span class="toc-card__num">第 49 章</span>
+          <span class="toc-card__title">投资心理和资金管理: 活下来比一次赚快钱重要</span>
+          <span class="toc-card__desc">讲清仓位、杠杆、回撤承受力、执行纪律、策略停用和个人资金边界。</span>
+        </a>
+        <a class="toc-card reveal" href="chapter-50.html">
+          <span class="toc-card__num">第 50 章</span>
+          <span class="toc-card__title">两条项目路径: 程序员怎样失败、怎样做稳</span>
+          <span class="toc-card__desc">用一正一反两个案例,比较先找模型与先问问题、追最佳参数与守样本外的不同结局。</span>
+        </a>
+        </div>
+      </section>
+      <section class="toc-part-block toc-part-block--main" id="part-8">
+        <div class="toc-part-header">
+          <span class="toc-part-badge">主线八</span>
+          <h2>第八部分 · 职业、复盘与长期成长</h2>
+          <p class="toc-part-question">做完第一个项目以后,怎样选择岗位、建设作品集并形成长期学习循环?</p>
+          <p>读完后,你会把全书收束成一条个人路线,而不是停在零散知识和一次性项目。</p>
+        </div>
+        <div class="toc-grid">
+        <a class="toc-card reveal" href="chapter-51.html">
+          <span class="toc-card__num">第 51 章</span>
+          <span class="toc-card__title">量化行业与职业路线: 你适合站在哪个位置</span>
+          <span class="toc-card__desc">把机构生产线、岗位分工、能力要求、作品集和面试表达放到同一张职业地图。</span>
+        </a>
+        <a class="toc-card reveal" href="chapter-52.html">
+          <span class="toc-card__num">第 52 章</span>
+          <span class="toc-card__title">长期学习路线: 从零到可展示的量化项目</span>
+          <span class="toc-card__desc">安排金融、统计、数据工程、因子、回测、模型、模拟盘和长期复盘的学习顺序。</span>
+        </a>
+        <a class="toc-card reveal" href="chapter-53.html">
+          <span class="toc-card__num">第 53 章</span>
+          <span class="toc-card__title">全书复盘与自检: 从一条鱼到一个量化系统</span>
+          <span class="toc-card__desc">按真实财富、金融权利、市场数据、研究验证、组合交易和人的纪律重走全书,再用判断题自检。</span>
+        </a>
+        <a class="toc-card reveal" href="chapter-54.html">
+          <span class="toc-card__num">第 54 章</span>
+          <span class="toc-card__title">结语: 你现在应该带走什么</span>
+          <span class="toc-card__desc">用最后一章收束金融直觉、量化方法和个人实践边界。</span>
+        </a>
+        </div>
+      </section>
+      <section class="toc-part-block toc-part-block--appendix" id="part-9">
+        <div class="toc-part-header">
+          <span class="toc-part-badge">工具箱</span>
+          <h2>附录 · 随时回来查</h2>
+          <p class="toc-part-question">哪些内容不必顺序阅读,但研究前值得反复核对?</p>
+          <p>术语、公式和最终检查表集中在这里,不再打断正文的收束。</p>
+        </div>
+        <div class="toc-grid">
+        <a class="toc-card reveal" href="chapter-55.html">
+          <span class="toc-card__num">第 55 章</span>
+          <span class="toc-card__title">概念复盘: 用人话重走金融与量化关键词</span>
+          <span class="toc-card__desc">沿着因果关系复盘货币、信用、股票、债券、因子、回测、滑点、容量、归因与风控。</span>
+        </a>
+        <a class="toc-card reveal" href="chapter-56.html">
+          <span class="toc-card__num">第 56 章</span>
+          <span class="toc-card__title">公式和指标速查: 别背公式,要知道它在问什么</span>
+          <span class="toc-card__desc">把收益率、年化、波动、回撤、夏普、IC、跟踪误差、久期和估值公式统一解释。</span>
+        </a>
+        <a class="toc-card reveal" href="chapter-57.html">
+          <span class="toc-card__num">第 57 章</span>
+          <span class="toc-card__title">最终检查表: 研究、交易和实盘前先读</span>
+          <span class="toc-card__desc">集中核对金融常识、数据时间线、回测假设、组合约束、交易成本、模拟盘和停止规则。</span>
+        </a>
+        </div>
+      </section>
 
       <section class="about reveal">
         <h2>关于本书</h2>
@@ -309,7 +512,7 @@
           组合优化、交易执行和风控。
         </p>
         <p>
-          全书 33 章,正文全部手写,配 22 张解释概念的手绘 SVG 图。内容尽量做到通俗又不失专业,
+          全书 58 章,正文全部手写,配 133 张解释概念的手绘 SVG 图。内容尽量做到通俗又不失专业,
           但金融和量化涉及真实资金与风险,书中所有案例、数字和结论仅用于学习,<strong>不构成任何投资建议</strong>。
           行业、机构和监管信息会随时间变化,实盘和引用前请以交易所、证监会、协会、券商和数据服务商的最新原文为准。
         </p>

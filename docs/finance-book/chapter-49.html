@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 49 章 · 投资心理和资金管理: 活下来比一次赚快钱重要 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清仓位、杠杆、回撤承受力、执行纪律、策略停用和个人资金边界。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="49">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第七部分 · 把研究变成可运行项目 · 第 49 章</p>
+        <h1>投资心理和资金管理: 活下来比一次赚快钱重要</h1>
+        <p class="lead">前面讲了一大堆模型和系统,但个人投资走到最后,绕不开人这个环节。你会害怕亏损,会在上涨之后贪心,会在回撤里怀疑策略,会想加杠杆把损失一把追回来。量化能减少临场拍脑袋,但消不掉人性。所以这一章谈资金管理和投资心理——这不是鸡汤,而是一套机制,保证你不用在情绪最差的时候,亲手把正确的流程毁掉。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线七</span>
+            <span>本部分第 4 / 5 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>怎样让研究穿过代码、模拟盘、真实订单和人的情绪,仍然保持可信?</p>
+          <p class="chapter-context__outcome">读完后,你会完成两类实战,并知道何时推进、何时停手、怎样复盘。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>个人量化必须先分清生活钱和风险钱,仓位高低决定你能不能扛过回撤。</li>
+            <li>杠杆、借钱和盈利后加仓都会放大错误,应对它们只能靠事前写好的规则。</li>
+          </ul>
+        </section>
+
+
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 连续十五年战胜指数之后</h2>
+<p>基金经理 Bill Miller 曾连续十五个自然年跑赢标普 500,这项纪录让他成为明星。可在金融危机前后,重仓金融股等判断遭遇重创,基金出现巨大回撤。过去十五次正确,没有替第十六年提供保险。</p><p>这个故事并不证明长期业绩毫无价值,而是提醒人们区分能力、风格和时代。一个策略可能恰好适合漫长的<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>扩张,稳定胜出会让管理人和客户一起把风险预算越放越大;等环境改变,最强的信念反而对应最大的仓位。</p><p>资金管理要做的不是预测传奇何时结束,而是确保任何一个判断都不能决定生死。仓位上限、回撤规则和分散化听着没有英雄气,却能让你在第十六年仍有资格重新思考。</p>
+        </section>
+
+        <h2>2. 先分清生活钱和风险钱</h2>
+<p>个人投资的第一课不是选策略,是先给口袋里的钱打标签。房租、生活费、医疗、家庭应急、短期学费,以及未来确定要用的钱,都不该放进高波动策略里。只有那部分亏得起、等得起、长期用不上的钱,才有资格叫风险资金。</p><p>很多人亏大钱,不是因为策略多复杂,而是把不能亏的钱拿去赌。钱一旦带着明确用途,市场波动就不再是数字波动,而是生活压力:你会被迫在低点割肉,或者为了回本去加<span class="term">杠杆</span>,一步错,步步错,越陷越深。</p><p>量化项目实盘之前,先白纸黑字写资金边界:总资金多少,最多投入多少,最大可承受亏损多少,亏到哪里必须停,这笔钱多久之内用不上。没有这些边界,策略再科学也没用——真到了波动里,接管账户的是情绪,不是代码。</p>
+
+        <h2>3. 仓位决定你能不能坚持</h2>
+<p>同一个策略,仓位不同,完全是两种人生。<span class="num">10%</span> 仓位亏 <span class="num">20%</span>,账户只亏 <span class="num">2%</span>,你还有心情冷静复盘;<span class="num">100%</span> 仓位亏 <span class="num">20%</span>,账面直接掉五分之一,人很难不难受;加 <span class="num">2 倍</span><span class="term">杠杆</span>再亏 <span class="num">20%</span>,账户可能亏掉 <span class="num">40%</span>,甚至触发强平。策略没变,是你给情绪留的空间变了。</p><p>所以仓位不是收益旋钮,不是觉得策略好就一把拉满。仓位该由什么决定?策略的波动、历史<a class="term term-link" href="glossary.html#g-最大回撤" title="查看术语：最大回撤">最大回撤</a>、你个人的承受力、资金的用途,还有它和你其他持仓的相关性。这几样没算清之前,拉满仓位不叫自信,叫裸奔。</p><p>个人做量化,完全可以先用很小的仓位验证流程。小仓位赚得少,但它让你用真实市场学成交、费用、<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>、心理压力和复盘。先把流程跑稳,再慢慢谈加仓——顺序反过来,学费会贵得多。</p><div class="callout callout--note reveal"><span class="callout__title">仓位是波动率按钮,不是信心奖杯</span><p>同一个策略,仓位从一成到满仓再到<span class="term">杠杆</span>,体验从<span class="hl">“冷静复盘”</span>一路滑到<span class="hl">“强平出局”</span>——策略没变,变的是你给情绪留了多少空间。仓位该由策略波动、历史最大回撤、资金用途和你的承受力共同决定,不由<span class="hl">“我最近感觉很好”</span>决定。信心好的时候更要把仓位交给事前写好的规则,因为那时恰恰是你最容易高估自己的时候。</p></div>
+
+        <h2>4. 杠杆会压缩犯错空间</h2>
+<p><span class="term">杠杆</span>表面上放大的是收益,实际上同步放大的是失败速度。没有<span class="term">杠杆</span>,策略回撤了你还有时间坐下来修;上了<span class="term">杠杆</span>,同样的回撤可能直接触发追加<span class="term">保证金</span>、强制平仓,或者你的心理先崩。时间这个缓冲垫,被<span class="term">杠杆</span>抽走了。</p><p><span class="term">杠杆</span>还会助长人性里的每个坏毛病:亏损之后想加仓一把回本,上涨之后想乘胜继续放大,连续赚钱之后觉得自己看懂了市场。这些冲动在无<span class="term">杠杆</span>时已经危险,叠上<span class="term">杠杆</span>,就是给自己装了个加速器。</p><p>新手别把<span class="term">杠杆</span>当入门工具。先在无<span class="term">杠杆</span>的环境里,把数据、<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>、成本、风控和心理全部训练到位。什么时候你能说清楚最坏情况,能承受强制平仓,能处理<span class="term">保证金</span>和<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>问题,再来谈<span class="term">杠杆</span>也不迟。</p>
+
+        <h2>5. 回撤里最容易做错决定</h2>
+<p>策略一进入回撤,你心里那个声音就开始问:模型是不是失效了?问本身没错,因为每个策略都会回撤;真正的难题是判断——这是正常波动,还是策略逻辑坏了?没有事先写好的规则,这个问题就会被你的情绪抢答。</p><p>可以提前写三层规则。第一层:回撤在历史正常范围内,什么都不动,继续观察。第二层:回撤超过历史某个分位,或者持续时间长得反常,降低仓位并复盘。第三层:出现数据异常、模型反向、风险暴露越界、亏损超出承受能力,暂停策略。每一层的触发条件,都在冷静的时候写好。</p><p>这套规则的目的不是机械止损,而是把情绪决策改造成流程决策。回撤中最典型的错误,就是在最低点临时把策略停掉,等反弹起来又追回去——规则存在的意义,就是拦住那个深夜里想砸键盘的自己。</p><div class="callout callout--note reveal"><span class="callout__title">先把规则写下来,再让交易发生</span><p>回撤中最危险的问题——<span class="hl">“模型是不是失效了”</span>——绝不能留给当时的自己回答。冷静时把三层规则写好:正常波动,不动;回撤超历史分位或持续反常,降仓复盘;数据异常、模型反向、超出承受力,暂停。规则的意义不是预测,是把深夜那个想砸键盘的自己拦在键盘外面。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 305" role="img" aria-label="亏损回本非对称示意:亏损越大,回到本金需要的涨幅急剧变大">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">亏得越多,回本要涨得越狠(先活下来)</text>
+            <line x1="110" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="110" y1="55" x2="110" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="90" y="60" text-anchor="end" fill="#8499bd" font-size="12.5">回本涨幅</text>
+            <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">亏损幅度</text>
+            <!-- 柱子:亏损 vs 需要涨幅 -->
+            <rect x="160" y="228" width="60" height="22" fill="rgba(122,167,240,0.5)"/><text x="190" y="222" text-anchor="middle" fill="#c9d4e8" font-size="12">亏10%→涨11%</text>
+            <rect x="320" y="200" width="60" height="50" fill="rgba(240,201,106,0.5)"/><text x="350" y="194" text-anchor="middle" fill="#c9d4e8" font-size="12">亏30%→涨43%</text>
+            <rect x="480" y="150" width="60" height="100" fill="rgba(240,150,90,0.6)"/><text x="510" y="144" text-anchor="middle" fill="#c9d4e8" font-size="12">亏50%→涨100%</text>
+            <rect x="640" y="75" width="60" height="175" fill="rgba(232,120,120,0.6)"/><text x="670" y="69" text-anchor="middle" fill="#ffb4b4" font-size="12">亏80%→涨400%</text>
+            <text x="450" y="290" text-anchor="middle" fill="#c9d4e8" font-size="13">亏损和回本不对称:亏 50% 要涨 100% 才回本,亏 80% 几乎回不来</text>
+          </svg>
+          <p class="figure__cap">这张图是“活下来比赚快钱更重要”的数学原因:亏 10% 涨 11% 就回本,但亏 50% 要涨整整 100%,亏 80% 得涨 400%。控制回撤,不是胆小,是保命。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 365" role="img" aria-label="回撤不对称复原图:净值从 1.2 跌到 0.6 又是怎么必须再涨 100% 才能回本">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回撤不对称:跌 50% 要涨 100% 才能回本</text>
+            <line x1="80" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <line x1="80" y1="60" x2="80" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <text x="92" y="66" fill="#bcc9dd" font-size="12">净值</text>
+            <path d="M 85 200 Q 200 170 330 190 Q 420 200 450 205 Q 500 285 620 275 Q 740 260 815 220" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <circle cx="85" cy="200" r="5" fill="#8fb37a"/>
+            <text x="85" y="188" fill="#8fb37a" font-size="12" font-weight="800">起点 1.0</text>
+            <circle cx="450" cy="205" r="5" fill="#f0c96a"/>
+            <text x="450" y="193" fill="#f0c96a" font-size="12" font-weight="800">高点 1.2</text>
+            <circle cx="620" cy="275" r="5" fill="#ee8877"/>
+            <text x="620" y="295" fill="#ee8877" font-size="12" font-weight="800">谷底 0.6(-50%)</text>
+            <line x1="450" y1="205" x2="810" y2="205" stroke="#8fb37a" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="810" y="200" fill="#8fb37a" font-size="12">得回到 1.2 才算回本</text>
+            <text x="450" y="338" text-anchor="middle" fill="#bcc9dd" font-size="12.5">数学只有一句:1.2 → 0.6 是 -50%,0.6 → 1.2 是 +100%;从深坑里爬出的代价比你想象贵上一倍——这就是止损要卡的死死的原因</text>
+          </svg>
+          <p class="figure__cap">跌 50% 不是利润的一半失去,是必须再赚 100% 才回得来。同哲学只能弥补的是止损和仓位——越往下亏,能回到起点的天数越长,这就是何时控制的设置在绝对值上。</p>
+        </div>
+        <h2>6. 盈利后也会犯错</h2>
+<p>连续赚钱是另一种危险。赚的多了,人容易过度自信:觉得策略已经被充分证明,于是加仓、放宽风控、减少检查、懒得看成本。很多大亏不是发生在策略刚上线的时候,而是发生在连续成功之后。</p><p>所以盈利阶段同样要复盘,问的问题比亏损时更扎心:收益来自模型能力,还是市场风格顺风?风险暴露有没有悄悄上升?换手和成本有没有变化?规模大了之后滑点有没有增加?如果答案是顺风,那此刻加仓,很可能刚好加在风格的尾部。</p><p>资金管理里要写清加仓条件,比如:模拟盘已经稳了多久,小实盘跑了多久,最大回撤是否在预期内,对账是否稳定,成本是否符合假设。条件没到就跳级加仓,和没压测就扩十倍流量是同一个味道。</p>
+
+        <h2>7. 借钱投资为什么危险</h2>
+<p>借钱投资,本质是把市场风险变成了债务风险。投资亏了,你眼睁睁看着账户变少,同时每个月还得照还固定的债务。市场不会因为你下个月要还款,就好心地涨一波救你。</p><p>很多投资灾难的剧本都是借钱加仓:上涨时显得格外聪明,下跌时,现金流压力和心理压力一起爆炸。哪怕你的策略长期真有优势,短期的亏损也可能先把你赶出局——长期收益再美,也只属于活到长期的人。</p><p>个人学量化,尤其不要拿借来的钱实盘。学习本身必然附带错误成本,再用借来的钱去付这笔学费,等于给学习过程加了利息,风险高得完全没有必要。</p>
+
+        <h2>8. 策略停用和重新启用</h2>
+<p>策略不是上线之后就永远跑下去。它可能需要降权、暂停、修复、下线,停用规则必须提前写好,比如:数据异常,交易成本超过阈值,滚动 <a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">IC</a> 长期为负,回撤超出预期范围,风控边界被踩。触发哪条,执行什么动作,事先定死。</p><p>重新启用同样要有规矩。不能策略一停、第二天看见它反弹,就手痒立刻恢复——那等于停用白停了。恢复的前提是逐项确认:数据恢复正常,模型表现解释得清楚,风险回到范围内,模拟运行稳定。</p><p>停用和启用都要留痕:什么时候停的,为什么停,停之后发生了什么,什么时候恢复的,恢复依据是什么。没有这些记录,团队也好、个人也好,都会在同一个坑里反复摔。</p>
+
+        <h2>9. 把投资当长期训练</h2>
+<p>学量化不是几周之内找到一台提款机。更现实的目标是把它当长期训练:看懂金融机制,搭起研究系统,发现并修正错误,最后形成一套适合自己的投资纪律。进度慢不可怕,跑偏才可怕。</p><p>把每个项目都看成训练样本:一个失败的<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>,教会你数据对齐;一个亏损的模拟盘,教会你成本和执行;一次回撤,教会你认识自己的风险承受力。只要本金和心态还在,每一次失败都是训练材料,不是终点。</p><p>这就是为什么<span class="hl">“活下来”</span>排在<span class="hl">“赚快钱”</span>前面。一次重仓爆亏,会直接剥夺你继续学习的资格。稳健推进看起来慢,但它让你活着留在牌桌上,让能力有时间复利。</p>
+
+        <h2>10. 写给计算机背景读者的提醒</h2>
+<p>工程世界里,系统出错可以回滚版本;投资世界里,亏损不能回滚。你可以修代码,市场不会退钱。就这一条差异,决定了金融系统必须比普通项目更谨慎——发布之前,把回滚不了的部分多检查几遍。</p><p>还要早点接受一件事:模型准确率高,不代表账户舒服。策略会有回撤,实盘会有滑点,数据会坏,你会紧张。把这些统统当作系统设计的一部分,而不是上线后的意外,才算真正从工程跨进了金融。</p><p>最后一句,别用聪明替代纪律。聪明负责发现想法,纪律负责不让这些想法变成灾难。两者分工明确,一个都不能翘班。</p><div class="callout callout--note reveal"><span class="callout__title">成功率代替不了期望值</span><p>发布十次成功九次,第十次把库删了,前面的成功全部清零——金融里没有回滚键,同理格律更硬:一个策略可以七成交易都赚钱,最后一次大亏就把利润全数归还。所以别只数成功率,要算期望:平均赚多少、平均亏多少、最坏一次多深,三笔账放一起再谈仓位。坏情况的尺寸,永远比好情况的频率值钱。</p></div>
+
+        <h2>11. 个人资金管理清单</h2>
+<p>第一,这笔钱多久不用?第二,最大能亏多少还不影响生活?第三,单个策略最多占总资产多少?第四,是否使用<span class="term">杠杆</span>?第五,亏到哪里暂停?第六,盈利到哪里才允许加仓?</p><p>第七,多久复盘一次?第八,每次手工干预是否记录在案?第九,几个策略之间是否高度相关?第十,如果连续三个月亏损,你还能不能按规则执行?把这十题答完,比纠结下一只<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>买什么重要得多。</p><p>把清单写下来,放在实盘脚本旁边。市场剧烈波动的时候,你需要看到的不是行情,而是自己冷静时亲手写下的规则。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>个人量化必须先分清生活钱和风险钱,仓位高低决定你能不能扛过回撤。</li>
+            <li>杠杆、借钱和盈利后加仓都会放大错误,应对它们只能靠事前写好的规则。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 连续十五年战胜指数之后</li>
+            <li><strong>2.</strong> 先分清生活钱和风险钱</li>
+            <li><strong>3.</strong> 仓位决定你能不能坚持</li>
+            <li><strong>4.</strong> 杠杆会压缩犯错空间</li>
+            <li><strong>5.</strong> 回撤里最容易做错决定</li>
+            <li><strong>6.</strong> 盈利后也会犯错</li>
+            <li><strong>7.</strong> 借钱投资为什么危险</li>
+            <li><strong>8.</strong> 策略停用和重新启用</li>
+            <li><strong>9.</strong> 把投资当长期训练</li>
+            <li><strong>10.</strong> 写给计算机背景读者的提醒</li>
+            <li><strong>11.</strong> 个人资金管理清单</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么说仓位比策略名字更重要?</summary>
+            <p>同一策略在不同仓位下,账户回撤和心理压力天差地别;仓位决定了你能不能坚持到策略兑现。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>回撤时为什么不能临时拍脑袋?</summary>
+            <p>情绪最强的时刻最容易在低点停掉策略或乱改规则,正确动作是按事前写好的分层规则执行。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>两条项目路径: 程序员怎样失败、怎样做稳</h2>
+          <p>用一正一反两个案例,比较先找模型与先问问题、追最佳参数与守样本外的不同结局。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

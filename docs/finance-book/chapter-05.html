@@ -3,276 +3,276 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 5 章 · 衍生品与其他资产:把未来和风险变成合约 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="讲清远期、期货、保证金、基差、期限结构和互换。 / 讲清看涨、看跌、权利金、买方卖方、时间价值和卖期权风险。" />
+    <title>第 5 章 · 股票与估值: 你买的权利为什么值这个价 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="从股东权利、股票收益来源走到公司行为、估值倍数和现金流折现。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="5">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第一部分 · 金融世界的底层结构 · 第 5 章</p>
-        <h1>衍生品与其他资产:把未来和风险变成合约</h1>
-        <p class="lead">衍生品这个词听起来吓人,其实核心只有一句:它的价值来自另一个东西。这一章先讲期货、远期和互换如何把未来的价格、利率或现金流提前写进合约,再讲期权如何把“不对称的收益结构”变成可以买卖的产品,最后把视野扩展到外汇、商品、REITs 和结构化产品。它们都能用来管理风险,也都能被用来放大风险。</p>
+        <p class="chapter__eyebrow">第二部分 · 资产如何承载现金流与风险 · 第 5 章</p>
+        <h1>股票与估值: 你买的权利为什么值这个价</h1>
+        <p class="lead">股票不是屏幕上的红绿代码,而是公司剩余现金流的一小份权利。先弄清股东排在谁后面、收益从哪里来,才能继续讨论分红、回购、增发和估值。这一章沿着同一条线回答两个问题:你买到了什么权利,市场又为什么愿意为这项权利支付今天的价格。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线二</span>
+            <span>本部分第 1 / 7 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?</p>
+          <p class="chapter-context__outcome">读完后,你能先拆现金流、权利、期限和最坏情况,再讨论价格涨跌。 </p>
+        </section>
+
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>远期和期货都是把未来交易价格写进合约,区别是期货更标准化。</li>
-            <li>保证金让期货占用资金少,也让盈亏被同比例放大。</li>
-            <li>期权买方买的是权利,卖方收权利金之后承担的是义务。</li>
-            <li>期权收益结构天生不对称:买方亏损有限,卖方可能承担尾部风险。</li>
-            <li>外汇是两种货币之间的相对价格,受利率、通胀、贸易和资本流动影响。</li>
+            <li>股票代表公司所有权的一小份,不是固定收益合同。</li>
+            <li>股东拿剩余收益,所以风险更高,上行空间也更大。</li>
+            <li>增发、配股、可转债、回购、分红都会改变股东的权利和现金流。</li>
+            <li>PE、PB 等估值倍数是语言,不是自动答案。</li>
           </ul>
         </section>
 
 
-        <h2>1. 把未来价格写进合约</h2>
+        <h2>1. 买股票到底买了什么</h2>
 
-        <h3>1.1. 先从一个卖鱼的人说起</h3>
-<p>还记得那座小岛吗?这次的主角是一位渔民:三个月后他有一批鱼可以卖,可他眼下就睡不着——万一三个月后鱼价大跌,这几个月就白忙了。岛的另一头,一位饭店老板也在发愁:万一三个月后鱼价大涨,菜单成本就压不住了。两个发愁的人一碰头,今天就把话说死:三个月后,不管市场价多少,都按每条十元成交。</p><p>这个<span class="hl">“十元”</span>是从哪儿来的?不是谁拍脑袋预测未来,而是两个人各自算账的结果。渔民想:这批鱼的饲料、人工、船油折下来,每条成本假设七元,十元成交就稳赚。老板想:菜单价格摆在那里,十元进货毛利还撑得住。双方都把最坏情况摆上桌,远期合约里那个数,就是两张预算表的交集,而不是对未来的预言。</p><p>这个约定,就是远期合约的直觉。远期不是今天立刻买卖鱼,而是今天把未来交易的价格写下来。渔民锁定了未来卖价,饭店锁定了未来买价。三个月后市场价格无论涨跌,他们都按约定价格交易——谁也别惊喜,谁也别惊吓。</p><p>把两种结局推演一遍。如果三个月后市场价涨到十二元,饭店按十元拿货,赚到了便宜,渔民少赚了两元;如果市场价跌到八元,渔民按十元出货,躲开了下跌,饭店多付了两元。注意这句话:风险没有消失,只是从一方转到了另一方。远期合约从来不消灭风险,它只是给风险换了个肩膀。</p><p>顺便拆掉两个常见误会。第一,签远期不是为了赌赢行情:买卖双方买的都是<span class="hl">“确定”</span>这两个字,而不是<span class="hl">“最便宜”</span>。第二,三个月后看到市场价更划算就后悔,大可不必——就当它是份保险单:你希望火灾永远不发生,却不会因此觉得保费白交。</p><div class="callout callout--note reveal"><span class="callout__title">远期买的是确定,不是便宜</span><p>两个误会一起拆。第一,签远期不是为了赌赢行情:买卖双方买的都是<span class="hl">“确定”</span>这两个字,而不是<span class="hl">“最便宜”</span>。第二,三个月后看到市场价更划算就后悔,大可不必——就当它是份保险单:你希望火灾永远不发生,却不会因此觉得保费白交。远期从来不消灭风险,它只是给风险换了个肩膀。</p></div>
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h3>1.1. 第一批可以转手的公司所有权</h3>
+<p><span class="num">1602 年</span>,荷兰东印度公司要组织远航。船要造、货要买、水手要提前付钱,而一趟航程可能几年后才回来,也可能永远回不来。让一个商人独自押上全部家产太危险,于是公司把远航的收益和风险切成许多份,让不同投资者共同出钱。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>更关键的一步是,出资人不必苦等船队返航。他可以把手里的份额转卖给另一个人。所有权从一张锁死到期的合约,变成了能够连续交易的证券。<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>最迷人的地方就从这里出现:公司在海上做生意,股东在岸上重新给未来现金流出价。</p></div><p>四百多年后,量化模型处理的仍是同一件事。价格序列不是凭空生成的数据,而是无数人对远方那艘船能带回多少货、要等多久、会不会沉没的集体报价。忘记价格背后是一份剩余权利,<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>就很容易退化成只会追逐曲线的游戏。</p>
+        </section>
 
-        <h3>1.2. 远期和期货有什么区别</h3>
-<p>远期合约通常是双方私下约定的。你和我约好三个月后按十元买卖鱼,细节可以很灵活:数量、质量、交货地点、付款方式,全都能定制——像项目制外包,需求随便提,合同现写现签。问题也明显:万一到了日子有一方反悔,另一方只能实打实咽下对手方风险。</p><p>期货可以理解成标准化远期。交易所把合约规格全部定好:标的是什么、每手多少、什么时候到期、怎么结算、<span class="term">保证金</span>多少,没空跟你讨价还价。大家在交易所里交易这些标准化合约,交易所和清算体系站在中间,负责把对手方违约风险降下来。</p><p>清算体系具体怎么降风险?两步。第一步,清算所站到每笔交易中间:对所有买方它是卖方,对所有卖方它是买方,你担心的是清算所的信用,而不是某个陌生对手的钱包。第二步,每日结算:每天收盘按结算价把盈亏当场结清,亏的从<span class="term">保证金</span>里扣,赚的当天到账,风险最多只积累一天,没机会滚成大雪球。</p><p>一句话对比:远期更灵活,但对手方风险更强;期货更标准,流动性更好,代价是必须接受<span class="term">保证金</span>和每日结算这一套更严格的规则。像选软件:定制系统合身但怕乙方跑路,标准产品死板但稳定可续费——各有价格,各取所需。</p>
+        <section class="case-study reveal">
+          <span class="case-study__label">概念现场</span>
+          <h3>1.2. 股东想修船,船长却想把自己的舱房刷成金色</h3>
+<p>股东把钱交给管理层,希望公司把船开到更远的地方;管理层每天握着方向盘,却可能更在意自己的奖金、办公室和任期。船赚不赚钱主要由股东承担,船长的豪华舱却由公司报销。这种<span class="hl">“出钱的人”</span>和<span class="hl">“做决定的人”</span>不是同一个人的麻烦,叫委托—代理问题。</p><p>给管理层股票和期权,是想把两个人绑到同一条净值线上,但绳子绑歪了也会出事。只奖励短期股价,管理层可能少做研发、多做<a class="term term-link" href="glossary.html#g-回购" title="查看术语：回购">回购</a>,甚至把风险藏到奖金发完以后。好的激励不是一句<span class="hl">“利益一致”</span>,而是收益、期限、回撤和追索条件一起设计。</p><p><a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>研究因此不能只读利润表,还要看股权结构、关联交易、管理层减持、薪酬和<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>配置。量化模型可以把治理变量做成因子,但数字背后的问题始终是同一个:替你开船的人,在什么情况下会把自己的目的地放在你的前面?</p>
+        </section>
 
-        <h3>1.3. 为什么期货会放大盈亏</h3>
-<p>期货最容易让新手受伤的地方,藏在<span class="hl">“<span class="term">保证金</span>”</span>三个字里。假设一份期货合约名义价值一百万元,<span class="term">保证金</span>比例是百分之十。你不需要掏出一百万元,只需拿出十万元<span class="term">保证金</span>,就能控制这一百万元的名义合约。十万元指挥一百万元,听上去是不是有点像咒语?</p><p>感受一下放大效应。如果标的价格上涨百分之一,合约名义盈利一万元。相对于一百万元,这只是百分之一;可相对于你掏出的十万元<span class="term">保证金</span>,就是百分之十。再翻一面:标的下跌百分之一,你的<span class="term">保证金</span>同样亏掉百分之十。标的才晃了一小下,你的账户已经坐了一整格电梯。</p><p>把每日结算用数字走一遍。第一天标的跌百分之一:合约亏一万元,当天从<span class="term">保证金</span>里划走,账户剩九万。第二天再跌百分之一:再划一万,剩八万。假设交易所的维持线是八万,第三天开盘前,追加<span class="term">保证金</span>的电话就来了。注意,不是到期才算总账,而是每天结一次——你连<span class="hl">“装死等反弹”</span>这个选项都没有。</p><p>这就是<span class="term">杠杆</span>。<span class="term">杠杆</span>不会提高你判断正确的概率,它只负责把结果放大:方向对时赚得快,方向错时亏得也快。<span class="term">保证金</span>不足时,你会被要求追加<span class="term">保证金</span>;拿不出或者不肯拿,强平就找上门,连带你翻身的机会一起清仓。</p><p>金融史上最惨烈的一课,偏偏由一群公认最聪明的人主演。<span class="num">1994 年</span>,一家叫<span class="hl">“长期资本管理公司”</span>(LTCM)的对冲基金成立,合伙人名单金光闪闪:两位后来在 <span class="num">1997 年</span>拿下诺贝尔经济学奖的经济学家——他们正是期权定价理论的奠基人,外加一位前美联储副主席。这支梦之队架起几十倍<span class="term">杠杆</span>,加上规模巨大的衍生品合约,前几年赚得盆满钵满。</p><p>但 <span class="num">1998 年</span>,俄罗斯突然债务违约,市场朝着他们模型里<span class="hl">“几乎不可能”</span>的方向剧烈运动,高<span class="term">杠杆</span>瞬间把亏损放大到无法承受。短短一百多天,基金净值跌去约九成、亏掉近 <span class="num">46 亿美元</span>,最后要美联储出面牵头救助,才没有把整个金融系统一起拖下水。</p><p>把这个故事钉在心里:诺贝尔奖级别的聪明,配上过高的<span class="term">杠杆</span>,照样爆仓。<span class="term">杠杆</span>的问题从来不是<span class="hl">“你会不会算”</span>,而是“万一算错、或者世界不按你的模型走,你还活不活得下来”。这也是本书后面反复强调的顺序:先学会活下来,再谈赚多少。</p><div class="callout callout--note reveal"><span class="callout__title">LTCM:聪明顶配照样爆仓</span><p>划重点:LTCM 的合伙人里有两位后来的诺贝尔经济学奖得主、一位前美联储副主席,架起几十倍<span class="term">杠杆</span>。<span class="num">1998 年</span>俄罗斯突然债务违约,市场朝模型里<span class="hl">“几乎不可能”</span>的方向剧烈一动,一百多天净值跌去约九成、亏掉近 <span class="num">46 亿美元</span>,最后要美联储牵头救助。<span class="term">杠杆</span>的问题从来不是会不会算,而是算错时你还活不活得下来。</p></div><div class="callout callout--note reveal"><span class="callout__title">不要把占用资金少理解成风险小</span><p>期货占用<span class="term">保证金</span>少,不是因为风险小,而是因为它用<span class="term">保证金</span>制度放大了账户波动。</p></div>
+        <section class="case-study reveal">
+          <span class="case-study__label">概念现场</span>
+          <h3>1.3. 奶茶涨一元没人走,再涨五元为什么队伍散了</h3>
+<p>楼下奶茶从十五元涨到十六元,队伍可能一点没短;涨到二十一元,很多人转身去了便利店。价格每变一点,销量会跟着变多少,叫需求价格弹性。不是所有商品都一样:救命药很难因为涨价就不买,同一条街上的三家奶茶却随时可以互相替代。</p><p>这件事直接决定企业有没有定价权。涨价百分之十、销量只掉百分之二,收入可能上升;涨价百分之十、销量掉百分之二十,收入反而缩水。奢侈品、必需品、订阅软件和景区门票面对的是不同顾客,同一家公司在不同价格区间里,弹性也会变。</p><p>研究公司提价时,别只在模型里把单价那一格往上拉。把价格、销量、客户流失、竞品促销和渠道库存放在同一张表里,估计的才是需求曲线。所谓<span class="hl">“品牌强所以能涨价”</span>,要等收入和毛利真的穿过这道量化检验,才不只是广告词。</p>
+        </section>
 
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 380" role="img" aria-label="期货逐日盯市时间线:缴 10 万保证金控制 100 万合约;标的每天跌 1% 就划走 1 万,余额 10 万、9 万、8 万,触到维持线 8 万后第三天开盘前必须追加,否则强平">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期货逐日盯市:10 万保证金,两天亏到维持线</text>
-            <text x="450" y="58" text-anchor="middle" fill="#8499bd" font-size="12.5">名义 100 万合约 · 保证金比例 10% → 缴 10 万;标的每跌 1%,合约当天就亏 1 万</text>
-            <defs><marker id="c5m" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>
-            <rect x="60" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="150" y="101" text-anchor="middle" fill="#7aa7f0" font-size="14" font-weight="800"><tspan x="150" y="101">开仓日</tspan></text>
-            <text x="150" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">缴保证金 10 万</text>
-            <text x="150" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">控制名义 100 万</text>
-            <text x="150" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">当日余额 10 万</text>
-            <path d="M 242 151 L 266 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
-            <rect x="270" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="360" y="101" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800"><tspan x="360" y="101">第1天收盘</tspan></text>
-            <text x="360" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">结算价 -1%</text>
-            <text x="360" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">当日划走 1 万</text>
-            <text x="360" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">余额 9 万</text>
-            <path d="M 452 151 L 476 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
-            <rect x="480" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(232,120,120,0.45)"/>
-            <text x="570" y="101" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800"><tspan x="570" y="101">第2天收盘</tspan></text>
-            <text x="570" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">再跌 -1%</text>
-            <text x="570" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">又划走 1 万</text>
-            <text x="570" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">余额 8 万</text>
-            <text x="570" y="204" text-anchor="middle" fill="#c9d4e8" font-size="12">触到维持线 8 万</text>
-            <path d="M 662 151 L 686 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
-            <rect x="690" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="780" y="101" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800"><tspan x="780" y="101">第3天开盘前</tspan></text>
-            <text x="780" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">追加保证金电话</text>
-            <text x="780" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">补足 10 万 → 留下</text>
-            <text x="780" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">拿不出 → 强平清仓</text>
-            <text x="100" y="252" fill="#8499bd" font-size="11">账户保证金余额 ↓</text>
-            <line x1="100" y1="316" x2="830" y2="316" stroke="#e88" stroke-width="1.5" stroke-dasharray="6 5"/>
-            <text x="100" y="308" fill="#ffb4b4" font-size="12">维持线 8 万:低于它就要追加</text>
-            <path d="M 150 278 L 360 297 L 570 316 L 780 316" fill="none" stroke="#f0c96a" stroke-width="2"/>
-            <circle cx="150" cy="278" r="5" fill="#f0c96a"/>
-            <text x="150" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">10 万</text>
-            <circle cx="360" cy="297" r="5" fill="#f0c96a"/>
-            <text x="360" y="283" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">9 万</text>
-            <circle cx="570" cy="316" r="5" fill="#f0c96a"/>
-            <text x="570" y="302" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">8 万</text>
-            <circle cx="780" cy="316" r="8" fill="none" stroke="#e88" stroke-width="2"/>
-            <text x="780" y="336" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">第 3 天开盘前:触发追加电话</text>
-            <text x="450" y="364" text-anchor="middle" fill="#c9d4e8" font-size="13">每天收盘按结算价当场结清:连「等反弹再说」的选项都没有——划走的是现金,不是浮亏数字</text>
-          </svg>
-          <p class="figure__cap">把每日结算用数字走一遍:第一天亏 1 万剩 9 万,第二天再亏 1 万剩 8 万,正好触到维持线——第三天开盘前追加电话就到。杠杆不提高判断胜率,只放大结果,而且你连「装死等反弹」的选项都没有。</p>
-        </div>
-        <h3>1.4. 套期保值、投机和套利</h3>
-<p>期货有三种常见用途,动机完全不同,别把它们混成一锅。第一种是套期保值。渔民怕鱼价跌,饭店怕鱼价涨,他们用期货锁定未来价格。注意这个目的:不是赚大钱,而是把未来的不确定性切掉一块——像给系统加熔断,不为跑分,只为不出事。</p><p>把套保用数字走完整。渔民今天按十元卖出三个月期货。三个月后现货跌到八元:现货这批鱼每条少卖两元,期货空头按十元卖出、八元平仓买回,每条赚回两元——两笔一抵,每条净收入还是十元。反过来现货涨到十二元:现货多赚两元,期货亏两元,还是十元。看明白了吗?套保画出来的收益线是一条水平线,好坏都锁死。</p><div class="callout callout--note reveal"><span class="callout__title">套保的收益线是一条水平线</span><p>手算:渔民今天按十元卖出三个月期货。到期现货跌到八元——现货每条少卖两元,期货空头按十元卖出、八元平仓买回,每条赚回两元,两笔一抵,净收入还是十元。现货涨到十二元:现货多赚两元,期货亏两元,还是十元。好坏都锁死,套保画出来的收益线是一条水平线:目标不是多赚,是把不确定性切掉一块。</p></div><p>第二种是投机。投机者既不生产鱼、也不需要鱼,他只是判断鱼价会涨或会跌,通过期货表达观点。骂投机者之前先停一秒:他们承担了价格波动的风险,也给市场提供了流动性——一个没人愿意接盘的市场,想保值的人也保不了值。</p><p>第三种是套利。比如同一种商品在两个市场价格差得不合理,或者现货和期货之间的关系偏离常态,套利者尝试买便宜的、卖贵的,等待价差收敛。听上去稳赚?别太乐观:价差可能继续扩大,<span class="term">保证金</span>可能先扛不住——<span class="hl">“看到收敛”</span>和<span class="hl">“活到收敛”</span>之间,隔着一条河。</p>
-
-        <h3>1.5. 基差和期限结构</h3>
-<p>混商品期货圈,绕不开<span class="term">基差</span>这个词。<span class="term">基差</span>是现货价格和期货价格之间的差。比如今天鱼的现货价格是十元,三个月期货价格是十点五元,中间差的零点五元,就和仓储、资金成本、供需预期有关——它不是谁拍脑袋定的,而是时间、仓库和资金一起开出来的价。</p><p>拆开推演一遍这零点五元。你今天花十元买一条鱼冻进仓库:仓储费假设两毛,买鱼的十元被占用三个月,利息假设一毛——这批货的全成本是十点三元。假如三个月期货报到十二元,马上有人借钱买现货、囤起来、同时卖出期货,到期交割稳赚差价;做的人一多,期货价就被压回持有成本附近。所以<span class="term">基差</span>不是情绪,它先是仓储和资金开出的发票,上面再叠一点供需预期。</p><p>期限结构说的是另一层关系:不同到期月份的期货价格之间怎么排列。有时远月价格高于近月,有时近月价格高于远月。商品市场里,库存、运输、季节性和资金成本,都会在这张排列表上留下自己的指纹。</p><p>这里有个经典的读反。近月比远月贵,未必是<span class="hl">“大家看跌未来”</span>,更可能是眼下的货太紧:工厂急着开工,宁愿为现货付溢价。把这张库存晴雨表当成涨跌投票器,方向可能就拧反了。</p><p>量化 CTA 和商品策略经常会研究<span class="term">基差</span>和期限结构。它们不只问价格会涨会跌,还问不同合约之间的相对关系——像做时间序列分析之余再看截面结构,结构与结构之间的错位里,往往藏着信号。</p>
-
-        <h3>1.6. 交换未来现金流</h3>
-<p>互换听起来更抽象,其实本质还是合同。最常见的是利率互换。A 公司背着浮动利率债务,天天担心未来利率上升;B 公司则更愿意承担浮动利率。两家坐下来约定:A 向 B 支付固定利率,B 向 A 支付浮动利率。一纸合同签下,两家的烦恼各得其所。</p><p>用一亿元名义本金走一遍。约定 A 每年付固定利率百分之三,即三百万元;B 付当年的浮动利率。第一年浮动利率是百分之二点八:A 付三百万、收两百八十万,净支出二十万,单看像小亏。第二年浮动利率涨到百分之三点五:A 仍付三百万,却能收三百五十万,净进账五十万。</p><p>效果是什么?A 把未来利率上升的风险转移出去,换成更确定的固定支付,终于可以睡安稳觉;B 则把浮动利率风险接到自己手里,希望从中获得补偿。还是那句老话:风险没有消失,只是换了个肩膀——金融工程的很大一部分,干的就是这个搬运动作。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>关键点要配上第二张账:A 自己就背着浮动利率债务。利率涨到百分之三点五,债务利息多付了,互换那头恰好净收五十万补回来——两边一抵,A 的总利息支出被熨成一条直线。所以别把互换单截出来看,那像赌局;放回它对冲的债务旁边,它是把浮动的账单换成固定的预算。</p></div><p>互换通常在场外市场交易,条款可以定制,灵活得像私聊敲定的口头协作;但灵活的账单随后就到:对手方风险、估值复杂和抵押品管理问题,一样不少。对新手来说,先把它理解成<span class="hl">“交换未来现金流”</span>就够了,工程细节留给以后。</p>
-
-        <h3>1.7. 衍生品条款怎样进入策略</h3>
-<p>量化里有一大类策略叫 CTA,也叫管理期货。它们在商品、股指、国债、外汇等期货市场上,做趋势、期限结构、跨品种关系和风险配置——期货合约对它们来说,像一盒可以任意组合的积木。</p><p>但期货数据和股票数据是两种生物。你要处理合约到期、移仓、主力合约切换、<span class="term">保证金</span>、夜盘、涨跌停、交割规则。一个看起来简单的趋势策略,如果移仓和成本处理错了,回测会非常失真——你看到的不是策略的本事,而是数据处理的 bug。</p><p>举个最容易踩的坑:移仓换月。你做多近月合约,价格五百八十元;到期前卖掉它、买入远月合约,远月六百元。这一步你贵二十元接回同样的货,但这二十元不是亏损,是期限结构的价差。可如果把两个合约的收盘价直接首尾相接,这二十元就会被回测算成一次凭空大涨,策略平白多出一截利润——那不是市场的馈赠,是数据拼接的裂缝。</p><div class="callout callout--note reveal"><span class="callout__title">贵二十元接回,不是多亏二十元</span><p>划重点:你做多近月合约,价格五百八十元;到期前卖掉它、买入远月合约,远月六百元——贵二十元接回同样的货。这二十元不是亏损,是期限结构的价差。可如果把两个合约的收盘价直接首尾相接,回测会把这二十元算成一次凭空大涨,策略平白多出一截利润。那不是市场的馈赠,是数据拼接的裂缝。</p></div><p>所以这一章的重点,不是怂恿你去开期货账户,而是往你脑子里装四句话:未来价格可以被合约化,风险可以被转移,<span class="term">杠杆</span>会放大一切,而量化系统必须尊重这些制度——不尊重的下场,是制度用追加<span class="term">保证金</span>通知亲自教你。</p>
-
-        <h2>2. 把不对称收益结构变成可交易产品</h2>
-        <p>期权大概是新手被名字吓住率最高的工具。先用一句话把它降服:期权买方买的,是一种未来的选择权;卖方收了钱,就要承担相应的义务。它和保险是亲戚:你交一笔小钱,把不想要的风险推给别人。期权最重要的知识点不是方向,而是收益和亏损的不对称——一边亏损有限,一边可能亏到看不见底。看懂这种不对称,你才不会被“胜率高”“稳健票息”“低成本博上涨”这些话术顺手带走。</p>
-
-        <h3>2.1. 先从一张买房选择权说起</h3>
-<p>从一个你大概率关心过的场景开始。假设你看中一套房,现在价格一百万元。你不确定三个月后到底要不要买,可又怕这期间房价涨上去。怎么办?你和房主约定:你今天付两万元,三个月内你有权按一百万元买下这套房;如果三个月后你不想买了,可以放弃,但两万元不退。</p><p>这两万元,就是期权里的权利金。你买到的不是房子本身,而是一个未来选择权。推演一下两种结局:三个月后房价涨到一百二十万元,你仍然可以按一百万元买,这份权利就很值钱;三个月后房价跌到九十万元,你不会按一百万元买,直接放弃权利,最多亏掉那两万元权利金。</p><div class="callout callout--note reveal"><span class="callout__title">权利金是不确定性的定价</span><p>划重点:你付两万元,买到的不是房子,是三个月内按一百万元买入的权利——涨了,你照约定价买;跌了,大不了放弃,最多亏掉这两万。房主肯签,因为他把这两万元当补偿收下。权利金的本质,是把<span class="hl">“涨价踏空”</span>这份风险外包出去的价格:不确定性也是一种商品,期权就是它的标价方式。</p></div><p>你可能会问:房主为什么肯签?他的账本也算得平。房价跌了,两万元白拿,聊补一点损失;房价小涨小跌,两万元安稳落袋;房价真大涨,他虽然只能按一百万元出手,但本来就做好了按这个价成交的准备。顺便看清权利金的本质:它是<span class="hl">“不确定性”</span>这种商品的定价——你花两万元,把<span class="hl">“涨价踏空”</span>的风险外包给了房主。</p><p>期权,就是这种结构的标准化版本。买方付权利金,获得未来在某个条件下买入或卖出的权利;卖方收权利金,同时背上一个义务:只要买方行权,他必须履约。一边花钱买<span class="hl">“可以”</span>,一边收钱保证<span class="hl">“一定”</span>——记住这句话,后面所有的不对称都从这里长出来。</p>
-
-        <h3>2.2. 看涨期权和看跌期权</h3>
-<p>期权世界分两个门派。看涨期权,先理解成未来按约定价格买入的权利。比如行权价一百元的看涨期权,意思是到期时你有权按一百元买入标的。标的涨到一百二十元,这个权利有价值——市价一百二的东西,你能按一百拿走;标的跌到八十元,你可以不买,权利作废,仅此而已。</p><p>看跌期权正好反过来:未来按约定价格卖出的权利。比如行权价一百元的看跌期权,到期时你有权按一百元卖出标的。标的跌到八十元,你可以按一百元卖给别人,这个权利有价值;标的涨到一百二十元,你放弃权利就行——谁愿意放着市价一百二不卖,非要按一百出手呢。</p><p>记一个拆合同的动作:拿到一张期权,先问<span class="hl">“持有者有权做什么”</span>——有权买入,就是看涨;有权卖出,就是看跌;再问<span class="hl">“这个权利在哪种行情下值钱”</span>。方向判断只是最后一步。也别把看跌期权当成诅咒:手里捏着股票的人买一张看跌,是给持仓上了一份保底保险,跟看空是两码事。</p><p>所以看涨不只是<span class="hl">“看多”</span>两个字的情绪表达,看跌也不只是<span class="hl">“看空”</span>。它们都是带价格、期限和权利义务的合同:方向只是其中一个字段,行权价、到期日、权利金,一个字段都不能少。</p>
+        <h3>1.4. 先从一家小店说起</h3>
+<p>把上市公司缩到最小,就是楼下那家生意不错的小店。店主想开第二家店,租金、装修、设备、库存、员工工资,样样要钱。他面前摆着两条路:一是向别人借,事后按约定还本付息;二是拉几个人一起出钱,让他们当股东,以后一起分店里赚下来的钱。</p><p>两种出钱的,心思完全不同。借钱的那位叫债权人,他最关心一件事:你能不能按时还钱?店赚得再多,他也只拿合同里那份利息。入股的那位叫股东,他只关心另一件事:店未来能不能越做越好?扣掉成本、债务之后,还剩多少归自己?</p><p>股票做的事情,就是把<span class="hl">“入股”</span>切成很多个小份,拿到市场上交易。你买一股,就是买了这家公司极小的一份所有权。份额小得不起眼,逻辑却和大股东一模一样:公司经营得好,你跟着受益;经营得差,你照样承担风险。</p><p>把<span class="hl">“一小份”</span>落成具体数字:店主把整家店作价 <span class="num">100 万</span>,切成 <span class="num">10 万</span>股,每股 <span class="num">10 元</span>。你花 <span class="num">1 万</span>买下 <span class="num">1000 股</span>,就占了这家店 <span class="num">1%</span>。年底店里净赚 <span class="num">10 万</span>,论份额有 <span class="num">1000 元</span>归你——但注意,论份额不等于进口袋:分多少、留在店里继续开店多少,由店里的治理说了算。</p><p>顺手拆掉第一个误区:买股票不是存钱。存款有银行承诺还本付息,股票没有任何人向你承诺保本。你手里攥的是一张<span class="hl">“未来剩余收益的分配凭证”</span>,值不值钱,全看店后面的经营。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 285" role="img" aria-label="期权到期收益图:看涨和看跌期权买方的最大亏损都是权利金,收益随价格朝有利方向放大">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期权到期收益:亏损有底,盈利放大</text>
-            <!-- 看涨期权 -->
-            <text x="230" y="60" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">买入看涨期权</text>
-            <line x1="80" y1="240" x2="400" y2="240" stroke="#46587a" stroke-width="1.5"/>
-            <line x1="240" y1="90" x2="240" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <text x="398" y="262" text-anchor="end" fill="#8499bd" font-size="12">到期股价</text>
-            <text x="150" y="256" text-anchor="middle" fill="#8499bd" font-size="12">行权价 K</text>
-            <path d="M 100 210 L 240 210 L 380 110" fill="none" stroke="#a8c6ff" stroke-width="3"/>
-            <line x1="100" y1="210" x2="240" y2="210" stroke="#ffb4b4" stroke-width="3"/>
-            <text x="150" y="200" text-anchor="middle" fill="#ffb4b4" font-size="12">亏损=权利金(有底)</text>
-            <text x="350" y="98" text-anchor="middle" fill="#a8c6ff" font-size="12">涨越多赚越多</text>
-            <!-- 看跌期权 -->
-            <text x="670" y="60" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">买入看跌期权</text>
-            <line x1="520" y1="240" x2="840" y2="240" stroke="#46587a" stroke-width="1.5"/>
-            <line x1="680" y1="90" x2="680" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <text x="838" y="262" text-anchor="end" fill="#8499bd" font-size="12">到期股价</text>
-            <text x="700" y="256" text-anchor="middle" fill="#8499bd" font-size="12">行权价 K</text>
-            <path d="M 540 110 L 680 210 L 820 210" fill="none" stroke="#f0c96a" stroke-width="3"/>
-            <line x1="680" y1="210" x2="820" y2="210" stroke="#ffb4b4" stroke-width="3"/>
-            <text x="760" y="200" text-anchor="middle" fill="#ffb4b4" font-size="12">亏损=权利金(有底)</text>
-            <text x="575" y="98" text-anchor="middle" fill="#f0c96a" font-size="12">跌越多赚越多</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="股票所有权示意:公司被切成很多股,持有一股即拥有对应比例的分红权、投票权和剩余索取权">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">买一股,就是把公司切成很多份、你拿其中一份</text>
+            <!-- 公司大饼 -->
+            <circle cx="230" cy="160" r="95" fill="rgba(18,29,49,0.6)" stroke="#f0c96a" stroke-width="2"/>
+            <path d="M 230 160 L 230 65 A 95 95 0 0 1 315 200 Z" fill="rgba(240,201,106,0.28)" stroke="#f0c96a"/>
+            <path d="M 230 160 L 315 200 A 95 95 0 0 1 175 249 Z" fill="rgba(122,167,240,0.22)" stroke="#7aa7f0"/>
+            <path d="M 230 160 L 175 249 A 95 95 0 0 1 149 100 Z" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0"/>
+            <path d="M 230 160 L 149 100 A 95 95 0 0 1 230 65 Z" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0"/>
+            <text x="230" y="285" text-anchor="middle" fill="#c9d4e8" font-size="13">一家公司 = 总股本</text>
+            <text x="272" y="130" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">你的1股</text>
+            <!-- 右:你这一份意味着什么 -->
+            <text x="600" y="86" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">持有这一份,你就有</text>
+            <rect x="440" y="104" width="410" height="40" rx="8" fill="rgba(122,167,240,0.12)"/>
+            <text x="460" y="130" fill="#eef4ff" font-size="14">· 分红权:公司赚钱后按份额分你一部分</text>
+            <rect x="440" y="152" width="410" height="40" rx="8" fill="rgba(122,167,240,0.12)"/>
+            <text x="460" y="178" fill="#eef4ff" font-size="14">· 投票权:重大事项按份额投票</text>
+            <rect x="440" y="200" width="410" height="40" rx="8" fill="rgba(122,167,240,0.12)"/>
+            <text x="460" y="226" fill="#eef4ff" font-size="14">· 剩余索取权:还完债、剩下的才归股东</text>
+            <text x="645" y="270" text-anchor="middle" fill="#ffb4b4" font-size="13">上不封顶,但也可能归零</text>
           </svg>
-          <p class="figure__cap">期权买方最多亏掉权利金(收益曲线下方有一条水平底),但价格朝有利方向走时收益会放大。这种不对称结构,是期权和直接买卖股票最大的不同。</p>
+          <p class="figure__cap">买股票不是买一个会涨的数字,而是买下公司的一小片所有权。公司做大,你这一份跟着变值钱;公司倒了,你排在债主后面,可能血本无归。</p>
         </div>
-        <h3>2.3. 买方亏损有限,卖方风险更复杂</h3>
-<p>期权买方最大的好处,一句话讲完:亏损有限。你买看涨期权,如果标的大跌,你最多亏掉权利金;你买看跌期权,如果标的大涨,你最多也亏掉权利金。最坏的结果,在你掏出权利金的那一刻就封了顶。</p><p>卖方则是另一本账。他收了权利金,就得承担履约义务。卖出看涨期权时,如果标的暴涨,卖方可能要按低价把标的卖给买方,亏损可能很大;卖出看跌期权时,如果标的暴跌,卖方可能要按高价接下标的,亏损也可能很大。权利金是确定的小收入,义务是不确定的大窟窿。</p><p>把卖方的账算具体。你卖出一张行权价一百元的看涨,收五元权利金。标的涨到一百三十元:你要按一百元交出市价一百三的东西,亏三十元,扣掉权利金净亏二十五;涨到一百五十元,净亏四十五,理论上没有顶。卖出看跌同理:标的跌到六十元,你按一百元接下,亏四十,扣五元净亏三十五;极端情况标的一文不值,净亏九十五。买方的亏损是封了口的信封,卖方的亏损是没封底的井。</p><p>这就是为什么很多<span class="hl">“卖期权”</span>策略看起来胜率很高,但你不能简单把它理解成低风险。它可能平时一笔一笔收小钱,收得你心旷神怡,然后极端行情里一次亏掉大钱。胜率描述的是频率,从来描述不了幅度。</p><div class="callout callout--note reveal"><span class="callout__title">高胜率不等于低风险</span><p>常见误区:卖期权胜率高,所以风险低。算笔账——卖出一张行权价一百元的看涨,收五元权利金:标的涨到一百三十元,你按一百元交出市价一百三的东西,扣掉权利金净亏二十五;涨到一百五十元,净亏四十五,理论上没有顶。平时一笔一笔收小钱,极端行情一次亏掉大钱。胜率描述的是频率,从来描述不了幅度。</p></div>
+        <h3>1.5. 股东排在最后,所以风险和机会都大</h3>
+<p>公司赚到钱了,股东是不是第一个伸手?恰恰相反,股东排最后。钱进账后,要先付员工工资、供应商货款、房租、税费、银行利息和<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>利息。一圈付完如果还有剩,才可能轮到股东——要么分到手,要么留在公司里继续滚。</p><p>这个位置有个学名:剩余索取权——股东拿的是<span class="hl">“剩下”</span>的那部分。它天然不如债券踏实:债券合同上通常白纸黑字写着固定利息和本金,股票却从不承诺你每年一定拿多少。公司亏损,股东可能没有分红;公司破产清算,股东也要排在债权人后头再上桌。</p><p>可世界很公平:正因为拿的是<span class="hl">“剩下的”</span>,一旦公司越飞越高,收入和利润持续增长,债权人的收益仍然只有合同里那点利息,股东却能分享成倍放大的增长。股票的上行空间来自这里,风险也来自这里——同一个<span class="hl">“排最后”</span>,既是诅咒,也是奖赏。</p><p>用一组最小的数字感受一下。公司有银行借款 <span class="num">100 万</span>、约定每年利息 <span class="num">5 万</span>,股东自己投了 <span class="num">100 万</span>。今年利润 <span class="num">10 万</span>:先付银行 <span class="num">5 万</span>,剩下 <span class="num">5 万</span>全归股东。明年生意变旺,利润跳到 <span class="num">30 万</span>:银行雷打不动还是 <span class="num">5 万</span>,剩下 <span class="num">25 万</span>统统归股东——公司多赚的钱,几乎全数流向股东,这就是<span class="hl">“上行空间”</span>的样子。可再看反面:今年利润只有 <span class="num">4 万</span>,连利息都不够付,银行照样有权先拿走它的 <span class="num">5 万</span>,股东不仅一分没有,还可能要往里贴亏损。股东排在最后,分得到最大的甜,也咽得下最苦的药。</p><p>把这组账换个角度看,放大效应会看得更清。股东本金 <span class="num">100 万</span>:利润 <span class="num">10 万</span>那年他拿到 <span class="num">5 万</span>,回报率 <span class="num">5%</span>;利润 <span class="num">30 万</span>那年他拿到 <span class="num">25 万</span>,回报率 <span class="num">25%</span>。利润只翻了 <span class="num">3 倍</span>,股东的回报却翻了 <span class="num">5 倍</span>。债主的 <span class="num">5 万</span>雷打不动,利润的全部波动都被挤到股东一个人身上——这就是<span class="hl">“<span class="term">杠杆</span>”</span>最朴素的直觉:拿走固定收益的人不陪你坐过山车,拿走剩余的人坐全程。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 350" role="img" aria-label="看涨期权买卖双方到期损益镜像图:行权价 10 元、权利金 0.5 元,盈亏平衡点 10.5 元;买方亏损有限盈利不封顶,卖方盈利有限亏损不见底,两条曲线关于零轴镜像">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">看涨期权:买方和卖方,同一条曲线的两面镜子</text>
-            <text x="450" y="56" text-anchor="middle" fill="#8499bd" font-size="12.5">例:行权价 K = 10 元,权利金 0.5 元/股 → 股价涨过 10.5 元,买方才真正开始赚钱</text>
-            <defs><marker id="c5x" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
-            <line x1="100" y1="190" x2="800" y2="190" stroke="#46587a" stroke-width="1.5" marker-end="url(#c5x)"/>
-            <line x1="100" y1="60" x2="100" y2="300" stroke="#46587a" stroke-width="1.5"/>
-            <text x="796" y="212" text-anchor="end" fill="#8499bd" font-size="12">到期股价</text>
-            <text x="88" y="64" text-anchor="end" fill="#8499bd" font-size="12">盈亏</text>
-            <text x="92" y="89" text-anchor="end" fill="#8499bd" font-size="11">+1.5</text>
-            <text x="92" y="159" text-anchor="end" fill="#8499bd" font-size="11">+0.5</text>
-            <text x="92" y="194" text-anchor="end" fill="#8499bd" font-size="11">0</text>
-            <text x="92" y="229" text-anchor="end" fill="#8499bd" font-size="11">-0.5</text>
-            <line x1="104" y1="155" x2="798" y2="155" stroke="rgba(122,167,240,0.14)" stroke-width="1"/>
-            <line x1="104" y1="225" x2="798" y2="225" stroke="rgba(122,167,240,0.14)" stroke-width="1"/>
-            <line x1="340" y1="70" x2="340" y2="310" stroke="rgba(122,167,240,0.35)" stroke-width="1.5" stroke-dasharray="5 5"/>
-            <text x="340" y="330" text-anchor="middle" fill="#c9d4e8" font-size="12">行权价 K = 10</text>
-            <line x1="440" y1="70" x2="440" y2="310" stroke="rgba(240,201,106,0.5)" stroke-width="1.5" stroke-dasharray="5 5"/>
-            <text x="440" y="330" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">盈亏平衡点 10.5</text>
-            <path d="M 140 225 L 340 225 L 740 85" fill="none" stroke="#a8c6ff" stroke-width="3"/>
-            <path d="M 140 155 L 340 155 L 740 295" fill="none" stroke="#ffb4b4" stroke-width="3" stroke-dasharray="7 5"/>
-            <circle cx="440" cy="190" r="4.5" fill="#f0c96a"/>
-            <circle cx="740" cy="85" r="4" fill="#a8c6ff"/>
-            <circle cx="740" cy="295" r="4" fill="#ffb4b4"/>
-            <text x="752" y="89" fill="#a8c6ff" font-size="12" font-weight="800">+1.5</text>
-            <text x="752" y="299" fill="#ffb4b4" font-size="12" font-weight="800">-1.5</text>
-            <text x="612" y="70" text-anchor="end" fill="#a8c6ff" font-size="12" font-weight="800">买方(实线):盈利不封顶</text>
-            <text x="612" y="302" text-anchor="end" fill="#ffb4b4" font-size="12" font-weight="800">卖方(虚线):亏损不见底</text>
-            <text x="212" y="246" text-anchor="middle" fill="#a8c6ff" font-size="12">买方最坏:-0.5 权利金(有底)</text>
-            <text x="212" y="136" text-anchor="middle" fill="#ffb4b4" font-size="12">卖方最好:+0.5 权利金(有顶)</text>
-            <text x="450" y="348" text-anchor="middle" fill="#c9d4e8" font-size="12.5">两条线关于 0 轴严格镜像:买方赚的每一分都是卖方亏的——期权是零和的风险转移,不是一起赚钱的地方</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="平价与波动对照:商品 A 常年 100±1,商品 B 100±30;右账卡写债主雷打不动拿 5 万,股东回报从 5% 到 25% 再到倒贴;风险看波动带宽度不看价格高低">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">同样都在 100 附近,谁的风险大?</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">左:两件商品一年走势;右:1.2 节那家公司的两笔真账——债主与股东</text>
+            <rect x="70" y="70" width="490" height="232" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="305" y="92" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">A:借出去的钱:常年 100 ± 1</text>
+            <text x="305" y="112" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">B:当股东拿的回报:100 ± 30</text>
+            <rect x="84" y="162" width="452" height="138" fill="rgba(232,120,120,0.09)"/>
+            <rect x="84" y="229" width="452" height="4" fill="rgba(122,167,240,0.14)"/>
+            <path d="M 80 231 L 138 231 L 196 229 L 254 231 L 312 233 L 370 231 L 428 231 L 486 229 L 544 231" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>
+            <path d="M 80 231 L 138 180 L 196 268 L 254 171 L 312 277 L 370 203 L 428 245 L 486 217 L 544 254" fill="none" stroke="#ffb4b4" stroke-width="2.5"/>
+            <line x1="84" y1="231" x2="536" y2="231" stroke="rgba(201,212,232,0.35)" stroke-width="1" stroke-dasharray="4 5"/>
+            <text x="90" y="178" fill="#8499bd" font-size="11">基准 100</text>
+            <text x="548" y="212" fill="#a8c6ff" font-size="11.5" font-weight="800">±1</text>
+            <text x="548" y="240" fill="#ffb4b4" font-size="11.5" font-weight="800">±30</text>
+            <rect x="600" y="70" width="260" height="232" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="730" y="96" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">同一家公司,两笔账</text>
+            <text x="730" y="122" text-anchor="middle" fill="#c9d4e8" font-size="12">公司借 100 万,年息 5 万</text>
+            <text x="730" y="148" text-anchor="middle" fill="#8499bd" font-size="12">利润 10 万那年:</text>
+            <text x="730" y="168" text-anchor="middle" fill="#eef4f8" font-size="12">债主 5 万(5%) · 股东 5 万(5%)</text>
+            <text x="730" y="194" text-anchor="middle" fill="#8499bd" font-size="12">利润 30 万那年:</text>
+            <text x="730" y="214" text-anchor="middle" fill="#a8c6ff" font-size="12">债主还是 5 万(雷打不动 5%)</text>
+            <text x="730" y="234" text-anchor="middle" fill="#ffb4b4" font-size="12">股东 25 万 → 回报 25%</text>
+            <text x="730" y="262" text-anchor="middle" fill="#ffb4b4" font-size="12">利润 4 万那年:股东一分没有还倒贴</text>
+            <text x="730" y="286" text-anchor="middle" fill="#f0c96a" font-size="12">利润的全部波动,都挤到股东身上</text>
+            <text x="450" y="336" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">哪个风险大,不看价格高低,看波动带宽度:±1 vs ±30,差出 30 倍</text>
+            <text x="450" y="362" text-anchor="middle" fill="#c9d4e8" font-size="12.5">波动率就是把这种不确定数字化;拿走固定收益的人不坐过山车,拿剩余收益的人坐全程</text>
           </svg>
-          <p class="figure__cap">买方最多亏掉权利金 0.5 元(亏损有底),价格涨过平衡点 10.5 元后赚多少没有顶;卖方镜像相反:最多赚 0.5 元,亏损理论上看不到底。所以卖方收的「保费」,本质是替别人扛尾部风险的价格。</p>
+          <p class="figure__cap">两件商品都围着 100 转:A 带宽 ±1,B 带宽 ±30,风险差 30 倍。1.2 节的账就是这条:B 是股东,利润 10 万拿 5 万(5%),利润 30 万拿 25 万(25%),利润 4 万就倒贴——波动率是把不确定性数字化。</p>
         </div>
-        <h3>2.4. 内在价值和时间价值</h3>
-<p>期权的价格通常可以拆成两部分:内在价值和时间价值。内在价值最好懂——如果现在立刻行权,这份权利值多少钱,一算是多少就是多少。它是期权的<span class="hl">“现货成色”</span>,不掺一点对未来的想象。</p><p>算一下就清楚。比如一只股票现在一百二十元,你手里有一张行权价一百元的看涨期权:立刻行权,按一百元买入、再按市价卖出,内在价值大约二十元。反过来,如果股票现在只有八十元,行权价一百元的看涨期权没有内在价值——没人会愿意花一百元去买市价八十元的东西。</p><p>把一张真实报价拆开看。假如这张看涨期权在市场上卖二十五元:二十元是内在价值,多出来的五元就是时间价值。之后股票如果原地不动,这五元会像冰块一样一天天化掉;到期那天,时间价值归零,期权只剩内在价值这具骨架。所以买期权像租着房子赌方向:方向之外,你每天都在为时间付租金。</p><div class="callout callout--note reveal"><span class="callout__title">五块钱的时间价值天天在化</span><p>划重点:股票现价一百二十元,行权价一百元的看涨期权卖二十五元——其中二十元是立刻行权就能兑现的内在价值,多出的五元是时间价值,是<span class="hl">“未来仍可能更有利”</span>这种可能性被定的价。此后股票原地不动,这五元会像冰块一样一天天化掉,到期归零。买期权像租着房子赌方向:方向之外,你每天都在为时间付租金。</p></div><p>没有内在价值,不代表期权一文不值。只要还没到期,未来标的仍可能涨到有利位置,这份可能性本身也值钱,它叫时间价值。留意时间价值的脾气:越接近到期,如果标的价格一直没动到有利位置,时间价值通常会流失。买期权的人经常输在这里:方向其实没看错太多,但时间不够了——哨声响了,比赛结束。</p>
+        <h3>1.6. 股价、股份数和市值</h3>
+<p><span class="hl">“这只股票才十块,便宜!”</span>——股票新手的高频错觉,就是只看股价。试想:A 公司股价一百元,B 公司股价十元,能直接说 A 更贵吗?不能。还得看两家公司各有<span class="hl">“多少份”</span>。</p><p>把份数乘上去,真相立现。市值等于股价乘以总股数:A 公司股价一百元、总股数一亿股,市值一百亿元;B 公司股价十元、总股数二十亿股,市值二百亿元。股价低的 B,公司整体反而更“贵”。单看股价比大小,就像用一份披萨的价格比两家店,却忘了数各自切成了几块。</p><div class="callout callout--note reveal"><span class="callout__title">十元股不比百元股便宜</span><p>常见误区:A 股价一百元、B 股价十元,就说 B 便宜。把份数乘上去——A 总股数一亿股、市值一百亿;B 二十亿股、市值二百亿,股价低的那个,公司整体反而更贵。涨幅也要看百分比:同样涨一元,A 只动 <span class="num">1%</span>,B 动了 <span class="num">10%</span>。单看股价比大小,就像只问一份披萨多少钱,却忘了数各自切了几块。</p></div><p>再拆一层<span class="hl">“便宜”</span>的幻觉:A 公司股价从 <span class="num">100 元</span>涨到 <span class="num">101 元</span>,涨 <span class="num">1 元</span>,涨幅 <span class="num">1%</span>,市值从 <span class="num">100 亿</span>到 <span class="num">101 亿</span>;B 公司股价从 <span class="num">10 元</span>涨到 <span class="num">11 元</span>,同样涨 <span class="num">1 元</span>,涨幅却是 <span class="num">10%</span>,市值从 <span class="num">200 亿</span>到 <span class="num">220 亿</span>。涨跌看的是百分比,不是元数——<span class="hl">“低价股涨得快”</span>的错觉,多半是这么来的。</p><p>别小看市值这个字段,量化建模会经常用到它,因为公司规模牵扯甚广:风险、<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>、市场关注度,乃至因子的表现。一般来说,小市值股票波动更大、流动性更差;大市值股票买卖更顺畅,但想象空间未必相同。同样的策略,套在不同市值区间的股票上,脾气可能完全不一样。</p><p><span class="hl">“流动性更差”</span>到底是什么意思?算一笔冲击账:你拿 <span class="num">1 亿</span>去建仓,投进市值 <span class="num">20 亿</span>的小公司,相当于要买走 <span class="num">5%</span> 的股权,一出手就把价格顶上天;投进市值 <span class="num">2 万</span>亿的巨头,只占 <span class="num">0.005%</span>,水面不起一丝涟漪。同一笔钱,<a class="term term-link" href="glossary.html#g-冲击成本" title="查看术语：冲击成本">冲击成本</a>天差地别——这就是规模在交易层面的真实含义。</p>
 
-        <h3>2.5. 波动率为什么重要</h3>
-<p>股票债券主要看方向,期权不同:它特别关心<span class="term">波动率</span>。<span class="term">波动率</span>可以先理解成标的价格上下摆动的幅度。为什么它这么要紧?因为买方手里握着选择权:标的越可能大幅波动,这份选择权越有用,期权也就越有价值。</p><p>用两组数字看个透。还是行权价一百元的看涨。情形甲:股票到期要么一百零五、要么九十五,期权的行权价值是五元或零。情形乙:股票要么一百三、要么七十,行权价值变成三十元或零。注意坏结局:两种情形下都是零,买方大不了不行权。波动放大,只把好结局从五元养到三十元,坏结局原地不动——这份不对称,就是<span class="term">波动率</span>值钱的根。</p><p>想极端一点就明白了。如果一只股票未来几乎不动,那看涨和看跌期权都不太值钱——权利再好,用不上也是闲的。可如果一只股票未来可能大涨也可能大跌,买方手里的选择权立刻身价倍增。</p><p>所以期权交易很多时候不是单纯交易方向,而是在交易<span class="term">波动率</span>。有人买期权,不一定因为一定看涨,而是认为未来会大幅波动、赌市场低估了这个幅度;有人卖期权,也不一定因为看空,而是在赌未来波动不会超过市场预期。方向是一个维度的判断,<span class="term">波动率</span>是另一个维度的生意。</p>
+        <h3>1.7. 分红不是白送钱</h3>
+<p>公司赚了钱,可以拿一部分现金直接分给股东,这叫分红。不少新手眼睛一亮:这不就是白送钱吗?先算笔账再欢呼:分红,只是公司资产中的一部分,从公司账户搬进了股东账户。</p><p>看具体的:一只股票价格十元,每股分红一元。分红后,公司账上少了每股一元的现金,股价理论上要做除息调整——你手里多了一元现金,股票却相应便宜了约一元。合起来算总财富,并没有凭空多出一元。钱没有变多,只是换了个地方放。</p><div class="callout callout--note reveal"><span class="callout__title">除息:提前扣掉那份白赚</span><p>划重点:股价十元,每股分红一元。除息后,你手里多了一元现金,股价相应便宜约一元,总财富一分没多——钱只是从公司账户搬进了股东账户。为什么不调整不行?若不除息,前一天十元买入、第二天拿一元再十元卖回,一天无风险白赚一元。除息,就是市场把这份<span class="hl">“白赚”</span>提前扣掉的机制。</p></div><p>为什么股价非要做这个除息调整?假设不调整:你在分红前一天花 <span class="num">10 元</span>买入,第二天拿走 <span class="num">1 元</span>现金,再以 <span class="num">10 元</span>卖回,一天白赚 <span class="num">1 元</span>。全天下的资金都盯着这种无风险漏洞,它不可能存在——除息,就是市场价格把这份<span class="hl">“白赚”</span>提前扣掉的机制。</p><p>还有个流行的说法要拆开:分红后股价再涨回 <span class="num">10 元</span>,叫<span class="hl">“填权”</span>,听起来像分红的钱最终还会回来。错。股价能不能涨回去,靠的是公司继续被市场看好、利润继续增长,跟分红这个动作本身没有关系。把<span class="hl">“分红”</span>和<span class="hl">“填权”</span>当成同一笔钱赚了两次,是同一份钱想花两回。</p><p>既然不白送,分红为什么还受重视?因为它传递的是另一个信号:公司账上有真现金,而且愿意把现金还给股东。一般来说,成熟公司更常分红;高速成长公司更愿意把钱留在体内、继续投资。<span class="hl">“分不分”</span>没有绝对好坏,标准只有一个:留在公司里的这笔钱,能不能用出比股东自己投更高的回报。</p>
 
-        <h3>2.6. 一个到期收益小表</h3>
-<p>光听概念太空,直接算账。假设你花五元买入一张行权价一百元的看涨期权。到期时,如果标的价格是八十元,你不会行权,亏五元权利金;如果标的价格是一百元,行权不行权都没多赚,还是亏五元权利金;如果标的价格涨到一百二十元,你可以按一百元买入价值一百二十元的标的,权利价值二十元,扣掉五元权利金,净赚十五元。</p><p>把这张小表补几行。到期价八十元,净亏五;一百元,净亏五;一百零五元,不亏不赚——这就是盈亏平衡点;一百一十元,净赚五;一百二十元,净赚十五。再站到桌子对面看卖方的账:正五、正五、零、负五、负十五,恰好是买方数字翻一个负号。一张合约两本账,镜像得严丝合缝。</p><p>这个例子戳破一个新手最常见的误会:买看涨期权,不是标的上涨就一定赚钱。标的要涨过行权价和权利金成本之和,你才真正开始盈利——这个门槛叫盈亏平衡点,每一笔期权交易落笔之前,都该先把它算出来。</p><div class="callout callout--note reveal"><span class="callout__title">涨了也可能白涨</span><p>手算:五元买一张行权价一百元的看涨。到期标的八十元,净亏五;一百元,还是亏五;一百零五元,不亏不赚——这就是盈亏平衡点;一百一十元净赚五;一百二十元净赚十五。对面卖方的账:正五、正五、零、负五、负十五,恰好是买方数字翻个负号。标的要涨过行权价加权利金之和,买方才真正开始盈利。</p></div><p>看跌期权也完全同理。买入看跌期权时,标的跌得越多越有利;但如果跌幅不够,盖不住权利金成本,该亏照样亏。天下没有白送的<span class="term">杠杆</span>,期权的每一分便宜,都明码标价写在这张表里。</p>
+        <h3>1.8. 股票收益来自哪里</h3>
+<p>买股票赚到钱,账能拆成三份。第一,公司盈利增长:赚得越来越多,每股对应的利润水涨船高。第二,估值变化:同样一块利润,市场愿意出的价格变了。第三,分红和回购:公司把现金直接还给股东,或出钱买回自家的股票。你的每一笔盈亏,基本都能归入这三类。</p><p>举个简单例子。某公司今年每股赚五元,市场给它二十倍<a class="term term-link" href="glossary.html#g-市盈率pe" title="查看术语：市盈率(PE)">市盈率</a>——市盈率就是<span class="hl">“股价是每股盈利的多少倍”</span>,二十倍的意思是:投资者愿意为这家公司每一元年利润掏二十元,所以股价大约一百元。明年每股赚六元,市场若仍给二十倍,股价约一百二十元。但如果市场变脸、只肯给十五倍,哪怕利润涨了,股价反而只剩九十元。利润往上走、股价往下走,听起来拧巴,市场天天在演。</p><p>把这笔账写成乘法,就不再拧巴:每股盈利从 <span class="num">5 元</span>到 <span class="num">6 元</span>,涨 <span class="num">20%</span>;市盈率从 <span class="num">20 倍</span>到 <span class="num">15 倍</span>,跌 <span class="num">25%</span>。股价 = 每股盈利 × 市盈率,1.2 乘 0.75 等于 0.9——盈利涨两成、估值缩四分之一,合计股价反跌 <span class="num">10%</span>,<span class="num">100 元</span>变 <span class="num">90 元</span>。你的总回报,就是这两根线的乘积,再加上到手的分红。</p><div class="callout callout--note reveal"><span class="callout__title">盈利涨两成,股价跌一成</span><p>手算:每股盈利从 <span class="num">5 元</span>到 <span class="num">6 元</span>,涨 <span class="num">20%</span>;市盈率从 <span class="num">20 倍</span>被砍到 <span class="num">15 倍</span>,跌 <span class="num">25%</span>。股价 = 每股盈利 × 市盈率,1.2 乘 0.75 得 0.9——股价从 <span class="num">100 元</span>变 <span class="num">90 元</span>。盈利这根线往上走,估值那根线往下走,合力照样是跌。<span class="hl">“业绩明明在涨,为什么我还亏”</span>,答案就藏在这条乘法里。</p></div><p>这也直接回答了那个经典困惑:“公司业绩明明在涨,为什么我的股票还亏?”盈利这根线往上走,估值那根线往下走,合力照样是跌。好公司不等于好股票——市场对它的预期一旦提前打满,你买入的价格里,已经替未来的好消息付过费了。</p><p>所以别把股价当成利润的提线木偶——它身上有两根线:一根是盈利,一根是市场愿意给多少倍的估值。而估值这根线,被<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>、行业景气、竞争格局、风险偏好共同拽着。想赚到股票的钱,先想清楚自己赚的是哪一根线上的钱。</p>
 
-        <h3>2.7. 期权风险怎样进入量化</h3>
-<p>到了量化世界,期权有一整套专属的研究对象:<span class="term">波动率</span>、偏度、期限结构、希腊值、成交量、持仓量和做市价差。所谓希腊值,就是期权价格对标的价格、<span class="term">波动率</span>、时间、利率等变量的敏感度——名字来自希腊字母,直觉上可以理解成仪表盘上一排 indicator,分别告诉你价格对哪个输入最过敏。</p><p>最常用的三盏灯先混个脸熟:对标的价格的敏感度常叫 Delta,对<span class="term">波动率</span>的叫 Vega,对时间流逝的叫 Theta。方向突变看 Delta,波动放大看 Vega,临近到期盯 Theta。不必背名词,但要知道哪盏灯会因为什么而亮——期权价格从来不只被涨跌牵着走。</p><p>期权策略特别容易在回测里显得岁月静好,卖期权策略尤其如此。因为大部分时间市场不会极端波动,卖方会一笔一笔地收权利金,资金曲线平滑得像在存钱。可真正的风险全躲在少数极端时刻。所以一个严肃的回测必须做压力测试:看看极端跳空、<span class="term">波动率</span>飙升、流动性消失的时候,那条平滑曲线会被拉成什么形状。</p><p>对个人来说,先理解期权结构比急着交易更重要。给你一条硬标准:能徒手画出买看涨、卖看涨、买看跌、卖看跌这四条到期收益线,再来谈策略;画不出来,就不应该碰复杂的期权产品。市场的补考费,一向比纸笔贵得多。</p>
+        <h3>1.9. 一级市场和二级市场再回看股票</h3>
+<p>上一章的两个市场概念,现在落到股票上再看一眼,会更清楚。公司 <span class="term">IPO</span> 或增发时,发行新股募集资金,钱流进公司——这是<a class="term term-link" href="glossary.html#g-一级市场" title="查看术语：一级市场">一级市场</a>。公司上市之后,你在软件里买入股票,通常是另一个投资者卖给你的,钱去了卖方手里——这是<a class="term term-link" href="glossary.html#g-二级市场" title="查看术语：二级市场">二级市场</a>。同样叫<span class="hl">“买股票”</span>,钱的去向完全不同。</p><p>钱虽未进公司,公司却天天盯着股价,不是虚荣,是利害。股价高,公司再融资更容易,员工手里的股权激励更诱人,并购时拿自家股票当货币也更硬气。股价低,融资变难,市场信心跟着打摆。二级市场的报价,会实实在在影响一级战场上公司的行动能力。</p><p><span class="hl">“利害”</span>有多大?算一算再融资的账:公司想再募 <span class="num">10 亿</span>。股价 <span class="num">50 元</span>时,新发 <span class="num">2000 万</span>股就够;股价跌到 <span class="num">25 元</span>,得新发 <span class="num">4000 万</span>股——募到同样的钱,老股东的持股比例被多摊薄了一倍。股价高低,直接决定公司融资的<span class="hl">“汇率”</span>,这就是管理层盯报价屏的真正原因。</p><p>所以别把二级市场想成<span class="hl">“赌场外壳”</span>。它是公司股权被持续定价、被提供流动性的地方,缺之不可。只是这个定价过程并不纯粹,里面混着情绪、资金、预期和短期噪声——懂它的人赚定价的钱,被噪声牵着走的人买单。</p>
 
-        <h2>3. 不只股票和债券</h2>
-        <p>股票和债券是最常见的两类金融资产,但金融世界的货架远不止这两排。外汇是两种货币之间的相对价格,商品连接着真实供需和期货市场,REITs 把不动产的现金流切成份额卖给你,结构化产品则把债券、期权和其他工具打包成带各种条款的组合。看懂它们有个额外的好处:这些资产各有各的风险来源,把它们摆在一起,你才真正看清“分散”两个字的意思。这一章不是怂恿你马上去交易它们,而是让你知道它们在金融系统里各自扮演什么角色——下次有人向你推销时,你至少听得懂他在卖什么。</p>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="股票生命周期五站:发行切 10 万股每股 10 元(100 万的店),换手 1 万买 1000 股占 1%,分红 10 元派 1 元靠除息扣掉白赚 1 元的洞,增发 0.2 亿把占比从千分之 1 摊到约万分之 8.3,回购注销 20 股把每股利润从 10 元抬到 12.5 元">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一只股票的一生:钱只进公司那一次</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">发行 → 换手 → 分红 → 增发 → 回购,五站各动一笔账——看懂每站把钱和权利搬给谁,才看懂"你这一份"</text>
+            <rect x="16" y="76" width="156" height="206" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="94" y="102" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="94" y="102">①发行</tspan></text>
+            <text x="94" y="124" text-anchor="middle" fill="#8499bd" font-size="11">一级市场</text>
+            <text x="94" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">股份第一次见人</text>
+            <text x="94" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">店作价 100 万</text>
+            <text x="94" y="202" text-anchor="middle" fill="#eef4f8" font-size="12">切成 10 万股</text>
+            <text x="94" y="226" text-anchor="middle" fill="#eef4f8" font-size="12">每股 10 元</text>
+            <text x="94" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">钱进公司账:变产线</text>
+            <rect x="194" y="76" width="156" height="206" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="272" y="102" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="272" y="102">②换手</tspan></text>
+            <text x="272" y="124" text-anchor="middle" fill="#8499bd" font-size="11">二级市场</text>
+            <text x="272" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">你买 = 另一位卖</text>
+            <text x="272" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">1 万买 1000 股</text>
+            <text x="272" y="202" text-anchor="middle" fill="#eef4f8" font-size="12">= 店里 1% 的份额</text>
+            <text x="272" y="226" text-anchor="middle" fill="#eef4f8" font-size="12">钱去卖方手里</text>
+            <text x="272" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">公司一分没多收</text>
+            <rect x="372" y="76" width="156" height="206" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="102" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800"><tspan x="450" y="102">③分红</tspan></text>
+            <text x="450" y="124" text-anchor="middle" fill="#8499bd" font-size="11">公司行动 · 除息</text>
+            <text x="450" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">10 元买入,派 1 元</text>
+            <text x="450" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">次日 10 元卖出</text>
+            <text x="450" y="202" text-anchor="middle" fill="#eef4f8" font-size="12">白赚 1 元的洞</text>
+            <text x="450" y="226" text-anchor="middle" fill="#eef4f8" font-size="12">除息提前扣掉</text>
+            <text x="450" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">分红不是白送钱</text>
+            <rect x="550" y="76" width="156" height="206" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="628" y="102" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800"><tspan x="628" y="102">④增发</tspan></text>
+            <text x="628" y="124" text-anchor="middle" fill="#8499bd" font-size="11">公司行为 · 再融资</text>
+            <text x="628" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">总股本 1 亿股</text>
+            <text x="628" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">你 10 万股=千分之 1</text>
+            <text x="628" y="202" text-anchor="middle" fill="#eef4f8" font-size="12">增发 0.2 亿→1.2 亿股</text>
+            <text x="628" y="226" text-anchor="middle" fill="#eef4f8" font-size="12">占比掉到约</text>
+            <text x="628" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">万分之 8.3,股没少、份薄了</text>
+            <rect x="728" y="76" width="156" height="206" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="806" y="102" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800"><tspan x="806" y="102">⑤回购</tspan></text>
+            <text x="806" y="124" text-anchor="middle" fill="#8499bd" font-size="11">公司行为 · 注销</text>
+            <text x="806" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">100 股,年利 1000 元</text>
+            <text x="806" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">买回注销 20 股</text>
+            <text x="806" y="202" text-anchor="middle" fill="#eef4f8" font-size="12">剩 80 股,利不变</text>
+            <text x="806" y="226" text-anchor="middle" fill="#eef4f8" font-size="12">每股利润 10→12.5</text>
+            <text x="806" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">+25% 是拿现金换的</text>
+            <path d="M 176 176 L 191 176" fill="none" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#hr3a)"/>
+            <path d="M 354 176 L 369 176" fill="none" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#hr3a)"/>
+            <path d="M 532 176 L 547 176" fill="none" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#hr3a)"/>
+            <path d="M 710 176 L 725 176" fill="none" stroke="#f0c96a" stroke-width="2.5" marker-end="url(#hr3a)"/>
+            <text x="450" y="316" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="750">钱的路:发行那天进公司一次 → 之后每天在股民之间换手 → 分红时现金才出公司进你账户</text>
+            <text x="450" y="344" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="750">"你这一份"的路:千分之 1 被增发摊到约万分之 8.3,回购又把每股利润从 10 元抬成 12.5 元</text>
+            <line x1="120" y1="360" x2="780" y2="360" stroke="rgba(122,167,240,0.18)"/>
+            <text x="450" y="386" text-anchor="middle" fill="#ffb4b4" font-size="12.5">别误读两处:+25% 的每股利润是拿真金白银换的,不是白赚;你点买入那一刻,钱多半进的是卖方口袋</text>
+            <defs><marker id="hr3a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
+          </svg>
+          <p class="figure__cap">钱只在发行那天进公司一次,之后天天换手都在投资者之间;分红要除息、增发会摊薄、回购的账面好看是拿现金换的。看懂每站把钱和权利搬给谁,才算看懂你买的这一份。</p>
+        </div>
+        <h3>1.10. 股票和量化有什么关系</h3>
+<p>很多人以为股票量化就是撸 K 线。格局小了。量化研究真正做的,是把公司的属性和市场的交易行为,逐项落成一列列数据:估值、盈利质量、增长、<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>、<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>、成交额、行业、市值、分析师预期、资金流——把一家公司活生生拆成一张表。</p><p>这些列组合起来,就成了因子,每个因子都替人问一个问题。<a class="term term-link" href="glossary.html#g-价值因子" title="查看术语：价值因子">价值因子</a>问:这个价格够不够便宜?质量因子问:公司赚钱稳不稳得住?动量因子问:市场是不是正在持续重新评估它?流动性因子问:买卖它的成本高不高?问法不同,捕捉的机会也不同。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>但记住:因子不是魔法。一个因子能赚钱,原因不外乎三种——补偿了某种风险、利用了某种行为偏差,或捕捉了某种信息与市场结构。所以看到因子历史上排得好,先别急着梭哈,多问两句:它为什么在未来还有效?扣掉交易成本,还剩多少?想清楚这两个问题,因子才从“玄学指标”变成“研究工具”。</p></div><div class="callout callout--note reveal"><span class="callout__title">因子赚钱只有三种来路</span><p>划重点:一个因子能赚钱,原因不外乎三种——补偿了某种风险,利用了某种行为偏差,或捕捉了某种信息与市场结构。看到历史上排得好,先别急着梭哈,多问两句:它为什么在未来还有效?扣掉交易成本还剩多少?两问都答得清,因子才从玄学指标变成研究工具。</p></div><p><span class="hl">“扣掉成本还剩多少”</span>必须真算,不能拍脑袋。假设一个因子<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>里年化<span class="term">超额收益</span> <span class="num">8%</span>,听着诱人;可它调仓频繁,一年双边换手产生的<a class="term term-link" href="glossary.html#g-佣金" title="查看术语：佣金">佣金</a>、税费、冲击成本合计约 <span class="num">3%</span>——净超额只剩 <span class="num">5%</span> 左右。回测里排得好只是毛收入,扣完成本才是你到手的工资条。</p><p>还有一种更隐蔽的自欺:回测时用到了明天才公布的数据——比如用今天收盘后才披露的公告去<span class="hl">“预测”</span>今天白天的涨跌。历史曲线因此漂亮得像印钞机,实盘里却根本没这一列数据可用。这类<span class="hl">“偷看未来”</span>的坑,后面讲回测时会专门拆,这里先把警惕心立起来。</p>
 
-        <h3>3.1. 两种货币之间的相对价格</h3>
-<p>先纠正一个最常见的错觉:很多人把汇率当成<span class="hl">“某一种货币值多少钱”</span>。其实汇率从来不是某一种货币的绝对价值,而是两种货币之间的相对价格。人民币兑美元汇率变化,反映的是人民币和美元之间购买力、利率、资本流动、贸易、预期等因素的相对变化——像天平的两端,动的从来不是单独一边。</p><p>为什么说是天平?回到最朴素的需求。出口商收到美元,要换成人民币发工资、付货款,他们在市场上卖美元、买人民币;进口商和出海投资的资金反着来,买美元、卖人民币。利率、通胀、贸易和资本流动,都是通过改变这两边队伍的长短来推动汇率的——哪边排队的人多,哪边的货币就被买得更贵。</p><p>汇率不是个遥远的宏观数字,普通人的生活里处处有它的影子。一个出口企业收到美元收入,但工资和成本用人民币支付,它就会天天盯汇率:如果美元兑人民币贬值,同样一美元收入换回的人民币变少,利润可能直接缩水。一个留学生家庭、一家跨境电商、一家进口企业,也都拴在这条链条上,只是站的位置不同。</p><p>外汇市场很大、流动性很强,但这不代表普通人容易赚钱。很多外汇交易带<span class="term">杠杆</span>,小幅波动就能放大成大幅盈亏。对初学者的建议是:先把汇率当作宏观和跨境现金流的价格来理解,不要先把它当成投机场。</p><p>看外汇报价,第一步是看清方向。假设 USD/CNY 从 7.10 变成 7.20,意思是 1 美元能换更多人民币:美元相对人民币升值,人民币相对美元贬值。同一个变动,立场不同的人冷暖自知——进口商要用美元买原材料,人民币贬值会让成本上升;出口商收美元货款,换回人民币可能增加。</p><p>拿数字把这个方向感钉死。出口商收回 <span class="num">10 万美元</span>货款:按 7.10 能换 <span class="num">71 万元</span>人民币,按 7.20 能换 <span class="num">72 万</span>,多进账 <span class="num">1 万</span>。进口商要付 <span class="num">10 万美元</span>买原材料:成本从 <span class="num">71 万</span>变成 <span class="num">72 万</span>,多掏 <span class="num">1 万</span>。同一个 0.10 的移动,天平两端一进一出——<span class="hl">“人民币升值是不是好事”</span>这种问题,先得问你站在链条哪一头。</p><p>最后把<span class="term">杠杆</span>请上台。比如你用 <span class="num">1 万元</span><span class="term">保证金</span>控制 <span class="num">10 万元</span>名义外汇头寸,相当于 <span class="num">10 倍</span><span class="term">杠杆</span>。汇率对你不利变动 <span class="num">1%</span>,名义亏损约 <span class="num">1000 元</span>,相当于<span class="term">保证金</span>亏 <span class="num">10%</span>。如果不理解<span class="term">杠杆</span>和强平,外汇行情里的小小波纹,落在你账户上就是大浪。</p>
+        <h2>2. 股价为什么不是只看利润</h2>
+        <p>上一章讲了股票是什么,这一章继续问:公司会对手里的股票做什么动作?市场又凭什么愿意为一家公司掏某个价?先说结论:估值不是算命,也不是把数字塞进公式就弹真理。估值,是在一堆假设条件下,对未来现金流、风险和增长所做的判断。条件一换,结论就换——这正是它难的地方,也是它有意思的地方。</p>
 
-        <h3>3.2. 价格背后是真实供需</h3>
-<p>商品家族的成员,你天天在新闻里见到:原油、铜、黄金、铁矿石、玉米、大豆。商品价格和股票价格有个根本区别——它背后常常有很强的现实供需。天气会影响农产品,地缘冲突会影响能源,房地产和制造业会影响金属需求。商品不活在报表里,它活在天气、矿山和运输线上。</p><p>商品还有两个股票没有的变量:库存和运输。库存低时,一点供给冲击就可能让价格大幅波动;库存高时,短期冲击可能被缓冲。把它想成缓存就秒懂:缓存厚,毛刺被吞掉;缓存薄,同样的毛刺直接打到价格上。</p><p>库存的缓冲作用可以算出来。假设某品种常态库存一千万吨,一次意外让到货少了五十万吨:缺口占库存百分之五,价格也许只晃一晃。要是库存本来只剩一百万吨,同样五十万吨就是一半缺口,价格很难不跳起来。绝对冲击没变,变的是缓冲垫的厚度——同一条新闻在不同库存水位下,砸出的坑完全不同。</p><p>黄金比较特殊,需要单独说。它既像商品,也像货币和避险资产。实际利率、美元、风险偏好、央行买卖,都会影响黄金价格。所以不要把所有商品混成一类看:每个品种都有自己的产业逻辑,原油的故事套不到大豆身上。</p><p>商品期货还要多盯一件事:期限结构。假设原油近月合约 <span class="num">580 元</span>,三个月后合约 <span class="num">600 元</span>,这可能反映仓储、资金成本和未来供需预期。反过来,如果近月 <span class="num">620 元</span>、远月 <span class="num">600 元</span>,可能说明现货紧张。记住这句要紧的话:做商品策略时,你买到的不是一个永不过期的<span class="hl">“原油价格”</span>,而是某个到期月份的合约。</p><p>顺着这句话多想一步。你在新闻里听到<span class="hl">“油价涨了”</span>,那是近月和现货的故事;你手里那张远月合约未必跟得上同样的幅度。期限结构一歪,不同月份合约的涨跌可以差出好几个身位——报的是同一桶油,走的不是同一条曲线。</p><p>一句话总结两个世界:股票看公司利润,商品看真实供需、库存和合约结构——库存是判断冲击会不会被放大的缓冲垫。所以商品研究员翻的是库存周报、天气预报和船期表,而不是利润表。</p>
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h3>2.1. Cisco 没有变坏,股票为什么还是跌了八成</h3>
+<p>互联网泡沫顶峰时,Cisco 一度成为全球市值最高的公司之一。它不是只有域名和幻灯片的空壳:路由器真实地卖出去,收入真实地增长,互联网也真的改变了世界。很多投资者因此相信,只要公司足够伟大,任何价格都值得。</p><p>随后泡沫破裂,Cisco 股价从高点跌去八成左右。公司没有在一夜之间消失,网络设备也没有突然没人用;真正崩掉的是投资者此前愿意支付的估值倍数。好生意和好股票之间,隔着一个买入价格。把未来二十年的好消息一次性付完,公司后来即使兑现不少增长,股东也可能只是慢慢等估值还债。</p><p>这就是价值因子、现金流<a class="term term-link" href="glossary.html#g-折现" title="查看术语：折现">折现</a>和<a class="term term-link" href="glossary.html#g-预期差" title="查看术语：预期差">预期差</a>的共同入口。量化模型不能只问<span class="hl">“谁增长最快”</span>,还要问<span class="hl">“市场已经为增长付了多少钱”</span>。基本面决定故事有没有发动机,估值决定你上车时是不是已经把终点票价付清。</p>
+        </section>
 
-        <h3>3.3. 把不动产现金流切成份额</h3>
-<p><span class="term">REITs</span> 可以先理解成一句话:把基础设施或不动产的现金流证券化。比如高速公路、产业园、仓储物流、保障性租赁住房,这些大个头资产每天都在产生租金、通行费或经营收入。<span class="term">REITs</span> 把这些资产装进一个结构里,投资者买份额,分享底层资产现金流——你不用真去买栋楼,也能当它的小份额业主。</p><p><span class="term">REITs</span> 的性格有点两面:既不像普通股票,也不像普通债券。它有权益属性,因为底层资产经营好坏会影响价值;它也有类似固定收益的属性,因为很多 <span class="term">REITs</span> 会强调较稳定的现金分派。两边都沾一点,意味着两边的风险你都得看一眼。</p><p>看 <span class="term">REITs</span> 最忌讳只盯一个分派率。还要看底层资产质量、租户稳定性、剩余期限、资产估值、<span class="term">杠杆</span>、管理人能力、扩募规则和流动性。高分派率如果来自一次性收益或资产质量下滑,并不一定可持续——分得高,不等于家底厚。</p><p>举个简化例子。一个产业园 <span class="term">REITs</span> 每年可分配现金 <span class="num">1 亿元</span>,总市值 <span class="num">20 亿元</span>,表面分派率约 <span class="num">5%</span>,看着挺香。如果核心租户搬走,未来可分配现金降到 <span class="num">7000 万元</span>,即使当前分派率看起来高,价格也可能下跌。<span class="term">REITs</span> 的分派来自底层资产经营,不是凭空出现的利息。</p><p>把这个例子往下推完。如果市场一直要求约 <span class="num">5%</span> 的分派率,可分派现金从 <span class="num">1 亿元</span>降到 <span class="num">7000 万元</span>,同样的回报率要求会把市值压到约 <span class="num">14 亿元</span>——<span class="num">7000 万</span>除以 0.05。从 <span class="num">20 亿</span>到 <span class="num">14 亿</span>,大约三成跌幅。还有个视觉陷阱:价格先跌、分派还没下调时,<span class="num">1 亿元</span>分派除以 <span class="num">14 亿元</span>市值,分派率被动升到 <span class="num">7%</span> 多一点。排行榜上突然变高的分派率,可能只是价格下跌的回声。</p><p><span class="term">REITs</span> 还要过估值和流动性两关。底层资产估值下调,基金净值可能下降;二级市场成交不活跃时,你想卖出可能要让价。它有现金流属性,但不是存款,也不是无风险债券——把它当成<span class="hl">“永远稳收的房租”</span>,是最常见的第一课学费。</p>
+        <h3>2.2. 公司为什么还会再融资</h3>
+<p>公司都上市融过一轮了,怎么还伸手要钱?因为日子还长:要建新工厂、要收购别家公司、要补充流动资金、要还到期的旧债。常见工具箱里有四件:增发股票、配股、发行<a class="term term-link" href="glossary.html#g-可转债" title="查看术语：可转债">可转债</a>、发行普通债券。</p><p>先看增发:公司发行更多股份来融资。原股东的第一反应往往是紧张——蛋糕没有立刻变大,切蛋糕的刀数却多了,每份占的比例自然变薄,这就是稀释。但先别急着骂:如果融来的钱能创造出更高回报,蛋糕后来做大了,长期看每股反而可能增值。稀释是眼前账,回报是长远账。</p><p>把稀释摊成数字,脑中就清楚了。假设公司总股本一亿股,你持有十万股,占千分之一。现在公司增发两千万股,总股本变成一亿两千万股,你的十万股占比掉到约万分之八点三。你的股数一股没少,比例却被摊薄了。这次稀释冤不冤,全看下一幕:这两千万股融回来的钱,赚利润的速度能不能跑赢被摊薄的比例。</p><div class="callout callout--note reveal"><span class="callout__title">一次增发摊薄多少</span><p>手算:总股本一亿股,你持十万股,占千分之一。增发两千万股,总股本变一亿两千万,你的十万股一股没少,占比却掉到约万分之八点三。这就是稀释的真实形状。冤不冤,取决于下一幕:这两千万股融回来的钱,赚利润的速度能不能跑赢被摊薄的比例。</p></div><p>配股呢,可以理解成公司优先问老股东一句:<span class="hl">“要不要继续出钱?”</span>可转债则更绕一点:它起初是张债券,未来满足条件能转成股票——一半债性、一半股性,两张面孔,估值自然也更复杂。认识每一种再融资动作,你才算看懂公司在对股东做什么。</p>
 
-        <h3>3.4. 把多个工具打包</h3>
-<p>结构化产品的做法很像搭乐高:把债券、期权、互换等工具组合起来,做成一个带条件的收益结构。它可能写着<span class="hl">“保本”</span><span class="hl">“增强”</span><span class="hl">“敲入”</span><span class="hl">“敲出”</span><span class="hl">“票息”</span>这些诱人的词,但请记住一件事:每个词背后一定有条款,条款才是产品本身。</p><p>先说一个经典拆法。很多<span class="hl">“保本加参与上涨”</span>的产品,拆开只有两块:大头买一只到期还本的债券,小头买一份看涨期权。债券到期把本金护住,期权负责在行情向好时弹出收益——<span class="hl">“保本”</span>两个字是结构拼出来的,不是发行人拍胸脯。还要留意:<span class="hl">“保本”</span>通常以持有到期、发行人不违约为前提。</p><p>举个简单例子。一个产品承诺:如果指数不跌破某个水平,你可以拿固定票息;如果指数跌破某个水平,你可能要承担指数下跌损失。表面上看,平时拿票息很舒服;拆开看结构,你其实悄悄卖出了一部分下跌保护——那份票息,就是你卖出这份保护收到的钱。</p><p>结构化产品最重要的是看路径,而不是只看到期价格。中间是否触发敲入敲出?观察日怎么定?收益上限在哪里?最坏情况下亏多少?发行人信用风险是谁?这一串问题答不上来,结论只有一个:看不懂条款,就不应该买。</p><p>把<span class="hl">“看路径”</span>落成数字。假设指数从 <span class="num">1000 点</span>出发,产品约定:任一观察日到 <span class="num">1030 点</span>就敲出、提前结束;期间跌破 <span class="num">700 点</span>就算敲入。指数前两个观察日在 1000 到 1020 之间晃,第三个观察日摸到 1035:敲出触发,你拿约定票息离场。可如果它是先跌到 680、再涨回 1035 呢?敲入已经触发,结局换了一套条款。终点同是 1035,路径不同,你拿到的钱完全不同。</p>
-                    <div class="table-wrap">
-                      <table>
-                        <thead><tr><th>指数路径</th><th>可能结果</th><th>小白应看到的风险</th></tr></thead>
-                        <tbody>
-                          <tr><td>观察日上涨并触发敲出</td><td>提前结束,拿约定票息</td><td>收益有上限,后面继续涨也与你无关</td></tr>
-                          <tr><td>期间没有敲入,到期也未大跌</td><td>可能拿到票息或本金加票息</td><td>看似平稳,但依赖路径条件</td></tr>
-                          <tr><td>期间跌破敲入线,到期仍下跌</td><td>可能承担指数下跌损失</td><td>平时收票息,极端时像接了下跌风险</td></tr>
-                          <tr><td>发行人出问题</td><td>条款兑现也可能受影响</td><td>还要看发行人信用风险</td></tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <p>这张表不是某个具体产品条款,只是帮助你理解结构化产品的阅读方式。所有带敲入、敲出、障碍、票息的产品,都要把不同路径下的收益和亏损像这张表一样逐行列出来。只看宣传里的年化票息,你永远看不到真正的风险藏在哪一行。</p><p>结构化产品里还有一类大户:资产证券化(ABS)。它的核心把戏是把一堆未来现金流——比如房贷还款、车贷、信用卡分期——打包成资产池,再切成可以交易的证券卖给投资者。你买的不再是<span class="hl">“某家公司”</span>,而是<span class="hl">“这池子钱未来会流的这条河”</span>。住房抵押证券(MBS)、车贷 ABS 都是这条路子。</p><p>给 ABS 排雷也用第 5 章那五问,但要加一个决定性的新变量——底层资产质量。池中每笔贷款的违约率、提前还款率、回收率,决定了现金流到底有多少量;一旦经济下行,成百上千笔小额贷款会一起出问题,整个证券的评级和价格随之重估;而且 ABS 通常有多层分级,优先级先拿钱,劣后级先挨亏——你买的那层在队伍哪个位置,直接决定你拿到的是分红还是坏账。</p>
+        <h3>2.3. 回购和分红有什么不同</h3>
+<p>公司账上趴着一笔现金,想还给股东,有两条路:分红,是把现金直接打进股东账户;回购,是拿这笔钱去市场上买回自家股票。殊途同归,动作和后果却很不一样。</p><p>回购之后,市面上流通的股份变少了。公司总利润不变、分母变小,每股利润自然抬高。听上去很美?先别鼓掌。公司若在股价很贵时回购,等于拿股东的钱去买昂贵资产;若在股价便宜、而公司又没有更好投资机会时回购,才算把钱花在了刀刃上。同一个动作,时机不对就成了冤大头。</p><p>把这段话算一遍。假设公司有<span class="num">100股</span>,一年利润<span class="num">1000元</span>,回购前每股利润<span class="num">10元</span>。公司掏现金从市场买回并注销<span class="num">20股</span>,剩下<span class="num">80股</span>,利润还是那<span class="num">1000元</span>,每股利润变成<span class="num">12.5元</span>——账面上每股好看了<span class="num">25%</span>。可公司总利润一分没多,只是分母小了,而且是拿真金白银的现金换的。所以判断回购,眼睛要盯住当时的股价贵不贵,而不是每股利润变美的幻觉。</p><p>说到底,分红和回购都绕回一个根本问题:这笔现金留在公司手里,还能不能创造更高回报?公司自己的再投资回报很高,把钱留着发展更好;公司已成熟、增长机会寥寥,把钱还给股东更好。钱由谁掌管,取决于谁用这笔钱更值钱。</p>
 
-        <h3>3.5. 跨资产共同语言</h3>
-<p>外汇、商品、<span class="term">REITs</span>、结构化产品摆在一起,像百货公司的四个楼层,差异巨大。但它们仍然可以用同一套问题拆开:第一,底层现金流或价格来源是什么;第二,谁有权拿收益;第三,谁承担风险;第四,交易成本和流动性如何;第五,估值或定价依赖哪些假设。五问问完,再花哨的产品也会露出骨架。</p><p>把五问套在 <span class="term">REITs</span> 上走一遍,当是练习。现金流来源:租金和经营收入;谁拿收益:份额持有人按份分;谁担风险:经营下滑、估值下调,持有人自己扛;成本和流动性:二级市场可能清淡,退出要让价;定价假设:分派可持续、估值站得住。五问走完,一只 <span class="term">REITs</span> 的骨架就摊在桌上。</p><p>这套问题比背产品名字更重要。你看到一个新资产,先不用急着判断能不能赚钱,先问它的现金流在哪里,风险从哪里来,退出时有没有市场——就像 review 别人的代码先读接口定义,而不是先跑 benchmark。接口都没看懂,跑分没有意义。</p><p>很多金融产品复杂,不是因为它们真的神秘,而是因为它们把几种简单风险叠在一起。把它拆开,就没那么吓人;拆不开,就先别碰——拆不开的产品,你连仓位该定多大都没法算。</p>
+        <h3>2.4. 拆股、送股和复权</h3>
+<p>假设你手里的股票突然一股变两股,是不是该高兴?先坐稳。所谓拆股,比如一股拆成两股:股数翻倍,理论价格减半——你手里从一股变两股,每股价从一百变五十,合计价值还是一百。拆股本身不创造一分钱财富,它只是把计量单位改小了。</p><p>送股、转增同理,也是新手容易踩的误会:股数看着变多了,公司真实资产并没有凭空增加,价格会做相应调整。天上不会掉股,账上不会生钱。</p><p>但麻烦留给做数据的人:分红、送股、拆股之后,历史价格就没法直接比了——一百元时代的股价和五十元时代的股价放在一张图上,你以为见过一次腰斩。于是有了复权:把历史价格按这些公司行动换算调整,让前后可比。做量化时有两条铁律要分开背:算收益,通常要用<a class="term term-link" href="glossary.html#g-复权价格" title="查看术语：复权价格">复权价格</a>;模拟真实成交,又不能拿复权价当成交价。这两个口径一旦串线,回测结果立刻失真——这个区别,非常重要。</p><div class="callout callout--note reveal"><span class="callout__title">复权的两条铁律</span><p>划重点:分红、送股、拆股之后,一百元时代的股价和五十元时代的股价没法直接比,于是有了复权。做量化要分开背两条铁律:算收益,通常要用复权价格;模拟真实成交,又不能拿复权价当成交价——当时的市场根本不认这个价。两个口径一旦串线,回测结果立刻失真。</p></div><p>复权具体怎么换算?沿用上面的例子:拆股前一年,历史上记的是一百元;拆股后变成五十元。前复权的做法,是把拆股之前的历史价格统统除以二——那张旧图上的<span class="hl">“一百”</span>改写成<span class="hl">“五十”</span>,曲线就连成一条可比的线,腰斩的假象随之消失。方向反过来,把新价格全部乘以二,叫后复权。两种口径算出的收益率是一样的,选哪个都行,关键是全程只用一种口径,别半路换。</p>
 
-        <h3>3.6. 跨资产数据怎样进入量化</h3>
-<p>多资产量化会同时研究股票、债券、外汇、商品、<span class="term">REITs</span>、期货和期权。注意,这些资产的数据不是同一种形状:数据频率、交易时间、成本、<span class="term">杠杆</span>和风险来源都不同。把它们塞进同一张数据表之前,你得先搞清楚每一列各自的脾气。</p><p>举个具体的坑:时间对齐。A 股下午三点收盘,商品期货有夜盘,外汇几乎二十四小时不停——同一行<span class="hl">“今日收盘价”</span>,背后是三个不同时刻。不处理时差就把它们并排算相关性,你算出的可能只是钟表时差,不是资产联动。多资产数据的第一课,是先统一时间轴,再谈模型。</p><p>不同策略对这些资产的依赖也不同。如果你做宏观 CTA,商品和外汇可能很重要;如果你做资产配置,<span class="term">REITs</span> 和黄金可能是分散工具;如果你做结构化产品分析,期权和路径风险是核心。资产是零件,策略才是组装图。</p><p>对个人来说,这一章的重点不是让你立刻交易所有资产,而是让你知道:金融世界的资产很多,但拆解语言可以统一。只要回到现金流、风险、价格、成本和约束这几个问题上,你就不会被任何产品名字带走。</p>
+        <h3>2.5. 倍数不是答案,是语言</h3>
+<p>谈估值,第一个绕不开的词是市盈率,简称 <span class="term">PE</span>:股价除以每股盈利。公司每股赚五元、股价一百元,<span class="term">PE</span> 就是二十倍。它粗略回答一个朴素的问题:市场愿意为这家公司每赚一元的利润,掏出多少钱?二十倍,就是掏二十元。</p><p>第二个常用的是<a class="term term-link" href="glossary.html#g-市净率pb" title="查看术语：市净率(PB)">市净率</a>,简称 <span class="term">PB</span>:股价除以每股净资产。谁最爱看它?银行、保险、周期行业——这些玩家<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>就是命根子。除此之外,还有市销率、股息率、企业价值倍数等等,各自管一片。</p><p>顺手拆一个新手最常踩的坑:低市盈率陷阱。周期行业的公司,在利润登上山顶的那一年,每股盈利特别高,<span class="term">PE</span> 算出来反而特别低,看着像捡便宜。可一旦行业转冷,利润从山顶滑落,同样的股价对应缩水的盈利,<span class="term">PE</span> 被动抬高,股价往往先跌为敬。所以看倍数,先问一句:眼下这份盈利,站在周期的什么位置?</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>但请记住这些倍数的定位:它们不是估值答案,而是估值语言。二十倍 <span class="term">PE</span> 贵不贵?答案永远是“看情况”——看公司增长、利润质量、行业空间、利率环境、风险。一家公司利润稳定但不增长,二十倍可能嫌贵;另一家公司高质量增长了很多年,二十倍反而可能不贵。倍数只能帮你把话说清,不能替你把决定做了。</p></div>
+
+        <h3>2.6. 把未来的钱折回今天</h3>
+<p>倍数之外,还有一条更底层的估值思路:一家公司值多少钱,取决于它未来能给股东的现金流,折算回今天值多少钱。这个方法叫折现现金流。不必急着学复杂模型,先立住一个直觉:未来的钱不等于今天的钱——越晚到手的钱、越没把握的钱,今天看就越不值钱。</p><p>配一组数字找感觉。假设一家公司未来每年能稳定给股东十元现金,而大家要求的回报是百分之十,那么这串未来现金流,今天大概值一百元上下。现在只改一个变量:要求回报降到百分之五,估值立刻抬高;升到百分之十五,估值马上缩水。现金流一分还没变,价格却随<span class="hl">“要求回报”</span>起舞。</p><p>这<span class="hl">“一百元上下”</span>是怎么来的?你自己就能复算:想每年回报百分之十、且每年拿到十元,需要投的本金正好是一百元——一百元的百分之十就是十元。要求回报降到百分之五呢?一百元的百分之五只有五元,不够,得投两百元,两百元的百分之五才够每年十元,于是估值抬到约两百元。要求回报升到百分之十五,倒过来算,十元除以 0.15 约等于六十七元,估值立马缩水到约六十七元。</p><p>盯住这条算式链:现金流一个字没改,动的只是<span class="hl">“要求回报”</span>这一个旋钮,估值却从约六十七元荡到约两百元,差出近三倍。所以折现现金流模型的输出,对输入的折现率几乎过敏——这正是后面要讲的<span class="hl">“假设管理”</span>的第一个现场。</p><div class="callout callout--note reveal"><span class="callout__title">一个旋钮,三倍估值差</span><p>手算复现:公司每年稳定给股东十元。要求回报百分之十,这串现金流值一百元——一百的百分之十正好是十。要求回报降到百分之五,得投两百元才够每年十元,估值抬到约两百;升到百分之十五,十元除以 0.15 约等于六十七元。现金流一个字没改,只拧了<span class="hl">“要求回报”</span>这一个旋钮,估值从约六十七荡到约两百,差出近三倍。</p></div><p>这就解释了为什么利率能遥控股票估值:利率越高,投资者要求的回报越高,未来的现金流折回今天就打折越狠。那些利润大头在很远未来的公司,对折现率尤为敏感——他们的故事讲得再漂亮,利率一起风,估值先着凉。</p>
+
+        <h3>2.7. 估值不是精确答案,而是条件判断</h3>
+<p>估值最害人的用法,是把模型算出来的那个数当真理。你以为在做物理,其实在做假设管理:增长率换一个数,利润率换一个数,折现率换一个数,结果可能差出好远。模型的精确,常常是一种错觉。</p><p>更靠谱的用法,是把估值变成一连串条件判断:如果公司未来五年保持增长,现在的价格大概合不合理?如果增长放慢,还剩多少安全边际?如果利率上升,估值要被压缩掉几成?别求一个<span class="hl">“算准”</span>的数,求对各种<span class="hl">“如果”</span>都心里有数。</p><p>什么叫<span class="hl">“对各种如果心里有数”</span>?教你一个倒推法:先别问<span class="hl">“它值多少钱”</span>,先问<span class="hl">“现在的价格隐含了什么假设”</span>。比如你按合理折现率倒算,发现现价需要公司未来五年每年增长百分之二十才撑得住——问题立刻从<span class="hl">“贵不贵”</span>变成<span class="hl">“百分之二十你信不信”</span>。一个模糊的估值争论,被换成一个能查证、能辩论的具体判断,这才是估值模型真正的用法。</p><p>投资的本质,不是在不确定的世界里找一个永远正确的估值数字,而是判断赔率。更关键的是想清楚:我赚的到底是哪一种钱——公司增长的钱、估值修复的钱、分红的钱,还是市场情绪的钱?前三种能算账,最后一种靠的是人心。</p><p>人心的凶险,有个专门讲给程序员听的故事,主角是人类历史上最聪明的大脑之一:艾萨克·牛顿。<span class="num">1720 年</span>,英国南海公司的股票被炒得飞起,牛顿早期买入,获利约翻倍、赚了几千英镑,冷静离场——到这一步,他都是对的。可眼见股价还在往上冲,身边人一个个暴富,他坐不住了,在接近顶部的位置高价杀了回去。随后泡沫破裂,他亏掉约两万英镑,相当于他好几年的收入,换算成今天是三百多万英镑。据说余生里,他不许任何人在他面前提起<span class="hl">“南海”</span>两个字。</p><div class="callout callout--note reveal"><span class="callout__title">牛顿两次出手,一对一错</span><p>划重点:<span class="num">1720 年</span>南海泡沫,牛顿早期买入、获利约翻倍、冷静离场——这一步他是对的;亏钱的是第二次:眼看身边人暴富,他在接近顶部高价杀回,随后亏掉约两万英镑,相当于他好几年的收入。第一次卖,是看清了贵;第二次买,是败给<span class="hl">“别人都在赚,就我没赚”</span>。</p></div><p>牛顿算得清天体运行,却算不准人心的疯狂。他第一次卖,是看清了贵;真正亏钱的,是第二次追高——那个<span class="hl">“别人都在赚,就我没赚”</span>的念头。这正是<span class="hl">“市场情绪的钱”</span>最凶险的地方:它专挑最热的时刻诱惑你进场。记住牛顿这门课的板书:估值一半是算账,另一半是管住自己不被情绪带走。</p>
+
+        <h3>2.8. 估值和公司行为怎样进入模型</h3>
+<p>量化股票研究会成吨地使用估值和公司行为数据:<span class="term">PE</span>、<span class="term">PB</span>、股息率、回购、增发、分红、盈利增速、现金流质量……它们能变成因子,也能变成控制变量,几乎是股票量化的每日口粮。</p><p>但这些数据,恰恰是最容易出错的一批。财报有披露日,公司行动有除权除息日,复权因子会随时间变化——今天数据库里那份<span class="hl">“看起来早就知道”</span>的数据,回到当时根本不存在。你绝不能拿着今天修正好的完整数据,回到过去<span class="hl">“假装知道”</span>、做交易。</p><p>这种<span class="hl">“假装知道”</span>具体怎么发生?最常见的入口是财报。一份年报的报表截止日是十二月三十一日,但市场真正读到它,是几个月之后的披露日。你回测次年一月的买入信号时,如果顺手用了这份年报的利润,等于让模型在一月就读到了几个月后才公开的数字——收益曲线随即漂亮得失真。这就是前面章节警告过的<a class="term term-link" href="glossary.html#g-未来函数" title="查看术语：未来函数">未来函数</a>:偷看未来,回测就撒谎。</p><p>所以估值因子这东西,看起来简单,真正做对很难。公式人人会算,难的是两条纪律:第一,保证模型当时看到的,只是当时真实可得的数据;第二,交易价格和复权收益的口径不混用。守住这两条,数据才肯说实话。</p>
 
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>远期和期货都是把未来交易价格写进合约,区别是期货更标准化。</li>
-            <li>保证金让期货占用资金少,也让盈亏被同比例放大。</li>
-            <li>期权买方买的是权利,卖方收权利金之后承担的是义务。</li>
-            <li>期权收益结构天生不对称:买方亏损有限,卖方可能承担尾部风险。</li>
-            <li>外汇是两种货币之间的相对价格,受利率、通胀、贸易和资本流动影响。</li>
+            <li>股票代表公司所有权的一小份,不是固定收益合同。</li>
+            <li>股东拿剩余收益,所以风险更高,上行空间也更大。</li>
+            <li>增发、配股、可转债、回购、分红都会改变股东的权利和现金流。</li>
+            <li>PE、PB 等估值倍数是语言,不是自动答案。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.1.</strong> 先从一个卖鱼的人说起</li>
-            <li><strong>1.2.</strong> 远期和期货有什么区别</li>
-            <li><strong>1.3.</strong> 为什么期货会放大盈亏</li>
-            <li><strong>1.4.</strong> 套期保值、投机和套利</li>
-            <li><strong>1.5.</strong> 基差和期限结构</li>
-            <li><strong>1.6.</strong> 交换未来现金流</li>
-            <li><strong>1.7.</strong> 衍生品条款怎样进入策略</li>
-            <li><strong>2.1.</strong> 先从一张买房选择权说起</li>
-            <li><strong>2.2.</strong> 看涨期权和看跌期权</li>
-            <li><strong>2.3.</strong> 买方亏损有限,卖方风险更复杂</li>
-            <li><strong>2.4.</strong> 内在价值和时间价值</li>
-            <li><strong>2.5.</strong> 波动率为什么重要</li>
-            <li><strong>2.6.</strong> 一个到期收益小表</li>
-            <li><strong>2.7.</strong> 期权风险怎样进入量化</li>
-            <li><strong>3.1.</strong> 两种货币之间的相对价格</li>
-            <li><strong>3.2.</strong> 价格背后是真实供需</li>
-            <li><strong>3.3.</strong> 把不动产现金流切成份额</li>
-            <li><strong>3.4.</strong> 把多个工具打包</li>
-            <li><strong>3.5.</strong> 跨资产共同语言</li>
-            <li><strong>3.6.</strong> 跨资产数据怎样进入量化</li>
+            <li><strong>1.1.</strong> 第一批可以转手的公司所有权</li>
+            <li><strong>1.2.</strong> 股东想修船,船长却想把自己的舱房刷成金色</li>
+            <li><strong>1.3.</strong> 奶茶涨一元没人走,再涨五元为什么队伍散了</li>
+            <li><strong>1.4.</strong> 先从一家小店说起</li>
+            <li><strong>1.5.</strong> 股东排在最后,所以风险和机会都大</li>
+            <li><strong>1.6.</strong> 股价、股份数和市值</li>
+            <li><strong>1.7.</strong> 分红不是白送钱</li>
+            <li><strong>1.8.</strong> 股票收益来自哪里</li>
+            <li><strong>1.9.</strong> 一级市场和二级市场再回看股票</li>
+            <li><strong>1.10.</strong> 股票和量化有什么关系</li>
+            <li><strong>2.1.</strong> Cisco 没有变坏,股票为什么还是跌了八成</li>
+            <li><strong>2.2.</strong> 公司为什么还会再融资</li>
+            <li><strong>2.3.</strong> 回购和分红有什么不同</li>
+            <li><strong>2.4.</strong> 拆股、送股和复权</li>
+            <li><strong>2.5.</strong> 倍数不是答案,是语言</li>
+            <li><strong>2.6.</strong> 把未来的钱折回今天</li>
+            <li><strong>2.7.</strong> 估值不是精确答案,而是条件判断</li>
+            <li><strong>2.8.</strong> 估值和公司行为怎样进入模型</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>远期和期货的核心区别是什么?</summary>
-            <p>远期更定制化、私下签;期货更标准化,并由交易所和清算体系降低对手方违约风险。</p>
+            <summary>买股票是在借钱给公司吗?</summary>
+            <p>不是。买股票是买公司所有权的一小份;借钱给公司做债权人,那更像买债券或发放贷款。</p>
           </details>
           <details class="quiz__item">
-            <summary>为什么期货保证金会放大盈亏?</summary>
-            <p>因为你用较少保证金控制较大名义资产,标的一小幅波动,折算到保证金上就是一大幅波动。</p>
+            <summary>为什么股价低不代表公司便宜?</summary>
+            <p>因为还要乘上总股数看市值:十元股指不定对应一家二百亿市值的公司,一百元股整体反而可能只有一百亿。</p>
           </details>
           <details class="quiz__item">
-            <summary>买入看涨期权,是不是标的上涨就一定赚钱?</summary>
-            <p>不一定。标的需要涨过行权价和权利金成本,买方才真正盈利——盈亏平衡点之下,涨了也可能白涨。</p>
+            <summary>增发一定是坏事吗?</summary>
+            <p>不一定。它会稀释股份,但如果融来的钱能创造更高回报,蛋糕做大,长期反而可能有价值。</p>
           </details>
           <details class="quiz__item">
-            <summary>卖期权为什么不能只看胜率?</summary>
-            <p>因为卖方可能平时一直小赚,极端行情一次大亏。胜率说的是频率,覆盖不了幅度。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>为什么外汇不是一种货币的绝对价格?</summary>
-            <p>因为汇率总是两种货币之间的相对价格——天平的两端,从来不是单独一边在动。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>看 REITs 只看分派率够吗?</summary>
-            <p>不够。还要看底层资产质量、现金流稳定性、杠杆、估值和流动性——分得高,不等于家底厚。</p>
+            <summary>拆股会让股东凭空变富吗?</summary>
+            <p>不会。股数变多、每股价格相应下调,总价值不因拆股本身增加——变的只是计量单位。</p>
           </details>
         </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>债券: 确定性更强,但绝不等于没有风险</h2>
+          <p>讲清债券字段、票息、到期收益率、久期、信用利差和可转债。</p>
+        </section>
+
       </div>
     </main>
     <script src="assets/book.js"></script>

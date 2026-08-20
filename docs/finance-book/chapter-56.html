@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 56 章 · 公式和指标速查: 别背公式,要知道它在问什么 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="把收益率、年化、波动、回撤、夏普、IC、跟踪误差、久期和估值公式统一解释。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="56">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">附录 · 随时回来查 · 第 56 章</p>
+        <h1>公式和指标速查: 别背公式,要知道它在问什么</h1>
+        <p class="lead">金融公式一摆出来,很多小白条件反射式地紧张,仿佛又回到了被高数支配的岁月。其实大可不必——入门级公式没有一条是故弄玄虚,它们每个都在问一个朴素的问题:赚了多少?扛了多大波动?从最高点摔下来多深?有没有跑赢该跑赢的基准?这个价格相对利润算贵吗?这只债券对利率变化有多敏感?公式的存在,不是为了显得专业,而是为了把这些问题说清楚、算清楚、比清楚。这一章我们把常用公式和指标逐个拆开,只看一件事:它到底在问什么。</p>
+
+        <section class="chapter-context chapter-context--appendix">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">工具箱</span>
+            <span>本部分第 2 / 3 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>哪些内容不必顺序阅读,但研究前值得反复核对?</p>
+          <p class="chapter-context__outcome">术语、公式和最终检查表集中在这里,不再打断正文的收束。 工具型内容,需要时回来查。</p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>公式的作用是把收益、风险、基准和估值问题算清楚、说清楚、比清楚——它们是尺子,不需要跪拜,只需要用对。</li>
+            <li>同一个指标各有适用边界:夏普、VaR、PE、IC 单独使用都会骗人,必须结伴出场、交叉验证。</li>
+          </ul>
+        </section>
+
+
+        <h2>1. 收益率</h2>
+<p><span class="num">100 元</span>变成 <span class="num">105 元</span>,和 <span class="num">100 万</span>变成 <span class="num">105 万</span>,哪笔更厉害?直觉告诉你后者赚得多,但“多”是本金堆出来的。要把它们放上同一把尺子,就得算出比例——这就是收益率:单期收益率 = 结束价值 / 开始价值 - 1。<span class="num">100 元</span>变成 <span class="num">105 元</span>,收益率 <span class="num">5%</span>;<span class="num">100 元</span>变成 <span class="num">95 元</span>,收益率 <span class="num">-5%</span>。收益率存在的全部意义,就是抹平本金规模的差异,让大钱小钱可以同框比较。</p><p>但多期收益千万别简单相加,得按复利相乘。第一期赚 <span class="num">10%</span>,第二期亏 <span class="num">10%</span>,最终是 1.1 × 0.9 - 1 = <span class="num">-1%</span>——涨跌幅看着对称,账户结果并不对称。这和写代码一个道理:字符串拼接和真正的数值计算,长得像,结果完全两码事。收益是在变化后的新本金上继续滚动,乘法才是它的母语。</p><p>量化代码里最容易栽跟头的,反而不是公式,而是价格口径:用未<a class="term term-link" href="glossary.html#g-复权价格" title="查看术语：复权价格">复权价格</a>算长期收益,会把分红除权误读成股价下跌;用复权价格模拟真实成交,又对不上当时市场里的真实价格。收益公式两行就写完,数据口径却能坑你一整个<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>。写第一行代码之前,先问自己:我手里的价格,到底是哪种价格?</p>
+
+        <h2>2. 年化收益</h2>
+<p>某个策略跑了一周,赚了 <span class="num">2%</span>。朋友兴奋地一把按下计算器:一年 50 多周,那年化不得翻倍?先按住他的手——这就是<span class="term">年化收益</span>最常被滥用的姿势。年化的本意很单纯:把不同长度的投资结果换算成<span class="hl">“一年”</span>这个公共口径,方便比较。比如 <span class="num">3 个月</span>收益 <span class="num">5%</span>,复利年化大约是 1.05 的 <span class="num">4 次</span>方再减一。它是个换算器,不是个许愿池。</p><p>请把这句话抄在屏幕上:年化不是预测。一个策略一周赚 <span class="num">2%</span>,绝不能据此外推一年能赚多少。那一周的收益,可能来自运气,可能来自正好刮过你持仓的市场风格,也可能来自一次性事件——年化之后,这些短期波动都会被放大成吓人的天文数字。短期样本年化=拿着一天的天气预告一年的收成。</p><p>所以看<span class="term">年化收益</span>时,必须同时摆出回撤、波动和样本长度,三者是年化的法定监护人。没有风险指标陪跑的<span class="term">年化收益</span>,就像有人只告诉你这辆车极速能跑 350,绝口不提刹车灵不灵——数字越大,你越该警惕,而不是越兴奋。</p>
+
+        <h2>3. 波动率</h2>
+<p>两台机器,一台每天稳定输出 1 单,一台有时 10 单有时 -8 单,长期平均相同——你会把生产任务交给哪台?<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>量的就是这种<span class="hl">“忽上忽下”</span>的程度:它通常是收益率的标准差,衡量收益围绕平均值上下摆动的幅度。日收益稳稳的,波动率低;大涨大跌交替上演,波动率高。</p><p>日波动率怎么年化?常用方法是乘以交易日数量的平方根。A 股严谨回测可以按实际交易日数算,行业报告也常统一用 252 作为近似。这背后有个假设要心里有数:它来自独立同分布近似——每一天的收益被假设成互不影响的独立抽样——现实市场并不完美满足这个假设,但作为粗略的比较工具,它简单、好用、行业通行,够用就先拿来用。</p><p>不过波动率有个<span class="hl">“政策性歧视”</span>要知道:它把上涨和下跌一视同仁,全算成波动。可投资者并不讨厌上涨时的波动,真正让人睡不着觉的,是下跌、回撤和尾部亏损。所以波动率是个有用的粗筛,却不是风险的完整画像——它告诉你车在晃,但分不清是在上坡还是在坠崖。</p>
+
+        <h2>4. 最大回撤</h2>
+<p>净值一路爬到 1.5,你还没来得及截图炫耀,它掉头跌到 1.2——这一段的疼痛值怎么量?用<a class="term term-link" href="glossary.html#g-最大回撤" title="查看术语：最大回撤">最大回撤</a>:净值从历史高点跌到之后低点的最大跌幅,1.2 / 1.5 - 1 = <span class="num">-20%</span>,最大回撤就是 <span class="num">-20%</span>。所有风险指标里,只有它天然带着<span class="hl">“曾经拥有”</span>的心碎感。</p><p>最大回撤之所以贴近真实投资体验,是因为人不是从起点看账户的,而是牢牢记得那个最高点。净值从高点掉下来,账面亏的是钱,心里亏的是落差,压力大到一定程度,很多人就会在回撤中赎回、停掉策略——而且恰恰停在最不该停的底部附近。一个策略你拿不拿得住,看回撤比看收益更准。</p><p>回撤还拖着一条复利的尾巴:跌 <span class="num">50%</span>,要涨 <span class="num">100%</span> 才回本。刀砍得越深,爬回来的坡越长。所以策略控制回撤,从来不是为了净值曲线好看,而是为了不让复利被一次深亏拦腰打断——复利最怕的不是慢,是重头再来。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 380" role="img" aria-label="最大回撤示意:净值曲线从1.0爬到高点1.5后跌到低点1.2,落差括号标-20%,公式为1.2除以1.5减1;复利尾巴是跌50%要涨100%才回本">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">最大回撤怎么量:净值从 1.5 跌回 1.2,疼多少?</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">最大回撤 = 净值从历史高点跌到之后低点的最大跌幅——人不是从起点看账户,是牢牢记得那个最高点</text>
+            <line x1="120" y1="300" x2="830" y2="300" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="120" y1="300" x2="120" y2="60" stroke="#46587a" stroke-width="1.5"/>
+            <text x="812" y="322" text-anchor="end" fill="#8499bd" font-size="12">时间</text>
+            <text x="96" y="66" text-anchor="end" fill="#8499bd" font-size="12">净值</text>
+            <path d="M 150 280 L 230 238 L 310 196 L 390 150 L 480 120 L 560 180 L 640 216 L 720 192 L 800 170" fill="none" stroke="#7aa7f0" stroke-width="3"/>
+            <line x1="120" y1="120" x2="480" y2="120" stroke="rgba(240,201,106,0.5)" stroke-width="1.5" stroke-dasharray="6 5"/>
+            <circle cx="480" cy="120" r="5" fill="#f0c96a"/>
+            <text x="112" y="116" text-anchor="end" fill="#f0c96a" font-size="12" font-weight="800">高点 1.5</text>
+            <text x="480" y="98" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">你记得的是它</text>
+            <line x1="120" y1="216" x2="640" y2="216" stroke="rgba(232,136,136,0.5)" stroke-width="1.5" stroke-dasharray="6 5"/>
+            <circle cx="640" cy="216" r="5" fill="#e88"/>
+            <text x="112" y="212" text-anchor="end" fill="#ffb4b4" font-size="12" font-weight="800">低点 1.2</text>
+            <text x="640" y="242" text-anchor="middle" fill="#ffb4b4" font-size="12">很多人恰恰停在这附近</text>
+            <text x="112" y="276" text-anchor="end" fill="#8499bd" font-size="12">起点 1.0</text>
+            <line x1="664" y1="120" x2="664" y2="216" stroke="#e88" stroke-width="2"/>
+            <line x1="656" y1="120" x2="672" y2="120" stroke="#e88" stroke-width="2"/>
+            <line x1="656" y1="216" x2="672" y2="216" stroke="#e88" stroke-width="2"/>
+            <text x="684" y="172" fill="#e88" font-size="15" font-weight="800">落差 −20%</text>
+            <rect x="140" y="62" width="300" height="52" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="156" y="84" fill="#eef4f8" font-size="12.5" font-weight="800">最大回撤 = 低点 ÷ 高点 − 1</text>
+            <text x="156" y="105" fill="#bcc9dd" font-size="12">= 1.2 ÷ 1.5 − 1 = −20%(跌了五分之一)</text>
+            <text x="450" y="338" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="600"><tspan x="450" y="338">拿不拿得住一个策略,看回撤比看收益更准——账面亏的是钱,心里亏的是落差</tspan></text>
+            <text x="450" y="364" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">复利的尾巴:跌 50%,要涨 100% 才回本;刀砍得越深,爬回来的坡越长</text>
+          </svg>
+          <p class="figure__cap">净值一路爬到 1.5,你还没来得及截图炫耀,它掉头跌到 1.2——最大回撤就是 1.2 ÷ 1.5 − 1 = −20%。拖着一条复利的尾巴:跌 50% 要涨 100% 才回本。控回撤不是为曲线好看,是不让复利被一次深亏拦腰打断。</p>
+        </div>
+        <h2>5. 夏普比率</h2>
+<p>两个策略摆面前:A <span class="term">年化收益</span> <span class="num">15%</span>,B <span class="term">年化收益</span> <span class="num">25%</span>,选谁?先别急,问一句各自冒了多大风险。<a class="term term-link" href="glossary.html#g-夏普比率" title="查看术语：夏普比率">夏普比率</a>就是干这个的:它大致等于超出无风险收益的部分,除以收益的波动率。翻译成人话:每承担一份波动,你换来多少<span class="term">超额收益</span>。它不问<span class="hl">“赚没赚”</span>,问的是<span class="hl">“赚得值不值”</span>。</p><p>代几个数字感受一下:A 策略<span class="term">年化收益</span> <span class="num">15%</span>,无风险收益 <span class="num">3%</span>,年化波动 <span class="num">12%</span>,<span class="term">夏普</span>约为 1;B 策略<span class="term">年化收益</span> <span class="num">25%</span>,波动 <span class="num">44%</span>,<span class="term">夏普</span>约 0.5。B 赚的绝对数字更多,但每一单位波动换来的收益质量更差——一个像匀速巡航的高铁,一个像半夜狂飙的摩托,终点都是<span class="hl">“到了”</span>,过程体验天差地别。</p><p>还要警惕<span class="term">夏普</span>的盲区:它会系统性低估<span class="hl">“小赚大亏”</span>型策略的风险。卖期权、加<span class="term">杠杆</span>、吃<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>尾部风险的策略,平时风平浪静、<span class="term">夏普</span>可能很好,可一次极端行情就能亏掉几年的积累——<span class="term">夏普</span>只看得见日常的抖动,看不见悬崖。<span class="term">夏普</span>高到离谱的策略,第一件事不是兴奋,是检查它的风险藏哪了。</p>
+
+        <h2>6. 信息比率</h2>
+<p>跑赢指数 <span class="num">5%</span>,听起来不错——但如果这 <span class="num">5%</span> 是东一榔头西一棒子、上下乱窜着跑出来的呢?<a class="term term-link" href="glossary.html#g-信息比率" title="查看术语：信息比率">信息比率</a>就是给<span class="hl">“跑赢基准”</span>打质量分的:它等于年化<span class="term">超额收益</span>除以年化<a class="term term-link" href="glossary.html#g-跟踪误差" title="查看术语：跟踪误差">跟踪误差</a>,专门评价相对基准的主动管理能力,尤其贴合指数增强那一类产品。<span class="term">夏普</span>看的是绝对收益的性价比,信息比率看的是<span class="term">超额收益</span>的性价比,别记混。</p><p>拆开看两个零件:<span class="term">超额收益</span> = 组合收益 - 基准收益;跟踪误差 = <span class="term">超额收益</span>的波动。把它俩一除,信息比率的含义就清楚了:你每偏离基准一份、每承担一份<span class="hl">“跟丢指数”</span>的风险,换回多少超额。信息比率高,说明偏离得值;比率低,说明你在为基准免费增加了心跳。</p><p>和<span class="term">夏普</span>一样,信息比率也得看样本长度和稳定性。一个产品短期超额很高,但跟踪误差也高、超额回撤又深,未必比一个稳定小超额的产品更好——前者像一场暴扣集锦,后者像一支赛季胜率稳定的球队。教练(和投资人)真正想要的,通常是后者。</p>
+
+        <h2>7. IC 和 RankIC</h2>
+<p>你造了一个<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>,怎么知道它有没有用?最直接的体检:看看因子打分和未来收益是否同向相关——这就是 <a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">IC</a>,它衡量因子值和未来收益之间的相关性。<span class="term">RankIC</span> 是它的近亲,改用排序相关:不看数值差多少,只看因子排名和未来收益排名是否一致,天然对极端值不敏感,实际研究里更常用。</p><p>先泼好冷水,免得期望虚高:<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>横截面噪声极大,IC 通常不会高。长期平均 <span class="term">RankIC</span> 只有 0.02 或 0.03,听着像废铁?别急着扔——如果它够稳定、成本够低、容量够大,照样可能有价值。这就像大规模系统里的微弱信号:单次几乎听不见,架不住每天重复几千遍,聚沙成塔。判断因子,看的是细水长流,不是单日暴击。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>但记住:IC 只是第一层检验,不是合格证书。一个因子 IC 漂亮,还要过五关:分层收益是否单调、换手是否扛得住、成本后还剩多少、行业暴露干不干净、样本外是否还活着,外加它在组合里的边际贡献。单科状元不等于全能选手,因子入组合前,六关一关都别省。</p></div>
+
+        <h2>8. 跟踪误差</h2>
+<p>指数基金的管理员最怕什么?偏离指数——跟踪误差就是给这种<span class="hl">“偏离程度”</span>量的体温:它衡量组合收益相对基准收益的波动。指数基金希望它越低越好,贴着基准走;指数增强则故意留出一部分跟踪误差,用它换取<span class="term">超额收益</span>的空间。</p><p>所以跟踪误差不是坏东西,它是主动管理自由度的代价——一分偏离,一分机会。完全不偏离基准,组合就是个复制品,很难产生任何超额;偏离太大,客户拿到的风险就可能不再是他签字时以为买的那种产品。自由度本身是中性工具,错的是你以为它免费。</p><p>评价指数增强产品时,跟踪误差必须和<span class="term">超额收益</span>结伴看,绝不能单看<span class="hl">“超额高”</span>。超额很高但偏离也很大的组合,可能只是把指数的外衣穿在了一个主动豪赌的身上。买指增买的就是<span class="hl">“受控的偏离”</span>,失控的偏离等于花了被动钱、担了主动险。</p>
+
+        <h2>9. 久期</h2>
+<p>手里握着一只<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>,听说要加息,该慌几分?<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>就是回答这个问题的<span class="hl">“<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>敏感度计”</span>:它可以粗略理解为债券价格对利率变化的敏感程度。久期为 7 的债券,收益率上升 <span class="num">1 个百分点</span>,价格大约下跌 <span class="num">7%</span>。这是近似值,但是极其好用的近似值——久期 7,利率动 <span class="num">1%</span>,价格约动 <span class="num">7%</span>,一句话记住了九成功夫。</p><p>结论很直白:久期越长,债券越怕利率上升,也越受益于利率下降,是个对称的放大器。有个常见误区值得敲黑板:长期国债没有<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>违约风险,这话没错,但它有明显的利率风险——政府的信用不会跑,利率的波动照样让你的账面疼。安全≠不波动,很多新手在这一格上栽过。</p><p>以后读债券基金报告,看到<span class="hl">“久期较长”</span>四个字,就要自动翻译成:这只基金对利率变化敏感。别把债券基金默认理解成<span class="hl">“不会跌的产品”</span>——它不违约,但它会回撤。看债基先看久期,就像租车先看刹车,几秒的事,省一堆麻烦。</p>
+
+        <h2>10. VaR</h2>
+<p>老板问你:<span class="hl">“这组合最多会亏多少?”</span>这个问题其实问得不精确,精确的问法是:在某个置信水平和期限下,正常情况下可能亏多少——这就是 <a class="term term-link" href="glossary.html#g-var" title="查看术语：VaR">VaR</a>(在险价值)。比如 <span class="num">1 日</span> <span class="num">95%</span> VaR 为 <span class="num">100 万</span>,意思是模型估计:<span class="num">95%</span> 的日子里,单日亏损不超过 <span class="num">100 万</span>。它给了风险一个可以开会讨论的数字。</p><p>VaR 有几种常见口径:历史模拟、参数法、蒙特卡洛,各自对收益分布和尾部形状的假设不同,算出来的数自然不同。它适合做风险沟通,让非技术同事秒懂量级;但它有一个天生说不出口的秘密:超过 VaR 之后会亏多惨,它一概不说。VaR 告诉你护栏有多高,从不告诉你护栏外面是草坪还是悬崖。</p><p>所以 VaR 绝不能单挂上岗,必须和<a class="term term-link" href="glossary.html#g-压力测试" title="查看术语：压力测试">压力测试</a>、最大回撤、尾部损失、<span class="term">杠杆</span>、流动性组队。只甩出一个 VaR 数字,证明不了风险被充分控制——那更像是风险报告的精装修,而不是结构安全检测。真想知道最坏情况,得请压力测试出马,那是它的岗位。</p>
+
+        <h2>11. PE、PB 和股息率</h2>
+<p>一只股票 <span class="num">100 元</span>,贵还是便宜?单看价格回答不了,得问<span class="hl">“<span class="num">100 元</span>买到了什么”</span>——估值三兄弟就是干这个的。<a class="term term-link" href="glossary.html#g-市盈率pe" title="查看术语：市盈率(PE)">PE</a> 是市值除以净利润,问的是市场愿意为一元利润付多少钱;<a class="term term-link" href="glossary.html#g-市净率pb" title="查看术语：市净率(PB)">PB</a> 是市值除以净资产,问的是愿意为一元账面净资产付多少钱;股息率是分红除以价格,问的是按当前价格买入,分红回报大约多少。三个问题,三种<span class="hl">“相对贵贱”</span>的视角。</p><p>不过这三个指标都必须防机械使用:低 <span class="term">PE</span>、低 <span class="term">PB</span>、高股息率常被看作便宜,但低估值可能来自真实风险(便宜得有道理),高股息可能不可持续(今年分完明年没得分),<span class="term">PB</span> 对轻资产公司解释力有限(人家值钱的资产根本不在账上)。便宜货和坑,从外表看是双胞胎,区别藏在<a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>里。</p><p>正确的打开方式,是把估值指标和行业、质量、成长、现金流放在一起看——估值负责回答<span class="hl">“贵不贵”</span>,其他维度负责回答<span class="hl">“值不值”</span>。量化里的标准动作是做行业中性和极端值处理,避免把行业之间的天然差异,误当成某只股票的便宜。估值是雷达,不是自动导航,方向还得你把。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>公式的作用是把收益、风险、基准和估值问题算清楚、说清楚、比清楚——它们是尺子,不需要跪拜,只需要用对。</li>
+            <li>同一个指标各有适用边界:夏普、VaR、PE、IC 单独使用都会骗人,必须结伴出场、交叉验证。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 收益率</li>
+            <li><strong>2.</strong> 年化收益</li>
+            <li><strong>3.</strong> 波动率</li>
+            <li><strong>4.</strong> 最大回撤</li>
+            <li><strong>5.</strong> 夏普比率</li>
+            <li><strong>6.</strong> 信息比率</li>
+            <li><strong>7.</strong> IC 和 RankIC</li>
+            <li><strong>8.</strong> 跟踪误差</li>
+            <li><strong>9.</strong> 久期</li>
+            <li><strong>10.</strong> VaR</li>
+            <li><strong>11.</strong> PE、PB 和股息率</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么多期收益率要用乘法而不是简单相加?</summary>
+            <p>因为每期收益都作用在变化后的新本金上,投资是一条复利链,只有乘法能正确描述它。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>夏普比率为什么不能单独用来判断策略好坏?</summary>
+            <p>它拿波动率当风险的全部,会低估尾部亏损、杠杆和“小赚大亏”结构的危险。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>最终检查表: 研究、交易和实盘前先读</h2>
+          <p>集中核对金融常识、数据时间线、回测假设、组合约束、交易成本、模拟盘和停止规则。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

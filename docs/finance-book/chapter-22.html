@@ -3,309 +3,201 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 22 章 · 从预测到交易:组合、执行与风控 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="解释为什么量化模型输出分数后,还要经过风险约束、成本模型和组合优化。 / 讲清订单生命周期、执行算法、拒单、部分成交、撤单、风控和盘后对账。" />
+    <title>第 22 章 · 央行、利率与汇率: 全球资金的水龙头 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="货币政策三件套、QE 与 QT、收益率曲线倒挂、实际利率、利率平价、汇率制度坐标、特里芬两难、不可能三角、央行沟通,到一套从央行日历出发的宏观研究工作流。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="22">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第四部分 · 量化研究从因子开始 · 第 22 章</p>
-        <h1>从预测到交易:组合、执行与风控</h1>
-        <p class="lead">量化研究员常常先得到一列预测分数,但真实投资从不是把最高分的股票全部买满。这一章讲预测之后的三件事:组合优化怎么在收益、风险和各种约束之间做权衡;交易执行怎么把理想仓位真的下到市场里,又不被成本和冲击吃掉;风控和监控怎么盯住边界,决定什么时候该减仓、停用和复盘。预测告诉你想要什么,这三步决定你能付出什么代价去实现它。</p>
+        <p class="chapter__eyebrow">第四部分 · 宏观环境如何改变资产 · 第 22 章</p>
+        <h1>央行、利率与汇率: 全球资金的水龙头</h1>
+        <p class="lead">2022 年美联储连着加息,远在中国的股民发现自己的股票也在跌;2024 年 7 月底日本央行加息一个口子,一周后日经指数单日暴跌 12.4%。美联储一句话,为什么全世界的股票都跟着抖?这一章把央行请出来讲透:它只有几件常规武器,却握着全球资金的总水龙头;利率是它的语言,汇率是这套语言最响亮的回声。读完这一章,你会拿到一张从央行日历走到交易决策的地图。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线四</span>
+            <span>本部分第 3 / 6 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>增长、通胀、央行、美元和金融危机怎样穿过市场,改变资产的现金流与折现率?</p>
+          <p class="chapter-context__outcome">读完后,你能把宏观新闻放回传导链,而不是用一个大词解释所有涨跌。 </p>
+        </section>
+
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>模型分数不能直接等于仓位,中间还要过风险、成本、流动性和产品约束这几道关。</li>
-            <li>风险模型帮你拆出市场、行业、风格和个股特有风险,避免把暴露误认成能力。</li>
-            <li>实盘交易是一台订单状态机,必须处理好拒单、部分成交、撤单、成交回报和对账。</li>
-            <li>执行要在速度、成本和成交确定性之间取舍,大订单还得额外考虑冲击和参与率。</li>
-            <li>风险控制不是预测每次下跌,而是限制异常状态下的损失扩张。</li>
+            <li>央行只做一件事:调节钱的数量和钱的价格。政策利率定方向,准备金率和公开市场操作定水量,QE 与 QT 定曲线斜率,沟通定波动率──这是读所有央行动作的总钥匙。</li>
+            <li>实际利率 = 名义利率 − 通胀。通胀比利率涨得快,加息也是放水;利率不动、通胀跳水,不加息也是收紧。看央行紧不紧,永远减掉通胀再问。</li>
           </ul>
         </section>
 
 
-        <h2>1. 组合优化和风险模型</h2>
+        <section class="case-study reveal">
+          <span class="case-study__label">概念现场</span>
+          <h2>1. 招聘会挤满人时,工资和物价为什么容易一起抬头</h2>
+<p>经济很热的时候,工厂缺人、餐厅抢服务员,老板只能加工资;居民收入增加,消费又更旺,企业更有底气提价。把失业率和<a class="term term-link" href="glossary.html#g-通胀" title="查看术语：通胀">通胀</a>放到一张图上,短期里常能看到一条跷跷板:失业低一些,物价压力高一些。这条著名关系叫菲利普斯曲线。</p><p>可它从来不是央行手里的固定菜单。石油突然涨价时,经济可能一边失业上升、一边物价上涨;人们若预期未来一直通胀,会提前要求更高工资、调整报价,整条曲线也会移动。二十世纪七十年代的滞胀,就把<span class="hl">“失业和通胀只能二选一”</span>的简单版本撞出了大洞。</p><p>做宏观量化时,别拿一条全样本直线预测所有年代。把需求冲击、供给冲击、通胀预期、工资增速和制度变化分开,再看关系在滚动窗口里怎样漂移。菲利普斯曲线更像一张会移动的地图,不是央行拧一下就精确出水的龙头。</p>
+        </section>
 
-        <h3>1.1. 预测分数不是仓位</h3>
-<p>模型输出的通常是预期收益、排序分数或概率。它只能说明模型相对看好或看空哪些股票,并不直接等于买多少。分数最高的股票,可能流动性差,可能已经涨停买不到,可能和你组合里的已有持仓高度相关,也可能让行业暴露超标。</p><p>来看一个具体场景。模型给某只小盘股打了最高分,但它每天成交额只有 <span class="num">2000 万元</span>,而你的产品规模有 <span class="num">20 亿元</span>。直接按分数买入 <span class="num">5%</span> 仓位,就是要买 <span class="num">1 亿元</span>——相当于吃掉很多天的成交量,价格会被你自己一路推上去。预测再强,也绕不开成交能力这堵墙。</p><p>所以组合构建的目标,是把预测翻译成可执行仓位,在收益、风险、成本、流动性和约束之间折中。量化行业里,预测模型和组合优化通常是两层系统: 一层负责<span class="hl">“想要什么”</span>,一层负责<span class="hl">“能实现多少”</span>。把两层混成一个简单排序,是很多业余策略和专业策略的分水岭。</p>
+        <section class="case-study reveal">
+          <span class="case-study__label">概念现场</span>
+          <h2>2. 工厂先砍加班,还是先把人请出门</h2>
+<p>订单少了百分之十,老板通常不会当天就裁掉百分之十的人。他可能先砍加班、停招聘、少开一条生产线,等确认低迷不是一周的坏天气,才真正裁员。因此产出下降和失业上升常常同向,却不会一比一同步。这个经验关系叫奥肯定律。</p><p>它为什么只是经验规律?企业可以囤积劳动力,也可以用临时工和工时吸收冲击;人口结构、劳动参与率和生产率变化,都会让同样的 GDP 增速对应不同失业率。疫情期间的大停摆和重启,更把许多历史系数拧得变了形。</p><p>现在预测就业,可以把 GDP、招聘职位、工时、初次申领失业救济和工资放进同一个量化框架。奥肯定律提供的是一个交叉检查:如果模型说产出骤降、就业却毫发无伤,你得解释企业靠什么吸收冲击,而不是盲信一条回归线。</p>
+        </section>
 
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="五步流水线:模型打分、组合约束、目标组合、对比现持仓、拆成订单,每步标注输入输出">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">从分数到订单:五步流水线,每步都可能改形</text>
-            <defs>
-              <marker id="d11a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker>
-            </defs>
-            <!-- 五个步骤框 -->
-            <rect x="30" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="105" y="112" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">① 模型打分</text>
-            <text x="105" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">每只股一个分</text>
-            <text x="105" y="156" text-anchor="middle" fill="#8499bd" font-size="11">输入:因子值</text>
-            <text x="105" y="174" text-anchor="middle" fill="#8499bd" font-size="11">输出:预期收益排序</text>
-            <rect x="202" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="277" y="112" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">② 组合约束</text>
-            <text x="277" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">单票上限·行业上限</text>
-            <text x="277" y="156" text-anchor="middle" fill="#bcc9dd" font-size="11.5">跟踪误差预算</text>
-            <text x="277" y="174" text-anchor="middle" fill="#8499bd" font-size="11">分数不是仓位,先过笼头</text>
-            <rect x="374" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="449" y="112" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">③ 目标组合</text>
-            <text x="449" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">一张目标权重表</text>
-            <text x="449" y="156" text-anchor="middle" fill="#8499bd" font-size="11">它还不存在</text>
-            <text x="449" y="174" text-anchor="middle" fill="#8499bd" font-size="11">只是计算的结果</text>
-            <rect x="546" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="621" y="112" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">④ 对比现持仓</text>
-            <text x="621" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">目标 vs 实有</text>
-            <text x="621" y="156" text-anchor="middle" fill="#8499bd" font-size="11">差出来的才是交易</text>
-            <text x="621" y="174" text-anchor="middle" fill="#8499bd" font-size="11">差得多 = 换手高 = 成本高</text>
-            <rect x="718" y="84" width="150" height="118" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(232,120,120,0.45)"/>
-            <text x="793" y="112" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">⑤ 拆成订单</text>
-            <text x="793" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5">按时间/价格平滑拆单</text>
-            <text x="793" y="156" text-anchor="middle" fill="#8499bd" font-size="11">市价·限价·算法单</text>
-            <text x="793" y="174" text-anchor="middle" fill="#8499bd" font-size="11">下单前三检查拦截</text>
-            <!-- 连线 -->
-            <line x1="180" y1="143" x2="198" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
-            <line x1="352" y1="143" x2="370" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
-            <line x1="524" y1="143" x2="542" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
-            <line x1="696" y1="143" x2="714" y2="143" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d11a)"/>
-            <text x="450" y="248" text-anchor="middle" fill="#eef4f8" font-size="14">每一步都在"变形":分数→满足约束的组合→和现在不同的差→一条条订单</text>
-            <text x="450" y="274" text-anchor="middle" fill="#c9d4e8" font-size="12.5">失误排查从后往前查:先看订单是不是下错,再看持仓对没对,最后才怪模型分数</text>
-          </svg>
-          <p class="figure__cap">分数一路到订单要经过五道工序:打分、过约束、成目标、比现仓、拆订单。故事从后往前排查:订单下错最先看订单系统,组合走形先看约束,最后才轮到怪模型。</p>
-        </div>
-        <h3>1.2. 你承诺偏离多少</h3>
-<p>如果产品是指数增强,组合就要围绕某个指数基准来建。比如<span class="term">中证 500</span> 指数增强: 客户掏钱买的是一个承诺——大体跟住<span class="term">中证 500</span>,同时多赚一些<span class="term">超额收益</span>。组合不能因为模型一时看好银行股,就把大量仓位搬进银行,完全跑出<span class="term">中证 500</span> 的形状。那不叫指数增强,叫换了底仓。</p><p>这类承诺落到纸面上,就是基准约束: 个股相对权重、行业偏离、风格偏离和<span class="term">跟踪误差</span>。<span class="term">跟踪误差</span>用大白话讲,就是组合收益偏离基准收益的幅度有多大。<span class="term">跟踪误差</span>越小,组合越像指数,超额空间也可能越小;<span class="term">跟踪误差</span>越大,组合越自由,但客户承担的偏离风险也越大。</p><p>这就是指数增强的核心取舍: 想多赚 <span class="term">Alpha</span>,就得允许一些偏离;但偏离太大,产品就不再像它承诺的那个东西。组合优化器的活儿,就是把这种<span class="hl">“承诺”</span>翻译成数学约束,写进求解过程里。</p><div class="callout callout--note reveal"><span class="callout__title">跟踪误差预算,是写给未来自己的借条</span><p>定下 <span class="num">4%</span> 的<span class="term">跟踪误差</span>上限,等于提前签好一张借条:平时风平浪静没人看,等组合连续跑输基准三个月,客户和渠道都会拿着这张纸来敲门。教训通常集中在那天到齐:预算定小了,超额施展不开;定大了,持有人先熬不住。定预算别拍脑袋——回测里把历史上最难熬的几段偏离翻出来,看自己睡得着觉的上限到底在哪一格。</p></div>
+        <h2>3. 调钱的数量和钱的价格</h2>
+<p>把经济体想象成一套自来水网:家家户户要水,水太少就旱,放太猛就涝。央行就是坐在总闸口的那个人。它的工具箱看着琳琅满目,其实只做一件事:调节钱的数量和钱的价格──钱的价格就是<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>,钱的数量就是银行体系里可贷的头寸。所有工具都围着这两件事转。</p><p>先给工具箱画一张地图:价格工具管方向,就是政策利率,通胀超目标就加息、经济失速就降息,最快也最可逆;数量工具管水管粗细,存款准备金率和公开市场操作负责吞吐基础货币;<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>工具(QE 和 QT)是利率降到零以后的第二引擎;沟通工具最省成本,用嘴预告未来的路径,让市场自己先动。</p><p>利率是按着一条走廊走的。走廊上限是央行愿意出借的价格,比如贴现窗口、中国的 SLF;下限是央行愿意付息的价格,比如美联储的超额准备金利率 IORB;政策利率落在中间。走廊越窄,短端利率波动越可控──用工程的话说,上下限是两个刹车与油门,把利率这辆车的摆动区间先框死。</p><p>主角有两位。美联储 <span class="num">1913 年</span>由《联邦储备法》设立,<span class="num">1977 年</span>拿到<span class="hl">“物价稳定 + 最大化就业”</span>的双使命,决策机构是 FOMC,每年开 <span class="num">8 次</span>例会,声明在美东时间 14:00 准时发布。中国人民银行 <span class="num">1948 年</span> <span class="num">12 月</span>合并组建并发行人民币,<span class="num">2017 年</span>起形成<span class="hl">“货币政策 + 宏观审慎”</span>的双支柱框架──前者管总量与价格,后者用 MPA 管<span class="term">杠杆</span>和跨境<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>流动,这是和欧美最明显的体制差异。</p><p>两位主角之外,还有两张熟面孔得认一认。欧央行只有<span class="hl">“物价稳定”</span>的单一使命,<span class="num">2014 年</span> <span class="num">6 月</span>把存款利率降到 <span class="num">-0.10%</span>,是全球主要央行里第一个大规模搞负利率的;它天生带着一块<span class="hl">“碎片化”</span>的软肋──意大利国债与德国国债的利差,就是欧元区的<span class="hl">“主权风险温度计”</span>。日本央行则是低息三十年的活档案:<span class="num">1999 年</span> <span class="num">2 月</span>全球第一个零利率,<span class="num">2001 年</span> <span class="num">3 月</span>全球第一个 QE,<span class="num">2013 年</span> <span class="num">4 月</span><span class="hl">“异次元宽松”</span>要把基础货币两年翻一倍,直到 <span class="num">2026 年</span> <span class="num">6 月</span>才把政策利率加回 <span class="num">1.0%</span>──<span class="num">1995 年</span>以来的最高。</p><p>为什么整本书走到这儿,要从利率这根线讲起?因为利率是几乎所有资产定价的分母:<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>估值要把未来现金流按它<a class="term term-link" href="glossary.html#g-折现" title="查看术语：折现">折现</a>,<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>价格跟它此消彼长,房贷利率直接挂在它上面,连黄金和美元都跟着实际利率的节奏呼吸。本章的路线很简单:先拆央行的常规武器与非常规武器,再讲利率跟汇率之间那条最硬的平价关系,最后落到制度坐标和一套能从央行日历走到交易决策的工作流。</p><div class="callout callout--note reveal"><span class="callout__title">利率杀到零,经济为什么还冷?</span><div class="callout callout--warn reveal"><span class="callout__title">陷阱</span><p><a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>陷阱:名义利率逼近零时,货币政策像推一根绳子——再使劲,绳子只会折起来拽不出需求。暗处藏着一件事:物价在跌的话,现金自动赚了一笔“<a class="term term-link" href="glossary.html#g-通缩" title="查看术语：通缩">通缩</a>利息”,此时名义利率 <span class="num">0%</span> 扣掉通缩还是正实际利率,借钱者还是亏。日本从 <span class="num">1995 年</span>把利率钉到 <span class="num">0.5%</span> 以下,三十年没把物价拉起来;美联储 <span class="num">2008 年</span>降到零区间后,只能转向 QE 直接买资产——利率跌破资金价格的最后门槛,就得换发动机。判断政策空间大小时别盯绝对数字,看边际变化:<span class="num">5%</span> 降到 <span class="num">4%</span> 和 <span class="num">1%</span> 降到 <span class="num">0%</span>,完全不是一件事。</p></div></div>
 
-        <h3>1.3. 风险模型在估计什么</h3>
-<p>风险模型试图解释一个朴素问题: 你的组合为什么会波动? 它通常把股票收益拆成四层——市场、行业、风格和个股特有风险。市场风险来自大盘整体涨跌;行业风险来自行业共同变化;风格风险来自市值、价值、<span class="term">动量</span>、波动、质量等共同因子;个股风险来自公司自身的事件。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>这个拆分的关键用处在于: 你持有很多股票,个股特有风险会被分散掉一部分,但行业和风格风险不会自动消失。你以为买了 100 只股票已经很分散,风险模型却可能告诉你: 组合其实重仓小市值和高波动风格,一旦这些风格<span class="term">反转</span>,100 只股票会手拉手一起跌。</p></div><p>所以要明白,风险模型不是为了让投资没有风险,而是让你知道自己在承担什么风险。没有风险模型,很多收益归因会变成错觉: 看起来像选股能力,实际可能只是刚好押中了某个风格。</p>
+        <h2>4. 政策利率、准备金率、公开市场操作</h2>
+<p>新闻里一句<span class="hl">“央行加息”</span>,三步之后就会变成你的房贷月供和理财产品收益率:银行间的借钱利率先动,存款和贷款利率跟着动,企业和居民最后动。美国的链条类似,只是起点换成联邦基金利率;欧元区的起点则是欧央行的三大关键利率。这条传导链的源头,是三件常规武器。</p><p>第一件是政策利率,管钱的价格。美联储定联邦基金目标区间,<span class="num">2026 年</span> <span class="num">7 月</span>停在 <span class="num">3.50%</span>–<span class="num">3.75%</span>;<span class="num">1980 年</span>沃尔克为扑灭通胀把它打到过 <span class="num">20%</span>,<span class="num">2008 年</span> <span class="num">12 月</span>为救危机又降到 0–<span class="num">0.25%</span>。中国 <span class="num">2024 年</span> <span class="num">6 月</span>把主要政策利率切换成了 <span class="num">7 天</span>逆<a class="term term-link" href="glossary.html#g-回购" title="查看术语：回购">回购</a>利率,此前中期的锚是 MLF;贷款报价 LPR 每月 <span class="num">20 日</span>由 18 家报价行报出,分 <span class="num">1 年</span>期和 <span class="num">5 年</span>期以上两档,眼下分别停在 <span class="num">3.0%</span> 和 <span class="num">3.5%</span>。</p><p>第二件是存款准备金率,管水的总量──强制银行把存款的一定比例冻结在央行,降准释放长期无成本资金。这最能看出制度差异:中国大型机构的准备金率 <span class="num">2011 年</span>曾高达 <span class="num">21.5%</span>,<span class="num">2026 年</span> <span class="num">7 月</span>降到约 <span class="num">7.5%</span>,降一次准就是一笔以千亿计的长钱;而美联储 <span class="num">2020 年</span> <span class="num">3 月</span>已把法定准备金率降到 0,欧元区法定准备金率也只有 <span class="num">1%</span>。一边频繁用,一边接近弃用,因为中国是<span class="hl">“数量型框架”</span>,欧美早已切换成<span class="hl">“价格型框架”</span>。</p><p>第三件是公开市场操作,管每天的微调:央行和一级交易商买卖债券或做回购,把短端利率钉在政策目标附近。美联储每天在 SOMA 框架下微调,中国几乎每日开展 <span class="num">7 天</span>逆回购。中国还有几件配套的家什:<span class="num">2014 年</span>创设的 MLF 以优质债券质押提供 <span class="num">3 个月</span>到 <span class="num">1 年</span>期资金,<span class="num">2013 年</span>初创设的 SLF 是月末季末大额流动性的兜底、利率充当走廊上限,<span class="num">2014 年</span>的 PSL 则专供棚改、保障房这类政策性任务。</p><p>以中国为例,把传导链完整走一遍:央行早上开展 <span class="num">7 天</span>逆回购,银行间短期资金的价格先被锚住;每月 <span class="num">20 日</span>,18 家报价行报出 LPR,房贷利率就跟着 <span class="num">5 年</span>期以上那一档重定价;降准释放的是更长期、无成本的资金,让银行敢把款贷得更长。从政策利率到你的月供,中间隔着银行间报价和两档 LPR──链条不算长,但每一环都有时滞,所以货币政策的药效从来都以<span class="hl">“季度”</span>为单位发作。</p><div class="callout callout--note reveal"><span class="callout__title">三件套,一句话记住</span><p>政策利率定方向:通胀高就加息;存款准备金率定水量:降准放水、升准收水;公开市场操作定日内的平稳:每天把短端利率钉住在目标附近。价格定方向,数量定松紧。</p></div><p>三件套合起来,就像水库既调水价又调闸口:加息是提价,让人少用水;OMO 和准备金率是旋转闸门,控制放多少水。哪只手用得更勤,取决于央行的框架和这块经济体的体质。以后再看到<span class="hl">“央行又出了个新工具”</span>的新闻,先问一句:它动的是价格,还是数量?</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="风险模型三维度图:波动率、相关系数(协方差)、因子暴露,分别描述绝对风险、分散程度、赌博方向">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">风险模型在算哪三件事</text>
-            <rect x="90" y="90" width="220" height="230" rx="12" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
-            <text x="200" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 波动率</text>
-            <text x="200" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">每只个股或资产自然波动多大</text>
-            <text x="200" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">窗口滞后的历史扰动</text>
-            <text x="200" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">方差 / 标准差</text>
-            <text x="200" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是绝对风险的上限付罗</text>
-            <text x="200" y="252" text-anchor="middle" fill="#8499bd" font-size="12">高波动 · 高风险</text>
-            <text x="200" y="280" text-anchor="middle" fill="#8499bd" font-size="12">模型理解也被这块表所影响</text>
-            <rect x="340" y="90" width="220" height="230" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
-            <text x="450" y="118" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">② 相关系数</text>
-            <text x="450" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">股和股之间起落有多同步</text>
-            <text x="450" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">不同行业不同景度</text>
-            <text x="450" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">协方差矩阵</text>
-            <text x="450" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是分散的杠杆——</text>
-            <text x="450" y="246" text-anchor="middle" fill="#bcc9dd" font-size="12">相关性越高,收益越像</text>
-            <text x="450" y="274" text-anchor="middle" fill="#8499bd" font-size="12">极度时她完全不分散</text>
-            <rect x="590" y="90" width="220" height="230" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
-            <text x="700" y="118" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 暴露程度</text>
-            <text x="700" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">你持有的小整组合</text>
-            <text x="700" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">对某个因子的平均评价</text>
-            <text x="700" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">行业暴露 * 风格暴露</text>
-            <text x="700" y="224" text-anchor="middle" fill="#bcc9dd" font-size="12">它是你在赌什么——</text>
-            <text x="700" y="246" text-anchor="middle" fill="#bcc9dd" font-size="12">赌价值,赌成长,赌消费</text>
-            <text x="700" y="274" text-anchor="middle" fill="#8499bd" font-size="12">过度集中就是赌注过巫</text>
-            <text x="450" y="360" text-anchor="middle" fill="#bcc9dd" font-size="12.5">风险不是一个总数,是这三个维度的题项之合;这三个合在一起才叫卫刻风险献</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="利率走廊图:上下限两条虚线夹着政策利率,市场利率在其中游荡,人民银行用走廊来控制资金价格">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">利率走廊:央行不是出一个点数,是画一条通道</text>
+            <!-- 走廊 -->
+            <rect x="120" y="90" width="660" height="220" rx="10" fill="rgba(122,167,240,0.1)" stroke="rgba(122,167,240,0.5)"/>
+            <line x1="120" y1="140" x2="780" y2="140" stroke="#ee8877" stroke-width="2.5" stroke-dasharray="8 5"/>
+            <text x="130" y="132" fill="#ee8877" font-size="13" font-weight="800">上限:贴现利率/紧急贷款利率(央行贷款给你的价格)</text>
+            <line x1="120" y1="250" x2="780" y2="250" stroke="#8fb37a" stroke-width="2.5" stroke-dasharray="8 5"/>
+            <text x="130" y="270" fill="#8fb37a" font-size="13" font-weight="800">下限:超额准备金利率(银行闲钱存央行的价格)</text>
+            <!-- 政策利率 -->
+            <line x1="120" y1="195" x2="780" y2="195" stroke="#f0c96a" stroke-width="3"/>
+            <text x="130" y="188" fill="#f0c96a" font-size="13" font-weight="800">目标:政策利率(联邦基金利率/七天逆回购)</text>
+            <!-- 市场利率游荡 -->
+            <path d="M 200 210 Q 300 170 400 195 Q 500 220 600 185 Q 700 165 760 195" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <text x="560" y="168" fill="#a8c6ff" font-size="12">市场利率(Shibor/同业存单利率)</text>
+            <!-- 说明 -->
+            <rect x="80" y="330" width="740" height="70" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(132,153,189,0.4)"/>
+            <text x="104" y="354" fill="#bcc9dd" font-size="12">走廊比点数重要:上限是让市场知道利率再贵也不超过这条线,下限是让市场知道钱再便宜央行也不让它跌穿。两层线一变,市场利率自然就会容许在中间游荡</text>
+            <text x="104" y="378" fill="#bcc9dd" font-size="12">美联储加息 = 整条走廊上移;QE/缩表 = 央行直接买/卖资产把走廊内的市场利率压缩到底,两种是不同工具</text>
           </svg>
-          <p class="figure__cap">说“这个组合风险大”没有意义;要说“哪个维度”的风险大。先看波动、再看关联、最后看暴露——三层都过了,才算真正把风险看透了。</p>
+          <p class="figure__cap">理解央行的加息/降息不要记“数字变几点”,要看走廊整体搬上了几条台阶——墙根动了、普通利率就会跟随加动上限/下限的位移。</p>
         </div>
-        <h3>1.4. 行业和风格暴露</h3>
-<p>行业暴露很好理解: 组合里医药、银行、电子、消费各占多少,摊开持仓一看便知。风格暴露稍微抽象一些,它描述的是组合在市值、估值、成长、<span class="term">动量</span>、<span class="term">波动率</span>、流动性这些维度上的倾向。</p><p>举个例子。一个组合看起来买了很多行业,挺分散,但翻开来全部偏小市值、高波动、高换手。它的行业是分散了,风格却一点没分散。市场如果切换到大盘蓝筹行情,这个组合可能长期跑输,而你还以为只是运气不好。</p><p>所以量化组合常会主动限制风格暴露。不是因为风格一定不好,而是因为你要知道自己想赚的是什么钱。如果策略号称靠模型选股,却主要靠小市值暴露赚钱,那模型能力就被夸大了——这是诚实问题,不只是技术问题。</p>
+        <h2>5. 资产负债表的收与放</h2>
+<p>利率降到零,经济还在往下沉,怎么办?<span class="num">2008 年</span>的美联储给出的答案是:不再只调价格,直接开动印钞机买国债。利率探底之后,央行从<span class="hl">“调节物价”</span>切换到<span class="hl">“亲自下场买东西”</span>,这就叫量化宽松(QE)。后面要讲的负利率、前瞻指引,全都是被这个<span class="hl">“零下限”</span>逼出来的发明。</p><p>QE 的机制:央行大规模买入国债、MBS 甚至 <a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a>,有两个效果──把长端利率压下去,同时把天量准备金注入银行体系。全球第一个吃螃蟹的是日本:<span class="num">1999 年</span> <span class="num">2 月</span>首创零利率,<span class="num">2001 年</span> <span class="num">3 月</span>首创 QE;美联储 <span class="num">2008 年</span> <span class="num">11 月</span>启动 QE1,到 <span class="num">2012 年</span> <span class="num">9 月</span>的 QE3 干脆做成了开放式,不定总量上限;欧央行 <span class="num">2015 年</span> <span class="num">3 月</span>推出 APP,每月买 <span class="num">600 亿</span>欧元。</p><p>同样开闸,2008 和 2020 是两轮性质不同的大水。<span class="num">2008 年</span>是金融系统的管道着了火,QE 先救银行,把抵押贷款债券接过来修复资产负债表,更像定向灭火;<span class="num">2020 年</span> <span class="num">3 月</span>是疫情把整个经济同时按停,美联储两周内紧急降息 <span class="num">150bp</span> 回到零,再宣布<span class="hl">“无限量 QE”</span>,像把主闸门直接开到最大,水位漫向几乎所有资产。一次修管道,一次开水库──前者救的是传导,后者救的是需求。</p><p>QT 就是倒放录像:停止再投资或者主动卖出,让缩表把准备金收回去。它远没有加息那么好拿捏──美联储 <span class="num">2017 年</span> <span class="num">10 月</span>开始第一轮 QT,到 <span class="num">2019 年</span> <span class="num">9 月</span>以回购市场爆雷收场:准备金抽得太狠,隔夜资金利率陡然飙升,只好立刻回头。第二轮 QT 从 <span class="num">2022 年</span> <span class="num">6 月</span>起,把资产负债表从 <span class="num">2022 年</span> <span class="num">4 月</span>约 <span class="num">9 万</span>亿美元一路缩到 <span class="num">2026 年</span> <span class="num">8 月</span>约 <span class="num">6.76 万</span>亿美元,这次节奏明显更慢、更小心。</p><p>被逼到墙角的时候,央行还有更极端的工具:负利率──对银行存在央行的超额资金<span class="hl">“收费”</span>,倒逼它们把钱贷出去。瑞典央行 <span class="num">2009 年</span>首开先河;欧央行 <span class="num">2014 年</span> <span class="num">6 月</span>跟进,最低打到 <span class="num">-0.5%</span>;日本央行 <span class="num">2016 年</span> <span class="num">1 月</span>也降到 <span class="num">-0.1%</span>。存钱倒贴钱,这违背了<span class="hl">“钱有时间价值”</span>的古老直觉,所以它注定是临时措施:欧央行 <span class="num">2022 年</span> <span class="num">7 月</span>退出,日本央行 <span class="num">2024 年</span> <span class="num">3 月</span>退出,两家都退得如释重负。</p><div class="callout callout--note reveal"><span class="callout__title">扩表和缩表,到底在动什么</span><p>QE 买入资产、投放准备金,等于央行亲手往整个体系的水箱加水;QT 反向抽水。价格工具定方向,资产负债表工具定斜率──利率曲线上每一点的斜率,都可能被它改写。</p></div><p>对做量化的人,央行资产负债表是现成的仪表盘:资产负债表总额加上 ON RRP 余额的变动,就是全球美元流动性的<span class="hl">“水位计”</span>。股、债、商品时常出现齐涨齐跌,背后往往是同一个水位的涨落──把这个水位记进日志,很多看似无缘由的同涨同跌,就有了共同的解释变量。</p>
 
-        <h3>1.5. 个股上限和集中度</h3>
-<p>个股上限是最直白的风险约束,比如单只股票不超过组合 <span class="num">2%</span>,或者相对基准不超过 <span class="num">1%</span>。它防的是单点爆雷: 财务造假、停牌、黑天鹅、流动性枯竭,这些事都可能发生在单个股票上,仓位越重,炸得越疼。</p><p>集中度还能用很多指标看: 前十大持仓占比、行业前几大占比、Herfindahl 指数等。集中度越高,组合越依赖少数判断;集中度越低,组合更分散,但也可能把最强信号摊薄。两个方向都有代价。</p><p>所以量化不是永远越分散越好。太分散,预测优势被稀释;太集中,单点风险被放大。组合构建要在这两头之间找平衡——信号强度说话,风险控制兜底。</p>
-
-        <h3>1.6. 换手约束和交易成本模型</h3>
-<p>组合优化不能只看<span class="hl">“今天理想持仓是什么”</span>,还得看另一个问题: 从昨天的持仓走到今天的持仓,路上要付多少过路费? 调仓越大,换手越高,成本越高。交易成本包括显性费用、买卖价差、滑点和市场冲击。</p><p>成本模型负责估计每笔交易大概会漏掉多少钱。流动性好的大盘股成本低,流动性差的小盘股成本高;小单成本低,大单成本高;平稳成交成本低,急着成交成本高。同样是“买”,代价差别很大。</p><p>于是会出现一个反直觉的结论: 如果新组合比旧组合只多一点点预期收益,却需要大量换仓,优化器很可能选择不交易。很多时候,最优动作不是追今天分数最高的组合,而是在收益提升和交易成本之间,找到净收益最高的那个变化。</p>
-
-        <h3>1.7. 约束优化的直觉</h3>
-<p>组合优化听起来公式味很重,其实一句话就能说清: 最大化预期收益,减去风险惩罚,减去交易成本,同时满足一堆约束。约束包括仓位总和、个股上下限、行业偏离、风格暴露、换手、现金比例、禁买名单和流动性限制。</p><p>这套机制不是为了把金融变成数学游戏,而是为了让所有取舍都摊开写清楚。想象同一张会议桌: 模型说这只股票好,风险模型说它会增加小盘暴露,成本模型说买它很贵,产品合同说不能偏离行业太多——优化器的工作,就是让这几方当场把架吵完,吵出一个可执行的结论。</p><p>而且在实际机构里,优化器的输出还要过交易员、风控和合规的检查。因为模型和约束都可能漏掉现实问题: 临时停牌、公告风险、监管限制、交易通道异常、赎回压力,这些常常不在数学式子里,却在市场里真实发生。</p><div class="callout callout--note reveal"><span class="callout__title">约束优化的直觉,是把所有反对意见请上桌</span><p>优化的式子一句话就能写完:收益减风险减成本,再满足一堆约束。真正的工夫全在<span class="hl">“一堆约束”</span>那一栏——每一条背后都站着一个会真的来索赔的人:合同承诺、流动性、成本、合规。约束少写一条,数学上照样有最优解,只是那个解下了单就可能被停牌、涨停或通道异常当场打回。所谓组合优化,就是让这些反对意见在成交之前把架吵完。</p></div>
+        <h2>6. 长短期利率打架的信号</h2>
+<p>借 <span class="num">10 年</span>的钱,利息竟然比借 <span class="num">3 个月</span>的还低──这在日常借贷里听着荒谬,在国债市场却真会发生,还闹得全球市场人心惶惶。这就是<a class="term term-link" href="glossary.html#g-收益率曲线" title="查看术语：收益率曲线">收益率曲线</a>倒挂,一个名气极大的衰退信号灯。想看清这盏灯,得先看利率这条曲线平时是怎么拼出来的。</p><p>先把曲线的构成拆开。短端利率基本被央行钉住,政策利率是多少,<span class="num">3 个月</span>就贴着多少;长端利率由市场对未来的预期决定──将来的增长、通胀、还要再加多少息,再加一块<span class="hl">“期限溢价”</span>:钱锁得越久、越不可控,就要越多补偿。正常世界里曲线向上倾斜,因为期限越长风险越大。整条曲线等于<span class="hl">“央行之手”</span>加<span class="hl">“市场之预期”</span>的合谋。</p><p>倒挂是反常的组合:短端高于长端。它说的是央行正在用力收紧短端,而市场笃定未来经济会变弱、将来还得降息──锁长期反而不要更高利息,因为大家抢着在衰退到来前先把高利率锁到手。倒挂因此成了历史上反复应验的衰退先行指标,连央行自己也盯着它。</p><p>想感受央行对曲线的掌控力,看日本就够。<span class="num">2016 年</span> <span class="num">9 月</span>日本央行推出收益率曲线控制(YCC),直接把 <span class="num">10 年</span>期国债收益率钉在 <span class="num">0%</span> 附近,承诺不限量购债兜底;波动带从 ±<span class="num">0.1%</span> 一路放宽到 <span class="num">2023 年</span>的 <span class="num">1%</span>,<span class="num">2024 年</span> <span class="num">3 月</span> <span class="num">19 日</span>才随负利率一起退出。代价是把十年期的价格变成官价,最后背上了超过全市场一半的国债存量──美联储早在 1942 到 <span class="num">1951 年</span>也为战争融资钉过利率,此路一开,退出只能是学步式的慢。</p><p>做研究时,把曲线当成可以量化的仪表盘:短端看央行,长端看预期,<span class="num">2 年</span>期与 <span class="num">10 年</span>期的利差就是两者分歧的刻度。再往外看一层,美债、德债、日债三条曲线的相对高低,由三家央行各自的 QE、QT 节奏和储备配置需求驱动──债券相对价值策略的地基,就埋在三条曲线的差别里。</p><p>收益率曲线是几乎所有资产定价的分母:股票估值用它折现未来现金流,房贷利率参照它定价,美元和日元的利差也由它拉开。看宏观形势,先看曲线长什么样──它一天一变,却是所有资产共同的刻度尺。而这个分母里还藏着一个最容易看错的变量:通胀,这是下一节的主题。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 295" role="img" aria-label="量化流水线示意:数据到信号到组合到执行到风控,风控持续反馈回整条链路">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化是一条流水线,算法只是其中一环</text>
-            <!-- 5 个流程块 -->
-            <rect x="30" y="90" width="150" height="90" rx="12" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0" stroke-width="2"/>
-            <text x="105" y="126" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">数据</text>
-            <text x="105" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">采集·清洗·对齐</text>
-            <rect x="205" y="90" width="150" height="90" rx="12" fill="rgba(122,167,240,0.14)" stroke="#7aa7f0" stroke-width="2"/>
-            <text x="280" y="126" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">信号/因子</text>
-            <text x="280" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">研究员建模</text>
-            <rect x="380" y="90" width="150" height="90" rx="12" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="2"/>
-            <text x="455" y="126" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">组合</text>
-            <text x="455" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">优化·约束</text>
-            <rect x="555" y="90" width="150" height="90" rx="12" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="2"/>
-            <text x="630" y="126" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">交易执行</text>
-            <text x="630" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">下单·成交</text>
-            <rect x="730" y="90" width="140" height="90" rx="12" fill="rgba(232,120,120,0.14)" stroke="#e88" stroke-width="2"/>
-            <text x="800" y="126" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">风控</text>
-            <text x="800" y="150" text-anchor="middle" fill="#c9d4e8" font-size="12">盯边界·止损</text>
-            <!-- 箭头 -->
-            <g stroke="#8499bd" stroke-width="2.5" fill="none">
-              <path d="M 180 135 L 203 135" marker-end="url(#qp)"/>
-              <path d="M 355 135 L 378 135" marker-end="url(#qp)"/>
-              <path d="M 530 135 L 553 135" marker-end="url(#qp)"/>
-              <path d="M 705 135 L 728 135" marker-end="url(#qp)"/>
-            </g>
-            <!-- 风控反馈回路 -->
-            <path d="M 800 180 C 800 240 105 240 105 182" fill="none" stroke="#e88" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#qpr)"/>
-            <text x="450" y="235" text-anchor="middle" fill="#ffb4b4" font-size="12.5">风控和监控持续反馈,发现问题就减仓、停用、回炉</text>
-            <text x="450" y="278" text-anchor="middle" fill="#8499bd" font-size="13">任何一环出错,再强的模型也赚不到钱</text>
-            <defs>
-              <marker id="qp" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8499bd"/></marker>
-              <marker id="qpr" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e88"/></marker>
-            </defs>
+          <svg class="chapter-diagram" viewBox="0 0 900 525" role="img" aria-label="收益率曲线坐标图:绿色正常曲线上坡,红色倒挂曲线下坡,底部框注明倒挂的含义是市场赌央行即将降息">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">收益率曲线:平时上坡,危险时倒着挂</text>
+            <!-- 坐标区 -->
+            <line x1="90" y1="330" x2="810" y2="330" stroke="#41506b" stroke-width="2"/>
+            <line x1="90" y1="330" x2="90" y2="70" stroke="#41506b" stroke-width="2"/>
+            <text x="66" y="200" fill="#8499bd" font-size="12">利率</text>
+            <text x="816" y="334" fill="#8499bd" font-size="12">期限</text>
+            <!-- 正常曲线(上行) -->
+            <path d="M 100 280 Q 300 200 800 120" stroke="#8fb37a" stroke-width="3" fill="none"/>
+            <text x="640" y="104" fill="#b8d6a3" font-size="13" font-weight="800">正常形态:期限越长,利息越高</text>
+            <text x="640" y="128" fill="#bcc9dd" font-size="11.5">短借长贷有利差,银行开心</text>
+            <!-- 倒挂曲线(下行) -->
+            <path d="M 100 130 Q 300 220 800 290" stroke="#e87878" stroke-width="3" fill="none"/>
+            <text x="120" y="118" fill="#ffb4b4" font-size="13" font-weight="800">倒挂:短端比长端贵</text>
+            <text x="120" y="142" fill="#bcc9dd" font-size="11.5">央行加息把短端顶上去了,连 5 年期都不愿给这么高</text>
+            <!-- 倒挂的含义 -->
+            <rect x="120" y="356" width="660" height="86" rx="10" fill="rgba(232,120,120,0.12)" stroke="rgba(232,120,120,0.5)"/>
+            <text x="140" y="384" fill="#ffb4b4" font-size="13" font-weight="800">倒挂交易的是"央行的未来认输"</text>
+            <text x="140" y="410" fill="#bcc9dd" font-size="12">长端利率 = 未来平均短期利率的市场预期。倒挂 = 市场赌央行很快就会降息,</text>
+            <text x="140" y="430" fill="#bcc9dd" font-size="12">而此时降息的理由通常只有一个:经济衰退要来了。</text>
+            <text x="450" y="474" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">历史样本:2 年-10 年倒挂后,衰退从未缺席过——只是不知道什么时候来。</text>
+            <text x="450" y="500" text-anchor="middle" fill="#8499bd" font-size="12.5">用法:它是一个状态变量,带不来择时,但当它出现时,每一张多头仓位都该重新审一遍。</text>
           </svg>
-          <p class="figure__cap">量化不是“写个模型就赚钱”,而是一条流水线:数据、因子、组合、执行、风控环环相扣。任何一环掉链子,前面做得再好也白搭。</p>
+          <p class="figure__cap">曲线的形状是央行之手与市场预期的合力。倒挂时,曲线的两端在打架:短端说&#x27;我现在紧&#x27;,长端说&#x27;我知道你不会一直紧&#x27;——历史告诉我们,长端常常是对的.</p>
         </div>
-        <h3>1.8. 多头、空头和市场中性</h3>
-<p>普通多头组合只做一件事: 买入资产。所以它的收益跟着市场整体涨跌大起大落。市场中性策略则想换个活法: 买入看好的资产,同时卖空或用<span class="term">股指期货</span>对冲掉市场暴露,让组合主要赚相对选股收益——大盘涨跌,理论上与我无关。</p><p><span class="hl">“中性”</span>听起来很稳,但绝不等于无风险。空头或对冲工具有成本;融券可能借不到;<span class="term">股指期货</span>有<span class="term">基差</span>;多空两边可能一起亏;极端行情里,资产之间的相关性和平时完全不是一个物种。</p><p>组合优化在多空策略里也更复杂: 要同时控制多头和空头规模、净暴露、总<span class="term">杠杆</span>、行业中性、风格中性、融资融券成本和强平风险。个人投资者通常不适合一上来就玩复杂多空,先把单纯多头走通再说。</p>
+        <h2>7. 为什么加息不等于收紧</h2>
+<p>银行柜台告诉你存款利率涨到了每年 <span class="num">5%</span>,你先别急着高兴。如果物价一年涨 <span class="num">7%</span>,你的钱其实在变瘦──账面多了 5 块利息,货架上的东西贵了 7 块。名义利率是银行挂在牌子上的数字,实际利率才是你钱包的真实速度。</p><p>费雪方程一句话说清:名义利率 ≈ 实际利率 + 预期通胀,所以实际利率 = 名义利率 − 通胀。决定你购买力的,是减掉通胀剩下的那一截;<a class="term term-link" href="glossary.html#g-储蓄" title="查看术语：储蓄">储蓄</a>者真实的回报、借钱者真实的负担,都装在这个<span class="hl">“实际”</span>里。决定黄金、长<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>资产定价的,也主要是这个实际利率,市场直接用美国 <span class="num">10 年</span>期 TIPS 的收益率来衡量它。</p><p>用 2021 到 <span class="num">2022 年</span>的黄金来检验这条式子再合适不过。前期美联储名义利率几乎不动,通胀却一路大涨,实际利率被推到负值──持有现金和债券其实在亏钱,金价被负实际利率托了上去;<span class="num">2022 年</span>加息快速追上通胀,<span class="num">10 年</span>期 TIPS 收益率从约 <span class="num">-1%</span> 弹到约 +<span class="num">1.8%</span>,实际利率由负转正,金价随即被压制。这两年金价的两段走势,用名义利率根本解释不通,换成实际利率立刻通顺。</p><div class="callout callout--note reveal"><span class="callout__title">问一下:减掉通胀还剩多少</span><p>央行说<span class="hl">“加息”</span>,别急着记成<span class="hl">“收紧”</span>。通胀涨得比利率还快,加息也可能实际是放水;利率不动、通胀跳水,不加息也是收紧。真正要看的,永远是实际利率那条线。</p></div><p>想要一把量化的尺子,<span class="num">1993 年</span>的泰勒规则给出政策利率<span class="hl">“应该”</span>的位置:i = r* + π + 0.5(π − π*) + 0.5(产出缺口)。意思是通胀每高出目标一档,利率就该跟上一档半,经济过热再加码。把美联储的实际利率和泰勒规则的计算结果摆在一起,偏离有多远,就是衡量央行<span class="hl">“软还是硬”</span>的量化锚。</p><p>判断货币政策松紧,别只听发布会上的语气,去问三个数:名义利率多少,通胀多少,两者之差是正还是负。同样的动作,在不同通胀背景里含义完全相反──三个数就能把一场两小时的发布会,浓缩成一行写进日志的结论。</p>
 
-        <h3>1.9. 赚的钱从哪里来</h3>
-<p>策略跑了一段时间,赚了或亏了,接下来该做归因。归因就是把收益拆开对账: 市场贡献多少,行业贡献多少,风格贡献多少,选股贡献多少,交易成本扣掉多少。不做归因,你只知道盈亏结果,不知道原因——赚了不知道怎么赚的,下次就守不住。</p><p>举个例子。一个指数增强产品本月跑赢 <span class="num">2%</span>,归因一做,发现 <span class="num">1.5%</span> 来自超配了上涨行业,<span class="num">0.3%</span> 来自小市值风格,真正的个股选择只贡献了 <span class="num">0.2%</span>。这结果不一定坏,但它告诉你一件事: 收益来源和你对外宣称的能力,到底一不一致。</p><p>归因还是判断失效的雷达。模型亏钱时,是所有因子一起失效,还是某个行业暴露拖累? 是成本上升,还是预测本身反向? 是风险模型低估了暴露,还是交易执行变差? 每个答案都指向不同的修法,不归因就只能说一句<span class="hl">“行情不好”</span>,然后继续亏钱。</p>
+        <h2>8. 为什么本国加息,自家货币往往升值</h2>
+<p>全世界有一笔隔夜就能搬家的钱,它是全球最没耐心的钱──哪国利息高,它今天就能换汇过去。本国一加息,相当于向全世界发一张高息的请柬,钱涌进来,先要换成本币,本币买的人多了,价格就涨。这就是<span class="hl">“加息往往伴随升值”</span>的传导链。</p><p>这条链有个理论版本叫利率平价。硬约束是抵补利率平价(CIP):远期汇率 F = S × (1 + 本币利率) / (1 + 外币利率),不写等号就有无风险套利。<span class="num">2008 年</span>后 CIP 在主要货币对出现系统性偏离,乖离的幅度叫交叉货币<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>,它不再是套利空间,而是观察全球美元融资压力的仪表盘。</p><p>把平价关系做成生意,就是套息交易(carry trade):借利息低的货币,换成利息高的货币资产躺着吃利差。机制一句话,前提却苛刻──汇率波动要小于利差,而且低息货币不能突然升值。借日元买高息资产的那批人,本质上是在卖空汇率<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>。</p><p>日元把这出戏演了三十年。<span class="num">1999 年</span>全球首个零利率后,日元成了最便宜的融资货币;<span class="num">2013 年</span> <span class="num">4 月</span><span class="hl">“异次元宽松”</span>后,USD/JPY 从 90 一路走到 <span class="num">2015 年</span>的 125;<span class="num">2022 年</span>美联储暴力加息、日本央行死守 YCC,美日利差突破 <span class="num">5 个百分点</span>,日元贬到 151.94 的 <span class="num">32 年</span>低点,日本财务省年内三次干预、共投入约 <span class="num">9 万</span>亿日元买日元。</p><p>捡息差的收益像梯子一样慢,回撤却像跳楼。<span class="num">2024 年</span> <span class="num">7 月</span> <span class="num">31 日</span>日本央行加息,<span class="num">8 月</span> <span class="num">2 日</span>美国弱非农,套息资金闻声集体平仓:<span class="num">8 月</span> <span class="num">5 日</span>日经单日暴跌 <span class="num">12.4%</span>,USD/JPY 从 <span class="num">7 月</span>初约 160 跌到 142 附近。日元急升、日股重挫、<span class="term">保证金</span>追缴、更多平仓──链条一路自我加速。利差的好日子,常常结束在一个跳空缺口里。</p><p>另一条平价线叫未抵补利率平价(UIP):按理说高息货币未来应当贬回去把利差抹平。可实证里它长期系统性失效──这是<span class="hl">“远期<a class="term term-link" href="glossary.html#g-升水贴水" title="查看术语：升水/贴水">贴水</a>之谜”</span>,也正是 carry <a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>几十年不死的存在基础。一句话记牢:CIP 偏差度量美元荒,UIP 偏差度量 carry 风险溢价。</p><div class="callout callout--note reveal"><span class="callout__title">一个巨无霸在美国 5.7 美元,在中国 3.6 美元</span><p>一价定律说:同一商品在自由市场只有一个价,差价会被套利抹平。但《经济学人》每年发的巨无霸指数显示:跨国折算后价差常年 <span class="num">40%</span> 上下。不是定律错了,是适用条件不存在——巨无霸不能跨国运去套利,价格里的房租、人工、电费全是本地成分。可贸易品(芯片、原油)价格必须全球收敛;不可贸易品(房租、理发)就该有差价。看汇率新闻时先问:你关心的是哪一类?套利通道堵不堵?</p></div>
 
-        <h3>1.10. 个人项目怎么简化组合优化</h3>
-<p>个人做第一个量化项目,不必一上来就写优化器。先用简单规则就够: 选分数最高的 30 只股票,等权持有;单只不超过 <span class="num">5%</span>;剔除停牌、ST、涨跌停无法买入、成交额太低的股票;每月调仓;扣固定成本和滑点。这套规则土,但每一步你都能看懂。</p><p>然后再逐步加约束。先加行业上限,再加市值暴露控制,再加换手限制,再加成本敏感性。每加一层,都观察收益、回撤、换手和超额有没有改善。这样你能真正理解每个约束在干什么,而不是把一堆参数扔进优化器,对着输出结果一脸懵。</p><p>等规则组合跑通了,再去学 cvxpy、二次规划或商用优化器都不迟。工具从来不是重点,重点是知道从预测分数到真实仓位之间,横着多少现实约束。</p>
+        <h2>9. 固定、浮动与港币的联系汇率</h2>
+<p>同一张港币,四十多年里兑美元的比值几乎没动过──不是市场仁慈,是制度不让它动。汇率从来不只由供求决定,先要看这个经济体给自己选了哪套规矩;要理解它为什么能不动、又怎么偶尔会动,得先回到选择本身。</p><p>规矩换过好几轮。<span class="num">1870 年</span>代到 <span class="num">1914 年</span>是古典金本位,货币按固定含量兑换黄金;<span class="num">1922 年</span>热那亚会议改为小国用英镑、美元代替黄金;<span class="num">1944 年</span> <span class="num">7 月</span>布雷顿森林会议确立<span class="hl">“双挂钩”</span>:美元钉黄金,35 美元一盎司,他国货币钉美元,波动带宽 ±<span class="num">1%</span>。<span class="num">1971 年</span> <span class="num">8 月</span> <span class="num">15 日</span>尼克松关闭黄金窗口,<span class="num">1973 年</span> <span class="num">3 月</span>主要货币集体浮动,<span class="num">1976 年</span> <span class="num">1 月</span>牙买加协定干脆宣布:浮动、钉住、管理浮动全部合法──从此世界进入一套<span class="hl">“无体系”</span>的体系。</p><p>今天的制度坐标大致是三极。完全固定的一端以货币局为样板;完全浮动的一端是美元、日元、欧元,央行原则上不干预币值;中间一大片是管理浮动,央行设一个中间价和带宽,平时让市场报价,越界才出手。三种制度各有代价,也各有撑不下去的临界点。</p><p>港币是联系汇率最出名的样本。<span class="num">1983 年</span>起香港实行货币局制度:发钞行每发一笔港币,都要按固定汇率抵押等值美元储备,<span class="num">2005 年</span>起兑换区间细化成 7.75 到 7.85。汇率锁死了,代价是香港的利率只能被动跟着美联储走──锚怎么开,小船就怎么晃。固定汇率从来不是免费的午餐,账单是用货币政策的独立性来付的。</p><p>折中态怎么走,人民币是现成的课:<span class="num">1994 年</span>汇率并轨;<span class="num">2005 年</span> <span class="num">7 月</span> <span class="num">21 日</span>改盯一篮子货币并一次性升值 <span class="num">2.1%</span>;日内波动带宽从 ±<span class="num">0.3%</span> 一路扩到 <span class="num">2014 年</span> <span class="num">3 月</span>的 ±<span class="num">2%</span>。即便是浮动阵营,大国仍会周期性合谋──<span class="num">1985 年</span> <span class="num">9 月</span> <span class="num">22 日</span>广场协议,G5 联手压低美元,日元两年内从 240 升到 120 区间。制度是框架,框架里依然天天在博弈。</p><p>这套博弈的场地大得惊人:BIS 三年一次的调查显示,<span class="num">2025 年</span> <span class="num">4 月</span>全球外汇日均成交已达 <span class="num">9.6 万</span>亿美元,比 <span class="num">2022 年</span>的 <span class="num">7.5 万</span>亿多出将近三成;伦敦、纽约、新加坡、香港四个地方就吃掉了 <span class="num">75%</span> 的交易量。外汇市场是所有市场里最深的那片海洋──水深的地方,一条大玩家翻身,就能掀起全球的浪。</p>
 
-        <h2>2. 策略如何真的下到市场里</h2>
-        <p>量化策略在研究报告里输出的是一条干净的目标仓位,在真实市场里执行的却是一串跌跌撞撞的订单: 会排队、会部分成交、会被拒绝、会撤不掉、成交价会变差,还要被风控和交易规则管着。实盘系统的任务,绝不是把 buy 函数调用出去就完事,而是把策略意图可靠地翻译成真实成交,并且在出错的时候保护账户。这一章讲的,就是研究到实盘之间那段最容易被低估的路。</p>
+        <h2>10. 世界货币为什么一山不容二虎</h2>
+<p>全世界都愿意用你印的钱,这是特权还是诅咒?经济学家的回答很扫兴:两者都是。全世界都要美元,美国就难免要当全球的<a class="term term-link" href="glossary.html#g-中央银行" title="查看术语：中央银行">中央银行</a>和全球的消费国──这不是修辞,是写在货币体系里的结构性裂缝。</p><p>这个矛盾 <span class="num">1960 年</span>由特里芬点破:全球流动性要求美元不断外流,可外流得越多,美国按 35 美元一盎司兑换黄金的承诺就越不可信。储备货币国必须用自己的赤字喂养世界的流动性,而赤字又在腐蚀<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>。两难无解,最终以 <span class="num">1971 年</span>尼克松关闭黄金窗口收场──特里芬难题不是理论游戏,它亲手引爆过体系。</p><p>布雷顿森林塌了,美元的霸权却没塌,理由只有两个字:网络。<span class="num">2025 年</span>外汇市场上的交易有 <span class="num">89%</span> 的单边涉及美元;SWIFT 跨境支付里美元占近一半,全球贸易计价一半以上用美元;全球已分配外汇储备里,美元的份额从 <span class="num">1999 年</span>约 <span class="num">71%</span> 缓慢滑到 <span class="num">2024 年</span>末的约 <span class="num">57.8%</span>,但欧元只有约 <span class="num">20%</span>,人民币约 <span class="num">2%</span>。</p><p>网络效应像一个用了三十年的编程语言生态:换语言不难,难的是把编译器、库、文档、开发者一起换掉。给贸易计价、发债、清算、报价全是美元的体系整体搬家,成本高到没人付得起。所以世界货币的位子,一山很难容下二虎──挑战者要赢,靠的不是口头承诺,是重建一整套生态。</p><p>看盘的经验坐标里有一条<span class="hl">“美元微笑曲线”</span>:美国经济极强时,利差和回报把全球资金吸过去,美元强;美国经济极弱、全球避险时,大家又抢美元避险,美元还是强;只有中间不温不火的地带,美元才容易走弱。相对通胀、实际利差、头寸拥挤度,都是比新闻形容词更可靠的快变量。</p><div class="callout callout--note reveal"><span class="callout__title">别用口号做空美元</span><p>储备份额下降是个慢变量,份额从 <span class="num">71%</span> 滑到 <span class="num">57.8%</span> 期间,美元指数在 2014–2016 和 2021–2022 都曾大涨。真要看<span class="hl">“去美元化”</span>,别盯份额,盯组合的变化:央行购金 2022–2024 连续三年年均超 1000 吨、双边本币结算增加、美债持仓下降──三项一起动,才是真的信号。</p></div><p>对投资者来说,特里芬两难的当代版本是:只要世界还要求流动性,美元就既是别人的储备,也是别人的风险。盯住慢变量做单,容易被快变量打穿;只盯快变量下注,又会错过慢变量的拐点──看懂这点,你不会因<span class="hl">“去美元化”</span>的口号做空美元,也不会因美元指数大涨就认定天下太平。</p>
 
-        <h3>2.1. 订单生命周期</h3>
-<p>一笔订单从产生到结束,通常要走过一串状态。策略先生成交易意图,组合层把它变成目标买卖数量,交易系统做风控检查,然后向券商或交易通道提交订单。接下来,这笔订单可能被接受、被拒绝、部分成交、全部成交、撤单中、撤单成功、撤单失败——每个状态都可能停留,也可能跳到别的状态。</p><p>这些状态全部要落日志。你不能只记一句<span class="hl">“我想买 <span class="num">10000 股</span>”</span>。真实系统要知道: 已报多少、成交多少、剩余多少、平均成交价多少、费用多少、是否可撤、是否失败、失败原因是什么。否则下一次下单,就是基于错误持仓继续行动——错误会利滚利。</p><p>用程序员的话说,订单生命周期就是一个状态机。量化开发里很多严重事故,根本不是模型错,而是状态机错: 以为撤单成功其实没撤,以为没成交其实已经部分成交,以为订单被拒其实内部账已经加仓。状态不一致,是交易系统的头号死因。</p>
+        <h2>11. 三样东西,只能选两样</h2>
+<p>既要钱随便进出,又要汇率钉死,还要利率自己说了算──三个愿望,上天只许你实现两个。这就是蒙代尔-弗莱明的不可能三角,也是所有货币危机起手的第一张牌;站在三角的哪条边上,决定了一个经济体政策空间的形状。</p><p>三角的三个角分别是:独立的货币政策、资本自由流动、汇率稳定。每个经济体都在三选二。美国和日本选独立的货币政策加资本自由流动,放弃汇率稳定,让美元日元自由浮动;中国香港选固定汇率加资本自由流动,放弃货币政策,利率被动地跟随美联储;中国内地选独立的货币政策加有管理的浮动,代价是给资本账户装上闸门,资本不能完全自由来去。</p><p>选错了会付出什么代价,历史有一堆学费单。<span class="num">1992 年</span> <span class="num">9 月</span> <span class="num">16 日</span><span class="hl">“黑色星期三”</span>:英镑撑不住欧洲汇率机制的固定区间,被迫退出,索罗斯的量子基金一战封神──英国没选放弃汇率,市场替它选了。<span class="num">1997 年</span>亚洲金融危机的剧本更血腥:泰国、印尼、韩国的企业大借美元短债、投本币长项目,典型的货币与期限双重错配;固定汇率制造<span class="hl">“没有汇率风险”</span>的幻觉,一旦信心崩塌,贬值、外债膨胀、破产、资本外逃、再贬值,螺旋一路自我加速。</p><p>最后的出路大致三条:动用储备加资本管制硬扛(马来西亚 <span class="num">1998 年</span>走过这条路),求助 IMF 开紧缩的药方,或者干脆一次性重定价。中途还有个痛苦权衡:加息能防守利差、托住汇率,可国内的信贷会同时被压垮──死守固定汇率的账,从来都不是白付的。资本管制在三角里的位置要摆正:它不是原罪,是给货币政策换独立性的一笔明码标价的学费。</p><div class="callout callout--note reveal"><span class="callout__title">三选二,三种样板</span><p>美国与日本的组合:独立货币政策 + 资本自由流动;中国香港的组合:固定汇率 + 资本自由流动;中国内地的组合:独立货币政策 + 有管理的浮动。每个经济体的每个政策动作,先问它坐在三角形的哪条边上。</p></div><p>中国的这条路怎么走的?汇率侧:<span class="num">2015 年</span> <span class="num">8 月</span> <span class="num">11 日</span>中间价改为参考上日收盘价,当天就贬了 <span class="num">1.9%</span>,三天累计约 <span class="num">3%</span>;<span class="num">2017 年</span> <span class="num">5 月</span> <span class="num">26 日</span>引入逆周期因子<span class="hl">“托一把”</span>,<span class="num">2018 年</span> <span class="num">8 月</span>重启,<span class="num">2020 年</span> <span class="num">10 月</span>又坦言淡出──每个出现的时点本身就是政策信号。资本侧:QFII 在 <span class="num">2002 年</span>最先打开一条缝,沪港通 <span class="num">2014 年</span>、债券通北向 <span class="num">2017 年</span>接踵而来,<span class="num">2019 年</span>取消 QFII 额度。<span class="hl">“有管理的浮动”</span>四个字,就是这样一年一年、一格一格具体化的。</p>
 
-        <h3>2.2. 市价单、限价单和算法单</h3>
-<p>市价单追求尽快成交,但成交价可能很差;限价单指定最差可接受价格,能控制价格,但不保证成交。一个追确定性,一个追价格,各有代价。还要提醒一句: A 股普通股票没有完全等同于海外市场的简单市价单机制,实际订单类型和申报方式,得按交易所和券商的规则来理解,不能照搬段子。</p><p>机构的玩法更细: 常用算法单把大订单拆成一串串小订单。比如按时间均匀成交的 TWAP,按市场成交量比例参与的 VWAP,或者根据盘口和冲击动态调整的执行算法。注意,这些算法的目的不是预测股票涨跌,而是在完成交易这件事上,尽量降低冲击和滑点。</p><p>个人做量化,不一定需要复杂算法单,但至少要理解一件事: 大单不能一次砸进市场。哪怕你只是用小资金交易,也要在回测里考虑限价、成交不足和价格滑点,别假设任何数量都能按理想价格成交。</p>
-
-        <h3>2.3. 快、便宜和确定性不能同时最大化</h3>
-<p>交易执行有三个常见目标: 尽快成交、尽量低成本、尽量确定地完成。坏消息是,这三个没法同时要。想快,就可能主动吃对手盘,滑点更高;想便宜,就可能挂单慢慢等,成交不确定;想确定完成,就可能得在价格上让步。工程上这叫不可能三角,选两个,放掉一个。</p><p>场景不同,选择就完全不同。比如你必须今天把仓位降下来,就不能只挂一个保守的卖价佛系等待——市场如果继续下跌,没卖掉的风险比滑点大得多。反过来,如果只是小幅调仓,完全可以更耐心,把冲击成本省下来。</p><p>所以执行算法要按策略需求来选择: 高频信号衰减快,晚一分钟信号就贬值,需要更快成交;长期配置调仓不着急,可以慢慢执行;风控减仓则是保命优先,成交确定性压倒成本考虑。</p>
-
-        <h3>2.4. 下单前先挡住低级错误</h3>
-<p>前置风控,是订单发出市场之前的最后一道安检。常见检查包括: 账户资金够不够、可卖持仓够不够、证券是否可交易、价格是否越界、数量是否符合交易单位、单笔金额是否过大、个股和行业仓位是否超限、标的是否在黑名单或限制名单里。</p><p>这些检查看起来琐碎,像表单校验一样无聊,但它们能拦住成片的事故: 模型输出异常、数据缺失、价格单位错了、重复下单、股票停牌、涨跌停不可成交——都可能在安检口被拦下,而不是在市场上爆炸。</p><p>一个实盘系统的默认世界观应该是: 模型会犯错、数据会坏、网络会断、券商会拒单。前置风控不是对研究员不信任,而是承认在真实市场里,任何环节都可能出问题,所以每道门都要有守卫。</p>
-
-        <h3>2.5. 市场正在变</h3>
-<p>订单发出去,风险不是结束了,而是刚开始。盘中价格可能快速变化,成交可能只完成一半,账户净值可能在下跌,<span class="term">保证金</span>可能不足,市场可能触发异常波动。盘中风控要做的,就是持续盯持仓、现金、成交、回撤、暴露和订单状态。</p><p>举个具体的坑: 一个策略原计划买入 50 只股票,结果只成交了 20 只,剩下 30 只因为涨停买不到。此刻你的真实组合,和模型预期里的组合已经是两个东西——如果系统还按目标组合计算风险,就会严重低估真实偏离。</p><p>盘中风控的常见动作包括: 暂停新单、撤销未成交订单、降低参与率、强制减仓、切换备用通道、通知人工确认。记住,自动化不等于无人负责——关键节点必须有清晰的告警和明确的权限,告警响了要有人接。</p><div class="callout callout--note reveal"><span class="callout__title">实盘的组合和回测的组合,是两个组合</span><p>计划买 50 只,涨停拦住 30 只,你实际持有的已经是另一个组合:行业权重变了、风格暴露变了、资金占用也变了。如果监控还按<span class="hl">“目标组合”</span>算风险,你盯的就是一块假仪表盘。盘中风控的第一原则,是把<span class="hl">“我想买什么”</span>和<span class="hl">“我真的买到了什么”</span>分开记账——回测里它们永远相等,实盘里它们天天岔开。</p></div>
-
-        <h3>2.6. 部分成交和撤单失败</h3>
-<p>部分成交是实盘常态,不是异常。你想买 <span class="num">10000 股</span>,可能先成交 <span class="num">3000 股</span>,剩下 <span class="num">7000 股</span>还在队列里排队。这一瞬间,你的真实持仓已经变了,现金也被占用或冻结了,但目标仓位还没完成——系统必须同时记住这三件事。</p><p>撤单也不是一键瞬间完成。你发出撤单请求的那一刻,订单可能已经部分成交,也可能正在交易所的队列里等着;最终结果可能是撤单成功、撤单失败,或者先成交了导致无可撤。所有这些中间态,系统都必须处理。</p><p>如果系统简单地认为<span class="hl">“发出撤单 = 订单不存在了”</span>,迟早出事。正确做法是等交易通道返回确认,再根据成交回报更新状态。交易系统最怕的东西只有一样: 内部状态,和券商那边的真实状态,对不上。</p>
-
-        <h3>2.7. 成交回报和内部账本</h3>
-<p>成交回报,是券商或交易通道给你回执: 订单成交了多少、价格多少、费用多少。内部账本就得根据这些回执,更新现金、持仓、冻结资金、可卖数量、成本价和盈亏。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>关键原则: 内部账本不能只靠自己推演。真实成交可能和预期不同,费用可能有细碎名目,订单可能被拆成几笔成交。所以盘中和盘后,都要拿内部账本和券商或托管的数据对账,确认两边一致。</p></div><p>对账这件事听起来一点不性感,但非常关键。很多金融系统的稳定性,不在模型层,在账务层。钱和仓位一旦记错,后面一切都跟着错: 收益、风险、申赎、合规、报表,全盘失真。</p>
-
-        <h3>2.8. 真实成交比预期差多少</h3>
-<p>滑点监控做的事,是比较预期成交价和实际成交价。基准可以选下单时的中间价、买一卖一、VWAP 或到达价格。实际成交比买入基准更高、比卖出基准更低,差出来的那截,就是你付的成本。</p><p>只看一个总滑点没有用,要拆开看: 按股票、行业、时间、订单大小、参与率、交易员或算法逐层分解。某些股票滑点长期偏大,可能是流动性差;某个时间段滑点偏大,可能是市场在剧烈波动;某个执行算法滑点偏大,可能该调参了。</p><p>量化策略上线后,如果只盯预测效果、不看执行效果,会漏掉真正的失血点。模型赚 <span class="num">5%</span>,执行亏 <span class="num">3%</span>,客户最后只看到 <span class="num">2%</span>。所以有句话要记住: 执行质量,本身就是 <span class="term">Alpha</span> 的一部分。</p>
-
-        <h3>2.9. 灾难开关和人工接管</h3>
-<p>实盘系统必须设计灾难开关,也就是一键拉闸的能力。数据源异常、行情延迟、订单拒绝率异常、成交价偏离过大、单账户亏损超过阈值、重复下单、持仓暴露越界——任何一种出现,都应该触发暂停或人工确认。</p><p>历史上很多交易事故,不是因为没人会写模型,而是因为系统在异常状态下继续自动交易。最著名的一课来自骑士资本(Knight Capital),它当时是美国股市最大的做市商之一。<span class="num">2012 年</span> <span class="num">8 月</span> <span class="num">1 日</span>开盘,一次软件部署出了岔子: 一段本该废弃的旧代码被意外激活,交易系统开始疯狂、错误地自动下单。在大约 <span class="num">45 分钟</span>里,它向市场发出了 400 多万笔订单,买高卖低、越亏越交易,最高峰每分钟烧掉约一千万美元。等工程师手忙脚乱地把它停下来,公司已经亏了大约 <span class="num">4.4 亿美元</span>——一家上市巨头几乎在三刻钟内被自己的程序搞垮,几天后就被迫贱卖求生。</p><p>对每天写代码、发版的人来说,这个故事格外扎心: 杀死骑士资本的不是市场,是一次没做好灰度和回滚、又缺乏有效急停开关的部署。模型再聪明,只要实盘系统在异常时还在自动下单,几分钟就能把多年利润清零。所以灾难开关、人工接管、部署纪律,在量化里和策略本身同等重要。</p><p>当然,灾难开关不是为了让系统保守到不敢交易,而是为了确保异常不会无限放大。一个专业的交易系统必须能回答四个问题: 什么时候自动停? 谁有权限恢复? 停止后如何平仓或恢复状态? 日志如何追溯?</p>
-
-        <h3>2.10. 个人实盘从小规模开始</h3>
-<p>个人做量化,千万别从全自动大资金起步。更稳的路线是台阶式的: 先离线回测,再模拟盘,再小资金半自动,最后才考虑自动化。每上一级台阶,都要确认数据、订单、成交、费用、持仓和净值能对得上。</p><p>小资金阶段,重点不是赚不赚钱,而是系统有没有按预期运行: 信号是否按时生成,订单是否正确,成交是否记录,失败是否告警,盘后是否对账,日志够不够复盘用。</p><p>道理很朴素: 一个系统在小钱时都经常状态错、日志缺、成本算不清,放大资金只会放大问题,不会解决问题。量化实盘的第一目标不是马上赚大钱,而是证明系统能在真实市场里稳定、可控、可解释地运行。</p>
-
-        <h2>3. 什么时候该减仓、停用和复盘</h2>
-        <p>量化系统最容易被误解成一台只管赚钱的机器。但真正成熟的系统,还要能回答一连串“如果”: 市场突然变了怎么办? 模型连续失效怎么办? 成交成本暴涨怎么办? 某个行业暴露过高怎么办? 风险控制不是保守派在旁边拖后腿,而是让策略有资格活到长期优势兑现的那套机制。这一章就把这套机制拆开看。</p>
-
-        <h3>3.1. 风险控制不是预测明天会不会跌</h3>
-<p>很多人把风控理解成<span class="hl">“提前知道明天要跌”</span>。这不现实,风控没有水晶球。它真正做的是两件事: 限制坏情况发生时的损失范围,让系统在异常状态下停止扩大战果或扩大亏损。它不需要每次猜中市场,但必须在风险超出承受范围时,确确实实采取行动。</p><p>举个例子。策略连续亏损,不一定说明策略错了,也可能只是正常波动;但如果亏损的同时,成交成本异常、持仓暴露越界、数据缺失率上升、模型 <span class="term">IC</span> 反向——这几件事一起出现,就不是普通波动了,该暂停的暂停,该降权的降权。</p><p>风控的核心,是把<span class="hl">“我感觉不太对”</span>这种直觉,翻译成可监控的指标和明确的动作。哪个指标触发黄色预警,哪个指标触发暂停交易,谁有权限恢复,恢复之前要检查什么——这些全都要提前写清楚,不能等出事再开会讨论。</p>
-
-        <h3>3.2. 你到底押了什么</h3>
-<p>暴露,就是组合对某类风险的敏感程度。最常见的有四种: 市场暴露、行业暴露、风格暴露和个股暴露。你以为自己在勤勤恳恳做选股,组合却可能悄悄押了小市值、成长、低流动性,或者某个行业。</p><p>暴露监控要看两个口径: 绝对暴露和相对基准暴露。一个指数增强产品,如果相对基准超配某行业 <span class="num">8 个百分点</span>,这就是一次明明白白的行业押注。它可能带来收益,也可能带来回撤——关键不是押注本身对不对,而是你知不知道它存在。</p><p>很多策略出问题时,并不是模型一点预测能力都没有,而是某个暴露在极端环境里把损失放大了。风险系统要能及时告诉你: 今天这笔亏损,来自大盘、行业、风格、个股事件,还是交易执行。分不清来源,就没法对症下药。</p>
-
-        <h3>3.3. 一个点坏掉会不会拖垮全局</h3>
-<p>集中度衡量的是: 组合是不是过度依赖少数资产、行业、风格或交易。单只股票仓位太高,一条负面公告就可能砸出大回撤;行业太集中,一个政策变化可能同时打击一大片持仓;策略收益集中在少数几笔交易,未来的可重复性就要打问号。</p><p>好消息是,集中度的指标一点都不复杂: 前十大持仓占比、最大个股权重、最大行业权重、单一因子贡献、单一交易日收益贡献。指标虽土,能发现的问题一大堆。</p><p>还有一个容易骗人的地方: 量化组合常常持仓几百只,看起来非常分散。但如果这些股票在风险模型里高度同向——暴露在同一种风格上,集中度其实仍然很高。真正的集中度,看的是风险来源,不是股票数量。</p>
-
-        <h3>3.4. VaR 能说明什么,不能说明什么</h3>
-<p><span class="term">VaR</span> 是 Value at Risk,常翻译成在险价值。它想回答一个问题: 在某个置信水平下,未来一段时间可能亏多少钱。比如 <span class="num">1 日</span> <span class="num">95%</span> <span class="term">VaR</span> 为 <span class="num">100 万</span>,意思是按模型估计,正常情况下 <span class="num">95%</span> 的日子,亏损不超过 <span class="num">100 万</span>。</p><p><span class="term">VaR</span> 的优点是沟通友好: 它把风险压成一个谁都能看懂的数字,风控、管理层、产品报告里都能用——<span class="hl">“可能亏多少”</span>一句话说清。但局限同样明显: 它依赖历史数据和分布假设,对极端尾部不够敏感;更要命的是,它不告诉你超过 <span class="term">VaR</span> 之后,会亏得多惨。</p><p>所以 <span class="term">VaR</span> 绝不能单独使用。一个策略平时波动很低,<span class="term">VaR</span> 看起来很小,但如果藏着卖期权式的尾部风险,真正的危机来临时,损失会远超模型。看 <span class="term">VaR</span> 的时候,必须同时看压力测试、<span class="term">最大回撤</span>、尾部损失,还有策略本身的机制。</p>
-
-        <h3>3.5. 故意把坏天气拿出来看</h3>
-<p>压力测试的思路很粗暴: 主动假设极端情景,看看组合扛不扛得住。比如大盘一天跌 <span class="num">8%</span>,小盘风格暴跌,流动性减半,某个行业跌停,信用利差走阔,股债同时下跌。它不问<span class="hl">“这些事明天会不会发生”</span>,只问<span class="hl">“如果发生了,你能不能承受”</span>。</p><p>压力测试有两种常见做法。历史压力测试,拿过去真实的危机场景重放: 股灾、疫情初期、利率快速上行、流动性冲击。假设压力测试,则根据当前组合的暴露定制情景: 你的组合重仓新能源,那就测试新能源行业大跌会怎样。</p><p>压力测试的价值在于提前暴露脆弱点。它预测不了危机什么时候来,但能告诉你哪里最可能断。知道断点之后,你就有了动作清单: 降低集中度、减少<span class="term">杠杆</span>、改执行计划,或者设置止损线。</p>
-
-        <h3>3.6. 简单但很容易误用</h3>
-<p>止损,就是亏损达到某个阈值时减仓或退出。逻辑上它能防止单个错误无限扩大,实操上它也可能是台绞肉机: 一个波动很高的策略,止损太紧,会不断低卖高买、被市场反复洗出去;止损太松,又等于没装保险丝。</p><p>止损可以设在多个层级,而且各层级不能混用: 单票止损处理个股事件,组合止损处理整体回撤,策略止损处理模型失效,账户止损处理生存风险。一只股票出事和整个账户出事,该做的动作完全不一样。</p><p>量化里更常用的,其实是动态风险预算和降权机制,而不是机械地一把全卖。比如回撤扩大、<span class="term">IC</span> 变差、波动上升时,逐步降低仓位;指标恢复之后,再逐步恢复。这种渐进式处理比一次性开关更稳,但前提是规则要写清楚,不能盘中拍脑袋。</p>
-
-        <h3>3.7. 模型失效监控</h3>
-<p>模型失效不该等亏得很惨才发现,它通常有前兆。你可以监控预测分数和未来收益的关系: 滚动 <span class="term">IC</span>、分层收益、多空收益、预测覆盖率、特征缺失率、预测分布漂移。这些指标持续异常,模型很可能正在失效。</p><p>还要学会区分两种<span class="hl">“不赚钱”</span>: 模型失效,还是市场环境不利。一个价值因子在成长股行情里跑输,可能只是风格逆风,过阵子就回来;但如果价值因子内部排序都完全反过来了,那就要重点检查数据和模型本身了。一个是天气问题,一个是引擎问题,别搞混。</p><p>失效处理可以分级: 降低权重、暂停新开仓、只减不加、切换备用模型、要求人工复盘、重新训练、永久下线。特别要记住: 不要在没有复盘的情况下,因为短期亏损就随便重训——那等于拿噪声当信号,越训越乱。</p><div class="callout callout--note reveal"><span class="callout__title">比率要盯,但先分清天气和引擎</span><p>滚动 <span class="term">IC</span> 掉头向下,先别急着重训,先问一句:是整个风格在逆风,还是我的排序真的反了?天气问题靠熬和降权,引擎问题靠停和修,两个动作做反了都很贵——把引擎病当天气,会越亏越自信;把天气当引擎病,会在黎明前亲手掐死策略。盯任何比率的正确姿势,是提前给它配好那句<span class="hl">“然后呢”</span>。</p></div>
-
-        <h3>3.8. 数据风险和系统风险</h3>
-<p>量化策略是用数据喂大的,数据出问题就是慢性中毒。行情延迟、复权错误、财报字段缺失、指数成分回填、供应商接口变化、时间戳错位,都会直接污染信号。数据错误往往比模型错误更隐蔽: 模型会照常输出,看起来一切正常,而结论已经错了。</p><p>系统风险则是工程侧的事故清单: 程序 bug、部署错误、网络断连、券商接口异常、重复下单、日志丢失、权限配置错误。骑士资本事件已经提醒过我们: 交易系统错误能在很短的时间内造成巨大损失。</p><p>所以,风控不能只盯市场行情。它还要盯数据质量、服务健康、订单状态、延迟、错误率、版本发布和权限变更。量化是金融和工程的结合体,风险也注定同时来自金融和工程两边。</p>
-
-        <h3>3.9. 风险限额和权限</h3>
-<p>风险限额,是提前写死在系统里的边界: 总仓位上限、单票上限、行业上限、<span class="term">杠杆</span>上限、日内亏损上限、订单金额上限、参与率上限、撤单率上限。限额的作用,是把抽象的风险变成系统能自动检查的规则。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>权限则决定关键时刻谁能动什么: 谁能改限额、谁能恢复交易、谁能手动下单、谁能关闭策略。权限设计之所以重要,是因为极端时刻人会紧张,临时口头决策容易出错。专业机构会要求留痕、复核和审批,就是给紧张时刻上保险。</p></div><p>个人做量化同样需要限额,别觉得规则只属于机构。比如单日最大亏损到 <span class="num">2%</span> 停止交易,单只股票不超过 <span class="num">10%</span>,单日成交额不超过账户 <span class="num">30%</span>,策略连续异常两天必须手动复盘。账户再小,也要养成制度习惯。</p>
-
-        <h3>3.10. 风险报告要能指导动作</h3>
-<p>好的风险报告不是指标堆砌大赛,而是帮人做决策。它要回答: 当前组合的风险在哪里,和昨天相比变了什么,哪些指标越了界,如果极端情景发生会亏多少,现在是否需要减仓、停用或人工复核。</p><p>报告可以分三层来写。第一层给结论: 正常、预警、越界;第二层给原因: 哪个暴露、哪个策略、哪个数据源或哪笔订单导致的;第三层给明细: 持仓、交易、指标和日志。不同角色看不同深度:用不到明细的人不必翻明细,做决策的人先读结论。</p><p>底线是: 一份风险报告如果只能在事后解释亏损,却不能提前暴露风险、触发动作,那它的价值就很有限。风控系统的目标,是让风险可见、可讨论、可执行——三个“可”,缺一不可。</p>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 575" role="img" aria-label="不可能三角:三个顶点分别是独立的货币政策、资本自由流动、汇率稳定,三条边外各标注美国的选法、香港的选法、中国内地的选法">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">不可能三角:三样东西,只能选两样</text>
+            <!-- 三角形 -->
+            <path d="M 450 110 L 170 380 L 730 380 Z" fill="rgba(18,29,49,0.55)" stroke="#41506b" stroke-width="2"/>
+            <!-- 顶点 -->
+            <circle cx="450" cy="110" r="9" fill="#f0c96a"/>
+            <text x="450" y="86" text-anchor="middle" fill="#ffe6a8" font-size="15" font-weight="800">独立的货币政策</text>
+            <text x="450" y="134" text-anchor="middle" fill="#bcc9dd" font-size="11.5">自己定利率,想加就加</text>
+            <circle cx="170" cy="380" r="9" fill="#7aa7f0"/>
+            <text x="170" y="414" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">资本自由流动</text>
+            <text x="170" y="436" text-anchor="middle" fill="#bcc9dd" font-size="11.5">钱想来就来,想走就走</text>
+            <circle cx="730" cy="380" r="9" fill="#8fb37a"/>
+            <text x="730" y="414" text-anchor="middle" fill="#b8d6a3" font-size="15" font-weight="800">汇率稳定</text>
+            <text x="730" y="436" text-anchor="middle" fill="#bcc9dd" font-size="11.5">盯住美元或一篮子</text>
+            <!-- 三边:选法与代价 -->
+            <rect x="60" y="180" width="230" height="86" rx="10" fill="rgba(122,167,240,0.14)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="76" y="206" fill="#a8c6ff" font-size="13" font-weight="800">美国:选 ①+②</text>
+            <text x="76" y="228" fill="#bcc9dd" font-size="12">放弃汇率稳定——美元自由浮动,</text>
+            <text x="76" y="248" fill="#bcc9dd" font-size="12">涨跌都认,换完整政策主权</text>
+            <rect x="610" y="180" width="230" height="86" rx="10" fill="rgba(143,183,122,0.14)" stroke="rgba(143,183,122,0.5)"/>
+            <text x="626" y="206" fill="#b8d6a3" font-size="13" font-weight="800">中国香港:选 ②+③</text>
+            <text x="626" y="228" fill="#bcc9dd" font-size="12">放弃货币政策——联系汇率下,</text>
+            <text x="626" y="248" fill="#bcc9dd" font-size="12">美联储加息香港只能跟加</text>
+            <rect x="335" y="470" width="230" height="86" rx="10" fill="rgba(240,201,106,0.14)" stroke="rgba(240,201,106,0.5)"/>
+            <text x="351" y="496" fill="#ffe6a8" font-size="13" font-weight="800">中国内地:选 ①+③</text>
+            <text x="351" y="518" fill="#bcc9dd" font-size="12">放弃资本自由流动——资本管制,</text>
+            <text x="351" y="538" fill="#bcc9dd" font-size="12">才有自己的利率与汇率节奏</text>
+            <text x="450" y="330" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">1992 英镑、1997 泰铢:</text>
+            <text x="450" y="352" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">都是想三个全要,被市场投票出局</text>
+          </svg>
+          <p class="figure__cap">三角形的三个顶点不能同时占有,每个国家只是选了放弃哪一样。所有伟大的汇率危机——1992 英镑、1997 泰铢、2015 瑞郎——都发生在“我全要”的那一侧。</p>
+        </div>
+        <h2>12. 央行的沟通艺术与宏观工作流</h2>
+<p><span class="num">2012 年</span> <span class="num">7 月</span>,欧债危机最凶的时候,欧洲央行行长德拉吉面对伦敦的投资者只说了一句:欧洲央行将不惜一切代价保住欧元(whatever it takes)。一分钱都没花,市场的恐慌就被压了下去──这是央行沟通史上最值钱的句子之一。它回答了一个问题:央行说话为什么能当政策用。</p><p>因为在金融市场,价格从来不是由<span class="hl">“现在”</span>定的,而是由<span class="hl">“预期”</span>定的。整条收益率曲线、每一只股票、每一次美元波动,都是对未来路径的定价。央行用语言预告路径,就是直接改预期。这叫前瞻性指引:<span class="num">2011 年</span> <span class="num">8 月</span>,美联储第一次给出日历型指引,公开承诺极低利率<span class="hl">“至少维持到 <span class="num">2013 年</span>年中”</span>;<span class="num">2020 年</span> <span class="num">8 月</span>,又把目标框架换成平均通胀目标制。语言本身就可以压缩期限溢价、压低长端利率。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>想跟上央行的“说话”,先记住它的节奏。美联储 FOMC 每年 <span class="num">8 次</span>例会,大约 6 周一次;3、6、9、<span class="num">12 月</span>的四次会议附带经济预测摘要和点阵图──19 位委员每人匿名标出自己预期的年末利率,点阵图就是把这 19 个点摊开给全世界看;会后三周公布纪要;每年 <span class="num">8 月</span>下旬的杰克逊霍尔年会,是政策转向的传统信号场。</p></div><p>点阵图的正确读法,不是猜哪个点最准,而是看三个数的对照:点的中位数代表委员会的<span class="hl">“官方剧本”</span>,利率期货的价格代表市场真金白银的下注,两者之间的差值,就是围绕议息会议所有交易机会的来源。会后还有一个笨办法:把新声明和上一份声明逐字比对──央行声明里每个被删改的形容词,都是刻意留下的信号。</p><div class="callout callout--note reveal"><span class="callout__title">价格定方向,沟通定波动率</span><p>利率决定方向,QE、QT 决定斜率,而沟通和点阵图,决定了市场对未来路径的定价波动率。央行的每一句话,都是摆在桌面上的交易信号。</p></div><p>把前面九节收拢,就是一条宏观研究的工作流。第一步,做一张央行日历:美联储每年 <span class="num">8 次</span>例会加杰克逊霍尔,欧央行、日央行、中国央行的议息时点与数据发布日全列进去。第二步,给每个事件写下市场当前的定价──比如期货隐含的加息概率、点阵图的中位数;第三步,事件落地后拿实际措辞对照预期,差值就是冲击;第四步,看冲击顺着哪条传导链扩散:利率曲线、美元、日元 carry、黄金的实际利率,还是人民币的离岸价差。看似宏大的<span class="hl">“宏观分析”</span>,拆到这层就是一组可记录、可<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>的事件日志。</p><p>这套工作流的精神,是把宏大叙事拆成一张表:日期、事件、预期、实际、差值、传导路径、资产反应,一项一项记下来。攒上几年,你就有了自己的<span class="hl">“央行事件数据库”</span>──做事件研究、做利率与汇率因子,底稿都在这里面。读懂央行的人不等新闻,新闻等他的日历。从钱的价格到钱的回声,这一章画完了;下一章,我们带着这张地图,去看危机是怎么发生的。</p>
 
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>模型分数不能直接等于仓位,中间还要过风险、成本、流动性和产品约束这几道关。</li>
-            <li>风险模型帮你拆出市场、行业、风格和个股特有风险,避免把暴露误认成能力。</li>
-            <li>实盘交易是一台订单状态机,必须处理好拒单、部分成交、撤单、成交回报和对账。</li>
-            <li>执行要在速度、成本和成交确定性之间取舍,大订单还得额外考虑冲击和参与率。</li>
-            <li>风险控制不是预测每次下跌,而是限制异常状态下的损失扩张。</li>
+            <li>央行只做一件事:调节钱的数量和钱的价格。政策利率定方向,准备金率和公开市场操作定水量,QE 与 QT 定曲线斜率,沟通定波动率──这是读所有央行动作的总钥匙。</li>
+            <li>实际利率 = 名义利率 − 通胀。通胀比利率涨得快,加息也是放水;利率不动、通胀跳水,不加息也是收紧。看央行紧不紧,永远减掉通胀再问。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.1.</strong> 预测分数不是仓位</li>
-            <li><strong>1.2.</strong> 你承诺偏离多少</li>
-            <li><strong>1.3.</strong> 风险模型在估计什么</li>
-            <li><strong>1.4.</strong> 行业和风格暴露</li>
-            <li><strong>1.5.</strong> 个股上限和集中度</li>
-            <li><strong>1.6.</strong> 换手约束和交易成本模型</li>
-            <li><strong>1.7.</strong> 约束优化的直觉</li>
-            <li><strong>1.8.</strong> 多头、空头和市场中性</li>
-            <li><strong>1.9.</strong> 赚的钱从哪里来</li>
-            <li><strong>1.10.</strong> 个人项目怎么简化组合优化</li>
-            <li><strong>2.1.</strong> 订单生命周期</li>
-            <li><strong>2.2.</strong> 市价单、限价单和算法单</li>
-            <li><strong>2.3.</strong> 快、便宜和确定性不能同时最大化</li>
-            <li><strong>2.4.</strong> 下单前先挡住低级错误</li>
-            <li><strong>2.5.</strong> 市场正在变</li>
-            <li><strong>2.6.</strong> 部分成交和撤单失败</li>
-            <li><strong>2.7.</strong> 成交回报和内部账本</li>
-            <li><strong>2.8.</strong> 真实成交比预期差多少</li>
-            <li><strong>2.9.</strong> 灾难开关和人工接管</li>
-            <li><strong>2.10.</strong> 个人实盘从小规模开始</li>
-            <li><strong>3.1.</strong> 风险控制不是预测明天会不会跌</li>
-            <li><strong>3.2.</strong> 你到底押了什么</li>
-            <li><strong>3.3.</strong> 一个点坏掉会不会拖垮全局</li>
-            <li><strong>3.4.</strong> VaR 能说明什么,不能说明什么</li>
-            <li><strong>3.5.</strong> 故意把坏天气拿出来看</li>
-            <li><strong>3.6.</strong> 简单但很容易误用</li>
-            <li><strong>3.7.</strong> 模型失效监控</li>
-            <li><strong>3.8.</strong> 数据风险和系统风险</li>
-            <li><strong>3.9.</strong> 风险限额和权限</li>
-            <li><strong>3.10.</strong> 风险报告要能指导动作</li>
+            <li><strong>1.</strong> 招聘会挤满人时,工资和物价为什么容易一起抬头</li>
+            <li><strong>2.</strong> 工厂先砍加班,还是先把人请出门</li>
+            <li><strong>3.</strong> 调钱的数量和钱的价格</li>
+            <li><strong>4.</strong> 政策利率、准备金率、公开市场操作</li>
+            <li><strong>5.</strong> 资产负债表的收与放</li>
+            <li><strong>6.</strong> 长短期利率打架的信号</li>
+            <li><strong>7.</strong> 为什么加息不等于收紧</li>
+            <li><strong>8.</strong> 为什么本国加息,自家货币往往升值</li>
+            <li><strong>9.</strong> 固定、浮动与港币的联系汇率</li>
+            <li><strong>10.</strong> 世界货币为什么一山不容二虎</li>
+            <li><strong>11.</strong> 三样东西,只能选两样</li>
+            <li><strong>12.</strong> 央行的沟通艺术与宏观工作流</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>为什么预测最高的股票不能直接满仓买?</summary>
-            <p>它可能流动性差、风险暴露过高、违反个股或行业约束,也可能根本买不到,或者买起来成本太高。</p>
+            <summary>为什么央行加息,货币往往会升值?</summary>
+            <p>加息等于给本国资产开出更高利息,全球的短期资金要换成本币才能去吃这块利差,本币需求增加,币值就被推高。利率是央行对内的价签,汇率是这套价签在国际市场上的回声。但要注意反向风险:低息货币一旦反向升值,套息交易会平仓踩踏,2024 年 8 月的日股股灾就是这么来的。</p>
           </details>
           <details class="quiz__item">
-            <summary>风险模型主要拆解哪些风险?</summary>
-            <p>市场风险、行业风险、风格风险和个股特有风险。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>为什么策略目标仓位不能直接等于成交结果?</summary>
-            <p>因为订单可能被拒、部分成交、排队未成交、撤单失败,或因涨跌停停牌根本无法交易。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>执行为什么不能同时最快、最便宜、最确定?</summary>
-            <p>追求快速和确定通常要主动吃对手盘、付出滑点;耐心挂单成本低,但成交不确定,三者只能取其二。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>VaR 的主要局限是什么?</summary>
-            <p>它依赖模型和历史假设,又不能描述超过阈值之后的尾部损失,所以不能单独代表全部风险。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>压力测试为什么有用?</summary>
-            <p>它主动模拟极端情景,不问会不会发生,只问发生了你扛不扛得住,从而提前暴露组合可能断在哪里。</p>
+            <summary>“加息”为什么不一定等于“收紧”?</summary>
+            <p>因为决定购买力的是实际利率:实际利率 = 名义利率 − 通胀。通胀涨得比名义利率还快时,比如 2021 年,名义利率不动但实际利率跌成负值,这本质是放水;反过来通胀已经跳水、利率却还没动,不加息也是收紧。判断松紧,永远减掉通胀再问。</p>
           </details>
         </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>世界经济形势: 美元、黄金和全球资金流</h2>
+          <p>讲清美元体系、美元指数、美元潮汐、黄金的定价逻辑、央行囤金和去美元化,给你一个读世界形势的仪表盘。</p>
+        </section>
+
       </div>
     </main>
     <script src="assets/book.js"></script>

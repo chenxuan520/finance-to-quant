@@ -33,7 +33,9 @@ GLOSSARY = _manuscript.GLOSSARY
 REFERENCES = _manuscript.REFERENCES
 
 
-CHAPTER_GROUPS = [
+# 概念图最初按旧公开章号登记。这里只保留旧章到源单元的映射,
+# 用于把图按小节锚点迁回正文;公开目录不再依赖这张表。
+LEGACY_CHAPTER_GROUPS = [
     [0, 1], [2, 3], [4, 5], [6, 7], [8, 9], [10, 11, 12],
     [70], [37, 38, 65], [66], [67], [68], [69], [71], [72],
     [13, 14], [76],
@@ -46,234 +48,242 @@ CHAPTER_GROUPS = [
 ]
 
 
-VISIBLE_PARTS = [
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第一部分 · 金融世界的底层结构",
-"第二部分 · A 股市场与交易机器",
-"第二部分 · A 股市场与交易机器",
-"第二部分 · A 股市场与交易机器",
-"第三部分 · 收益、风险与投资评价",
-"第三部分 · 收益、风险与投资评价",
-"第三部分 · 收益、风险与投资评价",
-"第四部分 · 量化研究从因子开始",
-"第四部分 · 量化研究从因子开始",
-"第四部分 · 量化研究从因子开始",
-"第四部分 · 量化研究从因子开始",
-"第五部分 · 量化行业与策略版图",
-"第五部分 · 量化行业与策略版图",
-"第五部分 · 量化行业与策略版图",
-"第五部分 · 量化行业与策略版图",
-"第五部分 · 量化行业与策略版图",
-"第六部分 · 项目实战与工程化",
-"第六部分 · 项目实战与工程化",
-"第六部分 · 项目实战与工程化",
-"第六部分 · 项目实战与工程化",
-"第六部分 · 项目实战与工程化",
-"第六部分 · 项目实战与工程化",
-"第七部分 · 路线、复盘与检查清单",
-"第七部分 · 路线、复盘与检查清单",
-"第七部分 · 路线、复盘与检查清单",
-"第七部分 · 路线、复盘与检查清单",
-"第七部分 · 路线、复盘与检查清单",
-"第七部分 · 路线、复盘与检查清单",
-"第七部分 · 路线、复盘与检查清单",
-"第七部分 · 路线、复盘与检查清单",
-"第七部分 · 路线、复盘与检查清单",
+# 公开版只从这张结构表生成。每个分部同时声明它在主线中的问题、
+# 读完后的产出和包含的手稿单元,避免目录、导航和说明文档各维护一套范围。
+BOOK_STRUCTURE = [
+    {
+        "title": "第一部分 · 金融为什么存在",
+        "kind": "main",
+        "badge": "主线一",
+        "question": "真实财富有限,为什么人类还需要货币、信用、银行和市场?",
+        "outcome": "读完后,你能沿着资源、时间和风险解释金融系统,不再把金融理解成一堆产品名词。",
+        "groups": [[0], [1], [2], [3], [4, 5]],
+    },
+    {
+        "title": "第二部分 · 资产如何承载现金流与风险",
+        "kind": "main",
+        "badge": "主线二",
+        "question": "股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?",
+        "outcome": "读完后,你能先拆现金流、权利、期限和最坏情况,再讨论价格涨跌。",
+        "groups": [[6, 7], [8], [9], [10], [11], [12], [70]],
+    },
+    {
+        "title": "第三部分 · 市场如何形成价格与数据",
+        "kind": "main",
+        "badge": "主线三",
+        "question": "一项金融权利怎样上市、成交、留下数据,又该怎样评价它的收益和风险?",
+        "outcome": "读完后,你能把交易界面上的数字还原为制度、现金流和可研究的数据口径。",
+        "groups": [[13, 53], [76, 14], [15], [16], [37], [17], [18], [19, 74]],
+    },
+    {
+        "title": "第四部分 · 宏观环境如何改变资产",
+        "kind": "main",
+        "badge": "主线四",
+        "question": "增长、通胀、央行、美元和金融危机怎样穿过市场,改变资产的现金流与折现率?",
+        "outcome": "读完后,你能把宏观新闻放回传导链,而不是用一个大词解释所有涨跌。",
+        "groups": [[66], [38], [69], [65], [67], [68]],
+    },
+    {
+        "title": "专题篇 · 个人金融的安全底盘",
+        "kind": "special",
+        "badge": "专题选读",
+        "question": "在研究收益之前,个人怎样先守住不能承受的风险?",
+        "outcome": "这一篇不阻塞量化主线;它把保险、社保、养老金和家庭配置放回个人现金流。",
+        "groups": [[71], [72, 75]],
+    },
+    {
+        "title": "第五部分 · 量化研究如何产生可信结论",
+        "kind": "main",
+        "badge": "主线五",
+        "question": "一个金融判断怎样变成可证伪假设,再经过数据、回测、模型和实盘约束?",
+        "outcome": "读完后,你能从问题出发完成研究闭环,而不是先找模型、再给结果编故事。",
+        "groups": [[20], [21], [22], [23], [24], [25], [26], [39], [44, 47], [45, 55]],
+    },
+    {
+        "title": "第六部分 · 策略如何变成产品",
+        "kind": "main",
+        "badge": "主线六",
+        "question": "不同量化策略赚的是什么钱,承担什么风险,最终怎样装进受约束的产品?",
+        "outcome": "读完后,你能按收益来源和风险结构比较策略,而不是只按历史年化排名。",
+        "groups": [[29], [30], [31], [32], [33], [34], [35, 54, 77], [36]],
+    },
+    {
+        "title": "第七部分 · 把研究变成可运行项目",
+        "kind": "main",
+        "badge": "主线七",
+        "question": "怎样让研究穿过代码、模拟盘、真实订单和人的情绪,仍然保持可信?",
+        "outcome": "读完后,你会完成两类实战,并知道何时推进、何时停手、怎样复盘。",
+        "groups": [[41], [42, 56], [43, 57], [46], [61, 62]],
+    },
+    {
+        "title": "第八部分 · 职业、复盘与长期成长",
+        "kind": "main",
+        "badge": "主线八",
+        "question": "做完第一个项目以后,怎样选择岗位、建设作品集并形成长期学习循环?",
+        "outcome": "读完后,你会把全书收束成一条个人路线,而不是停在零散知识和一次性项目。",
+        "groups": [[27, 49], [28, 50], [48, 60], [63]],
+    },
+    {
+        "title": "附录 · 随时回来查",
+        "kind": "appendix",
+        "badge": "工具箱",
+        "question": "哪些内容不必顺序阅读,但研究前值得反复核对?",
+        "outcome": "术语、公式和最终检查表集中在这里,不再打断正文的收束。",
+        "groups": [[51, 52], [40], [58, 59, 64]],
+    },
 ]
 
 
-# 每个可见章的整章标题与统领导语,由人手写,取代把子主题机械拼成
-# "X 与 Y" 的标题、以及"只讲第一个子主题 + 开发说明"的导语。
-# key = 可见章号(0..32)。
-CHAPTER_OVERRIDES = {
-    6: {
-        "title": "结构性产品与另类资产:把风险和收益切开重卖",
-        "lead": "期权和期货是原料,真正卖给客户的是组装好的结构。这一章拆开雪球、CDS/CDO、利率互换这些结构化产品的内部齿轮,再走进加密、REITs、大宗这些另类资产的家庭,问同一个问题:你卖出的那个风险,到底是不是你以为的那个。",
+EXCLUDED_SOURCE_CHAPTERS = {
+    73: "内容已拆成 callout 嵌回相关章节,保留手稿仅作历史来源。",
+}
+
+
+# 多单元章和少量关键转折章必须有人工标题与导语,不能再机械拼成“X 与 Y”。
+GROUP_OVERRIDES = {
+    (12,): {
+        "title": "跨资产入门: 外汇、商品与 REITs",
+        "desc": "先用现金流、供需和计价货币理解外汇、商品与不动产份额,再建立跨资产研究的共同语言。",
+        "lead": "股票和债券之外,资产仍然可以用同一组问题理解:现金流从哪里来,价格受什么供需约束,谁承担汇率、流动性和尾部风险。这一章先做跨资产地图,认识外汇、商品与 REITs,并把它们放进统一的数据口径。下一章再进入更复杂的结构性产品,拆开那些被重新包装的收益和风险。",
     },
-    9: {
-        "title": "危机四百年:从郁金香到硅谷银行",
-        "lead": "四百年十二场崩盘,从郁金香到 LUNA,从南海到硅谷银行。每一场都由不同的故事开场,退场姿势却惊人一致——叙事发到一半、杠杆叠到上限、流动性一收,火就点起来了。这一章把这份病例从头到尾读一遍。",
+    (70,): {
+        "title": "结构性产品深拆: 收益和风险怎样被切开重卖",
+        "desc": "拆开雪球、CDS、CDO、互换和另类资产的内部齿轮,识别高票息背后被卖出的尾部风险。",
+        "lead": "上一章建立了跨资产地图,这一章专门深入最容易被包装话术遮住的区域。雪球、CDS、CDO 和利率互换没有凭空创造收益,只是把旧资产的现金流与风险重新切开、排序和出售。理解每一份高票息对应谁在承担什么最坏情况,才算真正读懂结构。",
     },
-    10: {
-        "title": "影子银行:银行不在银行里",
-        "lead": "把钱放进余额宝,钱去了哪里?不在银行的银行,做着吸收存款、发放贷款、期限错配这三件事,却不戴银行的四重管束。这一章从货币市场基金、信托、P2P 到回购市场,把这套影子里的机器拆开看。",
+    (4, 5): {
+        "title": "金融系统与市场: 钱、风险和证券如何流动",
+        "desc": "把金融系统的参与者、资金与风险流向,和证券发行、交易、清算、交收放进同一张地图。",
+        "lead": "货币和信用解决了跨时间调动资源的问题,但现代金融不是两个人之间的一张借条,而是一张由居民、企业、银行、基金、交易所和监管者共同组成的网络。这一章先看钱和风险怎样在网络中流动,再看一项权利怎样从一级市场发行,进入二级市场交易。地图搭好以后,后面的股票、债券和衍生品才各有位置。",
     },
-    11: {
-        "title": "央行、利率与汇率:全球资金的水龙头",
-        "lead": "美联储一句话,全世界的股票都跟着抖。政策利率、QE、收益率曲线、汇率制度、特里芬两难、不可能三角——这一章把全球资金的总闸门拆开,看清利率和汇率是怎么从央行办公室走进你的投资组合的。",
+    (6, 7): {
+        "title": "股票与估值: 你买的权利为什么值这个价",
+        "desc": "从股东权利、股票收益来源走到公司行为、估值倍数和现金流折现。",
+        "lead": "股票不是屏幕上的红绿代码,而是公司剩余现金流的一小份权利。先弄清股东排在谁后面、收益从哪里来,才能继续讨论分红、回购、增发和估值。这一章沿着同一条线回答两个问题:你买到了什么权利,市场又为什么愿意为这项权利支付今天的价格。",
     },
-    0: {
-        "title": "货币与通胀:财富到底是什么",
-        "lead": "在讲股票、债券和量化之前,先把最容易被忽略的地基打牢:钱本身不是财富,真正的财富是能吃、能用、能生产的真实东西。这一章借一座只有鱼的小岛,把货币、储蓄、资本、信用讲成一条线,再顺势解释价格为什么会涨、通胀为什么让钱缩水,以及名义收益和实际收益的区别。地基稳了,后面所有术语才不会变成一团雾。",
+    (13, 53): {
+        "title": "账户与交易界面: 一笔委托从哪里出发",
+        "desc": "把账户、券商、交易所、登记结算和交易软件上的资金、持仓、委托、成交连成一条链。",
+        "lead": "真实交易不是从策略公式开始,而是从一个有资金、有持仓、有权限的账户开始。你在软件里看到的可用资金、可卖数量、委托和成交,背后分别对应券商、交易所和登记结算系统中的不同状态。这一章从制度走到界面,把一笔委托真正出发以前的链路讲清楚。",
     },
-    1: {
-        "title": "信用、利率与银行体系",
-        "lead": "上一章的小岛出现了\u201c借一条鱼\u201d的行为,这一章从这里继续。有人今天有多余资源,有人有能提高未来产出的计划,把两者接起来就是信用;只要有等待和风险,就会出现利率。理解了这一点,再看银行怎么把存款变成贷款、央行为什么能影响整个经济的钱是松还是紧,就不再是背名词,而是看清一套环环相扣的机制。",
+    (76, 14): {
+        "title": "股票怎样上市、交易与退市",
+        "desc": "沿着股票的一生理解注册制、IPO、打新、交易时间、涨跌幅、T+1、费用、ST 与退市。",
+        "lead": "一只股票能够出现在交易软件里,先要完成发行与上市;能够被买卖,还要服从具体市场的交易规则;失去上市条件时,又会进入风险警示和退市通道。这一章沿着股票从出生到退出的生命周期,把 A 股回测最容易写错的制度约束放回真实市场。",
     },
-    2: {
-        "title": "金融系统地图:钱和风险怎么流动",
-        "lead": "现代金融不是一条直线,而是一张网络:有人有钱,有人缺钱;有人要确定性,有人愿担风险;还有人负责撮合、托管和监管。这一章先把这张地图画出来,弄清钱和风险到底怎么在其中流动;再区分公司第一次拿钱的一级市场,和投资者互相换手的二级市场。看懂地图,后面的股票、债券、基金、量化机构才不会散成一堆孤立名词。",
+    (19, 74): {
+        "title": "市场为什么难赢: 有效性与行为偏差",
+        "desc": "从有效市场、随机游走走到损失厌恶、锚定、从众与纪律,解释超额收益为什么稀缺。",
+        "lead": "市场并不完美,人也并不理性,但这两句话都不等于市场会免费送钱。公开信息会被竞争者迅速写进价格,人的偏差又会让错误长期反复。这一章把市场的竞争压力和人的出厂设置放在一起,解释研究为什么必须同时保持怀疑、纪律和可证伪性。",
     },
-    3: {
-        "title": "股票:你买的到底是什么",
-        "lead": "很多人第一次接触股票,看到的只是一串代码、一个价格和红绿涨跌。但股票的本质是公司所有权的一小份,你买的是未来分享公司剩余收益的权利。这一章先讲清\u201c买股票到底买了什么\u201d,再解释分红、送股、回购这些公司行为如何影响你手里的股份,以及为什么股价不是只看当期利润,而是看市场对未来的整体判断。",
+    (72, 75): {
+        "title": "社保、养老金与家庭资产配置",
+        "desc": "从五险一金、养老三支柱走到应急资金、长期账户和家庭资产分桶。",
+        "lead": "家庭资产配置不是先挑收益最高的产品,而是先回答哪些钱不能亏、什么时候要用、哪些风险个人扛不起。社保和养老金提供公共底牌,应急资金、保障和长期组合再补上个人责任。这一章按现金流的先后顺序,把工资条、养老账户和家庭投资放进同一张图。",
     },
-    4: {
-        "title": "债券与基金:把钱借出去或交给别人管",
-        "lead": "股票讲的是公司剩余收益,债券讲的是白纸黑字的合同现金流:什么时候付息、什么时候还本都写得清清楚楚。但确定性更强不等于没有风险,利率、信用和流动性都会让债券价格波动。这一章先把债券从一张借条讲到利率和信用风险,再转向另一条路径\u2014\u2014基金、ETF、指数和私募,看清\u201c把钱交给别人管理\u201d到底意味着什么。",
+    (44, 47): {
+        "title": "识别回测幻觉: 错误清单与拆解案例",
+        "desc": "系统识别未来函数、幸存者偏差、成本低估、容量忽略和参数挑选,并拆穿一条漂亮曲线。",
+        "lead": "研究最重要的能力之一,不是证明策略有效,而是尽快证明它为什么可能无效。这一章先建立错误清单,再沿着一条异常漂亮的回测曲线逐项排查:股票池是否点时、信号是否偷看收盘、成本是否算够、涨跌停是否可成交、参数是否挑过头。坏消息越早出现,真钱越安全。",
     },
-    5: {
-        "title": "衍生品与其他资产:把未来和风险变成合约",
-        "lead": "衍生品这个词听起来吓人,其实核心只有一句:它的价值来自另一个东西。这一章先讲期货、远期和互换如何把未来的价格、利率或现金流提前写进合约,再讲期权如何把\u201c不对称的收益结构\u201d变成可以买卖的产品,最后把视野扩展到外汇、商品、REITs 和结构化产品。它们都能用来管理风险,也都能被用来放大风险。",
+    (45, 55): {
+        "title": "审查量化研究: 从论文到回测报告",
+        "desc": "用同一套问题检查研报、论文和回测报告里的假设、数据、基准、成本、风险与样本外。",
+        "lead": "读懂结论不等于审查过研究。无论面对券商研报、学术论文还是别人发来的一份回测报告,可靠的顺序都相同:先找问题和假设,再查数据与时间,随后看基准、成本、风险和样本外。这一章先给审查框架,再带你按这个顺序真正读一份报告。",
     },
-    14: {
-        "title": "A 股的交易机器:从下单到成交",
-        "lead": "你在手机上点一次买入,看似一秒钟的事,背后却串起账户、券商、交易所、登记结算、托管、清算和风控一整套机器。这一章先讲清这套机器里每个角色在做什么,再落到 A 股具体的交易规则:交易时间、涨跌幅限制、T+1、各项费用。量化系统如果不懂这些,就会把交易写成一个想当然的简单函数,最后在实盘里出错。",
+    (35, 54, 77): {
+        "title": "读懂量化产品: 净值、报告与合同",
+        "desc": "从净值、费用、回撤和归因走到基金月报、招募书、定期报告与结构化产品确认书。",
+        "lead": "策略研究回答的是一套方法可能怎样赚钱,产品文件回答的则是投资者实际买到了什么。费后净值、申赎限制、封闭期、规模和合同条款都会改变最终体验。这一章从产品指标走到月报和法律文件,训练一种稳定顺序:不听话术,先找基准、费用、流动性、风险和最坏情况。",
     },
-    16: {
-        "title": "看懂行情:屏幕上的数字和基准",
-        "lead": "第一次打开行情软件,满屏的最新价、涨跌幅、成交量、换手率、买一卖一、K 线、均线、复权很容易把人吓住。这一章先不急着学指标,而是讲清这些数字从哪里来、表示什么、又不能说明什么;再讲指数、ETF 和基准,回答一个常被忽略的问题:你的收益到底在和谁比较?看懂行情,才谈得上理解交易和量化数据。",
+    (42, 56): {
+        "title": "市场中性模拟盘: 把策略放进真实时间",
+        "desc": "搭建多头、对冲、保证金和归因账本,再用一周日志处理数据、信号、成交与对账异常。",
+        "lead": "回测把多年历史压缩成几分钟,模拟盘却强迫系统按真实时间等待。市场中性还多了一本对冲账:Beta、基差、保证金和现金每天都在变化。这一章先搭出模拟盘,再跟着它过完一周,让数据迟到、信号为空、涨停买不到和盘后对不到账这些现实问题逐个出现。",
     },
-    17: {
-        "title": "收益、风险与市场为什么难赢",
-        "lead": "一条收益曲线好不好,不能只看最后赚了多少。这一章先讲怎么量化收益和风险:年化、波动、最大回撤、夏普比率,让\u201c赚钱的体验发生在时间里\u201d这件事变得可测量;再讲资产配置和分散化,为什么不该把判断全押在一处;最后借有效市场、随机游走和行为偏差,解释一个残酷的现实\u2014\u2014赚超额收益为什么这么难。",
+    (43, 57): {
+        "title": "从模拟盘到小实盘: 上线前必须检查什么",
+        "desc": "逐项核对数据、模型、交易、风控、日志和权限,再用可承受的小资金验证真实链路。",
+        "lead": "模拟盘稳定不代表可以直接放大资金,它只说明系统获得了进入下一道门的资格。这一章先给上线门禁,再讲第一笔小资金实盘怎样限定资金、品种、自动化程度和停止规则。目标不是证明自己能赚钱,而是验证真实订单、费用、对账和情绪是否仍在控制范围内。",
     },
-    20: {
-        "title": "量化的起点:因子和数据",
-        "lead": "实习时听到的\u201c找因子\u201d,不是什么玄学密码。最朴素地说,因子就是一列能描述资产特征、风险暴露或预测信息的数字,量化研究的第一步就是把一句投资判断写成可检验的数据列。这一章先讲因子是什么、从哪里来、怎么检验有没有用,再讲更容易被忽略却更致命的一环:数据从哪里来、标签怎么定义、样本又该怎么切分。",
+    (61, 62): {
+        "title": "两条项目路径: 程序员怎样失败、怎样做稳",
+        "desc": "用一正一反两个案例,比较先找模型与先问问题、追最佳参数与守样本外的不同结局。",
+        "lead": "同样会写代码、同样从公开数据开始,两个项目可以走向完全不同的结局。反面路径先找模型、后找问题,小赚后加杠杆;正面路径从一个小问题出发,先做数据检查和简单基线,再进模拟盘。这一章把两条路线并排,让方法论落到真实选择。",
     },
-    21: {
-        "title": "回测与机器学习:在历史里排练",
-        "lead": "回测是量化研究的实验室:把策略规则放进历史市场里跑一遍,看当时这么做会发生什么。但它是排练,不是时光机,更不是赚钱证明\u2014\u2014偷看未来、忽略成本、假设无限成交,结果就会变成幻觉。这一章先讲怎么做一次可信的回测,再讲量化里的机器学习:模型为什么不是越复杂越好,以及金融数据和图像文本有什么根本不同。",
+    (27, 49): {
+        "title": "量化行业与职业路线: 你适合站在哪个位置",
+        "desc": "把机构生产线、岗位分工、能力要求、作品集和面试表达放到同一张职业地图。",
+        "lead": "量化机构不是只有研究员,一套策略要经过数据、研究、平台、交易、风控、合规和运营。进入行业之前,先看清每个岗位在生产线里消除什么失败,再判断自己的工程能力最适合接在哪一段。这一章从真实工作流走到作品集,帮你选择位置而不是追逐一个模糊的“量化”标签。",
     },
-    22: {
-        "title": "从预测到交易:组合、执行与风控",
-        "lead": "量化研究员常常先得到一列预测分数,但真实投资从不是把最高分的股票全部买满。这一章讲预测之后的三件事:组合优化怎么在收益、风险和各种约束之间做权衡;交易执行怎么把理想仓位真的下到市场里,又不被成本和冲击吃掉;风控和监控怎么盯住边界,决定什么时候该减仓、停用和复盘。预测告诉你想要什么,这三步决定你能付出什么代价去实现它。",
+    (28, 50): {
+        "title": "长期学习路线: 从零到可展示的量化项目",
+        "desc": "安排金融、统计、数据工程、因子、回测、模型、模拟盘和长期复盘的学习顺序。",
+        "lead": "学习量化最常见的失败不是不够努力,而是顺序倒置:金融问题没想清楚就训练模型,数据时间线没站稳就追求高收益。这一章把个人项目路线和长期学习节奏合在一起,每一阶段都要求留下可检查的产物,让“学过”逐步变成“做得出来、讲得清楚”。",
     },
-    23: {
-        "title": "量化行业和个人的路线",
-        "lead": "从外面看,量化像一群人关在办公室里写神秘算法;真实工作更像一条生产线,研究、工程、交易、风控、合规各司其职,算法只是其中一环。这一章先讲行业里不同角色到底在做什么,帮你看清自己适合站在哪个位置;再给计算机背景的个人一条能真正走通的学习路线:从零起步,该学什么、该做什么、又该避开哪些一开始就注定失败的方向。",
+    (48, 60): {
+        "title": "全书复盘与自检: 从一条鱼到一个量化系统",
+        "desc": "按真实财富、金融权利、市场数据、研究验证、组合交易和人的纪律重走全书,再用判断题自检。",
+        "lead": "走到这里,最容易发生的事是记住很多术语,却忘了它们之间的因果关系。这一章先把全书重新压成一条链:真实财富产生现金流,金融工具分配权利与风险,市场形成价格和数据,研究寻找可证伪的优势,系统把优势变成受约束的交易。随后用十个判断题检查这条链是否真的站稳。",
     },
-    24: {
-        "title": "量化策略版图与指数增强",
-        "lead": "量化不是一种策略,而是一大类用数据、模型和规则做投资的方法:有人做指数增强,有人做市场中性,有人做商品趋势,有人做套利和高频。这一章先把整张策略地图铺开,让你看清它们在数据、频率、收益来源和风险上的根本差异;再深入第一种最容易理解的路径\u2014\u2014指数增强,看它如何在紧贴基准的同时,争取那一点点稳定的超额收益。",
+    (51, 52): {
+        "title": "概念复盘: 用人话重走金融与量化关键词",
+        "desc": "沿着因果关系复盘货币、信用、股票、债券、因子、回测、滑点、容量、归因与风控。",
+        "lead": "这一章不是网站那份按词查找的术语表,而是一次按因果关系组织的概念复盘。忘记某个词时,先找它对应的真实问题:谁拿到现金流,谁承担风险,数据怎样计算,结果怎样进入仓位。能用自己的话把词连成机制,比背住定义更重要;只想查单个定义时,直接使用页头的术语表。",
     },
-    25: {
-        "title": "市场中性与 CTA 趋势",
-        "lead": "市场中性听起来很诱人:不管大盘涨跌,只赚自己的选股能力。但\u201c中性\u201d到底中和了什么值得先讲清楚\u2014\u2014对冲能降低方向风险,却消灭不了基差、融券、成本和极端行情里的相关性失效。这一章先拆解市场中性对冲之后到底还剩什么风险,再转向 CTA 和期货趋势,看另一类完全不同的思路:用规则去交易商品、股指和利率的趋势。",
+    (58, 59, 64): {
+        "title": "最终检查表: 研究、交易和实盘前先读",
+        "desc": "集中核对金融常识、数据时间线、回测假设、组合约束、交易成本、模拟盘和停止规则。",
+        "lead": "附录最后不再增加新知识,只保留三道门禁:进入量化前是否理解基本金融机制,开始项目时是否做到数据与实验可信,把系统推向交易前是否知道最坏情况和停止方式。每次研究、买产品或准备实盘时,都可以从这里重新检查。",
     },
-    26: {
-        "title": "套利与高频:更快更精细的战场",
-        "lead": "\u201c套利\u201d这个词容易让人误会成白捡钱。严格意义上的无风险套利很少,一旦出现就会被速度快、成本低、资金大的参与者迅速挤掉;普通人说的套利,多数是\u201c赌价差回归\u201d的相对价值交易,能赚钱但绝不是没有风险。这一章先讲套利和相对价值的真实面貌,再进入高频交易和市场微观结构,看清毫秒之间价格、排队和风险是怎么运作的。",
-    },
-    27: {
-        "title": "量化产品、监管与合规",
-        "lead": "很多人理解了策略,却不会看产品。一个量化产品不是一段回测代码,而是有管理人、托管人、合同、费用、封闭期和净值披露的金融产品,投资者真正买到的是扣费后、受约束、会波动的一条净值曲线。这一章先讲怎么看懂一个量化产品:净值、费用、封闭期和业绩归因;再讲监管、合规和伦理\u2014\u2014技术能力再强,也不能越过市场规则的边界。",
-    },
-    7: {
-        "title": "基本面与宏观:数字背后的公司和经济",
-        "lead": "股票背后是公司,公司背后是生意。量化可以只用价格和成交量,也可以用财务报表做基本面因子。这一章先讲清收入、利润、资产、负债和现金流分别在说什么,以及为什么\u201c利润好看但现金流很差\u201d会让投资者警惕;再把视野拉到宏观,看利率、通胀、汇率和商品这些大变量如何彼此牵动,又如何一层层传导到你持有的资产上。",
-    },
-    28: {
-        "title": "量化项目的工程骨架与速查",
-        "lead": "计算机背景的读者最容易把量化项目写成一个越拉越长的 notebook,几周后连自己都理不清哪个单元格先跑、哪个文件才是最终结果。这一章先讲怎么像正经工程项目那样组织一个量化项目:数据来源清楚、配置可重复、实验有记录、回测可复现、报告能自动生成;再给一份公式和指标速查,帮你在\u201c别死背公式,要知道它在问什么\u201d之间找到平衡。",
-    },
-    29: {
-        "title": "实战一:从零做一个指数增强回测",
-        "lead": "前面讲了很多概念,这一章带你真正走一遍完整的研究流程。目标很具体:选一个指数作为基准,在它的成分股里构造几个简单因子,每月调仓,扣除成本,再和基准比较。做完你会发现,量化项目真正难的地方不是写出买卖信号,而是让数据、时间、交易规则、风险和报告全都对得上\u2014\u2014这也是把\u201c懂概念\u201d变成\u201c能动手\u201d的第一道坎。",
-    },
-    30: {
-        "title": "实战二:市场中性模拟盘与上线检查",
-        "lead": "市场中性比指数增强更复杂,因为它不只买股票,还要处理对冲。这一章带你做一个市场中性的模拟盘,重点不是收益,而是看清多头为什么赚或亏、对冲工具贡献多少、基差带来什么影响、保证金和现金怎么变化。做完之后,再给你一份从回测走到模拟盘、再走向实盘前必须逐条确认的检查清单,把\u201c手刹\u201d拉在真正下真金白银之前。",
-    },
-    31: {
-        "title": "避坑:常见错误和如何读研究",
-        "lead": "量化新手亏钱,常常不是因为不懂高深理论,而是掉进了几个反复出现的坑:看起来赚钱,其实在偷看未来的答案。这一章先把这些最常见的错误一个个摆出来,让你在自己的项目里能认出它们;再讲一项同样重要的能力\u2014\u2014如何读量化研究报告和论文:先找它的假设和数据口径,再看结论,别被漂亮的曲线和术语牵着走。",
-    },
-    32: {
-        "title": "心理、资金管理与一次复盘",
-        "lead": "技术之外,能不能活下来,往往取决于心理和资金管理。这一章先讲为什么\u201c活下来比一次赚快钱更重要\u201d:仓位怎么定、亏损怎么扛、情绪怎么不被行情牵着走;再用一个复盘案例,完整拆开一条看起来很漂亮的回测曲线,看它是怎么在偷看未来、幸存者偏差和成本假设上一步步被拆穿的。纸面收益和真实收益之间,隔着的正是这些。",
-    },
-    33: {
-        "title": "全书复盘:从一条鱼到一个量化系统",
-        "lead": "学到这里,名词已经很多:货币、信用、股票、债券、基金、期货、期权、指数、因子、回测、机器学习、组合优化、交易执行、风控。这一章把它们重新收束成一条链\u2014\u2014真实财富产生现金流,金融工具分配现金流和风险,市场给这些权利定价,数据记录市场状态,策略试图从数据里找到优势,实盘系统再把优势变成可控的交易。金融不是一堆孤立术语,量化也不是孤立算法。",
-    },
-    34: {
-        "title": "职业路线与长期学习",
-        "lead": "如果你想把兴趣变成职业,这一章讲两件事。一是计算机背景的人怎样进入量化:该积累什么能力、怎么攒一个能证明自己的作品集、面试和岗位大致看什么;二是一条能长期走下去的学习路线\u2014\u2014读什么、做什么、又怎么定期复盘。量化是一条需要耐心的路,走得远比一开始跑得快更重要。",
-    },
-    35: {
-        "title": "术语复盘:用人话再讲一遍",
-        "lead": "全书出现了大量术语,这一章把它们集中起来,用最朴素的人话再讲一遍,方便你随时回来查。前半部分复盘金融基础词汇:货币、信用、股票、债券、基金这些概念到底在说什么;后半部分复盘量化词汇:因子、回测、夏普、中性、滑点又分别指什么。不追求严谨定义,只求你一看就想起它对应的那件真实的事。",
-    },
-    36: {
-        "title": "场景练习:开户软件和基金月报",
-        "lead": "概念懂了,真正上手时还是会被界面和文件里的术语绊住。这一章用两个真实场景带你练一遍:第一次开户后,交易软件里每一个数字、每一个按钮到底在说什么;第一次拿到基金月报和产品报告,又该重点看哪些栏目、警惕哪些说法。把抽象概念落到你真会遇到的屏幕和纸面上,才算真的学会。",
-    },
-    37: {
-        "title": "场景练习:回测报告和模拟盘",
-        "lead": "这一章继续用场景带你练手。第一个场景:第一次看到一份回测报告,你该按什么顺序读、哪些指标最容易骗人、哪些细节能暴露它是否偷看了未来;第二个场景:第一次跑模拟盘的一周,每天该关注什么、会遇到哪些和回测不一样的意外。这些练习的目的,是让你在面对真实材料时有一套可靠的检查动作,而不是凭感觉。",
-    },
-    39: {
-        "title": "场景练习:第一次小资金实盘",
-        "lead": "小资金实盘不是为了证明自己能很快赚钱,而是为了验证真实的交易链路。这一章带你走一遍第一次小实盘:先把资金上限定在\u201c全亏掉也不影响生活\u201d的水平,再观察订单、成交、费用、滑点、持仓、对账和自己的情绪反应。这一步最重要的从来不是收益,而是知道真实市场会怎样改变你的系统和你的心态。",
-    },
-    40: {
-        "title": "最终清单:动手前必须真正懂的事",
-        "lead": "在真正动手做量化之前,有些事必须先真正弄懂,而不是\u201c好像知道\u201d。这一章给你两份清单:第一份是从金融小白走到量化之前,必须真正理解的金融常识;第二份是着手做量化项目之前,必须真正做到的准备。把这两份清单当成过关检查,任何一条答不上来,就说明前面某一章还需要回去补。",
-    },
-    41: {
-        "title": "自检判断题与一个反面案例",
-        "lead": "这一章用两种方式帮你检验自己是不是真的理解了。先是十个判断题,每一个都对应书里的一个关键直觉,答错说明那块地基还没打牢;再是一个反面案例,完整讲一个程序员是怎样凭着扎实的编程能力,却在量化里一步步亏钱的。别人踩过的坑,是最便宜的学费。",
-    },
-    42: {
-        "title": "一个稳妥的项目与结语",
-        "lead": "这一章先讲一个正面案例:一个稳妥的个人量化项目,是怎样从一个很小的问题出发,一点点长成能长期运行的东西的\u2014\u2014它和那些追求一夜暴富的做法,区别到底在哪里。最后是全书的结语,回答一个问题:读完这本书,你现在真正应该带走的是什么。不是某个策略,而是一套看待金融和量化的方式。",
-    },
-    43: {
-        "title": "附录:每次研究前先读这张纸",
-        "lead": "最后给你一张可以反复看的纸。每次你想做一个策略、买一个产品、写一个模型、跑一次回测,或者把模拟盘推向实盘之前,先把这一章读一遍。它不提供新概念,只帮你把手刹拉住几分钟\u2014\u2014很多亏损不是因为不懂高深理论,而是因为忘了最基本的问题:问题是否足够小、数据是否可信、成本是否算够、风险是否扛得住。",
+    (20,): {
+        "title": "从问题到因子: 把投资判断变成可检验假设",
+        "lead": "量化研究不该从下载数据或挑模型开始,而该从一个足够小、能够被证伪的金融问题开始。因子只是把问题写成一列可重复计算的数字。这一章先问收益可能来自现金流、风险补偿、行为偏差还是市场摩擦,再把解释变成信号,用 IC、分层回测和失效条件检查它。",
     },
 }
+
+
+CHAPTER_SPECS = []
+for part_index, part in enumerate(BOOK_STRUCTURE):
+    for part_chapter_index, nums in enumerate(part["groups"]):
+        CHAPTER_SPECS.append({
+            "source_nums": nums,
+            "part": part,
+            "part_index": part_index,
+            "part_chapter_index": part_chapter_index,
+            "part_chapter_count": len(part["groups"]),
+        })
+
+CHAPTER_GROUPS = [spec["source_nums"] for spec in CHAPTER_SPECS]
 
 
 def strip_num_prefix(title: str) -> str:
     return re.sub(r"^[0-9一二三四五六七八九十]+[.、．]\s*", "", str(title)).strip()
 
 
-def merge_title(new_num: int, parts: list) -> str:
-    if new_num in CHAPTER_OVERRIDES:
-        return CHAPTER_OVERRIDES[new_num]["title"]
+def merge_title(nums: list, parts: list) -> str:
+    override = GROUP_OVERRIDES.get(tuple(nums), {})
+    if "title" in override:
+        return override["title"]
     titles = [strip_num_prefix(ch["title"]) for ch in parts]
     if len(titles) == 1:
         return titles[0]
-    first = titles[0].split(":")[0]
-    last = titles[-1].split(":")[0]
-    title = f"{first} 与 {last}"
-    return title if len(title) <= 34 else f"{first} 等"
+    raise ValueError(f"多单元章缺少人工标题覆盖: {nums}")
 
 
-def merge_desc(parts: list) -> str:
+def merge_desc(nums: list, parts: list) -> str:
+    override = GROUP_OVERRIDES.get(tuple(nums), {})
+    if "desc" in override:
+        return override["desc"]
     if len(parts) == 1:
         return parts[0]["desc"]
-    return " / ".join(ch["desc"] for ch in parts[:2])
+    raise ValueError(f"多单元章缺少人工描述覆盖: {nums}")
 
 
-def merge_lead(new_num: int, parts: list) -> str:
-    if new_num in CHAPTER_OVERRIDES:
-        return CHAPTER_OVERRIDES[new_num]["lead"]
+def merge_lead(nums: list, parts: list) -> str:
+    override = GROUP_OVERRIDES.get(tuple(nums), {})
+    if "lead" in override:
+        return override["lead"]
     return parts[0]["lead"]
 
 
@@ -309,16 +319,24 @@ def merged_sections(parts: list) -> list:
 def build_visible_chapters(source: list) -> list:
     by_num = {ch["num"]: ch for ch in source}
     visible = []
-    for new_num, nums in enumerate(CHAPTER_GROUPS):
+    for new_num, spec in enumerate(CHAPTER_SPECS):
+        nums = spec["source_nums"]
         parts = [by_num[n] for n in nums]
-        first = parts[0]
+        part = spec["part"]
         visible.append({
             "num": new_num,
             "source_nums": nums,
-            "part": VISIBLE_PARTS[new_num],
-            "title": merge_title(new_num, parts),
-            "desc": merge_desc(parts),
-            "lead": merge_lead(new_num, parts),
+            "part": part["title"],
+            "part_kind": part["kind"],
+            "part_badge": part["badge"],
+            "part_question": part["question"],
+            "part_outcome": part["outcome"],
+            "part_index": spec["part_index"],
+            "part_chapter_index": spec["part_chapter_index"],
+            "part_chapter_count": spec["part_chapter_count"],
+            "title": merge_title(nums, parts),
+            "desc": merge_desc(nums, parts),
+            "lead": merge_lead(nums, parts),
             "sections": merged_sections(parts),
             # 单元分组:双单元章渲染为 h2(单元) + h3(小节)两层,避免二十多个平级小节
             "units": [
@@ -1224,7 +1242,7 @@ def _fig_b1_account_fields():
 
 
 def _fig_b2_week():
-    """第 29 章:模拟盘一周时间线,周一~周五每天一个事故卡,周末写复盘。"""
+    """模拟盘一周时间线,周一~周五每天一个事故卡,周末写复盘。"""
     # (x, 日标签, 事故标题, 应对动作, 是否周末卡)
     cards = [
         (15, "周一", "数据没按时到", "停机告警·记日志", False),
@@ -1261,7 +1279,7 @@ def _fig_b2_week():
 
 
 def _fig_b2_guards():
-    """第 30 章:小实盘的三层护栏,从最外圈一路走到实盘。"""
+    """小实盘的三层护栏,从最外圈一路走到实盘。"""
     body = """            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">小实盘的三层护栏:从最外圈走到实盘</text>
             <defs><marker id="gd" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
             <!-- 人:从外往里走 -->
@@ -1315,7 +1333,7 @@ def _fig_b2_guards():
 
 
 def _fig_b2_checklist():
-    """第 31 章:金融直觉 8 件事 vs 量化纪律 10 件事,两列对照,门后才是代码。"""
+    """金融直觉 8 件事 vs 量化纪律 10 件事,两列对照,门后才是代码。"""
     left = [
         ("钱和财富的区别", "票子 ≠ 产出"),
         ("银行有用又脆弱", "挤兑是信心病"),
@@ -1371,7 +1389,7 @@ def _fig_b2_checklist():
 
 
 def _fig_b2_failure():
-    """第 32 章:程序员七步翻车(红)与正确姿势(金)逐步对照。"""
+    """程序员七步翻车(红)与正确姿势(金)逐步对照。"""
     # (左主句, 左细节, 右主句, 右细节)
     rows = [
         ("先找模型,后找问题", "拿 60 天价格,预测未来 5 天", "先定义问题,再选模型", "股票池 · 频率 · 成本先写死"),
@@ -1408,7 +1426,7 @@ def _fig_b2_failure():
 
 
 def _fig_b2_pipeline():
-    """第 33 章:八步稳妥项目流水线,每步带推进/停止判据,小赚后回到第 5 步。"""
+    """八步稳妥项目流水线,每步带推进/停止判据,小赚后回到复核步骤。"""
     # (步名, 判据, 判据是否停止线)
     nodes = [
         ("问题很小", "说不清问题 → 停", True),
@@ -1446,7 +1464,7 @@ def _fig_b2_pipeline():
 
 
 def _fig_b2_questions():
-    """第 34 章:六问检查牌,六张等高卡上下堆叠,六关都过才准开始。"""
+    """六问检查牌,六张等高卡上下堆叠,六关都过才准开始。"""
     cards = [
         ("问题足够小?", "一句话说清:哪个池子 · 哪个因子 · 哪个频率"),
         ("最坏情况知道?", "先想「全亏光那天」长什么样,再谈收益"),
@@ -3252,7 +3270,7 @@ PATCH_H = {
 
 
 def _fig_i4_seesaw():
-    """第 4 章:利率、债价、期限敏感度的跷跷板(新老债主类)。"""
+    """利率、债价、期限敏感度的跷跷板(新老债主类)。"""
     body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">利率与债券价格的跷跷板:同一张 100 元债</text>
             <!-- 中央支点 -->
             <path d="M 430 244 L 470 244 L 450 200 Z" fill="rgba(240,201,106,0.3)" stroke="#f0c96a"/>
@@ -4525,10 +4543,10 @@ def _fig_r23_career():
 
 
 PATCH_R3 = {
-    16: [("市值加权: 大公司说话更大声", _fig_r16_index)],
-    18: [("过度自信:九成司机自认为中上水平", _fig_r18_overconfidence)],
-    19: [("长期资产按目标分钱:先分桶,不是先选股", _fig_r19_buckets)],
-    20: [("IC: 因子排序和未来收益是否同向", _fig_r20_factor_ic)],
+    16: [("大公司说话更大声", _fig_r16_index)],
+    18: [("九成司机自认为中上水平", _fig_r18_overconfidence)],
+    19: [("先分桶,不是先选股", _fig_r19_buckets)],
+    20: [("因子排序和未来收益是否同向", _fig_r20_factor_ic)],
     22: [("风险模型在估计什么", _fig_r22_greek)],
     23: [("量化机构不是只有研究员", _fig_r23_career)],
 }
@@ -5090,7 +5108,7 @@ def _fig_p38_fivesnowball():
             <text x="795" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">有多长</text>
             <text x="795" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">长期票息更高但风险更长</text>
             <text x="450" y="266" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">这五个数拼起来就是你买的东西;丢了任何一个,你都不知买的是什么</text>
-            <text x="450" y="300" text-anchor="middle" fill="#bcc9dd" font-size="12.5">回程资金账:敲入触发后,票息补不回敲入的下跌;第六章已把四条命拆解过了</text>"""
+            <text x="450" y="300" text-anchor="middle" fill="#bcc9dd" font-size="12.5">回程资金账:敲入触发后,票息补不回敲入的下跌;前文已把四条命拆解过了</text>"""
     return concept_figure(body, "0 0 920 330",
         "雪球确认书五关键词:敲出价、敲入价、票息率、观察频率、期限,五框匀排",
         "雪球这类结构化产品的阅读绝不复杂:只要五处数字你能在确认书里找到,你就知道买了什么。腿不净判读不叫节省工夫,叫按运气发牌。")
@@ -5243,7 +5261,7 @@ def render_summary_figure(ch: dict) -> str:
           <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 {ch['num']} 章小结图: {title}">
             <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
             <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
-            {''.join(summary_cards)}
+{''.join(summary_cards)}
           </svg>
           <p class="figure__cap">读完第 {ch['num']} 章后,至少要能复述“{esc(summary_labels[0])}”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
         </div>
@@ -5254,12 +5272,38 @@ def render_summary_figure(ch: dict) -> str:
 #
 # 1. 句首带标志词的段落(记住/注意/先说结论/铁律...) -> callout 卡片;
 # 2. 短语级强调“xxx” -> 金色高亮 span(参照《从神经元到大模型》的彩色术语);
-# 3. 金融术语(IC/Beta/夏普/ETF...) -> 天青点线术语(同 dl 的 .term);
+# 3. 术语表中的金融术语 -> 天青点线链接,每小节同一术语只链接第一次;
 # 4. 数值+单位(46 亿美元/3%/20 倍...) -> 金色数字 .num(做全书里的视觉锚点)。
+_GLOSSARY_LINK_TARGETS = {term: term for term, _ in GLOSSARY}
+_GLOSSARY_LINK_TARGETS.update({
+    "ROE": "净资产收益率(ROE)",
+    "净资产收益率": "净资产收益率(ROE)",
+    "PE": "市盈率(PE)",
+    "市盈率": "市盈率(PE)",
+    "PB": "市净率(PB)",
+    "市净率": "市净率(PB)",
+    "夏普": "夏普比率",
+    "IR": "信息比率",
+    "RankIC": "IC",
+    "alpha": "Alpha",
+    "beta": "Beta",
+    "升水": "升水/贴水",
+    "贴水": "升水/贴水",
+    "动量": "动量因子",
+})
+_LEGACY_ENRICH_TERMS = {
+    "RankIC", "REIT", "REITs", "IPO", "T+0", "IR", "ROE", "PE", "PB",
+    "夏普", "超额收益", "年化收益", "股指期货", "保证金", "杠杆",
+    "动量", "反转", "沪深 300", "中证 500",
+}
+_ENRICH_TERM_LABELS = sorted(
+    set(_GLOSSARY_LINK_TARGETS) | _LEGACY_ENRICH_TERMS,
+    key=lambda item: (-len(item), item),
+)
 _ENRICH_TERMS_RE = re.compile(
-    r"(?<![A-Za-z])(?:RankIC(?![a-z])|VaR|ROE|IC(?![a-zA-Z])|IR(?![a-zA-Z])|ETF|REITs?|IPO|PE(?![a-zA-Z])|PB(?![a-zA-Z])|"
-    r"T\+1|T\+0|Alpha|Beta|alpha|beta|夏普比率|夏普|信息比率|最大回撤|波动率|换手率|跟踪误差|"
-    r"超额收益|年化收益|市盈率|市净率|股指期货|保证金|基差|升水|贴水|杠杆|动量|反转|沪深 300|中证 500)"
+    r"(?<![A-Za-z0-9])(?:"
+    + "|".join(re.escape(term) for term in _ENRICH_TERM_LABELS)
+    + r")(?![A-Za-z0-9])"
 )
 _ENRICH_NUM_RE = re.compile(
     r"(?<![0-9A-Za-z#])(-?\d+(?:\.\d+)?(?:-\d+(?:\.\d+)?)?\s*(?:亿美元|万元|亿元|万美元|万|亿|%|倍|个基点|bp|"
@@ -5267,14 +5311,45 @@ _ENRICH_NUM_RE = re.compile(
 )
 
 
-def _enrich_terms_nums(inner: str) -> str:
-    """只处理纯文本片段,跳过已有标签,避免嵌套错乱。"""
+def _enrich_terms_nums(inner: str, linked_glossary_targets: set[str]) -> str:
+    """处理纯文本片段；跳过链接和代码，避免嵌套或误改代码示例。"""
     parts = re.split(r"(<[^>]+>)", inner)
+    blocked_depth = 0
     for i in range(len(parts)):
         seg = parts[i]
-        if not seg or seg.startswith("<"):
+        if not seg:
             continue
-        seg = _ENRICH_TERMS_RE.sub(r'<span class="term">\g<0></span>', seg)
+        if seg.startswith("<"):
+            tag = re.match(r"<\s*(/?)\s*([A-Za-z0-9]+)", seg)
+            if tag:
+                closing, name = tag.groups()
+                name = name.lower()
+                if name in {"a", "code"}:
+                    if closing:
+                        blocked_depth = max(0, blocked_depth - 1)
+                    elif not seg.rstrip().endswith("/>"):
+                        blocked_depth += 1
+            continue
+        if blocked_depth:
+            continue
+
+        def _term(m):
+            label = m.group(0)
+            target = _GLOSSARY_LINK_TARGETS.get(label)
+            if target is None:
+                return f'<span class="term">{esc(label)}</span>'
+            if target in linked_glossary_targets:
+                if label in _LEGACY_ENRICH_TERMS:
+                    return f'<span class="term">{esc(label)}</span>'
+                return esc(label)
+            linked_glossary_targets.add(target)
+            anchor = f"g-{slugify(target)}"
+            return (
+                f'<a class="term term-link" href="glossary.html#{anchor}" '
+                f'title="查看术语：{esc(target)}">{esc(label)}</a>'
+            )
+
+        seg = _ENRICH_TERMS_RE.sub(_term, seg)
         seg = _ENRICH_NUM_RE.sub(r'<span class="num">\g<0></span>', seg)
         parts[i] = seg
     return "".join(parts)
@@ -5305,7 +5380,10 @@ def _marker_title(plain: str) -> tuple:
     return (None, None, None)
 
 
-def enrich_body(htmltext: str) -> str:
+def enrich_body(
+    htmltext: str,
+    linked_glossary_targets: set[str] | None = None,
+) -> str:
     """对单个小节 body 做富文本增强(不改原文文字,只加包装)。
 
     手稿 body 由 p(...) + ... 直接拼接,段落之间没有换行,因此按 <p>...</p>
@@ -5313,6 +5391,8 @@ def enrich_body(htmltext: str) -> str:
     """
     parts = re.split(r"(<p>[\s\S]*?</p>)", htmltext)
     out = []
+    if linked_glossary_targets is None:
+        linked_glossary_targets = set()
     for seg in parts:
         if not (seg.startswith("<p>") and seg.endswith("</p>")) or any(tag in seg for tag in ("<pre", "<figure", "<table", "<svg", "<ol", "<ul", "code-walk")):
             out.append(seg)
@@ -5322,22 +5402,130 @@ def enrich_body(htmltext: str) -> str:
         # 1) 标志词段落升级成 callout
         kw, style, title = _marker_title(plain)
         if kw and len(plain) <= 260:
-            out.append(f'<div class="callout callout--{style} reveal"><span class="callout__title">{esc(title)}</span><p>{_enrich_terms_nums(inner)}</p></div>')
+            out.append(f'<div class="callout callout--{style} reveal"><span class="callout__title">{esc(title)}</span><p>{_enrich_terms_nums(inner, linked_glossary_targets)}</p></div>')
             continue
         # 2) 双引号短语高亮(避免已含标签的片段错乱)
         def _hl(m):
             return f'<span class="hl">“{m.group(1)}”</span>'
         new_inner = re.sub(r"“([^”<>]{2,18})”", _hl, inner)
         # 3) 术语与数字标注:对已含 <span class="hl"> 的嵌套安全(split 按标签切)
-        new_inner = _enrich_terms_nums(new_inner)
+        new_inner = _enrich_terms_nums(new_inner, linked_glossary_targets)
         out.append(f"<p>{new_inner}</p>")
     return "".join(out)
+
+
+FIGURE_SOURCE_OVERRIDES = {
+    # 旧章同时包含策略全景和指数增强专题;总览图留在策略全景,
+    # 其余两个锚点会自然匹配到指数增强专题。
+    (24, "指数增强"): 29,
+}
+
+
+def figure_anchors_for_chapter(ch: dict) -> list:
+    """把旧公开章号登记的概念图按小节锚点迁回源单元。"""
+    by_num = {item["num"]: item for item in SOURCE_CHAPTERS}
+    wanted = set(ch["source_nums"])
+    result = []
+    for legacy_num, anchors in CONCEPT_FIGURES.items():
+        legacy_sources = LEGACY_CHAPTER_GROUPS[legacy_num]
+        for keyword, maker in anchors:
+            owners = []
+            for source_num in legacy_sources:
+                source = by_num[source_num]
+                titles = [clean_section_title(title) for title, _ in source["sections"]]
+                if any(keyword in title for title in titles):
+                    owners.append(source_num)
+            owner = FIGURE_SOURCE_OVERRIDES.get(
+                (legacy_num, keyword), owners[0] if owners else legacy_sources[0]
+            )
+            if owner in wanted:
+                result.append((keyword, maker))
+    return result
+
+
+def render_chapter_context(ch: dict) -> str:
+    current = ch["part_chapter_index"] + 1
+    total = ch["part_chapter_count"]
+    note = "可独立选读,不影响后续量化主线。" if ch["part_kind"] == "special" else ""
+    if ch["part_kind"] == "appendix":
+        note = "工具型内容,需要时回来查。"
+    return f"""
+        <section class="chapter-context chapter-context--{esc(ch['part_kind'])}">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">{esc(ch['part_badge'])}</span>
+            <span>本部分第 {current} / {total} 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>{esc(ch['part_question'])}</p>
+          <p class="chapter-context__outcome">{esc(ch['part_outcome'])} {esc(note)}</p>
+        </section>
+"""
+
+
+def render_handoff(ch: dict) -> str:
+    idx = ch["num"]
+    if idx == len(CHAPTERS) - 1:
+        return """
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">读到这里</span>
+          <h2>工具箱到此结束</h2>
+          <p>回到全书目录,按你的问题重新进入对应部分;这本书不要求一次记住所有内容。</p>
+          <a class="xref" href="index.html">返回全书路线图 →</a>
+        </section>
+"""
+
+    next_ch = CHAPTERS[idx + 1]
+    if next_ch["part_kind"] == "special" and ch["part_kind"] == "main":
+        main_target = next(item for item in CHAPTERS[idx + 1:] if item["part_kind"] == "main")
+        return f"""
+        <section class="chapter-handoff chapter-handoff--choice">
+          <span class="chapter-handoff__label">接下来有两条路</span>
+          <h2>先补个人安全底盘,或继续量化主线</h2>
+          <p>专题篇不承担后续前置知识。想先处理保险和家庭现金流,顺序阅读;想直接进入研究生产线,可以跳过。</p>
+          <div class="chapter-handoff__actions">
+            <a class="xref" href="{chapter_file(next_ch['num'])}">专题选读: {esc(next_ch['title'])} →</a>
+            <a class="xref" href="{chapter_file(main_target['num'])}">继续主线: {esc(main_target['title'])} →</a>
+          </div>
+        </section>
+"""
+
+    if next_ch["part_kind"] == "appendix" and ch["part_kind"] == "main":
+        label = "正文已经收束"
+        heading = "下面是随时回来查的工具箱"
+        body = "术语、公式和最终检查表不再承担新的叙事任务,可以按需阅读。"
+    elif next_ch["part"] != ch["part"]:
+        label = "下一步"
+        heading = f"进入{next_ch['part']}"
+        body = next_ch["part_question"]
+    else:
+        label = "下一章为什么接在这里"
+        heading = next_ch["title"]
+        body = next_ch["desc"]
+    return f"""
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">{esc(label)}</span>
+          <h2>{esc(heading)}</h2>
+          <p>{esc(body)}</p>
+        </section>
+"""
+
+
+CASE_SECTION_LABELS = (
+    ("金融现场｜", "金融现场"),
+    ("概念现场｜", "概念现场"),
+)
+
+
+def split_case_section_title(title: str) -> tuple[str | None, str]:
+    for prefix, label in CASE_SECTION_LABELS:
+        if title.startswith(prefix):
+            return label, title.removeprefix(prefix)
+    return None, title
 
 
 def render_chapter(ch: dict) -> str:
     idx = ch["num"]
     # 概念图按锚点关键词挂到对应小节后面
-    anchors = CONCEPT_FIGURES.get(idx, [])
+    anchors = figure_anchors_for_chapter(ch)
     used = [False] * len(anchors)
 
     def attach_figures(title: str, out: list):
@@ -5349,6 +5537,7 @@ def render_chapter(ch: dict) -> str:
     units = ch.get("units") or []
     sections = []
     recap_rows = []
+    linked_glossary_targets = set()
     if len(units) > 1:
         # 多单元章:单元 = h2 大块,单元内小节 = h3(x.y 编号)
         for ui, unit in enumerate(units, 1):
@@ -5359,20 +5548,40 @@ def render_chapter(ch: dict) -> str:
             if unit.get("lead"):
                 sections.append(f"        <p>{esc(unit['lead'])}</p>\n")
             for si, (title, body) in enumerate(unit_sections, 1):
-                sections.append(f"""
-        <h3>{ui}.{si}. {esc(title)}</h3>
-{enrich_body(body.rstrip())}
+                case_label, display_title = split_case_section_title(title)
+                if case_label:
+                    sections.append(f"""
+        <section class="case-study reveal">
+          <span class="case-study__label">{case_label}</span>
+          <h3>{ui}.{si}. {esc(display_title)}</h3>
+{enrich_body(body.rstrip(), linked_glossary_targets)}
+        </section>
 """)
-                recap_rows.append((f"{ui}.{si}.", title))
+                else:
+                    sections.append(f"""
+        <h3>{ui}.{si}. {esc(title)}</h3>
+{enrich_body(body.rstrip(), linked_glossary_targets)}
+""")
+                recap_rows.append((f"{ui}.{si}.", display_title))
                 attach_figures(title, sections)
     else:
         rendered_sections = prepare_sections(ch["sections"])
         for n, (title, body) in enumerate(rendered_sections, 1):
-            sections.append(f"""
-        <h2>{n}. {esc(title)}</h2>
-{enrich_body(body.rstrip())}
+            case_label, display_title = split_case_section_title(title)
+            if case_label:
+                sections.append(f"""
+        <section class="case-study reveal">
+          <span class="case-study__label">{case_label}</span>
+          <h2>{n}. {esc(display_title)}</h2>
+{enrich_body(body.rstrip(), linked_glossary_targets)}
+        </section>
 """)
-            recap_rows.append((f"{n}.", title))
+            else:
+                sections.append(f"""
+        <h2>{n}. {esc(title)}</h2>
+{enrich_body(body.rstrip(), linked_glossary_targets)}
+""")
+            recap_rows.append((f"{n}.", display_title))
             attach_figures(title, sections)
     # 没匹配上的概念图(锚点关键词没找到)兜底追加到正文末尾,避免丢图
     for ai, (keyword, maker) in enumerate(anchors):
@@ -5402,6 +5611,7 @@ def render_chapter(ch: dict) -> str:
         <p class="chapter__eyebrow">{esc(ch["part"])} · 第 {idx} 章</p>
         <h1>{esc(ch["title"])}</h1>
         <p class="lead">{esc(ch["lead"])}</p>
+{render_chapter_context(ch)}
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
@@ -5426,6 +5636,7 @@ def render_chapter(ch: dict) -> str:
           <h2>自测</h2>
 {quiz}
         </section>
+{render_handoff(ch)}
       </div>
     </main>
     <script src="assets/book.js"></script>{labs_script}
@@ -5440,10 +5651,16 @@ def render_index() -> str:
     for ch in CHAPTERS:
         if ch["part"] != last_part:
             if last_part is not None:
-                cards.append("      </div>\n")
+                cards.append("        </div>\n      </section>\n")
             last_part = ch["part"]
-            cards.append(f"""      <p class="toc-part">{esc(last_part)}</p>
-      <div class="toc-grid">
+            cards.append(f"""      <section class="toc-part-block toc-part-block--{esc(ch['part_kind'])}" id="part-{ch['part_index']}">
+        <div class="toc-part-header">
+          <span class="toc-part-badge">{esc(ch['part_badge'])}</span>
+          <h2>{esc(last_part)}</h2>
+          <p class="toc-part-question">{esc(ch['part_question'])}</p>
+          <p>{esc(ch['part_outcome'])}</p>
+        </div>
+        <div class="toc-grid">
 """)
         cards.append(f"""        <a class="toc-card reveal" href="{chapter_file(ch['num'])}">
           <span class="toc-card__num">第 {ch['num']} 章</span>
@@ -5451,7 +5668,18 @@ def render_index() -> str:
           <span class="toc-card__desc">{esc(ch['desc'])}</span>
         </a>
 """)
-    cards.append("      </div>\n")
+    cards.append("        </div>\n      </section>\n")
+
+    roadmap_cards = []
+    for part_index, part in enumerate(BOOK_STRUCTURE):
+        if part["kind"] != "main":
+            continue
+        roadmap_cards.append(f"""        <a class="roadmap-card" href="#part-{part_index}">
+          <span>{esc(part['badge'])}</span>
+          <strong>{esc(part['title'].split('·', 1)[-1].strip())}</strong>
+          <small>{esc(part['question'])}</small>
+        </a>
+""")
 
     return render_head(f"{BOOK_TITLE} · {BOOK_SUBTITLE}", "给计算机背景读者的金融与量化入门书。") + f"""  <body data-cover>
     <a
@@ -5478,8 +5706,8 @@ def render_index() -> str:
         <p class="cover__eyebrow">{esc(BOOK_SUBTITLE)}</p>
         <h1>{esc(BOOK_TITLE)}</h1>
         <p class="cover__lead">
-          一本写给计算机背景金融小白的路线书。先把货币、银行、股票、债券、券商、基金、衍生品、A 股交易制度和宏观周期讲清楚,
-          再进入量化行业的因子、回测、机器学习、组合优化、交易执行、风控、机构案例、个人项目和上线检查清单。
+          一本写给计算机背景金融小白的路线书。沿着“真实财富 → 金融权利 → 市场价格与数据 →
+          研究假设 → 回测验证 → 组合交易 → 项目复盘”,一步步走到可信的量化研究。
         </p>
         <div class="cover__actions">
           <a class="button button--primary" data-continue href="chapter-00.html">开始阅读</a>
@@ -5501,8 +5729,22 @@ def render_index() -> str:
       </div>
     </header>
     <main class="toc-section" id="toc">
-      <h2>全书目录</h2>
-      <p class="toc-section__hint">建议顺序阅读。第 0-7 章建立金融和宏观地基,第 8-10 章理解 A 股交易、行情、指数、收益风险和有效市场,第 11-14 章进入量化研究生产线,第 15-20 章理解行业、策略、产品、监管和多资产,第 21-34 章完成项目、场景练习、检查清单和结语。</p>
+      <section class="book-roadmap reveal" aria-labelledby="roadmap-title">
+        <p class="book-roadmap__eyebrow">建议先看路线,再进目录</p>
+        <h2 id="roadmap-title">整本书只走一条主线</h2>
+        <p>先理解金融为什么存在,再认识资产、市场与宏观;随后把金融问题变成可验证研究,最后让策略穿过产品、项目和人的边界。专题篇可以跳过,附录按需查阅。</p>
+        <div class="roadmap-grid">
+{''.join(roadmap_cards)}        </div>
+        <div class="book-roadmap__aside">
+          <a class="xref" href="#part-4">专题选读:个人金融的安全底盘</a>
+          <a class="xref" href="#part-9">工具箱:术语、公式与最终检查表</a>
+        </div>
+      </section>
+      <div class="toc-heading">
+        <p class="book-roadmap__eyebrow">共 {len(CHAPTERS)} 章</p>
+        <h2>全书目录</h2>
+        <p>主线部分建议顺序阅读。每一章只回答一个核心问题;多单元章会在章内明确分层。</p>
+      </div>
 {''.join(cards)}
       <section class="about reveal">
         <h2>关于本书</h2>
@@ -5513,7 +5755,7 @@ def render_index() -> str:
           组合优化、交易执行和风控。
         </p>
         <p>
-          全书 33 章,正文全部手写,配 22 张解释概念的手绘 SVG 图。内容尽量做到通俗又不失专业,
+          全书 {len(CHAPTERS)} 章,正文全部手写,配 {sum(len(items) for items in CONCEPT_FIGURES.values())} 张解释概念的手绘 SVG 图。内容尽量做到通俗又不失专业,
           但金融和量化涉及真实资金与风险,书中所有案例、数字和结论仅用于学习,<strong>不构成任何投资建议</strong>。
           行业、机构和监管信息会随时间变化,实盘和引用前请以交易所、证监会、协会、券商和数据服务商的最新原文为准。
         </p>
@@ -5874,6 +6116,60 @@ a:hover { text-decoration: underline; }
   font-size: 2rem;
 }
 .toc-section__hint { color: var(--text-soft); }
+.book-roadmap {
+  margin-bottom: 3.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(122, 167, 240, 0.28);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(122, 167, 240, 0.11), rgba(240, 201, 106, 0.06));
+}
+.book-roadmap > p { max-width: 58rem; color: var(--text-soft); }
+.book-roadmap__eyebrow {
+  margin: 0 0 0.25rem;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 1.25rem;
+}
+.roadmap-card {
+  display: grid;
+  gap: 0.3rem;
+  min-height: 10rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  background: rgba(12, 18, 29, 0.48);
+  color: var(--text);
+}
+.roadmap-card:hover { text-decoration: none; border-color: rgba(240, 201, 106, 0.45); }
+.roadmap-card span { color: var(--primary); font-size: 0.78rem; font-weight: 850; }
+.roadmap-card strong { line-height: 1.35; }
+.roadmap-card small { color: var(--text-dim); line-height: 1.55; }
+.book-roadmap__aside { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+.toc-heading { margin-bottom: 2rem; }
+.toc-heading > p:last-child { color: var(--text-soft); }
+.toc-part-block { margin: 0 0 3.5rem; scroll-margin-top: calc(var(--header-height) + 1.5rem); }
+.toc-part-header {
+  margin-bottom: 1rem;
+  padding: 1rem 1.1rem;
+  border-left: 3px solid var(--primary);
+  background: rgba(255,255,255,0.025);
+}
+.toc-part-header h2 { margin: 0.2rem 0 0.45rem; font-size: 1.65rem; }
+.toc-part-header p { margin: 0.25rem 0; color: var(--text-soft); }
+.toc-part-header .toc-part-question { color: var(--text); font-weight: 720; }
+.toc-part-badge { color: var(--primary); font-size: 0.8rem; font-weight: 850; }
+.toc-part-block--special .toc-part-header { border-left-color: var(--accent); }
+.toc-part-block--special .toc-part-badge { color: var(--accent); }
+.toc-part-block--appendix .toc-part-header { border-left-color: var(--text-dim); }
+.toc-part-block--appendix .toc-part-badge { color: var(--text-dim); }
 .toc-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5953,6 +6249,22 @@ a:hover { text-decoration: underline; }
   font-size: 1.18rem;
   line-height: 1.8;
 }
+.chapter-context {
+  margin: -0.8rem 0 2rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(122, 167, 240, 0.24);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: rgba(122, 167, 240, 0.06);
+}
+.chapter-context p { margin: 0.45rem 0; }
+.chapter-context__meta { display: flex; flex-wrap: wrap; gap: 0.75rem; color: var(--text-dim); font-size: 0.84rem; }
+.chapter-context__badge { color: var(--accent); font-weight: 850; }
+.chapter-context__outcome { font-size: 0.95rem; }
+.chapter-context--special { border-left-color: var(--primary); background: rgba(240, 201, 106, 0.055); }
+.chapter-context--special .chapter-context__badge { color: var(--primary); }
+.chapter-context--appendix { border-left-color: var(--text-dim); background: rgba(255,255,255,0.03); }
+.chapter-context--appendix .chapter-context__badge { color: var(--text-dim); }
 .chapter p {
   margin: 1rem 0;
   color: var(--text-soft);
@@ -5970,6 +6282,31 @@ a:hover { text-decoration: underline; }
   font-size: 1.28rem;
   color: var(--text);
 }
+.case-study {
+  margin: 2.6rem 0;
+  padding: 1.2rem 1.25rem 1.25rem;
+  border: 1px solid rgba(240, 201, 106, 0.24);
+  border-left: 4px solid var(--primary);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(240, 201, 106, 0.09), rgba(122, 167, 240, 0.045));
+}
+.case-study__label {
+  display: inline-flex;
+  padding: 0.2rem 0.52rem;
+  border-radius: 999px;
+  background: rgba(240, 201, 106, 0.15);
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+.case-study h2,
+.case-study h3 {
+  margin-top: 0.65rem;
+  padding-top: 0;
+  border-top: 0;
+}
+.case-study p:last-child { margin-bottom: 0; }
 .summary, .quiz, .glossary-list, .references {
   border-left: 2px solid rgba(240, 201, 106, 0.28);
   padding-left: 1.1rem;
@@ -6056,6 +6393,20 @@ code {
   color: var(--accent);
   font-weight: 700;
   border-bottom: 1px dotted rgba(122, 167, 240, 0.55);
+}
+.term-link {
+  text-decoration: none;
+  text-underline-offset: 0.18em;
+}
+.term-link:hover {
+  color: #a9c8ff;
+  border-bottom-style: solid;
+  text-decoration: none;
+}
+.term-link:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
 }
 
 /* 数值锚点:数字+单位 */
@@ -6144,6 +6495,19 @@ strong .hl, strong .term, strong .num { color: #ffd97a; }
   color: var(--text);
 }
 .quiz__item p { color: var(--text-soft); }
+.chapter-handoff {
+  margin: 3rem 0 0;
+  padding: 1.2rem 1.3rem;
+  border: 1px solid rgba(122, 167, 240, 0.28);
+  border-radius: 12px;
+  background: rgba(122, 167, 240, 0.065);
+}
+.chapter-handoff h2 { margin: 0.2rem 0 0.5rem; padding: 0; border: 0; font-size: 1.35rem; }
+.chapter-handoff p { margin: 0.45rem 0 0.75rem; }
+.chapter-handoff__label { color: var(--accent); font-size: 0.8rem; font-weight: 850; }
+.chapter-handoff__actions { display: flex; flex-wrap: wrap; gap: 0.7rem 1.1rem; }
+.chapter-handoff--choice { border-color: rgba(240, 201, 106, 0.3); background: rgba(240, 201, 106, 0.06); }
+.chapter-handoff--choice .chapter-handoff__label { color: var(--primary); }
 
 .map-grid {
   display: grid;
@@ -6168,6 +6532,14 @@ strong .hl, strong .term, strong .num { color: #ffd97a; }
 .glossary-list li {
   padding: 1rem 0;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
+}
+.glossary-list li:target {
+  margin-inline: -0.75rem;
+  padding-inline: 0.75rem;
+  border-radius: 8px;
+  background: rgba(240, 201, 106, 0.1);
+  box-shadow: inset 3px 0 0 var(--primary);
 }
 .glossary-list p { margin: 0.2rem 0 0; color: var(--text-soft); }
 .references li { overflow-wrap: anywhere; }
@@ -6197,7 +6569,9 @@ strong .hl, strong .term, strong .num { color: #ffd97a; }
   .cover { min-height: 72vh; padding-top: 6rem; }
   .cover h1 { font-size: 3rem; }
   .cover__lead, .lead { font-size: 1.08rem; }
-  .toc-grid, .map-grid { grid-template-columns: 1fr; }
+  .toc-grid, .map-grid, .roadmap-grid { grid-template-columns: 1fr; }
+  .book-roadmap { padding: 1.1rem; }
+  .roadmap-card { min-height: auto; }
   .toc-card { min-height: auto; }
   .chapter { padding-left: 1rem; padding-right: 1rem; }
   .chapter h1 { font-size: 2.25rem; }
@@ -6549,7 +6923,8 @@ JS_TEMPLATE = r"""
     __CHAPTERS__
   ];
   var BOOK_TITLE = "__BOOK_TITLE__";
-  var STORAGE_LAST = "financebook:last";
+  // 公开结构已经整体重排。使用新键避免把旧章号进度误映射到不同主题。
+  var STORAGE_LAST = "financebook:last:v2";
   var sectionNavigate = null;
   var HEADING_ANCHOR_RATIO = 0.28;
 
@@ -6691,6 +7066,10 @@ JS_TEMPLATE = r"""
   }
   function scrollToSectionTarget(target, smooth) {
     if (!target) return;
+    if (target.matches && target.matches(".glossary-list li[id^='g-']")) {
+      scrollHeadingIntoView(target, smooth);
+      return;
+    }
     var heading = isSectionHeading(target) ? target : findSectionHeading(target);
     if (heading && sectionNavigate) {
       sectionNavigate(heading, smooth);

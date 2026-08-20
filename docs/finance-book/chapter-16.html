@@ -3,233 +3,210 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 16 章 · 看懂行情:屏幕上的数字和基准 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="解释股票软件里最常见的价格、成交量、K 线、盘口和复权概念。 / 从指数编制、指数基金、ETF 申赎、跟踪误差和基准意识讲起。" />
+    <title>第 16 章 · 财务报表和基本面因子: 公司赚钱到底看哪里 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="用小白能懂的方式讲利润表、资产负债表、现金流量表、ROE、毛利率和基本面量化。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="16">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第二部分 · A 股市场与交易机器 · 第 16 章</p>
-        <h1>看懂行情:屏幕上的数字和基准</h1>
-        <p class="lead">第一次打开行情软件,满屏的最新价、涨跌幅、成交量、换手率、买一卖一、K 线、均线、复权很容易把人吓住。这一章先不急着学指标,而是讲清这些数字从哪里来、表示什么、又不能说明什么;再讲指数、ETF 和基准,回答一个常被忽略的问题:你的收益到底在和谁比较?看懂行情,才谈得上理解交易和量化数据。</p>
+        <p class="chapter__eyebrow">第三部分 · 市场如何形成价格与数据 · 第 16 章</p>
+        <h1>财务报表和基本面因子: 公司赚钱到底看哪里</h1>
+        <p class="lead">你账户里每一股股票,背后都是一家真在开门做生意的公司。做量化可以只盯价格和成交量,也可以翻开公司的财务报表,构造基本面因子——另一条同样有效的路。这一章不要求你变成会计专家,但至少要做到三件事:看得懂收入、利润、资产、负债和现金流各自在讲什么;分得清“账面赚钱”和“钱真进了口袋”的区别;听到别人说“这家公司利润很好看、现金流却很难看”时,能本能地警觉起来,因为那往往就是故事和现实的裂缝。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线三</span>
+            <span>本部分第 5 / 8 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>一项金融权利怎样上市、成交、留下数据,又该怎样评价它的收益和风险?</p>
+          <p class="chapter-context__outcome">读完后,你能把交易界面上的数字还原为制度、现金流和可研究的数据口径。 </p>
+        </section>
+
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>行情数字是交易结果的记录,不是公司价值和未来走势的直接答案。</li>
-            <li>K 线、成交量、盘口、换手率、复权和技术指标都要先理解口径,再谈使用。</li>
-            <li>指数是一组证券按规则合成的市场尺子,不是单只股票或官方估值。</li>
-            <li>ETF 既有基金净值,也有交易所价格,折溢价和流动性会影响真实交易成本。</li>
+            <li>利润表、资产负债表和现金流量表,分别回答“赚不赚钱”“家底几何”“现金怎么进出”三个问题,要连起来读。</li>
+            <li>ROE、利润率、现金流、杠杆和估值指标,都必须放回行业、周期和披露时间里理解,孤立看数字必踩坑。</li>
           </ul>
         </section>
 
 
-        <h2>1. 先看懂屏幕上的数字</h2>
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 门店是真的,咖啡是真的,收入为什么还能是假的</h2>
+<p>瑞幸咖啡快速扩张时,门店、App 和排队取咖啡都是真实可见的。<span class="num">2020 年</span>公司却披露内部调查发现虚构交易等问题,此前看似高速增长的部分收入失去了可信度。这个案例最反直觉的地方是:一家真实经营的公司,照样可以交出不真实的数字。</p><p>财务分析不能停在<span class="hl">“有没有这门生意”</span>。收入确认、补贴、关联交易和现金回流决定利润表里那一块钱究竟是不是挣来的。利润增长很快,经营现金流、客户数据或同店表现却对不上,三张表之间的裂缝就值得追。</p><p><a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>量化最怕把会计字段当传感器真值。异常应收、现金流与利润背离、审计意见和频繁修订都可以成为质量<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>。模型不会自动识别谎言,但它可以系统地寻找故事与账本互相打架的地方。</p>
+        </section>
 
-        <h3>1.1. 最新价不是公司真实价值</h3>
-<p>行情软件把哪个数字放得最大最显眼,哪个数字就最容易被误解——最新价就是这么个角色。先弄清它从哪来:交易所的撮合引擎按价格优先、时间优先的规则,把不断涌入的买单和卖单两两配对,每配出一对就产生一笔成交;最新价就是最近这一笔被撮合出来的价格。它既不是交易所给这家公司盖的官方估值章,也不是把公司资产负债表里里外外算一遍得到的精确价值。</p><p>既然是最后一笔成交,它的局限也很明显:那一笔可能只有一百股,背后可能是一笔情绪单、一次误操作,或者一条还没被消化的消息。算一笔账:某股全天成交额 <span class="num">2 亿元</span>,尾盘有人用市价单扫走卖一上的 <span class="num">100 手</span>,价格从 <span class="num">20.00 元</span>被打到 <span class="num">20.10 元</span>。这一单金额约 <span class="num">20 万元</span>,只占全天成交的万分之一,却把最新价抬高了 <span class="num">0.5%</span>——反算一下,20.10 除以 20.00 再减 1,正好 <span class="num">0.5%</span>。常有人以为最新价是全市场共识的体现,其实它只是边际上最后一笔的价格,有足够耐心的资金足以挪动它。</p><p>量化研究每天要吃进海量价格数据,入门的第一个纪律就是尊重价格的含义:价格是可观察的结果,不是因果解释。用程序员的话说,它是系统输出的日志,不是源代码。策略不能因为价格涨了,就自动推导<span class="hl">“公司变好了”</span>;也不能因为跌了,就自动宣布<span class="hl">“公司变差了”</span>。价格变化的背后,可能是基本面,可能是资金流,可能是交易限制、情绪、指数调仓,也可能只是流动性被临时抽走了。看到日志先别急着下结论,这是读行情的第一课。</p>
-
-        <h3>1.2. 一天被压成四个价格</h3>
-<p>一天四五个小时的交易,几千笔、几万笔成交,最后落到日线数据里只剩四个数:开盘价、最高价、最低价、收盘价,英文缩写 OHLC。这四个数不是谁拍脑袋登记的,而是从全天逐笔成交里聚合出来的:开盘价来自早盘集合竞价的撮合一锤,最高价和最低价是全天成交价格扫出来的上下边界,收盘价来自收盘阶段的集合竞价或最后几笔成交。用程序员的话说,这是按交易日这个窗口对逐笔日志做了一次 first、last、max、min 聚合——压缩得很优雅,但压掉的东西你得心里有数。</p><p>动手算一遍就明白聚合的含义。假设某股第一笔成交 <span class="num">9.90 元</span>,随后依次是 <span class="num">10.05 元</span>、<span class="num">10.20 元</span>、<span class="num">9.95 元</span>,尾盘定在 <span class="num">10.10 元</span>,这一天的 OHLC 就是开 9.90、高 10.20、低 9.90、收 10.10。反着验证:开盘取第一笔、收盘取最后一笔、高低取极值,四个数各有出处。再假设另一只股票同一天也收出完全相同的 OHLC,但它是上午一路拉升、下午跳水后尾盘才拉回——两根 K 线骨架一模一样,股民的心跳曲线天差地别,只看聚合结果根本分不出来。</p><p>这对量化不是小事,而是坑。日线策略通常只能假设自己在某些价格附近成交,可真实成交发生在分钟、秒甚至逐笔层面。最典型的错误是:策略信号用当天收盘价计算,回测里却假设自己也按当天收盘价买入——可收盘价是收盘那一刻才知道的,你等于先看到了答案再答题。反直觉的是,数据压缩得越狠、回测代码越简洁,这种偷看的机会反而越多。这类未来函数,是全书反复要防的头号敌人。</p>
-
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 305" role="img" aria-label="K线构成示意:阳线收盘高于开盘,阴线收盘低于开盘,上下影线是最高价和最低价">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一根 K 线,记录一段时间里的四个价格</text>
-            <!-- 阳线 -->
-            <text x="250" y="76" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">阳线(收盘 &gt; 开盘)</text>
-            <line x1="250" y1="96" x2="250" y2="130" stroke="#a8c6ff" stroke-width="2"/>
-            <line x1="250" y1="230" x2="250" y2="262" stroke="#a8c6ff" stroke-width="2"/>
-            <rect x="222" y="130" width="56" height="100" rx="3" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff" stroke-width="2"/>
-            <text x="300" y="104" fill="#c9d4e8" font-size="12.5">最高价</text>
-            <text x="300" y="140" fill="#c9d4e8" font-size="12.5">收盘价(上沿)</text>
-            <text x="300" y="228" fill="#c9d4e8" font-size="12.5">开盘价(下沿)</text>
-            <text x="300" y="262" fill="#c9d4e8" font-size="12.5">最低价</text>
-            <!-- 阴线 -->
-            <text x="620" y="76" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">阴线(收盘 &lt; 开盘)</text>
-            <line x1="620" y1="96" x2="620" y2="130" stroke="#ffb4b4" stroke-width="2"/>
-            <line x1="620" y1="230" x2="620" y2="262" stroke="#ffb4b4" stroke-width="2"/>
-            <rect x="592" y="130" width="56" height="100" rx="3" fill="rgba(232,120,120,0.28)" stroke="#ffb4b4" stroke-width="2"/>
-            <text x="670" y="104" fill="#c9d4e8" font-size="12.5">最高价</text>
-            <text x="670" y="140" fill="#c9d4e8" font-size="12.5">开盘价(上沿)</text>
-            <text x="670" y="228" fill="#c9d4e8" font-size="12.5">收盘价(下沿)</text>
-            <text x="670" y="262" fill="#c9d4e8" font-size="12.5">最低价</text>
-            <text x="450" y="292" text-anchor="middle" fill="#8499bd" font-size="13">实体是开盘和收盘,上下影线是这段时间摸到的最高和最低</text>
-          </svg>
-          <p class="figure__cap">一根 K 线把一段时间压缩成四个数:开盘、收盘、最高、最低。实体两端是开盘和收盘,细细的影线是期间摸到过的最高和最低价。</p>
-        </div>
-        <h3>1.3. K 线实体和影线只是压缩图</h3>
-<p>很多新手看 K 线的姿势,像极了古人看星象:这根是<span class="hl">“仙人指路”</span>,那根是<span class="hl">“乌云盖顶”</span>,仿佛每根线里都藏着预言。我们先把这份神秘感拆掉。K 线只是把开、收、高、低四个价格画成一根柱子:实体是开盘和收盘之间的区间,影线是全天最高和最低摸到的位置。收盘高于开盘,画成上涨颜色;收盘低于开盘,画成下跌颜色。注意,红绿的含义各地习惯不同,A 股里常见的是红涨绿跌,和外盘正好相反,别记岔了。</p><p>看一根具体的线。某股当天开 <span class="num">10.00 元</span>、收 <span class="num">11.00 元</span>、最高 <span class="num">11.50 元</span>、最低 <span class="num">9.80 元</span>:实体高 <span class="num">1.00 元</span>,上影线 <span class="num">0.50 元</span>,下影线 <span class="num">0.20 元</span>,全天区间 <span class="num">1.70 元</span>,实体占了约 <span class="num">59%</span>。反算验证:1.00 加 0.50 加 0.20,恰好等于 1.70,账目自洽。稳妥的读法是把 K 线当成交易过程的压缩记录:大实体说明多空打得激烈且一方明显占优,上影线说明冲高过但没守住,下影线说明跳水过但被拉了回来。常有人以为长上影是见顶预告,其实它只是<span class="hl">“冲高未守住”</span>这五个字的事后记录,本身不预测明天。</p><p>对量化来说,K 线形态确实可以变成特征:实体长度、上下影线比例、开盘跳空幅度、收盘在全天区间里的位置,都能变成数值喂给模型。但这些特征必须经过样本外检验和交易成本检验,绝不能靠翻十几张漂亮的图就拍脑袋相信。图形语言适合建立直觉,统计检验才决定它有没有资格进入策略——这条界线,贯穿全书。</p>
+        <h2>2. 三张报表分别回答什么</h2>
+<p>想象你去面试一家公司,你大概会问三个问题:今年干得怎么样?家底有多厚?银行卡流水长什么样?财务报表恰好就是这三份答卷。利润表回答一段时间里公司赚了多少钱,它一路记录收入、成本、费用、税费和净利润;<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>回答某个时点上公司有什么、欠什么、股东净资产还剩多少;现金流量表回答钱实际怎么进、怎么出,并且分成经营、投资和筹资三类现金流。</p><p>用人话说,拿一家街角小店来对照:利润表像这一年的生意账——货卖了多少,成本多少,房租人工多少,年底账面落了多少;资产负债表像年底给店里拍张照——柜台里有多少现金、仓库里多少存货、添置了什么设备,外面还欠着供应商和银行多少钱;现金流量表最诚实,像银行流水单——钱到底哪天进来、哪天出去,一分不装。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>关键是三张表要一起看,拆开看都会闹笑话。只看利润表,可能忽略应收账款根本收不回来;只看资产负债表,可能看不到生意正在一天天恶化;只看现金流,又可能冤枉一家正在大力扩张的公司——它在猛投钱,流水自然难看。把三张表连起来读,是财务分析的基本功,也是基本面量化的起跑线。</p></div><p>口说无凭,拿一家虚构小厂把三张表焊一遍:今年确认收入 <span class="num">1000 万</span>,客户只付了 <span class="num">800 万</span>现金,剩 <span class="num">200 万</span>挂着应收;成本费用付现 <span class="num">550 万</span>,设备折旧 <span class="num">50 万</span>,缴税 <span class="num">100 万</span>。利润表算出净利润:1000 - 550 - 50 - 100 = <span class="num">300 万</span>。现金流量表给出经营现金流:800 - 550 - 100 = <span class="num">150 万</span>。两边要能对上:300 = 150 + 200(应收增加扣掉)- 50(折旧加回),一分不差。资产负债表那头,应收 +<span class="num">200 万</span>、现金 +<span class="num">150 万</span>、固定资产 <span class="num">-50 万</span>,资产净增 <span class="num">300 万</span>,正好等于利润转进净资产的 <span class="num">300 万</span>。三张表被同一笔账锁死,谁也别想单独说谎。</p><p>同一笔 <span class="num">200 万</span>应收,还是三表互查的最好标本。顺查:利润表里它算收入,<span class="num">300 万</span>净利里有它一份;资产负债表上它把应收项目垫高 <span class="num">200 万</span>;现金流量表里它做调节项,把 <span class="num">300 万</span>净利往下扣成 <span class="num">150 万</span>实收。倒查也一样:看到经营现金流比净利少 <span class="num">150 万</span>,先拆调节项,多半是应收吃了差额,再回资产负债表核对,应收果然胖了 <span class="num">200 万</span>。一个数字在三个位置各露一次脸,对不上账,就是警报。</p><div class="callout callout--note reveal"><span class="callout__title">三张报表,先各找各的主角再对照</span><p>利润表的主角是<span class="hl">“一段时期”</span>,资产负债表的主角是<span class="hl">“某个时点”</span>,现金流量表的主角是<span class="hl">“真金白银”</span>。最常见的阅读事故,就是拿错对照组:拿利润表的数字去回答现金流的问题,拿时点的照片去推断整年的经营。先看每张表在回答哪一问,再做交叉验证——表没错,问题先配对错。</p></div>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 340" role="img" aria-label="OHLC 聚合示意:五笔成交 9.90/10.05/10.20/9.95/10.10 聚合成一根阳线,开 9.90、高 10.20、低 9.90、收 10.10,实体约 +2.0%">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">五笔真实成交,聚合成一根 K 线</text>
-            <defs><marker id="c7a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker><marker id="c7b" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
-            <rect x="40" y="56" width="400" height="232" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="240" y="82" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800">全天 5 笔成交(按时间顺序)</text>
-            <path d="M 90 250 L 155 175 L 220 100 L 285 225 L 350 150" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>
-            <circle cx="90" cy="250" r="6" fill="#f0c96a"/>
-            <circle cx="155" cy="175" r="4.5" fill="#a8c6ff"/>
-            <circle cx="220" cy="100" r="6" fill="#f0c96a"/>
-            <circle cx="285" cy="225" r="4.5" fill="#a8c6ff"/>
-            <circle cx="350" cy="150" r="6" fill="#f0c96a"/>
-            <text x="76" y="254" text-anchor="end" fill="#f0c96a" font-size="11.5" font-weight="800">① 9.90</text>
-            <text x="147" y="197" text-anchor="middle" fill="#eef4f8" font-size="11.5">② 10.05</text>
-            <text x="232" y="104" fill="#f0c96a" font-size="11.5" font-weight="800">③ 10.20 最高</text>
-            <text x="293" y="249" text-anchor="middle" fill="#eef4f8" font-size="11.5">④ 9.95</text>
-            <text x="362" y="152" fill="#f0c96a" font-size="11.5" font-weight="800">⑤ 10.10</text>
-            <line x1="60" y1="270" x2="398" y2="270" stroke="#46587a" stroke-width="1.5" marker-end="url(#c7b)"/>
-            <text x="402" y="274" fill="#8499bd" font-size="11">时间</text>
-            <path d="M 448 165 L 512 165" stroke="#f0c96a" stroke-width="3" fill="none" marker-end="url(#c7a)"/>
-            <text x="480" y="148" text-anchor="middle" fill="#f0c96a" font-size="11.5">聚合</text>
-            <rect x="520" y="56" width="340" height="232" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="690" y="82" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800">得到一根阳线(收盘 &gt; 开盘)</text>
-            <line x1="640" y1="100" x2="640" y2="250" stroke="#a8c6ff" stroke-width="2.5"/>
-            <rect x="612" y="150" width="56" height="100" rx="3" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff" stroke-width="2"/>
-            <text x="692" y="104" fill="#eef4f8" font-size="12">最高 10.20 ← 第③笔</text>
-            <text x="692" y="154" fill="#eef4f8" font-size="12">收盘 10.10 ← 末笔⑤</text>
-            <text x="692" y="254" fill="#eef4f8" font-size="12">开盘=最低 9.90 ← 首笔①</text>
-            <text x="640" y="278" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">实体 +0.20 元 ≈ +2.0%</text>
-            <text x="450" y="320" text-anchor="middle" fill="#c9d4e8" font-size="12.5">四个数各有着落:开=首笔、高低=极值、收=末笔;被压掉的是路径——上午拉升下午跳水,也可能得到同样的四个数</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 305" role="img" aria-label="利润表漏斗示意:营业收入依次减成本、费用、税,最后才是净利润">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">利润表:收入一层层减下去,才剩净利润</text>
+            <!-- 漏斗式递减条 -->
+            <rect x="250" y="60" width="400" height="40" rx="4" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff"/>
+            <text x="450" y="86" text-anchor="middle" fill="#eef4ff" font-size="14" font-weight="800">营业收入(卖东西收到的钱)</text>
+            <text x="672" y="86" fill="#8499bd" font-size="12">100</text>
+            <rect x="285" y="108" width="330" height="36" rx="4" fill="rgba(122,167,240,0.24)"/>
+            <text x="450" y="132" text-anchor="middle" fill="#eef4ff" font-size="13.5">− 成本 → 毛利</text>
+            <text x="637" y="131" fill="#8499bd" font-size="12">60</text>
+            <rect x="320" y="152" width="260" height="36" rx="4" fill="rgba(122,167,240,0.18)"/>
+            <text x="450" y="176" text-anchor="middle" fill="#eef4ff" font-size="13.5">− 费用 → 营业利润</text>
+            <text x="602" y="175" fill="#8499bd" font-size="12">30</text>
+            <rect x="355" y="196" width="190" height="36" rx="4" fill="rgba(240,201,106,0.22)"/>
+            <text x="450" y="220" text-anchor="middle" fill="#eef4ff" font-size="13.5">− 税 → 净利润</text>
+            <text x="567" y="219" fill="#f0c96a" font-size="12">20</text>
+            <text x="450" y="266" text-anchor="middle" fill="#c9d4e8" font-size="13">收入不等于利润:中间要一层层扣掉成本、费用和税</text>
+            <text x="450" y="290" text-anchor="middle" fill="#8499bd" font-size="12.5">另外两张表:资产负债表看“有什么欠什么”,现金流量表看“钱真进真出”</text>
           </svg>
-          <p class="figure__cap">日线上的四个价格来自一次 first/max/min/last 聚合:开是首笔、收是末笔、高低是极值。这只股票恰好最低=开盘,所以下影线长度为零。聚合很优雅,但路径被压掉了——看 K 线时心里要装着这个前提。</p>
+          <p class="figure__cap">利润表像一个漏斗:最上面是收入,往下每一层都要扣掉一块成本,最后漏出来的才是净利润。所以“收入高”不等于“真赚钱”,要看它一路扣完还剩多少。</p>
         </div>
-        <h3>1.4. 有多少筹码换了手</h3>
-<p>价格告诉你成交在什么位置,成交量和成交额告诉你那个位置上到底有多少<span class="hl">“真金白银的交接”</span>。成交量是成交了多少股或多少手,成交额是成交了多少钱,两者联动:成交额等于每笔成交价格乘数量再加总,<span class="term">换手率</span>则是成交量除以流通股本。一个价格蹭蹭上涨但成交量很小,可能只是几笔小单推上去的,地基不稳;同样上涨若伴随巨大成交,说明大量资金在那个价格区域完成了换手,这个价是被真金白银投票投出来的。</p><p>算一笔联动账:某股流通股本 <span class="num">2 亿</span>股,今天成交 <span class="num">2000 万</span>股,成交均价 <span class="num">15 元</span>,那么成交额就是 <span class="num">2000 万</span>乘 15,等于 <span class="num">3 亿元</span>,<span class="term">换手率</span>就是 <span class="num">2000 万</span>除以 <span class="num">2 亿</span>,等于 <span class="num">10%</span>。反算验证:成交额除以均价回到 <span class="num">2000 万</span>股的成交量,两个口径互相咬合。再纠正一个最常见的误读:成交量放大,不等于<span class="hl">“买的人比卖的人多”</span>——每一笔成交都是一个买家配一个卖家,缺一不可。成交量放大的真正含义是分歧加大、交易活跃:多空两边在这个价位上激烈地互道珍重。</p><p>量化拿成交量主要干两件事:判断流动性,估算容量。流动性好的股票,策略进出如风;流动性差的股票,你一点资金就能掀起波浪。举个回测里必须算清楚的账:策略计划买入 <span class="num">1000 万元</span>的小盘股,可这只股票当天总成交额只有 <span class="num">3000 万元</span>——你一笔就买走全天三分之一的量,价格不可能纹丝不动地等你成交。回测里假装自己毫无冲击,实盘就会教你做人。</p>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 360" role="img" aria-label="小面包店一年的三张报表卡:利润表净利润5万、资产负债表30万总资产25万净资产、现金流量表现金减少2万,互相用箭头勾连">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">小面包店一年:三张报表互相指着对方</text>
+            <defs>
+              <marker id="d17a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker>
+              <marker id="d17g" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker>
+            </defs>
+            <!-- 三个报表卡 -->
+            <rect x="40" y="68" width="250" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="165" y="94" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">利润表(今年赚没赚)</text>
+            <text x="58" y="124" fill="#eef4f8" font-size="12.5">收入              80 万</text>
+            <text x="58" y="146" fill="#bcc9dd" font-size="12.5">- 材料/人工        55 万</text>
+            <text x="58" y="168" fill="#bcc9dd" font-size="12.5">- 房租/折旧/税     20 万</text>
+            <line x1="58" y1="176" x2="272" y2="176" stroke="#46587a" stroke-width="1"/>
+            <text x="58" y="196" fill="#f0c96a" font-size="12.5" font-weight="800">= 净利润            5 万</text>
+            <text x="58" y="220" fill="#8499bd" font-size="11">净利 ≠ 到手的钱(有赊账)</text>
+            <text x="58" y="240" fill="#8499bd" font-size="11">是一年干出来的结果</text>
+            <rect x="330" y="68" width="250" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="455" y="94" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">资产负债表(手里有啥)</text>
+            <text x="348" y="124" fill="#eef4f8" font-size="12.5">现金             12 万</text>
+            <text x="348" y="146" fill="#bcc9dd" font-size="12.5">存货(面粉)        3 万</text>
+            <text x="348" y="168" fill="#bcc9dd" font-size="12.5">设备(烤箱)       15 万</text>
+            <line x1="348" y1="176" x2="562" y2="176" stroke="#46587a" stroke-width="1"/>
+            <text x="348" y="196" fill="#eef4f8" font-size="12.5">= 总资产           30 万</text>
+            <text x="348" y="218" fill="#bcc9dd" font-size="12.5">- 借款              5 万</text>
+            <text x="348" y="240" fill="#f0c96a" font-size="12.5" font-weight="800">= 净资产           25 万</text>
+            <rect x="620" y="68" width="250" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="745" y="94" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">现金流量表(钱往哪走)</text>
+            <text x="638" y="124" fill="#eef4f8" font-size="12.5">经营活动净流入  +8 万</text>
+            <text x="638" y="146" fill="#bcc9dd" font-size="12.5">投资(买烤箱)     -15 万</text>
+            <text x="638" y="168" fill="#bcc9dd" font-size="12.5">筹资(借来)      +5 万</text>
+            <line x1="638" y1="176" x2="852" y2="176" stroke="#46587a" stroke-width="1"/>
+            <text x="638" y="196" fill="#f0c96a" font-size="12.5" font-weight="800">= 现金净变化      -2 万</text>
+            <text x="638" y="220" fill="#8499bd" font-size="11">利润 5 万但现金少了 2 万:</text>
+            <text x="638" y="240" fill="#8499bd" font-size="11">净利被存货/应收/折旧吃掉</text>
+            <!-- 三表互指 -->
+            <path d="M 300 178 L 322 178" stroke="#7aa7f0" stroke-width="2" fill="none" marker-end="url(#d17a)"/>
+            <text x="311" y="168" text-anchor="middle" fill="#8499bd" font-size="10.5">净利进净资产</text>
+            <path d="M 590 178 L 612 178" stroke="#f0c96a" stroke-width="2" fill="none" marker-end="url(#d17g)"/>
+            <text x="601" y="168" text-anchor="middle" fill="#8499bd" font-size="10.5">现金对上末数</text>
+            <text x="450" y="312" text-anchor="middle" fill="#c9d4e8" font-size="13">利润表问"赚了吗",资产负债表问"有啥、欠啥",现金流量表问"钱真到手了吗"</text>
+            <text x="450" y="336" text-anchor="middle" fill="#ffb4b4" font-size="12.5">三张表数字对不上 = 有个地方在造假或藏雷;对得上,是真的还是假的,要进一步看经营现金流</text>
+          </svg>
+          <p class="figure__cap">同一个小面包店,三张表各回答一件事:利润表说净赚 5 万,资产负债表说年底手里 30 万总资产、25 万净资产,现金流量表说钱实际上少了 2 万。三张表任何一个数字对不上,背后就有个地方在藏雷。</p>
+        </div>
+        <h2>3. 收入和利润不是同一回事</h2>
+<p><span class="hl">“我们公司年入百亿!”</span>听到这种话,先别急着鼓掌,补问一句:落到口袋里的利润有多少?收入是公司卖出产品或服务后确认的金额,利润是收入扣掉成本、费用、税费之后剩下的那一口。一家公司收入增长得再快,也不代表它真在赚钱;就算利润在涨,还得追问一句:这钱是不是主营业务挣来的,还是靠卖楼卖股凑出来的一次性进账。</p><p>算一笔最简单的账就明白了:公司卖货收入 <span class="num">100 万</span>,进货成本 <span class="num">70 万</span>,毛利 <span class="num">30 万</span>;再扣掉房租、工资、营销、研发、利息和税,最后净利润可能只剩 <span class="num">5 万</span>。收入数字很唬人,但如果成本和费用更唬人,股东到头来拿不到几个钱。这就是为什么研究和新闻里永远把收入和利润分开报。</p><p>量化里会用收入增长、净利润增长、毛<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>、净利率这些指标去搭成长因子和盈利能力因子。但用的时候必须防三样东西:一次性收益、会计调整和行业差异。尤其最后一条——银行、互联网、制造业的利润结构完全不同,拿同一把阈值尺子硬套,等于用体重秤量身高。</p><p>应收账款藏雷,推演一遍就看懂:去年收入 <span class="num">1000 万</span>、应收 <span class="num">200 万</span>,今年收入冲到 <span class="num">1500 万</span>,涨了五成,应收却从 <span class="num">200 万</span>翻到 <span class="num">600 万</span>,膨胀 <span class="num">3 倍</span>。新增的 <span class="num">500 万</span>收入里,<span class="num">400 万</span>只是挂账,等于八成增长是纸面富贵,钱包只鼓了两成。检查位就两个:应收增速除以收入增速,健康时两者该差不多,这里是 <span class="num">3 倍</span>对 <span class="num">0.5 倍</span>,差出 <span class="num">6 倍</span>;再看应收占收入的比例,从 200 ÷ 1000 = <span class="num">20%</span> 抬到 600 ÷ 1500 = <span class="num">40%</span>。两盏灯同亮,收入再漂亮也先打个对折再听。</p>
 
-        <h3>1.5. 同一批股票换了多少主人</h3>
-<p>把成交量再除以流通股本,就得到<span class="term">换手率</span>。它大致回答一个问题:在一个时间段里,这批可以自由买卖的股票里,有多大比例的筹码换了主人。<span class="term">换手率</span>高,说明这只股票门庭若市;<span class="term">换手率</span>低,说明持有人和观望者都在按兵不动。这个指标的妙处是把成交量标准化:不看绝对股数,看相对盘子的比例。</p><p>举个具体例子。某公司有 <span class="num">1 亿</span>股流通股,今天成交 <span class="num">1000 万</span>股,<span class="term">换手率</span>就是 <span class="num">10%</span>。再体会成交量和<span class="term">换手率</span>的联动:换一只流通盘只有 <span class="num">2000 万</span>股的小盘股,同样成交 <span class="num">300 万</span>股,<span class="term">换手率</span>是 <span class="num">15%</span>;换成流通盘 <span class="num">60 亿</span>股的大蓝筹,同样 <span class="num">300 万</span>股,换手只有 <span class="num">0.05%</span>。反算:<span class="num">300 万</span>除以 <span class="num">2000 万</span>是 0.15,除以 <span class="num">60 亿</span>是 0.0005,都对得上。同一笔成交量,在不同盘子上讲出完全不同的故事——这就是两个口径必须联动着看的原因。</p><p>反直觉的是,<span class="num">10%</span> 的<span class="term">换手率</span>绝不等于<span class="hl">“十分之一的股东换人了”</span>:同一只股票一天之内可能被反复买卖多次,成交量统计的是流转次数,不是不同的股东数;也不能反过来说剩下 <span class="num">90%</span> 的持有人不关心后市,他们只是今天没出手。<span class="term">换手率</span>在小盘股、题材股和事件驱动行情里特别常用,但也最容易被读歪:高换手可能是资金蜂拥关注,也可能是多空分歧大到掀桌子;低换手可能是筹码锁定良好,也可能是根本没人愿意来交易。所以它从不能孤立地用,要拉上市值、<span class="term">波动率</span>、涨跌幅和公告事件一起看。</p>
+        <h2>4. 毛利率和净利率</h2>
+<p>卖一杯咖啡赚多少差价,和一年忙到头真剩多少钱,是两回事——前者是毛利率,后者是净利率。毛利率 = 毛利 / 收入,它说的是产品或服务本身有多少加价空间;净利率 = 净利润 / 收入,它说的是所有费用都扣完之后,每一元收入最后留下多少利润。所以毛利率高不等于净利率高,中间可能隔着一座由研发、销售和管理费用堆成的大山。</p><p>对照两种极端就很好理解。一家软件公司,复制一份软件的边际成本几乎为零,毛利率可以高得惊人;但早期研发投入大、销售团队四处打单,费用同样惊人,净利润可能并不好看。反过来,一家零售公司毛利率可能很薄,靠快进快出、费用控制得紧,净利率反而稳稳的。利润表最下面那一行,从来不是最上面那一行的简单函数。</p><p>量化用利润率指标时,必须放回行业里比。白酒、银行、硬件制造、超市、航空,这些行业的利润率天然不在一个量级。跨行业直接比较毛利率,是最经典的低级错误:你看到的往往不是公司好坏,而是行业差异披了件公司基本面的外衣。</p><p>给你一组能心算的数:收入 <span class="num">1000 万</span>,进货成本 <span class="num">400 万</span>,毛利 <span class="num">600 万</span>,毛利率 <span class="num">60%</span>;研发、销售、管理费用合计 <span class="num">450 万</span>,税 <span class="num">50 万</span>,净利润 <span class="num">100 万</span>,净利率 <span class="num">10%</span>。反着验一遍:<span class="num">60%</span> 减 <span class="num">10%</span>,中间 <span class="num">50 个百分点</span>正是被 <span class="num">500 万</span>费用和税吃掉的那截——<span class="num">1000 万</span>的 <span class="num">50%</span> 刚好 <span class="num">500 万</span>。下次看到<span class="hl">“毛利率 <span class="num">60%</span> 的高科技生意”</span>先别激动,问一句费用率多少;毛利率只证到产品本身有赚头,最后赚不赚钱,要看那 <span class="num">50 个百分点</span>填不填得平。</p>
 
-        <h3>1.6. 买一卖一不是装饰</h3>
-<p>行情软件右上方那两列跳动的价格和数量——买一到买五、卖一到卖五——很多新手当它们是装饰。其实那是此刻市场上最真实的<span class="hl">“讨价还价现场”</span>。买一是当前最高的买入报价和排队的数量,卖一是当前最低的卖出报价和排队数量。买一和卖一之间的缝隙,叫买卖价差:缝越小,交易越顺畅;缝越大,你一进一出就要白送市场一笔钱。</p><p>拿一组数字感受一下。假设买一 <span class="num">9.99 元</span>,卖一 <span class="num">10.00 元</span>。你想立刻买入,就得去敲卖一的 <span class="num">10.00 元</span>;想立刻卖出,就得去敲买一的 <span class="num">9.99 元</span>。买完马上后悔卖出,哪怕行情纹丝不动,你也因为这道价差亏了每股 <span class="num">0.01 元</span>,相对 <span class="num">10 元</span>的成本就是 <span class="num">0.1%</span>。若一个短周期策略一天来回 <span class="num">20 次</span>,光价差就磨掉约 <span class="num">2%</span> 的本金,还没算佣金——反算:<span class="num">0.1%</span> 乘 <span class="num">20 次</span>,恰是 <span class="num">2%</span>。反直觉的是,同一道窄缝,拿三年的长线投资者几乎无感,对高频或短周期策略却是决定生死的成本线,毒性全看你的交易频率。</p><p>盘口上的数量也不是你看到的静态表格。卖一挂着 <span class="num">10 万</span>股,不代表你下单买 <span class="num">10 万</span>股就能全按卖一价拿走:行情数据有延迟,你前面排着别人的订单,挂单的还随时可以撤单。实盘交易系统必须处理部分成交、排队未成交、撤单失败这些破事——盘口更像一张不断刷新的弹幕,而不是一张静止的报价单。</p>
+        <h2>5. 资产和负债</h2>
+<p>相亲时大家爱问<span class="hl">“你有什么、你欠什么”</span>,问公司也一样,这张清单就叫资产负债表。资产是公司控制的资源:现金、应收账款、存货、固定资产、无形资产、长期投资;负债是公司需要偿还或履约的义务:短期借款、应付账款、长期借款、<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>。两边一减,资产减负债,剩下的才是股东权益。等式简单,读出味道不容易。</p><p>先看资产端,有句要紧的大实话:账上资产很多,不代表这些资产都值钱。现金最清白,没什么可争的;应收账款要看客户到底还不还钱;存货要看会不会过时跌价;固定资产要看能不能源源不断产生收益;商誉要看哪天会不会一纸减值公告砍掉一大块。同样叫<span class="hl">“资产”</span>,含金量天差地别,这正是财报阅读里最需要抠的地方。</p><p>再看负债端,也别一见负债就皱眉。合理借款能放大<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>效率,用别人的钱生钱;问题出在<span class="hl">“过高”</span>二字——负债太重的公司,一旦碰上利率上升、收入下滑或融资收紧,立刻变得脆弱不堪。量化里常用资产负债率、流动比率、速动比率、利息保障倍数这几个指标,给公司的财务风险画像,你至少要知道它们各自在看哪一面。</p><p>商誉炸雷的算术一点不深:公司花 <span class="num">10 亿</span>收购一个标的,比对方净资产多付的 <span class="num">6 亿</span>溢价,挂在账上当商誉;几年后标的只值 <span class="num">4 亿</span>,一纸减值把这 <span class="num">6 亿</span>砍掉。假设去掉减值前本年利润 +<span class="num">2 亿</span>,减值后就是 2 - 6 = <span class="num">-4 亿</span>,从盈利直接打成巨亏,净资产同步减 <span class="num">6 亿</span>。注意它不碰现金——钱是收购那年就花出去的,今年只是承认亏。检查位:商誉占净资产的比例,和并购标的的业绩承诺兑现率,前者越高,雷越大。</p><p>存货减值同理可算:账上存货 <span class="num">5000 万</span>,产品过时只值 <span class="num">3000 万</span>,计提跌价 <span class="num">2000 万</span>,本年利润直接减 <span class="num">2000 万</span>;卖得晚不如认亏早,只是很多公司选择晚认。检查位:存货增速长期跑赢收入增速,比如收入只涨一成、存货涨六成,叠上存货周转天数一路拉长,这批货早晚要在利润表里咬人。存货和应收其实是一对兄弟雷,都在用明天的钱,垫今天的利润。</p>
 
-        <h3>1.7. 一天波动有多大</h3>
-<p>涨跌幅回答的是<span class="hl">“终点比起点走了多远”</span>:当前价格或收盘价相对昨收价的变化比例。昨天收盘 <span class="num">10 元</span>,今天收盘 <span class="num">10.5 元</span>,涨幅就是 <span class="num">5%</span>——反算,10.5 除以 10 再减 1,正是 <span class="num">5%</span>。振幅回答的是<span class="hl">“过程有多颠簸”</span>:用当天最高价和最低价的差相对某个基准价格计算。假设今天最高 <span class="num">11 元</span>、最低 <span class="num">9.5 元</span>,振幅就是 11 减 9.5 再除以 10,等于 <span class="num">15%</span>。一个看结果,一个看过程。</p><p>常有人以为振幅大就意味着涨跌幅大,其实两者完全可以分离。一只股票收盘只涨了 <span class="num">1%</span>,看着岁月静好;可它盘中最高冲到过涨 <span class="num">8%</span>、最惨时跌到 <span class="num">-5%</span>,振幅巨大——这说明持有人这一天坐了一整圈过山车,抄底的人和追高的人心情完全不同。终点平静,不代表路上平静。</p><p>这条直觉在量化里会被一再用到:不能只看最终收益,还要看过程风险。两个策略一年下来都赚 <span class="num">10%</span>,一个中间<span class="term">最大回撤</span>只有 <span class="num">3%</span>,另一个中间<span class="term">最大回撤</span>达到 <span class="num">40%</span>——纸面收益相同,持有体验和承担的风险完全是两个物种。价格数据从第一天起就在提醒你:到达终点的路径本身,就是风险的一部分。</p>
+        <h2>6. 现金流比利润更难造梦</h2>
+<p>利润是算出来的,现金是数出来的——前者有口径,后者没商量。净利润是会计口径的产物,会被收入确认节奏、折旧摊销、减值计提、一次性收益这些东西推来推去;经营现金流盯的是另一件事:主营业务实打实带回来多少现金。把时间拉长看,一家好公司应该能持续把利润变成现金,纸面富贵终究要成色十足地落进账户。</p><p>所以碰到<span class="hl">“利润很高、经营现金流长期很差”</span>的组合,雷达就该响了。钱去哪了?可能是客户欠款收不回来,可能是存货堆在仓库里,可能是收入确认得太激进、货发出了款没影。当然也别一刀切:有些重资产公司被巨额折旧压低了利润,现金流反而比净利润更稳、更能代表真实经营,读数要看结构。</p><p>量化里常用经营现金流 / 净利润、自由现金流、现金流收益率这类指标来衡量盈利质量,一般规律是:现金流因子比单纯的净利润更能过滤会计噪音。但规律不是定律,用的时候照样要结合行业和周期背景,把口径差异想清楚再下结论。</p><p>来个完整的打架现场:某公司净利 <span class="num">1 亿</span>,经营现金流 <span class="num">-2 亿</span>,差额 <span class="num">3 亿</span>去哪了?从净利润往下调:折旧摊销 <span class="num">0.5 亿</span>不花现金,加回来,变成 <span class="num">1.5 亿</span>;应收增加 <span class="num">1.5 亿</span>,货卖了钱没回,扣掉,归零;存货增加 <span class="num">1 亿</span>,钱压在仓库,再扣,变 <span class="num">-1 亿</span>;应付减少 <span class="num">1 亿</span>,提前还了供应商,又扣,落到 <span class="num">-2 亿</span>。1 + 0.5 - 1.5 - 1 - 1 = -2,分毫不差。四栏里三栏都在替账面繁荣垫钱。这也解释了为什么经营现金流除以净利润常年小于 1 的公司要进观察名单——分母是意见,分子是事实。</p>
 
-        <h3>1.8. 分红送股后,价格为什么要重新调整</h3>
-<p>为什么分红送股之后,名义价格非要跳空一下?因为公司确实把一部分钱或权益还给了股东:每股派现 <span class="num">0.5 元</span>,公司账上就少了这笔现金,每股权益相应薄了 <span class="num">0.5 元</span>,交易所便把除息基准价从 <span class="num">10 元</span>直接调成 <span class="num">9.5 元</span>;10 送 10 之后股数翻倍,每股理论价对折。这个跳空是计量口径的规则性调整,不是市场当天恐慌抛售——你的总资产一分没少,只是每股价格的计量单位换了。</p><p>算一笔完整账。你持有 <span class="num">1000 股</span>,成本每股 <span class="num">10 元</span>,总资产 <span class="num">1 万元</span>。除息后价格 <span class="num">9.5 元</span>,市值变成 <span class="num">9500 元</span>,但账户里多了 <span class="num">500 元</span>现金分红,合计仍是 <span class="num">1 万元</span>。可如果直接把原始价格 9.5 除以 10 算收益率,会算出 <span class="num">-5%</span> 的假亏损;反算验证:9500 加 500,再除以 10000,恰好等于 1,真实回报是 <span class="num">0%</span>。常有人以为那个断崖是暴跌,其实它全由口径造成。要让收益率算得对,历史价格必须按每一次分红送股逐次调整——这就是复权存在的理由。</p><p>于是有了前复权和后复权:前复权把历史价格调整到和当前同一口径,方便你看长期走势的形状;后复权把当前价格折算到历史持有收益口径,方便算长期累计回报,不同数据源的算法和精度还可能有差异,用时务必写清楚。对量化这是高频错题:用未复权价格算收益,会把分红硬生生算成亏损;拿前复权价格模拟成交,又会用到历史上根本不存在的价格——那是事后调整出来的,当时的交易者从没见过。通常的做法是:算收益、算因子用复权口径,模拟成交、算订单用当时真实可交易的价格口径,混用必出问题。</p>
-
-        <h3>1.9. 先理解它只是加工后的价格</h3>
-<p>行情软件里层层叠叠的彩色均线,看着高深,拆开看其实朴素得很:<span class="num">5 日</span>均线就是最近 <span class="num">5 个交易日</span>收盘价的平均值。亲手算一条:最近 <span class="num">5 日</span>收盘依次是 10.0、10.2、10.1、10.4、<span class="num">10.3 元</span>,和为 51.0,均线就是 <span class="num">10.2 元</span>。明天若收在 <span class="num">11.0 元</span>,旧窗口里最老的 <span class="num">10.0 元</span>退出,新均线就是 51 减 10 加 11 再除以 5,等于 <span class="num">10.4 元</span>——反算,10.2 加 10.1 加 10.4 加 10.3 加 11.0 是 52,除以 5 正好 10.4。均线的作用只是平滑短期抖动,让趋势的轮廓更清楚。</p><p>所以指标不是水晶球,它们不会凭空创造信息,只是把已有的数据换个方式摆给你看。均线向上倾斜,说明过去一段时间价格整体在走高;短期均线上穿长期均线的<span class="hl">“金叉”</span>,说明短期平均涨速超过了长期平均。常有人以为金叉出现就该涨,其实它只陈述一个关于过去的事实,没有一条能保证<span class="hl">“未来”</span>一定上涨。MACD、RSI、布林带这些也一样,本质上都是对价格、成交量或波动的数学加工。</p><p>对程序员来说,最准确的类比是特征工程:原始价格是一列数据,均线、涨跌幅、<span class="term">波动率</span>、成交量均值都是从这列数据加工出来的派生特征。一个特征有没有用,不看名字专不专业、写法玄不玄乎,只看它在严格回测和样本外测试里能不能稳定贡献信息。把技术指标当特征,而不是当信仰,是这门课的基本心法。</p>
-
-        <h3>1.10. 时间戳、停牌、缺失和供应商差异</h3>
-<p>量化新人最大的幻觉,是以为行情数据是一张干干净净的 Excel:每只股票每天一行,开高低收成交量一应俱全,读进来就能跑。真实世界要粗糙得多:停牌的日子可能根本没有成交记录;新上市的股票历史短得可怜;退市的公司会悄悄从数据源里蒸发;不同供应商对复权算法、涨跌停处理、成交额口径、指数成分的历史版本,处理方式可能全都不一样。</p><p>时间戳是另一个重灾区。日线数据里的<span class="hl">“日期”</span>指交易日;到了分钟线和逐笔数据,还要分清交易所时间、接收时间、落库时间——三个时间可能互不相同。算一笔亏给你看:某公司今晚收盘后公布超预期财报,明天高开 <span class="num">5%</span>、盘中再涨 <span class="num">3%</span>。若回测让策略<span class="hl">“在公布当日收盘买入”</span>,全天 <span class="num">8%</span> 的收益就全记上了;可真实世界你最早只能明天开盘进场,能拿到手的只有 <span class="num">3%</span>——反算,高开已吃掉 <span class="num">5%</span>,8 减 5 剩 3。反直觉的是,报告漂亮得不像话,往往就因为这 <span class="num">5 个百分点</span>的偷看:这就是未来函数最隐蔽的一种长相。</p><p>所以<span class="hl">“看懂行情”</span>远不只是会看图。真正进入量化,你要对每一条数据连环发问:这条数据在当时的那个时点能不能被看到?价格是未复权还是复权口径?停牌的日子在数据里怎么表示?缺失值是当天没交易,还是数据本身坏了?指数成分是当时的真实成分,还是拿今天的名单回填的?这些问题的答案,决定了回测究竟是研究,还是自娱自乐。</p>
-
-        <h2>2. 你到底在和谁比较</h2>
-        <p>刚学投资和量化的人,张口就问“这个能赚多少”。更成熟的问法是:和谁相比赚多少?想想两个场景:市场整体涨了 30%,你的策略涨 20%——你绝对赚钱了,但跑输了大盘;市场跌了 20%,你的策略只跌 5%——你账上亏钱,但防守做得漂亮。再往里追问一层:你拿来比较的“大盘”本身又是怎么算出来的?它按什么规则选股票、按什么口径配权重?你买的 ETF 为什么同时挂着两个价格?没有一把统一的尺子,这些问题根本说不清楚。指数、ETF 和基准,就是为“比较”而生的工具,这一章把它们讲透。</p>
-
-        <h3>2.1. 指数不是一只股票,而是一把尺子</h3>
-<p>先说一个新手常有的误会:<span class="term">沪深 300</span>、<span class="term">中证 500</span>、中证 1000、上证指数、创业板指,这些名字天天出现在新闻里,但它们没有一只是股票,背后也没有一家公司。它们是把一组证券按一套明确规则合成的一个数字,是市场某个局部的<span class="hl">“成绩摘要”</span>。指数存在的意义,就是给市场切片,让你有一把可观察、可比较的尺子。</p><p>同样的市场,用不同编制规则会得到不同的尺子,动手一算便知。假设一个迷你市场只有三只股票:A 股价 <span class="num">50 元</span>、市值 <span class="num">700 亿</span>,B 股价 <span class="num">30 元</span>、市值 <span class="num">200 亿</span>,C 股价 <span class="num">10 元</span>、市值 <span class="num">100 亿</span>。某天 A 涨 <span class="num">1%</span>、B 平盘、C 跌 <span class="num">2%</span>。按市值加权,权重 0.7、0.2、0.1,指数涨 0.7 乘 <span class="num">1%</span> 减 0.1 乘 <span class="num">2%</span>,等于 <span class="num">0.5%</span>;按等权,三只各算一票,指数跌约 <span class="num">0.33%</span>;按价格加权,价格之和从 90 变成 50.5 加 30 加 9.8 等于 90.3,指数涨约 <span class="num">0.33%</span>。反算三种加权,账目都对得上。常有人以为指数涨了就是多数股票涨了,其实在市值加权的世界里,几只巨头足以盖过几百只下跌的股票。</p><p>你可以把指数理解成体检报告里的单项指标:它描绘不了每家公司的具体情况,但能让你一眼看出某一类资产大概什么状态。<span class="term">沪深 300</span> 偏大市值龙头蓝筹,<span class="term">中证 500</span> 和中证 1000 偏中小市值。用这把尺子之前得先读懂刻度规则,也就是编制方案:选哪些股票进来?按市值加权还是等权?多久调整一次成分?停牌、退市怎么处理?自由流通市值怎么算?每一项规则都会改变指数的表现,所以看指数绝不能只看名字。</p>
-
-        <h3>2.2. 大公司说话更大声</h3>
-<p>市值加权这个名字听着唬人,其实就是一句话:公司里<span class="hl">“块头”</span>大的,在指数里嗓门也大。机制上,每只成分股的权重约等于它的自由流通市值除以全部成分股自由流通市值的总和,指数涨跌幅就是所有成分股涨跌幅按权重的加总。很多主流指数采用市值加权或自由流通市值加权,指数涨跌不是几千只股票一人一票投出来的,而是按<span class="hl">“吨位”</span>加权的合唱。</p><p>感受一下吨位差。假设某指数成分股总市值 <span class="num">10 万</span>亿元,其中一只 <span class="num">2 万</span>亿元的巨头权重 <span class="num">20%</span>,一只 <span class="num">50 亿元</span>的小票权重只有 <span class="num">0.05%</span>。今天巨头涨 <span class="num">1%</span>,对指数的拉动是 <span class="num">20%</span> 乘 <span class="num">1%</span>,等于 <span class="num">0.2 个百分点</span>;小票涨 <span class="num">5%</span>,拉动是 <span class="num">0.05%</span> 乘 <span class="num">5%</span>,只有 <span class="num">0.0025 个百分点</span>——前者的影响是后者的 <span class="num">80 倍</span>。反算验证:<span class="num">10 万</span>亿乘 <span class="num">0.2025%</span> 等于 <span class="num">202.5 亿元</span>,恰好是巨头增加的 <span class="num">200 亿</span>加小票增加的 <span class="num">2.5 亿</span>,严丝合缝。</p><p>反直觉的是,指数和多数个股的感受经常脱节:有时盘面上几千只股票绿油油一片,指数却没跌多少——多半是几只大权重股在硬扛;也有时指数跌得很难看,你手里的小股票却没怎么跌——因为砸盘的正是那几只大块头。记住,指数是加权平均,不是所有股票的简单平均;它先听见大公司的声音。</p>
-
-        <h3>2.3. 承认市场很难战胜之后的选择</h3>
-<p>有一种基金,从设计之初就放弃了<span class="hl">“我要战胜市场”</span>的野心——指数基金。它的目标不是千里挑一找到最牛的股票,而是尽量复刻某个指数:买入指数的成分股,按规则调整权重,让基金净值紧紧跟着指数走。代价是它不会主动躲开指数里的烂公司,市场整体下跌时也不会自动空仓;换来的是透明、分散、费用较低。</p><p>这个思路背后有个深刻的观点,《漫步华尔街》反复强调过:对多数普通投资者来说,长期战胜市场非常难,低成本持有宽基指数,往往比追逐热门股票更可靠。注意,这不是说市场永远正确,而是一笔冷静的成本账:扣掉费用、税费、交易冲动和择时错误之后,普通人想持续跑赢市场,胜算真的很低。承认难,本身就是一种投资智慧。</p><p>把成本账算具体。假设投 <span class="num">10 万元</span>,市场<span class="term">年化收益</span> <span class="num">8%</span>:低费率指数基金按 <span class="num">0.2%</span> 收费,净年化约 <span class="num">7.8%</span>,<span class="num">30 年</span>后约是 <span class="num">10 万</span>乘 1.078 的 <span class="num">30 次</span>方,合计 <span class="num">95 万元</span>出头;一只按 <span class="num">1.5%</span> 收费的主动产品,净年化约 <span class="num">6.5%</span>,<span class="num">30 年</span>后约 <span class="num">66 万元</span>。仅仅 <span class="num">1.3 个百分点</span>的年费差,三十年后变成近 <span class="num">30 万元</span>的差距——反算两个终值相减,数字自洽。反直觉的是,投资里唯一确定能稳赚的 <span class="term">Alpha</span>,就是你主动选择不付出去的那部分费用。先低成本拿到市场平均收益,再掂量自己有没有能力、时间和纪律去争取超额,这个顺序不能反。</p>
-
-        <h3>2.4. 可以在交易所买卖的基金份额</h3>
-<p><span class="term">ETF</span> 是个混血儿,一半像基金,一半像股票。它是交易型开放式指数基金:说像基金,因为背后真持有一篮子资产、每天算得出净值;说像股票,因为它挂在交易所里,盘中随时买卖。你在券商账户买 <span class="term">ETF</span>,体验和买股票几乎一模一样:输代码、输价格、输数量,下单。</p><p>正因为有两副面孔,<span class="term">ETF</span> 身上时刻挂着两个价格。一个是基金份额净值,由它持有的那篮子资产算出来,代表<span class="hl">“它值多少钱”</span>;另一个是交易所的盘中成交价,由买卖双方撮合出来,代表<span class="hl">“大家愿意多少钱交易它”</span>。常有人以为 <span class="term">ETF</span> 标价多少就值多少,其实两个价格是两套系统各自算出来的。算一笔账:盘中净值 <span class="num">1.000 元</span>时,你在 <span class="num">1.006 元</span>买入,相当于为只值 <span class="num">1.000 元</span>的篮子多付了 <span class="num">0.6%</span> 的溢价——反算,1.006 除以 1.000 减 1,正是 <span class="num">0.6%</span>。正常情况下两个价格不会长期偏离太多,背后有申购赎回和套利机制当纠偏员,下一节细讲。</p><p><span class="term">ETF</span> 的申购赎回和普通开放式基金很不一样。很多股票 <span class="term">ETF</span> 的大额申赎,走的是<span class="hl">“以物易物”</span>:机构拿一篮子成分股票去换 <span class="term">ETF</span> 份额,或者拿 <span class="term">ETF</span> 份额换回一篮子股票,中间辅以现金替代等规则。普通个人投资者大多只在二级市场上买卖 <span class="term">ETF</span>,不直接参与这套复杂的申赎流程;但理解这套机制,你就明白 <span class="term">ETF</span> 的价格为什么通常能贴住净值,而不是放飞自我。</p>
-
-        <h3>2.5. 折价、溢价和套利机制</h3>
-<p>既然 <span class="term">ETF</span> 有两个价格,两个价格就难免打架:二级市场的交易价格比净值高,叫溢价;比净值低,叫折价。小幅度的折溢价每天都在发生,尤其在市场剧烈波动、成分股停牌、跨境 <span class="term">ETF</span> 的海外市场休市,或者流动性本身就不充裕的时候,两个价格更容易闹分家。</p><p>套利方向用一笔账就能记清。假设某 <span class="term">ETF</span> 市价 <span class="num">1.012 元</span>、净值 <span class="num">1.000 元</span>,溢价 <span class="num">1.2%</span>:套利者按净值申购 <span class="num">100 万</span>份,成本 <span class="num">100 万元</span>,转手在二级市场卖出进账 <span class="num">101.2 万元</span>,毛利 <span class="num">1.2 万元</span>——新份额涌出、卖盘增加,价格被压回净值,这就是溢价时<span class="hl">“申购卖出”</span>的纠偏方向。反过来市价 <span class="num">0.988 元</span>、折价 <span class="num">1.2%</span> 时,就在二级市场用 <span class="num">98.8 万元</span>扫货 <span class="num">100 万</span>份再赎回换回底层资产,价值 <span class="num">100 万元</span>。反算两个方向,都围绕这 <span class="num">1.2%</span> 的缝做功。反直觉的是,这叫套利却不是无风险:申赎有门槛和时滞,底层资产在你持仓期间照常波动,涨跌停和现金替代规则还可能把你半路拦下,所以折溢价不会永远瞬间消失。</p><div class="callout callout--warn reveal"><span class="callout__title">提醒</span><p>给新手一个实用提醒:买 <span class="term">ETF</span> 不能只看名字顺不顺耳、涨跌幅猛不猛,还要看成交额、买卖价差、折溢价和它跟踪的到底是什么指数。一只流动性差的 <span class="term">ETF</span> 报价看着便宜,可你买一卖一之间价差很大,进出的真实成本一点不便宜——便宜只是幻觉。</p></div>
-
-        <h3>2.6. 没有基准就没有评价</h3>
-<p>一句<span class="hl">“这个基金一年赚 <span class="num">12%</span>”</span>,你觉得算好还是算差?先别回答——这题缺条件。如果它常年满仓<span class="term">沪深 300</span>,而同期<span class="term">沪深 300</span> 涨了 <span class="num">20%</span>,那 <span class="num">12%</span> 其实是大幅落后;反过来看另一个基金一年跌 <span class="num">3%</span>,听着心疼,可如果它的基准同期跌了 <span class="num">20%</span>,那它可能藏着很强的防守或对冲能力。没有基准,成绩单一律无法批改。</p><p>相对强弱的算法也有讲究。基金一年涨 <span class="num">12%</span>、基准涨 <span class="num">20%</span>,很多人张口就说<span class="hl">“跑输 8 个点”</span>。严格口径是除法:1.12 除以 1.20 再减 1,等于 <span class="num">-6.7%</span>;反算验证,1.20 乘 0.9333 正好回到 1.12。单期看差距不大,复利几年就拉开:若连续三年如此,简单减法估的<span class="hl">“落后 <span class="num">24%</span>”</span>,与真实的 1.12 的三次方除以 1.20 的三次方再减 1 算出的约 <span class="num">-18.7%</span>,完全不是一个故事。常有人以为相对收益就是涨跌幅相减,其实那只是单期的粗略近似。</p><p>基准还得和产品匹配:买大盘股基金,拿<span class="term">沪深 300</span> 比;买中小盘的量化指数增强,拿<span class="term">中证 500</span> 或中证 1000 比;买债券基金,就得找合适的债券指数。拿错尺子量身高,结论必歪。量化行业最常挂嘴边的 <span class="term">Alpha</span> 和 <span class="term">Beta</span>,就是把这笔账拆开的语言:<span class="term">Beta</span> 是你承担市场或风格暴露换来的收益,水涨了船自然高;<span class="term">Alpha</span> 是把这些暴露全部扣掉之后仍多出来的那部分。没有基准,你根本说不清赚的是能力的钱,还是搭了市场上涨的顺风车。</p>
-
-        <h3>2.7. 偏离基准的波动</h3>
-<p>买了指数基金,基金经理的 KPI 是什么?不是赚多少,而是<span class="hl">“跟得紧不紧”</span>。<span class="term">跟踪误差</span>刻画基金相对基准收益的波动:每天比指数多一点点或少一点点,这些差异如果一直很稳定、很小,<span class="term">跟踪误差</span>就小;如果忽而大幅领先、忽而大幅落后,<span class="term">跟踪误差</span>就大。</p><p>误差从哪里来?三个源头占大头:一是费用,管理费和托管费每天从净值里扣,拖出一段稳定落后;二是现金拖累,应对申赎的现金仓几乎不产生指数收益;三是复制偏差,抽样复制、成分股停牌、分红再投和调仓的时点差,让持仓与指数并非严丝合缝。算一笔账:指数一年涨 <span class="num">10%</span>,某基金费率合计 <span class="num">0.5%</span>,常年留 <span class="num">2%</span> 现金仓、现金收益 <span class="num">1.5%</span>,其余完美跟踪,则基金收益约为 0.98 乘 <span class="num">10%</span> 加 0.02 乘 <span class="num">1.5%</span>,再减 <span class="num">0.5%</span>,等于 <span class="num">9.33%</span>,一年落后 <span class="num">0.67 个百分点</span>。反算:<span class="num">9.8%</span> 加 <span class="num">0.03%</span> 减 <span class="num">0.5%</span>,正好 <span class="num">9.33%</span>。</p><p>有意思的是,不同产品对<span class="term">跟踪误差</span>的态度截然相反:普通指数基金把它当敌人,指数增强产品却故意保留一定<span class="term">跟踪误差</span>去换<span class="term">超额收益</span>。反直觉的是,一个每天稳定落后指数 <span class="num">0.002%</span> 的基金,<span class="term">跟踪误差</span>几乎为零,一年却落后约 <span class="num">0.5%</span>——<span class="num">0.002%</span> 乘约 <span class="num">250 个交易日</span>,恰是 <span class="num">0.5%</span>:误差量的是波动大小,不是输赢方向。所以好的指数增强,是在可接受的<span class="term">跟踪误差</span>内持续提供<span class="term">超额收益</span>;翻译成量化的语言,就是模型预测、组合优化和风险约束必须作为一个系统协同工作,谁掉链子都不行。</p>
-
-        <h3>2.8. 宽基、行业、主题和策略指数</h3>
-<p>指数家族很大,买之前先认清你抱的是哪一款。宽基指数覆盖广,比如<span class="term">沪深 300</span>、<span class="term">中证 500</span>、中证 1000,大致代表市场整体;行业指数聚焦单一行业,比如医药、消费、银行、电子;主题指数围绕一个概念,比如新能源、人工智能、红利低波;策略指数则按某种选股规则办事,比如红利、价值、质量、低波动、<span class="term">动量</span>。</p><p>规律是:指数越窄,暴露越集中。算一笔集中度账:某主题指数第一大权重股占比 <span class="num">25%</span>,若这只股票跌 <span class="num">40%</span>,其余成分原地不动,指数也要被拖下水 <span class="num">25%</span> 乘 <span class="num">40%</span>,整整 <span class="num">10%</span>。反算:假设指数 <span class="num">1000 点</span>,这只权重股贡献 <span class="num">250 点</span>,跌后缩到 <span class="num">150 点</span>,指数自然落在 <span class="num">900 点</span>,恰是 <span class="num">-10%</span>。常有人以为买主题指数等于<span class="hl">“分散买下一个赛道”</span>,其实第一权重股的一跤就能把你带沟里。买医药行业 <span class="term">ETF</span> 的那一刻,你承担的不只是基金的风险,还有整个行业的景气度、估值和政策风险。</p><p>在量化研究里,这些指数还是拆收益的解剖刀。一个策略赚了钱,要一层层拆开问:是市场整体涨了?是小盘股涨了?是某个行业恰好起飞了?还是模型真的选对了股票?如果收益拆开一看,只是重仓了一个热门行业,那不是稳定的 <span class="term">Alpha</span>,而是行业 <span class="term">Beta</span>——风一停,就会还回去。</p>
-
-        <h3>2.9. 指数会换成分,数据也会骗人</h3>
-<p>很多人默认指数里装的股票名单是固定的,这是个危险的想当然。指数公司会定期调整成分:不符合规则的老股票被剔除,新符合规则的被纳入。每次调整,指数基金得跟着调仓;而你要做量化回测,这件事会直接影响结果的真实性。</p><p>看一个最常见的错误:拿今天的指数成分股去回测过去。比如用现在的<span class="term">沪深 300</span> 名单回测十年前的表现——那份名单里,十年前真正在指数里、后来经营恶化被踢出去的股票,全都不见了;留在名单里的,都是活到今天的胜利者。正确做法是使用点时成分数据:在每个历史日期,只用当时已经公布、已经生效的指数成分。</p><p>把这份偏差算成数字。假设等权持有 10 只股票、各 <span class="num">1 亿元</span>,五年间 2 只各跌 <span class="num">60%</span> 被剔除,剩下 8 只平均涨 <span class="num">50%</span>。真实结局是 2 乘 0.4 加 8 乘 1.5 等于 <span class="num">12.8 亿元</span>,赚 <span class="num">28%</span>;拿今天的 8 只名单回测,则是 <span class="num">8 亿</span>变 <span class="num">12 亿</span>,赚 <span class="num">50%</span>。反算:12.8 除以 10 减 1 与 12 除以 8 减 1,相差的 <span class="num">22 个百分点</span>全是幸存者填出来的。坑还不止成分:分红怎么处理、停牌怎么算点、新股第几天纳入——不尊重这些规则,基准是错的,<span class="term">超额收益</span>自然错,整个研究的数学基础就塌了。</p>
-
-        <h3>2.10. 个人怎么用指数建立投资纪律</h3>
-<p>说了这么多工具,落到你个人身上,指数最朴素的用法是当一面<span class="hl">“照妖镜”</span>。下次想买个股之前,先对自己三连问:我为什么不直接买一只低成本的宽基 <span class="term">ETF</span>?我承担这只个股的特有风险,指望换来什么额外收益?我是真有能力判断这家公司,还是只是被它最近的涨跌勾住了注意力?能答好这三问,你的下单才站得住。</p><p>如果你做量化练习,指数还是你的第一条及格线:买入并持有某个宽基指数,就这。你的策略要是长期跑不赢这个傻瓜基线,或者跑赢的部分全靠承担更大回撤、更集中的行业暴露,那就先别急着宣布自己挖到了 <span class="term">Alpha</span>。</p><p>把及格线量化一下:一只宽基 <span class="term">ETF</span> 综合费率约 <span class="num">0.15%</span>,而自己做策略,佣金、冲击成本、税费加研究折算,一年摩擦 <span class="num">1.5%</span> 都算客气——你的能力必须每年稳定补上这 <span class="num">1.35 个百分点</span>,才刚够和<span class="hl">“躺平”</span>打平,反算:<span class="num">1.5%</span> 减 <span class="num">0.15%</span>,恰是 <span class="num">1.35%</span>。反直觉的是,有时什么都不做、只买指数,反而是最优解。所以指数化投资不是躺平,更不是懒惰,而是承认难度之后的纪律:先用低成本工具把市场 <span class="term">Beta</span> 稳稳拿到手,再拿少量资金、少量研究时间去探索主动策略和量化策略。这条路远比一上来就满仓追逐复杂信号走得稳。</p>
+        <h2>7. 股东的钱赚得怎么样</h2>
+<p>你掏 <span class="num">100 万</span>入股一家店,年底它给你赚了 <span class="num">20 万</span>——这笔买卖算不算好?这就是 <a class="term term-link" href="glossary.html#g-净资产收益率roe" title="查看术语：净资产收益率(ROE)">ROE</a> 在回答的问题。<span class="term">ROE</span> 是净利润除以股东权益,表示股东投入的净资产一年产出了多少收益。<span class="term">ROE</span> 高,通常说明公司盈利能力强;但注意了,高只是结果,来源才是重点:它可能来自真本事的高利润率,也可能来自玩命借钱的高<span class="term">杠杆</span>。</p><p>想把来源拆开,就用经典的杜邦分析:把 <span class="term">ROE</span> 拆成净利率、资产周转率和权益乘数三块。净利率看每一元收入留下多少利润;资产周转率看家当用得勤不勤、效率高不高;权益乘数看<span class="term">杠杆</span>放得多大。三家公司 <span class="term">ROE</span> 都是 <span class="num">20%</span>,背后的风险可能天差地别——一家靠产品赚钱,一家靠勤快周转赚钱,一家靠借钱赌博赚钱,同分不同命。</p><p>量化里的质量因子,常用 <span class="term">ROE</span>、ROA、毛利率、现金流质量、盈利稳定性这些维度。但请把这句话刻在脑门上:高 <span class="term">ROE</span> 的<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>如果估值已经贵上天,未来收益未必高——好公司和好股票之间,永远隔着一个价格。质量,必须和价格放在一起看。</p><p>给杜邦三件套各配一家公司,<span class="term">ROE</span> 都是 <span class="num">20%</span>:A 靠利润率,净利率 <span class="num">20%</span> × 资产周转 <span class="num">1 次</span> × 权益乘数 1,相乘得 <span class="num">20%</span>;B 靠周转,净利率 <span class="num">4%</span> × 周转 <span class="num">2.5 次</span> × 乘数 2,也是 <span class="num">20%</span>;C 靠<span class="term">杠杆</span>,净利率 <span class="num">4%</span> × 周转 <span class="num">1 次</span> × 乘数 5,还是 <span class="num">20%</span>。三个 <span class="num">20%</span> 站一排,风险立判:A 的产品赚头跌一点还能活;C 的收入只要波动,<span class="num">5 倍</span>乘数会连本带息放大颠簸。同样分数不同命,拆开乘一遍,才知道谁在裸泳。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="市值加权示意图:三巨头权重 50/30/20,大公司 1% 变动比小公司 10% 变动对指数影响更大">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">市值加权:大公司涨 1%,比小公司涨 10% 更厉害</text>
-            <!-- 指数的三个代表权 -->
-            <rect x="90" y="90" width="200" height="200" rx="14" fill="rgba(122,167,240,0.3)" stroke="#7aa7f0"/>
-            <text x="190" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">成分 1</text>
-            <text x="190" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">市值 1000 亿</text>
-            <text x="190" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">权重 50%</text>
-            <rect x="330" y="110" width="120" height="160" rx="12" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
-            <text x="390" y="138" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">成分 2</text>
-            <text x="390" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">市值 600 亿</text>
-            <text x="390" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">权重 30%</text>
-            <rect x="490" y="140" width="90" height="130" rx="10" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
-            <text x="535" y="168" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">成分 3</text>
-            <text x="535" y="196" text-anchor="middle" fill="#bcc9dd" font-size="12">市值 400 亿</text>
-            <text x="535" y="218" text-anchor="middle" fill="#bcc9dd" font-size="12">权重 20%</text>
-            <!-- 箭头与数字 -->
-            <text x="670" y="130" fill="#bcc9dd" font-size="13">成分1 涨 1%</text>
-            <text x="670" y="156" fill="#f0c96a" font-size="15" font-weight="800">→ 指数涨 0.50 点</text>
-            <text x="670" y="188" fill="#bcc9dd" font-size="13">成分2 涨 1%</text>
-            <text x="670" y="210" fill="#f0c96a" font-size="15" font-weight="800">→ 指数涨 0.30 点</text>
-            <text x="670" y="244" fill="#bcc9dd" font-size="13">成分3 涨 10%</text>
-            <text x="670" y="266" fill="#f0c96a" font-size="15" font-weight="800">→ 指数只涨 0.20 点</text>
-            <rect x="60" y="310" width="780" height="80" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
-            <text x="84" y="334" fill="#f0c96a" font-size="13" font-weight="800">结论</text>
-            <text x="84" y="360" fill="#bcc9dd" font-size="12">宽基指数(上证50/沪深300)头部效应极强;不是“市场”听投票多少,是大公司方向决定主方向。要读“市场宽度”得看涨跌家数,不能只看指数曲线</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 450" role="img" aria-label="杜邦三联拆解图:ROE拆成利润率、资产周转率、杠杆倍数,同 ROE 不同质,经营型与杠杆型天差地别">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">杜邦拆解:ROE = 利润率 × 周转率 × 杠杆</text>
+            <rect x="360" y="70" width="180" height="80" rx="10" fill="rgba(240,201,106,0.25)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="450" y="100" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">ROE 18%</text>
+            <text x="450" y="124" text-anchor="middle" fill="#bcc9dd" font-size="12">净利润 / 股东权益</text>
+            <rect x="70" y="200" width="230" height="110" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="185" y="228" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">① 净利润率</text>
+            <text x="185" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">每 100 元收入净赚多少</text>
+            <text x="185" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是经营水准</text>
+            <text x="185" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">利润驱动型公司</text>
+            <rect x="335" y="200" width="230" height="110" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="450" y="228" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">② 资产周转率</text>
+            <text x="450" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">一块资产一年转销出多少收入</text>
+            <text x="450" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是运营效率</text>
+            <text x="450" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">效率驱动型公司</text>
+            <rect x="600" y="200" width="230" height="110" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="715" y="228" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">③ 杠杆倍数</text>
+            <text x="715" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">总资产 / 股东权益</text>
+            <text x="715" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是财务风险</text>
+            <text x="715" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">杠杆驱动型公司</text>
+            <path d="M 400 152 Q 300 178 250 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <path d="M 450 152 Q 450 178 450 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <path d="M 500 152 Q 580 178 680 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <rect x="70" y="340" width="760" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="94" y="366" fill="#f0c96a" font-size="13" font-weight="800">同 ROE ≠ 同质</text>
+            <text x="94" y="390" fill="#bcc9dd" font-size="12">A: 18% 利润率 × 1 周转 × 1 杠杆 = 18%,凭经营;B: 3% 利润率 × 1.2 周转 × 5 杠杆 = 18%,凭负债</text>
+            <text x="94" y="412" fill="#bcc9dd" font-size="12">两种 18 一旦利率上行表现完全相反——这就是必须拆开看的原因</text>
           </svg>
-          <p class="figure__cap">市值加权的含义:尽管指数看起来是数理平均,实际是“大公司说话更大声”。当你听说“指数涨了”,决定答案的大部分是前二十大成分股,不是大多数公司。</p>
+          <p class="figure__cap">ROE 的数字好看不代表质量好——先拆开看是挣钱挣的、效率挣的,还是负债堆的。只有能拆开的 ROE,才是撑得住下行的 ROE。</p>
         </div>
+        <h2>8. 价格相对什么贵</h2>
+<p>买菜你会问<span class="hl">“多少钱一斤”</span>,买股票要问的是<span class="hl">“价格相对什么贵”</span>——估值指标就是干这个的,它把市场价格和公司基本面绑在一起。<a class="term term-link" href="glossary.html#g-市盈率pe" title="查看术语：市盈率(PE)">PE</a> 是市值 / 净利润,问市场愿意为一元利润付多少钱;<a class="term term-link" href="glossary.html#g-市净率pb" title="查看术语：市净率(PB)">PB</a> 是市值 / 净资产,问愿意为一元账面净资产付多少钱;PS 是市值 / 收入,问愿意为一元收入付多少钱;股息率是每股分红 / 股价,问按当前价格买进,分红回报大约多少。</p><p>但每个指标都有它的脾气。<span class="term">PE</span> 低不一定便宜——可能是市场已经预见利润即将下滑,提前把价格打了折;<span class="term">PE</span> 高也不一定泡沫——可能是利润涨得快,分母在追分子。<span class="term">PB</span> 对银行、地产、周期类资产更常用,拿来量轻资产科技公司却常常失灵;PS 适合还没稳定盈利的早期公司,但你不能忽略它未来到底能不能赚钱。指标没有好坏,只有用没用对地方。</p><p>量化在造估值因子时,通常会把这些指标先标准化、再行业<a class="term term-link" href="glossary.html#g-中性化" title="查看术语：中性化">中性化</a>,然后和质量、成长、<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>搭伙使用。特别提醒一句:单纯闭眼买低 <span class="term">PE</span>,很容易一脚踩进价值陷阱——那种长期便宜、便宜得很有道理的坑。想让估值信号真有用,组合构建和风险控制必须跟上。</p><p>低 <span class="term">PE</span> 还会自己凭空消失:市值 <span class="num">100 亿</span>、净利 <span class="num">5 亿</span>,<span class="term">PE</span> = 100 ÷ 5 = 20,看着不贵;下年利润滑到 <span class="num">2.5 亿</span>,股价一动不动,<span class="term">PE</span> 自动变 100 ÷ 2.5 = 40。分子没动,分母腰斩,便宜就这么蒸发了。所以看 <span class="term">PE</span> 必须多问一句:这个利润是常态、高点还是低点?把周期顶点的利润当常态,<span class="num">20 倍</span>的便宜其实是 <span class="num">40 倍</span>的贵;反过来,周期底部的烂利润也会把 <span class="term">PE</span> 顶得很高,那一头同样是假信号。</p>
+
+        <h2>9. 财务数据的时间坑</h2>
+<p>财报封面上印着<span class="hl">“<span class="num">6 月</span> <span class="num">30 日</span>”</span>,不等于你 <span class="num">7 月</span> <span class="num">1 日</span>就能看到它——这中间隔着一段不短的披露窗口,而这段窗口正是无数<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>翻车的案发现场。财务报表要分清两个日子:报告期和披露日。报告期结束,只代表账算完了,不代表市场知道了。量化回测必须使用披露日之后的数据,绝不能把一份市场还没看到的财报提前塞进模型,否则就是教科书级的偷看未来。</p><p>麻烦还不止一层:财务数据会修正。公司可能更正报表,数据供应商可能回填最终版本。如果你用的数据库没有保存<span class="hl">“点时版本”</span>——也就是历史上每一天市场实际看到的那个版本——回测就会在不知不觉中使用后来修正过的数据,等于让模型提前阅卷改了答案,成绩当然好看,实盘当然挨打。</p><p>一句话总结:基本面量化最容易犯的错,就是<a class="term term-link" href="glossary.html#g-未来函数" title="查看术语：未来函数">未来函数</a>。价格数据好歹天天可见、一眼可查,财务数据的可见时间则复杂得多。动手做财务因子之前,先把三件事确认清楚:公告日、更新时间、字段口径。地基的土质没探明,别急着往上盖楼。</p><p>算一笔滞后账感受坑的深度:年报报告期止于 <span class="num">12 月</span> <span class="num">31 日</span>,披露最晚可拖到次年 <span class="num">4 月</span>底,隔着约 <span class="num">120 天</span>、整整 <span class="num">4 个月</span>。假设某公司利润翻倍,股价在 1 到 <span class="num">4 月</span>已提前涨 <span class="num">40%</span>,披露后又涨 <span class="num">10%</span>,全年累计 1.4 × 1.1 = 1.54。回测若在报告期一结束的新年就用上这份年报,全年收益记成 +<span class="num">54%</span>;实盘最早 <span class="num">4 月</span>底才能用,只能吃到后段 +<span class="num">10%</span>。54 对 10,信号效果被高估 <span class="num">5 倍</span>多,虚增 <span class="num">44 个百分点</span>——全是偷看那 <span class="num">4 个月</span>造的假。</p><div class="callout callout--note reveal"><span class="callout__title">财报有两枚时间戳,回测只认第二枚</span><p>封面上的<span class="hl">“<span class="num">6 月</span> <span class="num">30 日</span>”</span>只是账算完的日子,披露日才是市场知道的日子,两枚时间戳最长能隔四个月。回测只能用第二枚:数据入库时把<span class="hl">“可用时间”</span>直接写成公告日,而不是报告期——这条规则最好写成入库断言,让未来的自己想偷懒也偷不成。</p></div>
+
+        <h2>10. 行业差异和周期</h2>
+<p>拿银行的尺子去量制造业,就像用温度计称体重——工具没错,对象全错。不同行业的财务指标根本不能简单横向比较:银行的资产负债表和制造业长得完全是两个物种;地产的预收款和存货结构自成一派;互联网公司要盯研发费用和用户增长;周期品公司的利润则会跟着商品价格坐过山车。先认清行业,再看懂数字,顺序不能反。</p><p>周期行业尤其要多留个心眼,它专门惩罚只看静态数字的人。当利润站在周期高点时,分母巨大,<span class="term">PE</span> 看起来低得诱人,可接下来利润一旦回落,便宜立刻变贵;反过来,利润趴在周期低点时,<span class="term">PE</span> 高得吓人甚至为负,可周期一<span class="term">反转</span>,利润回来了,贵又变成了便宜。在周期里,<span class="hl">“低 <span class="term">PE</span>”</span>这三个字经常是最贵的误会。</p><p>那怎么办?量化里的常用解法是做行业内排名:在每个行业内部比较估值和质量,而不是把银行股和半导体股扔到同一个池子里硬比。行业中性化不是走形式、装样子,它是对商业模式差异最朴素的尊重——承认酿酒和炼钢本来就是两种生意,比较才有意义。</p>
+
+        <h2>11. 从财务报表到基本面因子</h2>
+<p>零件讲完了,现在把它们攒成一台能跑的机器。一次完整的基本面因子研究,流程大致是这样:先选定股票池和要用的财务字段,按公告日把财务数据对齐到交易日,再计算 <span class="term">ROE</span>、毛利率、收入增长、经营现金流质量、资产负债率这些因子,最后做极端值处理和行业标准化。每一步都有讲究,尤其是<span class="hl">“按公告日对齐”</span>——用的是披露时间,不是报告期,前面刚踩过的坑别再踩一遍。</p><p>因子造出来,接着做体检:看 <a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">IC</a>、分层收益、行业暴露、换手和成本。有个节奏上的常识值得记住:基本面因子更新慢,财报是季度更新的,所以调仓频率通常不需要太高。你要是每天根据同一个财务指标频繁下单,信号根本没变,变的只是你交出去的手续费——那不叫勤奋,叫给券商打工。</p><p>最后一步也最容易被省略:解释收益来源。质量因子为什么有效?可能是好公司风险更低、盈利更稳,也可能是市场长期低估了质量的持续性;估值因子为什么有效?可能是承担了风险的补偿,也可能是人性的行为偏差。没有解释,因子就是一段碰巧拟合上的曲线,你很难在回撤里坚持它——而不知为何赚的钱,市场早晚会连本带息收回去。</p>
+
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>行情数字是交易结果的记录,不是公司价值和未来走势的直接答案。</li>
-            <li>K 线、成交量、盘口、换手率、复权和技术指标都要先理解口径,再谈使用。</li>
-            <li>指数是一组证券按规则合成的市场尺子,不是单只股票或官方估值。</li>
-            <li>ETF 既有基金净值,也有交易所价格,折溢价和流动性会影响真实交易成本。</li>
+            <li>利润表、资产负债表和现金流量表,分别回答“赚不赚钱”“家底几何”“现金怎么进出”三个问题,要连起来读。</li>
+            <li>ROE、利润率、现金流、杠杆和估值指标,都必须放回行业、周期和披露时间里理解,孤立看数字必踩坑。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.1.</strong> 最新价不是公司真实价值</li>
-            <li><strong>1.2.</strong> 一天被压成四个价格</li>
-            <li><strong>1.3.</strong> K 线实体和影线只是压缩图</li>
-            <li><strong>1.4.</strong> 有多少筹码换了手</li>
-            <li><strong>1.5.</strong> 同一批股票换了多少主人</li>
-            <li><strong>1.6.</strong> 买一卖一不是装饰</li>
-            <li><strong>1.7.</strong> 一天波动有多大</li>
-            <li><strong>1.8.</strong> 分红送股后,价格为什么要重新调整</li>
-            <li><strong>1.9.</strong> 先理解它只是加工后的价格</li>
-            <li><strong>1.10.</strong> 时间戳、停牌、缺失和供应商差异</li>
-            <li><strong>2.1.</strong> 指数不是一只股票,而是一把尺子</li>
-            <li><strong>2.2.</strong> 大公司说话更大声</li>
-            <li><strong>2.3.</strong> 承认市场很难战胜之后的选择</li>
-            <li><strong>2.4.</strong> 可以在交易所买卖的基金份额</li>
-            <li><strong>2.5.</strong> 折价、溢价和套利机制</li>
-            <li><strong>2.6.</strong> 没有基准就没有评价</li>
-            <li><strong>2.7.</strong> 偏离基准的波动</li>
-            <li><strong>2.8.</strong> 宽基、行业、主题和策略指数</li>
-            <li><strong>2.9.</strong> 指数会换成分,数据也会骗人</li>
-            <li><strong>2.10.</strong> 个人怎么用指数建立投资纪律</li>
+            <li><strong>1.</strong> 门店是真的,咖啡是真的,收入为什么还能是假的</li>
+            <li><strong>2.</strong> 三张报表分别回答什么</li>
+            <li><strong>3.</strong> 收入和利润不是同一回事</li>
+            <li><strong>4.</strong> 毛利率和净利率</li>
+            <li><strong>5.</strong> 资产和负债</li>
+            <li><strong>6.</strong> 现金流比利润更难造梦</li>
+            <li><strong>7.</strong> 股东的钱赚得怎么样</li>
+            <li><strong>8.</strong> 价格相对什么贵</li>
+            <li><strong>9.</strong> 财务数据的时间坑</li>
+            <li><strong>10.</strong> 行业差异和周期</li>
+            <li><strong>11.</strong> 从财务报表到基本面因子</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>最新价为什么不等于公司真实价值?</summary>
-            <p>它只是最近一笔成交的价格,会受流动性、情绪、消息和单笔订单的影响,而估值还要看利润、资产、行业、利率和风险偏好,它代替不了完整体检。</p>
+            <summary>为什么利润好看、现金流却很差时要警惕?</summary>
+            <p>利润可能堆在收不回的应收账款、激进的会计确认或一次性收益里;钱没真的到账,盈利质量就要打问号。</p>
           </details>
           <details class="quiz__item">
-            <summary>为什么日 K 线会丢失信息?</summary>
-            <p>它把一天成千上万笔交易压缩成开高低收四个价和成交量,盘中的路径、拉扯过程和排队细节全都被压掉了。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>为什么没有基准就很难评价收益?</summary>
-            <p>因为绝对赚钱不代表跑赢了市场,绝对亏钱也不一定代表做得差——必须拿它和所承担的市场暴露去比较,绝对收益和相对收益要分开记账。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>ETF 为什么可能出现折价或溢价?</summary>
-            <p>二级市场价格由盘中买卖撮合出来,净值由底层资产算出来,两者会因为流动性、交易成本、申赎门槛、涨跌停或跨市场时间差而暂时分家。</p>
+            <summary>ROE 高一定是好公司吗?</summary>
+            <p>不一定。高 ROE 可能来自高利润率,也可能来自高杠杆硬撬,还要看它能否持续、背后承担多大风险。</p>
           </details>
         </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>收益和风险怎么量化: 年化、波动、回撤和夏普</h2>
+          <p>把投资报告里最常见的收益风险指标讲成可理解、可手算的东西。</p>
+        </section>
+
       </div>
     </main>
     <script src="assets/book.js"></script>

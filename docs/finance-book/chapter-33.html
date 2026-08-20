@@ -3,187 +3,133 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 33 章 · 全书复盘:从一条鱼到一个量化系统 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="把前面所有概念按从真实财富到人与纪律的十层重新串起来。" />
+    <title>第 33 章 · 交易执行和实盘系统: 策略如何真的下到市场里 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清订单生命周期、执行算法、拒单、部分成交、撤单、风控和盘后对账。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="33">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第六部分 · 项目实战与工程化 · 第 33 章</p>
-        <h1>全书复盘:从一条鱼到一个量化系统</h1>
-        <p class="lead">学到这里,名词已经很多:货币、信用、股票、债券、基金、期货、期权、指数、因子、回测、机器学习、组合优化、交易执行、风控。这一章把它们重新收束成一条链——真实财富产生现金流,金融工具分配现金流和风险,市场给这些权利定价,数据记录市场状态,策略试图从数据里找到优势,实盘系统再把优势变成可控的交易。金融不是一堆孤立术语,量化也不是孤立算法。</p>
+        <p class="chapter__eyebrow">第五部分 · 量化研究如何产生可信结论 · 第 33 章</p>
+        <h1>交易执行和实盘系统: 策略如何真的下到市场里</h1>
+        <p class="lead">量化策略在研究报告里输出的是一条干净的目标仓位,在真实市场里执行的却是一串跌跌撞撞的订单: 会排队、会部分成交、会被拒绝、会撤不掉、成交价会变差,还要被风控和交易规则管着。实盘系统的任务,绝不是把 buy 函数调用出去就完事,而是把策略意图可靠地翻译成真实成交,并且在出错的时候保护账户。这一章讲的,就是研究到实盘之间那段最容易被低估的路。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线五</span>
+            <span>本部分第 6 / 10 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>一个金融判断怎样变成可证伪假设,再经过数据、回测、模型和实盘约束?</p>
+          <p class="chapter-context__outcome">读完后,你能从问题出发完成研究闭环,而不是先找模型、再给结果编故事。 </p>
+        </section>
+
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>金融可以按真实财富、信用时间、资产权利、市场制度、数据、模型、回测、组合、实盘和人这十层来理解。</li>
-            <li>量化不是脱离金融的算法游戏,而是把金融假设一步步变成数据、模型、组合和交易系统。</li>
+            <li>实盘交易是一台订单状态机,必须处理好拒单、部分成交、撤单、成交回报和对账。</li>
+            <li>执行要在速度、成本和成交确定性之间取舍,大订单还得额外考虑冲击和参与率。</li>
           </ul>
         </section>
 
 
-        <h2>1. 真实财富和生产力</h2>
-<p>最底层不是钱,而是真实财富:鱼、粮食、房子、药品、机器、软件、知识、组织能力——人类真正在用的东西。钱只是帮忙交换、记账、储藏价值的工具,排在第二位。</p><p>做一个极简推演:社会的真实产出没有增加,只把纸币数量增加,结果不会是人人变富,而是更多名义货币追逐有限商品——通胀。把这一条想明白,你就能免疫大多数幻觉:金融市场的数字上涨,不等于真实财富自动增长。</p><p>投资的终点也仍然落在生产力上。股票、债券、基金、期货,拆到最后都要连接到未来现金流、资源配置和风险承担。脱离真实经济的金融,只剩下大家互相转账,转不出新财富。</p>
+        <h2>1. 订单生命周期</h2>
+<p>一笔订单从产生到结束,通常要走过一串状态。策略先生成交易意图,组合层把它变成目标买卖数量,交易系统做风控检查,然后向券商或交易通道提交订单。接下来,这笔订单可能被接受、被拒绝、部分成交、全部成交、撤单中、撤单成功、撤单失败——每个状态都可能停留,也可能跳到别的状态。</p><p>这些状态全部要落日志。你不能只记一句<span class="hl">“我想买 <span class="num">10000 股</span>”</span>。真实系统要知道: 已报多少、成交多少、剩余多少、平均成交价多少、费用多少、是否可撤、是否失败、失败原因是什么。否则下一次下单,就是基于错误持仓继续行动——错误会利滚利。</p><p>用程序员的话说,订单生命周期就是一个状态机。量化开发里很多严重事故,根本不是模型错,而是状态机错: 以为撤单成功其实没撤,以为没成交其实已经部分成交,以为订单被拒其实内部账已经加仓。状态不一致,是交易系统的头号死因。</p>
+
+        <h2>2. 市价单、限价单和算法单</h2>
+<p>市价单追求尽快成交,但成交价可能很差;限价单指定最差可接受价格,能控制价格,但不保证成交。一个追确定性,一个追价格,各有代价。还要提醒一句: A 股普通<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>没有完全等同于海外市场的简单市价单机制,实际订单类型和申报方式,得按交易所和券商的规则来理解,不能照搬段子。</p><p>机构的玩法更细: 常用算法单把大订单拆成一串串小订单。比如按时间均匀成交的 TWAP,按市场成交量比例参与的 VWAP,或者根据盘口和冲击动态调整的执行算法。注意,这些算法的目的不是预测股票涨跌,而是在完成交易这件事上,尽量降低冲击和<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>。</p><p>个人做量化,不一定需要复杂算法单,但至少要理解一件事: 大单不能一次砸进市场。哪怕你只是用小资金交易,也要在<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>里考虑限价、成交不足和价格滑点,别假设任何数量都能按理想价格成交。</p>
+
+        <h2>3. 快、便宜和确定性不能同时最大化</h2>
+<p>交易执行有三个常见目标: 尽快成交、尽量低成本、尽量确定地完成。坏消息是,这三个没法同时要。想快,就可能主动吃对手盘,滑点更高;想便宜,就可能挂单慢慢等,成交不确定;想确定完成,就可能得在价格上让步。工程上这叫不可能三角,选两个,放掉一个。</p><p>场景不同,选择就完全不同。比如你必须今天把仓位降下来,就不能只挂一个保守的卖价佛系等待——市场如果继续下跌,没卖掉的风险比滑点大得多。反过来,如果只是小幅调仓,完全可以更耐心,把<a class="term term-link" href="glossary.html#g-冲击成本" title="查看术语：冲击成本">冲击成本</a>省下来。</p><p>所以执行算法要按策略需求来选择: 高频信号衰减快,晚一分钟信号就贬值,需要更快成交;长期配置调仓不着急,可以慢慢执行;风控减仓则是保命优先,成交确定性压倒成本考虑。</p>
+
+        <h2>4. 下单前先挡住低级错误</h2>
+<p>前置风控,是订单发出市场之前的最后一道安检。常见检查包括: 账户资金够不够、可卖持仓够不够、证券是否可交易、价格是否越界、数量是否符合交易单位、单笔金额是否过大、个股和行业仓位是否超限、标的是否在黑名单或限制名单里。</p><p>这些检查看起来琐碎,像表单校验一样无聊,但它们能拦住成片的事故: 模型输出异常、数据缺失、价格单位错了、重复下单、股票停牌、涨跌停不可成交——都可能在安检口被拦下,而不是在市场上爆炸。</p><p>一个实盘系统的默认世界观应该是: 模型会犯错、数据会坏、网络会断、券商会拒单。前置风控不是对研究员不信任,而是承认在真实市场里,任何环节都可能出问题,所以每道门都要有守卫。</p>
+
+        <h2>5. 市场正在变</h2>
+<p>订单发出去,风险不是结束了,而是刚开始。盘中价格可能快速变化,成交可能只完成一半,账户净值可能在下跌,<span class="term">保证金</span>可能不足,市场可能触发异常波动。盘中风控要做的,就是持续盯持仓、现金、成交、回撤、暴露和订单状态。</p><p>举个具体的坑: 一个策略原计划买入 50 只股票,结果只成交了 20 只,剩下 30 只因为涨停买不到。此刻你的真实组合,和模型预期里的组合已经是两个东西——如果系统还按目标组合计算风险,就会严重低估真实偏离。</p><p>盘中风控的常见动作包括: 暂停新单、撤销未成交订单、降低参与率、强制减仓、切换备用通道、通知人工确认。记住,自动化不等于无人负责——关键节点必须有清晰的告警和明确的权限,告警响了要有人接。</p><div class="callout callout--note reveal"><span class="callout__title">实盘的组合和回测的组合,是两个组合</span><p>计划买 50 只,涨停拦住 30 只,你实际持有的已经是另一个组合:行业权重变了、风格暴露变了、资金占用也变了。如果监控还按<span class="hl">“目标组合”</span>算风险,你盯的就是一块假仪表盘。盘中风控的第一原则,是把<span class="hl">“我想买什么”</span>和<span class="hl">“我真的买到了什么”</span>分开记账——回测里它们永远相等,实盘里它们天天岔开。</p></div>
+
+        <h2>6. 部分成交和撤单失败</h2>
+<p>部分成交是实盘常态,不是异常。你想买 <span class="num">10000 股</span>,可能先成交 <span class="num">3000 股</span>,剩下 <span class="num">7000 股</span>还在队列里排队。这一瞬间,你的真实持仓已经变了,现金也被占用或冻结了,但目标仓位还没完成——系统必须同时记住这三件事。</p><p>撤单也不是一键瞬间完成。你发出撤单请求的那一刻,订单可能已经部分成交,也可能正在交易所的队列里等着;最终结果可能是撤单成功、撤单失败,或者先成交了导致无可撤。所有这些中间态,系统都必须处理。</p><p>如果系统简单地认为<span class="hl">“发出撤单 = 订单不存在了”</span>,迟早出事。正确做法是等交易通道返回确认,再根据成交回报更新状态。交易系统最怕的东西只有一样: 内部状态,和券商那边的真实状态,对不上。</p>
+
+        <h2>7. 成交回报和内部账本</h2>
+<p>成交回报,是券商或交易通道给你回执: 订单成交了多少、价格多少、费用多少。内部账本就得根据这些回执,更新现金、持仓、冻结资金、可卖数量、成本价和盈亏。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>关键原则: 内部账本不能只靠自己推演。真实成交可能和预期不同,费用可能有细碎名目,订单可能被拆成几笔成交。所以盘中和盘后,都要拿内部账本和券商或托管的数据对账,确认两边一致。</p></div><p>对账这件事听起来一点不性感,但非常关键。很多金融系统的稳定性,不在模型层,在账务层。钱和仓位一旦记错,后面一切都跟着错: 收益、风险、申赎、合规、报表,全盘失真。</p>
+
+        <h2>8. 真实成交比预期差多少</h2>
+<p>滑点监控做的事,是比较预期成交价和实际成交价。基准可以选下单时的中间价、买一卖一、VWAP 或到达价格。实际成交比买入基准更高、比卖出基准更低,差出来的那截,就是你付的成本。</p><p>只看一个总滑点没有用,要拆开看: 按股票、行业、时间、订单大小、参与率、交易员或算法逐层分解。某些股票滑点长期偏大,可能是<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>差;某个时间段滑点偏大,可能是市场在剧烈波动;某个执行算法滑点偏大,可能该调参了。</p><p>量化策略上线后,如果只盯预测效果、不看执行效果,会漏掉真正的失血点。模型赚 <span class="num">5%</span>,执行亏 <span class="num">3%</span>,客户最后只看到 <span class="num">2%</span>。所以有句话要记住: 执行质量,本身就是 <a class="term term-link" href="glossary.html#g-alpha" title="查看术语：Alpha">Alpha</a> 的一部分。</p>
+
+        <h2>9. 灾难开关和人工接管</h2>
+<p>实盘系统必须设计灾难开关,也就是一键拉闸的能力。数据源异常、行情延迟、订单拒绝率异常、成交价偏离过大、单账户亏损超过阈值、重复下单、持仓暴露越界——任何一种出现,都应该触发暂停或人工确认。</p><p>历史上很多交易事故,不是因为没人会写模型,而是因为系统在异常状态下继续自动交易。最著名的一课来自骑士<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>(Knight Capital),它当时是美国股市最大的<a class="term term-link" href="glossary.html#g-做市商" title="查看术语：做市商">做市商</a>之一。<span class="num">2012 年</span> <span class="num">8 月</span> <span class="num">1 日</span>开盘,一次软件部署出了岔子: 一段本该废弃的旧代码被意外激活,交易系统开始疯狂、错误地自动下单。在大约 <span class="num">45 分钟</span>里,它向市场发出了 400 多万笔订单,买高卖低、越亏越交易,最高峰每分钟烧掉约一千万美元。等工程师手忙脚乱地把它停下来,公司已经亏了大约 <span class="num">4.4 亿美元</span>——一家上市巨头几乎在三刻钟内被自己的程序搞垮,几天后就被迫贱卖求生。</p><p>对每天写代码、发版的人来说,这个故事格外扎心: 杀死骑士资本的不是市场,是一次没做好灰度和回滚、又缺乏有效急停开关的部署。模型再聪明,只要实盘系统在异常时还在自动下单,几分钟就能把多年利润清零。所以灾难开关、人工接管、部署纪律,在量化里和策略本身同等重要。</p><p>当然,灾难开关不是为了让系统保守到不敢交易,而是为了确保异常不会无限放大。一个专业的交易系统必须能回答四个问题: 什么时候自动停? 谁有权限恢复? 停止后如何平仓或恢复状态? 日志如何追溯?</p>
+
+        <h2>10. 个人实盘从小规模开始</h2>
+<p>个人做量化,千万别从全自动大资金起步。更稳的路线是台阶式的: 先离线回测,再模拟盘,再小资金半自动,最后才考虑自动化。每上一级台阶,都要确认数据、订单、成交、费用、持仓和净值能对得上。</p><p>小资金阶段,重点不是赚不赚钱,而是系统有没有按预期运行: 信号是否按时生成,订单是否正确,成交是否记录,失败是否告警,盘后是否对账,日志够不够复盘用。</p><p>道理很朴素: 一个系统在小钱时都经常状态错、日志缺、成本算不清,放大资金只会放大问题,不会解决问题。量化实盘的第一目标不是马上赚大钱,而是证明系统能在真实市场里稳定、可控、可解释地运行。</p>
+
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 460" role="img" aria-label="十层金字塔:自下而上依次是真实财富、信用时间、权利资产、市场制度、数据可见、因子模型、回测验证、组合风险、交易实盘、人纪律">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">全书十层复盘:越往上,越依赖下层垫着</text>
-            <!-- 十层金字塔,底层宽720,每层收60,层高32间距4,底 y=420 -->
-            <rect x="360" y="64" width="180" height="32" rx="4" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="450" y="85" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L10 · 人和纪律</text>
-            <rect x="330" y="100" width="240" height="32" rx="4" fill="rgba(122,167,240,0.10)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="450" y="121" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L9 · 交易执行实盘</text>
-            <rect x="300" y="136" width="300" height="32" rx="4" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="450" y="157" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L8 · 组合和风险</text>
-            <rect x="270" y="172" width="360" height="32" rx="4" fill="rgba(122,167,240,0.14)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="450" y="193" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L7 · 回测和验证</text>
-            <rect x="240" y="208" width="420" height="32" rx="4" fill="rgba(122,167,240,0.16)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="450" y="229" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L6 · 因子和模型</text>
-            <rect x="210" y="244" width="480" height="32" rx="4" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="450" y="265" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L5 · 数据和可见性</text>
-            <rect x="180" y="280" width="540" height="32" rx="4" fill="rgba(122,167,240,0.20)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="450" y="301" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L4 · 市场与交易制度</text>
-            <rect x="150" y="316" width="600" height="32" rx="4" fill="rgba(122,167,240,0.22)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="450" y="337" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L3 · 权利和资产</text>
-            <rect x="120" y="352" width="660" height="32" rx="4" fill="rgba(122,167,240,0.24)" stroke="rgba(122,167,240,0.28)"/>
-            <text x="450" y="373" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L2 · 信用和时间</text>
-            <rect x="90" y="388" width="720" height="32" rx="4" fill="rgba(240,201,106,0.16)" stroke="rgba(240,201,106,0.42)"/>
-            <text x="450" y="409" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">L1 · 真实财富和生产力(地基)</text>
-            <!-- 右侧向上的依赖提示 -->
-            <line x1="845" y1="412" x2="845" y2="80" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#b1ly)"/>
-            <defs><marker id="b1ly" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
-            <text x="867" y="243" text-anchor="middle" transform="rotate(-90 867 243)" fill="#f0c96a" font-size="12.5" font-weight="800">越往上,越依赖下层垫着</text>
-            <!-- 底部两条向内的支撑线,构成金字塔底 -->
-            <line x1="90" y1="420" x2="450" y2="446" stroke="rgba(240,201,106,0.42)" stroke-width="2"/>
-            <line x1="810" y1="420" x2="450" y2="446" stroke="rgba(240,201,106,0.42)" stroke-width="2"/>
-            <circle cx="450" cy="446" r="4" fill="#f0c96a"/>
+          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 33 章小结图: 交易执行和实盘系统: 策略如何真的下到市场里">
+            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
+            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
+
+            <g>
+              <rect x="65" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
+              <rect x="77" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
+              <text x="90" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">1</text>
+              <text x="84" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="84" y="203">实盘交易是一台订单</tspan><tspan x="84" y="221">状态机</tspan></text>
+            </g>
+            <g>
+              <rect x="335" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
+              <rect x="347" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
+              <text x="360" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">2</text>
+              <text x="354" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="354" y="194">执行要在速度、成本</tspan><tspan x="354" y="212">和成交确定性之间取</tspan><tspan x="354" y="230">舍</tspan></text>
+            </g>
+            <g>
+              <rect x="605" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
+              <rect x="617" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
+              <text x="630" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">3</text>
+              <text x="624" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="624" y="194">交易执行和实盘系统</tspan><tspan x="624" y="212">:策略如何真的下到</tspan><tspan x="624" y="230">市场里</tspan></text>
+            </g>
           </svg>
-          <p class="figure__cap">把全书压成十层:真实财富和生产力是地基,上面依次垫着信用、资产、市场制度、数据、因子、回测、组合、实盘,最上面是人和纪律。层越往上越窄——它能站住,全靠下面九层垫着;下层有问题,上层加倍还。</p>
-        </div>
-        <h2>2. 信用和时间</h2>
-<p>金融要解决的核心问题之一,是跨时间调度资源:今天手里有闲钱的人,把钱借给未来能创造价值的人。中间靠什么运转?信用、利率和合同。债券、贷款、银行、央行,全都挂在这条线上。</p><p>利率是时间的价格,也同时是风险价格的一部分。未来的钱不等于今天的钱,因为中间隔着机会成本、通胀和不确定性。债券价格和收益率反着走,股票估值受折现率影响——这些看似不相干的公式,根都扎在时间价值上。</p><p>银行干的事是把短期存款变成长贷,一边提高经济效率,一边制造期限错配;央行能影响流动性和短端利率,但没法直接印出真实生产率。信用既能推动增长,也会在看不见的地方积累脆弱性,这是同一枚硬币的两面。</p>
-
-        <h2>3. 权利和资产</h2>
-<p>中间一层是各种资产的身份证:股票是公司剩余收益权,债券是合同写死的固定索取权,基金是集合投资的份额,期货是未来价格的合约,期权是不对称的权利,<span class="term">ETF</span> 是在交易所买卖的基金份额。每个资产都可以拆成四件套:现金流、权利、风险、价格。</p><p>以后看到任何金融产品——不管包装多花哨——先问四个问题:它承诺什么现金流?谁有权拿收益?谁承担风险?价格怎么形成?这四个问题问完,再大的营销词也会现原形。</p><p>不同资产怕的东西不一样:股票怕盈利和估值双杀,债券怕利率上行和信用违约,期货怕<span class="term">杠杆</span>和换月,期权怕<span class="term">波动率</span>判断错和尾部风险,基金还要看管理人水平、费用和流动性。怕什么清楚,才知道该怎么管。</p>
-
-        <h2>4. 市场和交易制度</h2>
-<p>市场把纸面权利变成可以交易的价格。交易所管撮合和规则,券商管接入和服务,登记结算管权属和交收。你在软件上点一下买入,背后是账户、订单、清算、风控一整套系统在跑——那个按钮只是冰山露出水面的一角。</p><p>A 股那套具体制度——交易时间、集合竞价、连续竞价、涨跌幅、<span class="term">T+1</span>、停牌、ST、退市、交易单位、费用——每一项都会真实地改变策略结果。回测不尊重这些制度,收益必然失真;前面拆穿漂亮曲线的那一章,好几刀正砍在这里。</p><div class="callout callout--warn reveal"><span class="callout__title">提醒</span><p>订单簿还在提醒你:价格不是图表上的抽象点位。买一卖一的价差、盘口深度、排队顺序、滑点、冲击成本,这些都决定你的策略到底能不能按想象中的价格成交。市场制度,就是量化从纸面走向实盘时撞上的第一道现实约束。</p></div>
-
-        <h2>5. 数据和可见性</h2>
-<p>量化研究靠数据喂养,但数据不是从水龙头里流出来的纯净水。行情、财务、公告、指数成分、宏观、期货、期权、文本——每一类都有自己的口径、发布时间、修正历史和缺失毛病,拿到手就用,等于闭上眼睛开车。</p><p>这一层最重要的原则只有四个字:点时可见。模型站在任何历史时点,只能使用当时已经公开的数据——财报按披露日走,指数成分按调整日走,宏观按公布日走,回测用的复权价格和真实成交价格要分清。全部按时间线对齐,一条都不能含糊。</p><p>所以数据工程不是辅助杂活,它是研究可信度的地基。未来函数、幸存者偏差、成分回填、缺失值乱处理,任何一个都会把模型变成偷看答案的机器——考得分数越高,离真相越远。</p>
-
-        <h2>6. 因子和模型</h2>
-<p>因子,是把一句投资判断翻译成可检验数字的工序。估值、质量、成长、<span class="term">动量</span>、<span class="term">反转</span>、流动性、波动、规模,都可以落成因子;模型则把多个因子或特征揉成预测分数,这就是第六层干的事。</p><p>机器学习在这一层有用,但它不能脱离金融问题飘着。横截面排序和时间序列预测是两回事,<span class="term">RankIC</span> 和分层收益比普通准确率更能说明问题,交易成本会吃掉微弱优势,分布漂移会让模型悄悄衰减。这些约束不属于课本,属于市场。</p><p>好模型的标准也不是复杂。可验证、可解释、可交易、可监控,四样齐全才是好模型。线性模型、树模型、深度学习都只是工具,工具值不值钱,看它放进策略系统之后,能不能提供净增量。</p>
-
-        <h2>7. 回测和验证</h2>
-<p>回测是在历史里排练,不是对未来的证明。一次好回测要同时做到:按当时可见的数据生成信号,按真实交易规则模拟成交,老老实实扣成本,逐笔记录交易,和基准比较,再做样本外验证。少一步,结论就要打折。</p><p>看到漂亮回测,先别鼓掌,按老顺序查错:股票池是否点时,成交价格有没有偷看,成本是否完整,涨跌停停牌处理没有,容量合不合理,参数是不是过拟合,样本外有没有被污染。查完错的曲线,才有资格谈好不好。</p><p>验证的目标从来不是保住最漂亮的那条曲线,而是把不真实的收益一样样剔掉。修正之后还留在桌上的收益,才可能是真正值得继续研究的优势。</p>
-
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 452" role="img" aria-label="回测查错七刀:按顺序检查股票池是否点时、成交价有没有偷看、成本是否完整、涨跌停停牌处理、容量合理性、参数过拟合、样本外污染">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">看到漂亮曲线先别鼓掌:按老顺序查错,七刀砍完再谈好不好</text>
-            <text x="450" y="58" text-anchor="middle" fill="#8499bd" font-size="12.5">回测是在历史里排练,不是对未来的证明;查错顺序对应前面拆穿漂亮曲线的那几章</text>
-            <line x1="56" y1="106" x2="56" y2="394" stroke="rgba(122,167,240,0.28)" stroke-width="2" stroke-dasharray="5 5"/>
-            <rect x="28" y="80" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="56" cy="106" r="13" fill="#101d33" stroke="#7aa7f0" stroke-width="1.5"/>
-            <text x="56" y="111" text-anchor="middle" fill="#7aa7f0" font-size="13" font-weight="800">1</text>
-            <text x="190" y="107" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="107">股票池是不是点时</tspan></text>
-            <text x="318" y="111" fill="#8499bd" font-size="12">按当时的成分名单,不许拿今天的名单回填历史</text>
-            <rect x="28" y="128" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="56" cy="154" r="13" fill="#101d33" stroke="#7aa7f0" stroke-width="1.5"/>
-            <text x="56" y="159" text-anchor="middle" fill="#7aa7f0" font-size="13" font-weight="800">2</text>
-            <text x="190" y="155" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="155">成交价有没有偷看</tspan></text>
-            <text x="318" y="159" fill="#8499bd" font-size="12">信号日和成交日要错开,当天收盘价不许当天用</text>
-            <rect x="28" y="176" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="56" cy="202" r="13" fill="#101d33" stroke="#7aa7f0" stroke-width="1.5"/>
-            <text x="56" y="207" text-anchor="middle" fill="#7aa7f0" font-size="13" font-weight="800">3</text>
-            <text x="190" y="203" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="203">成本是否完整</tspan></text>
-            <text x="318" y="207" fill="#8499bd" font-size="12">佣金、滑点、冲击缺一项,纸面收益就虚高一截</text>
-            <rect x="28" y="224" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="56" cy="250" r="13" fill="#101d33" stroke="#f0c96a" stroke-width="1.5"/>
-            <text x="56" y="255" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">4</text>
-            <text x="190" y="251" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="251">涨跌停停牌处理没有</tspan></text>
-            <text x="318" y="255" fill="#8499bd" font-size="12">买不进、卖不出的日子,不许假装成交</text>
-            <rect x="28" y="272" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="56" cy="298" r="13" fill="#101d33" stroke="#f0c96a" stroke-width="1.5"/>
-            <text x="56" y="303" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">5</text>
-            <text x="190" y="299" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="299">容量合不合理</tspan></text>
-            <text x="318" y="303" fill="#8499bd" font-size="12">小资金做出来的成绩,不能原样平移到大资金</text>
-            <rect x="28" y="320" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="56" cy="346" r="13" fill="#101d33" stroke="#f0c96a" stroke-width="1.5"/>
-            <text x="56" y="351" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">6</text>
-            <text x="190" y="347" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="347">参数是不是过拟合</tspan></text>
-            <text x="318" y="351" fill="#8499bd" font-size="12">试了无数次留下的「最佳」,先打问号再上桌</text>
-            <rect x="28" y="368" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
-            <circle cx="56" cy="394" r="13" fill="#101d33" stroke="#e88" stroke-width="1.5"/>
-            <text x="56" y="399" text-anchor="middle" fill="#e88" font-size="13" font-weight="800">7</text>
-            <text x="190" y="395" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="395">样本外有没有被污染</tspan></text>
-            <text x="318" y="399" fill="#8499bd" font-size="12">反复看测试集回头改策略,测试集就进了回路</text>
-            <text x="450" y="438" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">验证的目标不是保住最漂亮的曲线,是把不真实的收益一样样剔掉——剔完还留在桌上的,才可能是真优势</text>
-          </svg>
-          <p class="figure__cap">看到漂亮回测,先按老顺序查错:股票池是不是点时、成交价有没有偷看、成本是否完整、涨跌停停牌处理没有、容量合不合理、参数是不是过拟合、样本外有没有被污染。查完错的曲线,才有资格谈好不好。</p>
-        </div>
-        <h2>8. 组合和风险</h2>
-<p>预测分数不能直接当仓位用,中间隔着一整层组合优化:在预期收益、风险、成本、流动性和各方约束之间做取舍。行业、风格、个股集中度、<span class="term">跟踪误差</span>、换手、容量,每一项都要被管起来。</p><p>风险控制的本质,不是预测明天跌不跌,而是把错误限制在不致命的范围内。暴露、集中度、<span class="term">VaR</span>、压力测试、止损、模型失效监控、数据监控、系统监控,加起来才构成完整的风险框架——单拿任何一个出来,都只是零件。</p><p>组合还要能解释自己赚的是哪份钱:市场 <span class="term">Beta</span>、行业、风格、选股、<span class="term">基差</span>、执行,还是<span class="term">杠杆</span>?归因的意义就是给收益办一张明细发票,让赚的和冒的险都变得可见——看不见来源的收益,迟早连本带利还回去。</p>
-
-        <h2>9. 交易执行和实盘</h2>
-<p>实盘不是调用一个 buy 函数就完事。订单会被拒,会部分成交,会撤单失败,要排队,有滑点,会被涨跌停和停牌拦住;内部账本还必须和券商真实状态对得上。这一层全是工程师熟悉的脏活,也全是要命的活。</p><p>上线前按清单逐项过:数据、模型、回测一致性、订单、风控、日志、权限、盘后对账,一项一项钉死。模拟盘和小资金实盘是必经之路,不是走过场——它们存在的意义,就是让错误先发生在亏得起的地方。</p><p>原则一句话:越自动、越快、越带<span class="term">杠杆</span>,越需要强风控。高频和衍生品策略把这句话放大到极致。系统错误比模型错误亏得更快——模型错了是慢慢流血,系统错了可能是当场断气。</p>
-
-        <h2>10. 人和纪律</h2>
-<p>链条最后一层,是人。你会害怕亏损,会在上涨之后过度自信,会想借钱加仓,会在回撤里怀疑策略。量化可以减少临场主观,但消不掉人性——它只是把战场从盘中挪到了冷静时刻的规则制定上。</p><p>资金管理的顺序前面已经讲过:先分清生活钱和风险钱,再限制仓位和<span class="term">杠杆</span>,提前写好停用和加仓规则。一个策略能不能长期执行,最终取决于你能不能扛住它真实的坏阶段,而不是它最好的那段曲线。</p><p>从小岛的一条鱼到一整套量化系统,这十层概念翻来覆去说的其实是同一件事:金融是资源、时间、风险和信息的系统工程。别被任何单个名词迷住眼睛,要一直能看见整条链。</p>
-
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 465" role="img" aria-label="十层金字塔图:真实财富、信用、制度、数据、因子、组合、执行,塔顶是人的纪律">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化十层金字塔:底下坏一点,上面就动一片</text>
-            <path d="M 60 400 L 840 400 L 790 340 L 110 340 Z" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.4)"/>
-            <text x="450" y="378" text-anchor="middle" fill="#bcc9dd" font-size="13">① 真实财富与生产力 · ② 信用与时间 · ③ 权利与资产</text>
-            <path d="M 110 340 L 790 340 L 740 280 L 160 280 Z" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.45)"/>
-            <text x="450" y="318" text-anchor="middle" fill="#bcc9dd" font-size="13">④ 市场制度 · ⑤ 数据可见性</text>
-            <path d="M 160 280 L 740 280 L 690 220 L 210 220 Z" fill="rgba(122,167,240,0.25)" stroke="rgba(122,167,240,0.5)"/>
-            <text x="450" y="258" text-anchor="middle" fill="#bcc9dd" font-size="13">⑥ 因子与模型 · ⑦ 回测与验证</text>
-            <path d="M 210 220 L 690 220 L 640 160 L 260 160 Z" fill="rgba(240,201,106,0.2)" stroke="rgba(240,201,106,0.5)"/>
-            <text x="450" y="198" text-anchor="middle" fill="#bcc9dd" font-size="13">⑧ 组合与风险 · ⑨ 交易与实盘</text>
-            <path d="M 260 160 L 640 160 L 590 100 L 310 100 Z" fill="rgba(238,136,119,0.2)" stroke="rgba(238,136,119,0.5)"/>
-            <text x="450" y="138" text-anchor="middle" fill="#bcc9dd" font-size="13">⑩ 人和纪律</text>
-            <path d="M 310 100 L 590 100 L 450 40 Z" fill="rgba(240,201,106,0.3)" stroke="#f0c96a"/>
-            <text x="450" y="76" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">你自己的决策</text>
-            <text x="450" y="438" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这不是组织架构图,是知识依赖图——底座塔基稍微不稳,上面那些数据、意外与模型都会跟着晃</text>
-          </svg>
-          <p class="figure__cap">这本书的全部内容可以画成一座十层金字塔。底下几层日暮存心,上面三层人人都盯屏幕。当你看到模型失效时,要检查的不是模型,是底下九层之一。“技术要求”的它本身没问题。”</p>
+          <p class="figure__cap">读完第 33 章后,至少要能复述“实盘交易是一台订单状态机”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
         </div>
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>金融可以按真实财富、信用时间、资产权利、市场制度、数据、模型、回测、组合、实盘和人这十层来理解。</li>
-            <li>量化不是脱离金融的算法游戏,而是把金融假设一步步变成数据、模型、组合和交易系统。</li>
+            <li>实盘交易是一台订单状态机,必须处理好拒单、部分成交、撤单、成交回报和对账。</li>
+            <li>执行要在速度、成本和成交确定性之间取舍,大订单还得额外考虑冲击和参与率。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.</strong> 真实财富和生产力</li>
-            <li><strong>2.</strong> 信用和时间</li>
-            <li><strong>3.</strong> 权利和资产</li>
-            <li><strong>4.</strong> 市场和交易制度</li>
-            <li><strong>5.</strong> 数据和可见性</li>
-            <li><strong>6.</strong> 因子和模型</li>
-            <li><strong>7.</strong> 回测和验证</li>
-            <li><strong>8.</strong> 组合和风险</li>
-            <li><strong>9.</strong> 交易执行和实盘</li>
-            <li><strong>10.</strong> 人和纪律</li>
+            <li><strong>1.</strong> 订单生命周期</li>
+            <li><strong>2.</strong> 市价单、限价单和算法单</li>
+            <li><strong>3.</strong> 快、便宜和确定性不能同时最大化</li>
+            <li><strong>4.</strong> 下单前先挡住低级错误</li>
+            <li><strong>5.</strong> 市场正在变</li>
+            <li><strong>6.</strong> 部分成交和撤单失败</li>
+            <li><strong>7.</strong> 成交回报和内部账本</li>
+            <li><strong>8.</strong> 真实成交比预期差多少</li>
+            <li><strong>9.</strong> 灾难开关和人工接管</li>
+            <li><strong>10.</strong> 个人实盘从小规模开始</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>为什么说钱不是金融学习的最底层?</summary>
-            <p>因为真实财富和生产力才是最终的地基,钱只是交换和记账的工具,钞票变多不等于财富变多。</p>
+            <summary>为什么策略目标仓位不能直接等于成交结果?</summary>
+            <p>因为订单可能被拒、部分成交、排队未成交、撤单失败,或因涨跌停停牌根本无法交易。</p>
           </details>
           <details class="quiz__item">
-            <summary>量化链条里数据为什么这么重要?</summary>
-            <p>数据决定模型在历史时点到底看见了什么;口径错了,回测和实盘会一起失真,再好的模型也被喂错料。</p>
+            <summary>执行为什么不能同时最快、最便宜、最确定?</summary>
+            <p>追求快速和确定通常要主动吃对手盘、付出滑点;耐心挂单成本低,但成交不确定,三者只能取其二。</p>
           </details>
         </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>风险控制和组合监控: 什么时候该减仓、停用和复盘</h2>
+          <p>讲清暴露、集中度、VaR、压力测试、止损、模型失效和风险监控。</p>
+        </section>
+
       </div>
     </main>
     <script src="assets/book.js"></script>

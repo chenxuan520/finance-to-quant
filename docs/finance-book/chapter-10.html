@@ -3,165 +3,136 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 10 章 · 影子银行:银行不在银行里 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="把余额宝、银行理财、信托通道、P2P、回购市场串到一张图上:什么叫影子银行,错配怎么赚钱,挤兑怎么发生, 2008 年和硅谷银行怎么炸,以及监管为什么永远追着影子跑。" />
+    <title>第 10 章 · 跨资产入门: 外汇、商品与 REITs | 从金融零基础到量化研究者</title>
+    <meta name="description" content="先用现金流、供需和计价货币理解外汇、商品与不动产份额,再建立跨资产研究的共同语言。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="10">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第一部分 · 金融世界的底层结构 · 第 10 章</p>
-        <h1>影子银行:银行不在银行里</h1>
-        <p class="lead">把钱放进余额宝,钱去了哪里?不在银行的银行,做着吸收存款、发放贷款、期限错配这三件事,却不戴银行的四重管束。这一章从货币市场基金、信托、P2P 到回购市场,把这套影子里的机器拆开看。</p>
+        <p class="chapter__eyebrow">第二部分 · 资产如何承载现金流与风险 · 第 10 章</p>
+        <h1>跨资产入门: 外汇、商品与 REITs</h1>
+        <p class="lead">股票和债券之外,资产仍然可以用同一组问题理解:现金流从哪里来,价格受什么供需约束,谁承担汇率、流动性和尾部风险。这一章先做跨资产地图,认识外汇、商品与 REITs,并把它们放进统一的数据口径。下一章再进入更复杂的结构性产品,拆开那些被重新包装的收益和风险。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线二</span>
+            <span>本部分第 6 / 7 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?</p>
+          <p class="chapter-context__outcome">读完后,你能先拆现金流、权利、期限和最坏情况,再讨论价格涨跌。 </p>
+        </section>
+
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>影子银行就是干银行三件事(集短钱、放长贷、赚利差)、却不戴银行四重管束的信用中介;看结构,别看招牌。</li>
-            <li>期限错配是这台生意的发动机:借短贷长赚期限利差; 1997、2008、2023 三次大炸,爆的都是同一台。</li>
+            <li>外汇是两种货币之间的相对价格,受利率、通胀、贸易和资本流动影响。</li>
+            <li>商品价格更直接连接着真实供需、库存和期限结构。</li>
           </ul>
         </section>
 
 
-        <h2>1. 干了银行的活, 没进银行的伞</h2>
-<p>你手机里的余额宝,你妈在银行 App 里买的 R2 理财,地产商从信托公司借的开发贷,美国机构手里永远报 1 美元净值的货币基金——看起来八竿子打不着的几样东西,在金融解剖刀下是同一类生物:都在替人收短钱,替人放长钱,从中间赚利差。这类生意有个统一的名字,叫影子银行。名字里带<span class="hl">“影子”</span>,不是因为它偷偷摸摸,而是因为它总在正主的光环外面活动。</p><p>判断标准只有一条:起了银行的作用,却不按银行被监管。正规银行吸收随时能取的存款、放出几年才到期的贷款,为此要接受四重管束——自有资本金要达标,存款要按比例缴准备金,存款要交存款保险,出事时有央行这个最后贷款人兜底。这四样的作用只有一个:让银行扛得住债主同时来取钱。影子银行的共性,就是绕开这四样,照做银行那三样——省掉的恰恰是这份<span class="hl">“扛得住”</span>。</p><p>回到小岛看一眼。岛上账房先生跟全村人说:你们的闲鱼存我这儿,随存随取;转头他把成堆的鱼借给船队修新船,三年后连本带利归还。只要大家不同时来提鱼,这门生意稳赚不赔。可他没留准备金,没有同业互保,出了事也没有谁来救——这间小屋没挂银行的招牌,干的却是银行的活。影子银行,就是现实世界里千千万万间这样的账房。</p><p>边界要划清:影子银行大多合法,甚至持牌——信托公司、基金公司、券商资管都是正经机构。问题不在牌照,在监管口径:它们挤进了信用中介这个行当,管束却没跟上。中国的影子家族大致有七大门派:银行理财领头,信托、券商资管、基金子公司做通道, P2P、小贷、消费金融走互联网线,再往下还有担保、典当、民间过桥这些灰色地带。</p><p>离你最远的名字,反而最好懂。企业一笔 <span class="num">1000 万</span>的银行贷款 <span class="num">4 月</span> <span class="num">30 日</span>到期,新贷款 <span class="num">5 月</span> <span class="num">20 日</span>才批下来,中间 <span class="num">20 天</span>空窗找民间资金过桥,日息千分之一,利息 <span class="num">20 万</span>,折合年化 <span class="num">36.5%</span>。定价敢这么贵,是因为银行一旦拒贷,过桥方损失的是全部本金——高收益里藏着的是<span class="hl">“或有归零”</span>。2011 到 <span class="num">2012 年</span>的温州民间借贷风波,就是这类担保圈、互保链成片断裂的现场。</p><p>它为什么会存在?因为有真实需求在顶着。正规银行处处是红线:曾经有一条 <span class="num">75%</span> 的存贷比上限(<span class="num">2015 年</span>才取消),有信贷额度管控,有对地产和过剩产能行业的限投令。钱想贷给贷不到的人,储户想要比存款更高的收益,两边一握手,影子就长出来了。影子银行不是谁设计出来的怪物,是监管和需求长期挤压出来的形状。所以监管每多画一条红线,市场上常常就多出一类影子产品——这不是巧合,是因果。</p><div class="callout callout--note reveal"><span class="callout__title">一句话记住</span><p>干银行三件事——集短钱、放长贷、赚利差,却没有银行的四重管束,这就是影子银行。它不在什么阴暗角落,它就躺在你的理财持仓里。下次看到<span class="hl">“灵活申赎、收益稳健”</span>的宣传语,先问一句:这份稳健归谁管?</p></div>
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 1973 年的一桶油怎样同时撞向股票、债券和汇率</h2>
+<p><span class="num">1973 年</span>石油危机之后,油价猛涨,加油站排起长队。对普通家庭,它是油箱变贵;对企业,它是运输、化工、电力和几乎所有供应链一起抬价;对政府和央行,它又变成增长放缓与<a class="term term-link" href="glossary.html#g-通胀" title="查看术语：通胀">通胀</a>上升同时出现的难题。</p><p>同一桶油沿着不同管道进入资产价格:企业成本上升压低<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>利润,通胀侵蚀<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>固定现金流,进口国的贸易账变差,出口国却突然涌入美元收入。所谓<span class="hl">“跨资产”</span>,不是把四张 K 线并排摆放,而是追踪一个冲击怎样穿过现金流、<a class="term term-link" href="glossary.html#g-折现" title="查看术语：折现">折现</a>率和国际收支。</p><div class="callout callout--warn reveal"><span class="callout__title">提醒</span><p>做量化时,这提醒我们不要把相关系数当永久属性。平静年份里各资产各走各的,共同冲击来临时却可能瞬间同向。模型真正要找的不是“黄金永远避险”或“债券永远<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>股票”,而是在哪种经济情景下,哪条传导链会暂时占上风。</p></div>
+        </section>
 
-        <h2>2. 用 90 天的钱养 3 年的资产</h2>
-<p>如果有人向你介绍一门生意:拿别人 <span class="num">90 天</span>后就要来取的钱,买 <span class="num">3 年</span>后才能变现的资产,中间差价全归你——你的第一反应大概是,这钱也太好赚了。影子银行的全部故事,都从这口锅开始。锅的名字叫期限错配。</p><p>常态下收益率曲线向上倾斜:期限越长,利率越高。发 <span class="num">90 天</span>理财的付息成本是 <span class="num">3.2%</span>,买 <span class="num">3 年</span>期资产的收益是 <span class="num">5%</span>,中间 <span class="num">1.8 个百分点</span>就是错配的价差。假设池子募了 <span class="num">90 天</span>产品 <span class="num">10 亿</span>,投进一笔 <span class="num">3 年</span>期市政债权——只要 <span class="num">3 年</span>内能滚动发行 12 期 <span class="num">90 天</span>产品接上,利差就稳稳到手。</p><p>错配要玩得转,靠另外两件套掩护。一是资金池:多笔资金混进一个池子,多笔资产混进另一个池子,不逐笔对应,灵活是灵活,亏了却不知道该算在谁头上。二是刚性兑付:产品亏了,管理人悄悄垫上,投资者以为自己买的就是高息存款。资金池负责藏亏损,刚兑负责藏风险,两个一联手,市场定价机制当场失灵。用程序员的比方记这三件套:期限错配是拿活钱补长账的定时任务,资金池是没有隔离的共享缓存,刚兑是吞掉所有异常的 try-except——系统平时跑着极顺,出事全是雪崩。</p><p>拿这笔账算到底:某银行理财资金池 <span class="num">100 亿</span>,负债端成本 <span class="num">3.5%</span>,资产端平均 <span class="num">4.3%</span>,利差 <span class="num">0.8%</span>,一年净赚 <span class="num">8000 万</span>。某笔 <span class="num">10 亿</span>非标违约,只收回六成,亏 <span class="num">4 亿</span>——池子当年直接倒亏 <span class="num">3.2 亿</span>。按合同,这笔亏损本该投资者自己承担;按行规,银行得补齐。所谓刚性兑付,就是这么一本广告里不出现、年年都要付的隐形负债。</p><p>错配的脆弱藏在一个会计细节里。池子有 <span class="num">50 亿</span>资产、综合久期 <span class="num">2 年</span>,若某季利率上行 <span class="num">1 个百分点</span>,按市值算要浮亏约 <span class="num">2%</span>,也就是 <span class="num">1 亿</span>。可只要没人赎回、债券持有到期,这笔浮亏可以永远不体现在报表上。所以这门生意的真相是:不挤兑就没事,一挤兑就全是事——账面平静和瞬间爆炸之间,只差一个赎回按钮。</p><p>回头看三次大炸雷,炸的都是同一台发动机。<span class="num">1997 年</span>亚洲金融危机,一些经济体拿随时会撤的短期外资养长期的本地项目,外资一退潮,汇率和银行一起出事。<span class="num">2008 年</span>,美国影子银行拿隔夜回购养房贷证券,机构一夜之间抽走资金。<span class="num">2023 年</span>,硅谷银行拿活期存款养十年期美债,储户 <span class="num">48 小时</span>把它提空。中国自己也预演过一次: <span class="num">2013 年</span> <span class="num">6 月</span><span class="hl">“钱荒”</span>,银行间隔夜 Shibor 定盘一度冲到约 <span class="num">13.4%</span>,靠同业融资滚动续命的理财和货基险些断链。三十年跨度,半个地球,死法一模一样:借的短,贷的长,债主先跑为敬。</p><div class="callout callout--note reveal"><span class="callout__title">这台发动机的说明书</span><p>负债端期限短、成本低;资产端期限长、收益高;中间的差价就是利润。它运转的每一天都看起来无比正确,直到某一天,债主们同时敲门。它的利润是真的,它的“稳”是假的——哪天要验货,只挑挤兑那天。</p></div>
+        <h2>2. 两种货币之间的相对价格</h2>
+<p>先纠正一个最常见的错觉:很多人把汇率当成<span class="hl">“某一种货币值多少钱”</span>。其实汇率从来不是某一种货币的绝对价值,而是两种货币之间的相对价格。人民币兑美元汇率变化,反映的是人民币和美元之间购买力、<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>、<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>流动、贸易、预期等因素的相对变化——像天平的两端,动的从来不是单独一边。</p><p>为什么说是天平?回到最朴素的需求。出口商收到美元,要换成人民币发工资、付货款,他们在市场上卖美元、买人民币;进口商和出海投资的资金反着来,买美元、卖人民币。利率、通胀、贸易和资本流动,都是通过改变这两边队伍的长短来推动汇率的——哪边排队的人多,哪边的货币就被买得更贵。</p><p>汇率不是个遥远的宏观数字,普通人的生活里处处有它的影子。一个出口企业收到美元收入,但工资和成本用人民币支付,它就会天天盯汇率:如果美元兑人民币贬值,同样一美元收入换回的人民币变少,利润可能直接缩水。一个留学生家庭、一家跨境电商、一家进口企业,也都拴在这条链条上,只是站的位置不同。</p><p>外汇市场很大、<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>很强,但这不代表普通人容易赚钱。很多外汇交易带<span class="term">杠杆</span>,小幅波动就能放大成大幅盈亏。对初学者的建议是:先把汇率当作宏观和跨境现金流的价格来理解,不要先把它当成投机场。</p><p>看外汇报价,第一步是看清方向。假设 USD/CNY 从 7.10 变成 7.20,意思是 1 美元能换更多人民币:美元相对人民币升值,人民币相对美元贬值。同一个变动,立场不同的人冷暖自知——进口商要用美元买原材料,人民币贬值会让成本上升;出口商收美元货款,换回人民币可能增加。</p><p>拿数字把这个方向感钉死。出口商收回 <span class="num">10 万美元</span>货款:按 7.10 能换 <span class="num">71 万元</span>人民币,按 7.20 能换 <span class="num">72 万</span>,多进账 <span class="num">1 万</span>。进口商要付 <span class="num">10 万美元</span>买原材料:成本从 <span class="num">71 万</span>变成 <span class="num">72 万</span>,多掏 <span class="num">1 万</span>。同一个 0.10 的移动,天平两端一进一出——<span class="hl">“人民币升值是不是好事”</span>这种问题,先得问你站在链条哪一头。</p><p>最后把<span class="term">杠杆</span>请上台。比如你用 <span class="num">1 万元</span><span class="term">保证金</span>控制 <span class="num">10 万元</span>名义外汇头寸,相当于 <span class="num">10 倍</span><span class="term">杠杆</span>。汇率对你不利变动 <span class="num">1%</span>,名义亏损约 <span class="num">1000 元</span>,相当于<span class="term">保证金</span>亏 <span class="num">10%</span>。如果不理解<span class="term">杠杆</span>和强平,外汇行情里的小小波纹,落在你账户上就是大浪。</p>
+
+        <h2>3. 价格背后是真实供需</h2>
+<p>商品家族的成员,你天天在新闻里见到:原油、铜、黄金、铁矿石、玉米、大豆。商品价格和股票价格有个根本区别——它背后常常有很强的现实供需。天气会影响农产品,地缘冲突会影响能源,房地产和制造业会影响金属需求。商品不活在报表里,它活在天气、矿山和运输线上。</p><p>商品还有两个股票没有的变量:库存和运输。库存低时,一点供给冲击就可能让价格大幅波动;库存高时,短期冲击可能被缓冲。把它想成缓存就秒懂:缓存厚,毛刺被吞掉;缓存薄,同样的毛刺直接打到价格上。</p><p>库存的缓冲作用可以算出来。假设某品种常态库存一千万吨,一次意外让到货少了五十万吨:缺口占库存百分之五,价格也许只晃一晃。要是库存本来只剩一百万吨,同样五十万吨就是一半缺口,价格很难不跳起来。绝对冲击没变,变的是缓冲垫的厚度——同一条新闻在不同库存水位下,砸出的坑完全不同。</p><p>黄金比较特殊,需要单独说。它既像商品,也像货币和避险资产。实际利率、美元、风险偏好、央行买卖,都会影响黄金价格。所以不要把所有商品混成一类看:每个品种都有自己的产业逻辑,原油的故事套不到大豆身上。</p><p>商品期货还要多盯一件事:期限结构。假设原油近月合约 <span class="num">580 元</span>,三个月后合约 <span class="num">600 元</span>,这可能反映仓储、资金成本和未来供需预期。反过来,如果近月 <span class="num">620 元</span>、远月 <span class="num">600 元</span>,可能说明现货紧张。记住这句要紧的话:做商品策略时,你买到的不是一个永不过期的<span class="hl">“原油价格”</span>,而是某个到期月份的合约。</p><p>顺着这句话多想一步。你在新闻里听到<span class="hl">“油价涨了”</span>,那是近月和现货的故事;你手里那张远月合约未必跟得上同样的幅度。期限结构一歪,不同月份合约的涨跌可以差出好几个身位——报的是同一桶油,走的不是同一条曲线。</p><p>一句话总结两个世界:股票看公司利润,商品看真实供需、库存和合约结构——库存是判断冲击会不会被放大的缓冲垫。所以商品研究员翻的是库存周报、天气预报和船期表,而不是利润表。</p>
+
+        <h2>4. 把不动产现金流切成份额</h2>
+<p><span class="term">REITs</span> 可以先理解成一句话:把基础设施或不动产的现金流证券化。比如高速公路、产业园、仓储物流、保障性租赁住房,这些大个头资产每天都在产生租金、通行费或经营收入。<span class="term">REITs</span> 把这些资产装进一个结构里,投资者买份额,分享底层资产现金流——你不用真去买栋楼,也能当它的小份额业主。</p><p><span class="term">REITs</span> 的性格有点两面:既不像普通股票,也不像普通债券。它有权益属性,因为底层资产经营好坏会影响价值;它也有类似固定收益的属性,因为很多 <span class="term">REITs</span> 会强调较稳定的现金分派。两边都沾一点,意味着两边的风险你都得看一眼。</p><p>看 <span class="term">REITs</span> 最忌讳只盯一个分派率。还要看底层资产质量、租户稳定性、剩余期限、资产估值、<span class="term">杠杆</span>、管理人能力、扩募规则和流动性。高分派率如果来自一次性收益或资产质量下滑,并不一定可持续——分得高,不等于家底厚。</p><p>举个简化例子。一个产业园 <span class="term">REITs</span> 每年可分配现金 <span class="num">1 亿元</span>,总市值 <span class="num">20 亿元</span>,表面分派率约 <span class="num">5%</span>,看着挺香。如果核心租户搬走,未来可分配现金降到 <span class="num">7000 万元</span>,即使当前分派率看起来高,价格也可能下跌。<span class="term">REITs</span> 的分派来自底层资产经营,不是凭空出现的利息。</p><p>把这个例子往下推完。如果市场一直要求约 <span class="num">5%</span> 的分派率,可分派现金从 <span class="num">1 亿元</span>降到 <span class="num">7000 万元</span>,同样的回报率要求会把市值压到约 <span class="num">14 亿元</span>——<span class="num">7000 万</span>除以 0.05。从 <span class="num">20 亿</span>到 <span class="num">14 亿</span>,大约三成跌幅。还有个视觉陷阱:价格先跌、分派还没下调时,<span class="num">1 亿元</span>分派除以 <span class="num">14 亿元</span>市值,分派率被动升到 <span class="num">7%</span> 多一点。排行榜上突然变高的分派率,可能只是价格下跌的回声。</p><p><span class="term">REITs</span> 还要过估值和流动性两关。底层资产估值下调,基金净值可能下降;<a class="term term-link" href="glossary.html#g-二级市场" title="查看术语：二级市场">二级市场</a>成交不活跃时,你想卖出可能要让价。它有现金流属性,但不是存款,也不是无风险债券——把它当成<span class="hl">“永远稳收的房租”</span>,是最常见的第一课学费。</p>
+
+        <h2>5. 把多个工具打包</h2>
+<p><a class="term term-link" href="glossary.html#g-结构化产品" title="查看术语：结构化产品">结构化产品</a>的做法很像搭乐高:把债券、期权、互换等工具组合起来,做成一个带条件的收益结构。它可能写着<span class="hl">“保本”</span><span class="hl">“增强”</span><span class="hl">“敲入”</span><span class="hl">“敲出”</span><span class="hl">“票息”</span>这些诱人的词,但请记住一件事:每个词背后一定有条款,条款才是产品本身。</p><p>先说一个经典拆法。很多<span class="hl">“保本加参与上涨”</span>的产品,拆开只有两块:大头买一只到期还本的债券,小头买一份看涨期权。债券到期把本金护住,期权负责在行情向好时弹出收益——<span class="hl">“保本”</span>两个字是结构拼出来的,不是发行人拍胸脯。还要留意:<span class="hl">“保本”</span>通常以持有到期、发行人不违约为前提。</p><p>举个简单例子。一个产品承诺:如果指数不跌破某个水平,你可以拿固定票息;如果指数跌破某个水平,你可能要承担指数下跌损失。表面上看,平时拿票息很舒服;拆开看结构,你其实悄悄卖出了一部分下跌保护——那份票息,就是你卖出这份保护收到的钱。</p><p>结构化产品最重要的是看路径,而不是只看到期价格。中间是否触发敲入敲出?观察日怎么定?收益上限在哪里?最坏情况下亏多少?发行人<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>风险是谁?这一串问题答不上来,结论只有一个:看不懂条款,就不应该买。</p><p>把<span class="hl">“看路径”</span>落成数字。假设指数从 <span class="num">1000 点</span>出发,产品约定:任一观察日到 <span class="num">1030 点</span>就敲出、提前结束;期间跌破 <span class="num">700 点</span>就算敲入。指数前两个观察日在 1000 到 1020 之间晃,第三个观察日摸到 1035:敲出触发,你拿约定票息离场。可如果它是先跌到 680、再涨回 1035 呢?敲入已经触发,结局换了一套条款。终点同是 1035,路径不同,你拿到的钱完全不同。</p>
+                    <div class="table-wrap">
+                      <table>
+                        <thead><tr><th>指数路径</th><th>可能结果</th><th>小白应看到的风险</th></tr></thead>
+                        <tbody>
+                          <tr><td>观察日上涨并触发敲出</td><td>提前结束,拿约定票息</td><td>收益有上限,后面继续涨也与你无关</td></tr>
+                          <tr><td>期间没有敲入,到期也未大跌</td><td>可能拿到票息或本金加票息</td><td>看似平稳,但依赖路径条件</td></tr>
+                          <tr><td>期间跌破敲入线,到期仍下跌</td><td>可能承担指数下跌损失</td><td>平时收票息,极端时像接了下跌风险</td></tr>
+                          <tr><td>发行人出问题</td><td>条款兑现也可能受影响</td><td>还要看发行人信用风险</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p>这张表不是某个具体产品条款,只是帮助你理解结构化产品的阅读方式。所有带敲入、敲出、障碍、票息的产品,都要把不同路径下的收益和亏损像这张表一样逐行列出来。只看宣传里的年化票息,你永远看不到真正的风险藏在哪一行。</p><p>结构化产品里还有一类大户:资产证券化(ABS)。它的核心把戏是把一堆未来现金流——比如房贷还款、车贷、信用卡分期——打包成资产池,再切成可以交易的证券卖给投资者。你买的不再是<span class="hl">“某家公司”</span>,而是<span class="hl">“这池子钱未来会流的这条河”</span>。住房抵押证券(MBS)、车贷 ABS 都是这条路子。</p><p>给 ABS 排雷也用前文的跨资产五问,但要加一个决定性的新变量——底层资产质量。池中每笔贷款的违约率、提前还款率、回收率,决定了现金流到底有多少量;一旦经济下行,成百上千笔小额贷款会一起出问题,整个证券的评级和价格随之重估;而且 ABS 通常有多层分级,优先级先拿钱,劣后级先挨亏——你买的那层在队伍哪个位置,直接决定你拿到的是分红还是坏账。</p>
+
+        <h2>6. 跨资产共同语言</h2>
+<p>外汇、商品、<span class="term">REITs</span>、结构化产品摆在一起,像百货公司的四个楼层,差异巨大。但它们仍然可以用同一套问题拆开:第一,底层现金流或价格来源是什么;第二,谁有权拿收益;第三,谁承担风险;第四,交易成本和流动性如何;第五,估值或定价依赖哪些假设。五问问完,再花哨的产品也会露出骨架。</p><p>把五问套在 <span class="term">REITs</span> 上走一遍,当是练习。现金流来源:租金和经营收入;谁拿收益:份额持有人按份分;谁担风险:经营下滑、估值下调,持有人自己扛;成本和流动性:二级市场可能清淡,退出要让价;定价假设:分派可持续、估值站得住。五问走完,一只 <span class="term">REITs</span> 的骨架就摊在桌上。</p><p>这套问题比背产品名字更重要。你看到一个新资产,先不用急着判断能不能赚钱,先问它的现金流在哪里,风险从哪里来,退出时有没有市场——就像 review 别人的代码先读接口定义,而不是先跑 benchmark。接口都没看懂,跑分没有意义。</p><p>很多金融产品复杂,不是因为它们真的神秘,而是因为它们把几种简单风险叠在一起。把它拆开,就没那么吓人;拆不开,就先别碰——拆不开的产品,你连仓位该定多大都没法算。</p>
+
+        <h2>7. 跨资产数据怎样进入量化</h2>
+<p>多资产量化会同时研究股票、债券、外汇、商品、<span class="term">REITs</span>、期货和期权。注意,这些资产的数据不是同一种形状:数据频率、交易时间、成本、<span class="term">杠杆</span>和风险来源都不同。把它们塞进同一张数据表之前,你得先搞清楚每一列各自的脾气。</p><p>举个具体的坑:时间对齐。A 股下午三点收盘,商品期货有夜盘,外汇几乎二十四小时不停——同一行<span class="hl">“今日收盘价”</span>,背后是三个不同时刻。不处理时差就把它们并排算相关性,你算出的可能只是钟表时差,不是资产联动。多资产数据的第一课,是先统一时间轴,再谈模型。</p><p>不同策略对这些资产的依赖也不同。如果你做宏观 CTA,商品和外汇可能很重要;如果你做资产配置,<span class="term">REITs</span> 和黄金可能是分散工具;如果你做结构化产品分析,期权和路径风险是核心。资产是零件,策略才是组装图。</p><p>对个人来说,这一章的重点不是让你立刻交易所有资产,而是让你知道:金融世界的资产很多,但拆解语言可以统一。只要回到现金流、风险、价格、成本和约束这几个问题上,你就不会被任何产品名字带走。</p>
+
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 515" role="img" aria-label="期限错配示意:上方负债端四个 90 天滚动块,下方资产端一条 3 年长方块,中间是 1.8% 的利差,底部红色区域标记滚动断裂点">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期限错配:用 90 天的钱养 3 年的资产</text>
-            <!-- 负债端:90 天滚动四段 -->
-            <text x="70" y="84" fill="#a8c6ff" font-size="14" font-weight="800">负债端:投资者的钱,90 天一轮回</text>
-            <rect x="70" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="156" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 1 轮 90 天</text>
-            <rect x="250" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="336" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 2 轮 90 天</text>
-            <rect x="430" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="516" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 3 轮 90 天</text>
-            <rect x="610" y="96" width="172" height="46" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/><text x="696" y="124" text-anchor="middle" fill="#a8c6ff" font-size="12">第 4 轮 90 天…</text>
-            <!-- 资产端:一条 3 年 -->
-            <text x="70" y="190" fill="#f0c96a" font-size="14" font-weight="800">资产端:借给地产商的贷款,3 年才到期,收益 5%</text>
-            <rect x="70" y="202" width="712" height="46" rx="8" fill="rgba(240,201,106,0.18)" stroke="#f0c96a"/>
-            <text x="426" y="230" text-anchor="middle" fill="#ffe6a8" font-size="12">3 年 × 5% ——第 1095 天晚上 12 点之前,一分钱拿不回来</text>
-            <!-- 利差赚取区 -->
-            <text x="70" y="282" fill="#8fb37a" font-size="13" font-weight="800">平时赚什么:借 3.2%、贷 5%,一年躺赚 1.8% 价差</text>
-            <!-- 断裂点 -->
-            <line x1="426" y1="300" x2="426" y2="380" stroke="#e87878" stroke-width="2" stroke-dasharray="6 6"/>
-            <path d="M 412 380 L 426 396 L 440 380 Z" fill="#e87878"/>
-            <rect x="200" y="400" width="452" height="64" rx="10" fill="rgba(232,120,120,0.16)" stroke="#e87878"/>
-            <text x="216" y="426" fill="#ffb4b4" font-size="13" font-weight="800">某一天,第 N 轮 90 天到期的钱不肯续了</text>
-            <text x="216" y="448" fill="#bcc9dd" font-size="12">资产还剩 2 年才到期——要么折价卖、要么求谁借钱。1997 / 2008 / 2023 都是这一天。</text>
-            <text x="450" y="490" text-anchor="middle" fill="#8499bd" font-size="12.5">左侧滚动的每一格都不是新钱,是旧钱的"再借一次"。滚动断掉的那天,账面上的盈利模型只剩一句话:谁能借我钱?</text>
+          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 10 章小结图: 跨资产入门: 外汇、商品与 REITs">
+            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
+            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
+
+            <g>
+              <rect x="65" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
+              <rect x="77" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
+              <text x="90" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">1</text>
+              <text x="84" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="84" y="203">外汇是两种货币之间</tspan><tspan x="84" y="221">的相对价格</tspan></text>
+            </g>
+            <g>
+              <rect x="335" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
+              <rect x="347" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
+              <text x="360" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">2</text>
+              <text x="354" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="354" y="194">商品价格更直接连接</tspan><tspan x="354" y="212">着真实供需、库存和</tspan><tspan x="354" y="230">期限结构</tspan></text>
+            </g>
+            <g>
+              <rect x="605" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
+              <rect x="617" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
+              <text x="630" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">3</text>
+              <text x="624" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="624" y="203">跨资产入门:外汇、</tspan><tspan x="624" y="221">商品与REITs</tspan></text>
+            </g>
           </svg>
-          <p class="figure__cap">影子银行与正规银行共用同一台发动机:滚动短钱,放长期资产,吃利差。1997 年是央行储备续不上,2008 年是回购市场续不上,2023 年硅谷银行是储户续不上——点火处不同,断的是同一根轴。</p>
+          <p class="figure__cap">读完第 10 章后,至少要能复述“外汇是两种货币之间的相对价格”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
         </div>
-        <h2>3. 开在批发市场里的银行</h2>
-<p>美国的影子银行不在街边,在华尔街的报表角落里。它服务的不是邻居大妈,而是机构:大企业财务官、对冲基金、投行交易台。整条链从一句简单的话开始——银行不想再把贷款自己捂到期了。</p><p>源头是证券化。银行把成千上万笔房贷打包、切块、评级,卖给市场,资金很快回笼,再放下一笔。链条是<span class="hl">“贷款→证券化→层层分销”</span>,风险像接力棒一样一棒一棒传下去。在 <span class="num">2008 年</span>之前,这套动作有个更好听的名字,叫风险分散。贷款从资产变成了商品,银行从持有人变成了批发商——这个转变本身没错,错在链条上后来没人再觉得自己该管风险。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>链条上有几块关键拼图。第一块是货币市场基金(MMF):它向机构和普通人募现金,声称净值永远 1 美元、随存随取,再拿去买商业票据和短债。说白了,就是一个批发版活钱池,大公司的现金管理部把它当活期账户用,基金经理把它当弹药库用。</p></div><p>第二块是回购市场(repo):机构把证券“卖”给对手方,签好一两天后加价买回来——本质是抵押借钱,就是书里讲债券时说的回购。美国的投行和基金天天靠它滚动隔夜资金,它是整个体系里最粗的一根输血管,粗到没人敢想它会停。</p><p>第三块最隐蔽:银行在表外开管道公司(conduit)和结构性投资载体(SIV)。它们发短期资产支持商票(ABCP)融资,转身买银行转出来的长期房贷证券——这是银行在监管围墙外开的分身:资本金留在表内,错配搬到表外,真出了事,母体银行又躲不掉。投行也开同款表外管道。影子银行的<span class="hl">“影子”</span>两个字,精准得可怕。</p><p>整条链连起来看:银行放贷,投行打包成证券,货币基金和管道公司买走,回购市场再给它们加<span class="term">杠杆</span>——放贷、持有、融资三件事被拆给三类机构轮着做。注意一个要命的事实:这条链上没有一个环节叫<span class="hl">“银行”</span>,所以也没有一个环节能敲开央行的救援窗口。它复制了银行的全部功能,唯独复制不了银行的保险丝。</p>
-
-        <h2>4. 挤兑的队伍排在回购市场上</h2>
-<p>教科书里银行挤兑的画面,是储户在银行门口排长队、举着存折砸门。<span class="num">2008 年</span> <span class="num">9 月</span>那场挤兑,画面完全不同:队伍排在你看不见的地方——货币基金市场和回购市场里,敲的是键盘,不是玻璃门。</p><p><span class="num">2008 年</span> <span class="num">9 月</span>雷曼倒闭,一只名叫 Reserve Primary Fund 的老牌货币基金,手里拿着 <span class="num">7.85 亿美元</span>雷曼票据,净值从 1 美元跌到 0.97 美元,行话叫<span class="hl">“跌破面值”</span>。货币基金的全部卖点就是<span class="hl">“永远 1 美元”</span>,这句口号当场翻车,信任瞬间清零。这只基金本身不算庞然大物,但它当着全世界的面证明了一件事:货币市场基金真的会亏。</p><p>接下来一周,约 <span class="num">3000 亿美元</span>从优先型货基里夺路而逃。货基被迫抛售商业票据,票据市场跟着冻结,靠它周转的企业融资断粮。最后是美国财政部掏出临时担保,给全部货币基金兜底——本来号称影子存款的东西,关键时刻还是纳税人垫的背。注意,这里面没有一分钱存款被保险覆盖——货基份额在法律上从来不是存款,只是在每个买家心里,它早就被当成存款用了。</p><p>管道公司那边更惨。ABCP 市场一冻结,它们手里几个月就到期的商票根本续发不出去,只能回头求母体银行把资产搬回表内——表外分身一夜之间回表,银行当年报表上的窟窿就是这么来的。证券化当初把风险切得多碎,挤兑时它就把风险运回得多快。</p><p>同一场恐慌也打在回购市场:交易商提高抵押品折扣、缩短期限,等于机构之间集体抽贷。抵押品昨天能借的钱今天借不到,缺口只能甩卖资产去补;资产越抛越贱,折扣越提越高,这是机构版的砸门取号。经济学家 Gorton 后来给这场危机下了个注脚:恐慌发生在表外。</p><p>为什么存款保险拦不住?因为存款保险只保银行表内的存款,不保货基份额,更不保回购融资——影子银行外观再像银行,出事时没有那层保障。这个剧本 <span class="num">2020 年</span> <span class="num">3 月</span>又演了一遍:疫情美元荒,机构抢赎优先货基,两周流出千亿级美元,美联储紧急设了 MMLF 工具,直接放钱给银行去接货基变现的资产。同一台发动机,十二年后再度爆缸。两次救的都是影子、不是表内——货基的<span class="hl">“影子存款”</span>地位,靠这两张急救单被官方盖了章。</p><div class="callout callout--note reveal"><span class="callout__title">零售挤兑 vs 批发挤兑</span><p>储户挤兑要数人头排队,一天取走几千万;机构挤兑敲几下键盘,一天抽走几千亿。<span class="num">2008 年</span>的教训是:批发挤兑更快、更狠、更难救。所以影子市场的风控设计,第一条防的不是亏,是<span class="hl">“一起跑”</span>。</p></div>
-
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 480" role="img" aria-label="回购市场挤兑的五步咬尾循环:MBS 跌、折扣率从 2% 涨到 40%、借款能力缩水、被迫抛售、价格再跌,中央标注融资流动性螺旋">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回购市场怎么挤兑:折扣率和价格互相咬尾</text>
-            <!-- 螺旋五步循环 -->
-            <ellipse cx="450" cy="250" rx="300" ry="150" fill="none" stroke="#41506b" stroke-width="2" stroke-dasharray="6 5"/>
-            <rect x="330" y="70" width="240" height="52" rx="8" fill="rgba(18,29,49,0.85)" stroke="#e87878"/>
-            <text x="450" y="102" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">① 风声:MBS 开始跌</text>
-            <rect x="580" y="180" width="250" height="52" rx="8" fill="rgba(18,29,49,0.85)" stroke="#e87878"/>
-            <text x="705" y="212" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">② 折扣率 2% → 40%</text>
-            <rect x="580" y="300" width="250" height="52" rx="8" fill="rgba(18,29,49,0.85)" stroke="#e87878"/>
-            <text x="705" y="332" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">③ 同样的抵押,借到的钱少了</text>
-            <rect x="70" y="300" width="250" height="52" rx="8" fill="rgba(18,29,49,0.85)" stroke="#e87878"/>
-            <text x="195" y="332" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">④ 被迫抛售资产补保证金</text>
-            <rect x="70" y="180" width="250" height="52" rx="8" fill="rgba(18,29,49,0.85)" stroke="#e87878"/>
-            <text x="195" y="212" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">⑤ 价格跌更狠 → 回到 ①</text>
-            <!-- 中央标注 -->
-            <text x="450" y="238" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">融资流动性螺旋</text>
-            <text x="450" y="262" text-anchor="middle" fill="#bcc9dd" font-size="12">Brunnermeier–Pedersen</text>
-            <text x="450" y="282" text-anchor="middle" fill="#bcc9dd" font-size="12">每一圈都要抵押品管加一遍</text>
-            <!-- 底部对照 -->
-            <text x="450" y="430" text-anchor="middle" fill="#8499bd" font-size="12.5">2008 年 9 月,这个螺旋用四天走完贝尔斯登三个月的路:没有门口排队,只有回购单上以小时计的折扣率上调。</text>
-            <text x="450" y="456" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">存款有存款保险,回购没有。</text>
-          </svg>
-          <p class="figure__cap">影子银行的挤兑不排队,在抵押品的折扣率上发生:昨天 98 元抵押能借 96,今天只能借 60,差额必须用卖资产补——卖出本身让价格再跌,拧紧下一圈。</p>
-        </div>
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="挤兑三级速度图:零售几天几月、同业几小时、批发回购分钟级,雷曼 48 小时倒闭">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">挤兑的速度档位:批发清算比零售存款快上百倍</text>
-            <rect x="60" y="80" width="230" height="155" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
-            <text x="175" y="108" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">零售存款挤兑</text>
-            <text x="175" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">居民在营业点ATM排队</text>
-            <text x="175" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">存款保险让他们不必太快</text>
-            <text x="175" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">酝酿来要几天到几周</text>
-            <rect x="335" y="80" width="230" height="155" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
-            <text x="450" y="108" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">同业拆借挤兑</text>
-            <text x="450" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">机构之间“今天别再借给它了”</text>
-            <text x="450" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">瞬时的通知,没有门铃</text>
-            <text x="450" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">几小时就完成断流</text>
-            <rect x="610" y="80" width="230" height="155" rx="10" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
-            <text x="725" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">批发回购挤兑</text>
-            <text x="725" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">对方从“押品抽责”开始:</text>
-            <text x="725" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">原来的折扣率 2% → 45%</text>
-            <text x="725" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">等于抵押品瞬间被折价一半</text>
-            <text x="725" y="206" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">按小时-日日落实,分钟里有生死</text>
-            <rect x="60" y="260" width="780" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
-            <text x="84" y="288" fill="#f0c96a" font-size="13" font-weight="800">这就是 2008 年雷曼的死法</text>
-            <text x="84" y="314" fill="#bcc9dd" font-size="12">雷曼需要的“明天开运”资金是靠回购融资。回购对手一旦在它身上加码新折扣率、或要求追加抵押,雷曼的钱立刻不够付到期的账单——结果 48 小时就场倒闭</text>
-            <text x="84" y="338" fill="#bcc9dd" font-size="12">存款保险是零售预防挤兑的疫苗;批发机构挤兑至今靠壮机构互相“不要廷同时逼债”这种非正式愿望,脆弱得多</text>
-          </svg>
-          <p class="figure__cap">同样是挤兑,批发机构之间的速度比居民排队快上三个数量级。2008 年雷曼之所以两天就死,根源正是它被回购市场瞬间断水。</p>
-        </div>
-        <h2>5. 久期炸弹的合规版本</h2>
-<p><span class="num">2023 年</span> <span class="num">3 月</span>,硅谷银行倒闭。这是一家监管齐全、审计在册、账面干净的正经银行,不是影子——可它死于影子银行同款心脏病,从风声传开到大势已去,只过了 <span class="num">48 小时</span>。这一节要讲的,就是它怎么把影子的病,犯在了伞下——也把<span class="hl">“影子的病只有影子会得”</span>这种错觉,一并击碎。</p><p>病名叫久期错配。硅谷银行拿科技企业存在自己这儿的活期存款——这些钱储户随时能转走——去买了大量十年期美债和长期房贷抵押证券。久期是债券价格对利率的敏感度,书前面给过直觉:久期 7 的债,利率涨 <span class="num">1 个百分点</span>,价格大约跌 <span class="num">7%</span>。十年期的东西,敏感度只会更高。</p><p>这里有个容易犯的糊涂:美债没有违约风险,但有利率风险。企业把钱存进来时以为万无一失,银行把存款买成美债时也以为万无一失——到期肯定还本付息嘛。错就错在<span class="hl">“到期”</span>两个字上:从存款变成十年期资产的那一刻起,银行和客户对<span class="hl">“今天就要拿走”</span>这道题的答案,完全对不上。</p><p><span class="num">2022 年</span>美联储激进加息,这些长期证券账面巨亏。同一个坑其实家家都在踩,但硅谷银行的储户高度集中在创投圈,风向在几个群里一转,提款指令就雪崩。挤兑从来不需要所有人到场,只需要跑得最快的那批人起跑——在余额秒到的时代,起跑只需要点开一个 App。当年去银行提款是排队的体力活,如今是一条网络请求,速度早就不是一个量级。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>注意它和货币基金共享同一个会计秘密:债券按持有到期口径记账,浮亏不进报表;只要储户不挤兑,亏损就像不存在。这正是影子银行“不挤兑就没事,一挤兑就全是事”的那根刺,只不过长在了一家持牌银行体内。挤兑之后大量储户把钱从存款搬进收益更高的货币市场基金——笨想也知道,影子水池的水位又涨了一轮。</p></div><p>所以别把影子银行当成一道<span class="hl">“机构分类题”</span>。错配是一种结构,不是一块招牌:挂银行招牌的照样会犯,躲在表外的更爱犯。以后判断一家机构靠不靠谱,先别问它有没有牌照,先问三件事——钱来自谁,能多快要回去,资产要多久才能变现。</p>
-
-        <h2>6. 银行自己在围栏边上打洞</h2>
-<p>挪到中国,故事换了主角。美国的影子银行是资本市场分工长出来的,投行、基金、管道公司各司其职,是市场的产物;中国的影子银行是银行自己打的洞——钱从表内搬到表外,绕一圈,再贷给银行本来想贷的人。记住这个差别,后面一整节的怪象和监管困局才好解释。</p><p>中国影子的总闸门是银行理财。<span class="num">2004 年</span>,光大银行发出首只人民币理财产品,是理财元年;十几年后,理财成了全民认知里的<span class="hl">“高息存款”</span>。储户买理财,钱从银行表内挪到表外;理财再把钱交给信托、券商资管、基金子公司,一层一层转给地产商、城投平台、过剩产能企业。信托在其中有两副脸:单一资金信托是一对一的通道,集合资金信托则把多笔钱汇成池子放长贷;池子旧了,窟窿藏不住,<span class="num">2020 年</span>四川信托爆雷、<span class="num">2023 年</span>中融信托兑付危机,背后都是资金池加地产敞口。</p><p>银行为何要打这个洞?因为表内处处是红线: <span class="num">75%</span> 的存贷比上限,信贷额度管控,对地产和<span class="hl">“两高一剩”</span>行业的限投令,还有资本计提。绕出去,红线全没了。各种通道费、服务费,本质不是技术的报酬,是为<span class="hl">“绕开监管”</span>支付的租金。就算 <span class="num">2015 年</span>存贷比红线被取消了,银行打洞的动机也从没消失,只是换了花样。</p><p>拆一笔真实的账:某地产商融资总成本 <span class="num">12%</span>/年,分解开是投资者收益 <span class="num">9%</span>、信托报酬 <span class="num">0.5%</span>、通道银行中收 <span class="num">1.5%</span>、销售费 <span class="num">1%</span>。同一家公司若走银行开发贷,成本只要 <span class="num">6%</span>。多出来的 <span class="num">6 个百分点</span>,一半是收益的搬运费,一半是监管的过路费。难怪影子链条上每一环都舍不得放手。</p><p>通道环节自己几乎是零风险套利的味道。某券商按 <span class="num">0.03%</span>/年收通道费,帮银行把 <span class="num">100 亿</span>定向买成信托贷款,风控不管、底层不看,坐收 <span class="num">300 万</span>一年。更极端的是基金子公司:注册资本 <span class="num">5 亿</span>,通道规模峰值做到 <span class="num">3000 亿</span>,表观<span class="term">杠杆</span> <span class="num">600 倍</span>。同样规模的信贷若放在银行表内,要垫数百亿资本——没垫出来的那部分,正是监管套利的量化测度。</p><p>洞还不止一层。常见的嵌套结构是:理财买券商定向资管,定向资管买信托受益权,信托再贷给融资人——一笔钱走完三四道手,每层收一道费,每层都说不归我管。风险被层层转手,核查被层层遮挡;银行把理财资金委托券商主动管理的<span class="hl">“委外”</span>,更是把加<span class="term">杠杆</span>的动作也请进了表外。监管后来的回应很干脆:穿透核查,嵌套最多一层。</p><div class="callout callout--note reveal"><span class="callout__title">影子和它的主人</span><p>中国影子银行总挂着一张银行的脸:产品在表外,发行方却是银行;储户在银行 App 里买理财,出事先找银行。这种隐性刚兑的默契,到 <span class="num">2018 年</span>资管新规才被正式终结——这也解释了为什么中国的影子整治,戏眼全在<span class="hl">“打破刚兑”</span>四个字上。</p></div>
-
-        <h2>7. 一元净值的信仰</h2>
-<p><span class="num">2013 年</span> <span class="num">6 月</span>余额宝上线,一把点燃全民互联网理财,顺手让货币基金从机构水池变成了几亿人的零钱罐。它就是一只货币基金,和美国的 MMF 是同一个物种,只是装进了你的手机,还多了一句随存随取的承诺。</p><p>货币基金敢报<span class="hl">“<span class="num">1 元</span>净值”</span>,靠的是摊余成本法:持仓债券不按当天市价记账,而按买入成本逐日摊销往上爬。监管同时要求用市价再算一遍,行话叫影子定价,两本账的差叫偏离度;在中国,偏离度绝对值到约 <span class="num">0.5%</span> 就要公告并采取纠正措施。</p><p>揪一个危险时刻看:某只货基的持仓按摊余成本记 <span class="num">99.5 元</span>,利率急升,当天影子价只值 <span class="num">99.0 元</span>,偏离约 <span class="num">-0.5%</span>,正好踩到公告线。先跑的人按 <span class="num">1 元</span>拿走现金,拿得比真实价值多;如果有 <span class="num">50%</span> 的份额按 <span class="num">1 元</span>赎回,剩下一半份额要吞掉全部真实亏损,亏损被放大近一倍。这就是挤兑激励的会计来源——<span class="num">1 元</span>的承诺越坚定,先跑的动机越足。顺带记住两个数据口径:万份收益是昨天 <span class="num">1 万</span>份实际到手的钱,七日年化是把最近 <span class="num">7 天</span>收益外推成年化;同一时点经常一个高一个低,做研究时混用这两个字段,等于自己造噪声。</p><p>这套机制在中国被真实检测过一次。<span class="num">2013 年</span> <span class="num">6 月</span>钱荒,银行间流动性突然抽干,部分货基遭大额赎回、负偏离扩大,个别基金触及公告线。这一吓成了后来一堆规则的前因:货基投资者结构不能太集中,流动性水位必须提前备足。你看,监管的每一条条款背后,几乎都站着一次真实的惊魂。</p><p>货基膨胀得太快,监管只能一路追着装闸门。中国线: <span class="num">2005 年</span>确立摊余成本加影子定价的框架, <span class="num">2015 年</span> <span class="num">12 月</span>《货币市场基金监督管理办法》系统成文, <span class="num">2017 年</span>把货基规模和基金公司风险准备金挂钩, <span class="num">2018 年</span> <span class="num">6 月</span>起 <span class="term">T+0</span> 快速赎回被限到单基金单日单渠道 <span class="num">1 万元</span>——快赎的闸门提前装好。别小看这 <span class="num">1 万元</span>:它把<span class="hl">“一键搬空”</span>的速度,人为降了下来。</p><p>美国线装得更重: <span class="num">2008 年</span>跌破面值之后, 2a-7 规则 <span class="num">2010 年</span>先大修流动性; <span class="num">2014 年</span>再改, <span class="num">2016 年</span>生效,机构类优先型货基改成浮动净值,周流动性资产跌破 <span class="num">30%</span> 时还可以收赎回费、甚至暂停赎回,这个装置就叫闸门(gates); <span class="num">2023 年</span>又修一轮,解开闸门和 <span class="num">30%</span> 水位的机械挂钩。两国的结论其实一样:许诺刚兑很容易,保住刚兑只能先装好<span class="hl">“不让大家一起跑”</span>的栏杆。</p><div class="callout callout--note reveal"><span class="callout__title">摊余成本不是保险</span><p>摊余成本法的生命线是持有到期;一旦挤兑逼它抛售,账面 <span class="num">1 元</span>的承诺就活不下去。它平的是波动,兜的不是底。手上拿着<span class="hl">“<span class="num">1 元</span>”</span>资产,先分清它是被保出来的,还是被记出来的。</p></div>
-
-        <h2>8. 没牌照的“银行”七年兴亡</h2>
-<p>P2P 的本义很干净:个人借给个人,平台只做信息撮合、收服务费,不碰钱。这个定位后来白纸黑字写进监管文件——可在中国的落地版本里,它被迅速做成一个没有牌照、没有资本金、没有存款保险的<span class="hl">“银行”</span>,还顺手叠了一层庞氏。这一切当年都包装在<span class="hl">“金融创新”</span>四个字里。</p><p>变形只要三步。第一步设资金池:真实借款人想借 <span class="num">24 个月</span>、年化 <span class="num">10%</span>,平台把债权拆成 <span class="num">1 个月</span>、预期 <span class="num">8%</span> 的理财产品零售给投资人,期限错配自动出现。第二步承诺保本,把信用中介做实。第三步假标自融,连借款人都省了,直接拿新钱还旧钱。</p><p>扒一家平台的流水看清水分:月成交额 <span class="num">10 亿</span>,其中真实借款需求只产生 <span class="num">3 亿</span>,其余 <span class="num">7 亿</span>是复投和借新还旧的自循环;平台按月收 <span class="num">1%</span> 服务费,名义月收 <span class="num">1000 万</span>,真实收入其实只有 <span class="num">300 万</span>。成交额数字越漂亮,泡沫越大——P2P 时代的行业排行榜,几乎都泡在这种水里。</p><p><span class="num">2015 年</span>底 e 租宝案发,把这个行业的底裤掀给全国看:虚构融资租赁项目、非法吸收约 <span class="num">500 亿</span>、波及约 <span class="num">90 万</span>人。<span class="num">2018 年</span>备案延期、流动性退潮, 6 到 <span class="num">7 月</span>单月数百家平台密集出问题,头部也扛不住。没有资本金、没有存款保险、没有最后贷款人——风一停,先飞的先摔死。这门生意从头到尾的逻辑,就是没有银行牌照,却干了银行加庞氏的活。</p><p>监管的绳子是逐段收紧的: <span class="num">2015 年</span>,十部委定调 P2P 只是信息中介; <span class="num">2016 年</span>专项整治启动,暂行办法立下 13 条禁令和借款限额,自然人在单个平台最多借 <span class="num">20 万</span>; <span class="num">2018 年</span>迎来爆雷潮; <span class="num">2019 年</span>初定调能退尽退、应关尽关;到 <span class="num">2020 年</span> <span class="num">11 月</span>,全国实际运营的 P2P 机构全部归零。从 <span class="num">2013 年</span>余额宝点燃互联网理财算起,这把火也只烧了七年。</p><p>P2P 死了,需求没死,遗产被收编进持牌体系。其实收编的动作更早就开始: <span class="num">2017 年</span> <span class="num">12 月</span>的 141 号文先整顿现金贷,综合资金成本必须折算成年化利率公示,禁止砍头息,叫停无场景的现金贷; <span class="num">2021 年</span>互联网贷款新规要求合作机构出资比例不低于 <span class="num">30%</span>、单户消费贷 <span class="num">20 万</span>封顶; <span class="num">2020 年</span>蚂蚁 <span class="term">IPO</span> 暂缓后,花呗借呗并入新设持牌消金公司。<span class="hl">“银行的影子的影子”</span>,最终还是被拖回了围栏里。</p><div class="callout callout--note reveal"><span class="callout__title">成交额的天真</span><p>复盘 P2P 数据,四个口径绝不能混:成交额、借贷余额、待收、风险敞口是四个数。自循环撑大的成交额,恰恰是平台最想让你看到的那张表。当年按排行榜选平台的人,就是先看漏了这一条。</p></div>
-
-        <h2>9. 一场追不上影子的猫鼠游戏</h2>
-<p>读到这里你八成要问:监管难道看不见吗?看得见,而且一直在堵。问题在于,影子银行的本质是套利——规则画在哪,影子就长在规则以外的第一道缝里。回看十几年的封堵史,你会看到一部猫鼠赛跑的记录片。</p><p>中国的封堵史可以背一串年份。<span class="num">2013 年</span> <span class="num">3 月</span>,监管给理财投非标画了双红线:余额不得超过理财产品余额的 <span class="num">35%</span>,且不得超过银行总资产的 <span class="num">4%</span>——影子银行的表外信贷属性第一次被官方点名。<span class="num">2016 年</span>底债灾暴露了委外加<span class="term">杠杆</span>的隐患, <span class="num">2017 年</span><span class="hl">“三三四十”</span>大检查后,影子银行规模进入压降通道。</p><p>最重的一刀在 <span class="num">2018 年</span> <span class="num">4 月</span> <span class="num">27 日</span>,资管新规发布,四刀齐下:资管产品必须净值化、打破刚兑;禁止资金池,要求期限匹配;穿透核查,嵌套最多一层;统一<span class="term">杠杆</span>和集中度约束。过渡期延到 <span class="num">2021 年</span>底,之后净值型产品占比超过 <span class="num">95%</span>。</p><p>规矩立完,市场立刻来了一场随堂考。<span class="num">2022 年</span> <span class="num">11 月</span>债市急跌,理财破净比例一度超过 <span class="num">10%</span>,数千只产品净值跌破 1,个人客户成批赎回,管理人被迫抛债,净值进一步下跌——教科书式的抛售螺旋。没有人排队砸门,一键赎回就完成了一次影子银行挤兑演习,全民第一次集体体验了<span class="hl">“理财真的会亏”</span>。同时也说明一件事:刚兑信仰拆掉之后,影子银行的挤兑不会消失,只会从排队砸门换成手机上的抛售键。</p><p>影子也没有死,只是迁了徙。封堵银信合作,通道换到券商资管;券商资管受限,换上基金子公司;给基金子公司套上净资本约束,业务又流向委外和互联网端。每一轮封堵都是真实的,每一次迁徙也是真实的——监管清单在加长,套利的菜单也在加长。</p><p>美国选了另一条路:承认影子银行的机构地位,用透明度、流动性门槛、浮动净值和闸门去驯化它。两条路线,结论相同——监管追求的是装刹车,不是拆发动机。猫鼠赛跑不会结束,这是结构,不是执法能力问题。对研究者来说,后半句更重要:别把任何一次封堵当成终点,它只是个逗号。</p>
-
-        <h2>10. 消灭不了的影子, 断不了的共生</h2>
-<p>讲了这么多事故,一个朴素的问题自然浮出来:影子银行既然这么危险,出过这么大的事,又耗了监管这么多年,为什么不干脆一纸禁令,全部禁掉,天下太平?这一节收个尾,答案是两个词:禁不掉,也不该禁。</p><p>禁不掉,是因为影子银行在填真实需求的坑。监管红线一刀切,必然有借款人被切在门外;储户永远想要比存款更高的收益,机构永远需要一个放活钱的地方,企业永远有常规信贷喂不饱的时刻。影子是套利的形状,更是需求的形状——需求不消失,影子只会换造型。强行全砍掉的代价,是融资更贵、门槛更高、更多人被踢出体系。</p><p>不该禁,是因为影子和正规银行是共生,不是寄生。中国的影子链条从头到尾围着银行转,银行出客户、出资金、出隐性信用;美国的回购和货基是整个金融体系的现金管理层,连美联储救火都得临时给货基设工具。真把影子一刀切掉,等于把它服务的那部分真实经济也一起切掉。</p><p>反过来,伞内也不是保险箱。<span class="num">2019 年</span>被接管的包商银行,成了第一家进入司法破产程序的银行,<span class="num">65 亿</span>二级资本债被全额减记,开了同类型减记的先河; <span class="num">2023 年</span>的硅谷银行拿着全套合规报表, <span class="num">48 小时</span>就没了; <span class="num">2022 年</span>河南、安徽那五家村镇银行更离谱,波及约 <span class="num">40 万</span>储户、约 <span class="num">400 亿</span>资金,其中一部分存款压根没进银行的账。全国村镇银行约 1651 家、占银行机构总数约 <span class="num">36%</span>,高风险机构里村镇银行占近三成。影子是风险,招牌也未必是安全。</p><p>落到你的研究上,影子银行最大的坑藏在数据口径里。资管新规前的理财规模,同一块钱可能在理财、信托、券商资管的统计里各算一遍;新规前后两段数据直接拼接,会画出假的崩溃曲线; P2P 的成交额全是复投水分。拿到任何一块影子银行的数据,先问它被数了几次、用什么口径,远比拿到多少行数据重要。</p><p>最后带走一个最简单的判断工具:任何向你承诺<span class="hl">“高收益、随时取、没风险”</span>的产品,先问一句——它拿什么兑现?如果答案是<span class="hl">“后面新进来的钱”</span>,那你面前正停着那台最古老的发动机。它能跑很多年,甚至跑得比谁都风光,但不会永远有下一个买家。影子银行不会因为难看而消失,只会因为被看懂而减速。</p>
-
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>影子银行就是干银行三件事(集短钱、放长贷、赚利差)、却不戴银行四重管束的信用中介;看结构,别看招牌。</li>
-            <li>期限错配是这台生意的发动机:借短贷长赚期限利差; 1997、2008、2023 三次大炸,爆的都是同一台。</li>
+            <li>外汇是两种货币之间的相对价格,受利率、通胀、贸易和资本流动影响。</li>
+            <li>商品价格更直接连接着真实供需、库存和期限结构。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.</strong> 干了银行的活, 没进银行的伞</li>
-            <li><strong>2.</strong> 用 90 天的钱养 3 年的资产</li>
-            <li><strong>3.</strong> 开在批发市场里的银行</li>
-            <li><strong>4.</strong> 挤兑的队伍排在回购市场上</li>
-            <li><strong>5.</strong> 久期炸弹的合规版本</li>
-            <li><strong>6.</strong> 银行自己在围栏边上打洞</li>
-            <li><strong>7.</strong> 一元净值的信仰</li>
-            <li><strong>8.</strong> 没牌照的“银行”七年兴亡</li>
-            <li><strong>9.</strong> 一场追不上影子的猫鼠游戏</li>
-            <li><strong>10.</strong> 消灭不了的影子, 断不了的共生</li>
+            <li><strong>1.</strong> 1973 年的一桶油怎样同时撞向股票、债券和汇率</li>
+            <li><strong>2.</strong> 两种货币之间的相对价格</li>
+            <li><strong>3.</strong> 价格背后是真实供需</li>
+            <li><strong>4.</strong> 把不动产现金流切成份额</li>
+            <li><strong>5.</strong> 把多个工具打包</li>
+            <li><strong>6.</strong> 跨资产共同语言</li>
+            <li><strong>7.</strong> 跨资产数据怎样进入量化</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>影子银行和正规银行的分界线在哪?</summary>
-            <p>不在牌照和门店,在管束:都在集短钱、放长贷、赚利差,但影子银行没有资本金要求、准备金、存款保险和最后贷款人兜底。</p>
+            <summary>为什么外汇不是一种货币的绝对价格?</summary>
+            <p>因为汇率总是两种货币之间的相对价格——天平的两端,从来不是单独一边在动。</p>
           </details>
           <details class="quiz__item">
-            <summary>期限错配赚到的钱,本质是什么?</summary>
-            <p>是期限利差: 90 天负债便宜、3 年资产贵,只要债主不同时来取,差价天天到手;一挤兑,攒下的浮亏一次兑现。</p>
+            <summary>看 REITs 只看分派率够吗?</summary>
+            <p>不够。还要看底层资产质量、现金流稳定性、杠杆、估值和流动性——分得高,不等于家底厚。</p>
           </details>
         </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>结构性产品深拆: 收益和风险怎样被切开重卖</h2>
+          <p>拆开雪球、CDS、CDO、互换和另类资产的内部齿轮,识别高票息背后被卖出的尾部风险。</p>
+        </section>
+
       </div>
     </main>
     <script src="assets/book.js"></script>

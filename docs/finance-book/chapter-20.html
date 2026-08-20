@@ -3,255 +3,212 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 20 章 · 量化的起点:因子和数据 | 从金融零基础到量化研究者</title>
-    <meta name="description" content="解释量化里常说的因子、信号、暴露、IC、分层回测和因子失效。 / 讲清行情、财务、另类数据、标签定义、点时数据和训练验证切分。" />
+    <title>第 20 章 · 国家为什么有穷有富: 从起飞到中等收入陷阱 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="把国家当一家公司读:增长的三个阶段、出口与进口替代两条路线、刘易斯拐点、全要素生产率、资源诅咒、日本化和人口红利,最后是投资视角怎么用。" />
     <link rel="icon" href="assets/favicon.svg" />
     <link rel="stylesheet" href="assets/book.css" />
   </head>
   <body data-chapter="20">
     <main class="chapter">
       <div class="chapter__inner">
-        <p class="chapter__eyebrow">第四部分 · 量化研究从因子开始 · 第 20 章</p>
-        <h1>量化的起点:因子和数据</h1>
-        <p class="lead">实习时听到的“找因子”,不是什么玄学密码。最朴素地说,因子就是一列能描述资产特征、风险暴露或预测信息的数字,量化研究的第一步就是把一句投资判断写成可检验的数据列。这一章先讲因子是什么、从哪里来、怎么检验有没有用,再讲更容易被忽略却更致命的一环:数据从哪里来、标签怎么定义、样本又该怎么切分。</p>
+        <p class="chapter__eyebrow">第四部分 · 宏观环境如何改变资产 · 第 20 章</p>
+        <h1>国家为什么有穷有富: 从起飞到中等收入陷阱</h1>
+        <p class="lead">新闻里常听到“中等收入陷阱”“人口红利”“产业转移”,它们到底是什么意思?这一章把国家当成一家公司来读:起飞靠人力,扩张靠投资,长期只能靠效率。每一次换发动机都有国家翻车——拉美翻在关起门来自己造,日本翻在泡沫破了之后所有人只顾还债。看懂这些路径,再看中国现在讲的“高质量发展”“内循环”“新质生产力”,你就接得住它们在回应哪道坎。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线四</span>
+            <span>本部分第 1 / 6 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>增长、通胀、央行、美元和金融危机怎样穿过市场,改变资产的现金流与折现率?</p>
+          <p class="chapter-context__outcome">读完后,你能把宏观新闻放回传导链,而不是用一个大词解释所有涨跌。 </p>
+        </section>
+
         <section class="objectives reveal">
           <h2>读完这一章,你会明白</h2>
           <ul>
-            <li>因子是把投资判断变成一列有口径、可排序、可检验的数据。</li>
-            <li>IC、RankIC 和分层回测用于检验因子是否对未来收益有排序信息。</li>
-            <li>量化数据必须恢复历史当时的信息状态,点时数据是防止未来函数的核心。</li>
-            <li>标签定义决定模型任务,预测绝对收益、相对收益、波动或回撤是不同问题。</li>
+            <li>增长靠三样东西:人、资本、生产率,越靠后越难啃,但只有生产率不会减速。</li>
+            <li>出口导向和进口替代是两条命运岔路,东亚和拉美各选了一条,结局天差地别。</li>
           </ul>
         </section>
 
 
-        <h2>1. 把投资判断变成可检验的数字</h2>
+        <section class="case-study reveal">
+          <span class="case-study__label">概念现场</span>
+          <h2>1. 律师打字也比助理快,为什么还是应该把键盘交出去</h2>
+<p>一位律师写合同很快,打字也比助理快。既然两样都更强,是不是所有活都该自己做?问题在于他花一小时打字,就少了一小时处理高价案件;助理放弃的只是另一份普通文书。比较的不是谁在每件事上更厉害,而是谁为了做这件事放弃得更少——这叫比较优势。</p><p>国家之间也是这样。一个国家哪怕生产所有东西都更有效率,仍可能把资源集中到相对优势最大的行业,再通过贸易换回其他商品。比较优势不保证每个人都立刻受益:被进口竞争挤到的行业会真实失业,运输、安全和产业学习也会改变那张静态账。</p><p>做国家和行业研究时,不要只排绝对成本。把机会成本、生产率、工资、汇率、供应链安全和转移成本一起放进模型,才能看清优势能不能兑现。比较优势给的是分工起点,不是一句<span class="hl">“自由贸易永远让所有人当场开心”</span>的口号。</p>
+        </section>
 
-        <h3>1.1. 因子不是魔法,是一列有口径的数据</h3>
-<p>在动手造因子之前,先看看这条路的天花板有多高。有个叫詹姆斯·西蒙斯的数学家,年轻时是顶尖的几何学家,拿过数学大奖,还给美国政府破译过密码。40 多岁时他离开学术界,创立了文艺复兴科技公司,办公室里招来的不是西装革履的交易员,而是一群数学家、物理学家和计算机科学家。他们做的事情,本质上就是本章要讲的事:把海量市场数据变成一列列数字,再用统计和模型,从中找出微弱但稳定的规律。</p><p>他们交出的成绩单是金融史上最夸张的那张:旗舰产品<span class="hl">“大奖章”</span>基金,从 1988 到 <span class="num">2018 年</span>,在扣掉高得离谱的费用之后,<span class="term">年化收益</span>仍约 <span class="num">39%</span>,扣费前更是高达约 <span class="num">66%</span>。更反直觉的细节是,据公开资料,他们单笔交易的胜率大概只有 <span class="num">50.75%</span>——和抛硬币几乎没区别。秘诀不是每次都猜对,而是把那一点点微弱的优势,靠海量交易次数和严格风控,滚成惊人的复利。这就是量化的灵魂:不追求算准明天,只追求长期站在概率这一边。而这一切的起点却朴素得惊人——把一个投资想法,变成一列可以检验的数字。这列数字,就是因子。</p><p>来亲手翻译一句试试。你说<span class="hl">“便宜的股票未来表现可能更好”</span>——这话说给人听没问题,可量化系统听不懂<span class="hl">“便宜”</span>这种形容词,你得给它数字:<span class="term">市盈率</span> <span class="term">PE</span>、<span class="term">市净率</span> <span class="term">PB</span>、企业价值倍数 EV/EBITDA,或者它们的倒数。选定口径之后,每只股票每天都有了一个确定的数,这一列数,就是你的估值因子。</p><p>再翻译两句。<span class="hl">“最近涨得强的股票可能继续强”</span>——可以译成过去 <span class="num">20 个交易日</span>收益率、过去 <span class="num">60 日</span>收益率,或者剔除最近几天<span class="term">反转</span>影响之后的<span class="term">动量</span>因子。<span class="hl">“质量好的公司更稳”</span>——可以用 <span class="term">ROE</span>、毛利率、负债率、现金流质量这些指标拼出一个质量因子。看到没有,投资界的每一句朴素判断,背后都能站出一列数据。</p><p>所以因子不是一张别人发给你的固定清单,而是一种把投资直觉数据化的方法。而数据化的关键永远是口径:用什么数据?在哪个时间点可见?缺失值和极端值怎么处理?每天怎么更新?适用于哪些股票?口径含糊的因子,翻译过来就是一句话都说不清的<span class="hl">“投资感觉”</span>,没法检验,更没法信任。</p>
+        <section class="case-study reveal">
+          <span class="case-study__label">概念现场</span>
+          <h2>2. 政府花出去的一百元,为什么可能在街上转好几圈</h2>
+<p>政府请工人修一段路,工人拿到一百元工资,转身去面馆吃饭;面馆老板多赚的钱,又拿一部分去买新冰箱;卖冰箱的人再去理发。最初一笔支出变成别人的收入,收入又变成下一轮支出,像一颗石子在池塘里荡开几圈。这叫财政乘数。</p><p>但水波不会无限放大。每一轮都会有人<a class="term term-link" href="glossary.html#g-储蓄" title="查看术语：储蓄">储蓄</a>、缴税或购买进口商品,钱从本轮国内支出里漏出去;如果工厂已经满负荷,新增订单还可能只推高价格。经济低迷、资源闲置时,乘数通常更有空间;供给紧张时,同样一百元更容易挤成<a class="term term-link" href="glossary.html#g-通胀" title="查看术语：通胀">通胀</a>。</p><p>评估刺激政策不能只看宣布了多少钱,还要看实际落地速度、资金流向和闲置产能。量化研究可以追踪财政脉冲、居民可支配收入、订单和就业的滞后反应,估出来的是特定时期的乘数,不是从教科书里抄一个永远不变的倍数。</p>
+        </section>
 
-        <h3>1.2. 因子、信号和特征有什么区别</h3>
-<p>在量化圈子里,因子、信号、特征这三个词经常被混着用,不同公司甚至有不同习惯,新人听得云里雾里。入门阶段可以按这样一套分工来记:特征,是喂给模型的原始或加工变量;因子,通常带着金融解释,能描述某种收益来源或风险暴露;信号,则更靠近交易决策,告诉你现在该不该买卖、给多少仓位。</p><p>拿一个具体例子串起来看。过去 <span class="num">20 日</span>收益率,扔进模型时它是个特征。如果你认为它代表<span class="term">动量</span>效应——涨的还会再涨——它就成了<span class="term">动量</span>因子。等模型把它和几十个其他变量揉在一起,输出一个股票预期收益分数,这个分数就是选股信号。同一个数字,在流水线的不同位置换了三个身份。</p><p>较真这三个词不是为了咬文嚼字,而是防止一个思维错误:把所有数字都当成 <span class="term">Alpha</span>。一个变量可能只是风险暴露,带上它不等于有正向收益预测;一个特征可能在模型里确实有用,却给不出清晰的经济解释;一个交易信号可能短期很灵,但容量小到装不下多少资金。身份不同,信任等级就该不同。</p>
+        <section class="case-study reveal">
+          <span class="case-study__label">概念现场</span>
+          <h2>3. 政府借钱修路,会不会把小企业挤出银行门口</h2>
+<p>一座城市里可借的钱本来就紧,政府忽然发行大量<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>修路,而且愿意给出更有吸引力的<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>。银行和投资者可能更愿意把钱借给政府,小企业发现贷款更贵、更难拿。公共支出增加了,私人投资却被抬高的融资成本压下去,这叫挤出效应。</p><p>它不是每次都会同样发生。衰退时银行账上趴着闲钱、企业本来也不想借,政府开工反而可能带来订单,把私人投资一起拉起来;经济过热、资源满载时,政府和企业才更像在抢同一批工人、钢材和资金。挤出还是带动,取决于当时有没有空位。</p><p>宏观研究因此不能看到发债就机械做空<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>或债券。要同时看产出缺口、信贷需求、<a class="term term-link" href="glossary.html#g-收益率曲线" title="查看术语：收益率曲线">收益率曲线</a>、央行反应和项目去向。量化模型真正要估的是政策冲击在当期挤走了谁、又给谁创造订单,而不是给<span class="hl">“政府支出”</span>固定贴上利多或利空。</p>
+        </section>
 
-        <h3>1.3. 常见因子家族</h3>
-<p>股票量化里的因子虽多,大致能归成几个家族,先把户口本认全。估值因子看股票贵不贵:<span class="term">PB</span>、<span class="term">PE</span>、股息率。质量因子看公司经营得好不好:<span class="term">ROE</span>、毛利率、现金流。成长因子看收入和利润的增长速度。<span class="term">动量</span>因子跟着过去的价格趋势走。<span class="term">反转</span>因子赌短期涨跌过度后的回摆。规模因子看市值大小。流动性因子盯成交额、<span class="term">换手率</span>和买卖价差。七个家族,各有脾气。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>但请立刻记住:这些因子没有一个是天天发工资的印钞机。价值因子可能连续多年跑输大盘;<span class="term">动量</span>因子会在市场急转弯时大亏一笔;小市值因子受监管政策和流动性的影响起伏很大;高股息因子往往集中在低成长行业。因子本质上是一组风险和行为模式的刻画,它们兑现收益的方式从不温柔准时。</p></div><p>所以成熟的量化研究员,问出<span class="hl">“哪个因子收益最高”</span>之后,紧接着还有一串问题:它和现有因子的相关性高不高?换手高不高?容量有多大?暴露明显落在哪些行业?计算时有没有用到未来数据?扣掉成本后还剩多少?能答完这一串,才算真正了解一个因子——收益数字只是它的简历,履历背调才是录取依据。</p>
+        <section class="case-study reveal">
+          <span class="case-study__label">概念现场</span>
+          <h2>4. 胶卷巨头倒下时,经济到底是在退步还是换发动机</h2>
+<p>智能手机把相机塞进口袋以后,胶卷、冲印店和一批老岗位迅速消失;与此同时,应用商店、图像传感器、云相册和短视频长出新的公司。站在被关掉的门店前,这当然是一场破坏;站在整个产业链上看,旧组合被拆掉,资源流向了更有效的新组合。</p><p>熊彼特把这种过程叫创造性破坏。创新不是在旧世界旁边温柔地添一层楼,常常是先把旧楼的租金打穿。生产率提高和行业阵痛可以同时发生,所以<span class="hl">“新技术提升长期增长”</span>与<span class="hl">“某批劳动者短期受伤”</span>并不矛盾。</p><p>投资研究最危险的误区,是把社会需要某项技术直接翻译成现有龙头永远赚钱。量化跟踪产业更应该看新公司进入、旧公司退出、<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>开支、价格下降和利润池迁移。创造性破坏创造的是新赛道,不保证旧冠军能拿到终点奖牌。</p>
+        </section>
 
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 290" role="img" aria-label="因子分层回测柱状图:按因子值把股票分成5组,从第1组到第5组未来收益单调递增">
-            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">分层回测:把股票按因子值分成5组,看收益是否单调</text>
-            <line x1="90" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <line x1="90" y1="60" x2="90" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <text x="60" y="70" fill="#8499bd" font-size="13">未来收益</text>
-            <!-- 5根柱子,单调递增 -->
-            <rect x="150" y="200" width="90" height="50" fill="#e88" opacity="0.75"/>
-            <text x="195" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第1组(因子最低)</text>
-            <rect x="290" y="175" width="90" height="75" fill="#c98b6a" opacity="0.8"/>
-            <text x="335" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第2组</text>
-            <rect x="430" y="150" width="90" height="100" fill="#b0a06a" opacity="0.8"/>
-            <text x="475" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第3组</text>
-            <rect x="570" y="120" width="90" height="130" fill="#8fb37a" opacity="0.85"/>
-            <text x="615" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第4组</text>
-            <rect x="710" y="90" width="90" height="160" fill="#a8c6ff" opacity="0.9"/>
-            <text x="755" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第5组(因子最高)</text>
-            <path d="M 195 195 L 335 170 L 475 145 L 615 115 L 755 85" fill="none" stroke="#eef4f8" stroke-width="2" stroke-dasharray="6 5"/>
-            <text x="600" y="70" fill="#eef4ff" font-size="13">收益随分组单调上升 → 因子可能有效</text>
-          </svg>
-          <p class="figure__cap">把股票按因子值排序、平均分成几组,再看每组之后的平均收益。如果从低到高单调递增(或递减),说明这个因子可能真的携带信息,而不是随机噪声。</p>
-        </div>
-        <h3>1.4. 同一天把股票排队</h3>
-<p>大量股票因子是在<span class="hl">“横截面”</span>上使用的。横截面这个词听着学术,动作却很形象:在同一天,把所有可投资股票拉到操场上,按某个因子值排成一队。比如今天全市场 4000 只股票,你按 <span class="term">PB</span> 从低到高排队,最便宜的站队首,最贵的站队尾。排完这支队,再谈怎么用。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>注意横截面排序和时间序列预测是两回事。它不预测大盘明天涨还是跌,它预测的是在同一锅里,哪几只股票相对更好。指数增强和市场中性策略最爱的就是这种相对收益:同一个市场环境下,多买排名靠前的,少买或者卖空排名靠后的——大盘涨你跟着涨,但你涨得比它多一点就行。</p></div><p>这也解释了你实习时为什么天天和<span class="hl">“矩阵”</span>打交道:行是日期,列是股票,每个格子里是一个因子值。一张巨大的表横在眼前,研究员每天的工作就是追问:这张矩阵里,到底有没有稳定的横截面排序信息?有,则留;没有,则扔。简单粗暴,但很诚实。</p>
+        <h2>5. 人力、资本、生产率</h2>
+<p>经济学家算国家增长的账,有个很朴素的拆法:产出 = 投入了多少人 × 投入了多少资本 × 还剩一块叫<span class="hl">“效率”</span>。一个国家刚起步时只有第一样:人多、工资低、肯干。把农民从田里请进工厂,接全世界的订单,这就是<span class="hl">“要素驱动”</span>——孟加拉、越南今天走的正是这条路,中国 <span class="num">1980 年</span>代也走这条路。门槛低,天花板也低:人不可能无限增加,工资一涨,订单立刻跑去下一个更便宜的地方。</p><p>赚到第一桶金后,国家会把钱投到设备、铁路、电网和厂房上,进入<span class="hl">“投资驱动”</span>。中国 1990 到 <span class="num">2010 年</span>就是样板:高铁、港口、开发区修出来的速度,全世界没见过第二家。但资本会饱和——第一条高铁连通两个城市,第十条可能只是装点门面;楼盖到空置的时候,再盖一栋只是浪费钢筋水泥。靠加投资的增长,迟早撞上回报率递减的墙。</p><p>能让人均收入一直涨下去的是第三条腿:全要素生产率(TFP)。同样的人和机器,产出能多出多少,取决于技术、管理、制度和品牌。它不依赖<span class="hl">“投入更多”</span>,所以不会自我减速。一国能不能跨过中等收入这道坎,本质看它有没有完成这次切换:从<span class="hl">“多干多得”</span>,换成<span class="hl">“巧干多得”</span>。</p>
 
-        <h3>1.5. 因子排序和未来收益是否同向</h3>
-<p>排好了队,自然要问:排得对不对?<span class="term">IC</span> 就是给排队质量打分的指标。<span class="term">IC</span> 是 Information Coefficient 的缩写,常见做法是计算因子值和未来收益之间的相关系数:今天得分高的股票,未来一段时间收益也更高,<span class="term">IC</span> 就是正的;要是高分股反而普遍表现更差,<span class="term">IC</span> 就是负的。正负之间,就是这个因子靠不靠谱的第一印象。</p><p>举个极简的例子感受一下。今天你按某因子给 5 只股票打分,明天高分股票普遍涨得多、低分股票涨得少甚至下跌,那这一天的 <span class="term">IC</span> 就比较高。业内的做法是把成百上千个交易日的 <span class="term">IC</span> 连成一条序列,再看它的平均值、稳定性和波动——单看一天的 <span class="term">IC</span> 意义不大,长期的平均表现才开始说明问题。</p><p>实战中更常用 <span class="term">RankIC</span>,也就是用排名算相关性,而不是用原始数值。原因很实际:因子值里常有极端值捣乱,排名的抗干扰能力更强。另外千万别觉得 <span class="term">IC</span> 要大才有用——股票横截面的噪声极强,一个长期平均 <span class="term">RankIC</span> 只有 0.03 的因子,如果稳定、成本低、容量大,一样可能有商业价值。在这个行业,微弱但稳定,胜过耀眼但抽风。
-                <div class="figure reveal">
-                          <div data-lab="ic"></div>
-                          <p class="figure__cap"><span class="term">IC</span> 实验台:拖动相关性强度 ρ,看散点从雾变成斜线——这就是书里说的<span class="hl">“因子排序和未来收益同向”</span>。</p>
-                        </div>
-                </p>
-
-        <h3>1.6. 高分组是不是真的更好</h3>
-<p><span class="term">IC</span> 给了一个相关系数,但你的直觉更想看真章:如果真按这个因子下注,能赚吗?分层回测就把这件事演给你看。做法是:按因子值把股票分成几组,常见五组或十组,第一组装因子最高的,最后一组装最低的,然后看各组未来一段时间的真实收益。因子要是有效,通常希望高分组长期跑赢低分组。</p><p>举个例子。把股票按股息率从高到低分成五组,每月调仓一次,跑出几年数据,如果最高股息组的长期收益持续高过最低股息组——而且不是靠某几年极端行情撑起来的——那这个因子八成有点真东西。但别急着收工,还得看多空收益、回撤、换手、行业暴露和市值暴露,确认赚的不是<span class="hl">“碰巧重仓了某个行业”</span>的钱。</p><p>分层回测的价值,在于它比干巴巴的 <span class="term">IC</span> 直观:<span class="term">IC</span> 告诉你排序的相关性,分层收益告诉你照着买会得到一条什么样的净值路径。当然它也不是免死金牌,交易成本、涨跌停约束、停牌、容量限制和数据偏差,都能让纸面上漂亮的多空曲线在实盘里走形。直观归直观,检验归检验。</p>
+        <h2>6. 拿出口给自己造血</h2>
+<p>韩国、新加坡、中国台湾起飞时用同一套打法:把产品卖到国外,换回外汇,再拿钱买技术、买设备、把产业往上游拱。丰田和三星走过,台积电也走过。出口导向有双重好处:外汇回补血库,企业被丢进全球竞争里天天挨打——产品不行就卖不出去,反而长得最快。</p><p>反面教材是拉美的进口替代:自己造、自己用、用高关税把外国货挡在门外。听上去自主,麻烦在于没了竞争压力,企业可以安静地落伍。<span class="num">1960 年</span>韩国人均 GDP 约一百美元,还低于阿根廷;到 <span class="num">2023 年</span>,韩国超过 <span class="num">3.3 万美元</span>,阿根廷停在约 <span class="num">1.3 万美元</span>。同一条起跑线,六十年差出两个世界——差就差在敢不敢把企业丢进全球市场。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 330" role="img" aria-label="分层回测柱状图:按股息率把股票分五组,未来一年平均收益从第1组+5.1%单调降到第5组+2.1%,多空差约+3.0个百分点/年">
-            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">分层回测:按股息率分 5 组,未来收益是否单调</text>
-            <text x="450" y="57" text-anchor="middle" fill="#8499bd" font-size="12">口径沿用本节:第 1 组装股息率最高的股票、第 5 组装最低的,每月调仓、连跑数年取平均</text>
-            <line x1="90" y1="60" x2="90" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <line x1="90" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
-            <text x="32" y="74" fill="#8499bd" font-size="11">年均收益↑</text>
-            <rect x="130" y="97" width="90" height="153" fill="rgba(240,201,106,0.45)" stroke="#f0c96a" stroke-width="1.5"/>
-            <text x="175" y="81" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">+5.1%</text>
-            <text x="175" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 1 组</text>
-            <text x="175" y="291" text-anchor="middle" fill="#8499bd" font-size="11">股息率最高</text>
-            <rect x="270" y="130" width="90" height="120" fill="rgba(122,167,240,0.42)"/>
-            <text x="315" y="114" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+4.0%</text>
-            <text x="315" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 2 组</text>
-            <rect x="410" y="151" width="90" height="99" fill="rgba(122,167,240,0.34)"/>
-            <text x="455" y="135" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+3.3%</text>
-            <text x="455" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 3 组</text>
-            <rect x="550" y="166" width="90" height="84" fill="rgba(122,167,240,0.27)"/>
-            <text x="595" y="150" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+2.8%</text>
-            <text x="595" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 4 组</text>
-            <rect x="690" y="187" width="90" height="63" fill="rgba(232,120,120,0.22)" stroke="#e88" stroke-width="1.5"/>
-            <text x="735" y="171" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">+2.1%</text>
-            <text x="735" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 5 组</text>
-            <text x="735" y="291" text-anchor="middle" fill="#8499bd" font-size="11">股息率最低</text>
-            <path d="M 175 97 L 315 130 L 455 151 L 595 166 L 735 187" fill="none" stroke="#eef4f8" stroke-width="2" stroke-dasharray="6 5"/>
-            <text x="706" y="76" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">单调递减 = 因子值越大,未来收益越好</text>
-            <text x="706" y="96" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">多空差 +5.1% - 2.1% ≈ +3.0 个百分点/年</text>
-            <text x="450" y="316" text-anchor="middle" fill="#ffb4b4" font-size="12.5">反过来,要是第 3 组反超第 1 组、顺序乱跳——先怀疑运气和行业暴露,别急着下注;单调才算有用</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 440" role="img" aria-label="出口造血循环图:开工厂接订单、外汇流进来、结汇变本币、发工资扩内需四个方框围成顺时针循环,中心圆写造血机越转越壮">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">拿出口给自己造血:一个国家的造血循环</text>
+            <!-- 中心循环四个节点 -->
+            <rect x="360" y="70" width="180" height="56" rx="8" fill="rgba(122,167,240,0.25)" stroke="#7aa7f0"/>
+            <text x="450" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">开工厂接订单</text>
+            <text x="450" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">先把东西卖出去</text>
+            <rect x="640" y="196" width="180" height="56" rx="8" fill="rgba(143,179,122,0.25)" stroke="#8fb37a"/>
+            <text x="730" y="220" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">外汇流进来</text>
+            <text x="730" y="240" text-anchor="middle" fill="#bcc9dd" font-size="11">美元/欧元落袋</text>
+            <rect x="360" y="320" width="180" height="56" rx="8" fill="rgba(240,201,106,0.25)" stroke="#f0c96a"/>
+            <text x="450" y="344" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">结汇变本币</text>
+            <text x="450" y="364" text-anchor="middle" fill="#bcc9dd" font-size="11">央行/银行系统放大</text>
+            <rect x="80" y="196" width="180" height="56" rx="8" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
+            <text x="170" y="220" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">发工资扩内需</text>
+            <text x="170" y="240" text-anchor="middle" fill="#bcc9dd" font-size="11">工人有钱再消费</text>
+            <!-- 循环箭头 -->
+            <path d="M 540 100 Q 660 130 716 192" fill="none" stroke="#8499bd" stroke-width="3" marker-end="url(#arrowM)"/>
+            <path d="M 700 252 Q 620 306 544 336" fill="none" stroke="#8499bd" stroke-width="3"/>
+            <path d="M 360 350 Q 240 320 190 256" fill="none" stroke="#8499bd" stroke-width="3"/>
+            <path d="M 200 196 Q 260 130 356 104" fill="none" stroke="#8499bd" stroke-width="3"/>
+            <defs><marker id="arrowM" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8499bd"/></marker></defs>
+            <!-- 循环中心 -->
+            <circle cx="450" cy="212" r="46" fill="rgba(18,29,49,0.9)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="450" y="208" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">造血机</text>
+            <text x="450" y="228" text-anchor="middle" fill="#bcc9dd" font-size="11">越转越壮</text>
+            <text x="450" y="412" text-anchor="middle" fill="#bcc9dd" font-size="12.5">循环一旦转起来,工人变消费者,消费者养活更多工厂;反之订单一断,整个环跟着收缩</text>
           </svg>
-          <p class="figure__cap">把股票按股息率排队分五组、每月调仓跑上几年:高分组 +5.1% 一路降到低分组 +2.1%,单调才算有用——说明因子分数和未来收益同向。顺序一旦乱跳,先怀疑运气或行业暴露,别急着下注。</p>
+          <p class="figure__cap">一个国家拿出口给自己造血的完整循环:开工厂接订单,外汇流进来,结汇变成本币,发工资扩内需,工人变消费者再养活更多工厂——越转越壮。反过来,订单一断,整个环跟着收缩。</p>
         </div>
-        <h3>1.7. 别把别人的风险当成自己的能力</h3>
-<p>这是因子研究里最容易自我感动的一个坑。你发现某个指标选出的股票收益很高,兴奋得不行,仔细一看:选出来几乎全是小市值股票。那它赚的很可能不是你这个指标的钱,而是小市值风格的钱——你只是站在别人的风口上,误以为自己会飞。</p><p>中性化就是把不想蹭的暴露剥离掉,让因子裸泳给你看。常见做法有行业中性、市值中性、风格中性。比如在每个行业内部单独排序,行业涨跌就干扰不到因子选股;或者用回归把市值暴露从因子值里抽走,剩下那部分如果还能预测收益,才算你有真本事。</p><p>但也别把中性化当成越多越好。剥得太狠,可能连因子真实的收益来源一起剥没了,剩下一个干干净净但毫无预测力的空壳。关键是想清楚自己要赚什么钱:如果你对外宣称做的是选股 <span class="term">Alpha</span>,就不能主要靠押行业和押市值;如果你本来就想做风格轮动,那风格暴露本身就是策略的一部分,不用剥,大方承认就好。</p>
-
-        <h3>1.8. 因子为什么会失效</h3>
-<p>因子不是永动机,它哪天躺平了,通常逃不出四种死因。第一,它本来就是噪声,只是历史上碰巧表现好——回测里的明星,数据挖掘的幽灵。第二,市场结构变了,过去支撑它的机制不再成立。第三,用的人太多,收益被蜂拥的交易挤没了。第四,交易成本上升或流动性变差,纸面收益根本落不了地。</p><p>除了彻底死亡,还有一种更磨人的情况:周期性失效。价值因子可能在成长股的大行情里难受好几年,<span class="term">动量</span>因子会在市场急转弯时突然崩给你看,低波因子会在风险偏好暴涨的牛市里跑输得让人怀疑人生。这不一定说明因子永久死了,但你的资金能不能扛到它复活,是个现实问题——长期信仰,短期要命。</p><p>所以判断失效绝不能只看一个月亏损就掀桌子。先查一串东西:亏损是不是超出了历史分布的正常范围?市场环境变没变?因子的拥挤度是不是在上升?交易成本是不是变高了?数据口径是不是出了毛病?组合约束是不是放大了某类风险?失效诊断是功夫活,它和当初发现因子一样,都是研究的一部分。</p>
-
-        <h3>1.9. 好因子需要同时过四关</h3>
-<p>一个因子想进实盘组合,得过四道关,一关都不能少。第一关是经济解释:为什么这列数字可能和未来收益有关?背后是风险补偿、行为偏差、信息滞后,还是制度约束?没解释也能研究,但你心里要给自己打个问号,持仓时也更谨慎。</p><p>第二关是统计检验:<span class="term">IC</span>、分层收益、多空组合、样本外表现,稳不稳定?第三关是交易可行:<span class="term">换手率</span>、滑点、停牌、涨跌停、容量,会不会把纸面收益吃个干净?第四关是组合贡献:把它放进已有的模型里,它能带来新增信息,还是和老因子高度重复——换个姿势说了同一件事?</p><p>四关一立,你会看到很多<span class="term">反转</span>的剧本:有些因子单测时气势如虹,一进组合就被发现和老因子长得太像,沦为多余;另有一些因子单测平平无奇,却因为和别人相关性低,加进来让整个组合更稳。量化研究最后看的从来不是单因子炫技,而是整个策略系统里,你到底贡献了多少边际价值。</p>
-
-        <h3>1.10. 个人如何做第一个因子研究</h3>
-<p>理论铺垫够了,该挽袖子了。个人入门的第一个因子研究,用最简单的日频因子就够:选一个股票池,比如<span class="term">沪深 300</span> 或<span class="term">中证 500</span> 成分股;选一个再平衡频率,比如每月一次调仓;选一个朴素因子,比如过去 <span class="num">20 日</span>收益率或 <span class="term">PB</span>;然后把时点数据、排序、分组、调仓、扣成本这一整套流程走通。</p><div class="callout callout--warn reveal"><span class="callout__title">郑重提醒</span><p>郑重提醒:别一上来就上深度学习,先把最朴素的流程做对。数据日期不能错位,停牌的股票不能随便成交,未来的财报不能提前用,指数成分不能用现在的名单回填历史,交易费用要老老实实扣,涨跌停要正确处理。这套流程的严谨程度,比你模型的名字响亮程度重要一百倍——流程错了,模型越聪明,自欺越高效。</p></div><p>走完第一遍,你应该能交出一份像样的研究报告:因子定义、数据来源、股票池、回测区间、调仓频率、<span class="term">IC</span>、分层收益、换手、成本、<span class="term">最大回撤</span>、失效阶段和可能的解释。每一项都有出处,每一个数字都经得起追问。做到这一步,恭喜你,才算真正站到了量化研究的大门口。</p>
-                <p>光说不练假把式。本书 <code>examples/</code> 目录里有四个零依赖、纯 Python 标准库的教学脚本,这一章对应的是 <code>ex01_factors.py</code>,核心函数长这样:</p>
-                <figure class="code-walk reveal">
-                  <figcaption class="code-walk__file">examples/ex01_factors.py</figcaption>
-                  <pre class="code-walk__code"><code>def factors_at(stocks, t):
-    # 只用 [0, t] 内可见的数据——这是纪律,不是习惯。                    <b class="cw-tag">1</b>
-    value, momentum, low_vol, quality = [], [], [], []
-    for s in stocks:
-        value.append((s, book_like(s, t) / s.prices[t]))          <b class="cw-tag">2</b>
-        momentum.append((s, s.prices[t] / s.prices[t - 60] - 1))
-        low_vol.append((s, -vol_60(s, t)))
-        quality.append((s, s.quality))
-    zs = [zscore(x) for x in (value, momentum, low_vol, quality)]  <b class="cw-tag">3</b>
-    return {c: sum(z[c] for z in zs) / 4 for c in zs[0]}           <b class="cw-tag">4</b></code></pre>
-                  <ol class="code-walk__notes">
-                    <li><strong>函数签名先锁数据边界</strong>:只取 <code>[0, t]</code> 区间。写因子代码,第一件事不是写公式,而是声明“我在 t 时刻到底能看到什么”——以后每加一列数据,都被这个 <code>t</code> 管着。</li>
-                    <li><strong>四个方向不同的东西先各自打分</strong>:“底子/价格”越高越便宜、动量越大越强、波动越小越稳、质量越高越好。同一行只能看到它们各自的得分,别急着相加。</li>
-                    <li><strong>zscore 是度量统一</strong>:四个因子单位完全不同,直接相加等于拿米、斤、摄氏度比大小。减去均值、除以标准差,先拉到同一量纲——第 19 章“四个分数怎么拧成一个”,拧的就是这一步。</li>
-                    <li><strong>等权 1/4 是刻意朴素</strong>:第一版别优化权重。先看等权合成是否仍有排序信息(本章的 IC、分层),再谈怎么配权——样本内调出来的“最优权重”,十有八九是噪声。</li>
-                  </ol>
-                </figure>
-                <p>跑一遍 `python3 ex01_factors.py`,你会看到五组分层收益是否单调、四个单因子 <span class="term">IC</span> 各是多少。注意一个诚实的提醒:这是合成数据上的教学,真实世界里 <span class="term">IC</span> 能稳定站在 0.03-0.05 已经可以拿来用了,别被示例里的好数字惯坏了眼睛。</p>
-
-        <h2>2. 量化模型从哪里学</h2>
-        <p>如果你有机器学习的底子,很容易把量化当成一个普通监督学习问题:把特征和标签喂给模型,训练,验证,上线,收工。但金融数据最阴险的地方,恰恰在于它会不动声色地让你把未来塞进过去:财报的发布日期、指数成分的变动、复权价格、停牌、涨跌停、退市、交易成本——每一个细节都可能让你的模型在回测里像个天才,一到实盘立刻失忆。这一章专门拆解这些坑,它们是初学者和老手之间的那道分水岭。</p>
-
-        <h3>2.1. 量化数据不是只有 K 线</h3>
-<p>新手想象中的量化数据,往往就是一张 K 线表。实际上,行情数据只是最基础的一层:开盘价、最高价、最低价、收盘价、成交量、成交额、盘口和逐笔成交。往上还有基本面数据:财报里的收入、利润、资产负债、现金流、<span class="term">ROE</span>、毛利率、负债率。再往上还有公告、分析师预测、基金持仓、指数成分、融资融券、期货持仓、期权<span class="term">波动率</span>、新闻文本和宏观数据。数据食材琳琅满目,问题是怎么配菜。</p><p>配菜的最大麻烦是:这些数据的频率和发布时间完全不在一个节拍上。行情数据每天甚至每秒更新,财报按季度才披露一次,宏观数据按月或按季发布,分析师报告和新闻则是不规则地突然到达。把它们拼进同一张训练表时,必须时刻盯住一件事——在交易发生的那个时刻,这条数据到底是不是已经可见?</p><p>所以量化数据工程的核心,不是把表拼起来那种体力活,而是考古式的还原:恢复历史当时的信息状态。模型在 <span class="num">2020 年</span> <span class="num">4 月</span> <span class="num">10 日</span>做决定时,绝不能看到 <span class="num">2020 年</span> <span class="num">4 月</span> <span class="num">30 日</span>才发布的年报修正,也不能看到后来才确定的指数成分回填。模型可以笨,但不能作弊——作弊考出的高分,一文不值。</p>
-
-        <h3>2.2. 在那个时点你到底知道什么</h3>
-<p>点时数据是量化里极其重要的概念,用一句话说:每条数据都要携带<span class="hl">“何时生效、何时可见、何时被修正”</span>的完整时间档案。听起来理所当然?举个最常见的反例:财报的报告期末是 <span class="num">12 月</span> <span class="num">31 日</span>,很多人就以为 <span class="num">12 月</span> <span class="num">31 日</span>当天就能用全年利润建模——错。投资者真正知道这个数字,通常要等公告发布之后,中间可能隔着好几个月。</p><p>代入一个具体场景,感受这个坑有多深。某公司 <span class="num">2025 年</span>年报的实际披露日是 <span class="num">2026 年</span> <span class="num">3 月</span> <span class="num">28 日</span>。如果你在 <span class="num">2026 年</span> <span class="num">1 月</span>的回测里使用了这份年报的最终净利润,那么你的模型等于提前两个多月偷看了答案——这就是教科书级的未来函数。它在回测里刷出的<span class="term">超额收益</span>,到了实盘一秒蒸发。</p><p>数据库里还埋着更隐蔽的雷:字段里只有报告期、没有发布日期;或者数据供应商把历史数据悄悄修正成最终版本,却没保留当时的初版。这种数据看起来干干净净,回测出来的结果却天然过于乐观——因为模型看到的是<span class="hl">“事后改过的历史”</span>。专业的数据服务会尽量提供公告日期、更新时间和历史版本沿革,买数据、选数据时,这条是硬指标。</p>
-
-        <h3>2.3. 你让模型预测什么</h3>
-<p>训练模型之前,有个问题必须先想清楚:你到底让它预测什么?这个<span class="hl">“什么”</span>,就是标签。股票量化里常见的标签有:未来 <span class="num">1 日</span>、<span class="num">5 日</span>、<span class="num">20 日</span>或 <span class="num">60 日</span>的收益率;也可以是未来相对行业或指数的<span class="term">超额收益</span>;还可以是未来是否跑赢市场中位数、未来的<span class="term">波动率</span>、未来的<span class="term">最大回撤</span>,甚至未来能否顺利成交。标签不同,你训练的根本就是不同的模型。</p><p>别小看标签定义,换一个标签,等于换了一道题。预测明天收益和预测下个月收益,是两份完全不同的考卷:明天收益噪声更大、交易频率更高、对成本更敏感;下个月收益信号或许更慢更稳,但持有期间的风险更长。同理,预测绝对收益,你会被整个市场的涨跌裹挟;预测相对收益,才是真正的选股题——那一部分才可能是你模型做出的成绩。</p><p>拿一个常见的入门标签来说:从今天收盘,到未来 <span class="num">20 个交易日</span>之后的复权收盘收益。它适合月频选股研究,但它绝不等于真实可成交的收益。为什么?因为你今天收盘之后才能算出完整收盘价,实际执行买入最早也要等到明天开盘或盘中,这中间隔着一个夜晚的跳空;而且还没扣成本,没处理停牌和涨跌停能不能成交的问题。标签是题面,成交是答题,先分清这两件事。</p>
-
-        <h3>2.4. 特征和标签的时间对齐</h3>
-<p>监督学习有条铁律:特征 X 必须在标签 y 之前可见。在任何领域都成立,但在量化里,它值得用加粗加大号字体刻在你的工位上。特征日期、数据发布日期、交易决策时间、下单时间、成交时间、标签收益区间——六个时间点,必须像火车时刻表一样排得整整齐齐,一处都不能越位。</p><p>来感受一个每天都会犯的经典错误。你用今天的收盘价计算特征,又在回测里假设自己按今天的收盘价买入——可收盘价格是收盘那一瞬间才确定的,你等于先看了答案再做题。正确姿势是:收盘后生成信号,下一次可执行成交在之后的某个交易时点。差一步,就是从研究滑向自欺的一步。</p><p>这类错误的可恶之处,在于它在代码里根本不显眼。一个 shift 写错了一格,一个 merge_asof 的连接方向反了,一个财报公告日期没做处理——模型表现立刻<span class="hl">“优异”</span>得不像话。所以请把下面这句话变成条件反射:看到过于漂亮的结果,第一反应不是庆祝自己挖到圣杯,而是去检查时间对齐。在金融数据里,异常好往往意味着异常错。</p>
-
-        <h3>2.5. 复权价格和真实成交价格要分开</h3>
-<p>前面章节讲过,复权是为了让历史价格口径可比。到了建模这一步,你会撞上一个看似矛盾的规则:算收益标签,该用复权价格;模拟真实成交,却绝不能用复权价格。两套价格,各管一段,弄混了全盘皆错。</p><p>用一个例子把这两条路分开。某股票分红除权,未复权价格从 <span class="num">10 元</span>变成 <span class="num">9.5 元</span>。如果你拿未复权价格算收益,会硬生生把分到手里的分红算成亏损——冤枉了它;可反过来,如果你拿复权价格去模拟下单成交,又是在用一个历史上根本不存在的交易价格——骗了你自己。标准做法是:收益计算和因子计算,走合适的复权口径;撮合成交、判断涨跌停、计算成本,一律走当时真实可交易的价格口径。</p><p>很多回测框架会在内部默默帮你做这些转换,这很方便,但也埋着信任风险——你不能完全盲信框架。至少要把几个字段抠清楚:close 到底是未复权还是前复权?return 含不含分红?limit_up 和 limit_down 用的是哪个价格口径?口径不清楚,后面的一切计算都建在流沙上。做量化,先把字段当法律文书读。</p>
-
-        <h3>2.6. 你允许模型在哪些资产上下注</h3>
-<p>模型不是想选谁就选谁——动手之前,你要先给它发一张<span class="hl">“准入名单”</span>,也就是股票池。你可以选全 A 股,也可以选<span class="term">沪深 300</span>、<span class="term">中证 500</span>、中证 1000 的成分股,或者锁定某个行业;也常常顺手剔除 ST 股、停牌股、上市未满一定天数的新股和流动性太差的股票。别以为股票池是随便画的圈,它直接决定策略的收益、风险和可执行性。</p><p>股票池里最阴的一个坑,是拿今天的名单回测过去。比如只拿现在还活着、还上市的股票回测十年——那些中途黯然退市的公司,被你的数据集悄悄抹掉了,样本里清一色<span class="hl">“活到了决赛圈”</span>的幸存者。这就是幸存者偏差。正确做法是:每个历史日期,都只使用当时可投资的股票池,让过去只看到过去的名单。</p><p>股票池还顺手决定了你的基准,这两件事必须配套。你在<span class="term">沪深 300</span> 成分里选股,就应该主要和<span class="term">沪深 300</span> 比;在中证 1000 里选,就和中证 1000 比。股票池和基准不匹配,就像拿游泳运动员的配速去考核自行车手——市场暴露和选股能力搅在一起,结论必然失真。</p>
-
-        <h3>2.7. 缺失值不是小麻烦</h3>
-<p>金融数据从来就不是完整的方格子。新上市的公司历史短,停牌的日子没成交,财务字段可能还没到披露时间,某些行业指标在别的行业根本不适用,新闻数据覆盖更是厚此薄彼——缺失无处不在。最危险的一个动作是:看见缺失就填 0。要知道,0 可能是一个真实数值(比如本期计提为零),也可能只是<span class="hl">“没有数据”</span>,两者的含义天差地别。</p><p>常见处理方式有这么几样:删除缺失样本、用行业中位数填充、拿上一期可见值延续、加一个<span class="hl">“是否缺失”</span>的标记位,或者干脆让模型自己学会处理缺失。选哪种没有标准答案,取决于字段的真实含义。比如 <span class="term">PB</span> 缺失,可能是公司净资产为负、算出来没意义,也可能只是数据未覆盖——一个是信号,一个是事故,绝不能一视同仁。</p><p>再深一层:缺失本身可能携带信息。财报迟迟不发、没有分析师覆盖、数据质量差,往往和风险挂在一起。如果你图省事,把带缺失的样本一刀切全删掉,你的股票池会悄悄偏向信息披露好、流动性好、规模大的公司——一个看不见的偏差,就被你亲手埋进了训练集。你以为在做清洗,其实是在做采样偏见。</p>
-
-        <h3>2.8. 训练集、验证集和测试集不能随机打乱</h3>
-<p>机器学习课本能教你随机划分训练集和测试集,但金融序列不吃这一套。为什么不能随便随机打乱?因为金融市场在时间上是连续的、上下游有依赖的:未来样本和过去样本可能共享同一个市场状态。一随机,未来市场环境的<span class="hl">“气味”</span>就顺着共享的状态渗进了训练集,模型等于提前闻过了考卷的味道。</p><p>更合理的做法是按时间顺序切分:比如 <span class="num">2015-2019 年</span>用作训练,<span class="num">2020-2021 年</span>做验证调参,<span class="num">2022-2024 年</span>守住测试。这样测试集才是真正的<span class="hl">“未来”</span>。还可以做滚动训练和 walk-forward 验证:用过去一段时间训练,向前预测一段,再整体往前滚动窗口,像推着时间向前走。让模型永远只学昨天、预测明天。</p><p>但时间切分也不是金钟罩。如果训练期和测试期的市场环境碰巧太像,结果仍可能乐观;如果测试期刚好撞上极端环境,结果又会过于悲观。所以更稳的做法是覆盖多个市场阶段,看策略在牛市、熊市、震荡市、流动性冲击里分别什么德行。一次切分一盏灯,多种环境才是全景灯。</p>
-
-        <h3>2.9. 样本外不是一句口号</h3>
-<p><span class="hl">“我做了样本外测试”</span>——研究报告里这行字人人会写,真正做到的却没有那么多。样本外的含义,是模型没有用这段数据参与训练、调参和策略选择。现实里最常见的违规是:反复盯着测试集结果看,根据测试结果回头改特征、调参数。一次两次看不出问题,搞多了,测试集就被悄悄<span class="hl">“用脏”</span>了——名为样本外,实为训练集。</p><p>量化里还有个更隐蔽的污染源,藏在研究员自己的脑子里。假设你试了 200 个因子,只留下表现最好的 5 个写进报告——即使每个因子都规规矩矩在测试集上跑过,最终的报告依然带着数据挖掘偏差。因为<span class="hl">“留下这 5 个”</span>这个动作本身,就已经看过了测试集的成绩。你筛过的不是因子,是运气。</p><p>对抗这种自欺,靠的是一整套研究纪律:留一份真正没碰过的最终样本、记录所有做过的实验(包括失败的)、控制试错次数、做跨市场交叉验证、上模拟盘和小规模实盘再验证一轮。样本外不是一个技术名词,而是一种对自己的诚实——能不骗自己的研究员,才配得上信任曲线。</p>
-
-        <h3>2.10. 从数据表到训练样本</h3>
-<p>铺垫了这么多防线,最后一步该真的搭样本了。一个股票日频训练样本,可以想象成三维结构:日期、股票、特征。每个交易日,操场上站着一批股票,每只身上挂着几十个特征值,标签是未来一段收益。喂给模型时,把这个立体结构拍平成一张大表:每一行是<span class="hl">“某天某只股票”</span>,列是特征和标签。</p><p>但拍平这张表之前,要过一串安检门:当天是否可交易?是否停牌?是否涨跌停到无法买卖?上市天数够不够?财务数据是否已披露?是否在股票池内?最关键的是:这套过滤规则,必须在训练、回测和实盘三处完全一致——三套规则各说各话,训练出来的就是<span class="hl">“三次元模型在二次元考试”</span>。</p><p>过滤不一致的结局是什么?如果训练样本里混着大量实盘根本买不到的股票,模型会津津有味地学习一堆不可执行的机会——纸上高手,实盘废物;如果回测过滤得严、训练过滤得松,训练目标和交易目标从一开始就南辕北辙。量化的细节不会浮现在 PPT 里,它们藏在每一行过滤规则里,最后统统反映在收益曲线上。</p>
+        <h2>7. 卡在不高不低的那一档</h2>
+<p>世界银行把经济体按人均收入分档:低收入约千美元以下,高收入约一万三千美元以上。所谓<span class="hl">“<a class="term term-link" href="glossary.html#g-中等收入陷阱" title="查看术语：中等收入陷阱">中等收入陷阱</a>”</span>,就是卡在中间的那批国家——廉价劳动力优势已被更穷的国家抢走,创新能力又还够不着发达国家,涨的涨不动、省的省不了,像三明治一样被两头挤压。<span class="num">1960 年</span>以来,真正跨过这道坎的经济体屈指可数,最出名的是东亚那几个。</p><p>卡住的根源是发动机没换:起飞靠<span class="hl">“人便宜”</span>,中等靠<span class="hl">“投资堆”</span>,再往上只能靠<span class="hl">“知识密集”</span>——技术、品牌、规则。发动机不换,车照样跑,只是越来越慢,慢到债务还不动、就业稳不住、社会情绪跟着变坏。所以<span class="hl">“中等收入陷阱”</span>不是玄学名词,是三件事一起到期:工资不低了,资本边际回报降了,创新还没接上。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="IC 曲线图:因子排序与未来收益的相关性起伏,需要看一年摊平后才能判断有没有资产质量">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">IC:每颗因子技能摆一条？检验一切是否“态一致”</text>
-            <!-- 排序 VS 下月收益坐标;正相关散开 -->
-            <rect x="80" y="80" width="380" height="300" rx="10" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.5)"/>
-            <text x="270" y="106" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">IC 的秒定义</text>
-            <text x="270" y="132" text-anchor="middle" fill="#bcc9dd" font-size="12">因子按分数给全市场若干股排队;</text>
-            <text x="270" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">看上个月谁最后;</text>
-            <text x="270" y="176" text-anchor="middle" fill="#bcc9dd" font-size="12">计算两个名次表的相关系数</text>
-            <text x="270" y="206" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">IC = {-1 ~ +1 的相关数}</text>
-            <text x="270" y="234" text-anchor="middle" fill="#bcc9dd" font-size="12">+ 表示分数高能涨(买高分好)</text>
-            <text x="270" y="256" text-anchor="middle" fill="#bcc9dd" font-size="12">- 表示分数高能跌(低分好)</text>
-            <text x="270" y="278" text-anchor="middle" fill="#bcc9dd" font-size="12">0 表示因子不预测未来</text>
-            <text x="270" y="308" text-anchor="middle" fill="#8499bd" font-size="12">行业经验:稳定的 IC 在 0.03~0.05 尤属珍贵</text>
-            <!-- 右边 曲线 -->
-            <text x="630" y="90" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">IC 为什么要滚一个季度到一年</text>
-            <line x1="500" y1="330" x2="820" y2="330" stroke="#8499bd" stroke-width="2"/>
-            <line x1="500" y1="130" x2="500" y2="330" stroke="#8499bd" stroke-width="2"/>
-            <path d="M 505 210 Q 560 200 620 220 Q 680 240 740 200 Q 790 170 820 190" fill="none" stroke="#a8c6ff" stroke-width="3"/>
-            <line x1="505" y1="235" x2="820" y2="235" stroke="#f0c96a" stroke-width="2" stroke-dasharray="8 6"/>
-            <text x="820" y="232" fill="#f0c96a" font-size="12">均值的均值</text>
-            <text x="820" y="330" fill="#bcc9dd" font-size="12">月份</text>
-            <text x="510" y="140" fill="#bcc9dd" font-size="12">IC(+)/-</text>
-            <text x="650" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12">任何单月可能都正,但趋势摆动围绕“均值的均值”上下;真正信号看 IC 摊平后的水平是否稳定轩抬高位</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 430" role="img" aria-label="中等收入陷阱楼梯图:农业起步、出口代工、中等收入三级台阶,通向高收入的梯子断掉,一条绿色路线升级接上去,一条红色路线原地打转">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">中等收入陷阱:楼梯爬到一半,梯子撤了</text>
+            <!-- 楼梯 -->
+            <rect x="80" y="330" width="160" height="40" rx="6" fill="rgba(122,167,240,0.25)" stroke="#7aa7f0"/>
+            <text x="160" y="355" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">农业起步</text>
+            <rect x="240" y="280" width="160" height="40" rx="6" fill="rgba(122,167,240,0.35)" stroke="#7aa7f0"/>
+            <text x="320" y="305" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">出口代工</text>
+            <rect x="400" y="230" width="160" height="40" rx="6" fill="rgba(240,201,106,0.3)" stroke="#f0c96a"/>
+            <text x="480" y="255" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">中等收入(卡壳高发区)</text>
+            <rect x="640" y="180" width="160" height="40" rx="6" fill="rgba(143,179,122,0.3)" stroke="#8fb37a"/>
+            <text x="720" y="205" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">高收入</text>
+            <!-- 断梯 -->
+            <line x1="560" y1="280" x2="640" y2="190" stroke="#ee8877" stroke-width="4" stroke-dasharray="10 8"/>
+            <text x="600" y="160" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">梯子撤了:工资涨了,廉价优势没了</text>
+            <!-- 两条路 -->
+            <path d="M 480 230 Q 560 150 700 128" fill="none" stroke="#8fb37a" stroke-width="4"/>
+            <text x="620" y="120" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">A:技术升级接上去(日韩)</text>
+            <path d="M 480 272 Q 560 320 700 330" fill="none" stroke="#ee8877" stroke-width="4"/>
+            <text x="620" y="352" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">B:靠借债和老本打转(拉美)</text>
+            <text x="450" y="400" text-anchor="middle" fill="#bcc9dd" font-size="12.5">判断看点:工人工资涨得比效率快,债务堆得比技术快,就是 B 路线的前兆</text>
           </svg>
-          <p class="figure__cap">IC 是量化界的成绩单——波动大是常态,稳定上斜才是真迹。单月出来一个 0.2 不能保证是真因子,一年的平均 IC 0.03-0.05 才能写进策略池。</p>
+          <p class="figure__cap">爬楼前半段靠的是便宜劳动力和出口代工,谁都能爬;难的是工资涨起来之后那一级——梯子(廉价优势)撤了,要么靠技术升级接上去(日韩路线),要么靠借债在原地打转(拉美路线)。判断前兆就看两条:工资涨得比效率快、债务堆得比技术快。</p>
         </div>
+        <h2>8. 廉价劳动力用光的那一天</h2>
+<p>起飞模式有一个明确的失效时刻,叫<a class="term term-link" href="glossary.html#g-刘易斯拐点" title="查看术语：刘易斯拐点">刘易斯拐点</a>。农村里有大量过剩劳动力时,城市工厂用很低的工资就能一直扩张;一旦农村剩余劳动力被吸干,再加人就得涨工资——工资一涨,价格优势就没了。中国大约在 2004 到 <span class="num">2010 年</span>之间迈过这个拐点:那几年珠三角的工厂大规模内迁或搬去越南,不是经营不善,是红利吃完了。</p><p>拐点之后,不涨工资就招不到人;涨工资,工厂就只有两条路:上自动化设备,或者搬去更便宜的地方。所以这些年才会冒出<span class="hl">“工程师红利”</span>这个词——它要接的就是人口红利的下一棒。劳动力从<span class="hl">“多而廉”</span>转向<span class="hl">“少而专”</span>,国家要么去干更高级的活,要么掉队。</p>
+
+        <h2>9. 家里有矿,可能反而长不好</h2>
+<p>资源多是好事吗?<span class="num">1977 年</span>荷兰发现大油气田,石油美元滚滚而来,政府福利开足马力,结果十年下来制造业反而萎缩——本币被油钱推高,实体出口变贵、失去竞争力,厂房闲置,这就是<span class="hl">“荷兰病”</span>。苏联和俄罗斯吃同一副药更久:油价高时百事无忧,油价一崩,经济立刻打摆,因为整个国家只有一根拐杖。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>可以记住两条资源收入的使用规则:一是直接撒出去发福利,二是隔离起来换生产率。挪威选了后者——设石油主权基金,钱全部投到海外资产,不让热钱冲击国内产业。到 <span class="num">2024 年</span>,这只基金规模超过 <span class="num">1.7 万</span>亿美元,是全球最大的主权基金。海湾国家学了一半,卡塔尔、阿联酋跟上——差别从来不在有没有资源,而在拿钱换什么。</p></div>
+
+        <h2>10. 泡沫破了之后,人人先还债</h2>
+<p><span class="num">1989 年</span>日本股市见顶,<span class="num">1990 年</span>楼市跟进,之后资产价格一落千丈。麻烦不止价格跌:企业赚到的钱优先还债,家庭多贵也要存钱,利率降到零也没人借钱——经济掉进<a class="term term-link" href="glossary.html#g-通缩" title="查看术语：通缩">通缩</a>。一拖就是<span class="hl">“失落的三十年”</span>,年均增长不到 <span class="num">1%</span>,物价长期贴着零线走。经济学家辜朝明给这个病起了名字,叫<span class="hl">“<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>衰退”</span>:资产坏了,债务还在,所有人都在修报表,没人在扩张。</p><p>日本化留了两条教训。一条是应对通缩必须快、必须持续——研究大萧条出身的伯南克后来用这套模板带美国过 2008;日本自己的失误恰在于收紧得太猛、救助得太晚。另一条是资产泡沫破灭后,别指望市场自己一夜修复——企业不借钱,就得政府顶上,否则大家一起节衣缩食,结果是把衰退过成了常态。</p>
+
+        <h2>11. 红利、拐点、老龄化</h2>
+<p>增长短期看投资,中期看产业,长期看人口。中国 15 到 64 岁劳动年龄人口在 <span class="num">2013 年</span>前后见顶,约十亿出头,从此一路回落;日本的劳动人口早在 <span class="num">1995 年</span>见顶,随后紧接着就是长期低迷。直白地说:干活的人是分子,要养的人是分母——分子缩小、分母变大,分式不好算是所有老龄化国家的共同难题。</p><p>应对的牌有几张:延迟退休、提高女性劳动参与率、自动化和机器人、移民、技术替代——没有万灵药,但可以组合打。日本的今天约等于很多国家的明天,它的体检表值得提前读:生育率 1.3 上下、退休年龄一延再延、机器人密度全球第一。看它踩过的坑,就是替自己省学费。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="人口周期三阶段图:红利→拐点→老龄化,资产偏好从股票房产转向债券现金保险">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">人口从红利走向老龄化,资产定价规则就被重写</text>
+            <line x1="80" y1="200" x2="820" y2="200" stroke="#8499bd" stroke-width="2"/>
+            <text x="92" y="224" fill="#8499bd" font-size="11">1980</text>
+            <text x="280" y="224" fill="#8499bd" font-size="11">2000</text>
+            <text x="480" y="224" fill="#8499bd" font-size="11">2015</text>
+            <text x="680" y="224" fill="#8499bd" font-size="11">2030+</text>
+            <rect x="80" y="70" width="220" height="110" rx="10" fill="rgba(143,179,122,0.22)" stroke="#8fb37a"/>
+            <text x="190" y="96" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">人口红利期</text>
+            <text x="190" y="122" text-anchor="middle" fill="#bcc9dd" font-size="12">劳动力充足廉价,储蓄率高</text>
+            <text x="190" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">资金持续涌入生产性资产</text>
+            <text x="190" y="172" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">股票、工厂、房产各自受益</text>
+            <rect x="350" y="70" width="220" height="110" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="460" y="96" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">人口拐点(刘易斯拐点)</text>
+            <text x="460" y="122" text-anchor="middle" fill="#bcc9dd" font-size="12">农村廉价劳力被吸尽</text>
+            <text x="460" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">中国大约 2004-2010 跨过</text>
+            <text x="460" y="172" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">工资开始加速上涨</text>
+            <rect x="620" y="70" width="220" height="110" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="730" y="96" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">老龄化承重期</text>
+            <text x="730" y="122" text-anchor="middle" fill="#bcc9dd" font-size="12">领养老金的人 ≥ 缴费人口的一半</text>
+            <text x="730" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">财富持有重心转移</text>
+            <text x="730" y="172" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">债券、现金、保险需求上升</text>
+            <rect x="80" y="260" width="760" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(132,153,189,0.4)"/>
+            <text x="104" y="288" fill="#f0c96a" font-size="14" font-weight="800">两大长期后果</text>
+            <text x="104" y="314" fill="#bcc9dd" font-size="12">利率中枢被压低:庞大储蓄人群争抢固定收益资产,长期债价被持续买高;养老金权益仓位减轻:大量退休人口同时抛售股票换生活费,股市长期承压</text>
+            <text x="104" y="336" fill="#bcc9dd" font-size="12">看利率下行别只怪央行——人口结构本身就是汪洋里那股最深的水流</text>
+          </svg>
+          <p class="figure__cap">刘易斯拐点一过,全社会从“赚工资”切成“领退休金”,债券和保险被推起来,股票被长期拖住。人口不是远问题,是利率每天跳动后面那只看不见的手。</p>
+        </div>
+        <h2>12. 怎么判断一个国家在哪个阶段</h2>
+<p>给一个国家做体检,问自己四个问题:劳动年龄人口还在涨吗?新增投资还能换来多少产出?企业拼的是成本还是创新?外贸赚的是辛苦钱还是定价权?四个问题排出来,它处于哪一档、下一步要过什么坎,大致就有数了。这套框架不只管宏观研究,量化做多资产、做汇率、做国别轮动时,它就是你的<span class="hl">“国情<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>”</span>——模型可以不喊口号,但不能没有国情。</p>
+
 
         <section class="summary reveal">
           <h2>小结</h2>
           <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
           <ul>
-            <li>因子是把投资判断变成一列有口径、可排序、可检验的数据。</li>
-            <li>IC、RankIC 和分层回测用于检验因子是否对未来收益有排序信息。</li>
-            <li>量化数据必须恢复历史当时的信息状态,点时数据是防止未来函数的核心。</li>
-            <li>标签定义决定模型任务,预测绝对收益、相对收益、波动或回撤是不同问题。</li>
+            <li>增长靠三样东西:人、资本、生产率,越靠后越难啃,但只有生产率不会减速。</li>
+            <li>出口导向和进口替代是两条命运岔路,东亚和拉美各选了一条,结局天差地别。</li>
           </ul>
           <h3>小节回看</h3>
           <ul>
-            <li><strong>1.1.</strong> 因子不是魔法,是一列有口径的数据</li>
-            <li><strong>1.2.</strong> 因子、信号和特征有什么区别</li>
-            <li><strong>1.3.</strong> 常见因子家族</li>
-            <li><strong>1.4.</strong> 同一天把股票排队</li>
-            <li><strong>1.5.</strong> 因子排序和未来收益是否同向</li>
-            <li><strong>1.6.</strong> 高分组是不是真的更好</li>
-            <li><strong>1.7.</strong> 别把别人的风险当成自己的能力</li>
-            <li><strong>1.8.</strong> 因子为什么会失效</li>
-            <li><strong>1.9.</strong> 好因子需要同时过四关</li>
-            <li><strong>1.10.</strong> 个人如何做第一个因子研究</li>
-            <li><strong>2.1.</strong> 量化数据不是只有 K 线</li>
-            <li><strong>2.2.</strong> 在那个时点你到底知道什么</li>
-            <li><strong>2.3.</strong> 你让模型预测什么</li>
-            <li><strong>2.4.</strong> 特征和标签的时间对齐</li>
-            <li><strong>2.5.</strong> 复权价格和真实成交价格要分开</li>
-            <li><strong>2.6.</strong> 你允许模型在哪些资产上下注</li>
-            <li><strong>2.7.</strong> 缺失值不是小麻烦</li>
-            <li><strong>2.8.</strong> 训练集、验证集和测试集不能随机打乱</li>
-            <li><strong>2.9.</strong> 样本外不是一句口号</li>
-            <li><strong>2.10.</strong> 从数据表到训练样本</li>
+            <li><strong>1.</strong> 律师打字也比助理快,为什么还是应该把键盘交出去</li>
+            <li><strong>2.</strong> 政府花出去的一百元,为什么可能在街上转好几圈</li>
+            <li><strong>3.</strong> 政府借钱修路,会不会把小企业挤出银行门口</li>
+            <li><strong>4.</strong> 胶卷巨头倒下时,经济到底是在退步还是换发动机</li>
+            <li><strong>5.</strong> 人力、资本、生产率</li>
+            <li><strong>6.</strong> 拿出口给自己造血</li>
+            <li><strong>7.</strong> 卡在不高不低的那一档</li>
+            <li><strong>8.</strong> 廉价劳动力用光的那一天</li>
+            <li><strong>9.</strong> 家里有矿,可能反而长不好</li>
+            <li><strong>10.</strong> 泡沫破了之后,人人先还债</li>
+            <li><strong>11.</strong> 红利、拐点、老龄化</li>
+            <li><strong>12.</strong> 怎么判断一个国家在哪个阶段</li>
           </ul>
         </section>
         <section class="quiz reveal">
           <h2>自测</h2>
           <details class="quiz__item">
-            <summary>因子为什么不能只理解成“能赚钱的数字”?</summary>
-            <p>因为因子也可能只是风险暴露、解释变量或历史噪声,必须检验它的预测能力、交易成本和风险来源,才能确认是不是有真金白银。</p>
+            <summary>什么叫刘易斯拐点?</summary>
+            <p>农村剩余劳动力被吸光的那一刻,从此制造业不涨工资就招不到人。</p>
           </details>
           <details class="quiz__item">
-            <summary>RankIC 大致衡量什么?</summary>
-            <p>它衡量因子排序和未来收益排序之间是否同向;用的是排名相关,比直接用原始数值相关更抗极端值的干扰。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>为什么财报报告期不等于可用时间?</summary>
-            <p>报告期只是财务数据覆盖的时间区间,投资者通常要等公告发布之后才能看到这些数字;在披露日之前使用,就是未来函数。</p>
-          </details>
-          <details class="quiz__item">
-            <summary>未来 20 日收益标签有什么执行问题?</summary>
-            <p>用今天收盘价生成信号又按今天收盘成交,等于先看到收盘结果再下单,偷看了当天信息;此外还要扣成本、处理停牌涨跌停。</p>
+            <summary>家里有矿为什么可能反而做不好经济?</summary>
+            <p>资源收入推高本币、挤垮实体出口(荷兰病);隔离起来换生产率才是正道,挪威主权基金是样板。</p>
           </details>
         </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>宏观数据和多资产: 利率、通胀、汇率和商品如何连起来</h2>
+          <p>讲清宏观指标的发布时间、利率曲线、通胀、汇率、商品和多资产配置的量化用法。</p>
+        </section>
+
       </div>
     </main>
     <script src="assets/book.js"></script>
-    <script src="assets/labs.js"></script>
   </body>
 </html>
