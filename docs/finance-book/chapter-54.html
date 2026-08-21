@@ -54,35 +54,39 @@
         <h2>7. 下一步怎么走</h2>
 <p>合上书之后,最大的诱惑是立刻去挑战复杂策略。请先把这股冲动摁住,换成一个具体的小项目,这里就有几个现成的候选:指数增强回测,基金月报分析,数据质量检查,模拟盘状态机。从中挑一个,做完整,写一份报告——<span class="hl">“完整”</span>两个字是重点,往下看。</p><p>完整是什么意思?每一项都有交代:数据有说明文档,假设有边界,结果有基准对照,成本做了敏感性,风险有指标衡量,失败有复盘记录。做到这个程度,哪怕最后策略没赚钱,你也已经在真正意义上学习量化——因为你交出的不是一张收益截图,而是一套可审计的研究。</p><p>金融和量化都不是读一遍书就能学会的技能,它们更像一种长期习惯:不断把想法放进现实约束里检验,发现问题,修正流程,必要时坦白<span class="hl">“我不知道”</span>。愿意检验、愿意修正、愿意承认不知道,这三样东西加起来,就是长期进步的全部起点。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="以后可以做的三个方向:研究员、开发员、策略员">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">下一步,三个方向可选</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">继续做量化研究员(深入某项金融领域); 成为量化开发者(建设别人能终能活的工具),</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">成为量化策略员(盯盘期货、盯管理产品):各自承担的数据结构不同</text>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">无论你选哪一条,都把这本书里的知识档焼进去:不是要你记住全部,而是让你每次动查一个新章时查漏补缺</text>
+          </svg>
+          <p class="figure__cap">读完这本书,你的武器只是理论上的。仅有在真实市场(或至少是模拟)里实践过一环,你才真正掌握了这些知识。</p>
+        </div>
         <h2>8. 回到开篇的小岛</h2>
 <p>这本书是从一座只有鱼的小岛讲起的,讲了几十章。现在揭晓这么做的原因:不是为了讲童话,而是想给你留一个醒神的原点——金融世界再复杂,拆到底,最后都要回到真实的资源和真实的风险上。</p><p>整条链条其实很短,我们来串一遍:渔网提高生产力,<a class="term term-link" href="glossary.html#g-储蓄" title="查看术语：储蓄">储蓄</a>给未来留出空间,<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>把未来的承诺提前挪到今天使用,市场给风险和现金流定价,量化用数据检验这些价格里有没有规律。五个环节连起来,金融在你眼前就不再是一团雾,而是一条能从头走到尾的路。</p><p>以后,当你在复杂模型、复杂产品、复杂行情的岔路口迷路时,请回到小岛,问那四个老问题:真实的东西是什么?未来的承诺是什么?谁在承担风险?价格有没有补偿这些风险?这套问题在开篇有用,在结语有用,在你未来很多年的每一次判断里,都一样有用。</p>
 
-
         <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 54 章小结图: 结语: 你现在应该带走什么">
-            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
-            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="小岛故事和量化完结的关系：技术不能宝动人心">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回到开篇小岛，看见这个市场的全貌</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">第 1 章的小岛故事没有结束——量化只是延续那句逻辑到了高频层面；</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">故事留着的：岛上的人还是会过度反应、过度自信、还是像债务习惯那样在动荡时挤兑；</text>
 
-            <g>
-              <rect x="65" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="77" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="90" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">1</text>
-              <text x="84" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="84" y="203">金融的底层是现金流</tspan><tspan x="84" y="221">、权利、风险和价格</tspan></text>
-            </g>
-            <g>
-              <rect x="335" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="347" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="360" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">2</text>
-              <text x="354" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="354" y="212">不要追求神奇模型</tspan></text>
-            </g>
-            <g>
-              <rect x="605" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="617" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="630" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">3</text>
-              <text x="624" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="624" y="203">结语:你现在应该带</tspan><tspan x="624" y="221">走什么</tspan></text>
-            </g>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">你学的是技术，得到的理解是这个市场是人的集体行为——理解它的人比今天大多数工具书更有优势。</text>
           </svg>
-          <p class="figure__cap">读完第 54 章后,至少要能复述“金融的底层是现金流、权利、风险和价格”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
+          <p class="figure__cap">这本书的哲学从始至终只有一个：制度、激励和人。工具会变、模型会被替换，但市场是人构成的——这一点自自然然不会变。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="全书的收束:从小岛算法走到量化,体制和村人相同">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回到小岛——关于量化的最终答案</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">这本书从岛开始,从装程序结束:所有代码、模型、策略只是一道道数字的工艺</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">而驱动这个市场的仍然是小岛上的那些人:储蓄、信用、权利、资本</text>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">你征服了模型不等于征服了市场——真正的智慧是,知道有界有人,自己的分量在哪里</text>
+          </svg>
+          <p class="figure__cap">如果你现在回到生活节奏,这本书只是你立的腕骨——是让你蕴全的方向。</p>
         </div>
 
         <section class="summary reveal">

@@ -127,6 +127,33 @@
         <h2>11. 时间戳、停牌、缺失和供应商差异</h2>
 <p>量化新人最大的幻觉,是以为行情数据是一张干干净净的 Excel:每只股票每天一行,开高低收成交量一应俱全,读进来就能跑。真实世界要粗糙得多:停牌的日子可能根本没有成交记录;新上市的股票历史短得可怜;退市的公司会悄悄从数据源里蒸发;不同供应商对复权算法、涨跌停处理、成交额口径、指数成分的历史版本,处理方式可能全都不一样。</p><p>时间戳是另一个重灾区。日线数据里的<span class="hl">“日期”</span>指交易日;到了分钟线和逐笔数据,还要分清交易所时间、接收时间、落库时间——三个时间可能互不相同。算一笔亏给你看:某公司今晚收盘后公布超预期财报,明天高开 <span class="num">5%</span>、盘中再涨 <span class="num">3%</span>。若回测让策略<span class="hl">“在公布当日收盘买入”</span>,全天 <span class="num">8%</span> 的收益就全记上了;可真实世界你最早只能明天开盘进场,能拿到手的只有 <span class="num">3%</span>——反算,高开已吃掉 <span class="num">5%</span>,8 减 5 剩 3。反直觉的是,报告漂亮得不像话,往往就因为这 <span class="num">5 个百分点</span>的偷看:这就是未来函数最隐蔽的一种长相。</p><p>所以<span class="hl">“看懂行情”</span>远不只是会看图。真正进入量化,你要对每一条数据连环发问:这条数据在当时的那个时点能不能被看到?价格是未复权还是复权口径?停牌的日子在数据里怎么表示?缺失值是当天没交易,还是数据本身坏了?指数成分是当时的真实成分,还是拿今天的名单回填的?这些问题的答案,决定了回测究竟是研究,还是自娱自乐。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 390" role="img" aria-label="行情数据的四个坑:时间戳漂移、停牌处理、缺失填充决策、供应商差异">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">行情数据的四个坑:同一个 K 线图在不同供应商眼里有四个版本</text>
+            <rect x="70" y="80" width="360" height="120" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="250" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">坑 1:时间戳打架</text>
+            <text x="250" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">跨平台同样的分钟线可能错了一分钟</text>
+            <text x="250" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">分钟级策略能直接因此产生未来函数</text>
+            <text x="250" y="184" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">分钟策略的死穴</text>
+            <rect x="470" y="80" width="360" height="120" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="650" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">坑 2:停牌填不填?</text>
+            <text x="650" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">停牌当期该用 0 填补还是当行值填充?</text>
+            <text x="650" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">填 0 vs 填摸一条线 —— 回测结论直接反</text>
+            <text x="650" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">主观决定差一分,量化结果差千里</text>
+            <rect x="70" y="220" width="360" height="120" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="250" y="248" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">坑 3:缺失/增补的不同性子</text>
+            <text x="250" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12"> 某只股这一天真的没有数据,或被人事根本回填?</text>
+            <text x="250" y="298" text-anchor="middle" fill="#bcc9dd" font-size="12">回填会扭移到未来函数</text>
+            <text x="250" y="324" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">填充号 = 偷看未来</text>
+            <rect x="470" y="220" width="360" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="650" y="248" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">坑 4:供应商差异是常态</text>
+            <text x="650" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">Wind 的和 JoinQuant 的价格列常常差 >0.1%</text>
+            <text x="650" y="298" text-anchor="middle" fill="#bcc9dd" font-size="12">同样的策略在两个数据源上两个结果</text>
+            <text x="650" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">你必须选一个做基准,而不是“谁在变”</text>
+            <text x="450" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这四个坑不是任何一家供应商能完全透明的——想脏就脏,彻底错未必错在 hk券商,可能错在你同时吃了两家的吐纳</text>
+          </svg>
+          <p class="figure__cap">行情数据四个坑分别要你回答一分钟对应、停牌怎么存、缺失怎么填、供应商是哪个的全套问题——研究的第一步是先建一套可重现的答案。</p>
+        </div>
 
         <section class="summary reveal">
           <h2>小结</h2>

@@ -95,9 +95,58 @@
           </svg>
           <p class="figure__cap">链条走一遍:信用是有人肯今天借鱼(借 1 还 2),利率是多借要付的价(5%→10%),估值是把未来的钱折回今天(105÷1.1=95.45)。利率一升,同一张 105 元的债从 100 元掉到 95.45 元——折现率拽着所有长期资产。</p>
         </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 460" role="img" aria-label="利率与债价相关结构图: 利率上行,旧债价格随着久期放大下跌,久期越长越敏感">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">利率每变动 1 个百分点,久期 10 年的债券价格大约反向变动 10%</text>
+            <line x1="180" y1="245" x2="720" y2="245" stroke="#8499bd" stroke-width="6"/>
+            <polygon points="450,250 430,275 470,275" fill="#8499bd"/>
+            <rect x="230" y="130" width="190" height="80" rx="10" fill="rgba(238,136,119,0.22)" stroke="#ee8877"/>
+            <text x="325" y="158" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">利率上行</text>
+            <text x="325" y="182" text-anchor="middle" fill="#bcc9dd" font-size="12">旧债的现值下跌</text>
+            <rect x="480" y="150" width="190" height="80" rx="10" fill="rgba(143,179,122,0.22)" stroke="#8fb37a"/>
+            <text x="575" y="178" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">利率下行</text>
+            <text x="575" y="202" text-anchor="middle" fill="#bcc9dd" font-size="12">旧债的现值上涨</text>
+            <rect x="70" y="320" width="760" height="120" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="94" y="348" fill="#f0c96a" font-size="13" font-weight="800">为什么久期决定敏感度</text>
+            <text x="94" y="372" fill="#bcc9dd" font-size="12">久期是债券对利率的敏感度:久期 10 年的债券,利率每上行 0.1 个百分点,价格大致下跌约 1%;久期 3 年的短期债,利率每上行 0.1 个百分点,价格大致下跌约 0.3%</text>
+            <text x="94" y="396" fill="#bcc9dd" font-size="12">这就是 2022-2023 年美联储加息期间,长期美债ETF出现历史最大回撤的原因;同一时间段,短期债券基金几乎不动</text>
+            <text x="94" y="420" fill="#bcc9dd" font-size="12">弄清这把尺怎么样运动:在加息预期强烈时,多做长期债意味着实控加杠杆地押在利率上</text>
+          </svg>
+          <p class="figure__cap">久期是债券对利率的杠杆。长短期债两者的利率风险结构完全不可横比,加息周期一旦启动,长债变成杠杆者,短债近乎稳定。</p>
+        </div>
         <h2>8. 国债、公司债和信用利差</h2>
 <p>欠债的名单拉出来,信用并不平等。国债通常被认为信用风险较低——背后有税收和货币体系撑着。公司债就要看公司的经营脸色了:可能赚钱,可能亏损,极端时直接违约不还。</p><p>市场怎么给这种差别标价?看数字。同样三年期,国债收益率百分之三,某家公司债收益率百分之六,中间多出来的三个百分点,一大块就是市场向这家公司索要的信用补偿。这个差价有名字:<a class="term term-link" href="glossary.html#g-信用利差" title="查看术语：信用利差">信用利差</a>。说白了,就是<span class="hl">“你比国家更可能赖账,那就多付我利息”</span>。</p><p>把利差换算成真金白银。同样借一百万元,国债一年利息三万,那家公司一年六万——每年多掏的三万,就是市场为<span class="hl">“这家公司可能还不上”</span>收的保险费。规模放大到百亿级的发债盘子,利差每走一个百分点,就是一年一个亿的成本差。</p><div class="callout callout--note reveal"><span class="callout__title">利差是市场收的保险费</span><p>划重点:同样三年期,国债收益率百分之三、公司债百分之六,多出来的三个点大致就是信用利差——你比国家更可能赖账,就多付我利息。换成钱:同样借一百万元,一年利息差三万;盘子放大到百亿级,利差每走一个百分点,一年成本就差一个亿。</p></div><p>利差还会呼吸。信用利差扩大,通常意味着市场开始担心违约或流动性、纷纷要求更高补偿;利差收窄,说明市场的心又大了,愿意重新承担信用风险。它像债券市场的体温计,做债券量化、信用策略、宏观策略的人,天天盯着这条线。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 500" role="img" aria-label="债券利差三层图: 同一期限的国债、AAA 债、普通企业债,市场上为不同信用风险评估出的利差">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">同一期限 10 年期,三层债券各自开价不一样</text>
+            <rect x="70" y="90" width="360" height="190" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="250" y="118" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">① 国债(一般认为最安全)</text>
+            <text x="250" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">人们称之为“无风险利率”</text>
+            <text x="250" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">10 年期收益率 ≈ 2.4%</text>
+            <text x="250" y="196" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">利差基准 = 0</text>
+            <text x="250" y="226" text-anchor="middle" fill="#8499bd" font-size="12">其他所有债券都从这里出发</text>
+            <rect x="470" y="90" width="360" height="190" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="650" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">② 央企或 AAA 级公司债</text>
+            <text x="650" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">有大股东背书,违约概率很小</text>
+            <text x="650" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">10 年期收益率 ≈ 3.0%</text>
+            <text x="650" y="196" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">利差 +0.6 个百分点</text>
+            <text x="650" y="226" text-anchor="middle" fill="#8499bd" font-size="12">高等级利差只多一点点</text>
+            <rect x="70" y="300" width="360" height="150" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="250" y="328" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 普通企业债/地产债</text>
+            <text x="250" y="356" text-anchor="middle" fill="#bcc9dd" font-size="12">收益率常常在 6-10%,甚至更高</text>
+            <text x="250" y="380" text-anchor="middle" fill="#bcc9dd" font-size="12">利差常常 + 3.5 到 +7.5 个百分点,甚或更宽</text>
+            <text x="250" y="408" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">利差突然拉大 = 危险信号</text>
+            <text x="250" y="432" text-anchor="middle" fill="#8499bd" font-size="12">2022 年地产债利差曾拉到 +10% 以上</text>
+            <rect x="470" y="300" width="360" height="150" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="494" y="328" fill="#f0c96a" font-size="13" font-weight="800">利差告诉你什么</text>
+            <text x="494" y="354" fill="#bcc9dd" font-size="12">同期限的三只债,收益率差异就是市场对它们各自违约风险的定价</text>
+            <text x="494" y="376" fill="#bcc9dd" font-size="12">利差拉大=钱更怕,利差收窄=钱愿还多</text>
+            <text x="494" y="398" fill="#bcc9dd" font-size="12">观察它的起点过非终点——你的机宽的“企业债 - 国债”利差比成立:别人出这个前你就站了</text>
+            <text x="450" y="482" text-anchor="middle" fill="#bcc9dd" font-size="12.5">债券的事宜不是涨是跌,实际收益结构一目了然:必利率 + 信用利差才是债的真价格</text>
+          </svg>
+          <p class="figure__cap">国债利率是底线,利差是市场对那家公司信用风险的报价。利差拉开不是公司坏了,是怕它坏的人多了。</p>
+        </div>
         <h2>9. 利率和信用怎样变成量化变量</h2>
 <p>很多人觉得债券四平八稳,不像股票那么刺激,离量化很远。恰恰相反,债券市场是量化研究的重地:利率曲线、信用利差、<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>、凸性、违约概率、流动性,每一项都能落成数据、喂给模型。</p><p>就算你只做股票,也绕不开利率。上一节刚算过:利率上升,未来现金流折回今天就缩水,那些利润大头在很远的未来的成长股,估值首当其冲;利率下降,债券价格抬升,股票估值也常被托一把。但注意,这些都不是按一下就出结果的机械规则——盈利和风险偏好的变化,随时能盖过利率的声音。</p><p>也给<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>提个醒:如果样本期里利率整体一路向下,任何<span class="hl">“未来现金流占比高”</span>的组合都天然坐在顺风车上。回测曲线漂亮,可能不是策略聪明,只是水位一直在涨。把利率路径拆开看一眼,是债券乃至股票策略的基本卫生。</p><p>所以这一章算不上债券从业者专属,它教的是金融里使用率最高的一条心法:未来承诺如何变成今天价格。把这条线随身带着,后面无论讲资产定价还是量化模型,你都会反复用到它。</p>
 

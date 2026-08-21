@@ -45,6 +45,17 @@
         <h2>3. 买卖价差是谁的收益和成本</h2>
 <p>买卖价差,就是卖一价减买一价的那条缝。想立刻买入,通常要打到卖一;想立刻卖出,通常要打到买一。这条缝,是主动成交者付的成本,也是提供流动性者可能赚到的补偿——同一个数字,在两边人眼里一个是支出,一个是收入。</p><p>做市者就住在这条缝里:同时挂出买单和卖单,低买高卖,赚价差。但做市绝不是稳赚:如果市场突然下跌,做市者的买单被成交了,卖单还没来得及撤,手里捏着的库存就开始亏钱。所以价差本质上是一种补偿——补偿你提供流动性,也补偿你承受<span class="hl">“赚小钱时被聪明人打”</span>的逆向选择风险。</p><p>对普通策略,买卖价差就是交易成本,而且要放进决策里算。一个看起来有 <span class="num">0.05%</span> 预测收益的短周期信号,如果买卖价差就有 <span class="num">0.04%</span>,再加<a class="term term-link" href="glossary.html#g-佣金" title="查看术语：佣金">佣金</a>和滑点,利润可能直接归零。信号不是做得不够好,是看完成本表就不必做了。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="买卖价差双面性：对老手是收益，对入场就是成本">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">买卖价差：商人的利润，你的成本</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">对做市商来说这一分的价差是收入，对高频抢单的又是一种交易成本。</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">流动性好的资产价差很小，交易活跃的资产价差更小；流动性差的资产价差放大，更难成交。</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">价差是你的交易成本，也是你进入买卖计划时的第一道门槛。</text>
+          </svg>
+          <p class="figure__cap">价差从哪来？做市商靠撮合赚回来，高频靠速度拿回去，而你——买、卖都要为它付一次。</p>
+        </div>
         <h2>4. 排队位置为什么重要</h2>
 <p>限价单进入订单簿后,同一个价位上通常按时间优先排队。你和别人都挂 <span class="num">10.00 元</span>买入,谁先到,谁站前面;成交量打到这个价位时,前面的订单先成交。规则简单得像食堂打饭,后果却很重要。</p><p>因为排队位置直接影响成交概率:你挂在买一的最前面,很可能轮到;挂在队尾,可能等很久还没轮到,行情已经走了。高频策略极其重视队列位置、撤单速度和订单簿变化,说白了,它们很大一部分工作就是在回答一个问题:我现在在队伍的第几个?</p><p>这对<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>是个警告:普通回测如果只看到买一卖一的价格,看不到排队数量和自己的位置,就无法准确模拟高频成交。回测显示你的限价单成交了,真实市场里可能根本没排到你——那种<span class="hl">“成交”</span>,只是数据里的一厢情愿。</p>
 
@@ -63,38 +74,32 @@
         <h2>9. 高频事故为什么危险</h2>
 <p>高频系统的速度快,所以错误也会扩散得快。一个重复下单 bug、一个风控开关配错、一个价格单位弄错,可能在极短时间内造成大量订单和巨大损失。普通系统出 bug 是<span class="hl">“哦,修一下”</span>;高频系统出 bug,是<span class="hl">“哦,发个公告”</span>。</p><p>骑士<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>事件常被拿来当警示案例:软件部署和交易系统错误,可以迅速造成严重亏损。所以高频系统必须配有严格发布流程、限额、实时监控、熔断、撤单能力和人工接管。这些不是锦上添花,是起飞前的襟翼检查——少了任何一项,飞机都不该离开地面。</p><p>这也是为什么说高频不是单纯的算法问题。它是工程、交易、风控、运维和合规共同支撑的一套系统。系统越自动、速度越快,约束就必须越强——马力越大的车,刹车越不能省。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="闪电崩盘:毫秒倒市场行情会在几分种里��变成&#x27;新基准&#x27;">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">高频故事等级:2010 年 5 月 6 日闪电崩盘</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">几分钟内,标普500 跌 9% 又回涨——微不清的机械里发生了程序化交易事故</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">流动性千分之一秒内消失,自动程序互相撞击,一次性砸进了最优质的公司也不复存</text>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">高频词条凉:不是你程序写得不够好,是炒到毫秒级,你的系统会被别人的快速反手打破</text>
+          </svg>
+          <p class="figure__cap">这场事故的核心教训绝不是历史,而是今天:在你的 1% 仓位做多以后,你想要去同一时间做一次彻底的检查。</p>
+        </div>
         <h2>10. 高频数据为什么难</h2>
 <p>高频数据的难,不在“多”,在<span class="hl">“较真”</span>。它量大、质量要求高、时间戳敏感:你要区分交易所时间、接收时间、落库时间,还要处理乱序、缺包、重复、延迟和不同数据源之间的差异。普通日频数据里无关紧要的脏点,到高频这里全都能毁掉结论。</p><p>逐笔和盘口数据还要逐字段理解含义:某些市场提供逐笔成交,某些只提供委托队列或快照;而快照不是完整订单簿,两次快照之间的变化可能完全被错过。用快照回测高频策略,很容易高估成交能力——就像拿每分钟拍一次的照片,去复盘一场百米冲刺。</p><p>所以高频研究的第一步不是建模型,而是数据重建:把订单簿的真实演化过程可信地还原出来。没有可信数据,任何高频回测都是在沙地上建楼——楼可以很漂亮,地址不行。</p>
 
         <h2>11. 个人应该怎么学习微观结构</h2>
 <p>个人不适合从高频实盘开始,但非常适合学习微观结构。最便宜的学习方式几乎不要钱:打开行情软件,观察盘口,记录买一卖一、价差、深度和逐笔成交,看价格怎样一笔一笔从订单流里“长”出来。看上一周,你对市场的理解会比看一年 K 线更立体。</p><p>再进一步,可以做几个不需要实盘的练习:用分钟数据估算滑点;用盘口快照观察价差变化;模拟限价单和市价单的成交过程;比较不同成交假设对回测结果的影响。每个练习都不复杂,但每个都会让你对<span class="hl">“成交”</span>这两个字变敬畏。</p><p>这些练习会反过来提升你低频策略的质量:你会真的尊重流动性、成交概率和交易成本,不再轻易相信<span class="hl">“按收盘价全额成交”</span>画出来的漂亮曲线。见过毫秒级的世界之后,再看日频的假设,眼睛自带怀疑。</p><div class="callout callout--note reveal"><span class="callout__title">高频不是独立副本,是梯子的最顶层</span><p>高频常被当成一个可以单独报班的方向,其实它站在一整架梯子的顶端,下面依次垫着:数据重建、成交口径、成本建模、延迟工程、实时风控、合规留痕。任何一层空心,顶层都站不稳。个人的正确走法不是跳级,而是把微观结构学回来改进低频——先让日频回测的成交假设变得诚实,再谈毫秒。</p></div>
 
-
         <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 43 章小结图: 高频交易和市场微观结构: 毫秒里的价格、排队和风险">
-            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
-            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="微观结构对个人的实际价值:不去做高频,但可以受高频启发">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">微观结构不是高频的特权,是低频的必修课</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">你做不了高频——需要主机托管、牌照、纳秒级延迟竞争力</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">但微观结构原理会帮你理解盘口的含义、买卖价差是怎样形成的、主动单和被动单的成交概率怎么区分</text>
 
-            <g>
-              <rect x="65" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="77" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="90" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">1</text>
-              <text x="84" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="84" y="194">高频交易的核心是市</tspan><tspan x="84" y="212">场微观结构:订单簿</tspan><tspan x="84" y="230">、价差、排队要检查</tspan></text>
-            </g>
-            <g>
-              <rect x="335" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="347" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="360" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">2</text>
-              <text x="354" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="354" y="194">做市和高频都不是稳</tspan><tspan x="354" y="212">赚:它们承担逆向选</tspan><tspan x="354" y="230">择、库存、系要检查</tspan></text>
-            </g>
-            <g>
-              <rect x="605" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="617" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="630" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">3</text>
-              <text x="624" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="624" y="194">高频交易和市场微观</tspan><tspan x="624" y="212">结构:毫秒里的价格</tspan><tspan x="624" y="230">、排队和风险</tspan></text>
-            </g>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">这些课语言在你的低频实盘里同样有效——你下单时的成交概率、滑点、成本,全都是微观结构里学过的话题</text>
           </svg>
-          <p class="figure__cap">读完第 43 章后,至少要能复述“高频交易的核心是市场微观结构:订单簿、价差、排队要检查”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
+          <p class="figure__cap">高频里得到的东西,低频同样要用:价差意味着什么,排队意味着什么,信号从发生到成交这几毫秒里发生了什么。读懂它,你的回测就把做极端现实的一切。</p>
         </div>
 
         <section class="summary reveal">

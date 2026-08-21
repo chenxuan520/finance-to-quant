@@ -36,12 +36,33 @@
         <h2>1. 订单生命周期</h2>
 <p>一笔订单从产生到结束,通常要走过一串状态。策略先生成交易意图,组合层把它变成目标买卖数量,交易系统做风控检查,然后向券商或交易通道提交订单。接下来,这笔订单可能被接受、被拒绝、部分成交、全部成交、撤单中、撤单成功、撤单失败——每个状态都可能停留,也可能跳到别的状态。</p><p>这些状态全部要落日志。你不能只记一句<span class="hl">“我想买 <span class="num">10000 股</span>”</span>。真实系统要知道: 已报多少、成交多少、剩余多少、平均成交价多少、费用多少、是否可撤、是否失败、失败原因是什么。否则下一次下单,就是基于错误持仓继续行动——错误会利滚利。</p><p>用程序员的话说,订单生命周期就是一个状态机。量化开发里很多严重事故,根本不是模型错,而是状态机错: 以为撤单成功其实没撤,以为没成交其实已经部分成交,以为订单被拒其实内部账已经加仓。状态不一致,是交易系统的头号死因。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="订单生命周期图：从发单到结算的六个节点">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">订单生命周期：从下单到成交的六步</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">下单 → 风控校验 → 排队 → 部分成交或全数成交 → 撤/改可选 → 日终结算。</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">每一步都可能失败：风控拦住、行情断层未成交、撤单没成功、部分成交只在清仓边缘。</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">回测忽略订单路径，会变成纯理论——你实际下的每一个单子都要走完这条路。</text>
+          </svg>
+          <p class="figure__cap">量化执行的核心不是算信号，是订单走完这条链。回测里的“今日买入”在真实世界里可能是六次努力：提交、校验、排队、成交、撤单、结算。</p>
+        </div>
         <h2>2. 市价单、限价单和算法单</h2>
 <p>市价单追求尽快成交,但成交价可能很差;限价单指定最差可接受价格,能控制价格,但不保证成交。一个追确定性,一个追价格,各有代价。还要提醒一句: A 股普通<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>没有完全等同于海外市场的简单市价单机制,实际订单类型和申报方式,得按交易所和券商的规则来理解,不能照搬段子。</p><p>机构的玩法更细: 常用算法单把大订单拆成一串串小订单。比如按时间均匀成交的 TWAP,按市场成交量比例参与的 VWAP,或者根据盘口和冲击动态调整的执行算法。注意,这些算法的目的不是预测股票涨跌,而是在完成交易这件事上,尽量降低冲击和<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>。</p><p>个人做量化,不一定需要复杂算法单,但至少要理解一件事: 大单不能一次砸进市场。哪怕你只是用小资金交易,也要在<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>里考虑限价、成交不足和价格滑点,别假设任何数量都能按理想价格成交。</p>
 
         <h2>3. 快、便宜和确定性不能同时最大化</h2>
 <p>交易执行有三个常见目标: 尽快成交、尽量低成本、尽量确定地完成。坏消息是,这三个没法同时要。想快,就可能主动吃对手盘,滑点更高;想便宜,就可能挂单慢慢等,成交不确定;想确定完成,就可能得在价格上让步。工程上这叫不可能三角,选两个,放掉一个。</p><p>场景不同,选择就完全不同。比如你必须今天把仓位降下来,就不能只挂一个保守的卖价佛系等待——市场如果继续下跌,没卖掉的风险比滑点大得多。反过来,如果只是小幅调仓,完全可以更耐心,把<a class="term term-link" href="glossary.html#g-冲击成本" title="查看术语：冲击成本">冲击成本</a>省下来。</p><p>所以执行算法要按策略需求来选择: 高频信号衰减快,晚一分钟信号就贬值,需要更快成交;长期配置调仓不着急,可以慢慢执行;风控减仓则是保命优先,成交确定性压倒成本考虑。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="执行三原则平衡图:快、便宜、确定性不可测都占">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">执行三原则:快、便宜、确定,你只能三选二</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">极限成交:快+确定(市价单),但滑点最贵的成本会从价差里收走</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">不成交:便宜+确定(限价单子慢),结果可能滑出一眼,边际却变成了错过成交的判断</text>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">下单是选择做什么,在最坏的行情里,是买单在最丟逼的环境中存不存快乐——市场可能并不在乎你再挂一手</text>
+          </svg>
+          <p class="figure__cap">&#x27;自动下单&#x27;复杂的地方不是指标连好怎么算,而是&#x27;都给了货能不能也不肯让你跟随它&#x27;的秩序。</p>
+        </div>
         <h2>4. 下单前先挡住低级错误</h2>
 <p>前置风控,是订单发出市场之前的最后一道安检。常见检查包括: 账户资金够不够、可卖持仓够不够、证券是否可交易、价格是否越界、数量是否符合交易单位、单笔金额是否过大、个股和行业仓位是否超限、标的是否在黑名单或限制名单里。</p><p>这些检查看起来琐碎,像表单校验一样无聊,但它们能拦住成片的事故: 模型输出异常、数据缺失、价格单位错了、重复下单、股票停牌、涨跌停不可成交——都可能在安检口被拦下,而不是在市场上爆炸。</p><p>一个实盘系统的默认世界观应该是: 模型会犯错、数据会坏、网络会断、券商会拒单。前置风控不是对研究员不信任,而是承认在真实市场里,任何环节都可能出问题,所以每道门都要有守卫。</p>
 
@@ -57,39 +78,23 @@
         <h2>8. 真实成交比预期差多少</h2>
 <p>滑点监控做的事,是比较预期成交价和实际成交价。基准可以选下单时的中间价、买一卖一、VWAP 或到达价格。实际成交比买入基准更高、比卖出基准更低,差出来的那截,就是你付的成本。</p><p>只看一个总滑点没有用,要拆开看: 按股票、行业、时间、订单大小、参与率、交易员或算法逐层分解。某些股票滑点长期偏大,可能是<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>差;某个时间段滑点偏大,可能是市场在剧烈波动;某个执行算法滑点偏大,可能该调参了。</p><p>量化策略上线后,如果只盯预测效果、不看执行效果,会漏掉真正的失血点。模型赚 <span class="num">5%</span>,执行亏 <span class="num">3%</span>,客户最后只看到 <span class="num">2%</span>。所以有句话要记住: 执行质量,本身就是 <a class="term term-link" href="glossary.html#g-alpha" title="查看术语：Alpha">Alpha</a> 的一部分。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="滑点:成交额每多一位,隐含成本就翻一类">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">滑点:成交额的隐形税</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">一笔 100 万的小额订单,你按收盘价下的模拟单,真实成交可能偏离标价 0.05 元</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">一笔 2000 万的大额订单可能要动用半本书的卖出队列——成交容积被吸完,价格就移动了几档,损耗从 0.1% 到几个个百分点都有可能</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">滑点不可避免,但可以被量化——写进策略的容量评估里,不然你要到实盘才知道</text>
+          </svg>
+          <p class="figure__cap">滑点不是“我发现成交贵了”,是市场深度在你的订单面前撑不住。滑点=你拿到的价格考市场中间价的差,这个差随成交额一起上涨,直到大到一个不能忽略的数字。</p>
+        </div>
         <h2>9. 灾难开关和人工接管</h2>
 <p>实盘系统必须设计灾难开关,也就是一键拉闸的能力。数据源异常、行情延迟、订单拒绝率异常、成交价偏离过大、单账户亏损超过阈值、重复下单、持仓暴露越界——任何一种出现,都应该触发暂停或人工确认。</p><p>历史上很多交易事故,不是因为没人会写模型,而是因为系统在异常状态下继续自动交易。最著名的一课来自骑士<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>(Knight Capital),它当时是美国股市最大的<a class="term term-link" href="glossary.html#g-做市商" title="查看术语：做市商">做市商</a>之一。<span class="num">2012 年</span> <span class="num">8 月</span> <span class="num">1 日</span>开盘,一次软件部署出了岔子: 一段本该废弃的旧代码被意外激活,交易系统开始疯狂、错误地自动下单。在大约 <span class="num">45 分钟</span>里,它向市场发出了 400 多万笔订单,买高卖低、越亏越交易,最高峰每分钟烧掉约一千万美元。等工程师手忙脚乱地把它停下来,公司已经亏了大约 <span class="num">4.4 亿美元</span>——一家上市巨头几乎在三刻钟内被自己的程序搞垮,几天后就被迫贱卖求生。</p><p>对每天写代码、发版的人来说,这个故事格外扎心: 杀死骑士资本的不是市场,是一次没做好灰度和回滚、又缺乏有效急停开关的部署。模型再聪明,只要实盘系统在异常时还在自动下单,几分钟就能把多年利润清零。所以灾难开关、人工接管、部署纪律,在量化里和策略本身同等重要。</p><p>当然,灾难开关不是为了让系统保守到不敢交易,而是为了确保异常不会无限放大。一个专业的交易系统必须能回答四个问题: 什么时候自动停? 谁有权限恢复? 停止后如何平仓或恢复状态? 日志如何追溯?</p>
 
         <h2>10. 个人实盘从小规模开始</h2>
 <p>个人做量化,千万别从全自动大资金起步。更稳的路线是台阶式的: 先离线回测,再模拟盘,再小资金半自动,最后才考虑自动化。每上一级台阶,都要确认数据、订单、成交、费用、持仓和净值能对得上。</p><p>小资金阶段,重点不是赚不赚钱,而是系统有没有按预期运行: 信号是否按时生成,订单是否正确,成交是否记录,失败是否告警,盘后是否对账,日志够不够复盘用。</p><p>道理很朴素: 一个系统在小钱时都经常状态错、日志缺、成本算不清,放大资金只会放大问题,不会解决问题。量化实盘的第一目标不是马上赚大钱,而是证明系统能在真实市场里稳定、可控、可解释地运行。</p>
 
-
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 33 章小结图: 交易执行和实盘系统: 策略如何真的下到市场里">
-            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
-            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
-
-            <g>
-              <rect x="65" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="77" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="90" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">1</text>
-              <text x="84" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="84" y="203">实盘交易是一台订单</tspan><tspan x="84" y="221">状态机</tspan></text>
-            </g>
-            <g>
-              <rect x="335" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="347" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="360" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">2</text>
-              <text x="354" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="354" y="194">执行要在速度、成本</tspan><tspan x="354" y="212">和成交确定性之间取</tspan><tspan x="354" y="230">舍</tspan></text>
-            </g>
-            <g>
-              <rect x="605" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="617" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="630" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">3</text>
-              <text x="624" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="624" y="194">交易执行和实盘系统</tspan><tspan x="624" y="212">:策略如何真的下到</tspan><tspan x="624" y="230">市场里</tspan></text>
-            </g>
-          </svg>
-          <p class="figure__cap">读完第 33 章后,至少要能复述“实盘交易是一台订单状态机”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
-        </div>
 
         <section class="summary reveal">
           <h2>小结</h2>

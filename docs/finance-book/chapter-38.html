@@ -36,9 +36,31 @@
         <h2>1. 它到底赚谁的钱</h2>
 <p>看量化产品的宣传材料,普通人第一眼盯住的是<span class="hl">“<span class="term">年化收益</span>”</span>;内行盯住的是另一件事:这钱到底是怎么赚来的。指数增强赚相对指数的选股超额;<a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>拆掉大盘因素,赚多空相对收益;CTA 赚期货趋势、期限结构或跨品种关系;套利赚价格关系偏离之后的那次回归;高频和做市赚微观结构里的价差、<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>和执行优势。五种钱,五种打法。</p><p>钱从哪来,风险就从哪来。指数增强怕跑输基准和风格失效;市场中性怕<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>成本和<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>;CTA 怕长期无趋势的震荡;套利怕极端价差扩大和流动性中断;高频怕技术延迟、交易规则变化和竞争挤压。宣传页不会写这些“怕”,但每一种怕背后,都有亏过真金白银的产品。</p><p>所以成熟投资者不会只问<span class="hl">“年化多少”</span>,而是追问:收益从哪里来、什么情况下会亏、容量多大、成本如何、能否长期复制。这五个问题,就是这张地图的坐标。</p><div class="callout callout--note reveal"><span class="callout__title">先看赚的是哪一种钱,再看年化多少</span><p>同样一条年化 <span class="num">10%</span> 的曲线,背后的钱可能来自五个完全不同的口袋:选股超额、多空相对收益、趋势、价差回归、微观结构。钱的来源决定了它会怎么亏、容量多大、对成本多敏感。所以拿到任何一份量化材料,先把收益归到正确的口袋,再谈数字——分类分错,后面的比较全是白比。</p></div>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="四类策略图解:方向、风险源、市场敏感性,各是哪个">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化产品的四个方向,差别只在'赚谁的钱'和'怕不怕大盘'</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">指数增强:赚选股超额(α)+市场涨跌(β);市场中性:对冲大盘 β,只赚选股 α</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">CTA:赚趋势,不怕横盘而是怕没趋势;套利类:专赚定价错位,最需要微观结构流动性</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">先回答这两个问题——它赚的是 Alpha 还是 Beta?跟大盘方向是否一致?90% 的量化产品你就有数了</text>
+          </svg>
+          <p class="figure__cap">你在选择任何量化产品前先回答两个问题:它赚的是 Alpha 还是 Beta?它的做市方向跟大盘行程是否一致?答完这两个,90% 的量化产品你已经有数了。</p>
+        </div>
         <h2>2. 四个互不相通的世界</h2>
 <p>都挂着<span class="hl">“量化”</span>两个字,做<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>的人和做期权的人坐下来,可能聊十分钟就发现互相听不懂。股票量化是最常被讨论的方向,包括多<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>选股、指数增强、市场中性、事件驱动和高频股票交易;<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>量化盯<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>曲线、<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>、<a class="term term-link" href="glossary.html#g-信用利差" title="查看术语：信用利差">信用利差</a>、流动性和相对价值;期货量化在商品、股指、国债、外汇等合约上做趋势、价差和期限结构;期权量化研究<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>、希腊字母、波动率曲面和尾部风险。</p><p>用程序员的话说,每类资产都有自己的<span class="hl">“数据方言”</span>:股票有财报、行业、指数成分和公司事件;期货有主力合约切换、<span class="term">保证金</span>、<a class="term term-link" href="glossary.html#g-展期" title="查看术语：展期">展期</a>和夜盘;债券有久期、凸性、<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>评级和成交不连续;期权有行权价、到期日、隐含波动率和流动性。方言接错,解析出来全是乱码——拿股票的回填方式去拼期货价格,<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>从第一步就错了。</p><p>个人学习最好先挑一个资产类别扎进去。A 股日频股票是比较适合入门的方向:概念丰富、数据相对容易理解,光弄懂交易规则就能学到很多。基础扎实后,再扩展到期货、期权、债券或多资产。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="四类量化策略本质差异：指数增强、市场中性、CTA、套利">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">四类策略尽管都叫量化，实际做的是四件完全不同的事</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">指数增强赚的是“略好于基准”的钱；市场中性赚的是“选出好股票，对冲大盘”的钱，</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">CTA 赚的是趋势延续的钱；套利赚的是价差回归正常水平的钱——它们彼此替代不了，也彼此不承担对方的风险。</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">看策略时先分清哪一类，再讨论收益多少——不然就是在用错误的尺子量人。</text>
+          </svg>
+          <p class="figure__cap">四类量化策略的钱来自不同的规则——其中一类能取代大盘风险，一类是算数据。每类有自己的胜率结构和周期，不能混为一个评价指标。</p>
+        </div>
         <h2>3. 从季度调仓到毫秒抢单</h2>
 <p>想象三个节奏完全不同的岗位:一个人每季度才做一次决定,一个人每天早上调一次仓,还有一个要在几毫秒内下完单。低频策略可能月度或季度调仓,主要用财务、估值、宏观和长期价格特征;中频策略可能每日或每周调仓,关注价格<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>、短期<span class="term">反转</span>、成交量、事件和资金流;高频在秒级、毫秒级甚至更短时间内交易,盯的是盘口、订单流、排队位置和延迟。</p><p>频率越高,工程和交易成本的戏份越重。低频像定时跑的批处理任务:慢慢算、慢慢执行,代价是承受较长持有期风险;高频像对延迟极度敏感的联机系统:单次收益极薄,需要极低延迟、稳定通道、精细风控和大量交易样本,链路任何一环抖一下,抖掉的都是真金白银。</p><p>计算机背景的人容易被高频吸引,因为它最像系统工程。但个人通常不适合从高频开始:没有交易通道、行情质量、低延迟基础设施和成本优势,高频回测很容易变成纸上游戏——你在自己电脑上跑赢了,只是因为回测里没有一整层专业机构在跟你抢单。</p>
 

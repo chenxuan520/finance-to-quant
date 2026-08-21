@@ -83,6 +83,33 @@
         <h2>6. 折价、溢价和套利机制</h2>
 <p>既然 ETF 有两个价格,两个价格就难免打架:二级市场的交易价格比净值高,叫溢价;比净值低,叫折价。小幅度的折溢价每天都在发生,尤其在市场剧烈波动、成分股停牌、跨境 ETF 的海外市场休市,或者流动性本身就不充裕的时候,两个价格更容易闹分家。</p><p>套利方向用一笔账就能记清。假设某 ETF 市价 <span class="num">1.012 元</span>、净值 <span class="num">1.000 元</span>,溢价 <span class="num">1.2%</span>:套利者按净值申购 <span class="num">100 万</span>份,成本 <span class="num">100 万元</span>,转手在二级市场卖出进账 <span class="num">101.2 万元</span>,毛利 <span class="num">1.2 万元</span>——新份额涌出、卖盘增加,价格被压回净值,这就是溢价时<span class="hl">“申购卖出”</span>的纠偏方向。反过来市价 <span class="num">0.988 元</span>、折价 <span class="num">1.2%</span> 时,就在二级市场用 <span class="num">98.8 万元</span>扫货 <span class="num">100 万</span>份再赎回换回底层资产,价值 <span class="num">100 万元</span>。反算两个方向,都围绕这 <span class="num">1.2%</span> 的缝做功。反直觉的是,这叫套利却不是无风险:申赎有门槛和时滞,底层资产在你持仓期间照常波动,涨跌停和现金替代规则还可能把你半路拦下,所以折溢价不会永远瞬间消失。</p><div class="callout callout--warn reveal"><span class="callout__title">提醒</span><p>给新手一个实用提醒:买 ETF 不能只看名字顺不顺耳、涨跌幅猛不猛,还要看成交额、买卖价差、折溢价和它跟踪的到底是什么指数。一只流动性差的 ETF 报价看着便宜,可你买一卖一之间价差很大,进出的真实成本一点不便宜——便宜只是幻觉。</p></div>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 415" role="img" aria-label="ETF 折价时套利链式反应: 发现、换股、收拢、多头同步,套入厌恶折价">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">ETF 折价时,套利商怎样把价差拉一贯</text>
+            <rect x="70" y="80" width="300" height="110" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="220" y="108" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">① 发现折价</text>
+            <text x="220" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">ETF 市场价 1.0 元(便宜)</text>
+            <text x="220" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">但蛋估净值 1.05 元(偏高)</text>
+            <text x="220" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">市场价 &lt; 净值,意味着套利窗口</text>
+            <rect x="470" y="80" width="300" height="110" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="620" y="108" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">② 动手套利</text>
+            <text x="620" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">先在二级市场买入 ETF,换取成一篮子股票</text>
+            <text x="620" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">(允许 GPIO 账后端留下股票)</text>
+            <text x="620" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">转换 = 以净值元帮你实物赎回</text>
+            <rect x="70" y="220" width="300" height="110" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="220" y="248" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">③ 市场该怎样主动受压</text>
+            <text x="220" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">人人涌入买廉价的 ETF 抬高价格</text>
+            <text x="220" y="298" text-anchor="middle" fill="#bcc9dd" font-size="12">高到接近净值 1.05 元 → 价差收敛</text>
+            <text x="220" y="324" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">套利商赚的是这一点 1.05 - 1.00 的差价</text>
+            <rect x="470" y="220" width="300" height="110" rx="10" fill="rgba(143,179,122,0.14)" stroke="#8fb37a"/>
+            <text x="620" y="248" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">④ 净账:是高风险吗?</text>
+            <text x="620" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">同一个价错位,套利商 apparent 上多赚了 5%</text>
+            <text x="620" y="298" text-anchor="middle" fill="#bcc9dd" font-size="12">但柜面中常要做对不起折价的触动</text>
+            <text x="620" y="324" text-anchor="middle" fill="#8499bd" font-size="12">套利交易量大到,折价又温直完是没有绝对的容错</text>
+            <text x="450" y="378" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这是为什么说"ETF 套利不是免费的钱,是对风险对放的一套价错"——铺了一条路,站了国有道路的規則</text>
+          </svg>
+          <p class="figure__cap">折价套利是价格的纠偏机制——套利商看到价差之后买卖一点不通迫促价格找位置,但这也让套利本身成了流动性最值钱的信号。</p>
+        </div>
         <h2>7. 没有基准就没有评价</h2>
 <p>一句<span class="hl">“这个基金一年赚 <span class="num">12%</span>”</span>,你觉得算好还是算差?先别回答——这题缺条件。如果它常年满仓<span class="term">沪深 300</span>,而同期<span class="term">沪深 300</span> 涨了 <span class="num">20%</span>,那 <span class="num">12%</span> 其实是大幅落后;反过来看另一个基金一年跌 <span class="num">3%</span>,听着心疼,可如果它的基准同期跌了 <span class="num">20%</span>,那它可能藏着很强的防守或<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>能力。没有基准,成绩单一律无法批改。</p><p>相对强弱的算法也有讲究。基金一年涨 <span class="num">12%</span>、基准涨 <span class="num">20%</span>,很多人张口就说<span class="hl">“跑输 8 个点”</span>。严格口径是除法:1.12 除以 1.20 再减 1,等于 <span class="num">-6.7%</span>;反算验证,1.20 乘 0.9333 正好回到 1.12。单期看差距不大,复利几年就拉开:若连续三年如此,简单减法估的<span class="hl">“落后 <span class="num">24%</span>”</span>,与真实的 1.12 的三次方除以 1.20 的三次方再减 1 算出的约 <span class="num">-18.7%</span>,完全不是一个故事。常有人以为相对收益就是涨跌幅相减,其实那只是单期的粗略近似。</p><p>基准还得和产品匹配:买大盘股基金,拿<span class="term">沪深 300</span> 比;买中小盘的量化指数增强,拿<span class="term">中证 500</span> 或中证 1000 比;买<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>基金,就得找合适的债券指数。拿错尺子量身高,结论必歪。量化行业最常挂嘴边的 Alpha 和 <a class="term term-link" href="glossary.html#g-beta" title="查看术语：Beta">Beta</a>,就是把这笔账拆开的语言:Beta 是你承担市场或风格暴露换来的收益,水涨了船自然高;Alpha 是把这些暴露全部扣掉之后仍多出来的那部分。没有基准,你根本说不清赚的是能力的钱,还是搭了市场上涨的顺风车。</p>
 
@@ -92,6 +119,17 @@
         <h2>9. 宽基、行业、主题和策略指数</h2>
 <p>指数家族很大,买之前先认清你抱的是哪一款。宽基指数覆盖广,比如<span class="term">沪深 300</span>、<span class="term">中证 500</span>、中证 1000,大致代表市场整体;行业指数聚焦单一行业,比如医药、消费、银行、电子;主题指数围绕一个概念,比如新能源、人工智能、红利低波;策略指数则按某种选股规则办事,比如红利、价值、质量、低波动、<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>。</p><p>规律是:指数越窄,暴露越集中。算一笔集中度账:某主题指数第一大权重股占比 <span class="num">25%</span>,若这只股票跌 <span class="num">40%</span>,其余成分原地不动,指数也要被拖下水 <span class="num">25%</span> 乘 <span class="num">40%</span>,整整 <span class="num">10%</span>。反算:假设指数 <span class="num">1000 点</span>,这只权重股贡献 <span class="num">250 点</span>,跌后缩到 <span class="num">150 点</span>,指数自然落在 <span class="num">900 点</span>,恰是 <span class="num">-10%</span>。常有人以为买主题指数等于<span class="hl">“分散买下一个赛道”</span>,其实第一权重股的一跤就能把你带沟里。买医药行业 ETF 的那一刻,你承担的不只是基金的风险,还有整个行业的景气度、估值和政策风险。</p><p>在量化研究里,这些指数还是拆收益的解剖刀。一个策略赚了钱,要一层层拆开问:是市场整体涨了?是小盘股涨了?是某个行业恰好起飞了?还是模型真的选对了股票?如果收益拆开一看,只是重仓了一个热门行业,那不是稳定的 Alpha,而是行业 Beta——风一停,就会还回去。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="宽基/行业/主题三种指数不是同一维度:基准选错,回报判断全错">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">宽基、行业、主题指数:是三种完全不同的尺</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">宽基指数(沪深 300、中证 500):按市值抽取全市场几百只股,代表“市场”</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">行业指数(医药、半导体、消费):只看一个行业内的股,代表“某一行业”的温度</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">指数选错,后面所有收益判断都错——研究前先看清你的基准是哪一种</text>
+          </svg>
+          <p class="figure__cap">宽基是市场温度,行业指数是单行业温度,主题指数是短期叙事温度。您要研究的是什么,就应该跟它的温度对比一下——别拿错尺。</p>
+        </div>
         <h2>10. 指数会换成分,数据也会骗人</h2>
 <p>很多人默认指数里装的股票名单是固定的,这是个危险的想当然。指数公司会定期调整成分:不符合规则的老股票被剔除,新符合规则的被纳入。每次调整,指数基金得跟着调仓;而你要做量化回测,这件事会直接影响结果的真实性。</p><p>看一个最常见的错误:拿今天的指数成分股去回测过去。比如用现在的<span class="term">沪深 300</span> 名单回测十年前的表现——那份名单里,十年前真正在指数里、后来经营恶化被踢出去的股票,全都不见了;留在名单里的,都是活到今天的胜利者。正确做法是使用点时成分数据:在每个历史日期,只用当时已经公布、已经生效的指数成分。</p><p>把这份偏差算成数字。假设等权持有 10 只股票、各 <span class="num">1 亿元</span>,五年间 2 只各跌 <span class="num">60%</span> 被剔除,剩下 8 只平均涨 <span class="num">50%</span>。真实结局是 2 乘 0.4 加 8 乘 1.5 等于 <span class="num">12.8 亿元</span>,赚 <span class="num">28%</span>;拿今天的 8 只名单回测,则是 <span class="num">8 亿</span>变 <span class="num">12 亿</span>,赚 <span class="num">50%</span>。反算:12.8 除以 10 减 1 与 12 除以 8 减 1,相差的 <span class="num">22 个百分点</span>全是幸存者填出来的。坑还不止成分:分红怎么处理、停牌怎么算点、新股第几天纳入——不尊重这些规则,基准是错的,<span class="term">超额收益</span>自然错,整个研究的数学基础就塌了。</p>
 

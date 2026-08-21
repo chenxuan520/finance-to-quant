@@ -48,6 +48,27 @@
         <h2>4. 市场操纵和虚假申报</h2>
 <p>你挂出一笔买单,市场看到的动作和你心里的意图,有时候根本不是一回事——这正是操纵市场的操作空间。市场操纵指的是用不正当方式影响价格或交易量,误导其他投资者。在程序化交易里尤其要警惕这几类行为:虚假申报、频繁报撤单扰乱市场、拉抬打压、对倒、诱导交易。</p><p>有些行为,从代码视角看像个<span class="hl">“策略”</span>,从规则视角看就是操纵。典型套路是:大量挂单堆出一个虚假的盘口厚度,从头到尾没打算成交,只为诱导别人跟风交易;等其他人的钱进来把价格推到想要的位置,再闪电撤单、反向成交获利。这不是聪明交易,而是破坏市场秩序——盘口的每一笔挂单,本来都被默认是一份真实的交易意愿,你把它当成了免费的广告牌。</p><p>也要说句公道话:合规的做市和高频交易同样会大量撤单,撤单本身不违规。区别在于,它们运行在规则允许的范围内,有真实交易意图,有风险控制。判断一条边界时,别只看代码长什么样,要看四样东西:目的是什么,行为模式是什么,对市场造成了什么影响,规则原文怎么要求。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="操纵和虚假申报红线图:两类行为是近年监管高压区">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">操纵和虚假申报,在量化时代最常用的两条红线</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">虚假申报:挂上一个大单,在成交前扫缝撤单(“骗市场”);被判为操纵</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">洗交易:自己跟自己买自卖,把量做出假趋势——监管定义这是恶意制造成交量</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">只要你的程序撤单率和同向量持仓都不合理,就别想脱身——这在 A 股近年的监管执法里是高频案例</text>
+          </svg>
+          <p class="figure__cap">市场操纵在量化时代最好被抓:你跑掉的每一笔撤单、每一笔得到的成交,都被系统和中介记下。别走到那条线就对了。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="操纵和虚假申报:布置大却又拉回的假单,和我们在自己账户之间虚构成交记录">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">操纵和虚假申报是监管盯上的两条线</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">虚假申报:挂上一个引诱的大单,在成交前一秒撤掉——诱导别人在你面前成交</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">洗交易:自己在两个账户之间对同类资产反复买卖,制造一堆假成交量——让价格信号显得热闹</text>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">回撤单率和同方向对冲比例跟着这两条红线,直接从量化 program 里就能上监管的黑名单</text>
+          </svg>
+          <p class="figure__cap">虚假的量化处罚不是监管被美味吸住才存在的:撤单率和成交方向永节奏过高的行为,就是一对直接可上罚询企业违规的证据。</p>
+        </div>
         <h2>5. 数据合规和隐私</h2>
 <p><span class="hl">“网上能爬到的数据,就是我自己的数据。”</span>——如果团队里有人这么说,你们的法务该加班了。如今的另类数据越来越花哨:新闻、招聘信息、卫星图像、App 使用数据、位置数据、消费数据、社交媒体文本,几乎什么都能变成<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>。但数据越丰富,合规问题越重:数据是否授权?是否包含个人信息?是否可用于投资研究?这三个问题在采购(或抓取)之前就要回答,不是出事之后再补。</p><p>隐私数据尤其敏感,这里没有任何<span class="hl">“收益够不够高”</span>的讨价还价空间。哪怕某份数据真的能预测公司业绩,只要来源侵犯隐私或违反授权,就不能用,用了就是把 Research 变成 Risk。正规的量化机构,数据都要过数据采购、法务、合规和信息安全这几道流程,从来不是研究员想用什么就用什么——这和你们公司上线新依赖前要过安全扫描,是同一套逻辑。</p><p>个人做研究,也请从第一天养成三个习惯:保存数据来源,记录授权方式;不抓需要登录或明确禁止爬取的数据;不碰个人敏感信息。这些记录今天看着多余,明天就是你证明清白的唯一证据。</p>
 
@@ -69,32 +90,15 @@
         <h2>11. 把合规写进系统</h2>
 <p>靠人肉记忆守规矩,就像靠人工盯日志告警——总有一天会困的。合规不能只靠自觉,要沉淀进系统。交易系统里应该有黑名单、限额、权限、日志、审批、异常告警和禁止交易窗口;研究平台里应该有数据权限、版本记录、实验留痕和结果审查。规则长在代码里,才不用每天考验人性。</p><p>个人项目不用追求机构级的重装备,做个简化版就够:保存每次实验的配置,记录每条数据的来源,把禁止交易的规则直接写成代码断言,给实盘脚本加上最大订单金额和最大亏损限制两道硬闸,保留完整的交易日志和复盘记录。这些东西加起来,成本不过几天开发,换来的却是系统在替你值夜班。</p><p>一旦规则写进系统,你就不再依赖临场自控。金融市场最擅长的就是用情绪和压力让人犯错——大涨时贪婪、大跌时恐惧,手一抖就越界。系统化的边界不会慌张,这正是它最值钱的地方。</p><div class="callout callout--note reveal"><span class="callout__title">一步一步的规诫,好过一次的英明判断</span><p>人在临场那一下的判断,最贵也最不可靠:大涨时手一抖,自设的限额就成了摆设。所以成熟的做法是把合规和风险切成一小步一小步的系统规诫——黑名单、限额、权限、日志、审批、熔断,每一步都不起眼,串起来就能替你值夜班。别指望关键时刻自己英明,要让错误在结构上根本发不出去。</p></div>
 
-
         <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 45 章小结图: 监管、合规和伦理: 技术能力不能越过市场规则">
-            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
-            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
-
-            <g>
-              <rect x="65" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="77" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="90" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">1</text>
-              <text x="84" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="84" y="203">交易越自动、速度越</tspan><tspan x="84" y="221">快</tspan></text>
-            </g>
-            <g>
-              <rect x="335" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="347" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="360" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">2</text>
-              <text x="354" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="354" y="194">内幕信息、市场操纵</tspan><tspan x="354" y="212">、违规数据和误导销</tspan><tspan x="354" y="230">售</tspan></text>
-            </g>
-            <g>
-              <rect x="605" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="617" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="630" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">3</text>
-              <text x="624" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="624" y="194">监管、合规和伦理:</tspan><tspan x="624" y="212">技术能力不能越过市</tspan><tspan x="624" y="230">场规则</tspan></text>
-            </g>
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="合规流水线四道门荐图:下单批先过四道硬检验,不然不发单">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">把合规写进系统:下单前必须过四道门</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">代码里不允许写'允许派发'——每一笔买或卖,在调用执行引擎之前,都必须过四个查</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">查股票池(在不在白名单)、查停牌退市(能不能成交)、查单日加仓上限(今天还能加多少)、查黑名单(这只票被禁止了)</text>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">任何一道门被绕过去,都等于违规——这套意识写在代码里,而不是写在文档里</text>
           </svg>
-          <p class="figure__cap">读完第 45 章后,至少要能复述“交易越自动、速度越快”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
+          <p class="figure__cap">合规不是看制度距离,是行程距离:把&#x27;看规则&#x27;变成&#x27;跑过的规则&#x27;——柴胡值速最近才知道柠惇从哪一边 legisalation 的门槛。</p>
         </div>
 
         <section class="summary reveal">

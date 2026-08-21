@@ -51,15 +51,57 @@
         <h2>5. 特征和标签的时间对齐</h2>
 <p>监督学习有条铁律:特征 X 必须在标签 y 之前可见。在任何领域都成立,但在量化里,它值得用加粗加大号字体刻在你的工位上。特征日期、数据发布日期、交易决策时间、下单时间、成交时间、标签收益区间——六个时间点,必须像火车时刻表一样排得整整齐齐,一处都不能越位。</p><p>来感受一个每天都会犯的经典错误。你用今天的收盘价计算特征,又在回测里假设自己按今天的收盘价买入——可收盘价格是收盘那一瞬间才确定的,你等于先看了答案再做题。正确姿势是:收盘后生成信号,下一次可执行成交在之后的某个交易时点。差一步,就是从研究滑向自欺的一步。</p><p>这类错误的可恶之处,在于它在代码里根本不显眼。一个 shift 写错了一格,一个 merge_asof 的连接方向反了,一个财报公告日期没做处理——模型表现立刻<span class="hl">“优异”</span>得不像话。所以请把下面这句话变成条件反射:看到过于漂亮的结果,第一反应不是庆祝自己挖到圣杯,而是去检查时间对齐。在金融数据里,异常好往往意味着异常错。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="时间对齐示意图:决策日前红虚线是“今天”,特征必须停留在它左边">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">时间对齐错位= 之所谓'自带未来酒'——回测被顺手偷看了未来</text>
+            <line x1="80" y1="220" x2="820" y2="220" stroke="#8499bd" stroke-width="2"/>
+            <text x="90" y="200" fill="#bcc9dd" font-size="12" font-weight="800">交易日</text>
+            <text x="820" y="242" fill="#bcc9dd" font-size="12">时间</text>
+            <!-- 决策点 -->
+            <line x1="450" y1="140" x2="450" y2="300" stroke="#ee8877" stroke-width="3" stroke-dasharray="8 5"/>
+            <text x="464" y="160" fill="#ee8877" font-size="13" font-weight="800">决策日(今天必须下单的瞬间)</text>
+            <!-- 特征点 -->
+            <circle cx="220" cy="290" r="10" fill="#8fb37a"/>
+            <text x="220" y="325" text-anchor="middle" fill="#b5d3a0" font-size="12" font-weight="800">特征 X 数据</text>
+            <text x="220" y="344" text-anchor="middle" fill="#bcc9dd" font-size="11">必须是决策日之前就可见</text>
+            <circle cx="620" cy="290" r="10" fill="#ee8877"/>
+            <text x="620" y="325" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">特征 Y 数据</text>
+            <text x="620" y="344" text-anchor="middle" fill="#bcc9dd" font-size="11">如果要等到决策日后才见到,这就是非法数据</text>
+            <text x="450" y="378" text-anchor="middle" fill="#bcc9dd" font-size="12.5">合法要做的检查:每个特征在它该被使用的那一刻都必须是真实当时披露的版本——不能被未来修正过的值污染</text>
+          </svg>
+          <p class="figure__cap">判断回测能不能信,先问数据是不是时点上可见——没有中间态:可见日必须早于使用日,差一分钟都不算对齐。</p>
+        </div>
         <h2>6. 复权价格和真实成交价格要分开</h2>
 <p>前面章节讲过,复权是为了让历史价格口径可比。到了建模这一步,你会撞上一个看似矛盾的规则:算收益标签,该用<a class="term term-link" href="glossary.html#g-复权价格" title="查看术语：复权价格">复权价格</a>;模拟真实成交,却绝不能用复权价格。两套价格,各管一段,弄混了全盘皆错。</p><p>用一个例子把这两条路分开。某股票分红除权,未复权价格从 <span class="num">10 元</span>变成 <span class="num">9.5 元</span>。如果你拿未复权价格算收益,会硬生生把分到手里的分红算成亏损——冤枉了它;可反过来,如果你拿复权价格去模拟下单成交,又是在用一个历史上根本不存在的交易价格——骗了你自己。标准做法是:收益计算和<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>计算,走合适的复权口径;<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>成交、判断涨跌停、计算成本,一律走当时真实可交易的价格口径。</p><p>很多回测框架会在内部默默帮你做这些转换,这很方便,但也埋着信任风险——你不能完全盲信框架。至少要把几个字段抠清楚:close 到底是未复权还是前复权?return 含不含分红?limit_up 和 limit_down 用的是哪个价格口径?口径不清楚,后面的一切计算都建在流沙上。做量化,先把字段当法律文书读。</p>
 
         <h2>7. 你允许模型在哪些资产上下注</h2>
 <p>模型不是想选谁就选谁——动手之前,你要先给它发一张<span class="hl">“准入名单”</span>,也就是股票池。你可以选全 A 股,也可以选<span class="term">沪深 300</span>、<span class="term">中证 500</span>、中证 1000 的成分股,或者锁定某个行业;也常常顺手剔除 ST 股、停牌股、上市未满一定天数的新股和<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>太差的股票。别以为股票池是随便画的圈,它直接决定策略的收益、风险和可执行性。</p><p>股票池里最阴的一个坑,是拿今天的名单回测过去。比如只拿现在还活着、还上市的股票回测十年——那些中途黯然退市的公司,被你的数据集悄悄抹掉了,样本里清一色<span class="hl">“活到了决赛圈”</span>的幸存者。这就是幸存者偏差。正确做法是:每个历史日期,都只使用当时可投资的股票池,让过去只看到过去的名单。</p><p>股票池还顺手决定了你的基准,这两件事必须配套。你在<span class="term">沪深 300</span> 成分里选股,就应该主要和<span class="term">沪深 300</span> 比;在中证 1000 里选,就和中证 1000 比。股票池和基准不匹配,就像拿游泳运动员的配速去考核自行车手——市场暴露和选股能力搅在一起,结论必然失真。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="股票池版图：大盘股池和小盘股池是不同的规则场">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">股票池不是中性设置，是你策略的一部分</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">假设你只回测沪深 300 的成分股——你是在大盘股里找规律，</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">允许全市场选股的小微盘股池，结果完全不同——你看见了另一个世界。</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">股票池一旦固定，就算是在不同日期上，结论也不能跨池互换。</text>
+          </svg>
+          <p class="figure__cap">股票池是策略真正踏上的土地——涨跌停规则、流动性、因子效果，全都在这个池里决定。换池即换规则。</p>
+        </div>
         <h2>8. 缺失值不是小麻烦</h2>
 <p>金融数据从来就不是完整的方格子。新上市的公司历史短,停牌的日子没成交,财务字段可能还没到披露时间,某些行业指标在别的行业根本不适用,新闻数据覆盖更是厚此薄彼——缺失无处不在。最危险的一个动作是:看见缺失就填 0。要知道,0 可能是一个真实数值(比如本期计提为零),也可能只是<span class="hl">“没有数据”</span>,两者的含义天差地别。</p><p>常见处理方式有这么几样:删除缺失样本、用行业中位数填充、拿上一期可见值延续、加一个<span class="hl">“是否缺失”</span>的标记位,或者干脆让模型自己学会处理缺失。选哪种没有标准答案,取决于字段的真实含义。比如 <a class="term term-link" href="glossary.html#g-市净率pb" title="查看术语：市净率(PB)">PB</a> 缺失,可能是公司净资产为负、算出来没意义,也可能只是数据未覆盖——一个是信号,一个是事故,绝不能一视同仁。</p><p>再深一层:缺失本身可能携带信息。财报迟迟不发、没有分析师覆盖、数据质量差,往往和风险挂在一起。如果你图省事,把带缺失的样本一刀切全删掉,你的股票池会悄悄偏向信息披露好、流动性好、规模大的公司——一个看不见的偏差,就被你亲手埋进了训练集。你以为在做清洗,其实是在做采样偏见。</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="缺失值填 0 和填均值都是在自毁数据集">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">缺失值的两个错误填法</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">填 0:在这一刻假装既没有行情,也没有波动——给动量、波动率因子喂了假数据</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">填历史均值:这个均值在当时你不可能知道;你等于用未来的均值校正了今天</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">正确做法:记为“缺失”,不填不猜,让模型在特征工程阶段自己知道——这叫中信持久性</text>
+          </svg>
+          <p class="figure__cap">缺失值不是需要补的坑,是该被标记的状态。你填了一个漂亮的值,模型信以为真——这比“这一天没有数据”伤害大多了。</p>
+        </div>
         <h2>9. 训练集、验证集和测试集不能随机打乱</h2>
 <p>机器学习课本能教你随机划分训练集和测试集,但金融序列不吃这一套。为什么不能随便随机打乱?因为金融市场在时间上是连续的、上下游有依赖的:未来样本和过去样本可能共享同一个市场状态。一随机,未来市场环境的<span class="hl">“气味”</span>就顺着共享的状态渗进了训练集,模型等于提前闻过了考卷的味道。</p><p>更合理的做法是按时间顺序切分:比如 <span class="num">2015-2019 年</span>用作训练,<span class="num">2020-2021 年</span>做验证调参,<span class="num">2022-2024 年</span>守住测试。这样测试集才是真正的<span class="hl">“未来”</span>。还可以做滚动训练和 walk-forward 验证:用过去一段时间训练,向前预测一段,再整体往前滚动窗口,像推着时间向前走。让模型永远只学昨天、预测明天。</p><p>但时间切分也不是金钟罩。如果训练期和测试期的市场环境碰巧太像,结果仍可能乐观;如果测试期刚好撞上极端环境,结果又会过于悲观。所以更稳的做法是覆盖多个市场阶段,看策略在牛市、熊市、震荡市、流动性冲击里分别什么德行。一次切分一盏灯,多种环境才是全景灯。</p>
 
@@ -69,33 +111,6 @@
         <h2>11. 从数据表到训练样本</h2>
 <p>铺垫了这么多防线,最后一步该真的搭样本了。一个股票日频训练样本,可以想象成三维结构:日期、股票、特征。每个交易日,操场上站着一批股票,每只身上挂着几十个特征值,标签是未来一段收益。喂给模型时,把这个立体结构拍平成一张大表:每一行是<span class="hl">“某天某只股票”</span>,列是特征和标签。</p><p>但拍平这张表之前,要过一串安检门:当天是否可交易?是否停牌?是否涨跌停到无法买卖?上市天数够不够?财务数据是否已披露?是否在股票池内?最关键的是:这套过滤规则,必须在训练、回测和实盘三处完全一致——三套规则各说各话,训练出来的就是<span class="hl">“三次元模型在二次元考试”</span>。</p><p>过滤不一致的结局是什么?如果训练样本里混着大量实盘根本买不到的股票,模型会津津有味地学习一堆不可执行的机会——纸上高手,实盘废物;如果回测过滤得严、训练过滤得松,训练目标和交易目标从一开始就南辕北辙。量化的细节不会浮现在 PPT 里,它们藏在每一行过滤规则里,最后统统反映在收益曲线上。</p>
 
-
-        <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 29 章小结图: 数据、标签和样本切分: 量化模型从哪里学">
-            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
-            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
-
-            <g>
-              <rect x="65" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="77" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="90" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">1</text>
-              <text x="84" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="84" y="203">量化数据必须恢复历</tspan><tspan x="84" y="221">史当时的信息状态</tspan></text>
-            </g>
-            <g>
-              <rect x="335" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="347" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="360" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">2</text>
-              <text x="354" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="354" y="203">标签定义决定模型任</tspan><tspan x="354" y="221">务</tspan></text>
-            </g>
-            <g>
-              <rect x="605" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="617" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="630" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">3</text>
-              <text x="624" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="624" y="194">数据、标签和样本切</tspan><tspan x="624" y="212">分:量化模型从哪里</tspan><tspan x="624" y="230">学</tspan></text>
-            </g>
-          </svg>
-          <p class="figure__cap">读完第 29 章后,至少要能复述“量化数据必须恢复历史当时的信息状态”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
-        </div>
 
         <section class="summary reveal">
           <h2>小结</h2>

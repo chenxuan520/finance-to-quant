@@ -36,6 +36,17 @@
         <h2>1. 收益率</h2>
 <p><span class="num">100 元</span>变成 <span class="num">105 元</span>,和 <span class="num">100 万</span>变成 <span class="num">105 万</span>,哪笔更厉害?直觉告诉你后者赚得多,但“多”是本金堆出来的。要把它们放上同一把尺子,就得算出比例——这就是收益率:单期收益率 = 结束价值 / 开始价值 - 1。<span class="num">100 元</span>变成 <span class="num">105 元</span>,收益率 <span class="num">5%</span>;<span class="num">100 元</span>变成 <span class="num">95 元</span>,收益率 <span class="num">-5%</span>。收益率存在的全部意义,就是抹平本金规模的差异,让大钱小钱可以同框比较。</p><p>但多期收益千万别简单相加,得按复利相乘。第一期赚 <span class="num">10%</span>,第二期亏 <span class="num">10%</span>,最终是 1.1 × 0.9 - 1 = <span class="num">-1%</span>——涨跌幅看着对称,账户结果并不对称。这和写代码一个道理:字符串拼接和真正的数值计算,长得像,结果完全两码事。收益是在变化后的新本金上继续滚动,乘法才是它的母语。</p><p>量化代码里最容易栽跟头的,反而不是公式,而是价格口径:用未<a class="term term-link" href="glossary.html#g-复权价格" title="查看术语：复权价格">复权价格</a>算长期收益,会把分红除权误读成股价下跌;用复权价格模拟真实成交,又对不上当时市场里的真实价格。收益公式两行就写完,数据口径却能坑你一整个<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>。写第一行代码之前,先问自己:我手里的价格,到底是哪种价格?</p>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="收益加上波动、回撤、夏普、跟踪误差:五个指标组合成一份净值报告">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">收益、波动、回撤、夏普——四个指标组合起来才有用</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">只报收益率,是骗人;报收益率+波动,你才知道这个收益伴随了多少颠簸</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">再加回撤——你才知道这条曲线最深摔多深;再加夏普——你才知道每承压摔了多少与多少超额的钱</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">同时参考:近一年收益排名、超额维持时间,样本外 samples——这四个指标放在一起,才会呈现真实策略成色</text>
+          </svg>
+          <p class="figure__cap">量化策略的评判永远不是一个指标。收益要高、波动要低、回撤要浅、夏普要稳定、跟踪误差要可控——不同的尺度记不住任何一个,你都可以相信这个策略远不如看上去的那样。</p>
+        </div>
         <h2>2. 年化收益</h2>
 <p>某个策略跑了一周,赚了 <span class="num">2%</span>。朋友兴奋地一把按下计算器:一年 50 多周,那年化不得翻倍?先按住他的手——这就是<span class="term">年化收益</span>最常被滥用的姿势。年化的本意很单纯:把不同长度的投资结果换算成<span class="hl">“一年”</span>这个公共口径,方便比较。比如 <span class="num">3 个月</span>收益 <span class="num">5%</span>,复利年化大约是 1.05 的 <span class="num">4 次</span>方再减一。它是个换算器,不是个许愿池。</p><p>请把这句话抄在屏幕上:年化不是预测。一个策略一周赚 <span class="num">2%</span>,绝不能据此外推一年能赚多少。那一周的收益,可能来自运气,可能来自正好刮过你持仓的市场风格,也可能来自一次性事件——年化之后,这些短期波动都会被放大成吓人的天文数字。短期样本年化=拿着一天的天气预告一年的收成。</p><p>所以看<span class="term">年化收益</span>时,必须同时摆出回撤、波动和样本长度,三者是年化的法定监护人。没有风险指标陪跑的<span class="term">年化收益</span>,就像有人只告诉你这辆车极速能跑 350,绝口不提刹车灵不灵——数字越大,你越该警惕,而不是越兴奋。</p>
 
@@ -74,6 +85,17 @@
             <text x="450" y="364" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">复利的尾巴:跌 50%,要涨 100% 才回本;刀砍得越深,爬回来的坡越长</text>
           </svg>
           <p class="figure__cap">净值一路爬到 1.5,你还没来得及截图炫耀,它掉头跌到 1.2——最大回撤就是 1.2 ÷ 1.5 − 1 = −20%。拖着一条复利的尾巴:跌 50% 要涨 100% 才回本。控回撤不是为曲线好看,是不让复利被一次深亏拦腰打断。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="最大回撤定义：从高点到谷底的最坏一段路径">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">最大回撤：从顶到底最坏的那段落差</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">考点：你的组合价值历史最高瘦多少？这个区间是从峰值 100 跌到谷底 75 那一段吗？</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">最大回撤 = 最高点 − 最低点的极差——一年盈利 30% 但最大回撤 50%，你很难持有它到底。</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">买之前先问自己能接受多大的最大回撤：超过自己能忍受的范围，策略再好你也守不住。</text>
+          </svg>
+          <p class="figure__cap">最大回撤反映的不仅是幅度，还有你守不守得住的心理底线——-50% 又会有一天发生，你需要问自己今天能不能接受。</p>
         </div>
         <h2>5. 夏普比率</h2>
 <p>两个策略摆面前:A <span class="term">年化收益</span> <span class="num">15%</span>,B <span class="term">年化收益</span> <span class="num">25%</span>,选谁?先别急,问一句各自冒了多大风险。<a class="term term-link" href="glossary.html#g-夏普比率" title="查看术语：夏普比率">夏普比率</a>就是干这个的:它大致等于超出无风险收益的部分,除以收益的波动率。翻译成人话:每承担一份波动,你换来多少<span class="term">超额收益</span>。它不问<span class="hl">“赚没赚”</span>,问的是<span class="hl">“赚得值不值”</span>。</p><p>代几个数字感受一下:A 策略<span class="term">年化收益</span> <span class="num">15%</span>,无风险收益 <span class="num">3%</span>,年化波动 <span class="num">12%</span>,<span class="term">夏普</span>约为 1;B 策略<span class="term">年化收益</span> <span class="num">25%</span>,波动 <span class="num">44%</span>,<span class="term">夏普</span>约 0.5。B 赚的绝对数字更多,但每一单位波动换来的收益质量更差——一个像匀速巡航的高铁,一个像半夜狂飙的摩托,终点都是<span class="hl">“到了”</span>,过程体验天差地别。</p><p>还要警惕<span class="term">夏普</span>的盲区:它会系统性低估<span class="hl">“小赚大亏”</span>型策略的风险。卖期权、加<span class="term">杠杆</span>、吃<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>尾部风险的策略,平时风平浪静、<span class="term">夏普</span>可能很好,可一次极端行情就能亏掉几年的积累——<span class="term">夏普</span>只看得见日常的抖动,看不见悬崖。<span class="term">夏普</span>高到离谱的策略,第一件事不是兴奋,是检查它的风险藏哪了。</p>

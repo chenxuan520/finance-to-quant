@@ -36,6 +36,32 @@
         <h2>1. 宏观数据先看发布时间</h2>
 <p>先考你一道送命题:模型里用 <span class="num">7 月</span>的 CPI,让模型在 <span class="num">7 月</span>做交易决策——行不行?答案是:不行,因为 <span class="num">7 月</span>的 CPI 可能要等到 <span class="num">8 月</span>才公布,<span class="num">7 月</span>的市场根本不知道它存在。宏观数据有一大家子:GDP、CPI、PPI、PMI、社融、信贷、失业率、进出口、工业增加值、零售、财政、货币供应、<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>和汇率等等,它们通常按月、按季或按周发布。金额重要,发布时间同样重要——对量化来说,后者甚至是先决条件。</p><p>坑还没完:宏观数据不是一个数发出来就板上钉钉,它还有初值、修正值和最终值。你今天在数据库里查到的<span class="hl">“历史数据”</span>,可能是后来修订过的版本,和当时市场看到的并不一样——这和上一章财务数据的点时问题,是同一种病。用修订版<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>,效果约等于让考生拿着改过的标准答案重新估分。</p><p>所以宏观研究的第一步,不是判断数据好坏,而是先建一张日历:哪个指标几号几点公布,市场预期是多少,实际值和<a class="term term-link" href="glossary.html#g-预期差" title="查看术语：预期差">预期差</a>多少,过去的数据有没有被修正过。这张日历就是你的时序防线——没有时间轴,宏观<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>迟早长出<a class="term term-link" href="glossary.html#g-未来函数" title="查看术语：未来函数">未来函数</a>,还是不疼不痒、极难发现的那种。</p><p>先把这张日历钉死:官方制造业 PMI 每月最后一天上午 9:30 发;CPI、PPI 一般在每月 <span class="num">9 日</span>前后上午 9:30;GDP 按季发,落在季后那个月的中旬、上午 <span class="num">10 点</span>;工业增加值、社零、固定资产投资跟着月度的节奏,多在每月 <span class="num">15 日</span>前后上午 <span class="num">10 点</span>;社融、M2、新增贷款落在每月 <span class="num">10 日</span>到 <span class="num">15 日</span>之间,偏偏爱在下午收盘后甚至傍晚公布;LPR 每月 <span class="num">20 日</span>上午 9:15 亮相,遇节假日顺延。注意,多数是<span class="hl">“日期窗口”</span>而非铁打的一天,所以入库要按真实公告日,不能拍成固定日期。</p><p>于是一个 A 股投资者的数据时刻表长这样:早晨 9:15 先看今天是不是 <span class="num">20 日</span>、LPR 动没动;9:30 开盘,CPI 常在这功夫砸进盘面;11:30 到 13:00 午休,把上午的消息消化一遍;15:00 收盘铃响,国内数据的戏份基本落幕;傍晚若正逢月中,社融可能随时弹出来;晚上 20:30 前后常轮到美国 CPI,21:30 前后美股开盘接着演,冬令时再各顺延一小时。全球市场就这么一棒接一棒跑接力,你的闹钟得按这个节奏设——漏了一棒,第二天开盘就轮到你猜谜。</p><p>修正值和初值的坑,边界要画清:GDP 这类指标先发初步核算,几年后才给最终核实,数据库里查到的<span class="hl">“历史值”</span>常常是后者。回测若用最终核实值,等于把几年后的修订塞回当年——市场那天根本不知道小数点后会怎么改,这就是隐性偷看未来。安全口径只有一条:任何时点只准使用当天及以前已公布的版本,初值就是初值,修正公告到了哪天,模型哪天才有资格切换。别拿<span class="hl">“反正差得不多”</span>当借口:修订大的时候能改写方向,这种亏在历史研究里反复上演。</p><div class="callout callout--note reveal"><span class="callout__title">宏观因子入库前,先查它的“出生证”</span><p>一个宏观数除了金额,还有一整套出生信息:几号几点公布、是初值还是修正值、当时市场预期是多少。这些信息缺一栏,因子库里就多一颗潜伏的未来函数——它不会报错,只会让你的回测悄悄变漂亮。所以宏观数据表的第一列不该是数值,而是<span class="hl">“市场从哪天起才有资格知道它”</span>。</p></div>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="宏观数据时点冲突图:决策点是 3 月 1 日,2 月数据是滞后、3 月数据是未来,必须用可见时点数据">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">今天 3 月 2 日我要预测 3 月数据,但 2 月的数据下个月才出来</text>
+            <line x1="80" y1="200" x2="820" y2="200" stroke="#8499bd" stroke-width="2"/>
+            <text x="118" y="184" fill="#bcc9dd" font-size="12">1 月 1 日</text>
+            <text x="290" y="184" fill="#bcc9dd" font-size="12">2 月 1 日</text>
+            <text x="470" y="184" fill="#bcc9dd" font-size="12">3 月 1 日(我的今天)</text>
+            <text x="650" y="184" fill="#bcc9dd" font-size="12">4 月 1 日</text>
+            <text x="820" y="184" fill="#bcc9dd" font-size="12">5 月 1 日</text>
+            <!-- 数据点 -->
+            <circle cx="170" cy="290" r="12" fill="#7aa7f0"/>
+            <text x="170" y="325" text-anchor="middle" fill="#bcc9dd" font-size="11">1 月数据</text>
+            <circle cx="340" cy="290" r="12" fill="#8fb37a"/>
+            <text x="340" y="325" text-anchor="middle" fill="#bcc9dd" font-size="11">2 月数据</text>
+            <circle cx="510" cy="290" r="12" fill="#f0c96a"/>
+            <text x="510" y="325" text-anchor="middle" fill="#bcc9dd" font-size="11">3 月数据:用 2 月数据预测</text>
+            <line x1="170" y1="278" x2="170" y2="212" stroke="#7aa7f0"/>
+            <line x1="340" y1="278" x2="340" y2="212" stroke="#8fb37a" stroke-dasharray="4 4"/>
+            <line x1="510" y1="278" x2="510" y2="212" stroke="#f0c96a"/>
+            <!-- 垂直红线 = 决策时点 -->
+            <line x1="510" y1="120" x2="510" y2="360" stroke="#ee8877" stroke-width="3" stroke-dasharray="6 4"/>
+            <text x="522" y="140" fill="#ee8877" font-size="13" font-weight="800">决测时点(3 月 1 日的决定)</text>
+            <text x="450" y="368" text-anchor="middle" fill="#bcc9dd" font-size="12.5">你站在 3 月 1 日:不能直接用 2 月数据(那是滞后),也不能直接用 3 月数据(那是未来)——必须用其上一个“可见时点”的数据演练一次</text>
+          </svg>
+          <p class="figure__cap">宏观建模最常见的错误:用上市于两天后的数据来训练上两天的模型。一个经典的定性规则:“所有特征都必须仅在当时可见的时点之前截断”,这就是 PIT(point-in-time)规则。</p>
+        </div>
         <h2>2. 利率是资产定价的底层变量</h2>
 <p>如果把整个金融系统看成一套服务,利率就是那个被所有模块引用的全局配置:<a class="term term-link" href="glossary.html#g-折现" title="查看术语：折现">折现</a>率、融资成本、<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>价格、<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>估值、房地产、汇率,全都依赖它。理解两条传导链就抓住了主干:无风险利率上升时,未来现金流折现到今天的价值会缩水,手里那些<span class="hl">“故事在远方”</span>的成长股,估值常常先承压;债券收益率上升时,票面现金流固定不变的存量债券,价格只能下跌——同样的票息,市场现在要求更高的回报,差价只能从价格里扣。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>还要注意,利率根本不是一个数字,而是一整条曲线。短端利率主要看央行政策和资金面的脸色;长端利率里则揉着市场对增长、<a class="term term-link" href="glossary.html#g-通胀" title="查看术语：通胀">通胀</a>和长期前景的预期。<a class="term term-link" href="glossary.html#g-收益率曲线" title="查看术语：收益率曲线">收益率曲线</a>变陡或者倒挂,都不是形状游戏,而是市场在给未来投票——曲线本身就是一份加密的宏观天气预报,量化要做的第一件事是学会解密它。</p></div><p>落到策略上,量化多资产研究会盯着利率<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>、曲线斜率、实际利率、<a class="term term-link" href="glossary.html#g-信用利差" title="查看术语：信用利差">信用利差</a>这些变量;股票策略也会拿利率环境解释估值的起落;债券策略更直接,就是围绕<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>、曲线和利差吃饭。利率这张底牌不看懂,很多资产价格的涨跌你只能看到热闹,看不到门道。</p><p>久期这把尺子,必须会手算:一张 <span class="num">10 年</span>期国债,久期约 7,收益率上行 <span class="num">0.1 个百分点</span>,价格变动约等于负的久期乘以利率变动,即 -7 × <span class="num">0.1%</span> = <span class="num">-0.7%</span>,<span class="num">1 万元</span>持仓立刻浮亏约 <span class="num">70 元</span>。反着验:收益率回落 <span class="num">0.1 个百分点</span>,价格约涨 <span class="num">0.7%</span>,数值对称。换成久期 3 的中短债,同样的 <span class="num">0.1 个百分点</span>只动 <span class="num">0.3%</span>。<span class="hl">“久期越长越敏感”</span>的全部含义就在这——利率变动乘以久期,债券价格的脾气一眼看穿。</p>
 
@@ -63,38 +89,33 @@
         <h2>10. 预期差比绝对值更重要</h2>
 <p>公布的经济数据明明很好,市场却跌给你看;数据差得难看,市场反而涨——这种<span class="hl">“反常识”</span>行情,背后是同一条规律:价格通常提前反映预期。市场交易的从来不是数据本身,而是数据和预期之间的差值。好消息低于更好的预期,就是坏消息;坏消息好于更坏的预期,就是好消息。这就是<span class="hl">“预期差”</span>三个字的全部分量。</p><p>拿 CPI 举个例子就清楚了。市场预期 CPI 是 <span class="num">3%</span>,实际公布 <span class="num">4%</span>:这意味着通胀超出预期,利率上行预期抬头,债券和成长股一起承压。换个剧本,市场预期 <span class="num">5%</span>,实际也是 <span class="num">4%</span>:通胀数字没变,可它低于预期,资产的反应可能完全反过来。同一个 <span class="num">4%</span>,站在不同预期的底座上,就是两种行情——不带上预期这把标尺,数字不会自己开口说话。</p><p>因此做宏观事件研究,必须把三个数分开:实际值、预期值、预期差。只拿实际值回测,常常会撞上一个尴尬的结果:模型怎么都解释不了市场当天为什么那样走。不是市场错了,是你的特征少了一维,你 measuring 的是事实,市场 price 的是意外。</p><p>把预期 <span class="num">3%</span>、实发 <span class="num">4%</span> 这根链条逐环手算一遍。第一环:通胀超预期,加息预期升温,假设 <span class="num">10 年</span>期国债收益率上行 <span class="num">0.1 个百分点</span>。第二环:久期 7 的存量国债,价格约跌 7 × <span class="num">0.1%</span> = <span class="num">0.7%</span>,<span class="num">1 万</span>持仓浮亏约 <span class="num">70 元</span>。第三环:成长股折现——一笔 <span class="num">10 年</span>后才到手的 <span class="num">100 元</span>利润,折现率从 <span class="num">8%</span> 抬到 <span class="num">8.1%</span>,现值从 100 ÷ 2.159 ≈ 46.32 缩到 100 ÷ 2.179 ≈ 45.89,约跌 <span class="num">1%</span>。第四环:债券跌、成长股估值缩,大盘情绪跟着降温。四个箭头,环环能拿笔复核——预期差就是这样从一行数据,变成满屏绿色。</p><div class="callout callout--note reveal"><span class="callout__title">市场交易的是意外,不是事实</span><p>数据好,市场跌;数据差,市场涨——不是市场抽风,是价格早就把<span class="hl">“大家以为的那个数”</span>消化掉了,真正驱动行情的是实际值和预期值之间的差。做宏观事件研究,实际值、预期值、预期差要分三列存;少了预期这一列,你的模型解释不了的不是市场,是自己缺的那一维特征。</p></div>
 
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="预期差示意图：绝对值好看但低于预期，市场仍然下跌">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">预期差：市场提前把好消息算进价格</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">去年 GDP 增长 9%，看起来是好数据，但市场早就预期它会到 9.2%——</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">结果公布后股价反而跌了：背的不是数据本身，是数据和预期的差额。</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">看宏观数据，不要问它是多少，要先问市场预期是多少。</text>
+          </svg>
+          <p class="figure__cap">数据真实与否并非市场关心的焦点——市场比较的是它和预期的差距。学会问“预期是多少”，你就脱离了看新闻做分析的阶段。</p>
+        </div>
         <h2>11. 多资产回测的额外问题</h2>
 <p>把股票、债券、商品、外汇塞进同一个回测,难度不是加法而是乘法——多资产回测比单一股票复杂得多。不同市场交易时间不同、节假日不同、货币不同、交易单位不同、<span class="term">保证金</span>和融资规则不同、数据频率也不同,每一个<span class="hl">“不同”</span>都是一处可能的故障点。拼的不是一张大表,而是一套有六七个时区的分布式系统,没对齐之前,它产生的每一行<span class="hl">“结果”</span>都值得怀疑。</p><p>具体要处理的清单拉出来不短:时区对齐、汇率换算、期货换月、债券久期、商品合约规格、股息、税费、资金占用。一个全球多资产策略,如果只是把几张简单的日线表按日期拼在一起,那几乎必错——错得还很隐蔽,净值曲线照样漂亮地生长,只是和真实世界没什么关系。幻觉式回测,是多资产领域产量最高的副产品。</p><p>个人学习完全可以从简版起步,别一上来就复刻桥水:A 股指数、债券 <a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a>、黄金 ETF、商品指数或期货连续合约,按月<a class="term term-link" href="glossary.html#g-再平衡" title="查看术语：再平衡">再平衡</a>,用统一的人民币口径计算收益。先把框架跑通、把对齐问题处理干净,再逐步往里加真实感更强的细节。框架先对,细节后补,这个顺序和多资产配置一样,讲的是先活下来。</p><p>时区坑要算到小时:美国 CPI 在北京时间晚上 20:30 公布,冬令时顺延到 21:30,而 A 股当天下午 <span class="num">3 点</span>就已收盘——这一天对 A 股来说,这个数据根本不存在,最早只能用于第二天的交易。回测若按自然日把<span class="hl">“当天”</span>的美国数据对齐到<span class="hl">“当天”</span>的 A 股,模型等于提前偷看了一个晚上。正确做法:以北京时间 UTC+8 为主时钟,每条海外数据标注<span class="hl">“对 A 股最早可交易日”</span>,先答这句再入库。</p><p>频率对齐也要落到交易日粒度:宏观多是月度、季度值,价格是日度,常见两种拼法各有规矩。一是前向填充:<span class="num">1 月</span> CPI 在 <span class="num">2 月</span> <span class="num">9 日</span>才公布,那么 <span class="num">2 月</span> <span class="num">9 日</span>之前的每一天,模型手中最新的 CPI 仍是 <span class="num">12 月</span>值,新值公布后才有资格上岗。二是重采样到月末:当月数据只能服务下个月起的仓位。两种都行,唯一不行的是让当月值在当月偷偷生效——那十来天的提前量,又是一个未来函数。</p>
 
         <h2>12. 个人如何用宏观而不被宏观带跑</h2>
 <p>打开财经软件,今天一条通胀新闻,明天一条汇率快讯,后天一场会议通稿——很多个人投资者的仓位,就这样被新闻流牵着鼻子走,一天一个主意。这种用法恰恰是宏观的错误打开方式。更稳的姿势是:把宏观当成风险背景和配置参考,而不是每天交易的理由。宏观是用来校准航向的六分仪,不是让你每分钟猛打一把的方向盘。</p><p>具体的做法可以很朴素:给自己搭几个简单仪表盘——利率水平和曲线形状、通胀趋势、<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>扩张速度、主要指数估值、商品价格、汇率、股债相关性。每月或者每季度检查一次就好,重点回答一个问题:我的组合是不是在不知不觉中,把筹码过度集中押在了某一个宏观情景上?仪表盘的价值不在预测,在于暴露你自己都没察觉的押注。</p><p>最后留一句醒脑的话:宏观很重要,但宏观预测很难,这两件事必须同时承认。量化学习的目标,不是把你训练成一个每天猜政策的人——那是一条拥挤且不归的路;而是让你知道哪些宏观变量会真正影响资产,并把这种影响老老实实地纳入风险管理和资产配置里。敬畏宏观,但不被宏观支配,这才是正道。</p>
 
-
         <div class="figure figure--reading reveal">
-          <svg class="chapter-map" viewBox="0 0 900 360" role="img" aria-label="第 21 章小结图: 宏观数据和多资产: 利率、通胀、汇率和商品如何连起来">
-            <rect x="18" y="18" width="864" height="324" rx="20" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.25)" />
-            <text x="450" y="68" text-anchor="middle" fill="#eef4f8" font-size="22" font-weight="850">本章留下的三件事</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="个人宏观预警:利率、美元、通胀三件事够不够">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">宏观预警:面向个人的三问</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">①利率近期是上还是下?②美元是回流还是流出?</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">③我现在持有的资产,在真实购买力下行周期里是否已经过价?</text>
 
-            <g>
-              <rect x="65" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="77" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="90" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">1</text>
-              <text x="84" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="84" y="203">宏观数据必须按发布</tspan><tspan x="84" y="221">时间和预期差来使用</tspan></text>
-            </g>
-            <g>
-              <rect x="335" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="347" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="360" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">2</text>
-              <text x="354" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="354" y="203">利率、通胀、汇率和</tspan><tspan x="354" y="221">商品</tspan></text>
-            </g>
-            <g>
-              <rect x="605" y="150" width="230" height="140" rx="16" fill="rgba(13,20,36,0.85)" stroke="rgba(122,167,240,0.4)" stroke-width="1.2" />
-              <rect x="617" y="162" width="26" height="26" rx="13" fill="#f0c96a" />
-              <text x="630" y="181" text-anchor="middle" fill="#101420" font-size="13" font-weight="900">3</text>
-              <text x="624" y="212" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="760"><tspan x="624" y="194">宏观数据和多资产:</tspan><tspan x="624" y="212">利率、通胀、汇率和</tspan><tspan x="624" y="230">商品如何连起来</tspan></text>
-            </g>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">宏观对个人的价值是预警,不是择时——宏观改变的是未来一年的仓位上限,不是明天的股价</text>
           </svg>
-          <p class="figure__cap">读完第 21 章后,至少要能复述“宏观数据必须按发布时间和预期差来使用”这一条判断,再用另外两张卡片检查自己是否真的理解。</p>
+          <p class="figure__cap">宏观上真正要回答的只有三件事:钱变贵吗、钱往哪流、我手里的资产值多少。答这三个,风险边界就有了。</p>
         </div>
 
         <section class="summary reveal">
