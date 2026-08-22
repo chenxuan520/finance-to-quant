@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 41 章 · CTA 和期货趋势: 用规则交易商品、股指和利率 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清期货保证金、主力合约、换月、趋势跟踪、期限结构和 CTA 风险。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="41">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第六部分 · 策略如何变成产品 · 第 41 章</p>
+        <h1>CTA 和期货趋势: 用规则交易商品、股指和利率</h1>
+        <p class="lead">CTA 常被说成“期货量化”或“趋势跟踪”,但它绝不是看着 K 线追涨杀跌那么简单。期货市场有自己的一整套游戏规则:保证金、杠杆、合约到期、换月、夜盘、基差、库存、产业链、宏观变量,规则都没读完就下场,结局可想而知。趋势策略也只是 CTA 的一部分,不是全部。想理解 CTA,要先理解期货合约的交易结构,再看趋势为什么有时会延续,又为什么会在震荡里把你反复摩擦。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线六</span>
+            <span>本部分第 4 / 8 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>不同量化策略赚的是什么钱,承担什么风险,最终怎样装进受约束的产品?</p>
+          <p class="chapter-context__outcome">读完后,你能按收益来源和风险结构比较策略,而不是只按历史年化排名。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>CTA 覆盖期货和衍生品策略的大家族,趋势跟踪只是其中最经典的一支,别把一支当全部。</li>
+            <li>期货策略必须正面处理保证金、杠杆、合约到期、换月、期限结构和成交规则,绕开任何一个都等于没看见风险。</li>
+          </ul>
+        </section>
+
+
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 海龟实验——交易规则能不能教给一群普通人</h2>
+<p>上世纪八十年代,交易员 Richard Dennis 和 William Eckhardt 争论一个问题:优秀交易者靠天赋,还是可以训练?他们招来一群背景各异的新手,用相对明确的趋势、突破、仓位和止损规则训练,这群人后来被称为<span class="hl">“海龟”</span>。</p><p>故事最吸引人的地方不是每个人都成了传奇,而是方法被拆成了动作:什么时候入场,亏多少必须走,一次能押多少,多个市场怎样分散。趋势判断只是其中一小块,真正让系统能够活下去的是仓位和退出纪律。</p><p>CTA 的核心也在这里。规则可以很简单,执行却会经历连续假突破、长时间无聊和一次大趋势突然到来。<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>要检查的不是某条均线有多神,而是人在最难受的那段时间里,系统是否还会按原规则继续运行。</p>
+        </section>
+
+        <h2>2. CTA 是什么</h2>
+<p>先拆名字:CTA 原意是 Commodity Trading Advisor,直译<span class="hl">“商品交易顾问”</span>,常指管理期货和衍生品策略的投资管理人。但别被 Commodity 骗了——在国内语境里,CTA 常覆盖商品期货、<span class="term">股指期货</span>、国债期货等量化策略,远不只是做商品。名字是祖传的,生意早就扩张了。</p><p>CTA 策略的家族很大:趋势跟踪、期限结构、跨品种价差、<a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>量化、<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>策略、日内短周期策略。其中最经典、最容易入门理解的是趋势跟踪,规则一句话就能说完:市场出现持续上涨趋势时做多,持续下跌趋势时做空。简单到让人怀疑,难做到让人崩溃——为什么,后面慢慢讲。</p><p>CTA 受机构欢迎,是因为它的收益来源和<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>多头不同。股票多头主要看企业盈利和股市风险偏好,CTA 却可能在商品供需、<a class="term term-link" href="glossary.html#g-通胀" title="查看术语：通胀">通胀</a>、<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>、汇率和危机趋势中赚钱。收益来源不同,波动节奏就常常错开,所以它常被放进多策略组合里做分散化——一个锅里炒菜,一个灶上炖汤,不容易一起糊。</p>
+
+        <h2>3. 期货合约和保证金</h2>
+<p>用 <span class="num">10 万</span>块钱,做 <span class="num">100 万</span>的生意,赚的时候收益翻倍——这就是<span class="term">保证金</span>交易对新手最有诱惑、也最危险的地方。期货交易的是标准化合约,约定未来按规则买卖某个标的;你不需要一次性支付全部名义价值,只缴一笔<span class="term">保证金</span>。<span class="term">保证金</span>提高了资金效率,同时也把<span class="term">杠杆</span>塞进了你的手里。</p><p>算笔账感受下速度。假设一手期货名义价值 <span class="num">100 万元</span>,<span class="term">保证金</span>比例 <span class="num">10%</span>,你只需约 <span class="num">10 万元</span>就能控制这手合约。价格上涨 <span class="num">2%</span>,名义盈利 <span class="num">2 万元</span>,相当于<span class="term">保证金</span>收益 <span class="num">20%</span>;价格下跌 <span class="num">2%</span>,<span class="term">保证金</span>亏损同样是 <span class="num">20%</span>。标的只动了 <span class="num">2%</span>,你的账户动了 <span class="num">20%</span>——<span class="term">杠杆</span>就是这么个放大器,方向对了放大喜悦,方向错了放大事故。</p><p>所以期货策略不能只看方向预测,还要看<span class="term">杠杆</span>、<span class="term">保证金</span>占用、追加<span class="term">保证金</span>、强平风险和极端行情。很多新手犯的同一个错误,就是低估了<span class="term">杠杆</span>的速度:眼睛盯着的标的风平浪静,账户里的净值已经惊涛骇浪。</p>
+
+        <h2>4. 合约到期和换月</h2>
+<p>股票可以买了放着传给孩子,期货不行——合约是有保质期的。同一个商品可能有 <span class="num">1 月</span>、<span class="num">5 月</span>、<span class="num">9 月</span>等不同到期合约,临近交割时,交易者通常要把持仓从旧合约搬到更远月或新的主力合约上,这个动作叫换月,也叫<a class="term term-link" href="glossary.html#g-展期" title="查看术语：展期">展期</a>。像接力赛:跑完一棒,必须把棒交到下一棒手里。</p><p>换月直接带来一个回测工程问题:不能把不同合约的价格简单拼成一条线。合约之间价格不同,换月处会产生跳变——拼出来的曲线在那一天凭空“涨”了一块,其实是换了个合约而已。数据供应商常提供主力连续、指数连续或复权连续合约,但每种口径都有自己的含义和局限,用之前先弄清它是怎么缝出来的。</p><p>如果你用连续合约计算信号,又用真实合约模拟成交,必须清楚两者之间的转换关系。期货回测里,合约选择、换月规则、成交价格和<span class="term">保证金</span>规则都是地基。地基没打,上面跑什么均线策略都一样是歪楼。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="换月事实:每个中长期头寸必须先处理好到期日">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">换月:远期合约的移仓周期</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">当前合约月一年只活六个月,你若是想一直持多仓,就得在到期前把策略移到远月合约</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">换月日的价格差异就是你的'跨年cash-in'——跟你的方向或 strategy 不相关,但会影响你的累计收益</text>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">换月日频率:股指期货一年12次,商品品种从几个月到 5-10 次——谈不上每个都是能量损耗,但得排序</text>
+          </svg>
+          <p class="figure__cap">永远不要不喜欢换月:&#x27;你自己持有的头寸&#x27;跨过换月日以每次代价最多的资产形式体现。</p>
+        </div>
+        <h2>5. 趋势为什么可能存在</h2>
+<p>价格为什么要<span class="hl">“排队走一段”</span>,而不是消息一出就一步跳到终点?一个原因是基本面变化会被市场逐步吸收:供给持续减少、库存下降、需求超预期,商品价格往往不是一天反应完,而是走成一段上涨趋势。宏观利率、汇率和通胀的变化,也可能推动多个市场持续移动一段时间。</p><p>另一个原因来自行为和资金:投资者反应不足、止损盘追单、基金调仓、风险预算调整,都会让价格变化带上惯性。有意思的地方在于,趋势跟踪策略根本不需要知道这些原因是什么——它只需要识别一件事:价格已经形成了某种持续方向。就像冲浪手不需要精通流体力学,只要能认出浪来了。</p><p>但趋势不是天天有。更多时候,价格只是在原地来回震荡。趋势策略在震荡里会不断开仓、止损、反向、再止损全身淤青。它的收益常常来自少数几波大趋势,而不是每天稳定小赚——这是一门<span class="hl">“三年不开张,开张吃三年”</span>的生意,前提是你要活得过那三年。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="趋势来源说明：行为惯性与仓位摩擦的合力">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">趋势为什么可能存在</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">行为层面：人都会对趋势反应迟钝，帮助价格一边一延伸；</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">摩擦层面：很多人不许做空、不能随时调整仓位，就拖久了反应时间；</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">加上特大盘股需要为机构投顾，——趋势不是技术图形证明出来的，是行为和制度摩擦“构建”出来的。</text>
+          </svg>
+          <p class="figure__cap">趋势不是市场天然存在的现象，是人类行为和管理制度共同构建出来的——所以 CTA 策略会失效，因为制度会变、摩擦会缓，趋势的动力会减弱。</p>
+        </div>
+        <h2>6. 一个最简单的趋势规则</h2>
+<p>趋势策略可以简单到一条均线:收盘价高于过去 <span class="num">60 日</span>均线就做多,低于 <span class="num">60 日</span>均线就做空或空仓。也可以用过去 <span class="num">20 日</span>、<span class="num">60 日</span>、<span class="num">120 日</span>的收益率来判断趋势强弱。规则本身,小学生都看得懂。</p><p>真正的工夫全在规则之外:用哪个连续合约算?什么时候换月?信号出在收盘,下一根 K 线成交还是当天成交?手续费和<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>扣多少?<span class="term">保证金</span>怎么计算?涨跌停无法成交怎么办?夜盘数据怎么和白盘合并?这些细节每一项都不起眼,每一项都能把回测写成另一份回测。</p><p>所以趋势策略的重点不是把规则搞复杂,而是确认它是否稳健:换几个品种,换几个周期,换几段市场环境,它还成立吗?一个只在某个品种某几年有效的均线,大概率只是历史偶然——那不是规律,是巧合化了妆。</p>
+
+        <h2>7. 多品种分散</h2>
+<p>单个品种可能几年不刮一阵风,等风的策略会被饿死。所以 CTA 常做多品种组合:黑色、能源、化工、有色、农产品、股指、国债一起监控。单个品种趋势不稳定,多品种既能增加捕捉趋势的机会,也能降低单一品种的风险——东方不亮西方亮。</p><p>但多品种不是把品种简单平均一下就完事。不同品种波动率不同、<span class="term">保证金</span>不同、<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>不同、夜盘时间不同、产业逻辑也不同。组合层面必须做风险平衡,否则高波动品种会主导整体盈亏:你以为自己做了十只品种,其实是一只品种加九个观众。</p><p>一个常见方法是按波动率调整仓位:波动大的品种少配,波动小的品种多配,让每个品种贡献相近的风险。这不保证赚钱,它保证的是另一件事:没有品种能仅凭天生脾气暴,就压倒其他所有信号。</p>
+
+        <h2>8. 期限结构和展期收益</h2>
+<p>同一个商品,<span class="num">1 月</span>到期和 <span class="num">9 月</span>到期的合约价格并不一样——期货不同到期月份排成的这条价格线,叫期限结构。近月价格低于远月,通常称正向市场或 contango,也可以说远月相对近月<a class="term term-link" href="glossary.html#g-升水贴水" title="查看术语：升水/贴水">升水</a>;近月价格高于远月,通常称反向市场或 backwardation,也可以说远月相对近月贴水。提醒一句:说升水贴水必须讲清参照物,不然很容易正好说反。</p><p>期限结构不只是术语,它直接影响钱。展期收益就来自换月过程中的价格结构:如果你长期持有某类期货、不断从近月换到远月,结构本身就在悄悄帮你赚钱或亏钱。商品指数和 CTA 策略,都绕不开这笔账。</p><p>趋势和期限结构还可以叠加使用:价格处于上涨趋势,同时期限结构显示现货紧张,信号可能就更强。但这类解释需要真正的商品基本面知识,只看图形是读不出<span class="hl">“现货紧张”</span>四个字的。</p>
+
+        <h2>9. CTA 的回撤特征</h2>
+<p>只看胜率的人,一定会误判 CTA:趋势跟踪策略常见特征恰恰是胜率不高,但盈亏比可能较好。日常状态是频繁小亏——假突破骗一次,止损一次;少数大赚来自真正的持续趋势。它不像工资,更像年终奖占大头、平时只发基本生活费。</p><p>CTA 的净值曲线可以拆成三种典型年份。第一类是趋势年:价格有明显单边方向,你顺势持有,基本不折腾但持有不多,每次真趋势一出现净值就要跨越一个台阶。比如 <span class="num">2022 年</span>的商品市场,俄乌冲突和供应链瓶颈让原油和黑色系持续上行,趋势策略全年收益都非常可观。</p><p>第二类是震荡年,最难熬的那种。价格在小范围内来回随机游走,策略会被每一个假突破骗一次就要小幅止损一次,一串小亏垒起来就构成回撤。这类年份往往是最长的时间段——比趋势行情的等待时间多得多,也是你最容易丧失信心的时刻。</p><p>第三类是趋势存在但突然<span class="term">反转</span>的年份,这是 CTA 最难受也最会被记住的那种回撤。<span class="num">21 年</span>的黑色系期货崩了 <span class="num">3%</span> 又拉回,市场从单边转横盘、波动率升高、流动性骤降,你持有趋势方向的仓位会遭到挤压,被迫去<span class="term">杠杆</span>。这时候光趋势还会输,但风险型 CTA 可能自救;趋势占比过高、不加<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>的 CTA 会被这种年份击穿。</p><div class="callout callout--note reveal"><span class="callout__title">遇到回撤先分清方向</span><p>一个合格的 CTA 投资者在被问到回撤时要先回答:那次回撤是发生在趋势年、震荡年还是<span class="term">反转</span>年?如果是趋势年里的回撤,那就是正常工作负荷——这类回撤你能不能扛得住,决定了你会不会把趋势继续信任到下一年。如果是震荡年里的长期回撤,就不是策略合适的问题,是仓位够不够重的问题——你只能在趋势明确前把仓位压得低一点。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="CTA 净值曲线特征:多年横盘养身,大行情年一次性贡息">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">CTA:大丰收年与横盘年之间的剪刀差</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">靠趋势吃饭:趋势在的年,它的净值往上涨。趋势不在的年,它横盘</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">2008、2014、2022 是典型的 CTA 大丰年——市场剧烈波动、趋势持续,多头多得手都没有休息过</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">投资者该知道:CTA 的回报结构是事件驱动——大丰收年带来 80% 的长期回报,横盘年其余时间它主要是“试错的成本”</text>
+          </svg>
+          <p class="figure__cap">CTA 是一种“压抑着等风来”的策略。学习型投资者要先接受它的劣优结构——长期横盘不淘汰、偶尔让大年份把损耗收回。你要的不是排名,是能不能等趋势出现。</p>
+        </div>
+        <h2>10. CTA 和股票组合的关系</h2>
+<p>CTA 有个迷人的传说:股票下跌或宏观剧变时,它可能表现较好,因为它可以做空期货,还可能捕捉<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>、商品或汇率上的趋势。这正是它在资产配置里的价值所在——和股票组合的收益来源不同,关键时刻也许能顶上。</p><p>但请把传说降半个温:CTA 不是股票下跌保险,它不保证危机时一定赚钱。如果危机来得太快、趋势不连续,或者流动性冲击导致多个品种同时<span class="term">反转</span>,CTA 也可能跟着亏。伞在大多数雨天好用,台风天也一样会被吹翻。</p><p>更准确的说法是:CTA 的收益来源和股票不同,长期相关性可能较低,因此可能改善组合的风险收益。把它当分散化工具,没错;把它当万能避险神器,就过了。</p><div class="callout callout--note reveal"><span class="callout__title">把 CTA 当队友,别当保险单</span><p>CTA 的价值在于收益来源和股票错开:平时低头各赚各的,危机里也许能顶上来——<span class="hl">“也许”</span>两个字必须留着,趋势不连续、流动性冲击一起上时,它也会跟着回撤。把它放进组合,买的是低相关,不是保险单;指望它每次股灾都赚钱,等于把队友错当成了理赔窗口。</p></div>
+
+        <h2>11. 个人如何学习 CTA</h2>
+<p>个人学 CTA,照例从一个教学版开始。选几个流动性较好的期货品种,用日线主力连续数据,白纸黑字写下明确的换月规则,用 <span class="num">20 日</span>或 <span class="num">60 日</span><a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>作为信号,按波动率分配仓位,老老实实扣手续费和滑点。要素就这么多,但每一个都不能省。</p><p>报告要写清楚:每个品种各自的收益、回撤、换手、<span class="term">保证金</span>占用、最大连续亏损,以及趋势期和震荡期的分别表现。还要检查参数是否稳定——换个均线周期业绩就翻天,那不是策略,是调参彩票。别只挑一个最漂亮的参数放进报告里安慰自己。</p><p>实盘之前,必须先硬核补课:期货账户、<span class="term">保证金</span>、夜盘、合约到期、涨跌停、强平、手续费和交易权限,一项都不能含糊。没有这些基础,千万不要因为回测曲线好看就上<span class="term">杠杆</span>——回测里<span class="term">杠杆</span>放大的是曲线,实盘里放大的是事故。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>CTA 覆盖期货和衍生品策略的大家族,趋势跟踪只是其中最经典的一支,别把一支当全部。</li>
+            <li>期货策略必须正面处理保证金、杠杆、合约到期、换月、期限结构和成交规则,绕开任何一个都等于没看见风险。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 海龟实验——交易规则能不能教给一群普通人</li>
+            <li><strong>2.</strong> CTA 是什么</li>
+            <li><strong>3.</strong> 期货合约和保证金</li>
+            <li><strong>4.</strong> 合约到期和换月</li>
+            <li><strong>5.</strong> 趋势为什么可能存在</li>
+            <li><strong>6.</strong> 一个最简单的趋势规则</li>
+            <li><strong>7.</strong> 多品种分散</li>
+            <li><strong>8.</strong> 期限结构和展期收益</li>
+            <li><strong>9.</strong> CTA 的回撤特征</li>
+            <li><strong>10.</strong> CTA 和股票组合的关系</li>
+            <li><strong>11.</strong> 个人如何学习 CTA</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>期货保证金为什么会放大风险?</summary>
+            <p>因为你只用较少的保证金就控制了较大名义价值的合约,标的的小幅波动,会被杠杆放大成本金的大幅波动。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>期货回测为什么不能随便拼接合约价格?</summary>
+            <p>不同到期合约的价格和流动性不同,换月会产生跳变;必须先明确连续合约口径和真实成交口径的换算关系。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>套利和相对价值: 看起来确定的价差为什么也会亏</h2>
+          <p>讲清 ETF 套利、期现套利、可转债套利、配对交易和相对价值中的隐藏风险。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

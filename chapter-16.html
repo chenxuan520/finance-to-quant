@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 16 章 · 财务报表和基本面因子: 公司赚钱到底看哪里 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="用小白能懂的方式讲利润表、资产负债表、现金流量表、ROE、毛利率和基本面量化。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="16">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第三部分 · 市场如何形成价格与数据 · 第 16 章</p>
+        <h1>财务报表和基本面因子: 公司赚钱到底看哪里</h1>
+        <p class="lead">你账户里每一股股票,背后都是一家真在开门做生意的公司。做量化可以只盯价格和成交量,也可以翻开公司的财务报表,构造基本面因子——另一条同样有效的路。这一章不要求你变成会计专家,但至少要做到三件事:看得懂收入、利润、资产、负债和现金流各自在讲什么;分得清“账面赚钱”和“钱真进了口袋”的区别;听到别人说“这家公司利润很好看、现金流却很难看”时,能本能地警觉起来,因为那往往就是故事和现实的裂缝。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线三</span>
+            <span>本部分第 5 / 8 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>一项金融权利怎样上市、成交、留下数据,又该怎样评价它的收益和风险?</p>
+          <p class="chapter-context__outcome">读完后,你能把交易界面上的数字还原为制度、现金流和可研究的数据口径。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>利润表、资产负债表和现金流量表,分别回答“赚不赚钱”“家底几何”“现金怎么进出”三个问题,要连起来读。</li>
+            <li>ROE、利润率、现金流、杠杆和估值指标,都必须放回行业、周期和披露时间里理解,孤立看数字必踩坑。</li>
+          </ul>
+        </section>
+
+
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 门店是真的,咖啡是真的,收入为什么还能是假的</h2>
+<p>瑞幸咖啡快速扩张时,门店、App 和排队取咖啡都是真实可见的。<span class="num">2020 年</span>公司却披露内部调查发现虚构交易等问题,此前看似高速增长的部分收入失去了可信度。这个案例最反直觉的地方是:一家真实经营的公司,照样可以交出不真实的数字。</p><p>财务分析不能停在<span class="hl">“有没有这门生意”</span>。收入确认、补贴、关联交易和现金回流决定利润表里那一块钱究竟是不是挣来的。利润增长很快,经营现金流、客户数据或同店表现却对不上,三张表之间的裂缝就值得追。</p><p><a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>量化最怕把会计字段当传感器真值。异常应收、现金流与利润背离、审计意见和频繁修订都可以成为质量<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>。模型不会自动识别谎言,但它可以系统地寻找故事与账本互相打架的地方。</p>
+        </section>
+
+        <h2>2. 三张报表分别回答什么</h2>
+<p>想象你去面试一家公司,你大概会问三个问题:今年干得怎么样?家底有多厚?银行卡流水长什么样?财务报表恰好就是这三份答卷。利润表回答一段时间里公司赚了多少钱,它一路记录收入、成本、费用、税费和净利润;<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>回答某个时点上公司有什么、欠什么、股东净资产还剩多少;现金流量表回答钱实际怎么进、怎么出,并且分成经营、投资和筹资三类现金流。</p><p>用人话说,拿一家街角小店来对照:利润表像这一年的生意账——货卖了多少,成本多少,房租人工多少,年底账面落了多少;资产负债表像年底给店里拍张照——柜台里有多少现金、仓库里多少存货、添置了什么设备,外面还欠着供应商和银行多少钱;现金流量表最诚实,像银行流水单——钱到底哪天进来、哪天出去,一分不装。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>关键是三张表要一起看,拆开看都会闹笑话。只看利润表,可能忽略应收账款根本收不回来;只看资产负债表,可能看不到生意正在一天天恶化;只看现金流,又可能冤枉一家正在大力扩张的公司——它在猛投钱,流水自然难看。把三张表连起来读,是财务分析的基本功,也是基本面量化的起跑线。</p></div><p>口说无凭,拿一家虚构小厂把三张表焊一遍:今年确认收入 <span class="num">1000 万</span>,客户只付了 <span class="num">800 万</span>现金,剩 <span class="num">200 万</span>挂着应收;成本费用付现 <span class="num">550 万</span>,设备折旧 <span class="num">50 万</span>,缴税 <span class="num">100 万</span>。利润表算出净利润:1000 - 550 - 50 - 100 = <span class="num">300 万</span>。现金流量表给出经营现金流:800 - 550 - 100 = <span class="num">150 万</span>。两边要能对上:300 = 150 + 200(应收增加扣掉)- 50(折旧加回),一分不差。资产负债表那头,应收 +<span class="num">200 万</span>、现金 +<span class="num">150 万</span>、固定资产 <span class="num">-50 万</span>,资产净增 <span class="num">300 万</span>,正好等于利润转进净资产的 <span class="num">300 万</span>。三张表被同一笔账锁死,谁也别想单独说谎。</p><p>同一笔 <span class="num">200 万</span>应收,还是三表互查的最好标本。顺查:利润表里它算收入,<span class="num">300 万</span>净利里有它一份;资产负债表上它把应收项目垫高 <span class="num">200 万</span>;现金流量表里它做调节项,把 <span class="num">300 万</span>净利往下扣成 <span class="num">150 万</span>实收。倒查也一样:看到经营现金流比净利少 <span class="num">150 万</span>,先拆调节项,多半是应收吃了差额,再回资产负债表核对,应收果然胖了 <span class="num">200 万</span>。一个数字在三个位置各露一次脸,对不上账,就是警报。</p><div class="callout callout--note reveal"><span class="callout__title">三张报表,先各找各的主角再对照</span><p>利润表的主角是<span class="hl">“一段时期”</span>,资产负债表的主角是<span class="hl">“某个时点”</span>,现金流量表的主角是<span class="hl">“真金白银”</span>。最常见的阅读事故,就是拿错对照组:拿利润表的数字去回答现金流的问题,拿时点的照片去推断整年的经营。先看每张表在回答哪一问,再做交叉验证——表没错,问题先配对错。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 305" role="img" aria-label="利润表漏斗示意:营业收入依次减成本、费用、税,最后才是净利润">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">利润表:收入一层层减下去,才剩净利润</text>
+            <!-- 漏斗式递减条 -->
+            <rect x="250" y="60" width="400" height="40" rx="4" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff"/>
+            <text x="450" y="86" text-anchor="middle" fill="#eef4ff" font-size="14" font-weight="800">营业收入(卖东西收到的钱)</text>
+            <text x="672" y="86" fill="#8499bd" font-size="12">100</text>
+            <rect x="285" y="108" width="330" height="36" rx="4" fill="rgba(122,167,240,0.24)"/>
+            <text x="450" y="132" text-anchor="middle" fill="#eef4ff" font-size="13.5">− 成本 → 毛利</text>
+            <text x="637" y="131" fill="#8499bd" font-size="12">60</text>
+            <rect x="320" y="152" width="260" height="36" rx="4" fill="rgba(122,167,240,0.18)"/>
+            <text x="450" y="176" text-anchor="middle" fill="#eef4ff" font-size="13.5">− 费用 → 营业利润</text>
+            <text x="602" y="175" fill="#8499bd" font-size="12">30</text>
+            <rect x="355" y="196" width="190" height="36" rx="4" fill="rgba(240,201,106,0.22)"/>
+            <text x="450" y="220" text-anchor="middle" fill="#eef4ff" font-size="13.5">− 税 → 净利润</text>
+            <text x="567" y="219" fill="#f0c96a" font-size="12">20</text>
+            <text x="450" y="266" text-anchor="middle" fill="#c9d4e8" font-size="13">收入不等于利润:中间要一层层扣掉成本、费用和税</text>
+            <text x="450" y="290" text-anchor="middle" fill="#8499bd" font-size="12.5">另外两张表:资产负债表看“有什么欠什么”,现金流量表看“钱真进真出”</text>
+          </svg>
+          <p class="figure__cap">利润表像一个漏斗:最上面是收入,往下每一层都要扣掉一块成本,最后漏出来的才是净利润。所以“收入高”不等于“真赚钱”,要看它一路扣完还剩多少。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 360" role="img" aria-label="小面包店一年的三张报表卡:利润表净利润5万、资产负债表30万总资产25万净资产、现金流量表现金减少2万,互相用箭头勾连">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">小面包店一年:三张报表互相指着对方</text>
+            <defs>
+              <marker id="d17a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7aa7f0"/></marker>
+              <marker id="d17g" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker>
+            </defs>
+            <!-- 三个报表卡 -->
+            <rect x="40" y="68" width="250" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="165" y="94" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">利润表(今年赚没赚)</text>
+            <text x="58" y="124" fill="#eef4f8" font-size="12.5">收入              80 万</text>
+            <text x="58" y="146" fill="#bcc9dd" font-size="12.5">- 材料/人工        55 万</text>
+            <text x="58" y="168" fill="#bcc9dd" font-size="12.5">- 房租/折旧/税     20 万</text>
+            <line x1="58" y1="176" x2="272" y2="176" stroke="#46587a" stroke-width="1"/>
+            <text x="58" y="196" fill="#f0c96a" font-size="12.5" font-weight="800">= 净利润            5 万</text>
+            <text x="58" y="220" fill="#8499bd" font-size="11">净利 ≠ 到手的钱(有赊账)</text>
+            <text x="58" y="240" fill="#8499bd" font-size="11">是一年干出来的结果</text>
+            <rect x="330" y="68" width="250" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="455" y="94" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">资产负债表(手里有啥)</text>
+            <text x="348" y="124" fill="#eef4f8" font-size="12.5">现金             12 万</text>
+            <text x="348" y="146" fill="#bcc9dd" font-size="12.5">存货(面粉)        3 万</text>
+            <text x="348" y="168" fill="#bcc9dd" font-size="12.5">设备(烤箱)       15 万</text>
+            <line x1="348" y1="176" x2="562" y2="176" stroke="#46587a" stroke-width="1"/>
+            <text x="348" y="196" fill="#eef4f8" font-size="12.5">= 总资产           30 万</text>
+            <text x="348" y="218" fill="#bcc9dd" font-size="12.5">- 借款              5 万</text>
+            <text x="348" y="240" fill="#f0c96a" font-size="12.5" font-weight="800">= 净资产           25 万</text>
+            <rect x="620" y="68" width="250" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="745" y="94" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">现金流量表(钱往哪走)</text>
+            <text x="638" y="124" fill="#eef4f8" font-size="12.5">经营活动净流入  +8 万</text>
+            <text x="638" y="146" fill="#bcc9dd" font-size="12.5">投资(买烤箱)     -15 万</text>
+            <text x="638" y="168" fill="#bcc9dd" font-size="12.5">筹资(借来)      +5 万</text>
+            <line x1="638" y1="176" x2="852" y2="176" stroke="#46587a" stroke-width="1"/>
+            <text x="638" y="196" fill="#f0c96a" font-size="12.5" font-weight="800">= 现金净变化      -2 万</text>
+            <text x="638" y="220" fill="#8499bd" font-size="11">利润 5 万但现金少了 2 万:</text>
+            <text x="638" y="240" fill="#8499bd" font-size="11">净利被存货/应收/折旧吃掉</text>
+            <!-- 三表互指 -->
+            <path d="M 300 178 L 322 178" stroke="#7aa7f0" stroke-width="2" fill="none" marker-end="url(#d17a)"/>
+            <text x="311" y="168" text-anchor="middle" fill="#8499bd" font-size="10.5">净利进净资产</text>
+            <path d="M 590 178 L 612 178" stroke="#f0c96a" stroke-width="2" fill="none" marker-end="url(#d17g)"/>
+            <text x="601" y="168" text-anchor="middle" fill="#8499bd" font-size="10.5">现金对上末数</text>
+            <text x="450" y="312" text-anchor="middle" fill="#c9d4e8" font-size="13">利润表问"赚了吗",资产负债表问"有啥、欠啥",现金流量表问"钱真到手了吗"</text>
+            <text x="450" y="336" text-anchor="middle" fill="#ffb4b4" font-size="12.5">三张表数字对不上 = 有个地方在造假或藏雷;对得上,是真的还是假的,要进一步看经营现金流</text>
+          </svg>
+          <p class="figure__cap">同一个小面包店,三张表各回答一件事:利润表说净赚 5 万,资产负债表说年底手里 30 万总资产、25 万净资产,现金流量表说钱实际上少了 2 万。三张表任何一个数字对不上,背后就有个地方在藏雷。</p>
+        </div>
+        <h2>3. 收入和利润不是同一回事</h2>
+<p><span class="hl">“我们公司年入百亿!”</span>听到这种话,先别急着鼓掌,补问一句:落到口袋里的利润有多少?收入是公司卖出产品或服务后确认的金额,利润是收入扣掉成本、费用、税费之后剩下的那一口。一家公司收入增长得再快,也不代表它真在赚钱;就算利润在涨,还得追问一句:这钱是不是主营业务挣来的,还是靠卖楼卖股凑出来的一次性进账。</p><p>算一笔最简单的账就明白了:公司卖货收入 <span class="num">100 万</span>,进货成本 <span class="num">70 万</span>,毛利 <span class="num">30 万</span>;再扣掉房租、工资、营销、研发、利息和税,最后净利润可能只剩 <span class="num">5 万</span>。收入数字很唬人,但如果成本和费用更唬人,股东到头来拿不到几个钱。这就是为什么研究和新闻里永远把收入和利润分开报。</p><p>量化里会用收入增长、净利润增长、毛<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>、净利率这些指标去搭成长因子和盈利能力因子。但用的时候必须防三样东西:一次性收益、会计调整和行业差异。尤其最后一条——银行、互联网、制造业的利润结构完全不同,拿同一把阈值尺子硬套,等于用体重秤量身高。</p><p>应收账款藏雷,推演一遍就看懂:去年收入 <span class="num">1000 万</span>、应收 <span class="num">200 万</span>,今年收入冲到 <span class="num">1500 万</span>,涨了五成,应收却从 <span class="num">200 万</span>翻到 <span class="num">600 万</span>,膨胀 <span class="num">3 倍</span>。新增的 <span class="num">500 万</span>收入里,<span class="num">400 万</span>只是挂账,等于八成增长是纸面富贵,钱包只鼓了两成。检查位就两个:应收增速除以收入增速,健康时两者该差不多,这里是 <span class="num">3 倍</span>对 <span class="num">0.5 倍</span>,差出 <span class="num">6 倍</span>;再看应收占收入的比例,从 200 ÷ 1000 = <span class="num">20%</span> 抬到 600 ÷ 1500 = <span class="num">40%</span>。两盏灯同亮,收入再漂亮也先打个对折再听。</p>
+
+        <h2>4. 毛利率和净利率</h2>
+<p>卖一杯咖啡赚多少差价,和一年忙到头真剩多少钱,是两回事——前者是毛利率,后者是净利率。毛利率 = 毛利 / 收入,它说的是产品或服务本身有多少加价空间;净利率 = 净利润 / 收入,它说的是所有费用都扣完之后,每一元收入最后留下多少利润。所以毛利率高不等于净利率高,中间可能隔着一座由研发、销售和管理费用堆成的大山。</p><p>对照两种极端就很好理解。一家软件公司,复制一份软件的边际成本几乎为零,毛利率可以高得惊人;但早期研发投入大、销售团队四处打单,费用同样惊人,净利润可能并不好看。反过来,一家零售公司毛利率可能很薄,靠快进快出、费用控制得紧,净利率反而稳稳的。利润表最下面那一行,从来不是最上面那一行的简单函数。</p><p>量化用利润率指标时,必须放回行业里比。白酒、银行、硬件制造、超市、航空,这些行业的利润率天然不在一个量级。跨行业直接比较毛利率,是最经典的低级错误:你看到的往往不是公司好坏,而是行业差异披了件公司基本面的外衣。</p><p>给你一组能心算的数:收入 <span class="num">1000 万</span>,进货成本 <span class="num">400 万</span>,毛利 <span class="num">600 万</span>,毛利率 <span class="num">60%</span>;研发、销售、管理费用合计 <span class="num">450 万</span>,税 <span class="num">50 万</span>,净利润 <span class="num">100 万</span>,净利率 <span class="num">10%</span>。反着验一遍:<span class="num">60%</span> 减 <span class="num">10%</span>,中间 <span class="num">50 个百分点</span>正是被 <span class="num">500 万</span>费用和税吃掉的那截——<span class="num">1000 万</span>的 <span class="num">50%</span> 刚好 <span class="num">500 万</span>。下次看到<span class="hl">“毛利率 <span class="num">60%</span> 的高科技生意”</span>先别激动,问一句费用率多少;毛利率只证到产品本身有赚头,最后赚不赚钱,要看那 <span class="num">50 个百分点</span>填不填得平。</p>
+
+        <h2>5. 资产和负债</h2>
+<p>相亲时大家爱问<span class="hl">“你有什么、你欠什么”</span>,问公司也一样,这张清单就叫资产负债表。资产是公司控制的资源:现金、应收账款、存货、固定资产、无形资产、长期投资;负债是公司需要偿还或履约的义务:短期借款、应付账款、长期借款、<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>。两边一减,资产减负债,剩下的才是股东权益。等式简单,读出味道不容易。</p><p>先看资产端,有句要紧的大实话:账上资产很多,不代表这些资产都值钱。现金最清白,没什么可争的;应收账款要看客户到底还不还钱;存货要看会不会过时跌价;固定资产要看能不能源源不断产生收益;商誉要看哪天会不会一纸减值公告砍掉一大块。同样叫<span class="hl">“资产”</span>,含金量天差地别,这正是财报阅读里最需要抠的地方。</p><p>再看负债端,也别一见负债就皱眉。合理借款能放大<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>效率,用别人的钱生钱;问题出在<span class="hl">“过高”</span>二字——负债太重的公司,一旦碰上利率上升、收入下滑或融资收紧,立刻变得脆弱不堪。量化里常用资产负债率、流动比率、速动比率、利息保障倍数这几个指标,给公司的财务风险画像,你至少要知道它们各自在看哪一面。</p><p>商誉炸雷的算术一点不深:公司花 <span class="num">10 亿</span>收购一个标的,比对方净资产多付的 <span class="num">6 亿</span>溢价,挂在账上当商誉;几年后标的只值 <span class="num">4 亿</span>,一纸减值把这 <span class="num">6 亿</span>砍掉。假设去掉减值前本年利润 +<span class="num">2 亿</span>,减值后就是 2 - 6 = <span class="num">-4 亿</span>,从盈利直接打成巨亏,净资产同步减 <span class="num">6 亿</span>。注意它不碰现金——钱是收购那年就花出去的,今年只是承认亏。检查位:商誉占净资产的比例,和并购标的的业绩承诺兑现率,前者越高,雷越大。</p><p>存货减值同理可算:账上存货 <span class="num">5000 万</span>,产品过时只值 <span class="num">3000 万</span>,计提跌价 <span class="num">2000 万</span>,本年利润直接减 <span class="num">2000 万</span>;卖得晚不如认亏早,只是很多公司选择晚认。检查位:存货增速长期跑赢收入增速,比如收入只涨一成、存货涨六成,叠上存货周转天数一路拉长,这批货早晚要在利润表里咬人。存货和应收其实是一对兄弟雷,都在用明天的钱,垫今天的利润。</p>
+
+        <h2>6. 现金流比利润更难造梦</h2>
+<p>利润是算出来的,现金是数出来的——前者有口径,后者没商量。净利润是会计口径的产物,会被收入确认节奏、折旧摊销、减值计提、一次性收益这些东西推来推去;经营现金流盯的是另一件事:主营业务实打实带回来多少现金。把时间拉长看,一家好公司应该能持续把利润变成现金,纸面富贵终究要成色十足地落进账户。</p><p>所以碰到<span class="hl">“利润很高、经营现金流长期很差”</span>的组合,雷达就该响了。钱去哪了?可能是客户欠款收不回来,可能是存货堆在仓库里,可能是收入确认得太激进、货发出了款没影。当然也别一刀切:有些重资产公司被巨额折旧压低了利润,现金流反而比净利润更稳、更能代表真实经营,读数要看结构。</p><p>量化里常用经营现金流 / 净利润、自由现金流、现金流收益率这类指标来衡量盈利质量,一般规律是:现金流因子比单纯的净利润更能过滤会计噪音。但规律不是定律,用的时候照样要结合行业和周期背景,把口径差异想清楚再下结论。</p><p>来个完整的打架现场:某公司净利 <span class="num">1 亿</span>,经营现金流 <span class="num">-2 亿</span>,差额 <span class="num">3 亿</span>去哪了?从净利润往下调:折旧摊销 <span class="num">0.5 亿</span>不花现金,加回来,变成 <span class="num">1.5 亿</span>;应收增加 <span class="num">1.5 亿</span>,货卖了钱没回,扣掉,归零;存货增加 <span class="num">1 亿</span>,钱压在仓库,再扣,变 <span class="num">-1 亿</span>;应付减少 <span class="num">1 亿</span>,提前还了供应商,又扣,落到 <span class="num">-2 亿</span>。1 + 0.5 - 1.5 - 1 - 1 = -2,分毫不差。四栏里三栏都在替账面繁荣垫钱。这也解释了为什么经营现金流除以净利润常年小于 1 的公司要进观察名单——分母是意见,分子是事实。</p>
+
+        <h2>7. 股东的钱赚得怎么样</h2>
+<p>你掏 <span class="num">100 万</span>入股一家店,年底它给你赚了 <span class="num">20 万</span>——这笔买卖算不算好?这就是 <a class="term term-link" href="glossary.html#g-净资产收益率roe" title="查看术语：净资产收益率(ROE)">ROE</a> 在回答的问题。<span class="term">ROE</span> 是净利润除以股东权益,表示股东投入的净资产一年产出了多少收益。<span class="term">ROE</span> 高,通常说明公司盈利能力强;但注意了,高只是结果,来源才是重点:它可能来自真本事的高利润率,也可能来自玩命借钱的高<span class="term">杠杆</span>。</p><p>想把来源拆开,就用经典的杜邦分析:把 <span class="term">ROE</span> 拆成净利率、资产周转率和权益乘数三块。净利率看每一元收入留下多少利润;资产周转率看家当用得勤不勤、效率高不高;权益乘数看<span class="term">杠杆</span>放得多大。三家公司 <span class="term">ROE</span> 都是 <span class="num">20%</span>,背后的风险可能天差地别——一家靠产品赚钱,一家靠勤快周转赚钱,一家靠借钱赌博赚钱,同分不同命。</p><p>量化里的质量因子,常用 <span class="term">ROE</span>、ROA、毛利率、现金流质量、盈利稳定性这些维度。但请把这句话刻在脑门上:高 <span class="term">ROE</span> 的<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>如果估值已经贵上天,未来收益未必高——好公司和好股票之间,永远隔着一个价格。质量,必须和价格放在一起看。</p><p>给杜邦三件套各配一家公司,<span class="term">ROE</span> 都是 <span class="num">20%</span>:A 靠利润率,净利率 <span class="num">20%</span> × 资产周转 <span class="num">1 次</span> × 权益乘数 1,相乘得 <span class="num">20%</span>;B 靠周转,净利率 <span class="num">4%</span> × 周转 <span class="num">2.5 次</span> × 乘数 2,也是 <span class="num">20%</span>;C 靠<span class="term">杠杆</span>,净利率 <span class="num">4%</span> × 周转 <span class="num">1 次</span> × 乘数 5,还是 <span class="num">20%</span>。三个 <span class="num">20%</span> 站一排,风险立判:A 的产品赚头跌一点还能活;C 的收入只要波动,<span class="num">5 倍</span>乘数会连本带息放大颠簸。同样分数不同命,拆开乘一遍,才知道谁在裸泳。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 450" role="img" aria-label="杜邦三联拆解图:ROE拆成利润率、资产周转率、杠杆倍数,同 ROE 不同质,经营型与杠杆型天差地别">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">杜邦拆解:ROE = 利润率 × 周转率 × 杠杆</text>
+            <rect x="360" y="70" width="180" height="80" rx="10" fill="rgba(240,201,106,0.25)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="450" y="100" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">ROE 18%</text>
+            <text x="450" y="124" text-anchor="middle" fill="#bcc9dd" font-size="12">净利润 / 股东权益</text>
+            <rect x="70" y="200" width="230" height="110" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="185" y="228" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">① 净利润率</text>
+            <text x="185" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">每 100 元收入净赚多少</text>
+            <text x="185" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是经营水准</text>
+            <text x="185" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">利润驱动型公司</text>
+            <rect x="335" y="200" width="230" height="110" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="450" y="228" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">② 资产周转率</text>
+            <text x="450" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">一块资产一年转销出多少收入</text>
+            <text x="450" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是运营效率</text>
+            <text x="450" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">效率驱动型公司</text>
+            <rect x="600" y="200" width="230" height="110" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="715" y="228" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">③ 杠杆倍数</text>
+            <text x="715" y="254" text-anchor="middle" fill="#bcc9dd" font-size="12">总资产 / 股东权益</text>
+            <text x="715" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">刀刃是财务风险</text>
+            <text x="715" y="300" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">杠杆驱动型公司</text>
+            <path d="M 400 152 Q 300 178 250 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <path d="M 450 152 Q 450 178 450 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <path d="M 500 152 Q 580 178 680 196" fill="none" stroke="#8499bd" stroke-width="2.5"/>
+            <rect x="70" y="340" width="760" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="94" y="366" fill="#f0c96a" font-size="13" font-weight="800">同 ROE ≠ 同质</text>
+            <text x="94" y="390" fill="#bcc9dd" font-size="12">A: 18% 利润率 × 1 周转 × 1 杠杆 = 18%,凭经营;B: 3% 利润率 × 1.2 周转 × 5 杠杆 = 18%,凭负债</text>
+            <text x="94" y="412" fill="#bcc9dd" font-size="12">两种 18 一旦利率上行表现完全相反——这就是必须拆开看的原因</text>
+          </svg>
+          <p class="figure__cap">ROE 的数字好看不代表质量好——先拆开看是挣钱挣的、效率挣的,还是负债堆的。只有能拆开的 ROE,才是撑得住下行的 ROE。</p>
+        </div>
+        <h2>8. 价格相对什么贵</h2>
+<p>买菜你会问<span class="hl">“多少钱一斤”</span>,买股票要问的是<span class="hl">“价格相对什么贵”</span>——估值指标就是干这个的,它把市场价格和公司基本面绑在一起。<a class="term term-link" href="glossary.html#g-市盈率pe" title="查看术语：市盈率(PE)">PE</a> 是市值 / 净利润,问市场愿意为一元利润付多少钱;<a class="term term-link" href="glossary.html#g-市净率pb" title="查看术语：市净率(PB)">PB</a> 是市值 / 净资产,问愿意为一元账面净资产付多少钱;PS 是市值 / 收入,问愿意为一元收入付多少钱;股息率是每股分红 / 股价,问按当前价格买进,分红回报大约多少。</p><p>但每个指标都有它的脾气。<span class="term">PE</span> 低不一定便宜——可能是市场已经预见利润即将下滑,提前把价格打了折;<span class="term">PE</span> 高也不一定泡沫——可能是利润涨得快,分母在追分子。<span class="term">PB</span> 对银行、地产、周期类资产更常用,拿来量轻资产科技公司却常常失灵;PS 适合还没稳定盈利的早期公司,但你不能忽略它未来到底能不能赚钱。指标没有好坏,只有用没用对地方。</p><p>量化在造估值因子时,通常会把这些指标先标准化、再行业<a class="term term-link" href="glossary.html#g-中性化" title="查看术语：中性化">中性化</a>,然后和质量、成长、<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>搭伙使用。特别提醒一句:单纯闭眼买低 <span class="term">PE</span>,很容易一脚踩进价值陷阱——那种长期便宜、便宜得很有道理的坑。想让估值信号真有用,组合构建和风险控制必须跟上。</p><p>低 <span class="term">PE</span> 还会自己凭空消失:市值 <span class="num">100 亿</span>、净利 <span class="num">5 亿</span>,<span class="term">PE</span> = 100 ÷ 5 = 20,看着不贵;下年利润滑到 <span class="num">2.5 亿</span>,股价一动不动,<span class="term">PE</span> 自动变 100 ÷ 2.5 = 40。分子没动,分母腰斩,便宜就这么蒸发了。所以看 <span class="term">PE</span> 必须多问一句:这个利润是常态、高点还是低点?把周期顶点的利润当常态,<span class="num">20 倍</span>的便宜其实是 <span class="num">40 倍</span>的贵;反过来,周期底部的烂利润也会把 <span class="term">PE</span> 顶得很高,那一头同样是假信号。</p>
+
+        <h2>9. 财务数据的时间坑</h2>
+<p>财报封面上印着<span class="hl">“<span class="num">6 月</span> <span class="num">30 日</span>”</span>,不等于你 <span class="num">7 月</span> <span class="num">1 日</span>就能看到它——这中间隔着一段不短的披露窗口,而这段窗口正是无数<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>翻车的案发现场。财务报表要分清两个日子:报告期和披露日。报告期结束,只代表账算完了,不代表市场知道了。量化回测必须使用披露日之后的数据,绝不能把一份市场还没看到的财报提前塞进模型,否则就是教科书级的偷看未来。</p><p>麻烦还不止一层:财务数据会修正。公司可能更正报表,数据供应商可能回填最终版本。如果你用的数据库没有保存<span class="hl">“点时版本”</span>——也就是历史上每一天市场实际看到的那个版本——回测就会在不知不觉中使用后来修正过的数据,等于让模型提前阅卷改了答案,成绩当然好看,实盘当然挨打。</p><p>一句话总结:基本面量化最容易犯的错,就是<a class="term term-link" href="glossary.html#g-未来函数" title="查看术语：未来函数">未来函数</a>。价格数据好歹天天可见、一眼可查,财务数据的可见时间则复杂得多。动手做财务因子之前,先把三件事确认清楚:公告日、更新时间、字段口径。地基的土质没探明,别急着往上盖楼。</p><p>算一笔滞后账感受坑的深度:年报报告期止于 <span class="num">12 月</span> <span class="num">31 日</span>,披露最晚可拖到次年 <span class="num">4 月</span>底,隔着约 <span class="num">120 天</span>、整整 <span class="num">4 个月</span>。假设某公司利润翻倍,股价在 1 到 <span class="num">4 月</span>已提前涨 <span class="num">40%</span>,披露后又涨 <span class="num">10%</span>,全年累计 1.4 × 1.1 = 1.54。回测若在报告期一结束的新年就用上这份年报,全年收益记成 +<span class="num">54%</span>;实盘最早 <span class="num">4 月</span>底才能用,只能吃到后段 +<span class="num">10%</span>。54 对 10,信号效果被高估 <span class="num">5 倍</span>多,虚增 <span class="num">44 个百分点</span>——全是偷看那 <span class="num">4 个月</span>造的假。</p><div class="callout callout--note reveal"><span class="callout__title">财报有两枚时间戳,回测只认第二枚</span><p>封面上的<span class="hl">“<span class="num">6 月</span> <span class="num">30 日</span>”</span>只是账算完的日子,披露日才是市场知道的日子,两枚时间戳最长能隔四个月。回测只能用第二枚:数据入库时把<span class="hl">“可用时间”</span>直接写成公告日,而不是报告期——这条规则最好写成入库断言,让未来的自己想偷懒也偷不成。</p></div>
+
+        <h2>10. 行业差异和周期</h2>
+<p>拿银行的尺子去量制造业,就像用温度计称体重——工具没错,对象全错。不同行业的财务指标根本不能简单横向比较:银行的资产负债表和制造业长得完全是两个物种;地产的预收款和存货结构自成一派;互联网公司要盯研发费用和用户增长;周期品公司的利润则会跟着商品价格坐过山车。先认清行业,再看懂数字,顺序不能反。</p><p>周期行业尤其要多留个心眼,它专门惩罚只看静态数字的人。当利润站在周期高点时,分母巨大,<span class="term">PE</span> 看起来低得诱人,可接下来利润一旦回落,便宜立刻变贵;反过来,利润趴在周期低点时,<span class="term">PE</span> 高得吓人甚至为负,可周期一<span class="term">反转</span>,利润回来了,贵又变成了便宜。在周期里,<span class="hl">“低 <span class="term">PE</span>”</span>这三个字经常是最贵的误会。</p><p>那怎么办?量化里的常用解法是做行业内排名:在每个行业内部比较估值和质量,而不是把银行股和半导体股扔到同一个池子里硬比。行业中性化不是走形式、装样子,它是对商业模式差异最朴素的尊重——承认酿酒和炼钢本来就是两种生意,比较才有意义。</p>
+
+        <h2>11. 从财务报表到基本面因子</h2>
+<p>零件讲完了,现在把它们攒成一台能跑的机器。一次完整的基本面因子研究,流程大致是这样:先选定股票池和要用的财务字段,按公告日把财务数据对齐到交易日,再计算 <span class="term">ROE</span>、毛利率、收入增长、经营现金流质量、资产负债率这些因子,最后做极端值处理和行业标准化。每一步都有讲究,尤其是<span class="hl">“按公告日对齐”</span>——用的是披露时间,不是报告期,前面刚踩过的坑别再踩一遍。</p><p>因子造出来,接着做体检:看 <a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">IC</a>、分层收益、行业暴露、换手和成本。有个节奏上的常识值得记住:基本面因子更新慢,财报是季度更新的,所以调仓频率通常不需要太高。你要是每天根据同一个财务指标频繁下单,信号根本没变,变的只是你交出去的手续费——那不叫勤奋,叫给券商打工。</p><p>最后一步也最容易被省略:解释收益来源。质量因子为什么有效?可能是好公司风险更低、盈利更稳,也可能是市场长期低估了质量的持续性;估值因子为什么有效?可能是承担了风险的补偿,也可能是人性的行为偏差。没有解释,因子就是一段碰巧拟合上的曲线,你很难在回撤里坚持它——而不知为何赚的钱,市场早晚会连本带息收回去。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>利润表、资产负债表和现金流量表,分别回答“赚不赚钱”“家底几何”“现金怎么进出”三个问题,要连起来读。</li>
+            <li>ROE、利润率、现金流、杠杆和估值指标,都必须放回行业、周期和披露时间里理解,孤立看数字必踩坑。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 门店是真的,咖啡是真的,收入为什么还能是假的</li>
+            <li><strong>2.</strong> 三张报表分别回答什么</li>
+            <li><strong>3.</strong> 收入和利润不是同一回事</li>
+            <li><strong>4.</strong> 毛利率和净利率</li>
+            <li><strong>5.</strong> 资产和负债</li>
+            <li><strong>6.</strong> 现金流比利润更难造梦</li>
+            <li><strong>7.</strong> 股东的钱赚得怎么样</li>
+            <li><strong>8.</strong> 价格相对什么贵</li>
+            <li><strong>9.</strong> 财务数据的时间坑</li>
+            <li><strong>10.</strong> 行业差异和周期</li>
+            <li><strong>11.</strong> 从财务报表到基本面因子</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么利润好看、现金流却很差时要警惕?</summary>
+            <p>利润可能堆在收不回的应收账款、激进的会计确认或一次性收益里;钱没真的到账,盈利质量就要打问号。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>ROE 高一定是好公司吗?</summary>
+            <p>不一定。高 ROE 可能来自高利润率,也可能来自高杠杆硬撬,还要看它能否持续、背后承担多大风险。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>收益和风险怎么量化: 年化、波动、回撤和夏普</h2>
+          <p>把投资报告里最常见的收益风险指标讲成可理解、可手算的东西。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 31 章 · 量化里的机器学习: 模型不是越复杂越好 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="从线性模型、树模型、深度学习和金融噪声讲清模型在量化中的位置。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="31">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第五部分 · 量化研究如何产生可信结论 · 第 31 章</p>
+        <h1>量化里的机器学习: 模型不是越复杂越好</h1>
+        <p class="lead">既然你有深度学习功底,心里多半早就在盘算: 能不能把股票数据喂给 Transformer,让模型自己学出赚钱规律? 答案是: 可以研究,但千万别把金融市场当成下一个 ImageNet。图像的标签是猫就是猫,金融的标签里却塞满噪声;样本之间不独立,今天和明天纠缠不清;分布说变就变;交易成本会啃掉微弱优势;模型越复杂,过拟合越丝滑。量化里的机器学习,不是比谁模型酷,而是把预测、组合、交易和风控接成一台真能赚钱的系统。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线五</span>
+            <span>本部分第 4 / 10 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>一个金融判断怎样变成可证伪假设,再经过数据、回测、模型和实盘约束?</p>
+          <p class="chapter-context__outcome">读完后,你能从问题出发完成研究闭环,而不是先找模型、再给结果编故事。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>量化模型首先服务于问题定义: 先想清楚预测什么,而不是先挑个酷模型再去找任务。</li>
+            <li>线性模型、树模型和深度学习各有边界,金融的低信噪比会把过拟合风险放大。</li>
+          </ul>
+        </section>
+
+
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. Zillow 的房价模型为什么买来一屋子麻烦</h2>
+<p>Zillow 曾把自动估价能力推向直接买卖房屋的 Zillow Offers 业务:模型估价、公司出钱收房、简单翻修后再卖。听起来像把一个预测模型接上<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>,让算法亲自兑现自己的判断。<span class="num">2021 年</span>,公司却宣布收缩并关闭这项业务,大量房屋估价和转售结果不及预期。</p><p>问题不只是模型<span class="hl">“猜错房价”</span>。买房之后还会冒出持有成本、翻修、地区<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>、成交周期和集中采购能力;预测误差一旦乘上真实库存,就从屏幕上的均方误差变成仓库里的现金损失。模型对平均价格差一点,在高<span class="term">杠杆</span>、低流动性的业务里可能已经差很多。</p><p>金融机器学习最怕目标函数和赚钱目标错位。更准的价格预测不必然带来更高利润,因为仓位、成本、容量和尾部路径在模型之外。把模型接上真钱以前,必须沿着端到端链路问一句:预测改善的这一点,最后究竟落在哪一行损益表上?</p>
+        </section>
+
+        <h2>2. 模型先服务于问题定义</h2>
+<p>做机器学习项目,很多人的肌肉记忆是先选模型、再找数据。在量化里,这个顺序是灾难的起点。这里的第一步是定义问题: 你到底要预测什么? 未来 <span class="num">1 日</span>收益、未来 <span class="num">20 日</span><span class="term">超额收益</span>、<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>排序、<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>、成交概率,还是风险暴露? 问题不同,数据、标签、损失函数和评价指标全都跟着变。</p><p>举例感受一下。目标是选股排序,你关心的就是 <a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">RankIC</a>、分层收益和组合<span class="term">超额收益</span>,而不是普通回归的 MSE;目标是判断明天这单能不能成交,你关心的是成交概率和拒单风险;目标是控制风险,预测误差的方向可能比收益预测本身更要紧。</p><p>很多失败的量化项目,从起点就走错了: 先挑一个酷模型,再满世界找数据喂它。更稳的顺序正好反过来: 金融问题、可交易假设、标签定义、数据口径、简单基线、复杂模型、组合和执行。模型在这条链上排在后面——不是它不重要,是它必须由前面的问题来定义。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 380" role="img" aria-label="机器学习四道快门:特征(估值动量波动质量流动性因子)、模型(0.3×价值+0.2×质量+0.2×动量−0.1×波动)、预测(未来20日相对收益看RankIC)、决策(超配前20%月频调仓);每格标注一个坑:泄漏、过拟合、信号衰减、执行成本">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">特征 → 模型 → 预测 → 决策:四道快门,每道都在吃收益</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">顺序不可倒:先定义问题,再谈模型——本章 2.1 节:模型必须由前面的问题来定义</text>
+            <defs><marker id="e10a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>
+            <rect x="24" y="72" width="186" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="117" y="100" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 特征</text>
+            <line x1="40" y1="112" x2="194" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="117" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="117" y="136">原始行情与财报</tspan></text>
+            <text x="117" y="162" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="117" y="162">压成因子:估值动量</tspan></text>
+            <text x="117" y="188" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="117" y="188">波动、质量、流动性</tspan></text>
+            <line x1="40" y1="230" x2="194" y2="230" stroke="rgba(232,136,136,0.30)"/>
+            <text x="117" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">坑:数据泄漏</text>
+            <text x="117" y="272" text-anchor="middle" fill="#c9d4e8" font-size="10.5">用了当天之后的数据(1.4)</text>
+            <rect x="246" y="72" width="186" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="339" y="100" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">② 模型</text>
+            <line x1="262" y1="112" x2="416" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="339" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="339" y="136">打分式(2.2节):</tspan></text>
+            <text x="339" y="162" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="339" y="162">分=0.3×价值</tspan></text>
+            <text x="339" y="188" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="339" y="188">+0.2×质量+0.2×动量</tspan></text>
+            <text x="339" y="214" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="339" y="214">−0.1×波动</tspan></text>
+            <line x1="262" y1="230" x2="416" y2="230" stroke="rgba(232,136,136,0.30)"/>
+            <text x="339" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">坑:过拟合</text>
+            <text x="339" y="272" text-anchor="middle" fill="#c9d4e8" font-size="10.5">历史答案背得太熟(1.9)</text>
+            <rect x="468" y="72" width="186" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="561" y="100" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">③ 预测</text>
+            <line x1="484" y1="112" x2="638" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="561" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="561" y="136">每只股一个预期分</tspan></text>
+            <text x="561" y="162" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="561" y="162">标签:未来20日收益</tspan></text>
+            <text x="561" y="188" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="561" y="188">看RankIC与分层</tspan></text>
+            <line x1="484" y1="230" x2="638" y2="230" stroke="rgba(232,136,136,0.30)"/>
+            <text x="561" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">坑:信号衰减</text>
+            <text x="561" y="272" text-anchor="middle" fill="#c9d4e8" font-size="10.5">上线后 IC 慢慢掉(2.9)</text>
+            <rect x="690" y="72" width="186" height="210" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="783" y="100" text-anchor="middle" fill="#8fb37a" font-size="15" font-weight="800">④ 决策</text>
+            <line x1="706" y1="112" x2="860" y2="112" stroke="rgba(122,167,240,0.18)"/>
+            <text x="783" y="136" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="783" y="136">规则:超配前20%</tspan></text>
+            <text x="783" y="162" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="783" y="162">月频调仓生成订单</tspan></text>
+            <text x="783" y="188" text-anchor="middle" fill="#bcc9dd" font-size="11.5" font-weight="600"><tspan x="783" y="188">下进市场才算数</tspan></text>
+            <line x1="706" y1="230" x2="860" y2="230" stroke="rgba(232,136,136,0.30)"/>
+            <text x="783" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">坑:执行成本</text>
+            <text x="783" y="272" text-anchor="middle" fill="#c9d4e8" font-size="10.5">佣金滑点吃掉超额(1.5)</text>
+            <path d="M 212 176 L 240 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e10a)"/>
+            <path d="M 434 176 L 462 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e10a)"/>
+            <path d="M 656 176 L 684 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e10a)"/>
+            <text x="450" y="318" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">出厂前死于泄漏和过拟合,上线后死于衰减与成本——四道快门,一道都省不掉</text>
+            <text x="450" y="344" text-anchor="middle" fill="#c9d4e8" font-size="12.5">本章路线因此反过来排:金融问题 → 可交易假设 → 标签 → 数据口径 → 简单基线 → 复杂模型</text>
+          </svg>
+          <p class="figure__cap">从原始数据到下单要过四道快门:特征压成因子、模型压成分数、分数变预测、预测进规则。每道都有一个主题坑:泄漏(1.4)、过拟合(1.9)、衰减(2.9)、成本(1.5)——前两道死在出厂前,后两道死在上线后。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="模型选型次序:问题先于工具,不是工具先于问题">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">先定义问题,再选模型</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">问题如果是“选哪只股票”——用浅模型、多因子回归就够了</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">问题如果是“明天的股价会涨几个点”——才需要开始考虑深层模型,但能做对超长周期的市场预测基本不存在</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">最坏的顺序是先决定用 AI/深度学习,再回去想个能装上的问题——这就是为什么大部分多空这套事最后都没兑现</text>
+          </svg>
+          <p class="figure__cap">先问“要回答什么问题”,再问“要用什么模型”。工具祛魅很简单:工具没有任何优越性,只是看你能不能问对问题。</p>
+        </div>
+        <h2>3. 线性模型为什么还活着</h2>
+<p>都这个年代了,线性模型凭什么还在量化一线活跃? 凭三点: 可解释、稳定、容易加约束。一个线性模型给每个<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>一个权重,你一眼能看出模型大概在奖励什么——估值、质量、<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>,还是流动性。它像一只透明外壳的机械表,不炫,但每个齿轮都能拆开检查。</p><p>最典型的多因子打分,写出来像一行配置: 分数 = 0.3 × <a class="term term-link" href="glossary.html#g-价值因子" title="查看术语：价值因子">价值因子</a> + 0.2 × 质量因子 + 0.2 × 动量因子 - 0.1 × 波动因子。真实模型更复杂,但核心直觉就是这样: 把多个因子按权重合成一个预期收益分数。</p><p>线性模型的短板也明显: 表达能力有限,抓不住非线性和特征之间的交互。比如低估值在某些行业是机会,在另一些行业可能是价值陷阱;<span class="term">动量</span>在高流动性股票上有效,到低流动性股票上可能还不够付成本。这类弯弯绕的关系,可能就得请非线性模型处理。</p>
+
+        <h2>4. 不让模型太相信自己</h2>
+<p>金融数据有个残酷组合: 特征很多,噪声更多。如果模型对每个特征都自由给出大权重,很容易把历史噪声当成宇宙真理。正则化用大白话说,就是给模型套上笼头: 不许权重随便变大、变复杂。说白了,别让模型太相信自己。</p><p>常见笼头各有手感: L2 正则惩罚大权重,让模型更平滑;L1 正则更狠,会把一些权重直接压到 0,顺手做了特征选择。树模型里有同款思想: 限制树深、叶子样本数、学习率和子采样;深度学习里则是 dropout、权重衰减、早停。名字五花八门,目的只有一个。</p><p>要拎清楚,正则化的目的不是故意把样本内收益压低点装谦虚,而是为了让模型在未来还能用。量化研究宁愿要一个样本内没那么惊艳、样本外更稳定的模型,也不该追求历史曲线的完美贴合——完美贴合过去,常常是没法面对未来的另一种说法。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="正则化效果说明：不加会过拟合，加了会牺牲一点但样本外更稳">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">正则化：让模型别把自己背的答案当成真理</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">不加正则：模型对历史数据倒背如流，参数又多又敏感，</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">加正则：参数被限制为一个简洁形状——可能精度略差，但样本外稳得多。</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">正则化的本质：牺牲一点训练分数，换一个不重写历史也不掉链子的模型。</text>
+          </svg>
+          <p class="figure__cap">机器学习消灭过拟合最常用的武器就是正则化——它给模型加了一股惰性，不让你为每一个数据点单独调参。</p>
+        </div>
+        <h2>5. 树模型和梯度提升</h2>
+<p>如果说线性模型是透明机械表,树模型就是会自己长出规则的判断树。它可以学到类似“当估值低、质量高、过去<span class="term">动量</span>不差时更看好”这样的规则,天生擅长非线性和特征交互。随机森林、GBDT、XGBoost、LightGBM、CatBoost,都是这个大家族的成员。</p><p>树模型在表格数据上常年能打,所以量化股票的截面数据里也到处是它: 不挑特征尺度,对异常值相对稳健,还能顺手输出特征重要性。很多中低频量化研究会拿梯度提升树当强基线——新模型要是连这个基线都打不过,就先别谈上线。</p><p>但别误会,树模型照样<a class="term term-link" href="glossary.html#g-过拟合" title="查看术语：过拟合">过拟合</a>。金融数据看起来样本很多,每天几千只股票、几百个特征,可真正独立的信息远没有账面那么多。树太深、参数太多、调参太频繁,很容易把某段历史里的偶然结构背下来,当成永恒规律。</p>
+
+        <h2>6. 深度学习能不能做量化</h2>
+<p>深度学习当然能用于量化,而且有几个方向很有研究价值: 高维数据、序列建模、文本处理、订单簿、组合表示学习。新闻文本、公告、研报、财报原文、盘口序列、分钟级多资产数据——这些传统模型啃不动的形态,神经网络都可能提取表示。</p><p>但深度学习在金融里有几个天生的难处,入行前必须知道。第一,信噪比低,标签里大量随机波动,信号微弱;第二,分布漂移强,市场制度、参与者和风格都会变;第三,样本有效独立性低,相邻日期和同一行业股票高度相关;第四,模型复杂后很难解释风险暴露。</p><p>所以结论不是<span class="hl">“不能用”</span>,而是<span class="hl">“要用就得加码纪律”</span>: 强基线、样本外、滚动验证、交易成本、容量估计、特征泄漏检查和风险归因,一个都不能省。一个神经网络<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>曲线再美,如果说不清赚的到底是什么钱,上线就很危险。</p>
+
+        <h2>7. 横截面模型和时间序列模型</h2>
+<p>量化建模有个基本分野。横截面模型在同一天横向比较很多股票,目标是排序: 输入是当天每只股票的特征,输出是未来一段时间的相对收益或排名。指数增强、多因子选股,常用这种思路。</p><p>时间序列模型则纵向盯同一个资产随时间的变化,比如预测指数、期货、外汇或单只股票未来走势。它更像传统时间序列预测,常用的料是滞后收益、波动率、宏观变量、仓位数据这些。</p><p>两者还可以合体: 先用时间序列模型提取每只股票的历史状态,再在横截面上排序。深度学习里的序列编码器和截面注意力机制,就可能这么用。但请记住前面的警告: 结构越复杂,防泄漏和防过拟合的工程就越重。</p>
+
+        <h2>8. 损失函数要和赚钱目标对齐</h2>
+<p>普通回归最小化 MSE,分类任务最小化交叉熵,这是机器学习课的默认答案。但量化赚钱通常不直接等于 MSE 最小。想想选股: 你真的不需要精确预测每只股票未来涨多少个点,你只需要把相对更好的那批排到前面去。</p><p>于是排序损失、相关性损失、分组收益、组合层面的目标函数,都可能更贴近量化任务。有些研究会直接优化 <span class="term">RankIC</span> 或近似排序目标,也有研究把交易成本和风险约束纳入训练或后处理。</p><p>不过,直接优化收益也有坑: 收益目标噪声很大,模型可能学到历史里的偶然交易路径。所以实际流程里常常分工: 模型先做预测或排序,再由组合优化器把预测变成仓位,并用风险模型和成本模型在旁边约束。让模型直接对着钱优化,听着很爽,做起来很险。</p>
+
+        <h2>9. 特征重要性不等于因果解释</h2>
+<p>机器学习模型常输出一张特征重要性排行。它能告诉你模型在历史训练里依赖了哪些变量,但请注意,它不能直接证明这些变量因果上导致了收益。一个特征被标<span class="hl">“重要”</span>,可能只是因为它代理了行业、市值、流动性或某段市场风格。</p><p>举个例: 模型发现<span class="hl">“成交额”</span>很重要,这不等于成交额越大越能赚钱。它可能只是帮模型区分大盘股和小盘股,或者帮模型避开流动性太差的股票。想解读特征重要性,得结合<a class="term term-link" href="glossary.html#g-中性化" title="查看术语：中性化">中性化</a>、分层、分市场阶段和金融逻辑一起看。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>深度学习的解释更难。注意力权重、梯度归因、SHAP 等工具可以辅助理解,但不能替代金融审查。解释工作的目标不是出漂亮图给报告贴金,而是确认一件要命的事: 策略没有靠未来数据、不可交易样本或隐含风险暴露在赚钱。</p></div>
+
+        <h2>10. 线上模型会衰减</h2>
+<p>模型上线不是毕业典礼,而是衰减的开始。金融模型上线后效果常常慢慢变差,原因可能有一串: 市场环境变化、竞争者学习、交易成本变化、数据源变化、模型过拟合、执行质量下降——也可能什么坏事都没发生,只是正常统计波动。</p><p>所以实盘模型需要监控,像盯线上服务一样盯它: 预测分布、因子覆盖率、缺失率、IC、分层收益、换手、持仓暴露、成交成本、<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>、回撤和相对基准。特别记住一条: 如果输入数据突然异常,模型输出再漂亮也不能信——垃圾进,必然垃圾出。</p><p>机器学习工程里有数据漂移、概念漂移、模型监控,量化里面对的是同一批问题,只是后果直接<a class="term term-link" href="glossary.html#g-折现" title="查看术语：折现">折现</a>成钱。一个模型从不是训练完就结束,而是进入一个循环: 持续验证、再训练、降权、停用和复盘。</p>
+
+        <h2>11. 个人应该怎么开始金融 ML</h2>
+<p>个人学习,千万别第一步就追最复杂的网络。更靠谱的路线像升级打怪: 先用简单因子和线性模型把完整回测跑通;再请树模型当强基线;最后在确实有高维序列或文本需求时,才尝试深度学习。</p><p>第一个机器学习项目可以很具体: 做一个月频选股排序。股票池选<span class="term">沪深 300</span> 或<span class="term">中证 500</span>,特征用估值、<span class="term">动量</span>、波动、质量和流动性,标签用未来 <span class="num">20 日</span>相对收益,模型从 Ridge、ElasticNet、LightGBM 开始,评价看 <span class="term">RankIC</span>、分层收益、换手和扣费后超额。每一步都在练真功。</p><p>这条路线不性感,但它训练的是真正重要的能力: 数据对齐、泄漏检查、样本外验证、成本建模、风险归因和报告复盘。等这套基本功扎实后,深度学习上不上、怎么上,你自然会有判断力。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>量化模型首先服务于问题定义: 先想清楚预测什么,而不是先挑个酷模型再去找任务。</li>
+            <li>线性模型、树模型和深度学习各有边界,金融的低信噪比会把过拟合风险放大。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> Zillow 的房价模型为什么买来一屋子麻烦</li>
+            <li><strong>2.</strong> 模型先服务于问题定义</li>
+            <li><strong>3.</strong> 线性模型为什么还活着</li>
+            <li><strong>4.</strong> 不让模型太相信自己</li>
+            <li><strong>5.</strong> 树模型和梯度提升</li>
+            <li><strong>6.</strong> 深度学习能不能做量化</li>
+            <li><strong>7.</strong> 横截面模型和时间序列模型</li>
+            <li><strong>8.</strong> 损失函数要和赚钱目标对齐</li>
+            <li><strong>9.</strong> 特征重要性不等于因果解释</li>
+            <li><strong>10.</strong> 线上模型会衰减</li>
+            <li><strong>11.</strong> 个人应该怎么开始金融 ML</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么金融 ML 不能直接照搬普通监督学习流程?</summary>
+            <p>因为金融数据带着一串特殊问题: 时间可见性、低信噪比、分布漂移、样本相关和交易成本,每个都能让标准流程翻车。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>线性模型在量化里为什么仍然常用?</summary>
+            <p>因为它可解释、稳定、容易约束,特别适合多因子合成和风险暴露审查。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>从预测到仓位: 组合优化和风险模型</h2>
+          <p>解释为什么量化模型输出分数后,还要经过风险约束、成本模型和组合优化。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

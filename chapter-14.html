@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 14 章 · 行情、K 线、成交量和复权: 先看懂屏幕上的数字 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="解释股票软件里最常见的价格、成交量、K 线、盘口和复权概念。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="14">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第三部分 · 市场如何形成价格与数据 · 第 14 章</p>
+        <h1>行情、K 线、成交量和复权: 先看懂屏幕上的数字</h1>
+        <p class="lead">你第一次打开行情软件,多半会被满屏闪动的数字晃晕:最新价、涨跌幅、昨收、今开、最高、最低、成交量、成交额、换手率、买一卖一、内盘外盘、K 线、均线、前复权、后复权。这时候先别急着学任何技术指标,而是要回答三个更基础的问题:这些数字从哪里来?它们各自表示什么?更重要的是,它们不能说明什么?每个数字背后都站着一套生成规则:最新价来自撮合引擎的最后一笔配对,K 线是逐笔日志按窗口压成的四个聚合值,复权价是为对齐分红前后的计价口径而调整的序列。屏幕上每个数字都有自己的口径和脾气,看懂这层,才谈得上理解交易,也才谈得上用量化数据做研究。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线三</span>
+            <span>本部分第 3 / 8 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>一项金融权利怎样上市、成交、留下数据,又该怎样评价它的收益和风险?</p>
+          <p class="chapter-context__outcome">读完后,你能把交易界面上的数字还原为制度、现金流和可研究的数据口径。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>行情数字是交易结果的记录,不是公司价值和未来走势的直接答案。</li>
+            <li>K 线、成交量、盘口、换手率、复权和技术指标都要先理解口径,再谈使用。</li>
+          </ul>
+        </section>
+
+
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 一夜跌了 5%,账户为什么没少一分钱</h2>
+<p>某只<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>收盘 <span class="num">100 元</span>,第二天每股派发 <span class="num">5 元</span>现金,除息参考价相应变成约 <span class="num">95 元</span>。只看未复权 K 线,屏幕上像是隔夜暴跌 <span class="num">5%</span>;可股东同时收到 <span class="num">5 元</span>现金,在不考虑税费和市场波动时,总财富并没有凭空蒸发。</p><p>这类<span class="hl">“假断崖”</span>不只来自分红。拆股、送股、配股和合并都会改写每股价格的刻度。原始价格记录的是当时真实成交价,<a class="term term-link" href="glossary.html#g-复权价格" title="查看术语：复权价格">复权价格</a>试图把公司行动接回一条可比较的收益序列;两者都对,只是回答的问题不同。</p><p>许多惊艳<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>就死在这里:模型把除息缺口学成暴跌信号,或者用后复权价格模拟当日可成交价。数据清洗不是把曲线画得顺眼,而是明确每一列到底能不能拿去算收益、发订单和做归因。</p>
+        </section>
+
+        <h2>2. 最新价不是公司真实价值</h2>
+<p>行情软件把哪个数字放得最大最显眼,哪个数字就最容易被误解——最新价就是这么个角色。先弄清它从哪来:交易所的<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>引擎按价格优先、时间优先的规则,把不断涌入的买单和卖单两两配对,每配出一对就产生一笔成交;最新价就是最近这一笔被撮合出来的价格。它既不是交易所给这家公司盖的官方估值章,也不是把公司<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>里里外外算一遍得到的精确价值。</p><p>既然是最后一笔成交,它的局限也很明显:那一笔可能只有一百股,背后可能是一笔情绪单、一次误操作,或者一条还没被消化的消息。算一笔账:某股全天成交额 <span class="num">2 亿元</span>,尾盘有人用市价单扫走卖一上的 <span class="num">100 手</span>,价格从 <span class="num">20.00 元</span>被打到 <span class="num">20.10 元</span>。这一单金额约 <span class="num">20 万元</span>,只占全天成交的万分之一,却把最新价抬高了 <span class="num">0.5%</span>——反算一下,20.10 除以 20.00 再减 1,正好 <span class="num">0.5%</span>。常有人以为最新价是全市场共识的体现,其实它只是边际上最后一笔的价格,有足够耐心的资金足以挪动它。</p><p>量化研究每天要吃进海量价格数据,入门的第一个纪律就是尊重价格的含义:价格是可观察的结果,不是因果解释。用程序员的话说,它是系统输出的日志,不是源代码。策略不能因为价格涨了,就自动推导<span class="hl">“公司变好了”</span>;也不能因为跌了,就自动宣布<span class="hl">“公司变差了”</span>。价格变化的背后,可能是<a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>,可能是资金流,可能是交易限制、情绪、指数调仓,也可能只是<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>被临时抽走了。看到日志先别急着下结论,这是读行情的第一课。</p>
+
+        <h2>3. 一天被压成四个价格</h2>
+<p>一天四五个小时的交易,几千笔、几万笔成交,最后落到日线数据里只剩四个数:开盘价、最高价、最低价、收盘价,英文缩写 OHLC。这四个数不是谁拍脑袋登记的,而是从全天逐笔成交里聚合出来的:开盘价来自早盘<a class="term term-link" href="glossary.html#g-集合竞价" title="查看术语：集合竞价">集合竞价</a>的撮合一锤,最高价和最低价是全天成交价格扫出来的上下边界,收盘价来自收盘阶段的集合竞价或最后几笔成交。用程序员的话说,这是按交易日这个窗口对逐笔日志做了一次 first、last、max、min 聚合——压缩得很优雅,但压掉的东西你得心里有数。</p><p>动手算一遍就明白聚合的含义。假设某股第一笔成交 <span class="num">9.90 元</span>,随后依次是 <span class="num">10.05 元</span>、<span class="num">10.20 元</span>、<span class="num">9.95 元</span>,尾盘定在 <span class="num">10.10 元</span>,这一天的 OHLC 就是开 9.90、高 10.20、低 9.90、收 10.10。反着验证:开盘取第一笔、收盘取最后一笔、高低取极值,四个数各有出处。再假设另一只股票同一天也收出完全相同的 OHLC,但它是上午一路拉升、下午跳水后尾盘才拉回——两根 K 线骨架一模一样,股民的心跳曲线天差地别,只看聚合结果根本分不出来。</p><p>这对量化不是小事,而是坑。日线策略通常只能假设自己在某些价格附近成交,可真实成交发生在分钟、秒甚至逐笔层面。最典型的错误是:策略信号用当天收盘价计算,<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>里却假设自己也按当天收盘价买入——可收盘价是收盘那一刻才知道的,你等于先看到了答案再答题。反直觉的是,数据压缩得越狠、回测代码越简洁,这种偷看的机会反而越多。这类<a class="term term-link" href="glossary.html#g-未来函数" title="查看术语：未来函数">未来函数</a>,是全书反复要防的头号敌人。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 305" role="img" aria-label="K线构成示意:阳线收盘高于开盘,阴线收盘低于开盘,上下影线是最高价和最低价">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一根 K 线,记录一段时间里的四个价格</text>
+            <!-- 阳线 -->
+            <text x="250" y="76" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">阳线(收盘 &gt; 开盘)</text>
+            <line x1="250" y1="96" x2="250" y2="130" stroke="#a8c6ff" stroke-width="2"/>
+            <line x1="250" y1="230" x2="250" y2="262" stroke="#a8c6ff" stroke-width="2"/>
+            <rect x="222" y="130" width="56" height="100" rx="3" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff" stroke-width="2"/>
+            <text x="300" y="104" fill="#c9d4e8" font-size="12.5">最高价</text>
+            <text x="300" y="140" fill="#c9d4e8" font-size="12.5">收盘价(上沿)</text>
+            <text x="300" y="228" fill="#c9d4e8" font-size="12.5">开盘价(下沿)</text>
+            <text x="300" y="262" fill="#c9d4e8" font-size="12.5">最低价</text>
+            <!-- 阴线 -->
+            <text x="620" y="76" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">阴线(收盘 &lt; 开盘)</text>
+            <line x1="620" y1="96" x2="620" y2="130" stroke="#ffb4b4" stroke-width="2"/>
+            <line x1="620" y1="230" x2="620" y2="262" stroke="#ffb4b4" stroke-width="2"/>
+            <rect x="592" y="130" width="56" height="100" rx="3" fill="rgba(232,120,120,0.28)" stroke="#ffb4b4" stroke-width="2"/>
+            <text x="670" y="104" fill="#c9d4e8" font-size="12.5">最高价</text>
+            <text x="670" y="140" fill="#c9d4e8" font-size="12.5">开盘价(上沿)</text>
+            <text x="670" y="228" fill="#c9d4e8" font-size="12.5">收盘价(下沿)</text>
+            <text x="670" y="262" fill="#c9d4e8" font-size="12.5">最低价</text>
+            <text x="450" y="292" text-anchor="middle" fill="#8499bd" font-size="13">实体是开盘和收盘,上下影线是这段时间摸到的最高和最低</text>
+          </svg>
+          <p class="figure__cap">一根 K 线把一段时间压缩成四个数:开盘、收盘、最高、最低。实体两端是开盘和收盘,细细的影线是期间摸到过的最高和最低价。</p>
+        </div>
+        <h2>4. K 线实体和影线只是压缩图</h2>
+<p>很多新手看 K 线的姿势,像极了古人看星象:这根是<span class="hl">“仙人指路”</span>,那根是<span class="hl">“乌云盖顶”</span>,仿佛每根线里都藏着预言。我们先把这份神秘感拆掉。K 线只是把开、收、高、低四个价格画成一根柱子:实体是开盘和收盘之间的区间,影线是全天最高和最低摸到的位置。收盘高于开盘,画成上涨颜色;收盘低于开盘,画成下跌颜色。注意,红绿的含义各地习惯不同,A 股里常见的是红涨绿跌,和外盘正好相反,别记岔了。</p><p>看一根具体的线。某股当天开 <span class="num">10.00 元</span>、收 <span class="num">11.00 元</span>、最高 <span class="num">11.50 元</span>、最低 <span class="num">9.80 元</span>:实体高 <span class="num">1.00 元</span>,上影线 <span class="num">0.50 元</span>,下影线 <span class="num">0.20 元</span>,全天区间 <span class="num">1.70 元</span>,实体占了约 <span class="num">59%</span>。反算验证:1.00 加 0.50 加 0.20,恰好等于 1.70,账目自洽。稳妥的读法是把 K 线当成交易过程的压缩记录:大实体说明多空打得激烈且一方明显占优,上影线说明冲高过但没守住,下影线说明跳水过但被拉了回来。常有人以为长上影是见顶预告,其实它只是<span class="hl">“冲高未守住”</span>这五个字的事后记录,本身不预测明天。</p><p>对量化来说,K 线形态确实可以变成特征:实体长度、上下影线比例、开盘跳空幅度、收盘在全天区间里的位置,都能变成数值喂给模型。但这些特征必须经过样本外检验和交易成本检验,绝不能靠翻十几张漂亮的图就拍脑袋相信。图形语言适合建立直觉,统计检验才决定它有没有资格进入策略——这条界线,贯穿全书。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 340" role="img" aria-label="OHLC 聚合示意:五笔成交 9.90/10.05/10.20/9.95/10.10 聚合成一根阳线,开 9.90、高 10.20、低 9.90、收 10.10,实体约 +2.0%">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">五笔真实成交,聚合成一根 K 线</text>
+            <defs><marker id="c7a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker><marker id="c7b" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
+            <rect x="40" y="56" width="400" height="232" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="240" y="82" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800">全天 5 笔成交(按时间顺序)</text>
+            <path d="M 90 250 L 155 175 L 220 100 L 285 225 L 350 150" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>
+            <circle cx="90" cy="250" r="6" fill="#f0c96a"/>
+            <circle cx="155" cy="175" r="4.5" fill="#a8c6ff"/>
+            <circle cx="220" cy="100" r="6" fill="#f0c96a"/>
+            <circle cx="285" cy="225" r="4.5" fill="#a8c6ff"/>
+            <circle cx="350" cy="150" r="6" fill="#f0c96a"/>
+            <text x="76" y="254" text-anchor="end" fill="#f0c96a" font-size="11.5" font-weight="800">① 9.90</text>
+            <text x="147" y="197" text-anchor="middle" fill="#eef4f8" font-size="11.5">② 10.05</text>
+            <text x="232" y="104" fill="#f0c96a" font-size="11.5" font-weight="800">③ 10.20 最高</text>
+            <text x="293" y="249" text-anchor="middle" fill="#eef4f8" font-size="11.5">④ 9.95</text>
+            <text x="362" y="152" fill="#f0c96a" font-size="11.5" font-weight="800">⑤ 10.10</text>
+            <line x1="60" y1="270" x2="398" y2="270" stroke="#46587a" stroke-width="1.5" marker-end="url(#c7b)"/>
+            <text x="402" y="274" fill="#8499bd" font-size="11">时间</text>
+            <path d="M 448 165 L 512 165" stroke="#f0c96a" stroke-width="3" fill="none" marker-end="url(#c7a)"/>
+            <text x="480" y="148" text-anchor="middle" fill="#f0c96a" font-size="11.5">聚合</text>
+            <rect x="520" y="56" width="340" height="232" rx="14" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="690" y="82" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800">得到一根阳线(收盘 &gt; 开盘)</text>
+            <line x1="640" y1="100" x2="640" y2="250" stroke="#a8c6ff" stroke-width="2.5"/>
+            <rect x="612" y="150" width="56" height="100" rx="3" fill="rgba(122,167,240,0.30)" stroke="#a8c6ff" stroke-width="2"/>
+            <text x="692" y="104" fill="#eef4f8" font-size="12">最高 10.20 ← 第③笔</text>
+            <text x="692" y="154" fill="#eef4f8" font-size="12">收盘 10.10 ← 末笔⑤</text>
+            <text x="692" y="254" fill="#eef4f8" font-size="12">开盘=最低 9.90 ← 首笔①</text>
+            <text x="640" y="278" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">实体 +0.20 元 ≈ +2.0%</text>
+            <text x="450" y="320" text-anchor="middle" fill="#c9d4e8" font-size="12.5">四个数各有着落:开=首笔、高低=极值、收=末笔;被压掉的是路径——上午拉升下午跳水,也可能得到同样的四个数</text>
+          </svg>
+          <p class="figure__cap">日线上的四个价格来自一次 first/max/min/last 聚合:开是首笔、收是末笔、高低是极值。这只股票恰好最低=开盘,所以下影线长度为零。聚合很优雅,但路径被压掉了——看 K 线时心里要装着这个前提。</p>
+        </div>
+        <h2>5. 有多少筹码换了手</h2>
+<p>价格告诉你成交在什么位置,成交量和成交额告诉你那个位置上到底有多少<span class="hl">“真金白银的交接”</span>。成交量是成交了多少股或多少手,成交额是成交了多少钱,两者联动:成交额等于每笔成交价格乘数量再加总,<a class="term term-link" href="glossary.html#g-换手率" title="查看术语：换手率">换手率</a>则是成交量除以流通股本。一个价格蹭蹭上涨但成交量很小,可能只是几笔小单推上去的,地基不稳;同样上涨若伴随巨大成交,说明大量资金在那个价格区域完成了换手,这个价是被真金白银投票投出来的。</p><p>算一笔联动账:某股流通股本 <span class="num">2 亿</span>股,今天成交 <span class="num">2000 万</span>股,成交均价 <span class="num">15 元</span>,那么成交额就是 <span class="num">2000 万</span>乘 15,等于 <span class="num">3 亿元</span>,换手率就是 <span class="num">2000 万</span>除以 <span class="num">2 亿</span>,等于 <span class="num">10%</span>。反算验证:成交额除以均价回到 <span class="num">2000 万</span>股的成交量,两个口径互相咬合。再纠正一个最常见的误读:成交量放大,不等于<span class="hl">“买的人比卖的人多”</span>——每一笔成交都是一个买家配一个卖家,缺一不可。成交量放大的真正含义是分歧加大、交易活跃:多空两边在这个价位上激烈地互道珍重。</p><p>量化拿成交量主要干两件事:判断流动性,估算容量。流动性好的股票,策略进出如风;流动性差的股票,你一点资金就能掀起波浪。举个回测里必须算清楚的账:策略计划买入 <span class="num">1000 万元</span>的小盘股,可这只股票当天总成交额只有 <span class="num">3000 万元</span>——你一笔就买走全天三分之一的量,价格不可能纹丝不动地等你成交。回测里假装自己毫无冲击,实盘就会教你做人。</p>
+
+        <h2>6. 同一批股票换了多少主人</h2>
+<p>把成交量再除以流通股本,就得到换手率。它大致回答一个问题:在一个时间段里,这批可以自由买卖的股票里,有多大比例的筹码换了主人。换手率高,说明这只股票门庭若市;换手率低,说明持有人和观望者都在按兵不动。这个指标的妙处是把成交量标准化:不看绝对股数,看相对盘子的比例。</p><p>举个具体例子。某公司有 <span class="num">1 亿</span>股流通股,今天成交 <span class="num">1000 万</span>股,换手率就是 <span class="num">10%</span>。再体会成交量和换手率的联动:换一只流通盘只有 <span class="num">2000 万</span>股的小盘股,同样成交 <span class="num">300 万</span>股,换手率是 <span class="num">15%</span>;换成流通盘 <span class="num">60 亿</span>股的大蓝筹,同样 <span class="num">300 万</span>股,换手只有 <span class="num">0.05%</span>。反算:<span class="num">300 万</span>除以 <span class="num">2000 万</span>是 0.15,除以 <span class="num">60 亿</span>是 0.0005,都对得上。同一笔成交量,在不同盘子上讲出完全不同的故事——这就是两个口径必须联动着看的原因。</p><p>反直觉的是,<span class="num">10%</span> 的换手率绝不等于<span class="hl">“十分之一的股东换人了”</span>:同一只股票一天之内可能被反复买卖多次,成交量统计的是流转次数,不是不同的股东数;也不能反过来说剩下 <span class="num">90%</span> 的持有人不关心后市,他们只是今天没出手。换手率在小盘股、题材股和事件驱动行情里特别常用,但也最容易被读歪:高换手可能是资金蜂拥关注,也可能是多空分歧大到掀桌子;低换手可能是筹码锁定良好,也可能是根本没人愿意来交易。所以它从不能孤立地用,要拉上市值、<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>、涨跌幅和公告事件一起看。</p>
+
+        <h2>7. 买一卖一不是装饰</h2>
+<p>行情软件右上方那两列跳动的价格和数量——买一到买五、卖一到卖五——很多新手当它们是装饰。其实那是此刻市场上最真实的<span class="hl">“讨价还价现场”</span>。买一是当前最高的买入报价和排队的数量,卖一是当前最低的卖出报价和排队数量。买一和卖一之间的缝隙,叫买卖价差:缝越小,交易越顺畅;缝越大,你一进一出就要白送市场一笔钱。</p><p>拿一组数字感受一下。假设买一 <span class="num">9.99 元</span>,卖一 <span class="num">10.00 元</span>。你想立刻买入,就得去敲卖一的 <span class="num">10.00 元</span>;想立刻卖出,就得去敲买一的 <span class="num">9.99 元</span>。买完马上后悔卖出,哪怕行情纹丝不动,你也因为这道价差亏了每股 <span class="num">0.01 元</span>,相对 <span class="num">10 元</span>的成本就是 <span class="num">0.1%</span>。若一个短周期策略一天来回 <span class="num">20 次</span>,光价差就磨掉约 <span class="num">2%</span> 的本金,还没算<a class="term term-link" href="glossary.html#g-佣金" title="查看术语：佣金">佣金</a>——反算:<span class="num">0.1%</span> 乘 <span class="num">20 次</span>,恰是 <span class="num">2%</span>。反直觉的是,同一道窄缝,拿三年的长线投资者几乎无感,对高频或短周期策略却是决定生死的成本线,毒性全看你的交易频率。</p><p>盘口上的数量也不是你看到的静态表格。卖一挂着 <span class="num">10 万</span>股,不代表你下单买 <span class="num">10 万</span>股就能全按卖一价拿走:行情数据有延迟,你前面排着别人的订单,挂单的还随时可以撤单。实盘交易系统必须处理部分成交、排队未成交、撤单失败这些破事——盘口更像一张不断刷新的弹幕,而不是一张静止的报价单。</p>
+
+        <h2>8. 一天波动有多大</h2>
+<p>涨跌幅回答的是<span class="hl">“终点比起点走了多远”</span>:当前价格或收盘价相对昨收价的变化比例。昨天收盘 <span class="num">10 元</span>,今天收盘 <span class="num">10.5 元</span>,涨幅就是 <span class="num">5%</span>——反算,10.5 除以 10 再减 1,正是 <span class="num">5%</span>。振幅回答的是<span class="hl">“过程有多颠簸”</span>:用当天最高价和最低价的差相对某个基准价格计算。假设今天最高 <span class="num">11 元</span>、最低 <span class="num">9.5 元</span>,振幅就是 11 减 9.5 再除以 10,等于 <span class="num">15%</span>。一个看结果,一个看过程。</p><p>常有人以为振幅大就意味着涨跌幅大,其实两者完全可以分离。一只股票收盘只涨了 <span class="num">1%</span>,看着岁月静好;可它盘中最高冲到过涨 <span class="num">8%</span>、最惨时跌到 <span class="num">-5%</span>,振幅巨大——这说明持有人这一天坐了一整圈过山车,抄底的人和追高的人心情完全不同。终点平静,不代表路上平静。</p><p>这条直觉在量化里会被一再用到:不能只看最终收益,还要看过程风险。两个策略一年下来都赚 <span class="num">10%</span>,一个中间<a class="term term-link" href="glossary.html#g-最大回撤" title="查看术语：最大回撤">最大回撤</a>只有 <span class="num">3%</span>,另一个中间最大回撤达到 <span class="num">40%</span>——纸面收益相同,持有体验和承担的风险完全是两个物种。价格数据从第一天起就在提醒你:到达终点的路径本身,就是风险的一部分。</p>
+
+        <h2>9. 分红送股后,价格为什么要重新调整</h2>
+<p>为什么分红送股之后,名义价格非要跳空一下?因为公司确实把一部分钱或权益还给了股东:每股派现 <span class="num">0.5 元</span>,公司账上就少了这笔现金,每股权益相应薄了 <span class="num">0.5 元</span>,交易所便把除息基准价从 <span class="num">10 元</span>直接调成 <span class="num">9.5 元</span>;10 送 10 之后股数翻倍,每股理论价对折。这个跳空是计量口径的规则性调整,不是市场当天恐慌抛售——你的总资产一分没少,只是每股价格的计量单位换了。</p><p>算一笔完整账。你持有 <span class="num">1000 股</span>,成本每股 <span class="num">10 元</span>,总资产 <span class="num">1 万元</span>。除息后价格 <span class="num">9.5 元</span>,市值变成 <span class="num">9500 元</span>,但账户里多了 <span class="num">500 元</span>现金分红,合计仍是 <span class="num">1 万元</span>。可如果直接把原始价格 9.5 除以 10 算收益率,会算出 <span class="num">-5%</span> 的假亏损;反算验证:9500 加 500,再除以 10000,恰好等于 1,真实回报是 <span class="num">0%</span>。常有人以为那个断崖是暴跌,其实它全由口径造成。要让收益率算得对,历史价格必须按每一次分红送股逐次调整——这就是复权存在的理由。</p><p>于是有了前复权和后复权:前复权把历史价格调整到和当前同一口径,方便你看长期走势的形状;后复权把当前价格折算到历史持有收益口径,方便算长期累计回报,不同数据源的算法和精度还可能有差异,用时务必写清楚。对量化这是高频错题:用未复权价格算收益,会把分红硬生生算成亏损;拿前复权价格模拟成交,又会用到历史上根本不存在的价格——那是事后调整出来的,当时的交易者从没见过。通常的做法是:算收益、算因子用复权口径,模拟成交、算订单用当时真实可交易的价格口径,混用必出问题。</p>
+
+        <h2>10. 先理解它只是加工后的价格</h2>
+<p>行情软件里层层叠叠的彩色均线,看着高深,拆开看其实朴素得很:<span class="num">5 日</span>均线就是最近 <span class="num">5 个交易日</span>收盘价的平均值。亲手算一条:最近 <span class="num">5 日</span>收盘依次是 10.0、10.2、10.1、10.4、<span class="num">10.3 元</span>,和为 51.0,均线就是 <span class="num">10.2 元</span>。明天若收在 <span class="num">11.0 元</span>,旧窗口里最老的 <span class="num">10.0 元</span>退出,新均线就是 51 减 10 加 11 再除以 5,等于 <span class="num">10.4 元</span>——反算,10.2 加 10.1 加 10.4 加 10.3 加 11.0 是 52,除以 5 正好 10.4。均线的作用只是平滑短期抖动,让趋势的轮廓更清楚。</p><p>所以指标不是水晶球,它们不会凭空创造信息,只是把已有的数据换个方式摆给你看。均线向上倾斜,说明过去一段时间价格整体在走高;短期均线上穿长期均线的<span class="hl">“金叉”</span>,说明短期平均涨速超过了长期平均。常有人以为金叉出现就该涨,其实它只陈述一个关于过去的事实,没有一条能保证<span class="hl">“未来”</span>一定上涨。MACD、RSI、布林带这些也一样,本质上都是对价格、成交量或波动的数学加工。</p><p>对程序员来说,最准确的类比是特征工程:原始价格是一列数据,均线、涨跌幅、波动率、成交量均值都是从这列数据加工出来的派生特征。一个特征有没有用,不看名字专不专业、写法玄不玄乎,只看它在严格回测和样本外测试里能不能稳定贡献信息。把技术指标当特征,而不是当信仰,是这门课的基本心法。</p>
+
+        <h2>11. 时间戳、停牌、缺失和供应商差异</h2>
+<p>量化新人最大的幻觉,是以为行情数据是一张干干净净的 Excel:每只股票每天一行,开高低收成交量一应俱全,读进来就能跑。真实世界要粗糙得多:停牌的日子可能根本没有成交记录;新上市的股票历史短得可怜;退市的公司会悄悄从数据源里蒸发;不同供应商对复权算法、涨跌停处理、成交额口径、指数成分的历史版本,处理方式可能全都不一样。</p><p>时间戳是另一个重灾区。日线数据里的<span class="hl">“日期”</span>指交易日;到了分钟线和逐笔数据,还要分清交易所时间、接收时间、落库时间——三个时间可能互不相同。算一笔亏给你看:某公司今晚收盘后公布超预期财报,明天高开 <span class="num">5%</span>、盘中再涨 <span class="num">3%</span>。若回测让策略<span class="hl">“在公布当日收盘买入”</span>,全天 <span class="num">8%</span> 的收益就全记上了;可真实世界你最早只能明天开盘进场,能拿到手的只有 <span class="num">3%</span>——反算,高开已吃掉 <span class="num">5%</span>,8 减 5 剩 3。反直觉的是,报告漂亮得不像话,往往就因为这 <span class="num">5 个百分点</span>的偷看:这就是未来函数最隐蔽的一种长相。</p><p>所以<span class="hl">“看懂行情”</span>远不只是会看图。真正进入量化,你要对每一条数据连环发问:这条数据在当时的那个时点能不能被看到?价格是未复权还是复权口径?停牌的日子在数据里怎么表示?缺失值是当天没交易,还是数据本身坏了?指数成分是当时的真实成分,还是拿今天的名单回填的?这些问题的答案,决定了回测究竟是研究,还是自娱自乐。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 390" role="img" aria-label="行情数据的四个坑:时间戳漂移、停牌处理、缺失填充决策、供应商差异">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">行情数据的四个坑:同一个 K 线图在不同供应商眼里有四个版本</text>
+            <rect x="70" y="80" width="360" height="120" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="250" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">坑 1:时间戳打架</text>
+            <text x="250" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">跨平台同样的分钟线可能错了一分钟</text>
+            <text x="250" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">分钟级策略能直接因此产生未来函数</text>
+            <text x="250" y="184" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">分钟策略的死穴</text>
+            <rect x="470" y="80" width="360" height="120" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="650" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">坑 2:停牌填不填?</text>
+            <text x="650" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">停牌当期该用 0 填补还是当行值填充?</text>
+            <text x="650" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">填 0 vs 填摸一条线 —— 回测结论直接反</text>
+            <text x="650" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">主观决定差一分,量化结果差千里</text>
+            <rect x="70" y="220" width="360" height="120" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="250" y="248" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">坑 3:缺失/增补的不同性子</text>
+            <text x="250" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12"> 某只股这一天真的没有数据,或被人事根本回填?</text>
+            <text x="250" y="298" text-anchor="middle" fill="#bcc9dd" font-size="12">回填会扭移到未来函数</text>
+            <text x="250" y="324" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">填充号 = 偷看未来</text>
+            <rect x="470" y="220" width="360" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="650" y="248" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">坑 4:供应商差异是常态</text>
+            <text x="650" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">Wind 的和 JoinQuant 的价格列常常差 >0.1%</text>
+            <text x="650" y="298" text-anchor="middle" fill="#bcc9dd" font-size="12">同样的策略在两个数据源上两个结果</text>
+            <text x="650" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">你必须选一个做基准,而不是“谁在变”</text>
+            <text x="450" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这四个坑不是任何一家供应商能完全透明的——想脏就脏,彻底错未必错在 hk券商,可能错在你同时吃了两家的吐纳</text>
+          </svg>
+          <p class="figure__cap">行情数据四个坑分别要你回答一分钟对应、停牌怎么存、缺失怎么填、供应商是哪个的全套问题——研究的第一步是先建一套可重现的答案。</p>
+        </div>
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>行情数字是交易结果的记录,不是公司价值和未来走势的直接答案。</li>
+            <li>K 线、成交量、盘口、换手率、复权和技术指标都要先理解口径,再谈使用。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 一夜跌了 5%,账户为什么没少一分钱</li>
+            <li><strong>2.</strong> 最新价不是公司真实价值</li>
+            <li><strong>3.</strong> 一天被压成四个价格</li>
+            <li><strong>4.</strong> K 线实体和影线只是压缩图</li>
+            <li><strong>5.</strong> 有多少筹码换了手</li>
+            <li><strong>6.</strong> 同一批股票换了多少主人</li>
+            <li><strong>7.</strong> 买一卖一不是装饰</li>
+            <li><strong>8.</strong> 一天波动有多大</li>
+            <li><strong>9.</strong> 分红送股后,价格为什么要重新调整</li>
+            <li><strong>10.</strong> 先理解它只是加工后的价格</li>
+            <li><strong>11.</strong> 时间戳、停牌、缺失和供应商差异</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>最新价为什么不等于公司真实价值?</summary>
+            <p>它只是最近一笔成交的价格,会受流动性、情绪、消息和单笔订单的影响,而估值还要看利润、资产、行业、利率和风险偏好,它代替不了完整体检。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么日 K 线会丢失信息?</summary>
+            <p>它把一天成千上万笔交易压缩成开高低收四个价和成交量,盘中的路径、拉扯过程和排队细节全都被压掉了。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>指数、ETF 和基准: 你到底在和谁比较</h2>
+          <p>从指数编制、指数基金、ETF 申赎、跟踪误差和基准意识讲起。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

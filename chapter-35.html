@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 35 章 · 一个量化项目的代码骨架: 从数据到报告怎么组织 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="用工程视角讲清数据层、因子层、回测层、模型层、报告层和配置管理。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="35">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第五部分 · 量化研究如何产生可信结论 · 第 35 章</p>
+        <h1>一个量化项目的代码骨架: 从数据到报告怎么组织</h1>
+        <p class="lead">计算机背景的读者,最容易把量化项目写成一个巨长的 notebook:单元格从上到下八百行,变量名从 df1 排到 df17。前几天它确实跑得通;过几周你自己都说不清哪个单元格该先运行、哪个文件才是最终结果、那条漂亮曲线到底是怎么来的。这不是研究,这是考古现场。真正可复盘的量化项目,必须像工程项目一样组织:数据来源清楚,配置可重复,实验有记录,回测可再现,报告能自动生成。这一章就带你搭出这副骨架。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线五</span>
+            <span>本部分第 8 / 10 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>一个金融判断怎样变成可证伪假设,再经过数据、回测、模型和实盘约束?</p>
+          <p class="chapter-context__outcome">读完后,你能从问题出发完成研究闭环,而不是先找模型、再给结果编故事。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>量化项目要按数据、因子、回测、模型、报告和日志分层组织,把所有逻辑塞进一个 notebook,等于放弃复盘能力。</li>
+            <li>配置、版本、交易记录和自动报告,是可复现研究的四根支柱,缺一根,结论就立不住。</li>
+          </ul>
+        </section>
+
+
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 同一份策略,三个人为什么跑出三条净值</h2>
+<p>团队里三个人拿到<span class="hl">“同一份”</span>策略:<a class="term term-link" href="glossary.html#g-价值因子" title="查看术语：价值因子">价值因子</a>、月末调仓、前十分之一<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>。第一个人用本地下载的最新成分股,第二个人沿用上个月缓存,第三个人把缺失值直接填成零。代码都能运行,三张净值却像三个毫不相干的产品。</p><p>问题不是谁的 Python 写得更优雅,而是项目没有保存数据版本、配置、日志和产物。研究结论一旦离开作者电脑就无法复现,它便不是结论,只是一次偶然运行。文件夹结构看起来枯燥,实际是在给每个数字补出生证明。</p><p>一个可靠项目应该让别人从报告反查到参数、代码、输入数据和运行时间。组织代码的目标不是好看,而是在收益异常时能沿链路回去找原因。量化研究真正的作品不是那张图,是任何人都能重新生成那张图的过程。</p>
+        </section>
+
+        <h2>2. 目录结构先分层</h2>
+<p>拿到一个新项目,第一件事不是写<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>,而是开目录。就像接手一个后端服务,你总得先知道代码、配置和日志各住哪个房间。一个最小化的量化项目,可以分成这么几层:data 保存原始数据和处理后的数据,features 保存因子构造,backtest 保存<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>逻辑,models 保存训练和预测,reports 保存图表和结论,configs 保存参数,logs 保存运行记录。七个目录,各管一段,谁也不越界。</p><p>目录分得这么讲究,不是为了看着整齐,而是为了隔离责任——工程师听到<span class="hl">“隔离责任”</span>这四个字,应该条件反射般地舒服。原始数据不该被实验脚本随手改掉;因子计算不该和回测<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>搅在一起;报告不该靠手工复制粘贴拼出来。每层的边界都清清楚楚,出错了你才知道去哪一层抓人;边界糊成一锅粥,debug 就变成全链路推理小说。</p><p>入门阶段完全不必上什么复杂框架,但有一条铁律:别把所有东西都塞进一个脚本。量化研究是要反复试错的,结构一乱,你很快就会发现一个致命问题——收益率变了,你却分不清它是来自模型改进、数据更新,还是某次手抖的手工操作。分不清功劳和 bug 的项目,比没有项目还危险,因为它会给你虚假的信心。</p>
+                <pre><code>quant_project/
+    configs/base.yaml
+    data/raw/              # 原始下载,不手改
+    data/processed/        # 清洗后的价格、成分、财务
+    features/              # 因子计算脚本
+    backtest/              # 账户、订单、撮合、指标
+    models/                # 训练、预测、模型版本
+    reports/               # 自动生成的图表和结论
+    tests/                 # 数据、因子、回测状态测试
+    logs/                  # 每次实验和模拟盘日志</code></pre>
+                <p>上面这棵目录树不是行业唯一标准,但它给了第一版项目一个可以照抄的形状。务实一点的做法是:先只实现 `configs`、`data`、`features`、`backtest`、`reports` 这五层,让研究流程能完整跑一圈;等到了模拟盘阶段,再把 `models`、`logs` 和更完整的测试补进来。骨架先立住,肌肉慢慢长。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 315" role="img" aria-label="量化项目分层结构示意:data、factors、backtest、config、reports 各司其职">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化项目要分层,别塞进一个大 notebook</text>
+            <!-- 分层结构 -->
+            <rect x="120" y="60" width="660" height="40" rx="8" fill="rgba(122,167,240,0.20)" stroke="#a8c6ff" stroke-width="1.5"/>
+            <text x="140" y="85" fill="#eef4ff" font-size="14">data/  原始与清洗后的数据,来源和口径清楚</text>
+            <rect x="120" y="106" width="660" height="40" rx="8" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
+            <text x="140" y="131" fill="#eef4ff" font-size="14">factors/  因子计算,每个因子一个可复现脚本</text>
+            <rect x="120" y="152" width="660" height="40" rx="8" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="140" y="177" fill="#eef4ff" font-size="14">backtest/  回测引擎与成交、成本、约束假设</text>
+            <rect x="120" y="198" width="660" height="40" rx="8" fill="rgba(240,201,106,0.16)" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="140" y="223" fill="#eef4ff" font-size="14">config/  参数与实验配置,可重复、可追溯</text>
+            <rect x="120" y="244" width="660" height="40" rx="8" fill="rgba(122,167,240,0.16)" stroke="#7aa7f0" stroke-width="1.5"/>
+            <text x="140" y="269" fill="#eef4ff" font-size="14">reports/  自动生成的净值、指标和归因报告</text>
+            <text x="450" y="300" text-anchor="middle" fill="#8499bd" font-size="12.5">每层职责单一,换人接手也能看懂,几周后自己也不会迷路</text>
+          </svg>
+          <p class="figure__cap">把项目按职责拆成清晰的几层,而不是全写进一个越拉越长的 notebook。数据、因子、回测、配置、报告各归各位,几周后你和接手的人都还能看懂。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 415" role="img" aria-label="量化项目目录三层图:raw 原始层只读、features 特征层可算、reports 报告层只产,层间只允许向下读写,右侧红色虚线表示禁止反向回流">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">把目录当地层:每一层只许干一件事</text>
+            <!-- 三层地层,像地质剖面 -->
+            <rect x="80" y="70" width="740" height="84" rx="8" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="110" y="102" fill="#a8c6ff" font-size="14" font-weight="800">data/raw 原始层</text>
+            <text x="110" y="128" fill="#bcc9dd" font-size="12">落地之后一个字都不许改——改坏了没人知道,所有脏活留给下一层</text>
+            <rect x="80" y="166" width="740" height="84" rx="8" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="110" y="198" fill="#f0c96a" font-size="14" font-weight="800">data/features 特征层</text>
+            <text x="110" y="224" fill="#bcc9dd" font-size="12">清洗、对齐、算因子全在这里;每个因子一张登记表:定义、公式、值域、频率</text>
+            <rect x="80" y="262" width="740" height="84" rx="8" fill="rgba(238,136,119,0.13)" stroke="#ee8877"/>
+            <text x="110" y="294" fill="#ffb4b4" font-size="14" font-weight="800">reports 报告层</text>
+            <text x="110" y="320" fill="#bcc9dd" font-size="12">回测曲线、指标表、报错日志只从这里出;截图从贴自动生成,杜绝手工美图</text>
+            <!-- 层间箭头:只许向下 -->
+            <line x1="450" y1="156" x2="450" y2="164" stroke="#8499bd" stroke-width="3"/>
+            <line x1="450" y1="252" x2="450" y2="260" stroke="#8499bd" stroke-width="3"/>
+            <text x="470" y="161" fill="#8499bd" font-size="11">只许向下读</text>
+            <text x="470" y="257" fill="#8499bd" font-size="11">只许向下写</text>
+            <!-- 右侧红线:禁止反向 -->
+            <path d="M 800 330 Q 860 220 800 100" fill="none" stroke="#ee8877" stroke-width="3" stroke-dasharray="8 6"/>
+            <line x1="786" y1="88" x2="814" y2="112" stroke="#ee8877" stroke-width="3"/>
+            <line x1="786" y1="112" x2="814" y2="88" stroke="#ee8877" stroke-width="3"/>
+            <text x="450" y="388" text-anchor="middle" fill="#bcc9dd" font-size="12.5">吃过亏的项目最后都长成一个样:原始层只读、特征层可算、报告层只产,箭头一律向下</text>
+          </svg>
+          <p class="figure__cap">把目录当地质层:data/raw 落地后一个字不许改;data/features 负责清洗和算因子,每个因子都有登记表;reports 只负责产出回测曲线和报错日志。吃亏的项目最后都长成一个样——箭头一律向下,谁也不许反向回流。</p>
+        </div>
+        <h2>3. 配置文件比硬编码可靠</h2>
+<p>打开很多新手的量化代码,随手一搜就能搜出十几个魔法数字:日期写死在第三行,路径写死在循环里,费率藏在一个谁也想不起来的函数深处。这是给自己埋雷。正确的做法是:股票池、回测区间、调仓频率、交易成本、<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>、因子列表、模型参数,统统收进配置文件或显式参数里,不让任何关键数字散落在代码各处。写代码时你对它们了如指掌,三个月后它们就是你读不懂的甲骨文。</p><p>配置真正的价值,是让实验可重复。设想一下:你今天跑了一个<span class="term">中证 500</span> 月频低估值策略,一个月后你应该能用同一份配置跑出同样的结果;如果结果不一样,你必须能回答到底是数据更新了、代码改动了,还是依赖环境变了。回答不出这个问题,你做的就不是研究,是许愿——每次跑出来的都是许来的新愿。</p><p>配置还有个大用场:做对比实验。只改一个参数,比如把交易成本从 <span class="num">0.1%</span> 调到 <span class="num">0.2%</span>,其余一概不动,观察结果怎么变——这才是干净的单变量实验。要是参数散在代码里,对比实验就退化成了手工记忆大赛:刚才那次我到底改没改滑点来着?想不起来,实验就白费了。</p>
+                <pre><code>universe: csi500
+    start_date: 2016-01-01
+    end_date: 2024-12-31
+    rebalance: monthly
+    trade_price: next_open
+    cost:
+    buy_bps: 8
+    sell_bps: 13
+    constraints:
+    max_weight: 0.03
+    min_avg_amount: 20000000
+    factors:
+    - value_bp
+    - momentum_60
+    - quality_roe</code></pre>
+                <p>这份配置写的是一个研究项目的完整边界。以后报告里只要引用它,读者一眼就能知道:股票池是什么、日期从哪到哪、多久调一次仓、成本怎么扣、约束有几条、用了哪几个因子。配置写得越清楚,越难在事后偷偷改规则——它既是给别人的说明书,也是给未来那个容易心软的自己上的一把锁。</p>
+
+        <h2>4. 原始、清洗和特征分开</h2>
+<p>数据进来之后,最不该发生的就是<span class="hl">“边洗边用边覆盖”</span>。数据层至少要分出三个区:raw、processed 和 feature。raw 是原始下载或导入的数据,尽量一个字节都不改——它是案发现场的原貌;processed 是清洗后的标准表,比如统一了代码、日期、复权和停牌字段;feature 则是从 processed 算出来的因子和模型输入。三层各司其职,污染才不会顺着管道一路扩散。</p><p>这么分的用意是:每一步都要可追溯。某天你发现某个因子值异常,必须能沿着管道倒回去——从因子值,到清洗后的字段,到原始价格,再到处理脚本——一路查到源头。查不回去,模型输出错了你就只能猜;研究里“猜”这个字,比亏损本身更贵。</p><p>还有一件事要单独拎出来:数据检查脚本必须独立存在、随更随跑。缺失率、重复日期、异常价格、停牌状态、复权跳变、财报发布日期、指数成分变化,每一项都要能自动检查。数据检查绝不是开工那天跑一次就完事的仪式,每次更新数据都要重跑一遍——它更像 CI 而不是剪彩,何况脏数据最喜欢趁你不检查的时候溜进来。</p>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>表</th><th>关键字段</th><th>用途</th></tr></thead>
+                    <tbody>
+                      <tr><td>prices</td><td>date, code, open, close, volume, amount, adj_factor, paused, limit_up, limit_down</td><td>行情、成交限制、收益计算</td></tr>
+                      <tr><td>universe</td><td>date, code, index_code, weight</td><td>点时股票池和基准权重</td></tr>
+                      <tr><td>features</td><td>date, code, factor_name, value, available_at</td><td>因子矩阵和可见时间</td></tr>
+                      <tr><td>orders</td><td>date, code, side, qty, limit_price, status</td><td>回测和模拟盘订单状态</td></tr>
+                      <tr><td>positions</td><td>date, code, qty, sellable_qty, market_value</td><td>持仓、T+1 和风险暴露</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>有了上面这几张最小字段表,你就能把研究从一堆散落的 DataFrame,升级成一个可以逐表检查的数据层。字段不必一上来就追求齐全,但每个字段都必须说得出含义和口径——你今天省掉的注释,就是明年 debug 时流的泪。</p>
+
+        <h2>5. 每个因子都要有定义</h2>
+<p>因子代码最怕写成一句<span class="hl">“反正就是这么算的”</span>。每个因子都要白纸黑字写清楚:输入是什么,输出是什么,时间口径是什么。拿 momentum_20 举例:它用过去 <span class="num">20 个交易日</span>的复权收益,是否跳过最近 <span class="num">1 天</span>?做没做行业中性?极端值怎么处理?缺失值怎么填?这些问题不回答,同一个名字下可能住着三四种不同的因子,而你还以为它们是一个。</p><p>每个因子最好配两样小东西:一段文档和一个小测试。测试不用复杂,给它一段极小的假数据,算出预期结果,断言对上就行。别小看这几行——将来你重构代码时,它就是那个能在你手滑把 shift 方向改错的瞬间、立刻报警的哨兵。方向错了一位,因子就整个反了,而回测曲线照样会画出图来,绝不主动提醒你。</p><p>因子层还要舍得存中间结果。训练模型时不要每次临时把全部因子重算一遍:又慢,又难复现,还会让<span class="hl">“同一次实验”</span>变成玄学概念。工程上很简单:按日期和股票把因子矩阵落盘,记好生成它的代码和数据版本。因子矩阵就是研究世界的 checkpoint,存了它,你才能随时读档重来。</p>
+
+        <h2>6. 账户、订单和指标分开</h2>
+<p>回测层里至少住着三个角色,千万别让它们合体:策略负责生成目标仓位,撮合模块负责模拟成交,账户模块负责更新现金和持仓。最怕的写法是让策略函数直接改净值——看起来少写几十行,实际上你把成本、停牌、<a class="term term-link" href="glossary.html#g-t1" title="查看术语：T+1">T+1</a> 和部分成交这些现实,全都挡在了门外。爽一时,假一世:这种回测越漂亮,离市场越远。</p><p>指标计算同样要独立出来。<span class="term">年化收益</span>、<a class="term term-link" href="glossary.html#g-最大回撤" title="查看术语：最大回撤">最大回撤</a>、<a class="term term-link" href="glossary.html#g-夏普比率" title="查看术语：夏普比率">夏普</a>、<a class="term term-link" href="glossary.html#g-换手率" title="查看术语：换手率">换手率</a>、超额、<a class="term term-link" href="glossary.html#g-跟踪误差" title="查看术语：跟踪误差">跟踪误差</a>、<a class="term term-link" href="glossary.html#g-信息比率" title="查看术语：信息比率">信息比率</a>、行业暴露,这些统统可以从净值、持仓和交易记录里算出来,干嘛塞在回测主循环里?指标一旦独立,所有策略就能共用同一套评价体系——谁都别想给自己定制一把对自己有利的尺子。评价口径统一,是实验可比性的前提。</p><p>交易记录必须老老实实保存,这一条没有商量余地。只留一条净值曲线是远远不够的:你要知道每一次买卖了什么、数量多少、价格多少、费用多少、有没有失败。净值曲线是结果,交易记录是证据;复盘时不看证据只看结果,和破案时只看心情不看监控,本质上是一回事。</p>
+                <pre><code>for date in trading_calendar:
+    data = load_point_in_time_data(date)
+    if is_rebalance_day(date):
+        score = compute_score(data.features)
+        target = build_target_portfolio(score, constraints)
+        orders = diff_to_orders(account.positions, target)
+    orders = risk_check(orders, account, market_rules)
+    fills = match_orders(orders, data.next_bar, cost_model)
+    account.update(fills, data.close_price)
+    recorder.save(date, account, orders, fills)</code></pre>
+                <p>这段伪代码的重点只有两个字:顺序。先取当时可见的数据,再算分数和目标组合,再生成订单,再过风控,再撮合成交,最后更新账户并记录——一环扣一环。这个顺序只要乱一环,<a class="term term-link" href="glossary.html#g-未来函数" title="查看术语：未来函数">未来函数</a>或账户状态错误就会从裂缝里爬进来,而且通常不会报错,只会安静地给你一个好看得不真实的收益。回测引擎的全部尊严,都在这个循环里。</p>
+
+        <h2>7. 训练、预测和回测不要混</h2>
+<p>引入机器学习之后,有一条分工红线必须焊死:训练脚本负责用训练区间拟合模型,预测脚本负责在指定日期输出分数,回测脚本负责把分数变成组合。三件事,三个入口。一旦混在一起写,样本泄漏几乎是必然结局——它不会轰隆一声炸掉,而是悄悄把<span class="hl">“未来”</span>揉进训练集,让你的回测成绩好看到值得怀疑人生。</p><p>模型文件必须带版本,这是底线工程素养:用了哪些特征、训练区间到哪、参数是什么、随机种子是什么、代码是哪个版本,全部记录在案。要求是实盘的硬标准——模拟盘或实盘里某一天做出的预测,必须能一路追溯到当时那个具体的模型。追溯不到,那次预测就是一次无法复盘的悬案。</p><p>预测结果也要落盘,别让每次回测都临时训一遍模型然后直接交易。真实生产流程里,每天是先生成一份预测文件,组合构建和交易系统再去读它。照这个流程做模拟,一来更贴近真实生产,二来每一步都有档可查。回测里<span class="hl">“图省事”</span>省掉的每一步,未来都会变成你选择困难与互相矛盾的实验结果。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 920 385" role="img" aria-label="量化项目分层流水线图:原始数据、清洗、特征因子、训练、预测、回测报告六个方框单向排列,训练到因子之间画红色禁止回流线和叉号,下方三栏口诀分别为配置外置、失败也留档、测试断言守门">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化项目流水线:每一层只管自己的事</text>
+            <!-- 六层管道 -->
+            <rect x="40" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#7aa7f0"/>
+            <text x="100" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">原始数据</text>
+            <text x="100" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">只读,不改</text>
+            <rect x="190" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#7aa7f0"/>
+            <text x="250" y="94" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">清洗</text>
+            <text x="250" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">对齐·去重·补缺</text>
+            <rect x="340" y="70" width="120" height="56" rx="8" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+            <text x="400" y="94" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">特征/因子</text>
+            <text x="400" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">每个有定义</text>
+            <rect x="490" y="70" width="120" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#8fb37a"/>
+            <text x="550" y="94" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">训练</text>
+            <text x="550" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">只用历史段</text>
+            <rect x="640" y="70" width="100" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#ee8877"/>
+            <text x="690" y="94" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">预测</text>
+            <text x="690" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">滚到样本外</text>
+            <rect x="770" y="70" width="110" height="56" rx="8" fill="rgba(18,29,49,0.8)" stroke="#ee8877"/>
+            <text x="825" y="94" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">回测/报告</text>
+            <text x="825" y="114" text-anchor="middle" fill="#bcc9dd" font-size="11">自动生成</text>
+            <!-- 箭头 -->
+            <line x1="160" y1="98" x2="188" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="310" y1="98" x2="338" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="460" y1="98" x2="488" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="610" y1="98" x2="638" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <line x1="740" y1="98" x2="768" y2="98" stroke="#8499bd" stroke-width="2.5"/>
+            <!-- 数据不可回流红线 -->
+            <path d="M 690 128 Q 550 190 400 168" fill="none" stroke="#ee8877" stroke-width="3" stroke-dasharray="8 6"/>
+            <line x1="380" y1="160" x2="420" y2="176" stroke="#ee8877" stroke-width="3"/>
+            <line x1="380" y1="176" x2="420" y2="160" stroke="#ee8877" stroke-width="3"/>
+            <text x="545" y="186" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">禁止:未来信息回流训练——一跨线就是前视偏差</text>
+            <!-- 底部三栏口诀 -->
+            <rect x="60" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="80" y="246" fill="#a8c6ff" font-size="13" font-weight="800">配置外置</text>
+            <text x="80" y="270" fill="#bcc9dd" font-size="12">路径·参数全进配置文件</text>
+            <text x="80" y="292" fill="#bcc9dd" font-size="12">代码里不许硬编码</text>
+            <rect x="330" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.4)"/>
+            <text x="350" y="246" fill="#f0c96a" font-size="13" font-weight="800">失败也留档</text>
+            <text x="350" y="270" fill="#bcc9dd" font-size="12">跑挂的实验记参数和报错</text>
+            <text x="350" y="292" fill="#bcc9dd" font-size="12">失败的坑只值记一次</text>
+            <rect x="600" y="220" width="240" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(238,136,119,0.4)"/>
+            <text x="620" y="246" fill="#ffb4b4" font-size="13" font-weight="800">测试断言守门</text>
+            <text x="620" y="270" fill="#bcc9dd" font-size="12">因子值域、收益单位、</text>
+            <text x="620" y="292" fill="#bcc9dd" font-size="12">截面覆盖率,进 CI 每天查</text>
+            <text x="450" y="352" text-anchor="middle" fill="#bcc9dd" font-size="12.5">工程骨架的正确性不看代码多聪明,看三条纪律:数据单向流、配置全外置、结果可复现</text>
+          </svg>
+          <p class="figure__cap">量化项目的正确性靠的是三条纪律而不是代码聪明:数据只能从原始层一路单向流到报告层,训练绝不允许偷看样本外(一跨线就是前视偏差);路径参数全部外置到配置文件;跑挂的实验也要留档,同样的坑只值记一次。</p>
+        </div>
+        <h2>8. 自动生成比手工截图可靠</h2>
+<p>回测跑完了,接下来这一幕你肯定不陌生:打开 notebook,挑几张好看的图截下来,贴进文档——收工。问题恰恰出在“挑”字上。报告必须尽量自动生成:回测一结束,脚本就该自动输出净值图、回撤图、年度收益、月度收益、<a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">IC</a>、分层、换手、持仓、行业暴露和成本敏感性,一个都不许少。流程固定了,才轮不到人性出场挑肥拣瘦。</p><p>手工截图有两个原罪:一是容易只挑对自己有利的图,二是容易漏掉不利的结果——而这两者往往同时发生,且当事人毫无自觉。自动报告的价值就在于把固定指标一股脑全摆在你面前,逼你直面策略的真实长相,包括它卸妆后的部分。研究里最贵的能力不是发现机会,而是不对自己撒谎。</p><p>报告里还要保留元信息:用的是哪份配置、哪个数据版本。别人(包括三个月后的你)看到一条曲线,应该立刻能知道它出自哪个实验、哪组参数、哪版数据。没有元信息的图表,复盘价值趋近于零——一条来历不明的漂亮曲线,和一张没写日期的化验单一样,看着精密,毫无用处。</p>
+
+        <h2>9. 记录失败比记录成功更重要</h2>
+<p>说一个不浪漫的事实:量化研究里,大多数想法都会失败。那么你失败的想法去哪了?如果不记录失败,两个后果等着你:一是反复在同一个方向上徒劳尝试,二是记忆里只剩下成功案例,完美患上<a class="term term-link" href="glossary.html#g-幸存者偏差" title="查看术语：幸存者偏差">幸存者偏差</a>。实验日志应该老老实实记这些:日期、想法、配置、结果、结论、下一步。它不贵,每次十分钟,换的是不再原地打转。</p><p>日志不需要长,但必须诚实。举个例子,一条合格的记录长这样:尝试 <span class="num">60 日</span><a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>,样本内有效,<span class="num">2021 年</span>后失效,换手偏高,扣完成本超额为负,暂不加入组合。几句话,信息量齐全。这样的记录攒上半年,它比任何一本交易秘籍都懂你——因为它记录的恰恰是你亲手撞过的每一堵墙。</p><p>记录失败还有个隐藏收益:它能训练你的研究判断力。翻着翻着,规律自己会浮出来——哪些方向总是死在成本上,哪些因子扒光了看其实只是市值暴露,哪些模型对参数敏感到一碰就变脸。这些<span class="hl">“伤亡名单”</span>攒起来,才是你区别于新手的真正护城河。没写过失败日志的研究员,永远都在交同一笔学费。</p>
+
+        <h2>10. 测试和断言</h2>
+<p>你写出过一个收益年化翻倍的策略,结果第二天发现是复权因子用反了吗?写过的举手的人很多,承认的没几个。量化代码要和任何工程项目一样写测试,至少备齐四类:数据测试、因子测试、回测状态测试和指标测试。收益率算得对不对、复权处理合不合理、持仓会不会变成负数、现金和交易记录对不对得上账,每一项都要有测试兜底。</p><p>断言则是挡低级错误的廉价保险:禁止使用未来日期的数据,禁止下单数量不是交易单位的整数倍,禁止组合权重突破上限,禁止净值出现非数字,禁止成交发生在停牌日。写起来一条一行,抓 bug 一抓一个准。这些门槛再简单不过,可它们拦住的,恰恰是历史上无数<span class="hl">“漂亮回测”</span>的真实死因。</p><p>这些测试看着不像金融研究,倒像是软件工程的杂务——没错,它们就是杂务,但它们会救你的命。说三遍也不嫌多:很多漂亮回测来自 bug,不是来自 <a class="term term-link" href="glossary.html#g-alpha" title="查看术语：Alpha">Alpha</a>。测试写得越早,你被假收益欺骗的次数就越少;等到实盘才发现,就不叫学费,叫赔偿金。</p>
+                <pre><code>def test_momentum_uses_only_past_prices():
+    prices = [10, 11, 12, 13]
+    # asof=3 是第 4 天,只能看到第 4 天之前的可见价格
+    assert momentum(prices, asof=3, window=2) == 12 / 10 - 1
+
+def test_no_trade_when_limit_up():
+    order = Buy(code="000001", qty=100)
+    bar = Bar(open=10.0, limit_up=10.0, sell_volume=0)
+    assert match(order, bar).filled_qty == 0</code></pre>
+                <div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>注意这些测试样例的共同特点:小到一眼能算出答案。它们不追求覆盖金融现实的全部复杂度,目标很聚焦——挡住最常见的方向错误、未来数据和非法成交。测试的价值不在宏大,在于每个都简单到无可辩驳:对就是对,错就是错,没有辩解空间。</p></div>
+
+        <h2>11. 从教学项目到生产系统</h2>
+<p>教学项目可以舒舒服服跑在你自己的笔记本上,生产系统则要直面一堆残酷的新世界:调度、监控、权限、容错、备份、日志、告警和人工接管。这里要替你按一下刹车:千万别一上来就奔着复杂生产系统去造——但也要知道,未来某天你会需要它们。方向要看清,步子要放慢,这两件事不矛盾。</p><p>一条合理的过渡路线是循序渐进的:本地脚本先跑通,然后配置化;接着让报告每天定时自动生成;然后模拟盘自动更新;再然后小资金半自动下单;最后才谈全自动。注意每一级的共同点:都恰好比上一级多一个真实约束。这就像给游戏逐级解锁难度——跳级的人,通常会被市场用最贵的方式补课。</p><p>最后把工程化这件事的动机说透:它不是为了炫技术,而是为了让策略在时间里可维护。量化项目会持续迭代,没有结构、没有记录的项目,几个月之后就会退化成一台没人敢碰的黑箱——包括你自己。今天你嫌工程化麻烦,明天它就是你和<span class="hl">“推倒重来”</span>之间唯一的距离。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>量化项目要按数据、因子、回测、模型、报告和日志分层组织,把所有逻辑塞进一个 notebook,等于放弃复盘能力。</li>
+            <li>配置、版本、交易记录和自动报告,是可复现研究的四根支柱,缺一根,结论就立不住。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 同一份策略,三个人为什么跑出三条净值</li>
+            <li><strong>2.</strong> 目录结构先分层</li>
+            <li><strong>3.</strong> 配置文件比硬编码可靠</li>
+            <li><strong>4.</strong> 原始、清洗和特征分开</li>
+            <li><strong>5.</strong> 每个因子都要有定义</li>
+            <li><strong>6.</strong> 账户、订单和指标分开</li>
+            <li><strong>7.</strong> 训练、预测和回测不要混</li>
+            <li><strong>8.</strong> 自动生成比手工截图可靠</li>
+            <li><strong>9.</strong> 记录失败比记录成功更重要</li>
+            <li><strong>10.</strong> 测试和断言</li>
+            <li><strong>11.</strong> 从教学项目到生产系统</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么不建议把量化项目写成一个长 notebook?</summary>
+            <p>运行顺序、临时文件和手工操作全都难以复现,时间一长,连你自己也分不清结果到底来自模型、数据还是手滑。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>回测为什么必须保存交易记录?</summary>
+            <p>净值只能告诉你结果,交易记录才能让你复盘每一笔买卖、费用、失败单和持仓变化——证据比结论重要。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>识别回测幻觉: 错误清单与拆解案例</h2>
+          <p>系统识别未来函数、幸存者偏差、成本低估、容量忽略和参数挑选,并拆穿一条漂亮曲线。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

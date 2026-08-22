@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 11 章 · 结构性产品深拆: 收益和风险怎样被切开重卖 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="拆开雪球、CDS、CDO、互换和另类资产的内部齿轮,识别高票息背后被卖出的尾部风险。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="11">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第二部分 · 资产如何承载现金流与风险 · 第 11 章</p>
+        <h1>结构性产品深拆: 收益和风险怎样被切开重卖</h1>
+        <p class="lead">上一章建立了跨资产地图,这一章专门深入最容易被包装话术遮住的区域。雪球、CDS、CDO 和利率互换没有凭空创造收益,只是把旧资产的现金流与风险重新切开、排序和出售。理解每一份高票息对应谁在承担什么最坏情况,才算真正读懂结构。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线二</span>
+            <span>本部分第 7 / 7 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?</p>
+          <p class="chapter-context__outcome">读完后,你能先拆现金流、权利、期限和最坏情况,再讨论价格涨跌。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>结构性产品的母机是债券加期权:收益是一棵条款写死的 if-else 树;看不出“保本”字样一律按非保本处理;回测必须细到路径级,否则测不出条款里的悬崖。</li>
+            <li>雪球的两位数票息来自你卖出的看跌保护:涨够敲出、收益封顶,跌穿敲入、按指数跌幅结账;敲入线附近,做市商的对冲盘会反向加速下跌,2022 年与 2024 年初的大面积敲入就是这么来的。</li>
+          </ul>
+        </section>
+
+
+        <h2>1. 它们不是新资产,是旧资产切开重卖</h2>
+<p>货架上的名字一年比一年花哨:<span class="hl">“增强”</span><span class="hl">“稳盈”</span><span class="hl">“雪球”</span><span class="hl">“挂钩”</span><span class="hl">“避险”</span>。先别管名字,把这一族产品拆到底,原料只有两样:一只负责到期付钱的<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>,一份负责<span class="hl">“如果怎样就怎样”</span>的期权。差别全在刀工——怎么切、怎么拼、把哪一块卖给谁。前面章节里你见过最朴素的拼法:大头买一只到期还本的债,小头买一份看涨期权,凑出<span class="hl">“保本加参与上涨”</span>。这一章涉及的拼法要野得多:很多时候,你不是在买期权,而是在卖期权。</p><p>先看清它和<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>债券最大的区别。买股票买债券,收益直接跟资产走:公司赚多少、债还多少,你那条净值线就怎么画,跌 <span class="num">10%</span> 你账上就是实打实的 <span class="num">-10%</span>。而这一族产品的收益不是一条连续曲线,是一棵 if-else 树:涨到某条线,按条款 A 结账;跌破另一条线,按条款 B 结账——同样是跌 <span class="num">10%</span>,站在条件的两侧,含义天差地别。量化研究在这里最容易翻车:把 if-else 树当成一条平滑曲线去<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>,参数调得再细,也测不出条款里藏着的那道悬崖。</p><p>摊开地图,这张桌子上坐着三大家族。<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>衍生品,原料是债券、贷款加一份违约条款,卖给你的能力是<span class="hl">“把违约当保险买卖”</span>;<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>衍生品,原料是国债利率加一份互换条款,卖给你的能力是<span class="hl">“把固定利率和浮动利率对调”</span>;<a class="term term-link" href="glossary.html#g-结构化产品" title="查看术语：结构化产品">结构化产品</a>,原料是债券加期权再加分级,卖给你的能力是<span class="hl">“把涨跌切成一段一段”</span>。名字各不相同,手上的动作是同一个:切、拼、分级、转卖。</p><p>所以有句话值得抄在你的屏幕上:这些产品没有一种是新资产,它们全是旧资产切开、拼贴、再卖一遍。所谓金融创新,很多时候就是同一笔现金流换了件外套——房贷还是那笔房贷,切成三层、排好队、分别标价,就长出一堆新名字。读懂它们的方法论也只有一条:读条款永远比读宣传册重要。宣传册负责让你心动,条款负责在坏天气里决定你到底亏多少;你签的是条款,不是宣传册。</p><p>动手给这类东西建模之前,先把三条纪律写下来。第一,收益和亏损是条款写出来的,不是市场<span class="hl">“自然”</span>长出来的,一切统计分析都要先向条款低头。第二,产品说明里看不出<span class="hl">“保本”</span>两个字的,一律按非保本处理,别替它脑补保护。第三,想复现它的盈亏,前提是价格路径足够细、触发点足够明确——日频数据在这类产品身上根本不够用,这个道理,后面雪球一节会让你实实在在地疼一次。</p>
+
+        <h2>2. 敲进敲出的四条命</h2>
+<p>挑一只最典型的产品放上手术台:雪球。名字温软,条款一点也不温软。它是 <span class="num">2021 年</span>前后券商柜台最火的结构化产品,火到要靠预约抢额度;也是后来把<span class="hl">“稳健”</span><span class="hl">“高息”</span>这几个字摔得最碎的一个。把它彻底拆透,这一族产品的套路,你就算是全见过了。</p><p>把一份典型条款摆上桌,逐个词翻译:名义本金 <span class="num">100 万</span>,挂钩<span class="term">中证 500</span> 指数,入场时指数 <span class="num">9500 点</span>;期限三年;敲出线画在入场价的 <span class="num">103%</span>,即 <span class="num">9785 点</span>;敲入线画在入场价的 <span class="num">70%</span>,即 <span class="num">6650 点</span>;票息年化 <span class="num">15%</span>。<span class="hl">“敲出”</span>是指数涨够之后提前散场的那扇门,<span class="hl">“敲入”</span>是指数跌穿之后保护失效的那扇门。两扇门的位置一画好,整棵 if-else 树就长出来了。还要盯住观察日的设定:敲出通常按月观察,敲入在很多产品里是按日盯的——条款里这几行小字,决定了行情<span class="hl">“碰到线”</span>到底算不算数。</p><p>这棵树只有四种结局,一条一条过:没敲入也没敲出,到期拿完整票息,年化 <span class="num">15%</span>;某个观察日指数收上敲出线,产品提前终止,利息算到敲出那天为止;期间跌穿过敲入线、之后再没涨回敲出线,到期指数跌多少你就亏多少,本金不保底;先敲入、后来又敲出,票息照样拿到敲出日。注意顺序很重要:敲入是一次性翻牌,翻过去就回不去,后面涨回来也只能按敲入后的条款结账。</p><p>手算第一种行情:指数两年多一直在 <span class="num">6650 点</span>上方晃,第 <span class="num">14 个月</span>的观察日收上了 <span class="num">9785 点</span>,敲出,产品提前终止。利息 = <span class="num">100 万</span> × <span class="num">15%</span> × 14 ÷ 12 ≈ <span class="num">17.5 万</span>。只拿了一年出头的利息,没拿满三年,但落袋为安。这是销售材料里最爱展示的路径:持有期短、票息亮眼、过程丝滑,客户体验几乎完美。</p><p>再算第二种行情:指数一路下行,某个交易日跌穿 <span class="num">6650 点</span>,敲入;之后慢慢往回爬,但直到到期也没能再站上 <span class="num">9785 点</span>,最后收在 <span class="num">7800 点</span>。亏损 = <span class="num">100 万</span> × (7800 ÷ 9500 - 1) ≈ <span class="num">-17.9 万</span>,本金实实在在亏掉一块。同一张合同、同一个入场价:一个结局 +<span class="num">17.5 万</span>,一个结局 <span class="num">-17.9 万</span>——差别不在终点,在两条路径中间各自踩过了哪扇门。</p><div class="callout callout--note reveal"><span class="callout__title">雪球条款速读</span><p>敲出线画在上方:涨够了就散场,收益封顶;敲入线画在下方:跌穿了,票息保护失效,到期按指数跌幅结账。<span class="num">15%</span> 的票息只在<span class="hl">“从没敲入”</span>的世界里完整成立——这个前提,宣传页通常不会替你划重点。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="雪球产品两条障碍线之间,标的价格的四种路径:区间震荡拿满票息、提前敲出、先敲入再敲出、敲入未敲出赔本金">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">雪球结构的四条命:同一张产品,四种结局</text>
+            <!-- 图表区:时间横轴,标的价格纵轴 -->
+            <line x1="70" y1="330" x2="830" y2="330" stroke="#41506b" stroke-width="2"/>
+            <text x="836" y="334" fill="#8499bd" font-size="12">到期</text>
+            <!-- 敲出线 103% -->
+            <line x1="70" y1="110" x2="830" y2="110" stroke="#f0c96a" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="76" y="102" fill="#f0c96a" font-size="12" font-weight="700">敲出线 103%(每月观察)</text>
+            <!-- 敲入线 70% -->
+            <line x1="70" y1="250" x2="830" y2="250" stroke="#e87878" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="76" y="270" fill="#ffb4b4" font-size="12" font-weight="700">敲入线 70%(每日观察)</text>
+            <text x="76" y="190" fill="#bcc9dd" font-size="12">起点 100%</text>
+            <!-- 命 A:不碰两边,到期拿满票息 -->
+            <polyline points="70,190 220,176 380,196 560,164 830,178" fill="none" stroke="#8fb37a" stroke-width="3"/>
+            <text x="560" y="150" fill="#b8d6a3" font-size="12" font-weight="700">命 1:区间震荡,到期拿满两年票息 30%</text>
+            <!-- 命 B:提前敲出 -->
+            <polyline points="70,190 180,150 300,118 340,110" fill="none" stroke="#7aa7f0" stroke-width="3"/>
+            <circle cx="340" cy="110" r="6" fill="#7aa7f0"/>
+            <text x="360" y="88" fill="#a8c6ff" font-size="12" font-weight="700">命 2:第 6 个月敲出,提前结束,拿 6 个月票息≈7.5%</text>
+            <!-- 命 C:先敲入再敲出 -->
+            <polyline points="70,190 200,238 260,252 380,238 520,150 640,116 700,110" fill="none" stroke="#c9a7f5" stroke-width="3"/>
+            <circle cx="260" cy="252" r="5" fill="#c9a7f5"/>
+            <circle cx="700" cy="110" r="6" fill="#c9a7f5"/>
+            <text x="420" y="300" fill="#d8c1f7" font-size="12" font-weight="700">命 3:先敲入、后敲出——捡回票息,虚惊一场</text>
+            <!-- 命 D:敲入未敲出 -->
+            <polyline points="70,190 220,246 300,252 430,286 600,300 830,312" fill="none" stroke="#e87878" stroke-width="3"/>
+            <text x="560" y="340" fill="#ffb4b4" font-size="12" font-weight="700">命 4:敲入后没爬回——按到期跌幅赔本金,票息一分没有</text>
+            <!-- 底部注解 -->
+            <text x="450" y="392" text-anchor="middle" fill="#8499bd" font-size="13">你拿到的高票息,是替券商卖出了一张"障碍看跌期权"的权利金——命 4 发生时,你在替整个市场接盘。</text>
+          </svg>
+          <p class="figure__cap">雪球只有四种结局,三种都是小赚,一种是大亏——而且大亏恰恰发生在市场最差、你最需要钱的时候。票息两位数不是银行的慷慨,是你卖出保险换来的权利金。</p>
+        </div>
+        <h2>3. 两位数票息的弦外之音</h2>
+<p>现在回答那个最要紧的问题:<span class="num">15%</span> 的年化票息,到底是从谁的口袋里掏出来的?天下没有免费的利息,券商更不是慈善机构——这么显眼的一笔固定收益,一定有一个说得清的出处。</p><p>出处其实是你自己。买入一份雪球,相当于你把一份带障碍条件的看跌期权卖给了券商:指数不跌穿敲入线,这份期权到期作废,你净赚权利金;一旦跌穿,期权生效,你按指数跌幅赔钱。所谓票息,大头就是你卖出这份<span class="hl">“下跌保护”</span>收到的权利金,再叠上<a class="term term-link" href="glossary.html#g-做市商" title="查看术语：做市商">做市商</a>在场内做<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>赚的价差预算。说穿了:你在赌<span class="hl">“跌不到七成”</span>,赌赢收租,赌输一个人吞下指数的全部跌幅。</p><p>这套结构在特定天气里体验好得出奇。<span class="num">2021 年</span>前后指数震荡慢涨,敲出频频触发,很多投资人持有几个月就拿一笔利息离场,来回几次,体验无限接近<span class="hl">“能提前取的高息存款”</span>。销售端只需要展示过去一年敲出了多少笔、客户拿得多开心,成交就水到渠成——在慢牛里,这棵 if-else 树最危险的那根树枝永远不会被踩到,也就没人愿意相信它真的存在。</p><p>转折出现在指数掉头之后。这种结构最怕的不是崩盘式暴跌一天,而是层层阴跌:<span class="num">2022 年</span>起<span class="term">中证 500</span> 从高位回落,<span class="num">2024 年</span>初小盘股又是一轮急跌,指数先后跌穿一批产品的敲入线,大面积敲入集中发生。当年被卖成<span class="hl">“稳稳收息”</span>的产品,在下跌里显出真面目:非保本,指数跌多少,本金就亏多少。宣传期的<span class="hl">“从没敲入过”</span>,从来就不是条款的一部分。</p><p>还有一层更隐蔽的机制会火上浇油:做市商的对冲盘。指数在安全区时,对冲仓位很小,市场感觉不到它;一旦逼近敲入线,雪球内嵌期权的 Delta 会突然冲向 1,做市商被迫在短时间内集中调仓,抛售压力砸向本已脆弱的市场,下跌反过来触发更多雪球敲入。敲入区附近的砸盘,不是谁在使坏,是一叠合同在同一时刻机械执行的后果。</p><p>对量化研究,这类产品的坑直接写在数据频率上。拿<span class="hl">“每月抽样模拟一次”</span>去回测雪球,等于蒙住条款的眼睛:它的收益是严格路径依赖的,除非每条分钟级路径都真实经过敲入、敲出的判定,尾部风险必然被低估。历史上大量雪球回测在 <span class="num">2015 年</span>、<span class="num">2022 年</span>那些关键月份<span class="hl">“恰好没踩到”</span>敲入路径——事后复盘才发现,漏掉的不是哪个参数,是路径本身。</p><div class="callout callout--note reveal"><span class="callout__title">敲入前夜会发生什么</span><p>指数越贴近敲入线,做市商的 Delta 对冲越像踩下油门:仓位不是慢慢变,是反向加速变。2023 到 <span class="num">2024 年</span>那轮<span class="hl">“越跌越砸、越砸越跌”</span>的夹杀,底层正是这层对冲反馈。知道这层机制,你就不会在下跌里再去问<span class="hl">“谁在砸盘”</span>。</p></div>
+
+        <h2>4. 做市商桌上的四块表</h2>
+<p>做市商的桌上没有股评,没有 K 线故事,只有四块仪表盘:Delta、Gamma、Vega、Theta,行话叫希腊字母。期权基础那一章你已经见过它们的名字;这一节换个视角,不看公式,看一个做市商每天怎么被这四块表折腾——因为他每天收盘都要拿这四块表对账。</p><p>Delta 回答方向问题:标的涨一块钱,期权价格跟着动多少。它也是做市商的对冲指令单——每卖出一份期权,立刻按 Delta 买入对应份额的标的,把方向风险当场抵消。理想状态下,标的涨也好、跌也好,组合的理论盈亏被抹平,做市商赚的是买卖价差这份流水钱,不是赌方向的钱。你把他想成一个只收手续费的庄家:赌客谁赢谁输不重要,池子别翻就行。</p><p>Gamma 回答加速问题:Delta 自己变得有多快。行情平缓时,对冲安安静静,一天调不了几次仓;标的剧烈跳动时,Gamma 让对冲误差成倍放大——刚按旧 Delta 补完仓,新 Delta 已经跑到另一边去了,再补,又错。这是做市商最怕跳空的原因:他从来不怕方向,怕的是方向变得太快,快到对冲的手速跟不上。Gamma 越大,那张<span class="hl">“盈亏已抹平”</span>的桌子晃得越厉害。</p><p>Vega 和 Theta 管另外两维。Vega 是隐含<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>每抬一档,期权增值多少,它量的是市场的恐慌情绪;Theta 是时间每过一天,期权白蚀掉多少,越贴近到期日蚀得越快。买期权的人天天被 Theta 咬,卖期权的人天天收 Theta——所以卖方真正睡不着的不是时间,是 Vega 和 Gamma:平时稳稳收租,恐慌情绪一起来,账面平白无故开始浮动,浮动的方向还经常和你收租的方向对着干。</p><p>现在把雪球放回这张桌子上:在做市商眼里,它从来不是理财产品,而是一团需要动态管理的 Vega 和 Gamma。指数安稳时,对冲仓安安静静,票息背后是持续的小额收割;指数逼近敲入线时,Delta 突然奔向 1,反向加速的对冲盘倾巢出动。普通投资者看不到这张桌子,只看得到宣传页上的票息——这就是买卖双方信息差真正所在的位置。</p><div class="callout callout--note reveal"><span class="callout__title">四块表的一句话版</span><p>Delta 是方向,Gamma 是加速,Vega 是情绪,Theta 是时间。做市商每天的盈亏约等于:价差收入 + Theta 收割 - Vega 和 Gamma 带来的惊吓。他不关心你看对看错,只关心自己有没有被这四块表咬到。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="期权四希腊字母表:Delta 管方向、Gamma 管加速度、Vega 管波动预期、Theta 管时间流逝">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期权做市商桌上的四块表</text>
+            <rect x="70" y="80" width="360" height="125" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="250" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">Delta · 标的价格每变 1 元</text>
+            <text x="250" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">买平值看涨时 Delta ≈ 0.5:标涨 1 元,期权约赚 0.5</text>
+            <text x="250" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">看跌在 -1~0 之间</text>
+            <text x="250" y="188" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">对冲要用它调仓位</text>
+            <rect x="470" y="80" width="360" height="125" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="650" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">Gamma · 行情的加速度</text>
+            <text x="650" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">标的价格每变一格,Delta 自身变多少</text>
+            <text x="650" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">临近到期、平值附近的 Gamma 最大</text>
+            <text x="650" y="188" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">大 Gamma 意味着仓位会越错越快</text>
+            <rect x="70" y="220" width="360" height="125" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="250" y="248" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">Vega · 波动率预期每变 1%</text>
+            <text x="250" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">隐含波动率不是历史波动,是大家对未来的定价</text>
+            <text x="250" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">恐慌时 IV 上冲,期权价格被动抬升</text>
+            <text x="250" y="328" text-anchor="middle" fill="#8499bd" font-size="12">做市商对冲它,就要卖进买保险</text>
+            <rect x="470" y="220" width="360" height="125" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="650" y="248" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">Theta · 每天时间价值衰减多少</text>
+            <text x="650" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">到期越近,沙漏漏得越快</text>
+            <text x="650" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">买方每天都在输 Theta,卖方每天都在收</text>
+            <text x="650" y="328" text-anchor="middle" fill="#8499bd" font-size="12">最后一个月衰减最快</text>
+            <text x="450" y="372" text-anchor="middle" fill="#bcc9dd" font-size="12.5">方向、加速度、波动、时间——期权的全部价格行为,疏散成这四块表就够了</text>
+          </svg>
+          <p class="figure__cap">期权的复杂不在名字,在维度——方向、加速度、波动预期、时间衰减各占一块。把四块钱读懂,希腊字母就不再是密室术语。</p>
+        </div>
+        <h2>5. 给别人的债券买违约保险</h2>
+<p>假设你手里一张 A 公司的债券都没有,却想买一份<span class="hl">“A 公司一违约、你就赚大钱”</span>的合同。这门生意真实存在,合同的名字叫 CDS,信用违约掉期。拆开看它一点也不神秘,就是一张保险单——只不过投保的对象不是天灾人祸,是别人家的违约;保费按年收,出险按约定赔。</p><p>先把正当用途说清楚:你确实持有 A 的债,怕它违约,于是每年付给 B 一笔保费,行话叫 CDS 价差,按面值的百分比报价,比如每年 <span class="num">1.5%</span>。合同里白纸黑字写死什么情况算违约——破产、拒付、重组,一条不含糊。真出了事,B 按<span class="hl">“面值减去残值”</span>赔给你:面值 <span class="num">1000 万</span>,残值按 <span class="num">40%</span> 算,赔 <span class="num">600 万</span>。从结构上看,这就是一张贴在债券上的保险单,它让债券持有人第一次能把违约风险单独拆出来交易。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>关键的变异在于:你不持有 A 的债,也能买这份保险。这叫裸 CDS,动作和借股票裸空一模一样——纯粹做空。从此,“赌一家公司会倒”成了一件标准化、可交易的工具,不再需要先借到它的债。保险被发明出来是为了分散风险,裸 CDS 却把它变成了一块放大对赌的场地:一张保单下面有没有对应的真实资产,合同不管,市场也不管。</p></div><p>把账算清楚:面值 <span class="num">1000 万</span>,年保费 <span class="num">1.5%</span>,即每年 <span class="num">15 万</span>。如果 A 一年内违约,你用 <span class="num">15 万</span>换回 <span class="num">600 万</span>,扣掉保费净赚 <span class="num">585 万</span>;如果 A 平平安安,这 <span class="num">15 万</span>保费白交。赔率大约四十比一。危机年份里,这就是金融圈空头的主力武器:花零花钱级别的保费,押注一个巨头倒下——新闻里那些<span class="hl">“做空全世界”</span>的传奇头寸,拆到底,很多就是这么搭出来的。</p><p>再站到卖方的桌上算同一笔账:每年收 <span class="num">15 万</span>,代价是随时准备掏出 <span class="num">600 万</span>——四十年不出事才勉强回本,一次踩雷全部归零还要倒贴。保费只要定错一丁点,窟窿就是几十倍的大。所以卖 CDS 的机构本质上在开保险公司:精算对了,是躺着收租的好生意;精算错了,破产只是时间问题,区别只在最后赔给谁。看懂这一层,你就知道该用什么眼光,去打量那些<span class="hl">“靠收保费过好日子”</span>的<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>。</p><div class="callout callout--note reveal"><span class="callout__title">同一张保单的两张脸</span><p>买方视角:<span class="num">15 万</span>博 <span class="num">600 万</span>,是用小钱对冲灾难,或押注灾难;卖方视角:<span class="num">600 万</span>的或有负债,换来 <span class="num">15 万</span>现金流,是<span class="hl">“大概率小赚、小概率巨亏”</span>的典型负偏结构。评价任何收保费的生意,先问那笔小概率赔付谁来扛、扛不扛得住。</p></div>
+
+        <h2>6. 一栋房子卖出一百份保险</h2>
+<p>CDS 还只是两个人对赌一家公司的生死。真正把 <span class="num">2008 年</span>炸翻的,是另一台功率大得多的机器:CDO,担保债务工具——把一堆违约风险打包、切碎、分级,再卖给全世界。要理解那场席卷全球的危机,其实只需要看懂这一台机器是怎么转的。</p><p>做法像切蛋糕,只不过刀口从风险那头下刀。把一大堆房贷、企业债打包成一个资产池,按<span class="hl">“谁先吃损失”</span>切成三层:股权层最先挨打,夹层居中,AAA 优先级最后才轮到。用数字把栅栏立起来:池子的损失先由股权层吞掉前 <span class="num">5%</span>,夹层吞 <span class="num">5%</span> 到 <span class="num">15%</span> 之间那一段,AAA 只在总损失超过 <span class="num">15%</span> 之后才开始出血。每一层各标各的价:越靠后挨打的层越贵、收益率越低;最先流血的股权层,票息高得吓人——高收益三个字,就是这么造出来的。</p><p>评级的幻觉就从这道栅栏里长出来:历史上房贷的平均违约率只有 <span class="num">2%</span> 到 <span class="num">3%</span>,要伤到 AAA,得先穿破股权层、再穿破夹层——看起来<span class="hl">“几乎不可能”</span>。评级公司顺水推舟盖上 AAA 的章,于是全世界的养老金、保险公司都敢买。注意这里的潜台词:AAA 不是没有风险,是它背后的模型假设着<span class="hl">“损失率无论如何到不了 <span class="num">15%</span>”</span>。章是真的,假设是模型的。</p><p>一层两层还不够卖。上下两层卖光了,就把一堆 CDO 的夹层再打包、再切三层,人称 CDO 的平方;更激进的品种叫合成 CDO——池子里根本没有真债,全是用 CDS<span class="hl">“复制”</span>出来的债券表现:卖出一份保费收入,同时承担一份违约赔付。同一笔房贷违约,参考它的 CDS 可以签上一百次。换句话说:同一栋房子,卖出了一百份火灾保险。</p><p><span class="num">2008 年</span>的崩塌链条,六步走完。第一步,房贷发放标准松掉,没收入、没工作、没资产也能批贷;第二步,投行把这些房贷打包成 RMBS;第三步,RMBS 的夹层再被做成 CDO、CDO 的平方和合成 CDO;第四步,评级公司给出 AAA,因为模型假设<span class="hl">“美国各地房价不会同时跌”</span>;第五步,房价真的一起跌,<span class="hl">“几乎不违约”</span>的前提瞬间作废;第六步,手里攥着 AAA 的机构不但收不到钱,还得按 CDS 对外赔付,对手方跟着一起爆。</p><p>这台机器给量化留下的伤口,不是<span class="hl">“没算出来”</span>,而是相关系数。模型里,各地房价违约的相关性用的是历史值 0.2;危机一来,它直接跳到 1——所有分散化假设在同一时刻失效。任何用历史协方差矩阵搭出来的组合,都是踩在这个假设上走钢丝。<span class="num">2008 年</span>的量化基金不是死在公式上,是死在没人告诉公式:相关系数有时候会变成 1。</p><div class="callout callout--note reveal"><span class="callout__title">同一栋房子,一百份保险</span><p>合成 CDO 的可怕在于:风险敞口不再受真实债券数量的约束。保单可以比房子多一百倍,房价跌穿的那天,要赔的窟窿也就比房子大一百倍。衍生品本身不点火,它只是把火种复制了一百份,再分发到全世界的仓库里。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 470" role="img" aria-label="CDO 三层塔自上而下:AAA 优先层、夹层、股权层;左侧绿色箭头现金流自上而下,右侧红色箭头违约损失自下而上">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">CDO 的瀑布:现金流从上往下浇,损失从下往上烧</text>
+            <!-- 三层塔 -->
+            <rect x="120" y="80" width="360" height="66" rx="8" fill="rgba(122,167,240,0.30)" stroke="#7aa7f0"/>
+            <text x="300" y="106" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">AAA 优先层 80%</text>
+            <text x="300" y="130" text-anchor="middle" fill="#bcc9dd" font-size="11.5">先吃饭:贷款回款先付它,票息最低</text>
+            <rect x="120" y="146" width="360" height="66" rx="8" fill="rgba(240,201,106,0.24)" stroke="#f0c96a"/>
+            <text x="300" y="172" text-anchor="middle" fill="#ffe6a8" font-size="14" font-weight="800">夹层 BBB~A 15%</text>
+            <text x="300" y="196" text-anchor="middle" fill="#bcc9dd" font-size="11.5">排队吃:优先级吃饱才轮它,票息居中</text>
+            <rect x="120" y="212" width="360" height="66" rx="8" fill="rgba(232,120,120,0.22)" stroke="#e87878"/>
+            <text x="300" y="238" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">股权层(最先死)5%</text>
+            <text x="300" y="262" text-anchor="middle" fill="#bcc9dd" font-size="11.5">收缴碗:所有损失先砸它,票息最肥</text>
+            <!-- 现金流箭头(自上而下) -->
+            <path d="M 540 70 L 540 260" stroke="#8fb37a" stroke-width="3" fill="none"/>
+            <path d="M 532 70 L 548 70 L 540 56 Z" fill="#8fb37a"/>
+            <text x="566" y="110" fill="#b8d6a3" font-size="12.5" font-weight="700">现金流向下浇:</text>
+            <text x="566" y="132" fill="#bcc9dd" font-size="12">100 万月供先进来,</text>
+            <text x="566" y="152" fill="#bcc9dd" font-size="12">AAA 拿走它的那份,</text>
+            <text x="566" y="172" fill="#bcc9dd" font-size="12">剩下的才浇下一层</text>
+            <!-- 损失箭头(自下而上) -->
+            <path d="M 720 260 L 720 76" stroke="#e87878" stroke-width="3" fill="none"/>
+            <path d="M 712 78 L 728 78 L 720 64 Z" fill="#e87878"/>
+            <text x="620" y="290" fill="#ffb4b4" font-size="12.5" font-weight="700">违约损失往上烧:</text>
+            <text x="620" y="310" fill="#bcc9dd" font-size="12">平均违约率 7% 时,股权层烧光、</text>
+            <text x="620" y="330" fill="#bcc9dd" font-size="12">夹层带血,AAA 岿然不动;</text>
+            <text x="620" y="350" fill="#bcc9dd" font-size="12">2008 年各地违约一起跳到 25%——</text>
+            <text x="620" y="370" fill="#bcc9dd" font-size="12">AAA 的"安全"原来是相关性假设</text>
+            <!-- 底部 -->
+            <text x="450" y="416" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">分层不减风险,只重排风险的座位:总损失 = 各层损失相加,一层都省不了。</text>
+            <text x="450" y="444" text-anchor="middle" fill="#8499bd" font-size="12.5">2008 年的发明不是分层,是把一群"相关性 0.2"的假设卖掉、再按"相关性 1"的现实定价</text>
+          </svg>
+          <p class="figure__cap">瀑布的本质是队列,不是魔法:上游 AAA 先吃饭,下游股权层先替所有人收碗。2008 年大家发现,只要各地房价一起跌,AAA 的&#x27;安全&#x27;只是建在相关性 0.2 的假设上。</p>
+        </div>
+        <h2>7. 固定和浮动的对赌台</h2>
+<p>两个人坐在一张桌子两端,互相羡慕对方的债:你那笔是浮动利率,天天怕加息;我这笔是固定利率,怕利率涨了自己吃亏。解决办法意外地朴素:开一张对赌台,把两种利息的形态对调——本金各自留着不动,谁也不用挪窝。这张台子叫利率互换,IRS,机构世界里最常用、普通人最少见到的一种衍生品。</p><p>合同长这样:A 背着 <span class="num">100 万</span>贷款,利率是 LPR 加 <span class="num">1 个百分点</span>;B 手里有 <span class="num">100 万</span>固定利率 <span class="num">4%</span> 的头寸,笃定利率要涨、想改成浮动。双方签一份互换:A 每年付 B 固定 <span class="num">4%</span>,B 每年付 A <span class="hl">“LPR+<span class="num">1%</span>”</span>。名义本金 <span class="num">100 万</span>,从头到尾不换本金,只轧差利息——A 欠银行的贷款还是 A 自己还,互换只管两边利息的差额。这 <span class="num">100 万</span>是把算数的标尺,叫<span class="hl">“名义”</span>就是因为没人真把它掏出来。</p><p>手算一遍 A 的账。签约时 LPR 是 <span class="num">3.45%</span>,A 原本每年要付 <span class="num">100 万</span> × (<span class="num">3.45%</span>+<span class="num">1%</span>) = <span class="num">4.45 万</span>;签完互换,A 对外那笔浮动利息被 B 的付款抵掉,净支出钉死在 <span class="num">4 万</span>,当下就差出 <span class="num">0.45 万</span>一年。之后哪怕 LPR 涨到 <span class="num">3.85%</span>,A 的年支出还是 <span class="num">4 万</span>,加息的焦虑彻底转给了对手方。也别忘了 A 放弃的那半边:如果 LPR 不涨反跌,他照样付 <span class="num">4 万</span>,眼睁睁看别人越付越少——互换锁死的是确定性,从来不是包赚协议。</p><p>别嫌这工具土:银行、保险和大型私募管理利率风险,主力就是它。中国的银行间利率互换市场从 <span class="num">2014 年</span>起就是几十万亿级别的体量,比普通人熟悉的股票期权市场热闹得多,只是柜台不对个人开放。机构版的<span class="hl">“怕加息”</span>,最后大多落到这条线上解决——你看不见它,但它垫在整个债券市场的底下。</p><p>顺手收两个进阶名词。第一个是互换期权,Swaption:它给你一个权利——在未来某个时点,按约定的固定利率进入一笔利率互换。比如你明年要发债、怕届时利率涨,可以先买这份<span class="hl">“入场保险”</span>;届时利率真涨过约定水平,你签约后立刻比市价占便宜;没涨,权利金白付。逻辑和普通期权一模一样,只是保的标的换成了一份互换合同。</p><p>第二个是 DV01,也常叫 PVBP:利率每动 <span class="num">1 个基点</span>,一手互换的账面盈亏是多少钱。给你量级感:<span class="num">1000 万</span>名义、<span class="num">10 年</span>期的互换,DV01 大约 <span class="num">950 元</span>——<a class="term term-link" href="glossary.html#g-收益率曲线" title="查看术语：收益率曲线">收益率曲线</a>动一小格,账上就是近千元的进或出。粗算法是<span class="hl">“<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a> × 名义本金 ÷ 10000”</span>。实盘里没人手算它,都调现成的库,但你得知道这个数是怎么长出来的:它是对利率风险最小的那块量砖。</p>
+
+        <h2>8. 连底层资产都可以省掉</h2>
+<p>把<span class="hl">“切开重卖”</span>的逻辑推到极端,会得到一个怪胎:连底层资产都省掉,只剩共识本身在定价。这就是加密资产。先把立场说清:这一节不提供任何投资建议,只拆机制。为什么把它放进来?因为它是金融工程思想在野地里长出来的镜像:同样的拼装欲望,同样的风险错配,只是少了监管、托管和最后兜底的那套老规则。看懂它怎么转、怎么崩,比要不要碰它重要得多。</p><p>比特币、以太坊这类币没有现金流,没有利息,不分红,定价的唯一支撑是<span class="hl">“下一个买家愿意出多少钱”</span>。稀缺性写在代码里,信念写在社群里,价格写在交易所的<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>里。暴涨暴跌对它们来说不是事故,而是这台没有现金流锚的机器的正常工况——这一点它和名画、稀有卡牌是亲戚:价格等于共识,共识一撤,底下是空的。</p><p>稳定币想给这台机器焊一个锚。USDT、USDC 这一类的做法是宣称 1:1 锚定美元:每发行 1 枚,号称就有 1 美元准备金趴在账户里。全部要害都在那个后备仓库:准备金审计是否透明、钱托管在哪、挤兑时能不能立刻变现——围绕这些问题的争议,从 <span class="num">2018 年</span>起就因披露不充分而长期存在。这个锚看起来钉在美元上,其实钉在<span class="hl">“发行方说的话你信不信”</span>上。</p><p>算法稳定币走得更野:LUNA 和 UST 互相背书——UST 想维持 1 美元,就靠燃烧或新发 LUNA 来对冲脱锚的压力。<span class="num">2022 年</span> <span class="num">5 月</span>,UST 从 1 美元滑到 0.1 美元、再一路走向归零,LUNA 从 119 美元跌到贴地,一周之内市值蒸发 400 多亿美元。机制上讲,这是一场典型的信心驱动的挤兑:当两个互相担保的币开始一起下跌,算法救不了任何一边,越救越像在烧纸救火。</p><p>如果说 LUNA 死在设计,FTX 死在操守。<span class="num">2022 年</span> <span class="num">11 月</span>,这家头部交易所被揭出挪用客户资金,去填姊妹基金 Alameda 的交易亏损;一轮披露点燃提现潮,从体面到破产只用了八天。一个连交易所账本都不可信的市场,再漂亮的对冲、再神准的模型,也一样归零。它留下的教训只有一句,但分量极重:托管、隔离、<span class="term">杠杆</span>上限,是全息金融里的生死线;平台账户里显示的那个数字,从平台爆雷那一刻起,可能就不再是你的资产。</p>
+
+        <h2>9. 把大楼切成能交易的股票</h2>
+<p>一栋写字楼你买不起。把它切成一万份,每份像股票一样在交易所挂单,你就买得起了。这把刀叫 <span class="term">REITs</span>,不动产投资信托。它是另类资产里最<span class="hl">“老实”</span>的一种:底层有真实的楼、真实的租户、真实的租金,估值可以完全摊开算给你看——也正因为算得清楚,拿它练<span class="hl">“现金流定价”</span>这把刀最合适。</p><p>机制一句话:把写字楼、商场、高速公路、仓储物流的租金现金流打包成信托份额,拿到交易所挂牌,买卖方式和<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>都向股票看齐。美国市场有条硬约束:利润的 <span class="num">90%</span> 以上必须强制分红——所以买 <span class="term">REITs</span> 的第一性不是赌涨价,是先锁定一条租金现金流。中国 <span class="num">2021 年</span> <span class="num">6 月</span>正式起步,首批 9 只公募 <span class="term">REITs</span> 上市,底层是产业园区、高速公路这类基础设施。</p><p>定价核心是一个比率:分派率 = 每年分派现金 ÷ 市值。手算一遍:每年分派 <span class="num">1 亿</span>,市值 <span class="num">20 亿</span>,分派率就是 <span class="num">5%</span>。现在市场利率上行,投资者普遍要求 <span class="num">6%</span> 的回报——分派现金一分没多,估值就被压到 1 ÷ 0.06 ≈ <span class="num">16.67 亿</span>,价格凭空跌去约 <span class="num">17%</span>。所以 <span class="term">REITs</span> 是长着债券脾气的股票:楼还是那栋楼,租金还是那个租金,利率一抬,价格先跪,逻辑和债券价格对利率反向波动一模一样。</p><p>顺手立一个对照组:名画、名表、稀有卡牌这类收藏资产,没有租金、没有利息,价格等于下一个买家的心理价,估值模型无处下手,全靠<span class="hl">“共识”</span>和流动性托底。把它们和 <span class="term">REITs</span> 摆在一起,分界线一眼可见:另类资产值不值得放进模型,先看底层有没有现金流。有现金流,才谈得上分派率、久期和<a class="term term-link" href="glossary.html#g-折现" title="查看术语：折现">折现</a>;没有现金流,就只剩情绪和共识——那部分,用的是加密资产一节的语言。</p><p>量化视角再补一刀:国内公募 <span class="term">REITs</span> 历史太短,波动样本喂不饱一个像样的<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>模型;不少品种盘后流动性很薄,回测里<span class="hl">“按收盘价随便成交”</span>的假设在这里格外失真。想把它当组合分散器用,先查成交厚度和容量,再查自己悄悄下了多少假设。另类资产的<span class="hl">“低相关”</span>,经常是<span class="hl">“样本太短、没经历过同框的天灾”</span>——没见证过,不等于不存在。</p>
+
+        <h2>10. 大宗、ESG 与收尾一问</h2>
+<p>最后收两件小一点的,再把整章收拢。先说大宗商品:它的坑和股票长得完全不一样——你拿到手的不是一家公司,而是一串会到期的合约。价格看错了可以扛着等翻本,合约一到期,你连扛的资格都没有。</p><p>先认一张图:同一个商品、不同到期月份的期货价格,排成一条曲线。远月比近月贵,叫<a class="term term-link" href="glossary.html#g-升水贴水" title="查看术语：升水/贴水">升水</a>结构(Contango),通常反映仓储、保险和资金成本;远月比近月便宜,是贴水结构。长期做多商品期货的人,真实收入常常不是现货涨价,而是<a class="term term-link" href="glossary.html#g-展期" title="查看术语：展期">展期</a>:近月快到期时换成远月,一卖一买之间,升贴水悄悄吃掉或补贴你的收益——方向看对、展期亏钱,是这个市场最经典的新手死法。</p><p>两次极端行情值得背下来。<span class="num">2020 年</span> <span class="num">4 月</span> <span class="num">20 日</span>,WTI 原油 <span class="num">5 月</span>合约最低打到 -37.63 美元一桶:交割规则要求实物入库,美国内陆的储油罐全部爆满,拿着合约等于倒贴钱求人把油接走——教科书级的<span class="hl">“交割机制扭曲价格”</span>。<span class="num">2022 年</span> <span class="num">3 月</span>,LME 镍遭遇大规模逼空,几天内从约 <span class="num">2.5 万美元</span>冲到 <span class="num">8 万美元</span>以上,交易所最终取消当天交易并停盘——那一刻所有人都重学了一遍:衍生品平台方手里的裁定权,比任何技术指标都大。</p><p>ESG 和碳交易简单交代:绿债是把融资明确投向风电、光伏、水处理等环保用途的债券;蓝债是它的海洋版本,<span class="num">2020 年</span>起出现的新兴品种;碳市场则把排放配额做成可交易的资产。量化的冷水必须浇在这:多套 ESG 评级口径互相打架,同一家公司在不同体系里得分能差出几档;<span class="hl">“ESG <span class="term">超额收益</span>”</span>在学术上显著性不稳定,实务里更多是风险偏好和监管配置的产物。别把标签当成免费的 <a class="term term-link" href="glossary.html#g-alpha" title="查看术语：Alpha">Alpha</a>。</p><p>现在把这一章所有东西并排摆好,问出那个贯穿始终的问题:你卖出的,是你以为的风险吗?雪球的票息背后,是你卖出去的看跌保护;CDS 的保费背后,是四十倍的或有赔付;AAA 评级背后,是一个相关系数能从 0.2 跳到 1 的世界;稳定币的锚背后,是没人彻底查过的仓库;<span class="term">REITs</span> 的分派率背后,是利率那把刀。签字之前,把<span class="hl">“我到底在替谁背什么风险”</span>写成一句话——写不出来,就别签。</p><div class="callout callout--note reveal"><span class="callout__title">量化接手这类资产前的四问</span><p>一、历史数据有多长,序列断过几次?二、有没有脱锚、停盘、监管切换这类系统性断点?三、收益是连续的,还是条款驱动的 if-else 树?四、回测用的价格路径,细到分钟级了吗?四问答不齐,再漂亮的净值曲线也只是草稿。</p></div>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>结构性产品的母机是债券加期权:收益是一棵条款写死的 if-else 树;看不出“保本”字样一律按非保本处理;回测必须细到路径级,否则测不出条款里的悬崖。</li>
+            <li>雪球的两位数票息来自你卖出的看跌保护:涨够敲出、收益封顶,跌穿敲入、按指数跌幅结账;敲入线附近,做市商的对冲盘会反向加速下跌,2022 年与 2024 年初的大面积敲入就是这么来的。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 它们不是新资产,是旧资产切开重卖</li>
+            <li><strong>2.</strong> 敲进敲出的四条命</li>
+            <li><strong>3.</strong> 两位数票息的弦外之音</li>
+            <li><strong>4.</strong> 做市商桌上的四块表</li>
+            <li><strong>5.</strong> 给别人的债券买违约保险</li>
+            <li><strong>6.</strong> 一栋房子卖出一百份保险</li>
+            <li><strong>7.</strong> 固定和浮动的对赌台</li>
+            <li><strong>8.</strong> 连底层资产都可以省掉</li>
+            <li><strong>9.</strong> 把大楼切成能交易的股票</li>
+            <li><strong>10.</strong> 大宗、ESG 与收尾一问</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>雪球的高票息到底从哪来?</summary>
+            <p>大头是你把一份带障碍的看跌期权卖给了券商,收到的权利金被打包进票息,再加做市商的对冲预算。看着是利息,其实是保费——涨够敲出收益封顶,跌穿敲入按指数跌幅赔。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>雪球敲入时,为什么下跌常常会加速?</summary>
+            <p>指数逼近敲入线时,做市商为对冲内嵌期权持有的 Delta 仓位要反向急调,集中抛售砸向市场;下跌触发更多敲入,敲入又带来新的抛压。这是合同机械执行的反馈回路,不是谁在蓄意砸盘。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一步</span>
+          <h2>进入第三部分 · 市场如何形成价格与数据</h2>
+          <p>一项金融权利怎样上市、成交、留下数据,又该怎样评价它的收益和风险?</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

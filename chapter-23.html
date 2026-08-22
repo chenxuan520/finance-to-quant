@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 23 章 · 世界经济形势: 美元、黄金和全球资金流 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清美元体系、美元指数、美元潮汐、黄金的定价逻辑、央行囤金和去美元化,给你一个读世界形势的仪表盘。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="23">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第四部分 · 宏观环境如何改变资产 · 第 23 章</p>
+        <h1>世界经济形势: 美元、黄金和全球资金流</h1>
+        <p class="lead">看国内的盘,你有沪深 300 当锚;看世界,锚是美元和黄金。这一章把世界经济形势讲成一张结构图:美元是水管,黄金是水位计,各国央行是水闸,钱往哪儿流、谁被抽水、谁在囤池子,看懂了,你以后看新闻里的“美联储又加息了”“金价创新高”“人民币国际化”,能自己接出下一句:那我的账户会跟着发生什么。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线四</span>
+            <span>本部分第 4 / 6 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>增长、通胀、央行、美元和金融危机怎样穿过市场,改变资产的现金流与折现率?</p>
+          <p class="chapter-context__outcome">读完后,你能把宏观新闻放回传导链,而不是用一个大词解释所有涨跌。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>世界经济形势的三张桌子是美中欧,美元体系的靠点位是全球结算六成份额和 34 万亿美元美债市场。</li>
+            <li>美元指数和 USD 潮汐是全球资产的水压表,黄金和实际利率是流动性的温度计,实际利率与金价大类反向但央行买盘能压反相不破。</li>
+          </ul>
+        </section>
+
+
+        <section class="case-study reveal">
+          <span class="case-study__label">概念现场</span>
+          <h2>1. 商场、工地和港口,怎样拉着一整个经济体往前走</h2>
+<p>周末的商场排长队,城郊的塔吊连夜转,港口的集装箱一排排出海——财经新闻喜欢把这三幅画叫作拉动经济的<span class="hl">“三驾马车”</span>:消费、投资和出口。它好记,但别把口号背成公式。真正的支出法账本写的是 GDP = 消费 + 投资 + 政府购买 + 净出口,最后一项是出口减进口。</p><p>为什么一定要减进口?你花一万元买了进口电脑,这笔钱会先被记进消费,但电脑不是本国生产的,所以还要在进口那边扣掉,否则同一台机器就给本国 GDP 冒领了一次功劳。政府修路也不是凭空出现:它会进入政府购买,形成的道路和设备还可能被归进投资口径。</p><p>读宏观数据时,真正有用的不是问<span class="hl">“哪驾马车最重要”</span>,而是拆各项对增长的贡献、价格变化和库存波动。量化研究可以把消费、固定资产投资、政府支出和净出口做成分项时间序列,再看它们怎样传到行业收入;只盯出口总额,很容易把进口原料和价格上涨当成真实发动机。</p>
+        </section>
+
+        <section class="case-study reveal">
+          <span class="case-study__label">概念现场</span>
+          <h2>2. 卖出去一船货以后,那笔外汇究竟去了哪里</h2>
+<p>一家企业把一船商品卖到海外,收回一笔外汇。钱不会在海面上消失:它可以换成本币发工资,可以留在银行,银行又可能拿它买外国<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>;央行也可能接过外汇,在自己的<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>上增加储备。货从这边出去,金融资产往另一边回来,两本账总要在某处碰头。</p><p>商品、服务、投资收益和转移主要记在经常账户;跨境买<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>、债券、企业和储备资产,主要记在<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>与金融账户。一个经济体长期经常账户顺差,往往意味着它把一部分<a class="term term-link" href="glossary.html#g-储蓄" title="查看术语：储蓄">储蓄</a>以金融资产形式投向海外。顺差不是仓库里凭空多出一堆现金,逆差也不自动等于明天破产。</p><p>跨境资产研究要把贸易流和资金流并排看:是谁赚到外汇、谁在买外部资产、负债用什么币种、汇率变动后账面怎样重估。量化模型若只拿贸易顺差预测汇率,却不看证券投资、直接投资和储备变化,就像只看商店收银台,不看钱最后进了哪家银行。</p>
+        </section>
+
+        <h2>3. 先看清三张桌子</h2>
+<p>世界杯没有<span class="hl">“总积分榜”</span>,世界经济也一样,没有一张能直接下注的大盘。但你可以先看三张最大的桌子:美国、中国、欧盟(加上日本坐桌边)。美国一家 GDP 约 <span class="num">28 万</span>亿美元,中国约 <span class="num">18 万</span>亿,欧盟加起来约 <span class="num">19 万</span>亿,日本 <span class="num">4 万</span>亿上下——全球约 <span class="num">100 万</span>亿美元的总盘子里,前三张桌子占了六成半。这三家的<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>、货币、汇率一动,全世界都跟着晃,这就是为什么<span class="hl">“世界经济形势”</span>这四个字谈来谈去,最后总是落在这几家的央行身上。</p><p>三家的角色还不一样。美国出货币和消费市场,出口的是债券和规则;中国和日本出制造和商品,出口的是产品和家电;欧盟居中,上午当买家下午当卖家。把世界经济想成一个巨大的生产-消费循环系统:有人造东西,有人买东西,中间的货币和上下的价差,决定谁赚谁亏。你以后看到<span class="hl">“美国<a class="term term-link" href="glossary.html#g-通胀" title="查看术语：通胀">通胀</a>成过敏”</span>,不要把它当成别人家的事——它是一根连着全世界资产价格的线,就像小岛上的鱼票多一毛,连锁反应一圈一圈地传过来。</p><p>看三张桌子不是看热闹,是看主线:美国那张桌子动美元利率,中国那张桌子动工业需求,欧盟日本跟着摇摆。你关掉手机不看新闻,全球经济也在你持仓里继续演——所以,这章剩下的所有小节,都是教你怎么把三天的财经头条,按到一张结构图里读。</p>
+
+        <h2>4. 美元为什么是世界的水龙头</h2>
+<p>全球的贸易结算、外储储备、债券计价,六成上下都是美元。各国囤的外汇储备里,美元长期占约 <span class="num">58%</span>(<span class="num">2023 年</span> IMF 的 COFER 数据),第二名欧元才 <span class="num">20%</span>,人民币约 <span class="num">2%</span>。全世界的银行、石油商、跨国公司,默认用美元记账、默认要还美元的债——美元就成了世界的水龙头:美联储一拧,全球资金成本跟着动。</p><p>这个地位不是天生的。<span class="num">1944 年</span>布雷顿森林,44 国在新罕布什尔谈好:美元 35 美元换一盎司黄金,其他货币再钉住美元——全世界的货币都通过美元扎稳。<span class="num">1971 年</span>尼克松关掉黄金窗口,金子这头的锚断了,但美元的网已经织好,SWIFT、国际清算、美债市场比黄金还好用,网留下来、美元垄断留下。听起来的理解是:黄金当锚的时代结束了,但<span class="hl">“用美元”</span>这个习惯反而固化了。</p><p>水龙头的权力还配三件工具:SWIFT 报文系统(全世界银行间钱的白话文,<span class="num">2022 年</span>把俄罗斯主要银行踢出去,等于删了它们的银行卡);美国金融市场(三十四万亿美元的美债市场,是全世界最深的抵押品池子,银行、企业、央行都拿它当金字招牌);美元结算大宗商品(石油、天然气、铁矿石,都用美元计价)。水龙头、账本、抵押品三块一起,就是美元体系的真身。</p><p>对量化来说,美元不是背景板,是十五日线的坐标系:全球资产价格都得换算到美元口径才能比较,你写的任何跨境策略,本质上都默认了<span class="hl">“美元是基准”</span>。</p>
+
+        <h2>5. 一篮子货币的体重秤</h2>
+<p>别只看<span class="hl">“人民币兑美元”</span>的单一汇率,美元的总体强弱看<span class="hl">“美元指数(DXY)”</span>。它把美元对六种货币的汇率排个权重,欧元区占 <span class="num">57.6%</span>,日元 <span class="num">13.6%</span>,英镑 <span class="num">11.9%</span>,加元 <span class="num">9.1%</span>,瑞典克朗 <span class="num">4.2%</span>,瑞士法郎 <span class="num">3.6%</span>,加起来一算,就是美元对全世界的均价。大致地说,DXY 涨,说明美元对多数主要货币集体变贵;DXY 跌,是集体变便宜。</p><p>算账很直白:欧元自己掉 <span class="num">1%</span>,大约推 DXY 走 <span class="num">0.58 点</span>;日元、英镑各自掉 <span class="num">1%</span>,各推 DXY 走约 <span class="num">0.14 点</span>和 <span class="num">0.12 点</span>。一家重量占了六成,欧元兑美元动一下,基本就是 DXY 的大半边天。所以你能理解为什么欧洲一动乱、一加息迟疑,DXY 就暴——欧元一弱,美元自动强,什么都不需要美联储做。</p><p>DXY 是电网上的电压:它不稳,全世界资产都抖。<span class="num">2022 年</span>美联储暴力加息,DXY 从 95 一路冲到 114,欧元差点破①,英镑差点破①,新兴市场苦不堪言,人民币也被拖了一年。<span class="num">2026 年</span>的今天,你后回看 <span class="num">2024 年</span> DXY 在 100-108 之间磨,美中欧利率差在西方加息回落后收窄,就是你能直接布到价格里的那个主线。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>记住一句话:DXY 不只是汇率,它是全球资金成本的眼表。它高,全世界的美元债利息、大宗商品价格、新兴市场美元债都被一只手抬起来;它低,这些就松一松。</p></div>
+
+        <h2>6. 加息抽水,降息放水</h2>
+<p>美元体系有一个特有的节奏,华尔街叫<span class="hl">“美元潮汐”</span>。降息时美联储往市场撒水,美元便宜,资金涌到世界各地找收益:新兴市场基建、东南亚股市、高收益债券,全都吸一口;加息时美联储水桶收走,钱往回流,美元债利息变高,新兴市场被迫上调本币利率留住资本,股市债市一起抽——历史上每一次美元急流,都有站上冲浪板的新兴市场被浪打翻。</p><p>近一点的例子,你大概能背:2008 后第一轮大放水,美联储资产负债表从约 <span class="num">9000 亿美元</span>冲到 <span class="num">4.5 万</span>亿;2020 疫情再开,直接从 <span class="num">4.2 万</span>亿冲到 <span class="num">9 万</span>亿——钱多得散到全世界,一切资产闭眼涨,<span class="num">2022 年</span>再一桶收走,通胀被压,一堆东西跌回原形。新兴市场是最常年被抽的对象:1994 美元抽一次,墨西哥倒了;1997 又抽,泰铢东南亚一滚;2008 后再放再收,2022 这轮,斯里兰卡、巴基斯坦、埃及、阿根廷都被拍过一遍。</p><p>这个规律背后的机制很朴素:全球的债和<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>,大半开在美元这门账上。美元利率是基准利率里的水压,美联储才可能加价;非美国家只能跟着。美国为什么能这样通过自我政策应对全球?因为全世界的美元堆在美国金融市场的资产里(美债 <span class="num">34 万</span>亿,其中 <span class="num">8 万</span>亿是外国政府公司拿着),他是全世界最大的债主,也是最大的市场——别的国家加息是救货币,美国加息是定全球价;美联储一加,全世界都头疼,这是美元霸权里最实在的一部分。</p><p>潮水起落的教训:美元利率里按 <span class="num">1%</span> 的档,大约是全球流动性的接写线;两年期美债和联邦基金利率,有点像政策温度计;DXY 是另一侧的水压表。个人要做的是记住三件事——加息时全球<span class="hl">“好的东西”</span>都会跌(债贵股伤股普跌),降息时之前的烂资产都可能涨回来,新兴市场总是浪最大那片海。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="美元潮汐图解:央行一个决定改变全世界的资产估值逻辑">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">美元潮汐:世界流动性的总开关</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">美联储加息→全球美元回流美国,全球其他市场价格被动压下</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">美联储降息→美元流出美国,全球资产价格被动抬升</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">这不是比喻,是现金的实际流向:美联储按 12 个月念的利率,就是全球资产的折现率开关</text>
+          </svg>
+          <p class="figure__cap">你要读全球市场的钱,就别只看 K 线——看美联储在哪里抽水/放水。这不是宏观常识,是所有资产定价的共同底层变量。</p>
+        </div>
+        <h2>7. 不生息的老钱</h2>
+<p>黄金不盈利、不付息、不生运用,你就是存银行也只有保管费没有利息——按巴菲特的话讲很<span class="hl">“窝囊”</span>。但它被地球人共同相信了五千年,这份共识没有一个货币能比上。布雷顿森林倒了,银价替代位从没被金代替——比特币想试,目前还是新车,几次大的扔盘都证明它极不稳定。黄金的定位很清楚:不生息,但是千年的避难所。</p><p>不生息的好处,在一个特殊语境下闪光:现金为王时代结束、通胀烧、货币超发、战争、制裁这些东西,快到压不住,你还能拿金子。通胀高,黄金得涨;货币超发,黄金得涨(因为金子没法印);战争乱的时候,市场会抢金子。从这个角度,黄金是系统恐慌的保险:不涨的时候不急,就怕万一——同你的仓位里存一点黄金,本质上是买几份保险单,不是买狼来,只是保着睡眠。</p><p>回看数字:<span class="num">2000 年</span>金价 280 美元/盎司,2008 金融危机涨到 1900+,2013 回落,2020 疫情冲击+实际利率跌至负,金价再上 2000+创历史新高;<span class="num">2022 年</span>美元加息、美债真实利率转正,金价缩到 1700;2023-2024 央行囤金加持,又涨到 2400+;到 2025-26 你在页面里翻一眼当前金价,能自己背出这台长机。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="黄金与实际利率反向关系：一个不生息的资产，依靠避险属性定价">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">黄金不生息，为什么还有人买</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">黄金没有利息、没有股息、没有现金流——它本身不创造价值，</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">但它几千年都被市场当作“不信任时候的备份”——越不确定越值钱的资产。</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">它和利率是反向开关：实际利率上，黄金就便宜；实际利率下，黄金就贵。</text>
+          </svg>
+          <p class="figure__cap">黄金是那种你不能看成债券的资产——它不讲现金流，讲的是“不信任的保险”。实际利率上升时它跌，实际利率下行或危机时它涨。</p>
+        </div>
+        <h2>8. 黄金的遥控器</h2>
+<p>黄金不生息,但它的价格跟一个很具体的东西对着走:实际利率 = 名义利率 − 市场的通胀预期。用 <span class="num">10 年</span>期美债实际收益率(市场上叫 TIPS 收益率)看就行。实际利率为正,意味着拿美元债可以直接赚一笔真利息,没人陪你玩不生息的;实际利率转负,上美元拿利息还跑不过物价,大家就回头看黄金。</p><p>数字会很顺:2008 后 TIPS 实际利率从正一点点掉到负,黄金 <span class="num">2013 年</span>才触顶 1900+;2020 疫情,实际利率从 ±<span class="num">0%</span> 直接打到 <span class="num">-1%</span>,黄金冲上 2100;2022 美联储急加息,实际利率转正、一年冲到 +<span class="num">1.7%</span>,你再看那轮黄金回落 1700,前后按得上;过了 2023,即使实际利率维持正位,央行囤金的需求抵上来,金价不跌反涨——遥控器被多按了一路。</p><p>所以读黄金不是读金价本身,是读金价和实际利率的张力。金价高、实际利率也高,说明除利率外还有第三股力量在施,那是央行买的需求;金价和实际利率同向上行,要小心这是远期预期被推高;金价涨、实际利率转弱或负,这组合在历史上多对应恐慌或货币不稳。把指标摆到一张图上,自己能马上得出金价到底是恐慌推的,还是央行撑底的。</p><p>技术上一条机位:万国商业的官方数据里就有 Ramsey 长期序列、World Gold Council 季度报告。写<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>时,金价单位是美元盎司,别忘了汇率换算。</p>
+
+        <h2>9. 央行为什么2022后开始囤金</h2>
+<p><span class="num">2022 年</span>之后,全球央行的金库突然不够用。据世界黄金协会,<span class="num">2022 年</span>全球央行净购金 1136 吨,是 <span class="num">1950 年</span>以来有记录的最高;<span class="num">2023 年</span>又买 1037 吨;2024 也差不多千吨。三年连买超千吨,是以前想都不敢想的量级。买家是谁?中国的央行、波兰央行、土耳其、俄罗斯等新兴市场为主——特别是俄罗斯,手里 <span class="num">6400 亿</span>外汇储备里一大半被冻结在欧美,才想知道哪里靠不住。</p><p>原因一句说穿:美元资产好,但那是美国的;黄金黄金是国际的,但金子到手就不赖任何人。各国看穿这一点,只在等一个信号:把储备从<span class="hl">“美元债+美元存款+美司券”</span>的集中,换成一部分金子;同时试探能不能在贸易上少用一点美元(本币结算、货币互换)。这个 2022 以后新兴市场的集中买方,就是金价在国际利率不离谱时也不跌的会议重要原因之一。</p><p>去美元化是不是真的动摇美元体系,这可以多说一点,但我们先记住眼前的信号:三年 3000 吨,按 2400 美元/盎司大约值 2000 多亿美元——这不是小钱,是真金白银二十年的资产重心移动,方向只有一个:从美元池往黄金挪一点。它的量级目前还有限(<span class="num">58%</span> 下降到 <span class="num">54%</span> 只是渣渣),但要看趋势,不看稳态。</p>
+
+        <h2>10. 为什么全球贸易要用美元做账</h2>
+<p><span class="num">1974 年</span>美国跟沙特有一个私下默契:沙特的石油全部用美元结算,换回美国的安全稳定保障。后来这条规矩扩展到 OPEC——全世界买油都得先换美元,你就算自己不用美元,商品市场上也就是用美元标价。这一笔账超划算:大家都得长期保持美元,美元地位天生稳定——你能梦见的最大优势,是靠加价就能收<span class="hl">“铸币税”</span>(用美元当记帐通货的人,实际是在给美国买单)。</p><p>石油美元让每个国家无论愿不愿,都自动成为美元的使用者。一文看懂:沙特卖油收到美元,存回美国买美债——美元的循环闭环了;日本买油要用美元,从卖车上换;中国买油也美元,内转的贸易顺差价也得维持一只美元<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>仓。这套机制/心态占到全球贸易的六成左右的记入,一时就替不了。</p><p>石油美元近几年出现的异动,值得咬文嚼字:OPEC+减产提价”开始自己动油价,俄罗斯因为被踢出 SWIFT 开始用印度卢比/人民币结算石油,沙特也开始接人民币兑油,伊拉克用 CIPS 交——这些都是小口子。美元标价仍是绝对主角,但它不再是唯一的帐。逻辑很简单:大宗定价系统是否能从美元换,本质上是看商品卖家能不能找到下一个可靠的支付和储备渠道——这是坑,也是路。</p>
+
+        <h2>11. 更可能的剧本是稀释</h2>
+<p>总有人问<span class="hl">“美元会不会崩”</span>。看实际数据:美元在全球外储份额从 <span class="num">2000 年</span>的约 <span class="num">71%</span> 降到 <span class="num">2023 年</span>的约 <span class="num">58%</span>,一年一桶地慢一点,二十多年才跌了 <span class="num">13 个百分点</span>——它是一种漫长稀释,不是崩盘。美债 <span class="num">34 万</span>亿美元的总量听起来吓人,但历史里债/GDP 更高的国家也有过(二战后美国自己、日英美都经历过),关键是债要用谁的钱来还——美国的美元债用自己印的美元来还,技术意义上的<span class="hl">“违约”</span>门槛等于自己不下决定。</p><p>真正的风险,来自武器化的代价:2022 把俄罗斯银行踢出 SWIFT、冻结 3000 多亿美元储备这种动作,短期威力巨大,长期会刺疼旁观国家——<span class="hl">“我也能做他下一个”</span>,总有人会做功课。后果是渐变的:多国央行多买点金子、多签几份本币互换协议、多建几条 CIPS 一类的替代通道,这些加不进一次性新闻头条,却在十年尺度上累积。</p><p>所以判断<span class="hl">“美元倒不倒”</span>要分层看:短期内(<span class="num">5 年</span>),没有下一个足够大的金融市场能装下 <span class="num">60%</span> 的全球外储,美元地位会延续;中长期(<span class="num">10-30 年</span>),主要看点是份额能不能守住,而不是会不会崩——守不住的就是<span class="hl">“稀释式衰退”</span>,它对所有用美元标的出的套利长期影响,但不会影响你明天的 <a class="term term-link" href="glossary.html#g-t1" title="查看术语：T+1">T+1</a> 交易。</p>
+
+        <h2>12. 给你的仪表盘</h2>
+<p>新闻联播的<span class="hl">“世界形势”</span>常读成一堆形容词,你作为量化研究者可以把它拆成五个一组的数字仪表盘。第一格:<span class="num">10 年</span>期美债收益率(全球资金成本)与 <span class="num">2 年</span>期(政策预期);第二格:DXY 美元指数(货币强弱);第三格:TIPS 实际利率(黄金遥控器、流动性真温度);第四格:金价和铜价(避险与工业需求);第五格:WTI 油价(通胀供给端)。把这五个数字放进你的每日日志,趋势就清楚了。</p><p>还有一个程序员的好习惯:做汇率类策略、跨境类司机、货币<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>、外盘商品,都要记住时区。美国 CPI 通常在北京时间晚 20:30 发,A 股已经收盘——你在回测中把它们自然日对齐,等于偷偷看了一夜的新闻(这在之前的宏观章节里也是这样提过的);做黄金策略用伦敦金价,时区又是另一回事;做多资产组合,一个月收尾把汇率转换加上,错的航次能拉 1 个点回撤。</p><p>读世界经济,别问一句<span class="hl">“会不会出大事”</span>,问得应该是“我持有的资产里,哪一个押注暴露在哪个主要变量上”。如果都能答出,你就是读懂的人了;若答不出,你在关心那个消息的意义也不大。这个仪表盘,目的是一眼看你的组合里哪里有集中赌注,不是真的帮你预测明天下雨——那是回头写新闻的人的工作,不是你的。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 495" role="img" aria-label="宏观决策仪表盘:美收益率、美元指数、TIPS、金与铜、油价,这五个数足以绕过绝大多数的宏观判断">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">每天五件事:把这五个数吃进早会,股票和债都不会让你风局被动</text>
+            <rect x="70" y="90" width="350" height="100" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="245" y="118" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">① 10 年期美债收益率</text>
+            <text x="245" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">全球资本定价的“地基价格”</text>
+            <text x="245" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">哚股、债、金全线贴现率的指挥棒</text>
+            <rect x="470" y="90" width="350" height="100" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="645" y="118" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">② DXY(美元指数)</text>
+            <text x="645" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">美元强不楚的尺子</text>
+            <text x="645" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">美元强 → 其他资产被动币磨</text>
+            <rect x="70" y="220" width="350" height="100" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="245" y="248" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">③ TIPS 实际利率</text>
+            <text x="245" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">从名义利率里剔通胀、纯实际资金成本</text>
+            <text x="245" y="298" text-anchor="middle" fill="#bcc9dd" font-size="12">黄金最重要的温度镜</text>
+            <rect x="470" y="220" width="350" height="100" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="645" y="248" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">④ 金价和铜价</text>
+            <text x="645" y="276" text-anchor="middle" fill="#bcc9dd" font-size="12">金:避险偏好;铜:工业需求</text>
+            <text x="645" y="298" text-anchor="middle" fill="#bcc9dd" font-size="12">同款同币种看全市场在意的是由险还是增长</text>
+            <rect x="70" y="350" width="350" height="80" rx="10" fill="rgba(238,136,119,0.12)" stroke="rgba(238,136,119,0.4)"/>
+            <text x="245" y="378" text-anchor="middle" fill="#ee8877" font-size="14" font-weight="800">⑤ WTI 油价</text>
+            <text x="245" y="404" text-anchor="middle" fill="#bcc9dd" font-size="12">通胀的冲锋锋,迟早传导到 CPI</text>
+            <text x="450" y="456" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这五个数永远不会告诉你“买什么”,但它变到“市场最关心什么”。你的工作是读懂今天市场在说什么</text>
+          </svg>
+          <p class="figure__cap">宏观预测不重要,重要的是读懂市场在说什么。这本道永远只需要五个数——收益率告诉你资金多贵,美元告诉你资金出界不明,TIPS 告诉你实际资金成本,油价告诉你通胀压力,金价告诉你避险情绪。</p>
+        </div>
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>世界经济形势的三张桌子是美中欧,美元体系的靠点位是全球结算六成份额和 34 万亿美元美债市场。</li>
+            <li>美元指数和 USD 潮汐是全球资产的水压表,黄金和实际利率是流动性的温度计,实际利率与金价大类反向但央行买盘能压反相不破。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 商场、工地和港口,怎样拉着一整个经济体往前走</li>
+            <li><strong>2.</strong> 卖出去一船货以后,那笔外汇究竟去了哪里</li>
+            <li><strong>3.</strong> 先看清三张桌子</li>
+            <li><strong>4.</strong> 美元为什么是世界的水龙头</li>
+            <li><strong>5.</strong> 一篮子货币的体重秤</li>
+            <li><strong>6.</strong> 加息抽水,降息放水</li>
+            <li><strong>7.</strong> 不生息的老钱</li>
+            <li><strong>8.</strong> 黄金的遥控器</li>
+            <li><strong>9.</strong> 央行为什么2022后开始囤金</li>
+            <li><strong>10.</strong> 为什么全球贸易要用美元做账</li>
+            <li><strong>11.</strong> 更可能的剧本是稀释</li>
+            <li><strong>12.</strong> 给你的仪表盘</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么美元是世界的水龙头?</summary>
+            <p>因为全球贸易六成上下用美元结算、外储约 58% 是美元、34 万亿美元美债市场是全世界最大的抵押品池子,加上 SWIFT 报文和大宗定价权——工具齐装满盘。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>美元指数涨,如果欧元自己也变弱,谁的责任更大?</summary>
+            <p>两者责任难分。欧元区占 DXY 权重 57.6%,欧元弱 1% 就推 DXY 走约 0.58 点——很多时候美元指数高,是因为欧元日元自己先弱,美元反而没干什么。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>危机四百年: 从郁金香到硅谷银行</h2>
+          <p>把过去四百年最惨烈的十二场崩盘并排放在一起读:郁金香、南海、大萧条、1987、日本、亚洲金融风暴、互联网泡沫、2008、欧债、2015 年的 A 股、2020 与 2022、2023 硅谷银行与瑞信——每一次都由不同的故事开场,退场姿势却惊人一致。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 7 章 · 基金、ETF、指数和私募: 把钱交给别人管理意味着什么 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清基金份额、净值、指数基金、ETF、公募、私募、对冲和指数增强。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="7">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第二部分 · 资产如何承载现金流与风险 · 第 7 章</p>
+        <h1>基金、ETF、指数和私募: 把钱交给别人管理意味着什么</h1>
+        <p class="lead">很多普通人并不直接买几十只股票和债券,而是买基金。基金看起来只是一个产品名称,点两下就能申购,其实它背后是一整套法律结构、账户安排、投资规则和费用机制。你买基金,不是把钱塞进一个黑箱然后闭眼祈祷,而是签下一份约定:谁来管钱、可以买什么、怎么估值、怎么收费、风险由谁承担。这一章就把这份约定逐条拆开看。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线二</span>
+            <span>本部分第 3 / 7 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?</p>
+          <p class="chapter-context__outcome">读完后,你能先拆现金流、权利、期限和最坏情况,再讨论价格涨跌。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>基金是一套集合投资的结构,不是某一种单一策略。</li>
+            <li>指数基金和 ETF 的核心优势是低成本、透明和分散,但请记住,它们不保本。</li>
+          </ul>
+        </section>
+
+
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 明明每天有净值,为什么突然不能赎回</h2>
+<p><span class="num">2019 年</span>,英国明星基金经理 Neil Woodford 管理的旗舰基金暂停赎回。此前基金仍然每天公布净值,投资者也习惯把它当成随时能进出的开放式产品;但持续赎回碰上组合里难以迅速卖出的非上市和小盘资产,门口一下被堵死。</p><p>这不是<span class="hl">“基金里没有资产”</span>,而是资产和负债的时间错配:投资者希望今天拿钱,底层持仓却需要几周甚至几个月才能找到买家。为了给先走的人付现金,基金只能先卖最容易卖的东西,留下来的组合反而越来越难卖,赎回压力于是会自我强化。</p><p>所以研究基金不能只看收益率和基金经理名字。持仓<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>、产品开放频率、投资者结构和规模变化同样是一组<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>。净值是一张价格表,赎回条款才是出口;有报价不等于你能按这个报价把钱拿走。</p>
+        </section>
+
+        <h2>2. 基金是什么</h2>
+<p>先想象一个最简单的画面:你和一万个互不相识的人,把钱放进同一个资金池,雇一位管理人,按事先签好的合同去投资。你买到的不是某只具体的<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>,而是这个池子的份额——基金份额。池子底下装着什么?可能是股票、<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>、货币市场工具、商品,也可能是其他基金,甚至衍生品。合同写了能买什么,管理人才有权限买什么。</p><p>钱放在一起,第一个要防的就是管钱的人伸手。所以基金资产通常由托管人(通常是银行等机构)单独保管,管理人不能随便把基金资产和自己公司的资产混在一起。托管、估值、信息披露、投资范围,这些听着枯燥的词,本质上是给管理人焊上的几道铁栏杆,目的就是降低他乱来的风险。</p><p>把托管翻译成程序员语言,就是权限分离。管理人有<span class="hl">“下单权”</span>,可以决定买卖;但钱和证券的<span class="hl">“私钥”</span>握在托管人手里,管理人碰不到资产本体。两套权限拆开,作恶的空间就小得多——这跟线上系统里<span class="hl">“开发不许直接改生产库”</span>是同一个安全哲学。所以评价一只基金的安全垫,先看结构,再看业绩,顺序别反。</p><p>所以请把一个观念摆正:基金不是一种策略,而是一种结构——一种<span class="hl">“凑钱、托管、按合同投资”</span>的组织方式。股票基金、债券基金、货币基金、指数基金、量化基金、<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>基金,听上去五花八门,其实都是同一副结构骨架下,装了不同的投资方式。</p>
+
+        <h2>3. 基金净值怎么理解</h2>
+<p>打开任何一只基金的页面,最显眼的那个数字叫单位净值。它是什么意思?一句话:池子里所有家当扣掉负债和费用之后,平摊到每一份上值多少钱。假设一只基金总资产扣掉负债和费用后值一亿元,总份额是一亿份,那么单位净值就是一元。你持有一万份,名下大约就是一万元资产。</p><p>再看涨跌怎么落到你头上。如果净值从一元涨到一点一元,你的一万份大约变成一万一千元;如果净值跌到零点九元,你的一万份大约变成九千元。你的盈亏不用自己算,净值涨跌直接按比例映射到你的账户。</p><p>再拆一个高频误会:净值高低,不代表贵便宜。两只基金,一只净值一元,一只净值三元,你各投一万元,前者买到一万份,后者买到约三千三百三十三份;两边都涨百分之十,前者赚一千元,后者同样赚一千元。净值只是历史累计出来的记账结果,起跑线在你买入那一刻,人人平等。还有一种<span class="hl">“净值变低”</span>更不吓人:分红。每份分红一角钱之后,净值从一元变成九角,你账户里多了一笔现金,总资产一分没少——那不是跌,是钱换了个位置。</p><div class="callout callout--note reveal"><span class="callout__title">净值三元不比一元贵</span><p>常见误区:净值三元的基金比净值一元的贵。各投一万元:前者买到约三千三百三十三份,后者买到一万份;两边都涨百分之十,赚的都是一千元。净值只是历史累计出来的记账结果,起跑线在你买入那一刻人人平等。分红让净值从一元变九角也同理:账户里多了一笔现金,总资产一分没少。</p></div><p>还有一件事容易被忽略:净值不是每天早上凭空写出来的一个数,它必须根据底层资产估值算出来。底层是上市股票,估值相对容易,行情软件上实时有价;可如果底层是流动性差的债券、非上市资产或复杂衍生品,没有现成报价,估值就得依赖模型和规则——这部分水分和争议,你以后看产品时一定要留个心眼。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="基金净值拆解图:总资产减总负债除以份额才是净值,每日涨跌是资产重新估值">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">基金净值拆解:100 亿里到底装着什么</text>
+            <line x1="80" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <line x1="80" y1="60" x2="80" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <rect x="150" y="100" width="160" height="200" fill="rgba(122,167,240,0.3)" stroke="#7aa7f0"/>
+            <text x="230" y="120" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="800">总资产 100 亿</text>
+            <rect x="150" y="180" width="160" height="120" fill="rgba(240,201,106,0.25)" stroke="#f0c96a"/>
+            <text x="230" y="240" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">持仓市值 85 亿</text>
+            <text x="230" y="266" text-anchor="middle" fill="#8499bd" font-size="11.5">股、债、票据估算</text>
+            <rect x="150" y="100" width="160" height="80" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="230" y="144" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">空闲资金 15 亿</text>
+            <rect x="410" y="100" width="160" height="200" fill="rgba(238,136,119,0.25)" stroke="#ee8877"/>
+            <text x="490" y="120" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="800">总负债 10 亿</text>
+            <text x="490" y="240" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">应付费用 / 应付款</text>
+            <text x="650" y="200" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">净值 = (总资产−总负债) ÷ 份额</text>
+            <text x="450" y="350" text-anchor="middle" fill="#bcc9dd" font-size="12.5">假设基金有 5 亿份额:100 − 10 = 90 亿,÷ 5 亿 = 每份 18 元——这才是你今天看到的净值入账逻辑</text>
+            <text x="450" y="378" text-anchor="middle" fill="#bcc9dd" font-size="12.5">净值每天在涨/在跌,不是“基金管理人多给了你一毛钱”,是它手里这些资产每天重新被系统估值一次</text>
+          </svg>
+          <p class="figure__cap">净值每天在动,不是基金公司在接你的钱——它是在报当天的账面:股票、债券、票据、银行脉冲刷新了一遍。先读懂总账与负债的拆解,再问我赚不赚。</p>
+        </div>
+        <h2>4. 指数和指数基金</h2>
+<p>经常听到<span class="hl">“<span class="term">沪深 300</span>”</span><span class="hl">“<span class="term">中证 500</span>”</span>,指数到底是什么?先给个朴素的定义:指数就是一套选样本和加权的规则。某个宽基指数会白纸黑字规定:选哪些股票进来、每只股票权重多少、什么时候调整进出名单。指数不是一个会思考的基金经理,它是规则算出来的市场代表——按规则运行,铁面无私,毋需打卡上班。</p><p>指数基金的目标也因此和直觉相反:它通常不是去战胜指数,而是尽量跟住指数。它把钱按指数规则买入一篮子股票或债券,不求惊喜,只求用较低成本拿到市场平均表现。你可以把它理解成市场中的<span class="hl">“默认实现”</span>——不花哨,但谁都可以直接调用。</p><div class="callout callout--note reveal"><span class="callout__title">它不想赢,只想跟住</span><p>划重点:指数是一套选样本和加权的规则,指数基金的目标是尽量跟住它,而不是战胜它——按规则把钱配到每一只成分股,指数调名单它就跟着调仓,像一段定时执行的同步脚本。成本低,正因为没人赌明天;代价同样诚实:市场整体下跌时,别指望它躲开。多数主动基金扣完费,长期很难跑赢这个<span class="hl">“默认实现”</span>。</p></div><p><span class="hl">“跟住”</span>在工程上怎么做?基金按指数公布的权重,把池子里的钱照比例配到每一只成分股上;指数定期调整名单和权重,基金就跟着调仓,像一段定时执行的同步脚本。成本为什么低?因为不必高薪养一群研究员去赌明天,也不必频繁交易——按规则执行这件事,最怕花样,最喜纪律。它的代价同样诚实:市场整体下跌时,别指望它躲开。</p><p>《漫步华尔街》这本书力推指数投资,理由可不是<span class="hl">“指数每年都涨”</span>,而是一个更扎心的统计事实:长期看,低成本、分散化、少犯错,对普通投资者非常有力;而大多数主动基金扣掉各种费用之后,很难长期跑赢宽基指数。承认拿不到超额、先拿稳平均,对多数人来说反而更接近理性。</p>
+
+        <h2>5. ETF 为什么重要</h2>
+<p><a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a> 是可以在交易所买卖的基金——这是它和普通场外基金最大的一步跨越。它通常跟踪某个指数,既有基金净值,又像股票一样有实时买卖价格,你可以在交易时间里挂单买入卖出,价格就跳在你的行情软件上。</p><p>ETF 的好处一双手数得过来:透明、分散、成本较低、交易方便。更妙的是品类齐全:想买整个宽基市场,有宽基 ETF;看好某个行业,有行业 ETF;想配置债券、黄金、红利、海外市场,也很可能找到对应的 ETF。一部手机、一个账户,你就能把五花八门的资产搂进怀里。</p><p>把折溢价这件事拆开看:净值是按底层资产算出来的<span class="hl">“账本价”</span>,场内价格是交易时间里买卖双方<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>出来的<span class="hl">“喊价”</span>。喊价通常贴着账本价走,但遇到抢筹或恐慌,短时间可能偏离——价格高于净值叫溢价,等于你为同一篮资产多付了钱;低于净值叫折价。<a class="term term-link" href="glossary.html#g-跟踪误差" title="查看术语：跟踪误差">跟踪误差</a>则是另一笔账:费用、仓位复制方式、停牌成分股,都会在基金和指数之间留出一条细小但真实的缝。</p><p>但先别把它当成完美工具。ETF 会老老实实跟着底层资产涨跌,跌起来一分不少;它还有跟踪误差、交易价和净值之间的折溢价、流动性差异和费用。记住:低成本不等于保本——它便宜,但它照样会亏。</p>
+
+        <h2>6. 公募、私募和对冲基金</h2>
+<p>公募基金和私募基金,一字之差,面向的是两个世界。公募面向公众募集,监管和信息披露更严格,你在手机银行里就能买到,普通投资者抬手可及;私募面向合格投资者,起投门槛更高,策略可以更灵活,信息披露的口径也不一样——灵活的另一面,是你得自己具备更强的判断力。</p><p>私募的高门槛也不是摆架子:监管默认合格投资者有更强的风险识别和承受能力,才允许私募用更灵活、更不透明的策略——门槛本质是一份风险自负的声明。再顺手翻译一个高频词:<span class="hl">“多空”</span>就是同时做多看好的、做空看差的,两笔头寸组合起来,市场整体涨跌被部分抵消,剩下的是选股的差价。工具不自带善恶,全看使用者的风控纪律。</p><p>再看一个名字自带误导的词:对冲基金。听到<span class="hl">“对冲”</span>以为风险都被对冲掉了?未必。广义上,对冲基金可以使用多空、<span class="term">杠杆</span>、衍生品、套利、多策略等一大桌工具去追求收益,它可能把某些风险对冲得干干净净,也可能带着不小的<span class="term">杠杆</span>在刀刃上跳舞。判断一只对冲基金,别盯着名字,要盯住它的具体策略和风险控制。</p><p>把镜头拉近你最关心的领域:私募量化基金的常见产品,包括指数增强、<a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>、CTA、多策略等。它们的收益来源不同,波动和回撤也不同。听到<span class="hl">“量化”</span>两个字就默认风险一样的,就像听到<span class="hl">“写代码的”</span>就默认水平一样——还早得很。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 405" role="img" aria-label="公募/私募/对冲基金类别比较:门槛、披露密度、监管标准的区别看起来很简单,实际决定了你能不能接受它">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">公募、私募、对冲基金:名字相似,但谁能买、怎么权益所得完全不同</text>
+            <rect x="70" y="80" width="240" height="240" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="190" y="110" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">① 公募基金</text>
+            <text x="190" y="140" text-anchor="middle" fill="#bcc9dd" font-size="12">所有人都能买,起购 10 元</text>
+            <text x="190" y="164" text-anchor="middle" fill="#bcc9dd" font-size="12">净值每天披露,持仓每季披露</text>
+            <text x="190" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">证监会最严监管 + 托管行当守护</text>
+            <text x="190" y="218" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">最公开、最受控控、也最烦</text>
+            <rect x="330" y="80" width="240" height="240" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="110" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">② 私募基金</text>
+            <text x="450" y="140" text-anchor="middle" fill="#bcc9dd" font-size="12">合格投资者:100 万起投</text>
+            <text x="450" y="164" text-anchor="middle" fill="#bcc9dd" font-size="12">净值披露不靠每日,一般按月/按季</text>
+            <text x="450" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">较公募浅监管,但仍是正规机构</text>
+            <text x="450" y="218" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">要承担你对产品信息不如公募丰富的风险</text>
+            <rect x="590" y="80" width="240" height="240" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="710" y="110" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 对冲基金</text>
+            <text x="710" y="140" text-anchor="middle" fill="#bcc9dd" font-size="12">多数更可归为“对冲策略型基金”</text>
+            <text x="710" y="164" text-anchor="middle" fill="#bcc9dd" font-size="12">可以用多种杠杆、做空、衍生品</text>
+            <text x="710" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">报酬双 2/20:3% 管理 + 20% 超额</text>
+            <text x="710" y="218" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">行为多而重,能力和资金门槛也高</text>
+            <text x="450" y="358" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这三类彼此不一样——不,不能见"能赚钱的"就乱买,先问能不能看懂:起购门槛、披露密度、监管口径,这三条永远比“对冲”和“量化”这两个字酷不酷重要</text>
+          </svg>
+          <p class="figure__cap">三类产品象限各不相同:公募是超市,私募是会员店,对冲基金是咖啡屋菜单——看清楚自己能不能承担披露和决策缺口。</p>
+        </div>
+        <h2>7. 指数增强和市场中性</h2>
+<p>指数增强,名字听起来硬,拆开很简单:先大体跟住一个指数,再用选股模型争取多赚一点。比如一只指增产品,风险结构跟<span class="term">中证 500</span> 差不多,但它希望通过因子选股,在指数表现之上削出一块<span class="term">超额收益</span>。跟得稳是及格线,增强是加分题。</p><p>市场中性则更进了一步:它希望把大盘涨跌的影响尽量对冲掉,只留下选股能力带来的那部分收益。现实里常用<span class="term">股指期货</span>、融券或其他工具来做对冲——大盘涨它不为喜,大盘跌它不为惧,赚的是<span class="hl">“找出更好的股票”</span>这门手艺本身的钱。</p><p>用一组数字把两类策略分开记账。假设某年<span class="term">中证 500</span> 涨了百分之十:指增产品如果做到涨百分之十三,多出来的三个百分点就是<span class="term">超额收益</span>,来自选股模型;市场中性产品则用<span class="term">股指期货</span>对冲掉市场方向,大盘那百分之十的涨跌基本被对冲干净,剩下的目标大约是<span class="hl">“<span class="term">超额收益</span>减去对冲成本”</span>,成本里包括<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>和融券费用。所以看中性产品,别拿它跟牛市比涨幅,该看它扣完成本后,选股这门手艺还剩几个点。</p><div class="callout callout--note reveal"><span class="callout__title">同一笔超额,两本账</span><p>手算:某年<span class="term">中证 500</span> 涨百分之十。指增产品做到涨百分之十三,多出的三个点是选股模型削出来的超额;市场中性则用<span class="term">股指期货</span>把大盘那百分之十基本对冲干净,剩下的大约是<span class="hl">“<span class="term">超额收益</span>减去对冲成本”</span>,成本里包括基差和融券费用。所以看中性产品,别拿它跟牛市比涨幅——该看扣完成本后,选股这门手艺还剩几个点。</p></div><p>但两类策略都不是无风险的保险箱。指数增强会有跟踪误差,增强不成反而跑输的情况并不少见;市场中性要背对冲成本、基差风险、融券成本,还要扛模型失效和极端行情。市场越极端,这些平时不显眼的成本与裂缝,越可能同时现身。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="指数增强示意图:增强产品净值线在基准之上多出稳定的超额空间">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">指数增强:基准涨 20% 你也跟着,再多赚五到十个百分点</text>
+            <line x1="100" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <line x1="100" y1="100" x2="100" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <path d="M 120 290 L 260 240 L 400 210 L 540 170 L 700 130 L 810 110" fill="none" stroke="#7aa7f0" stroke-width="3"/>
+            <text x="820" y="108" fill="#7aa7f0" font-size="13" font-weight="800">指数本身(β)</text>
+            <path d="M 120 280 L 260 225 L 400 188 L 540 142 L 700 102 L 810 78" fill="none" stroke="#f0c96a" stroke-width="3.5"/>
+            <text x="820" y="76" fill="#f0c96a" font-size="13" font-weight="800">指数增强产品(β+α)</text>
+            <path d="M 810 112 L 810 82" stroke="#8fb37a" stroke-width="2"/>
+            <text x="760" y="98" fill="#8fb37a" font-size="11.5" text-anchor="end">超额: 多出来的那也许是 5-8%</text>
+            <text x="450" y="338" text-anchor="middle" fill="#bcc9dd" font-size="12.5">指数增强不是甩开指数,是“把指数的 β 完全收着,再在顶部加一个小的选股超额”;本金是别人的,超额才是自己的活儿</text>
+            <text x="450" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12.5">指数一来 20% → 你的实际若能到 25-30%,看起来不出格;但累积五年,就翻了不止一倍</text>
+          </svg>
+          <p class="figure__cap">指数增强的承诺是“市场杉数 1 倍,你帮客户省下的是超额部分 5-8%”。第一年看起来很馒,五年一拉复利,马上清晰可见的是超额的部分会成为利润的很大一部分。</p>
+        </div>
+        <h2>8. 基金产品怎样成为量化研究对象</h2>
+<p>绕回量化这条主线:基金和 ETF 不只是理财产品,更是量化策略常用的研究对象和交易载体。个人做量化,最适合从 ETF 起步——标的少、流动性相对好、数据容易处理,你的第一个<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>不必一上来就挑全市场几千只股票这么硬的骨头。</p><p>机构量化则常通过私募产品承载策略。研究一个量化产品,只看收益曲线约等于只看简历照片就录用——你还要看基准、费用、回撤、<span class="term">杠杆</span>、持仓分散度、流动性、申赎规则和策略容量。这一串词,个个都能改写那条漂亮曲线的真实成色。</p><p>单说<span class="hl">“策略容量”</span>,因为很多新手栽在这:一个策略能舒服装下的资金是有限的。规模小,进出灵活,小而美的机会够吃;规模一膨胀,买入本身就在抬价、卖出本身就在砸价,<span class="term">超额收益</span>被自己的体量摊薄。这和你压测系统时<span class="hl">“小流量全绿、大流量全挂”</span>是同一类问题:历史曲线跑得动,不代表装进未来的规模还跑得动。</p><p>以后你再看到某个基金宣传<span class="hl">“年化很高”</span><span class="hl">“回撤很低”</span>,先按住掏钱的冲动,连珠炮问几个问题:是实盘还是回测?是费前还是费后?样本有多长?是否经历过极端市场?规模多大、容量多大?这些问题听上去扫兴,但都比宣传单页那张图重要得多。</p><div class="callout callout--note reveal"><span class="callout__title">掏钱之前先连问五句</span><p>划重点:看到<span class="hl">“年化很高”</span><span class="hl">“回撤很低”</span>,先按住掏钱的冲动连问几句:是实盘还是回测?费前还是费后?样本有多长?经历过极端市场吗?规模多大、容量多大?尤其容量——规模一膨胀,买入本身就在抬价、卖出本身就在砸价,<span class="term">超额收益</span>被自己的体量摊薄:小流量全绿,不代表大流量不挂。</p></div>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>基金是一套集合投资的结构,不是某一种单一策略。</li>
+            <li>指数基金和 ETF 的核心优势是低成本、透明和分散,但请记住,它们不保本。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 明明每天有净值,为什么突然不能赎回</li>
+            <li><strong>2.</strong> 基金是什么</li>
+            <li><strong>3.</strong> 基金净值怎么理解</li>
+            <li><strong>4.</strong> 指数和指数基金</li>
+            <li><strong>5.</strong> ETF 为什么重要</li>
+            <li><strong>6.</strong> 公募、私募和对冲基金</li>
+            <li><strong>7.</strong> 指数增强和市场中性</li>
+            <li><strong>8.</strong> 基金产品怎样成为量化研究对象</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>基金净值到底是什么?</summary>
+            <p>基金资产扣除负债和费用后,除以基金份额得到的每份价值——你的盈亏跟着它按比例走。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>指数基金为什么适合普通人作为基准?</summary>
+            <p>因为它低成本、分散、透明;而长期看,大多数主动策略扣费后很难稳定战胜它。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>期货、远期与互换: 把未来价格写进合约</h2>
+          <p>讲清远期、期货、保证金、基差、期限结构和互换。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

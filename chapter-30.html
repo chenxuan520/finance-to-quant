@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 30 章 · 回测: 在历史里排练,但不要把历史当答案 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清事件驱动、调仓、成交假设、交易成本、滑点、容量和回测陷阱。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="30">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第五部分 · 量化研究如何产生可信结论 · 第 30 章</p>
+        <h1>回测: 在历史里排练,但不要把历史当答案</h1>
+        <p class="lead">回测是量化研究的实验室: 你把策略规则放进历史市场里,让它假装穿越回去重新跑一遍,看看当时真这么做会发生什么。但请先记住两句话: 回测不是时光机,更不是赚钱证明。它更像正式演出前的彩排,作用是帮你提前看到策略可能的收益、风险、换手和失效阶段。彩排越接近真实交易,参考价值越高;如果你在彩排里偷看未来、假装交易零成本、假设想买多少就能成交多少,那排出来的就不是戏,是幻觉。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线五</span>
+            <span>本部分第 3 / 10 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>一个金融判断怎样变成可证伪假设,再经过数据、回测、模型和实盘约束?</p>
+          <p class="chapter-context__outcome">读完后,你能从问题出发完成研究闭环,而不是先找模型、再给结果编故事。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>回测是拿当时可见的信息在历史里排练策略,不是向未来开具的赚钱证明。</li>
+            <li>成交假设、交易成本、换手、容量、停牌涨跌停和退市处理,每一项都能显著改写收益。</li>
+          </ul>
+        </section>
+
+
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 把 3 月 31 日的财报放进 3 月 31 日交易</h2>
+<p>一位研究者用一季度净利润选股,把报表期末日期 <span class="num">3 月</span> <span class="num">31 日</span>当成数据可用日。<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>结果漂亮得惊人:模型总能提前买到业绩大增的公司。问题是,许多一季报要到四月甚至更晚才公开,<span class="num">3 月</span> <span class="num">31 日</span>收盘前的市场根本看不到那些数字。</p><p>代码只错了一列日期,却获得了预知未来的能力。财务数据至少有三个时间:它描述哪段经营期、公司何时公告、数据库何时收录或修订。把第一个时间当成第二个,模型就会在历史里作弊,而且作弊得非常像真正的<a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>能力。</p><p>可靠回测必须按公告时间对齐,还要给数据入库和下单留出延迟。凡是结果好得不合常理,第一检查项不该是调参数,而是问:这一刻的我,真的已经看见这条数据了吗?</p>
+        </section>
+
+        <h2>2. 回测到底在模拟什么</h2>
+<p>一个最简回测,拆开看就是一条每天在跑的流水线: 每到一个决策时点,读取当时可见的数据,计算信号,生成目标持仓,下单,模拟成交,更新现金和持仓,记录净值。然后下一天或下一分钟,原样再来一遍。流程朴素得像一段 for 循环,很多新手的第一个回测也就几十行代码。</p><p>但正是这个看似朴素的循环,步步是坑。当时可见的数据,当时真的可见吗? 信号有没有偷看未来? 下单的那个时点,市场让不让你交易? 成交价格是真实存在过的吗? 费用扣了没有? <a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>会不会恰好停牌或涨跌停? 持仓满不满足 <a class="term term-link" href="glossary.html#g-t1" title="查看术语：T+1">T+1</a>? 这串问题里任何一个答错,回测就从实验降级成故事。</p><p>所以一个像样的回测,不能只吐给你一条收益曲线就完事。它还得交出交易记录、持仓明细、现金流水、费用、换手、没成交的订单、拒单和拒单原因、行业暴露、风险指标以及相对基准的表现。只有净值曲线的回测,就像只有结论没有日志的事故复盘: 你根本定位不了收益从哪来,更判断不了它能不能在实盘复现。</p>
+
+        <h2>3. 向量化回测和事件驱动回测</h2>
+<p>向量化回测的思路,程序员一定眼熟: 把数据整理成大矩阵,批量计算,一口气算出所有信号和收益。它像跑一个离线批处理任务: 快,所以特别适合日频选股、<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>研究和快速实验。代价是交易细节被简化掉了——部分成交、订单排队、盘中状态、复杂费用,这些在矩阵里都没有位置。</p><p>事件驱动回测更像一个真实上线的系统: 行情更新、信号生成、订单提交、成交回报、撤单、风控检查,每件事都作为一条事件在系统里流转、被逐个处理。它更慢,写起来也复杂得多,但能模拟的实盘细节多得多,适合高频、日内、多资产和复杂执行策略。一个是批处理,一个是事件流,各有各的适用场景。</p><p>个人入门的合理路径,是先用向量化做研究,但心里要时刻装着它的边界。等策略从研究报告走向实盘,再逐步把事件驱动的细节加回来。千万别犯那个经典错误: 因为向量化回测的收益曲线很漂亮,就默认真实交易也会这么漂亮。</p>
+
+        <h2>4. 调仓频率决定交易问题的难度</h2>
+<p>月频、周频、日频、分钟级——同样顶着<span class="hl">“量化策略”</span>四个字,它们面对的几乎是四个世界。规律只有一条: 调仓越频繁,交易成本越咬人,数据延迟越敏感,<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>越明显,对系统稳定性的要求越苛刻。</p><p>直观感受一下差距。一个月频选股策略,月末出信号、下月初调一次仓,主要操心的是财务数据、风格暴露和组合约束,工程上像一个定时任务。一个日内策略则要处理逐笔行情、盘口排队、低延迟系统和严格风控,工程上更接近实时系统。两者名片上都印着量化,工程难度却差着好几个数量级。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>所以新手最好从低频切入。注意,低频策略本身也绝不简单,它只是让你能先把数据、标签、成本、基准、风险这些基本功练扎实,不至于一上来就被毫秒延迟、订单簿和硬件问题按在地上摩擦。</p></div>
+
+        <h2>5. 收盘价成交最容易骗人</h2>
+<p>很多入门教程的回测,默认按当天收盘价成交。一句话点破这个假设的危险: 它是<a class="term term-link" href="glossary.html#g-未来函数" title="查看术语：未来函数">未来函数</a>最爱躲的地方。如果你的信号本身用到了当天收盘价、或者收盘后才披露的数据,回测又假设你在当天收盘那一刻成交——等于先偷看答案,再回到考场填答题卡。更诚实的假设是: 用下一交易日开盘价、成交均价,或者带滑点的价格。</p><p>就算改用下一日开盘价,也不代表你真能成交。开盘可能直接涨停,买单排到收盘也轮不到你;可能跌停,挂卖单无人问津;<a class="term term-link" href="glossary.html#g-集合竞价" title="查看术语：集合竞价">集合竞价</a>的量也可能根本不够你买。用日线数据做回测,成交价格注定只能是近似,盘口里那些细碎的真实是模拟不出来的。</p><p>成熟的回测会把成交假设故意调保守: 买入价略高于基准价,卖出价略低于基准价;按成交额限制最大参与比例;遇到涨跌停和停牌直接不许成交。原则就一条: 宁可把收益估少一点,也别让回测靠不真实的成交替你赚钱。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 295" role="img" aria-label="未来函数示意:决策时点左边是可用的历史,右边是不可用的未来,用到未来信息就是偷看答案">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回测最致命的错:偷看了未来</text>
+            <line x1="70" y1="150" x2="830" y2="150" stroke="#46587a" stroke-width="2" marker-end="url(#la)"/>
+            <defs><marker id="la" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
+            <line x1="450" y1="80" x2="450" y2="220" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 5"/>
+            <text x="450" y="70" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">决策时点(此刻)</text>
+            <rect x="110" y="112" width="320" height="40" rx="8" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="270" y="138" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">已知:历史数据(能用)</text>
+            <rect x="470" y="112" width="320" height="40" rx="8" fill="rgba(232,120,120,0.18)" stroke="#e88"/>
+            <text x="630" y="138" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">未知:未来数据(不能用)</text>
+            <path d="M 630 112 C 620 60 480 60 458 104" fill="none" stroke="#e88" stroke-width="2.5" marker-end="url(#la)"/>
+            <text x="560" y="55" text-anchor="middle" fill="#ffb4b4" font-size="13">用未来信息做当下决策 = 未来函数</text>
+            <text x="450" y="250" text-anchor="middle" fill="#c9d4e8" font-size="14">回测里一旦用到决策时点还不知道的信息,收益就是假的</text>
+            <text x="450" y="276" text-anchor="middle" fill="#8499bd" font-size="13">常见来源:用收盘价当天下单、复权/财报数据提前、标签泄漏</text>
+          </svg>
+          <p class="figure__cap">回测在某个时点做决策时,只能用那一刻已经公开的信息。一旦用到当时还不知道的未来数据(未来函数),回测收益就是幻觉,实盘一定复现不了。</p>
+        </div>
+        <h2>6. 佣金、税费、滑点和冲击</h2>
+<p>一提交易成本,多数人只想到券商<a class="term term-link" href="glossary.html#g-佣金" title="查看术语：佣金">佣金</a>。这只是冰山露出水面的一角。普通股票卖出可能有<a class="term term-link" href="glossary.html#g-印花税" title="查看术语：印花税">印花税</a>,还有<a class="term term-link" href="glossary.html#g-过户费" title="查看术语：过户费">过户费</a>等费用;<a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a>、<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>、<a class="term term-link" href="glossary.html#g-可转债" title="查看术语：可转债">可转债</a>、期货、期权各有各的费用结构。水面下更大的部分,是买卖价差、滑点和<a class="term term-link" href="glossary.html#g-冲击成本" title="查看术语：冲击成本">冲击成本</a>——这些隐性成本常常比显性费用更致命。</p><div class="callout callout--note reveal"><span class="callout__title">10 万元本金 × 每天一次换手 = 一年要被磨掉多少</span><p>每一笔单边成交,你要付的明面成本大致是:佣金约 <span class="num">0.03%</span>(双向收),卖出时印花税 <span class="num">0.05%</span>(<span class="num">2023 年</span>起),过户费约 <span class="num">0.001%</span>,约 <span class="num">0.08%</span>;再算上标价与实际成交价之间常见的 <span class="num">0.05-0.15%</span> 滑点,一轮<span class="hl">“买+卖”</span>成本合计约 <span class="num">0.2%</span>。年化一次换手 <span class="num">8 次</span>,成本约 <span class="num">1.6%</span>;换手 <span class="num">20 次</span>,<span class="num">4%</span>;换手 <span class="num">50 次</span>,<span class="num">10%</span>。假设一个策略年化毛收益 <span class="num">8%</span>,换手 <span class="num">40 次</span>就被成本清零;换手 <span class="num">8 次</span>以内,普通投资者的净收益明显高于高换手组合。你自己算一遍:把去年成交总金额拉出来,按 <span class="num">0.2%</span> / 边逐边扣——这才是真正被薅走的数目。</p></div><p>先把两个术语说明白。滑点,是你预期成交的价格和实际成交价格之间的差。冲击成本更扎心: 你的交易本身在推动价格——你买,价格被你买上去;你卖,价格被你砸下来。一个策略如果频繁买卖小盘低<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>股票,纸面上那点收益,很容易被滑点和冲击联手吃干抹净。</p><p>所以回测至少要做几档成本敏感性分析: 低成本、中等成本、高成本各跑一遍。判断标准很直白: 一个策略如果只在极低成本假设下赚钱,费用稍微调高一档就转亏,那它的商业价值约等于零。</p>
+
+        <h2>7. 策略到底有多爱动</h2>
+<p><a class="term term-link" href="glossary.html#g-换手率" title="查看术语：换手率">换手率</a>衡量组合买卖有多勤快。每月把全部持仓整个换一遍,和每年只换掉一小部分,是两种完全不同的生物: 成本、容量和执行难度都不一样。高换手策略要活下去,必须有更强的信号、更低的成本和更好的执行,三样缺一不可。</p><p>来算一笔账感受下。假设一个策略年化毛收益 <span class="num">20%</span>,年换手 <span class="num">20 倍</span>,单边总成本每次 <span class="num">0.1%</span>。先别急着算,得先定义换手口径: 如果 <span class="num">20 倍</span>指单边买入成交额除以平均资产,显性成本约 <span class="num">2%</span>;如果指完整换仓 <span class="num">20 次</span>,每次同时卖旧买新、双边成交约 <span class="num">40 倍</span>,成本约 <span class="num">4%</span>——这还没算冲击。如果这个策略的毛收益本来就来自频繁的小机会,成本这一项就足以决定生死。</p><p>换手还不止影响成本,也影响税费和运营稳定性。调仓越频繁,撞上停牌、涨跌停、部分成交和资金占用的概率越大。很多信号在纸面上聪明绝顶,最后因为换手太高,被判了<span class="hl">“不值得交易”</span>。</p>
+
+        <h2>8. 小钱能赚,大钱不一定能赚</h2>
+<p>容量回答一个朴素的问题: 这个策略最多能装下多少钱? 一个信号在 <span class="num">100 万</span>资金上灵光,不代表在 <span class="num">10 亿</span>资金上还灵光。资金越大,交易越藏不住,冲击成本越高,能买的资产越受限制。</p><p>小盘股、低成交额、窄价差的机会,通常容量有限。你买一点,能成交;买很多,价格被你自己推上去。卖的时候同理: 卖一点能退出,卖很多就把价格砸穿了。所以容量不是策略之外的附加题,它就是策略收益的一部分。</p><p>回测里可以用参与率约束粗略估计容量,比如每只股票每天的成交量参与比例不超过 <span class="num">5%</span> 或 <span class="num">10%</span>。如果策略需要吃掉当天成交量的一半才能凑够目标仓位,那回测出来的收益,基本可以当科幻小说看。</p>
+
+        <h2>9. 幸存者偏差和退市处理</h2>
+<p><a class="term term-link" href="glossary.html#g-幸存者偏差" title="查看术语：幸存者偏差">幸存者偏差</a>是回测里最常见的高估来源之一,而且隐蔽得很。你今天拿到的股票列表,是<span class="hl">“活到现在”</span>的股票;拿它回测过去,就自动漏掉了历史上退市的、长期停牌的、烂到消失的股票。剩下来的样本天然更健康,回测收益自然更好看——这不是策略厉害,是样本在开赛前就把输家清出了场。</p><p>退市处理是另一个魔鬼细节。某些股票退市前连续跌停、流动性枯竭,实盘里你根本卖不掉。如果回测假设你在退市前按理论价格轻松离场,就把尾部风险严重低估了。</p><p>正确做法只有一条: 保留历史上当时真实存在的全部可投资样本,并按真实规则处理退市、停牌、ST、涨跌停和流动性。回测越愿意直面坏情况,越能保护实盘。</p>
+
+        <h2>10. 历史答案背得太熟</h2>
+<p><a class="term term-link" href="glossary.html#g-过拟合" title="查看术语：过拟合">过拟合</a>用考试的话说,就是把历年真题的答案背得滚瓜烂熟,一进新考场就懵。模型记住了历史噪声,却没学到未来还用得上的规律。量化里过拟合格外容易发生,因为数据维度高、尝试次数多、市场噪声大。只要参数试得够多,总能凑出一条历史收益曲线很好看的组合。</p><p>过拟合有几个经典症状,值得记进备忘单: 参数稍微一动收益就崩;收益集中在少数几笔交易或少数年份;样本内很好、样本外很差;扣完成本就消失;逻辑解释牵强附会;回撤阶段完全无法解释。命中两条以上,就要高度怀疑。</p><p>防御手段是成体系的: 减少自由度、保留样本外、做滚动验证、做参数稳定性检查、记录所有实验(包括失败的)、使用简单基准、优先选择有经济解释且交易成本合理的策略。没有哪一招能单独救命,组合起来才有效。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 315" role="img" aria-label="训练集、验证集、测试集按时间轴依次排列,测试集信息回流训练的红色虚线被打叉">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">训练、验证、测试:一条只能向前的河</text>
+            <!-- 时间轴 -->
+            <line x1="70" y1="120" x2="830" y2="120" stroke="#46587a" stroke-width="2"/>
+            <defs><marker id="d10a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>
+            <line x1="70" y1="120" x2="826" y2="120" stroke="#7aa7f0" stroke-width="2.5" marker-end="url(#d10a)"/>
+            <!-- 三段 -->
+            <rect x="70" y="80" width="450" height="80" rx="12" fill="rgba(122,167,240,0.14)" stroke="rgba(122,167,240,0.45)"/>
+            <text x="295" y="106" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">训练集</text>
+            <text x="295" y="128" text-anchor="middle" fill="#eef4f8" font-size="13">模型在这里学参数</text>
+            <text x="295" y="148" text-anchor="middle" fill="#8499bd" font-size="11.5">随便用,用多少遍都行</text>
+            <rect x="530" y="80" width="150" height="80" rx="12" fill="rgba(240,201,106,0.13)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="605" y="106" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">验证集</text>
+            <text x="605" y="128" text-anchor="middle" fill="#eef4f8" font-size="13">用来调超参和选模型</text>
+            <text x="605" y="148" text-anchor="middle" fill="#8499bd" font-size="11.5">可反复用,但会"被用脏"</text>
+            <rect x="690" y="80" width="140" height="80" rx="12" fill="rgba(232,120,120,0.12)" stroke="rgba(232,120,120,0.5)"/>
+            <text x="760" y="106" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">测试集</text>
+            <text x="760" y="128" text-anchor="middle" fill="#eef4f8" font-size="13">封存到最后一刻</text>
+            <text x="760" y="148" text-anchor="middle" fill="#8499bd" font-size="11.5">只用一次,报告它</text>
+            <!-- 信息只能向前 -->
+            <text x="295" y="196" text-anchor="middle" fill="#8499bd" font-size="12">时光</text>
+            <line x1="330" y1="192" x2="500" y2="192" stroke="#8499bd" stroke-width="1.5" marker-end="url(#d10a)"/>
+            <text x="605" y="196" text-anchor="middle" fill="#8499bd" font-size="12"></text>
+            <line x1="680" y1="192" x2="690" y2="192" stroke="#8499bd" stroke-width="1.5"/>
+            <!-- 红色回流禁止 -->
+            <path d="M 760 200 C 700 250, 420 250, 300 200" fill="none" stroke="#e88" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#d10r)"/>
+            <defs><marker id="d10r" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#e88"/></marker></defs>
+            <line x1="560" y1="212" x2="586" y2="238" stroke="#e88" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="586" y1="212" x2="560" y2="238" stroke="#e88" stroke-width="3.5" stroke-linecap="round"/>
+            <text x="450" y="272" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">测试集的信息流回前段 = 回测被判作弊</text>
+            <text x="450" y="298" text-anchor="middle" fill="#c9d4e8" font-size="12.5">顺序变体:时间序列必须按时间切,不能随机打乱——那是另一种偷看未来</text>
+          </svg>
+          <p class="figure__cap">切分不是比例问题,是流向问题:训练集随便用,验证集用来挑超参所以会慢慢被用脏,测试集封存到最后只用一次。任何信息从右往左回流,回测就在作弊;时间序列还必须按时间切,随机打乱等于另一个方向的作弊。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 360" role="img" aria-label="未来函数示意图:在决策日前就调用本不该看到的数据">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">未来函数在你的回测里会怎么开始</text>
+            <rect x="80" y="90" width="740" height="80" rx="10" fill="rgba(238,136,119,0.13)" stroke="rgba(238,136,119,0.5)"/>
+            <text x="100" y="118" fill="#ffb4b4" font-size="14" font-weight="800">典型的不小心: 回复一天的结果来更新信号</text>
+            <text x="100" y="142" fill="#bcc9dd" font-size="12">比如:你今天要产生交易信号,但你调用了今天的收益来计算波动特征;而这个今天的收益是决策时点后才结算出来的</text>
+            <rect x="80" y="190" width="740" height="80" rx="10" fill="rgba(143,179,122,0.15)" stroke="rgba(143,179,122,0.5)"/>
+            <text x="100" y="218" fill="#b5d3a0" font-size="14" font-weight="800">正确路子:遵守一个'T-1'的时间点规则</text>
+            <text x="100" y="242" fill="#bcc9dd" font-size="12">在这天产生交易信号前,你只能使用仅当下可见的数据——通常意味着要用 T-1 日(即昨天收盘后)就已经可见的数据</text>
+            <text x="450" y="306" text-anchor="middle" fill="#bcc9dd" font-size="12.5">伤害不在情节中,在声势:一个微小的对齐错位,不被察觉的情况下从一个小时掉到一年,就会带来庞大的收益幻觉</text>
+            <text x="450" y="328" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">最常见的未来函数出现因有:使用“最新发布”的表,而不是“发布日”的表</text>
+          </svg>
+          <p class="figure__cap">未来函数不是张三李四的错误,是逻辑上最容易犯的——复权后的价格反凭着净、宏观数据按今天版本对齐昨天,财报按最新口径回填,任何一个都足以拆掉整个回测。</p>
+        </div>
+        <h2>11. 回测报告应该交代什么</h2>
+<p>一份合格的回测报告,相当于给策略做一次全身体检,项目清单至少包括: 数据来源、股票池、回测区间、基准、调仓频率、成交价格假设、费用和滑点、涨跌停停牌处理、持仓约束、收益风险指标、换手率、容量估计、样本外表现。一项都不能缺。</p><p>还要把收益摊在时间轴上看: 策略在哪些阶段赚钱、哪些阶段亏钱。只甩一个最终<span class="term">年化收益</span>,等于只给体检报告首页的总评。你要看它在牛市、熊市、震荡市分别什么表现,看<a class="term term-link" href="glossary.html#g-最大回撤" title="查看术语：最大回撤">最大回撤</a>发生时市场是什么环境,看<span class="term">超额收益</span>稳不稳定。</p><p>鉴别报告成色只需一句话: 如果里面没有成本、没有基准、没有回撤、没有换手、没有样本外,那不是研究报告,只是宣传材料。量化研究的专业性,首先体现在你愿不愿意把不利信息也摆上桌面。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>回测是拿当时可见的信息在历史里排练策略,不是向未来开具的赚钱证明。</li>
+            <li>成交假设、交易成本、换手、容量、停牌涨跌停和退市处理,每一项都能显著改写收益。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 把 3 月 31 日的财报放进 3 月 31 日交易</li>
+            <li><strong>2.</strong> 回测到底在模拟什么</li>
+            <li><strong>3.</strong> 向量化回测和事件驱动回测</li>
+            <li><strong>4.</strong> 调仓频率决定交易问题的难度</li>
+            <li><strong>5.</strong> 收盘价成交最容易骗人</li>
+            <li><strong>6.</strong> 佣金、税费、滑点和冲击</li>
+            <li><strong>7.</strong> 策略到底有多爱动</li>
+            <li><strong>8.</strong> 小钱能赚,大钱不一定能赚</li>
+            <li><strong>9.</strong> 幸存者偏差和退市处理</li>
+            <li><strong>10.</strong> 历史答案背得太熟</li>
+            <li><strong>11.</strong> 回测报告应该交代什么</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么按当天收盘价成交容易出未来函数?</summary>
+            <p>如果信号也用到了当天收盘后才知道的信息,又假设当天收盘成交,就等于先看了答案再进场交易。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>容量为什么会影响策略收益?</summary>
+            <p>资金越大越难以原价成交,冲击成本和流动性约束会把纸面上的机会一口口吃掉。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>量化里的机器学习: 模型不是越复杂越好</h2>
+          <p>从线性模型、树模型、深度学习和金融噪声讲清模型在量化中的位置。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

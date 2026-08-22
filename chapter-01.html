@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 1 章 · 钱、价格和通胀: 鱼票为什么会缩水 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="从小岛鱼票讲清货币、价格、购买力、通胀和实际收益。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="1">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第一部分 · 金融为什么存在 · 第 1 章</p>
+        <h1>钱、价格和通胀: 鱼票为什么会缩水</h1>
+        <p class="lead">上一章我们说清了一件事:钱不是财富本身。但新问题立刻冒出来:既然钱只是个工具,为什么这个工具有时候会“不好使”?为什么同样一百块钱,今年能买满满一篮子东西,过几年可能只够买半篮?这一章我们继续待在小岛上,跟着老仓的鱼票,把钱、价格、通胀、实际收益串成一条你日后真能拿去用的线。顺序别反:先弄懂钱为什么值钱,再看价格怎么报信,最后才轮到收益和模型。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线一</span>
+            <span>本部分第 2 / 5 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>真实财富有限,为什么人类还需要货币、信用、银行和市场?</p>
+          <p class="chapter-context__outcome">读完后,你能沿着资源、时间和风险解释金融系统,不再把金融理解成一堆产品名词。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>钱值钱,是因为它能换到真实的商品和服务,不是因为那张纸好看。</li>
+            <li>通胀最朴素的理解:同样的钱,能买到的真实东西变少了。</li>
+          </ul>
+        </section>
+
+
+        <h2>1. 为什么小岛需要鱼票</h2>
+<p>想象一下:你是岛上的修船师傅,干了一天活,对方抱来一堆鱼当工钱——今天吃两条,明天凑合,后天就臭了。你抱着一堆正在变质的鱼,心里什么滋味?小岛刚成立那会儿只有三个人,抓鱼、吃鱼、以鱼换鱼,日子凑合能过。可后来分工细了:有人专门捕鱼,有人修船,有人编网,有人教新手,老仓整天守着仓库。再让每笔交易都抱着鱼来回跑,谁都受不了——修船的今天不缺鱼,教课的也不想要一堆两天就坏的<span class="hl">“生鲜工资”</span>。</p><p>先看清没有鱼票时笨在哪。修船师傅想吃鱼,得先找到一个正好要修船的渔夫;教课的想要木柴,得先找到一个正好想听课的樵夫。经济学管这叫双重巧合:你有的恰是对方要的,对方有的恰是你想要的,两个条件同时成立,交易才能发生。这像极了没有统一接口的微服务群:N 个服务两两直连,连接线有 N(N-1)/2 条;引入统一接口后,每个服务只接一次,复杂度瞬间降维。鱼票就是那个被全岛接受的统一接口。</p><p>出路是老仓想出来的:大家把吃不完的鱼存进仓库,仓库给存鱼的人开一张<span class="hl">“鱼票”</span>。票本身不能烤着吃,但岛上人人认一件事——拿着它,随时能回仓库领鱼。有了这个共识,鱼票就能在岛上流通:修船的放心收票,先攒着,哪天饿了再拿票换鱼。方便,干净,不臭。</p><p>这就是钱最早干的事:让交换变简单。拆开看,钱有三个基本功能。第一,交易媒介——你不用再玩<span class="hl">“拿我有的、换我要的”</span>这种连连看。第二,计价单位——修船、织网、教课,全都能用同一个单位报价,一比就知道谁贵谁便宜。第三,价值储藏——今天不想花的购买力,能存起来留到明天。三件事听起来平平无奇,但后面所有金融故事都站在这块地基上。</p><p>把三个功能连起来看,其实是一个设计:交易媒介解决<span class="hl">“怎么换”</span>,计价单位解决<span class="hl">“值多少”</span>,价值储藏解决<span class="hl">“留到明天”</span>。缺任何一个,另两个都会跟着塌——票要是存不住价值,就没人愿意收;没人愿意收,计价功能也就形同虚设。这也是为什么一套货币体系一旦<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>动摇,往往三个功能一起失灵,而不是只坏一个。</p>
+
+        <h2>2. 鱼票有价值,不是因为纸好看</h2>
+<p>先问一个朴素的问题:鱼票就是一张纸,凭什么能换鱼?不是因为纸印得漂亮,而是因为岛上所有人信一件事——它背后有真鱼。仓库里真存着鱼,老仓也真的守信用,那么一张鱼票就实实在在代表一份购买力。信用一抽走,票立刻变回废纸。</p><p>把这个逻辑推一步,你就能亲手制造一次缩水。假设仓库里有一百条鱼,岛上流通着一百张票,粗略想,一张票换一条鱼,盘面刚好平衡。某天老仓动了歪心思,偷偷多印了一百张票——仓库里的鱼还是一百条,一条没多。岛民手里的票翻了一倍,兴冲冲拿去换鱼,结果一百条鱼要应付两百张票,会发生什么?鱼的标价只能涨:原来一张票一条鱼,现在两张票才换一条。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>注意每个人的处境:手里票的数目变多了,能买到的鱼却变少了。岛民没有变富,是鱼票本身缩水了。这就是通货膨胀最原始的样子:钱印多了,真实东西没变多,每张钱能兑出来的东西自然变少。</p></div><p>再追问一句:票毛了,谁受伤、谁受益?手里攥着票等着花的人,伤得最重;欠着票债的人反而占了便宜——债务按票面算,票毛了,债就轻了。而老仓作为印票的人,若抢在涨价之前先把新票花出去,就拿走了最大的一块。所以<a class="term term-link" href="glossary.html#g-通胀" title="查看术语：通胀">通胀</a>从来不是均匀洒下来的水,而是一场有先后、有偏向的再分配。</p><div class="callout callout--note reveal"><span class="callout__title">通胀从来不是均匀洒水</span><p>划重点:票毛了,从来不是人人平摊。攥着票攒钱的人和拿固定票薪的人伤得最重;欠票债的人,债按票面算,票毛了债就轻;印票的人若抢在涨价之前把新票花出去,拿走最大一块。表面是所有东西一起变贵,骨子里是一场有先后、有偏向的财富再分配。</p></div><div class="callout callout--note reveal"><span class="callout__title">先用最粗的直觉理解通胀</span><p>通胀不是某个商品偶尔涨价,而是整体购买力下降:同样的钱,能买到的真实东西变少。</p></div><div class="callout callout--note reveal"><span class="callout__title">坏钱为什么总能传遍世界</span><p>格雷欣法则:足值银币和不足值杂币在市场上按同一面值流通时,人们会先把劣币花出去,把良币藏起来——最终满街都是劣币,良币退出流通被熔化私藏。成因是<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>理性:法定比价偏偏拉平两种实际价值不等的东西,大家自然先花便宜的。现代版本同样在上演:稳定币里流通最广的往往是最不透明的那家,行业刚兑不清的<span class="hl">“高收益”</span>吸走了本该去正规渠道的钱。盯住两条:定价机制容不容许价差出现?如果不容许,劣币驱逐良币就不是腐败,而是理性选择。</p></div>
+
+        <h2>3. 价格是信号,不是敌人</h2>
+<p>看到涨价,人的第一反应是骂价格。先别急——多数时候,价格只是个报信的。鱼少了,价格上涨,它其实在替全岛广播一条消息:鱼变稀缺了。有人听了少吃两条,有人看出捕鱼有利可图、连夜赶工造更好的网。分散在每个人脑子里的信息,被一个价格压成了一个数字,传递效率极高。</p><p>把这个<span class="hl">“报信”</span>过程再放慢一格。没人知道全岛还剩多少鱼,每个人只知道自己门口那点事:渔夫知道今天难捕,食客知道今天叫好,修船师傅只知道工钱又变了。价格干的事,就是把这些碎片信息压成一个所有人看得懂的数字。它不需要谁站出来广播真相,只需要让大家各自行动——嫌贵的少买,看出机会的加码,供给和需求就这么被一只<span class="hl">“看不见的手”</span>拧到了一起。</p><p>当然,价格不是永远诚实。恐慌、炒作、政策、垄断、信息不对称,都能让价格偏离现实。但反过来想:要是没有价格这套信号系统,大家更难知道资源到底稀缺在哪。股价、<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>收益率、汇率、商品价格,都干着同样的报信工作。</p><p>历史上最出名的一次<span class="hl">“报信系统失灵”</span>,值得讲细一点。<span class="num">1637 年</span>的荷兰,一颗名叫<span class="hl">“永远的奥古斯都”</span>的郁金香球茎,峰值报价冲到大约一万荷兰盾——当时荷兰一个普通人一年才挣 150 盾左右,一万盾足够在阿姆斯特丹运河边买下一栋气派的房子。也就是说,市场真有人愿意拿一栋豪宅去换一颗花的种球。买的人当然不是想种花,而是笃定明天会有下一个傻瓜出更高的价接手。直到有一天没人接了,价格几天之内崩塌,一地鸡毛。</p><p>有趣的是,郁金香本身从头到尾没变,还是那颗球茎。变的只是人的预期。这就是价格会骗人的地方:平时它忠实地反映稀缺与否,可一旦所有人眼里只剩<span class="hl">“别人会不会出更高价”</span>,价格就和真实价值脱钩,被吹成泡沫。后面讲股市你会看到,同一个剧本在几百年里反复上演,只不过郁金香换成了<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>、房子或者某个时髦概念。</p><p>补一个历史上反复重演的错误:把价格当敌人,试图按住它。鱼少了、价格涨,若有人规定<span class="hl">“鱼价不许动”</span>,会发生什么?报信的探头被捂住了——按原价谁都想多买,没人觉得该多捕,货架空得更快。价格管制消灭不了稀缺,只消灭了稀缺的信号,顺便把大家应对稀缺的动力也一起消灭了。信号越难听,越说明该听,而不是该捂。</p><div class="callout callout--note reveal"><span class="callout__title">按住价格,捂住的是探头</span><p>常见误区:价格涨了就把价格当敌人按住。鱼少了,若规定<span class="hl">“鱼价不许动”</span>——按原价人人想多买,没人觉得该多捕,货架只会空得更快。稀缺并没有被消灭,被消灭的是稀缺的信号,连大家应对稀缺的动力也一起没了。管制治不了短缺,只是把报信的探头捂上。</p></div><p>所以学金融,别把价格只读成涨跌。价格背后藏着供给、需求、预期、风险,还有<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>——流动性先粗略理解成“能不能快速、不折价地把东西卖掉变成现金”:一套市中心的房子想马上出手,多半得降价,这就是流动性差;银行卡里的活期存款随时能用,这就是流动性好。以后每次价格变动,都守着一个习惯先问一句:这次是真东西变了,还是票印多了,还是大家的预期变了?</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 320" role="img" aria-label="价格三问卡:谁在生产(供给)、谁需要(需求)、多少钱(成交价);第三卡带 1637 年郁金香账:一颗球茎一万盾约等于普通人 66 年工资;每卡配一句没它就没价格">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">价格三问:每个成交价背后,都压着三个答案</text>
+            <rect x="30" y="64" width="250" height="190" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="155" y="94" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">谁在生产?供给</text>
+            <text x="155" y="126" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="600"><tspan x="155" y="126">渔夫知道今天难捕</tspan></text>
+            <text x="155" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="600"><tspan x="155" y="156">网厂看出机会,连夜赶工</tspan></text>
+            <text x="155" y="186" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="600"><tspan x="155" y="186">成本、产量都在里面</tspan></text>
+            <line x1="50" y1="216" x2="260" y2="216" stroke="rgba(122,167,240,0.18)"/>
+            <text x="155" y="240" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">没人生产:有价无货,谈不上价</text>
+            <rect x="310" y="64" width="250" height="190" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="435" y="94" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">谁需要?需求</text>
+            <text x="435" y="126" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="600"><tspan x="435" y="126">食客知道今天叫好</tspan></text>
+            <text x="435" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="600"><tspan x="435" y="156">人人想多分一条鱼</tspan></text>
+            <text x="435" y="186" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="600"><tspan x="435" y="186">愿出多高的价全在这里</tspan></text>
+            <line x1="330" y1="216" x2="540" y2="216" stroke="rgba(122,167,240,0.18)"/>
+            <text x="435" y="240" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">没人需要:无人出价,也没有价</text>
+            <rect x="590" y="64" width="250" height="190" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="715" y="94" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">多少钱?成交价</text>
+            <text x="715" y="126" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="600"><tspan x="715" y="126">碎片信息压成一个数字</tspan></text>
+            <text x="715" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="600"><tspan x="715" y="156">1637年郁金香:1颗球茎报1万</tspan></text>
+            <text x="715" y="186" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="600"><tspan x="715" y="186">≈年薪150盾×66≈一栋豪宅</tspan></text>
+            <line x1="610" y1="216" x2="820" y2="216" stroke="rgba(122,167,240,0.18)"/>
+            <text x="715" y="240" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">没有价格:稀缺信号传不出去</text>
+            <text x="450" y="294" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">看懂价格 ≈ 同时回答这三问:价格是把答案压成一个数字的报信人,不是敌人</text>
+          </svg>
+          <p class="figure__cap">把一个价格拆开看,背后就是三问:谁在生产、谁需要、多少钱——供给、需求、成交价,缺了任何一个都没有价格。1637 年那颗报一万盾的郁金香提醒你:三问的答案可以是泡沫,看价格也要看它背后的货和人。</p>
+        </div>
+        <h2>4. 名义收益和实际收益</h2>
+<p>存了一年钱,账户里多出五百块,值得高兴吗?先别急着高兴,我们把账算完。假设你年初有一万元,存了一年,年底变成一万零五百元。账户多了五百,名义收益百分之五,表面看是赚了。</p><p>再看同一年物价:你常买的那一篮子东西,年初标价一万元,年底涨到一万零八百元。翻译过来:年初你的一万元刚好买得起一篮,年底你的一万零五百元反而买不起同样一篮了。账户数字在涨,购买力却在降——这一进一出,你是变穷了。</p><p>两个词从此要分开记。名义收益,是账户数字增长了多少;实际收益,是扣掉通胀后购买力真正增长了多少。粗略估:实际收益约等于名义收益减去通胀。名义赚百分之五、通胀百分之八,实际大约是负百分之三——赚钱的名义,亏钱的是实际。</p><p>顺手把这个估算校准到精确。精确算法是除法:年底的钱除以年底的物价,再跟年初比。一万零五百除以一万零八百,约等于零点九七二二,购买力只剩年初的九成七多一点,实际收益约负百分之二点七八。减法算出的负百分之三是个近似——数字小的时候两者很接近,数字一大,误差就显形。口算用减法,做研究用除法,两个都要会。</p><div class="callout callout--note reveal"><span class="callout__title">名义百分之五,实际负二点七八</span><p>手算校准:年初一万,年底一万零五百;同一年那一篮子货,从一万涨到一万零八百。精确算法是除法——一万零五百除以一万零八百,约等于零点九七二二,购买力只剩年初的九成七,实际收益约负百分之二点七八。减出来的负三只是近似:口算用减法,做研究用除法,两个都要会。</p></div><p>这就是为什么看任何投资产品,都不能只盯<span class="term">年化收益</span>那个数。你至少要连问几句:扣掉通胀了吗?扣掉费用了吗?扣掉税了吗?为了这点收益,我到底承担了什么风险?问完这四句,很多产品的<span class="hl">“高收益”</span>光环当场就暗了。</p><p>这四句反问背后是一个误区:把<span class="hl">“收益”</span>两个字当成结论。其实收益只是故事的前半句,后半句写着你为这笔钱承担了什么——看不懂后半句,前半句就先别信。这也是全书的通用纪律:任何数字摆到面前,先问它是怎么算出来的、按谁的口径、漏掉了什么。</p><div class="callout callout--note reveal"><span class="callout__title">涨薪 5% 为什么可能实际上更穷</span><p>这是货币幻觉:人脑对名义数字格外敏感,对购买力迟钝。如果通胀 <span class="num">8%</span>,加薪 <span class="num">5%</span> 后名义奖杯到手,实际购买力其实缩了 <span class="num">3%</span>。同样,<span class="hl">“二十年前的三万”</span>和<span class="hl">“现在的三万”</span>按购买力也不是一回事——<span class="num">1980 年</span>代的万元户是富豪,放到现在连首付都不够。碰到任何跨年、跨代际的比较(工资、房价、遗产、养老金),都先问自己:数字换成同一年的购买力了吗?这是抵抗通胀骗局的入门仪式。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 380" role="img" aria-label="名义和实际收益的反差图:名义 +18% 扣掉通胀实际上是 +5.4%">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">名义涨 18%,通胀吃掉 12%,实际只多了 5.4% 的购买力</text>
+            <rect x="70" y="90" width="350" height="200" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="245" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">名义口径(屏幕上的数字)</text>
+            <text x="245" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">年初花 100 元买了一张债</text>
+            <text x="245" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">年末变成 118 元</text>
+            <text x="245" y="196" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">+18%</text>
+            <text x="245" y="226" text-anchor="middle" fill="#8499bd" font-size="12">这时候很容易看到自己的事面</text>
+            <rect x="470" y="90" width="350" height="200" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="645" y="118" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">实际口径(这笔钱后面可以买到多少条鱼)</text>
+            <text x="645" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">年初鱼价 1 元一条,100 元能买 100 条</text>
+            <text x="645" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">年末鱼价 1.12 元那 = 通胀 12%,118 元能买 105 条</text>
+            <text x="645" y="196" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">≈ +5.4% 真实购买力增长</text>
+            <text x="645" y="226" text-anchor="middle" fill="#8499bd" font-size="12">名义 18% → 实际 5.4%,中间差了 12 个通胀点</text>
+            <text x="450" y="320" text-anchor="middle" fill="#bcc9dd" font-size="12.5">名义数字经常看起来好看,实际回报却懒味刺鼻——5.4% 不是骗人的话,它是通胀把 18% 编制成 12% + 5.4% 的真实代价</text>
+            <text x="450" y="344" text-anchor="middle" fill="#bcc9dd" font-size="12.5">下次,看到一本书里面说今年“回报 18%”时,先问一个问题——通胀扣了吗?</text>
+          </svg>
+          <p class="figure__cap">名义告诉你账户数字多大了,实际告诉你钱包壮多少。通胀是把这两个数字掰开的那只股票:它越高,屏幕数字与实际看上去差得越远。</p>
+        </div>
+        <h2>5. 为什么钱多了不一定更富</h2>
+<p>把印票机开足马力,岛就能变富吗?想象小岛一天稳定产出一百条鱼,老仓却把鱼票印到一千张。岛民会因此吃得更好吗?不会。大家只是攥着更多的票,去抢池子里同样多的鱼。想真变富,路只有一条:网更好、分工更顺、仓储更可靠、贸易更通畅——真实鱼的数和质量提上去,岛才算真富。</p><p>把<span class="hl">“多出来的钱去哪了”</span>慢放推演一遍。钱不是同时撒到每个人手里的:它先到离印票机最近的人手里,这些人按还没涨的旧价买走真实资产;钱一层层转手,等流到普通人手里,物价已经涨完了。同样一笔新钱,先拿到的占便宜,后拿到的只接盘。这就是为什么<span class="hl">“钱多了”</span>从来不是大家齐步走变好,而是一轮静悄悄的财富重新排序。</p><p>现代社会是同一个道理,只是舞台大了。货币扩张在短期内有用:能缓解流动性紧张,让债务更容易滚动,把资产价格往上抬。但它变不出好公司、好产品、好技术和更高的生产率。如果票发多了、真实产出没跟上,多出来的钱迟早要找地方落脚——要么体现在物价上,要么吹出资产泡沫,要么攒成未来的风险。</p><p>这不是说货币政策没用。它有用,但不是万能:它能改变金融条件,替代不了真实生产。把这一句记牢,以后看到央行、利率、资产价格的新闻,就不会被一句轻飘飘的<span class="hl">“放水”</span>带着跑。水放下去,浮起来的是船,不是新增的鱼。</p><div class="callout callout--note reveal"><span class="callout__title">如果所有人都只存钱不花钱,会怎样</span><p>全班同学一起勒紧裤腰带,结果不是大家变富,而是集体变穷——这叫节俭悖论。你的支出就是别人的收入;人人同时把支出砍成原来的一成,商家收入直接缩成一成,接着裁员降薪,人们更不敢花,又进入下一轮。大萧条里的美国<a class="term term-link" href="glossary.html#g-储蓄" title="查看术语：储蓄">储蓄</a>率翻倍,物价却跌了 <span class="num">24%</span>,经济正因如此进入<a class="term term-link" href="glossary.html#g-通缩" title="查看术语：通缩">通缩</a>螺旋。对个人最优的储蓄率,放大到全民就成了需求地基被抽走。所以政策不奖励过度节俭:政府发债把私人储蓄借出来、重新点燃<span class="hl">“支出→收入”</span>链条,才是危机时的对症。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 270" role="img" aria-label="通胀示意:鱼票翻倍但鱼不变,每张票能换的鱼减半">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">多印鱼票,鱼没变多:每张票能换到的鱼变少</text>
+            <!-- 左:发票前 -->
+            <text x="230" y="74" text-anchor="middle" fill="#7aa7f0" font-size="16" font-weight="800">发票前</text>
+            <text x="230" y="98" text-anchor="middle" fill="#c9d4e8" font-size="13">仓库 100 条鱼 · 流通 100 张票</text>
+            <g fill="#f0c96a"><circle cx="150" cy="150" r="13"/><circle cx="190" cy="150" r="13"/><circle cx="230" cy="150" r="13"/><circle cx="270" cy="150" r="13"/><circle cx="310" cy="150" r="13"/></g>
+            <text x="230" y="196" text-anchor="middle" fill="#a8c6ff" font-size="17" font-weight="800">1 张票 → 1 条鱼</text>
+            <!-- 右:多印一倍票 -->
+            <text x="670" y="74" text-anchor="middle" fill="#e88" font-size="16" font-weight="800">多印一倍票后</text>
+            <text x="670" y="98" text-anchor="middle" fill="#c9d4e8" font-size="13">仓库仍 100 条鱼 · 流通 200 张票</text>
+            <g fill="#f0c96a"><circle cx="590" cy="150" r="13"/><circle cx="630" cy="150" r="13"/><circle cx="670" cy="150" r="13"/><circle cx="710" cy="150" r="13"/><circle cx="750" cy="150" r="13"/></g>
+            <text x="670" y="196" text-anchor="middle" fill="#ffb4b4" font-size="17" font-weight="800">2 张票 → 1 条鱼</text>
+            <line x1="450" y1="60" x2="450" y2="210" stroke="#46587a" stroke-width="1.5" stroke-dasharray="6 6"/>
+            <text x="450" y="246" text-anchor="middle" fill="#eef4f8" font-size="15">票变多,鱼没变多 → 同一条鱼要更多票 → 这就是通胀:购买力下降</text>
+          </svg>
+          <p class="figure__cap">鱼票从 100 张翻到 200 张,仓库还是 100 条鱼,于是换一条鱼需要的票翻倍。通胀不是某样东西偶尔涨价,而是整体购买力下降。</p>
+        </div>
+        <h2>6. 通胀数据如何进入量化</h2>
+<p>打开行情软件,你看到的是一列列整整齐齐的数字:股票价格、债券收益率、汇率、商品价格、基金净值。它们长得像温度计读数,其实完全不是一回事——温度计读的是自然界,价格读的是人心:每一笔报价都是人类交易、预期、风险偏好和制度约束搅在一起的结果。</p><div class="callout callout--tip reveal"><span class="callout__title">记住两件事</span><p>用价格喂模型之前,先记住两件事。第一,价格里有信息,但也掺着噪声,不能照单全收。第二,价格的规律会被交易者亲手改变:一个简单规律被足够多人发现后,可能很快失效,也可能变成人人挤在里面的拥挤交易。你以为自己在读市场的日记,市场其实也读到了你的笔记。</p></div><p>这层直觉落到数据上,有一个具体动作:把名义序列换成实际序列。做法很直白——名义价格除以同期物价指数。假设某资产名义价从一百涨到一百一十,同期物价指数从一百涨到一百零五,实际价约只剩一百零四点八。你以为涨了百分之十,剔掉通胀实际只涨了不到五个点。<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>忘了这一步,策略收益会被通胀吹出一个漂亮的假气球。</p><div class="callout callout--note reveal"><span class="callout__title">回测前先除掉通胀</span><p>划重点:某资产名义价从一百涨到一百一十,同期物价指数从一百涨到一百零五,实际价约只剩一百零四点八——你以为涨了百分之十,剔掉通胀其实不到五个点。动作本身很直白:名义序列除以同期物价指数。回测忘了这一步,策略收益会被通胀吹出一个漂亮的假气球。</p></div><p>所以量化不是抓起一段价格序列就训练模型。你得先弄明白价格变动背后是哪一种机制:是真实现金流变了,通胀预期变了,利率变了,还是短期资金在硬推?分不清这个,模型就只是在历史曲线里找影子——找得很像,用得很惨。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>钱值钱,是因为它能换到真实的商品和服务,不是因为那张纸好看。</li>
+            <li>通胀最朴素的理解:同样的钱,能买到的真实东西变少了。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 为什么小岛需要鱼票</li>
+            <li><strong>2.</strong> 鱼票有价值,不是因为纸好看</li>
+            <li><strong>3.</strong> 价格是信号,不是敌人</li>
+            <li><strong>4.</strong> 名义收益和实际收益</li>
+            <li><strong>5.</strong> 为什么钱多了不一定更富</li>
+            <li><strong>6.</strong> 通胀数据如何进入量化</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么多印鱼票不会让小岛真正变富?</summary>
+            <p>鱼票只是换鱼的凭证,鱼没有变多,每张票能换到的鱼就变少;大家手里的票多了,日子却没有变好。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>名义收益和实际收益差在哪?</summary>
+            <p>名义收益只看账户数字涨了多少,实际收益要扣掉通胀、看购买力真涨了多少——名义赚百分之五、通胀百分之八,实际大约是负百分之三。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>信用、利率和债: 借钱为什么要付利息</h2>
+          <p>从借鱼讲到信用、利率、贷款、债券和违约风险。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

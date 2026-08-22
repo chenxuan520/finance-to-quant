@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 8 章 · 期货、远期与互换: 把未来价格写进合约 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清远期、期货、保证金、基差、期限结构和互换。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="8">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第二部分 · 资产如何承载现金流与风险 · 第 8 章</p>
+        <h1>期货、远期与互换: 把未来价格写进合约</h1>
+        <p class="lead">从这一章开始,我们正式进入衍生品的世界。这个词听起来吓人,其实可以先用一句话降服它:衍生品的价值,来自另一个东西——鱼、股票、利率、汇率,凡是能作价的东西,都能被衍生品“关联”上。期货、远期和互换做的是同一件事:把未来某种价格、利率或现金流关系,提前写进今天的合同。为什么要提前写?因为真实世界里最折磨人的,往往不是价格本身,而是“不知道价格会怎样”——怕跌的渔民、怕涨的饭店、怕利率调皮的公司,这些睡不着觉的人凑到一起,就有了这一章的全部工具。它们可以管理风险,也可以放大风险,全看拿在谁手里。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线二</span>
+            <span>本部分第 4 / 7 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?</p>
+          <p class="chapter-context__outcome">读完后,你能先拆现金流、权利、期限和最坏情况,再讨论价格涨跌。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>远期和期货都是把未来交易价格写进合约,区别是期货更标准化。</li>
+            <li>保证金让期货占用资金少,也让盈亏被同比例放大。</li>
+          </ul>
+        </section>
+
+
+        <section class="case-study reveal">
+          <span class="case-study__label">金融现场</span>
+          <h2>1. 航空公司为什么要在油价上涨前先买未来</h2>
+<p>航空公司的机票往往提前卖出,燃油却要在未来每天购买。假如票价已经锁死,油价突然翻倍,一架坐满乘客的飞机也可能越飞越亏。美国西南航空曾长期使用燃油衍生品锁定部分成本,在油价急升的年份里,这层保护一度让它比许多同行更从容。</p><p>但<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>不是免费预测。油价下跌时,同行在现货市场享受便宜燃料,提前锁价的一方反而要承受合约损失。公司买期货或互换的目的不是每次都赢过市场,而是把最怕的那条成本曲线压平,让已经卖出去的机票不至于变成一串未知负债。</p><p>这也是衍生品最朴素的用途:把无法承受的价格波动交给愿意承担它的人。量化评估套保时,不能只盯衍生品账户本身的盈亏;现货端省下的钱和合约端亏掉的钱必须合并看。只截一条腿,好对冲也会被误判成坏交易。</p>
+        </section>
+
+        <h2>2. 先从一个卖鱼的人说起</h2>
+<p>还记得那座小岛吗?这次的主角是一位渔民:三个月后他有一批鱼可以卖,可他眼下就睡不着——万一三个月后鱼价大跌,这几个月就白忙了。岛的另一头,一位饭店老板也在发愁:万一三个月后鱼价大涨,菜单成本就压不住了。两个发愁的人一碰头,今天就把话说死:三个月后,不管市场价多少,都按每条十元成交。</p><p>这个<span class="hl">“十元”</span>是从哪儿来的?不是谁拍脑袋预测未来,而是两个人各自算账的结果。渔民想:这批鱼的饲料、人工、船油折下来,每条成本假设七元,十元成交就稳赚。老板想:菜单价格摆在那里,十元进货毛利还撑得住。双方都把最坏情况摆上桌,远期合约里那个数,就是两张预算表的交集,而不是对未来的预言。</p><p>这个约定,就是远期合约的直觉。远期不是今天立刻买卖鱼,而是今天把未来交易的价格写下来。渔民锁定了未来卖价,饭店锁定了未来买价。三个月后市场价格无论涨跌,他们都按约定价格交易——谁也别惊喜,谁也别惊吓。</p><p>把两种结局推演一遍。如果三个月后市场价涨到十二元,饭店按十元拿货,赚到了便宜,渔民少赚了两元;如果市场价跌到八元,渔民按十元出货,躲开了下跌,饭店多付了两元。注意这句话:风险没有消失,只是从一方转到了另一方。远期合约从来不消灭风险,它只是给风险换了个肩膀。</p><p>顺便拆掉两个常见误会。第一,签远期不是为了赌赢行情:买卖双方买的都是<span class="hl">“确定”</span>这两个字,而不是<span class="hl">“最便宜”</span>。第二,三个月后看到市场价更划算就后悔,大可不必——就当它是份保险单:你希望火灾永远不发生,却不会因此觉得保费白交。</p><div class="callout callout--note reveal"><span class="callout__title">远期买的是确定,不是便宜</span><p>两个误会一起拆。第一,签远期不是为了赌赢行情:买卖双方买的都是<span class="hl">“确定”</span>这两个字,而不是<span class="hl">“最便宜”</span>。第二,三个月后看到市场价更划算就后悔,大可不必——就当它是份保险单:你希望火灾永远不发生,却不会因此觉得保费白交。远期从来不消灭风险,它只是给风险换了个肩膀。</p></div>
+
+        <h2>3. 远期和期货有什么区别</h2>
+<p>远期合约通常是双方私下约定的。你和我约好三个月后按十元买卖鱼,细节可以很灵活:数量、质量、交货地点、付款方式,全都能定制——像项目制外包,需求随便提,合同现写现签。问题也明显:万一到了日子有一方反悔,另一方只能实打实咽下对手方风险。</p><p>期货可以理解成标准化远期。交易所把合约规格全部定好:标的是什么、每手多少、什么时候到期、怎么结算、<span class="term">保证金</span>多少,没空跟你讨价还价。大家在交易所里交易这些标准化合约,交易所和清算体系站在中间,负责把对手方违约风险降下来。</p><p>清算体系具体怎么降风险?两步。第一步,清算所站到每笔交易中间:对所有买方它是卖方,对所有卖方它是买方,你担心的是清算所的<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>,而不是某个陌生对手的钱包。第二步,每日结算:每天收盘按结算价把盈亏当场结清,亏的从<span class="term">保证金</span>里扣,赚的当天到账,风险最多只积累一天,没机会滚成大雪球。</p><p>一句话对比:远期更灵活,但对手方风险更强;期货更标准,<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>更好,代价是必须接受<span class="term">保证金</span>和每日结算这一套更严格的规则。像选软件:定制系统合身但怕乙方跑路,标准产品死板但稳定可续费——各有价格,各取所需。</p>
+
+        <h2>4. 为什么期货会放大盈亏</h2>
+<p>期货最容易让新手受伤的地方,藏在<span class="hl">“<span class="term">保证金</span>”</span>三个字里。假设一份期货合约名义价值一百万元,<span class="term">保证金</span>比例是百分之十。你不需要掏出一百万元,只需拿出十万元<span class="term">保证金</span>,就能控制这一百万元的名义合约。十万元指挥一百万元,听上去是不是有点像咒语?</p><p>感受一下放大效应。如果标的价格上涨百分之一,合约名义盈利一万元。相对于一百万元,这只是百分之一;可相对于你掏出的十万元<span class="term">保证金</span>,就是百分之十。再翻一面:标的下跌百分之一,你的<span class="term">保证金</span>同样亏掉百分之十。标的才晃了一小下,你的账户已经坐了一整格电梯。</p><p>把每日结算用数字走一遍。第一天标的跌百分之一:合约亏一万元,当天从<span class="term">保证金</span>里划走,账户剩九万。第二天再跌百分之一:再划一万,剩八万。假设交易所的维持线是八万,第三天开盘前,追加<span class="term">保证金</span>的电话就来了。注意,不是到期才算总账,而是每天结一次——你连<span class="hl">“装死等反弹”</span>这个选项都没有。</p><p>这就是<span class="term">杠杆</span>。<span class="term">杠杆</span>不会提高你判断正确的概率,它只负责把结果放大:方向对时赚得快,方向错时亏得也快。<span class="term">保证金</span>不足时,你会被要求追加<span class="term">保证金</span>;拿不出或者不肯拿,强平就找上门,连带你翻身的机会一起清仓。</p><p>金融史上最惨烈的一课,偏偏由一群公认最聪明的人主演。<span class="num">1994 年</span>,一家叫<span class="hl">“长期<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>管理公司”</span>(LTCM)的对冲基金成立,合伙人名单金光闪闪:两位后来在 <span class="num">1997 年</span>拿下诺贝尔经济学奖的经济学家——他们正是期权定价理论的奠基人,外加一位前美联储副主席。这支梦之队架起几十倍<span class="term">杠杆</span>,加上规模巨大的衍生品合约,前几年赚得盆满钵满。</p><p>但 <span class="num">1998 年</span>,俄罗斯突然债务违约,市场朝着他们模型里<span class="hl">“几乎不可能”</span>的方向剧烈运动,高<span class="term">杠杆</span>瞬间把亏损放大到无法承受。短短一百多天,基金净值跌去约九成、亏掉近 <span class="num">46 亿美元</span>,最后要美联储出面牵头救助,才没有把整个金融系统一起拖下水。</p><p>把这个故事钉在心里:诺贝尔奖级别的聪明,配上过高的<span class="term">杠杆</span>,照样爆仓。<span class="term">杠杆</span>的问题从来不是<span class="hl">“你会不会算”</span>,而是“万一算错、或者世界不按你的模型走,你还活不活得下来”。这也是本书后面反复强调的顺序:先学会活下来,再谈赚多少。</p><div class="callout callout--note reveal"><span class="callout__title">LTCM:聪明顶配照样爆仓</span><p>划重点:LTCM 的合伙人里有两位后来的诺贝尔经济学奖得主、一位前美联储副主席,架起几十倍<span class="term">杠杆</span>。<span class="num">1998 年</span>俄罗斯突然债务违约,市场朝模型里<span class="hl">“几乎不可能”</span>的方向剧烈一动,一百多天净值跌去约九成、亏掉近 <span class="num">46 亿美元</span>,最后要美联储牵头救助。<span class="term">杠杆</span>的问题从来不是会不会算,而是算错时你还活不活得下来。</p></div><div class="callout callout--note reveal"><span class="callout__title">不要把占用资金少理解成风险小</span><p>期货占用<span class="term">保证金</span>少,不是因为风险小,而是因为它用<span class="term">保证金</span>制度放大了账户波动。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 380" role="img" aria-label="期货逐日盯市时间线:缴 10 万保证金控制 100 万合约;标的每天跌 1% 就划走 1 万,余额 10 万、9 万、8 万,触到维持线 8 万后第三天开盘前必须追加,否则强平">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期货逐日盯市:10 万保证金,两天亏到维持线</text>
+            <text x="450" y="58" text-anchor="middle" fill="#8499bd" font-size="12.5">名义 100 万合约 · 保证金比例 10% → 缴 10 万;标的每跌 1%,合约当天就亏 1 万</text>
+            <defs><marker id="c5m" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>
+            <rect x="60" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="150" y="101" text-anchor="middle" fill="#7aa7f0" font-size="14" font-weight="800"><tspan x="150" y="101">开仓日</tspan></text>
+            <text x="150" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">缴保证金 10 万</text>
+            <text x="150" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">控制名义 100 万</text>
+            <text x="150" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">当日余额 10 万</text>
+            <path d="M 242 151 L 266 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
+            <rect x="270" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="360" y="101" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800"><tspan x="360" y="101">第1天收盘</tspan></text>
+            <text x="360" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">结算价 -1%</text>
+            <text x="360" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">当日划走 1 万</text>
+            <text x="360" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">余额 9 万</text>
+            <path d="M 452 151 L 476 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
+            <rect x="480" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(232,120,120,0.45)"/>
+            <text x="570" y="101" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800"><tspan x="570" y="101">第2天收盘</tspan></text>
+            <text x="570" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">再跌 -1%</text>
+            <text x="570" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">又划走 1 万</text>
+            <text x="570" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">余额 8 万</text>
+            <text x="570" y="204" text-anchor="middle" fill="#c9d4e8" font-size="12">触到维持线 8 万</text>
+            <path d="M 662 151 L 686 151" stroke="#8499bd" stroke-width="2" fill="none" marker-end="url(#c5m)"/>
+            <rect x="690" y="76" width="180" height="150" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="780" y="101" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800"><tspan x="780" y="101">第3天开盘前</tspan></text>
+            <text x="780" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12">追加保证金电话</text>
+            <text x="780" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12">补足 10 万 → 留下</text>
+            <text x="780" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12">拿不出 → 强平清仓</text>
+            <text x="100" y="252" fill="#8499bd" font-size="11">账户保证金余额 ↓</text>
+            <line x1="100" y1="316" x2="830" y2="316" stroke="#e88" stroke-width="1.5" stroke-dasharray="6 5"/>
+            <text x="100" y="308" fill="#ffb4b4" font-size="12">维持线 8 万:低于它就要追加</text>
+            <path d="M 150 278 L 360 297 L 570 316 L 780 316" fill="none" stroke="#f0c96a" stroke-width="2"/>
+            <circle cx="150" cy="278" r="5" fill="#f0c96a"/>
+            <text x="150" y="264" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">10 万</text>
+            <circle cx="360" cy="297" r="5" fill="#f0c96a"/>
+            <text x="360" y="283" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">9 万</text>
+            <circle cx="570" cy="316" r="5" fill="#f0c96a"/>
+            <text x="570" y="302" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">8 万</text>
+            <circle cx="780" cy="316" r="8" fill="none" stroke="#e88" stroke-width="2"/>
+            <text x="780" y="336" text-anchor="middle" fill="#ffb4b4" font-size="11.5" font-weight="800">第 3 天开盘前:触发追加电话</text>
+            <text x="450" y="364" text-anchor="middle" fill="#c9d4e8" font-size="13">每天收盘按结算价当场结清:连「等反弹再说」的选项都没有——划走的是现金,不是浮亏数字</text>
+          </svg>
+          <p class="figure__cap">把每日结算用数字走一遍:第一天亏 1 万剩 9 万,第二天再亏 1 万剩 8 万,正好触到维持线——第三天开盘前追加电话就到。杠杆不提高判断胜率,只放大结果,而且你连「装死等反弹」的选项都没有。</p>
+        </div>
+        <h2>5. 套期保值、投机和套利</h2>
+<p>期货有三种常见用途,动机完全不同,别把它们混成一锅。第一种是套期保值。渔民怕鱼价跌,饭店怕鱼价涨,他们用期货锁定未来价格。注意这个目的:不是赚大钱,而是把未来的不确定性切掉一块——像给系统加熔断,不为跑分,只为不出事。</p><p>把套保用数字走完整。渔民今天按十元卖出三个月期货。三个月后现货跌到八元:现货这批鱼每条少卖两元,期货空头按十元卖出、八元平仓买回,每条赚回两元——两笔一抵,每条净收入还是十元。反过来现货涨到十二元:现货多赚两元,期货亏两元,还是十元。看明白了吗?套保画出来的收益线是一条水平线,好坏都锁死。</p><div class="callout callout--note reveal"><span class="callout__title">套保的收益线是一条水平线</span><p>手算:渔民今天按十元卖出三个月期货。到期现货跌到八元——现货每条少卖两元,期货空头按十元卖出、八元平仓买回,每条赚回两元,两笔一抵,净收入还是十元。现货涨到十二元:现货多赚两元,期货亏两元,还是十元。好坏都锁死,套保画出来的收益线是一条水平线:目标不是多赚,是把不确定性切掉一块。</p></div><p>第二种是投机。投机者既不生产鱼、也不需要鱼,他只是判断鱼价会涨或会跌,通过期货表达观点。骂投机者之前先停一秒:他们承担了价格波动的风险,也给市场提供了流动性——一个没人愿意接盘的市场,想保值的人也保不了值。</p><p>第三种是套利。比如同一种商品在两个市场价格差得不合理,或者现货和期货之间的关系偏离常态,套利者尝试买便宜的、卖贵的,等待价差收敛。听上去稳赚?别太乐观:价差可能继续扩大,<span class="term">保证金</span>可能先扛不住——<span class="hl">“看到收敛”</span>和<span class="hl">“活到收敛”</span>之间,隔着一条河。</p>
+
+        <h2>6. 基差和期限结构</h2>
+<p>混商品期货圈,绕不开<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>这个词。基差是现货价格和期货价格之间的差。比如今天鱼的现货价格是十元,三个月期货价格是十点五元,中间差的零点五元,就和仓储、资金成本、供需预期有关——它不是谁拍脑袋定的,而是时间、仓库和资金一起开出来的价。</p><p>拆开推演一遍这零点五元。你今天花十元买一条鱼冻进仓库:仓储费假设两毛,买鱼的十元被占用三个月,利息假设一毛——这批货的全成本是十点三元。假如三个月期货报到十二元,马上有人借钱买现货、囤起来、同时卖出期货,到期交割稳赚差价;做的人一多,期货价就被压回持有成本附近。所以基差不是情绪,它先是仓储和资金开出的发票,上面再叠一点供需预期。</p><p>期限结构说的是另一层关系:不同到期月份的期货价格之间怎么排列。有时远月价格高于近月,有时近月价格高于远月。商品市场里,库存、运输、季节性和资金成本,都会在这张排列表上留下自己的指纹。</p><p>这里有个经典的读反。近月比远月贵,未必是<span class="hl">“大家看跌未来”</span>,更可能是眼下的货太紧:工厂急着开工,宁愿为现货付溢价。把这张库存晴雨表当成涨跌投票器,方向可能就拧反了。</p><p>量化 CTA 和商品策略经常会研究基差和期限结构。它们不只问价格会涨会跌,还问不同合约之间的相对关系——像做时间序列分析之余再看截面结构,结构与结构之间的错位里,往往藏着信号。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="期货曲线 Contango(列出 稳定)与 Backwardation(短期倒挂现货短缺),基差决定后市亲密化度">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">基差结构两种: Contango(升水)vs Backwardation(贴水)</text>
+            <line x1="80" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <line x1="80" y1="60" x2="80" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <text x="92" y="70" fill="#bcc9dd" font-size="12">价格</text>
+            <text x="820" y="318" fill="#bcc9dd" font-size="12">到期月越远</text>
+            <path d="M 100 270 Q 250 250 400 220 Q 550 190 810 150" fill="none" stroke="#7aa7f0" stroke-width="3"/>
+            <text x="820" y="152" fill="#7aa7f0" font-size="12" font-weight="800">Contango(远月高)</text>
+            <text x="180" y="220" fill="#bcc9dd" font-size="12">库存高、持有成本低</text>
+            <path d="M 100 150 Q 250 170 400 200 Q 550 230 810 260" fill="none" stroke="#ee8877" stroke-width="3"/>
+            <text x="820" y="264" fill="#ee8877" font-size="12" font-weight="800">Backwardation(远月低)</text>
+            <text x="180" y="140" fill="#bcc9dd" font-size="12">库存紧、现货紧俏</text>
+            <text x="450" y="336" text-anchor="middle" fill="#bcc9dd" font-size="12.5">正常的商品期货曲线上浮 → Contango,短期供给压力大这时反而坠是 Backwardation——基差 = 现货价 − 期货价,这笔“负数”就是 CTA 策略的主要开门费</text>
+            <text x="450" y="360" text-anchor="middle" fill="#bcc9dd" font-size="12.5">基差从 Contango 转到 Backwardation 往往有色回事,“你什么都没做,市场决定不平他”,这样的一瞥很值钱</text>
+          </svg>
+          <p class="figure__cap">基差的形态就是你多空中最应该承受的成本——Contango 时做空收 Carry、做多付 Carry;形态一翻,你的策略输赢结构也跟着翻篇。</p>
+        </div>
+        <h2>7. 交换未来现金流</h2>
+<p>互换听起来更抽象,其实本质还是合同。最常见的是<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>互换。A 公司背着浮动利率债务,天天担心未来利率上升;B 公司则更愿意承担浮动利率。两家坐下来约定:A 向 B 支付固定利率,B 向 A 支付浮动利率。一纸合同签下,两家的烦恼各得其所。</p><p>用一亿元名义本金走一遍。约定 A 每年付固定利率百分之三,即三百万元;B 付当年的浮动利率。第一年浮动利率是百分之二点八:A 付三百万、收两百八十万,净支出二十万,单看像小亏。第二年浮动利率涨到百分之三点五:A 仍付三百万,却能收三百五十万,净进账五十万。</p><p>效果是什么?A 把未来利率上升的风险转移出去,换成更确定的固定支付,终于可以睡安稳觉;B 则把浮动利率风险接到自己手里,希望从中获得补偿。还是那句老话:风险没有消失,只是换了个肩膀——金融工程的很大一部分,干的就是这个搬运动作。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>关键点要配上第二张账:A 自己就背着浮动利率债务。利率涨到百分之三点五,债务利息多付了,互换那头恰好净收五十万补回来——两边一抵,A 的总利息支出被熨成一条直线。所以别把互换单截出来看,那像赌局;放回它对冲的债务旁边,它是把浮动的账单换成固定的预算。</p></div><p>互换通常在场外市场交易,条款可以定制,灵活得像私聊敲定的口头协作;但灵活的账单随后就到:对手方风险、估值复杂和抵押品管理问题,一样不少。对新手来说,先把它理解成<span class="hl">“交换未来现金流”</span>就够了,工程细节留给以后。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="利率互换现金流示意: 甲付固定利息乙付浮动利息,双方只交换“两者之差”,本金不变">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">利率互换:双方只摆利息曲线,不动本金</text>
+            <path d="M 150 100 L 750 100" fill="none" stroke="#7aa7f0" stroke-width="3" marker-end="url(#arrA)"/>
+            <path d="M 750 220 L 150 220" fill="none" stroke="#ee8877" stroke-width="3" marker-end="url(#arrB)"/>
+            <defs><marker id="arrA" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#7aa7f0"/></marker><marker id="arrB" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#ee8877"/></marker></defs>
+            <rect x="70" y="130" width="260" height="80" rx="8" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="200" y="158" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">甲(嫌浮动)</text>
+            <text x="200" y="182" text-anchor="middle" fill="#bcc9dd" font-size="12">每隔 3 个月付 3.5% 固定利息</text>
+            <rect x="570" y="130" width="260" height="80" rx="8" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="700" y="158" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">乙(嫌固定)</text>
+            <text x="700" y="182" text-anchor="middle" fill="#bcc9dd" font-size="12">每隔 3 个月收 3.5%,并付浮动 LPR</text>
+            <text x="450" y="90" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">甲 → 乙:固定 3.5%</text>
+            <text x="450" y="250" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">乙 → 甲:浮动 LPR(根据当时市场利率调整)</text>
+            <text x="450" y="288" text-anchor="middle" fill="#bcc9dd" font-size="12.5">本金完全不动,只交换利息之差——它看起来优雅的地方是为机构定制而设计的:你可以只调'利息的期限结构',而不动本金</text>
+            <rect x="70" y="318" width="760" height="80" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="94" y="344" fill="#f0c96a" font-size="13" font-weight="800">为什么重要</text>
+            <text x="94" y="368" fill="#bcc9dd" font-size="12">银行更常见:它持有的是固定利率资产、却要向储户按浮动利率付息,通过利率互换把两边的错配抵消掉——这是现货系统里的一个最富的平衡工程</text>
+            <text x="94" y="390" fill="#bcc9dd" font-size="12">全球名义本金达数百万亿美元,历史上最大的利率风险控制工具</text>
+          </svg>
+          <p class="figure__cap">利率互换不是卖换品,是把两个&#x27;不知道利率&#x27;敞口拼在一起互相中和。你未来十年可能要还房贷,它就是帮你知道:你现在该怎么安排债务形式。</p>
+        </div>
+        <h2>8. 衍生品条款怎样进入策略</h2>
+<p>量化里有一大类策略叫 CTA,也叫管理期货。它们在商品、股指、国债、外汇等期货市场上,做趋势、期限结构、跨品种关系和风险配置——期货合约对它们来说,像一盒可以任意组合的积木。</p><p>但期货数据和<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>数据是两种生物。你要处理合约到期、移仓、主力合约切换、<span class="term">保证金</span>、夜盘、涨跌停、交割规则。一个看起来简单的趋势策略,如果移仓和成本处理错了,<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>会非常失真——你看到的不是策略的本事,而是数据处理的 bug。</p><p>举个最容易踩的坑:移仓换月。你做多近月合约,价格五百八十元;到期前卖掉它、买入远月合约,远月六百元。这一步你贵二十元接回同样的货,但这二十元不是亏损,是期限结构的价差。可如果把两个合约的收盘价直接首尾相接,这二十元就会被回测算成一次凭空大涨,策略平白多出一截利润——那不是市场的馈赠,是数据拼接的裂缝。</p><div class="callout callout--note reveal"><span class="callout__title">贵二十元接回,不是多亏二十元</span><p>划重点:你做多近月合约,价格五百八十元;到期前卖掉它、买入远月合约,远月六百元——贵二十元接回同样的货。这二十元不是亏损,是期限结构的价差。可如果把两个合约的收盘价直接首尾相接,回测会把这二十元算成一次凭空大涨,策略平白多出一截利润。那不是市场的馈赠,是数据拼接的裂缝。</p></div><p>所以这一章的重点,不是怂恿你去开期货账户,而是往你脑子里装四句话:未来价格可以被合约化,风险可以被转移,<span class="term">杠杆</span>会放大一切,而量化系统必须尊重这些制度——不尊重的下场,是制度用追加<span class="term">保证金</span>通知亲自教你。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>远期和期货都是把未来交易价格写进合约,区别是期货更标准化。</li>
+            <li>保证金让期货占用资金少,也让盈亏被同比例放大。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 航空公司为什么要在油价上涨前先买未来</li>
+            <li><strong>2.</strong> 先从一个卖鱼的人说起</li>
+            <li><strong>3.</strong> 远期和期货有什么区别</li>
+            <li><strong>4.</strong> 为什么期货会放大盈亏</li>
+            <li><strong>5.</strong> 套期保值、投机和套利</li>
+            <li><strong>6.</strong> 基差和期限结构</li>
+            <li><strong>7.</strong> 交换未来现金流</li>
+            <li><strong>8.</strong> 衍生品条款怎样进入策略</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>远期和期货的核心区别是什么?</summary>
+            <p>远期更定制化、私下签;期货更标准化,并由交易所和清算体系降低对手方违约风险。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么期货保证金会放大盈亏?</summary>
+            <p>因为你用较少保证金控制较大名义资产,标的一小幅波动,折算到保证金上就是一大幅波动。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>期权: 把不对称收益结构变成可交易产品</h2>
+          <p>讲清看涨、看跌、权利金、买方卖方、时间价值和卖期权风险。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>
