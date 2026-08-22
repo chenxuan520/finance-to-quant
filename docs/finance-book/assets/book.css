@@ -1080,3 +1080,93 @@ strong .hl, strong .term, strong .num { color: #ffd97a; }
   .lab__range { grid-column: 1 / -1; height: 7px; }
   .lab__chart { width: calc(100% - 1.4rem); margin: 0.6rem 0.7rem 0.3rem; }
 }
+
+
+/* ---- book search ---- */
+.book-search {
+  position: fixed; inset: 0; z-index: 80; display: none;
+}
+.book-search.is-open { display: block; }
+.book-search__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(3, 8, 16, 0.62);
+  backdrop-filter: blur(3px);
+}
+.book-search__panel {
+  position: relative; max-width: 720px; margin: 7vh auto 0;
+  max-height: 82vh; background: rgba(23, 32, 45, 0.96);
+  border: 1px solid rgba(122, 167, 240, 0.35); border-radius: 16px;
+  box-shadow: 0 18px 60px rgba(3, 8, 16, 0.5); overflow: hidden;
+  display: flex; flex-direction: column; animation: book-search-pop 180ms ease;
+}
+@keyframes book-search-pop { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.book-search__bar {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--line);
+}
+.book-search__icon { display: inline-grid; place-items: center; flex: 0 0 auto; color: var(--text-dim); }
+.book-search__icon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.book-search__input {
+  flex: 1 1 auto; min-width: 0; background: transparent; border: 0; outline: none;
+  color: var(--text); font-size: 1.05rem; font-family: inherit; padding: 0.4rem 0.2rem;
+}
+.book-search__input::placeholder { color: var(--text-dim); }
+.book-search__kbd {
+  flex: 0 0 auto; padding: 0.22rem 0.55rem; border-radius: 8px; border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.05); color: var(--text-dim); font-size: 0.72rem; font-weight: 600;
+  font-family: var(--font-mono); letter-spacing: 0.02em; white-space: nowrap; user-select: none;
+}
+.book-search__close {
+  flex: 0 0 auto; padding: 0.3rem 0.6rem; border-radius: 8px; border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04); color: var(--text-dim); font-size: 0.78rem; font-weight: 700; cursor: pointer;
+}
+.book-search__close:hover { color: var(--text); border-color: rgba(122, 167, 240, 0.35); }
+.book-search__status { padding: 0.5rem 0.9rem; color: var(--text-dim); font-size: 0.82rem; border-bottom: 1px solid var(--line); }
+.book-search__results { overflow-y: auto; padding: 0.4rem; display: grid; gap: 0.15rem; }
+.book-search__result { display: block; padding: 0.6rem 0.7rem; border-radius: 10px; border: 1px solid transparent; color: var(--text-soft); }
+.book-search__result:hover, .book-search__result.is-active { text-decoration: none; background: rgba(122, 167, 240, 0.12); border-color: rgba(122, 167, 240, 0.3); }
+.book-search__result-chapter { display: block; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--primary); }
+.book-search__result-heading { display: block; font-weight: 700; color: var(--text); margin: 0.12rem 0; }
+.book-search__result-snippet { display: block; font-size: 0.9rem; line-height: 1.55; color: var(--text-soft); }
+.book-search mark { background: rgba(240, 201, 106, 0.3); color: var(--text); border-radius: 3px; padding: 0 0.12em; }
+mark.hl-query { background: rgba(240, 201, 106, 0.45); color: var(--text); border-radius: 3px; padding: 0 0.08em; box-shadow: inset 0 -0.09em 0 rgba(240, 201, 106, 0.35); }
+.book-search__empty { padding: 1.4rem; text-align: center; color: var(--text-dim); }
+@media (max-width: 720px) { .book-search__panel { margin: 0; height: 100%; max-height: 100vh; border-radius: 0; } }
+
+.book-header__search { margin-left: auto; }
+.book-header__button {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.22rem 0.6rem; border-radius: 8px; border: 1px solid var(--line);
+  background: transparent; color: var(--text-soft);
+  font-family: inherit; font-size: 0.78rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+}
+.book-header__button:hover { color: var(--text); border-color: var(--line-strong); }
+.book-header__button svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.book-header__search-kbd { font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-dim); padding: 0.1rem 0.3rem; border: 1px solid var(--line); border-radius: 4px; }
+@media (max-width: 720px) { .book-header__search-text, .book-header__search-kbd { display: none; } }
+
+/* ---- glossary popover ---- */
+.term--glossary {
+  cursor: pointer; padding: 0; margin: 0; border: none; background: none;
+  font: inherit; color: var(--accent); font-weight: 600;
+  border-bottom: 1px dashed rgba(122, 167, 240, 0.55); text-decoration: none; border-radius: 2px;
+  transition: color 0.15s ease, background 0.15s ease; touch-action: manipulation;
+}
+.term--glossary:hover, .term--glossary:focus-visible { color: #bcd4ff; background: rgba(122, 167, 240, 0.14); outline: none; }
+.term--glossary.is-active, .term-link.is-glossary-active { color: #e2eeff; background: rgba(122, 167, 240, 0.22); border-bottom-style: solid; }
+.glossary-popover {
+  position: fixed; z-index: 1200; width: min(22rem, calc(100vw - 2rem)); padding: 0;
+  border: 1px solid var(--line-strong); border-radius: 14px; background: rgba(23, 32, 45, 0.98);
+  box-shadow: 0 18px 60px rgba(3, 8, 16, 0.5); color: var(--text);
+  animation: glossary-pop-in 0.14s ease-out;
+}
+@keyframes glossary-pop-in { from { opacity: 0; transform: translateY(4px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.glossary-popover__inner { padding: 0.85rem 1rem 0.75rem; }
+.glossary-popover__title { margin: 0 0 0.45rem; font-size: 0.95rem; font-weight: 700; color: var(--accent); line-height: 1.4; }
+.glossary-popover__body { margin: 0; font-size: 0.88rem; line-height: 1.65; color: var(--text-soft); }
+.glossary-popover__foot { display: flex; gap: 0.75rem; margin-top: 0.7rem; padding-top: 0.55rem; border-top: 1px solid var(--line); font-size: 0.8rem; }
+.glossary-popover__link { color: var(--accent); text-decoration: none; }
+.glossary-popover__link:hover { text-decoration: underline; }
+.glossary-popover__hint { margin-left: auto; color: var(--text-dim); }
+

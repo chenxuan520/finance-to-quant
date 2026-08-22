@@ -8083,6 +8083,96 @@ strong .hl, strong .term, strong .num { color: #ffd97a; }
   .lab__range { grid-column: 1 / -1; height: 7px; }
   .lab__chart { width: calc(100% - 1.4rem); margin: 0.6rem 0.7rem 0.3rem; }
 }
+
+
+/* ---- book search ---- */
+.book-search {
+  position: fixed; inset: 0; z-index: 80; display: none;
+}
+.book-search.is-open { display: block; }
+.book-search__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(3, 8, 16, 0.62);
+  backdrop-filter: blur(3px);
+}
+.book-search__panel {
+  position: relative; max-width: 720px; margin: 7vh auto 0;
+  max-height: 82vh; background: rgba(23, 32, 45, 0.96);
+  border: 1px solid rgba(122, 167, 240, 0.35); border-radius: 16px;
+  box-shadow: 0 18px 60px rgba(3, 8, 16, 0.5); overflow: hidden;
+  display: flex; flex-direction: column; animation: book-search-pop 180ms ease;
+}
+@keyframes book-search-pop { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.book-search__bar {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--line);
+}
+.book-search__icon { display: inline-grid; place-items: center; flex: 0 0 auto; color: var(--text-dim); }
+.book-search__icon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.book-search__input {
+  flex: 1 1 auto; min-width: 0; background: transparent; border: 0; outline: none;
+  color: var(--text); font-size: 1.05rem; font-family: inherit; padding: 0.4rem 0.2rem;
+}
+.book-search__input::placeholder { color: var(--text-dim); }
+.book-search__kbd {
+  flex: 0 0 auto; padding: 0.22rem 0.55rem; border-radius: 8px; border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.05); color: var(--text-dim); font-size: 0.72rem; font-weight: 600;
+  font-family: var(--font-mono); letter-spacing: 0.02em; white-space: nowrap; user-select: none;
+}
+.book-search__close {
+  flex: 0 0 auto; padding: 0.3rem 0.6rem; border-radius: 8px; border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04); color: var(--text-dim); font-size: 0.78rem; font-weight: 700; cursor: pointer;
+}
+.book-search__close:hover { color: var(--text); border-color: rgba(122, 167, 240, 0.35); }
+.book-search__status { padding: 0.5rem 0.9rem; color: var(--text-dim); font-size: 0.82rem; border-bottom: 1px solid var(--line); }
+.book-search__results { overflow-y: auto; padding: 0.4rem; display: grid; gap: 0.15rem; }
+.book-search__result { display: block; padding: 0.6rem 0.7rem; border-radius: 10px; border: 1px solid transparent; color: var(--text-soft); }
+.book-search__result:hover, .book-search__result.is-active { text-decoration: none; background: rgba(122, 167, 240, 0.12); border-color: rgba(122, 167, 240, 0.3); }
+.book-search__result-chapter { display: block; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--primary); }
+.book-search__result-heading { display: block; font-weight: 700; color: var(--text); margin: 0.12rem 0; }
+.book-search__result-snippet { display: block; font-size: 0.9rem; line-height: 1.55; color: var(--text-soft); }
+.book-search mark { background: rgba(240, 201, 106, 0.3); color: var(--text); border-radius: 3px; padding: 0 0.12em; }
+mark.hl-query { background: rgba(240, 201, 106, 0.45); color: var(--text); border-radius: 3px; padding: 0 0.08em; box-shadow: inset 0 -0.09em 0 rgba(240, 201, 106, 0.35); }
+.book-search__empty { padding: 1.4rem; text-align: center; color: var(--text-dim); }
+@media (max-width: 720px) { .book-search__panel { margin: 0; height: 100%; max-height: 100vh; border-radius: 0; } }
+
+.book-header__search { margin-left: auto; }
+.book-header__button {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.22rem 0.6rem; border-radius: 8px; border: 1px solid var(--line);
+  background: transparent; color: var(--text-soft);
+  font-family: inherit; font-size: 0.78rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+}
+.book-header__button:hover { color: var(--text); border-color: var(--line-strong); }
+.book-header__button svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.book-header__search-kbd { font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-dim); padding: 0.1rem 0.3rem; border: 1px solid var(--line); border-radius: 4px; }
+@media (max-width: 720px) { .book-header__search-text, .book-header__search-kbd { display: none; } }
+
+/* ---- glossary popover ---- */
+.term--glossary {
+  cursor: pointer; padding: 0; margin: 0; border: none; background: none;
+  font: inherit; color: var(--accent); font-weight: 600;
+  border-bottom: 1px dashed rgba(122, 167, 240, 0.55); text-decoration: none; border-radius: 2px;
+  transition: color 0.15s ease, background 0.15s ease; touch-action: manipulation;
+}
+.term--glossary:hover, .term--glossary:focus-visible { color: #bcd4ff; background: rgba(122, 167, 240, 0.14); outline: none; }
+.term--glossary.is-active, .term-link.is-glossary-active { color: #e2eeff; background: rgba(122, 167, 240, 0.22); border-bottom-style: solid; }
+.glossary-popover {
+  position: fixed; z-index: 1200; width: min(22rem, calc(100vw - 2rem)); padding: 0;
+  border: 1px solid var(--line-strong); border-radius: 14px; background: rgba(23, 32, 45, 0.98);
+  box-shadow: 0 18px 60px rgba(3, 8, 16, 0.5); color: var(--text);
+  animation: glossary-pop-in 0.14s ease-out;
+}
+@keyframes glossary-pop-in { from { opacity: 0; transform: translateY(4px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.glossary-popover__inner { padding: 0.85rem 1rem 0.75rem; }
+.glossary-popover__title { margin: 0 0 0.45rem; font-size: 0.95rem; font-weight: 700; color: var(--accent); line-height: 1.4; }
+.glossary-popover__body { margin: 0; font-size: 0.88rem; line-height: 1.65; color: var(--text-soft); }
+.glossary-popover__foot { display: flex; gap: 0.75rem; margin-top: 0.7rem; padding-top: 0.55rem; border-top: 1px solid var(--line); font-size: 0.8rem; }
+.glossary-popover__link { color: var(--accent); text-decoration: none; }
+.glossary-popover__link:hover { text-decoration: underline; }
+.glossary-popover__hint { margin-left: auto; color: var(--text-dim); }
+
 """
 
 
@@ -8518,8 +8608,370 @@ JS_TEMPLATE = r"""
       if (last && !exists) storeSet(STORAGE_LAST, CHAPTERS[0].file);
     }
   }
+
+  /* ============= 移植自 dl-book: 全书搜索 / 术语弹窗 / ?highlight= 高亮 ============= */
+
+  var SEARCH_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>';
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function escapeRegExp(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+
+  /* ---- ?highlight= 参数高亮 ---- */
+  function markSkipParent(node) {
+    while (node) {
+      if (!node.tagName) { node = node.parentElement; continue; }
+      var t = node.tagName.toUpperCase();
+      if (t === "SCRIPT" || t === "STYLE" || t === "SVG" || t === "CODE" || t === "PRE" ||
+          t === "TEXTAREA" || t === "INPUT" || t === "MARK") return true;
+      node = node.parentElement;
+    }
+    return false;
+  }
+  function highlightTermsIn(root, terms) {
+    if (!terms.length) return 0;
+    var count = 0;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    while (walker.nextNode()) {
+      if (!markSkipParent(walker.currentNode.parentElement)) nodes.push(walker.currentNode);
+    }
+    nodes.forEach(function (node) {
+      var text = node.nodeValue;
+      var lowered = text.toLowerCase();
+      var out = null, cursor = -1;
+      terms.forEach(function (term) {
+        var idx = lowered.indexOf(term.toLowerCase());
+        if (idx >= 0 && (cursor < 0 || idx < cursor)) cursor = idx;
+      });
+      if (cursor < 0) return;
+      // 只高亮每段第一处,避免整屏都是 mark
+      var best = terms.filter(function (t) { return lowered.indexOf(t.toLowerCase()) === cursor; })[0];
+      var at = cursor, len = best.length;
+      var before = text.slice(0, at), match = text.slice(at, at + len), after = text.slice(at + len);
+      var frag = document.createDocumentFragment();
+      if (before) frag.appendChild(document.createTextNode(before));
+      var m = document.createElement("mark");
+      m.className = "hl-query";
+      m.textContent = match;
+      frag.appendChild(m);
+      if (after) frag.appendChild(document.createTextNode(after));
+      node.parentNode.replaceChild(frag, node);
+      count += 1;
+    });
+    return count;
+  }
+  function applyHighlightFromURL() {
+    var inner = document.querySelector(".chapter__inner");
+    if (!inner) return;
+    try {
+      var sp = new URLSearchParams(location.search);
+      var raw = sp.get("highlight") || "";
+      var terms = raw.split(/\s+/).filter(function (w) { return w.length >= 2; });
+      if (!terms.length) return;
+      var n = highlightTermsIn(inner, terms);
+      if (n > 0) {
+        var first = inner.querySelector("mark.hl-query");
+        if (first) first.scrollIntoView({ block: "center", behavior: "smooth" });
+      }
+      // 去掉地址栏参数,刷新后不再重复高亮
+      var url = location.pathname + location.hash;
+      history.replaceState(null, "", url);
+    } catch (e) { /* ignore */ }
+  }
+
+  /* ---- 术语弹窗: 拦截/glossary 锚链接 ---- */
+  var GLOSSARY = { ready: false, loading: null, byId: {} };
+  function loadGlossary() {
+    if (GLOSSARY.ready) return Promise.resolve(GLOSSARY);
+    if (GLOSSARY.loading) return GLOSSARY.loading;
+    GLOSSARY.loading = fetch("glossary.html")
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        [].slice.call(doc.querySelectorAll(".glossary-list li[id]")).forEach(function (li) {
+          var strong = li.querySelector("strong");
+          var title = strong ? strong.textContent.replace(/\s+/g, " ").trim() : li.id;
+          var clone = li.cloneNode(true);
+          [].slice.call(clone.querySelectorAll("a")).forEach(function (a) { a.remove(); });
+          var body = (clone.querySelector("p") || clone).textContent.replace(/\s+/g, " ").trim();
+          GLOSSARY.byId[li.id] = { title: title, def: body, href: "glossary.html#" + li.id };
+        });
+        GLOSSARY.ready = true;
+        return GLOSSARY;
+      })
+      .catch(function () { return GLOSSARY; });
+    return GLOSSARY.loading;
+  }
+
+  var POP = null;
+  function popClose() {
+    if (POP && POP.parentNode) POP.parentNode.removeChild(POP);
+    [].slice.call(document.querySelectorAll(".term--glossary.is-active, .term-link.is-glossary-active")).forEach(function (elx) {
+      elx.classList.remove("is-active", "is-glossary-active");
+    });
+    POP = null;
+    document.removeEventListener("keydown", popKey);
+    window.removeEventListener("scroll", popClose, true);
+  }
+  function popKey(e) { if (e.key === "Escape") popClose(); }
+  function popOpen(anchor, entry) {
+    popClose();
+    anchor.classList.add("is-glossary-active");
+    var pop = el("div", "glossary-popover");
+    pop.innerHTML =
+      '<div class="glossary-popover__inner">' +
+      '  <p class="glossary-popover__title">' + escapeHtml(entry.title) + '</p>' +
+      '  <p class="glossary-popover__body">' + escapeHtml(entry.def) + '</p>' +
+      '  <div class="glossary-popover__foot">' +
+      '    <a class="glossary-popover__link" href="' + entry.href + '">在术语表中查看 →</a>' +
+      '    <span class="glossary-popover__hint">Esc 关闭</span>' +
+      '  </div>' +
+      '</div>';
+    document.body.appendChild(pop);
+    var rect = anchor.getBoundingClientRect();
+    var w = pop.offsetWidth, h = pop.offsetHeight;
+    var x = Math.max(12, Math.min(window.innerWidth - w - 12, rect.left));
+    var y = rect.bottom + 8;
+    if (y + h > window.innerHeight - 12) y = rect.top - h - 8;
+    pop.style.left = x + "px";
+    pop.style.top = y + "px";
+    POP = pop;
+    document.addEventListener("keydown", popKey);
+    window.addEventListener("scroll", popClose, true);
+    pop.addEventListener("click", function (e) { e.stopPropagation(); });
+  }
+  function setupGlossaryPopover() {
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest("a");
+      if (a && a.classList.contains("term-link")) {
+        e.preventDefault();
+        var href = a.getAttribute("href") || "";
+        var hashIdx = href.indexOf("#");
+        if (hashIdx < 0) return;
+        var id = href.slice(hashIdx + 1);
+        loadGlossary().then(function () {
+          var entry = GLOSSARY.byId[id];
+          if (entry) popOpen(a, entry);
+        });
+        return;
+      }
+      if (!POP) return;
+      if (POP.contains(e.target)) return;
+      popClose();
+    });
+  }
+
+  /* ---- 全书搜索 ---- */
+  function tokenizeQuery(raw) {
+    var chunks = String(raw || "").trim().split(/\s+/).filter(Boolean);
+    var terms = [];
+    chunks.forEach(function (chunk) {
+      var cur = "", mode = "";
+      for (var i = 0; i < chunk.length; i++) {
+        var ch = chunk.charAt(i);
+        var m = /[a-z0-9_+#.-]/i.test(ch) ? "latin" : (/[一-龥]/.test(ch) ? "han" : "other");
+        if (m === "other") { if (cur) terms.push(cur); cur = ""; mode = ""; continue; }
+        if (cur && mode !== m) { terms.push(cur); cur = ch; } else { cur += ch; }
+        mode = m;
+      }
+      if (cur) terms.push(cur);
+    });
+    return terms;
+  }
+
+  function fuzzyMatch(text, term) {
+    var hay = String(text || "").toLowerCase();
+    var q = String(term || "").toLowerCase();
+    var exactAt = hay.indexOf(q);
+    if (exactAt >= 0) {
+      var pos = []; for (var i = 0; i < q.length; i++) pos.push(exactAt + i);
+      return { positions: pos, score: 1200 + q.length * 45 - exactAt * 0.04 };
+    }
+    var cursor = 0, positions = [];
+    for (var j = 0; j < q.length; j++) {
+      var at = hay.indexOf(q.charAt(j), cursor);
+      if (at < 0) return null;
+      positions.push(at); cursor = at + 1;
+    }
+    var span = positions[positions.length - 1] - positions[0] + 1;
+    var gaps = span - positions.length;
+    if (span > Math.max(64, q.length * 18)) return null;
+    var score = 520 + q.length * 32 - gaps * 7 - positions[0] * 0.035;
+    for (var k = 1; k < positions.length; k++) if (positions[k] === positions[k - 1] + 1) score += 28;
+    return { positions: positions, score: score };
+  }
+
+  function createSearch() {
+    var overlay = el("div", "book-search");
+    overlay.innerHTML =
+      '<div class="book-search__backdrop" data-search-close></div>' +
+      '<div class="book-search__panel" role="dialog" aria-modal="true" aria-label="全书搜索">' +
+      '  <div class="book-search__bar">' +
+      '    <span class="book-search__icon">' + SEARCH_ICON + '</span>' +
+      '    <input type="search" name="book-search" class="book-search__input" placeholder="搜索全书:标题、正文、卡片…" autocomplete="off" spellcheck="false" aria-label="搜索全书" />' +
+      '    <span class="book-search__kbd" data-search-kbd aria-hidden="true">Ctrl+K</span>' +
+      '    <button type="button" class="book-search__close" data-search-close aria-label="关闭搜索">Esc</button>' +
+      '  </div>' +
+      '  <div class="book-search__status" data-search-status></div>' +
+      '  <div class="book-search__results" data-search-results></div>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    var input = overlay.querySelector(".book-search__input");
+    var statusEl = overlay.querySelector("[data-search-status]");
+    var resultsEl = overlay.querySelector("[data-search-results]");
+    var INDEX = [];
+    var indexReady = false, indexLoading = false, activeIndex = -1, debounce = null;
+
+    function setStatus(t) { statusEl.textContent = t; }
+
+    function extractSections(inner, ch) {
+      var sections = [];
+      var current = { ch: ch, heading: "", text: "" };
+      function push() {
+        var t = current.text.replace(/\s+/g, " ").trim();
+        if (t) sections.push({ ch: ch, heading: current.heading, text: current.heading + " " + t });
+      }
+      (function walk(node) {
+        for (var i = 0; i < node.childNodes.length; i++) {
+          var c = node.childNodes[i];
+          if (c.nodeType === 1) {
+            var tag = c.tagName.toUpperCase();
+            if (tag === "H2" || tag === "H3") {
+              push();
+              current = { ch: ch, heading: (c.textContent || "").replace(/\s+/g, " ").trim(), text: "" };
+            } else if (tag === "SCRIPT" || tag === "STYLE" || tag === "SVG") {
+              /* skip */
+            } else {
+              walk(c);
+            }
+          } else if (c.nodeType === 3) current.text += c.nodeValue;
+        }
+      })(inner);
+      push();
+      return sections;
+    }
+
+    function ensureIndex() {
+      if (indexReady || indexLoading) return;
+      indexLoading = true;
+      setStatus("正在准备全书索引…");
+      Promise.all(CHAPTERS.map(function (ch) {
+        return fetch(ch.file)
+          .then(function (r) { return r.text(); })
+          .then(function (html) {
+            var doc = new DOMParser().parseFromString(html, "text/html");
+            var inner = doc.querySelector(".chapter__inner");
+            return inner ? extractSections(inner, ch) : [];
+          })
+          .catch(function () { return []; });
+      })).then(function (all) {
+        INDEX = [];
+        for (var i = 0; i < all.length; i++) INDEX = INDEX.concat(all[i]);
+        indexReady = true; indexLoading = false;
+        setStatus(INDEX.length ? ("已索引全书 " + INDEX.length + " 节") : "无法建立索引(可能是以 file:// 方式打开)");
+      });
+    }
+
+    function runSearch(q) {
+      while (resultsEl.firstChild) resultsEl.removeChild(resultsEl.firstChild);
+      var terms = tokenizeQuery(q);
+      if (!terms.length) { activeIndex = -1; return; }
+      var out = [];
+      for (var i = 0; i < INDEX.length; i++) {
+        var sec = INDEX[i], ok = true, score = 0;
+        for (var j = 0; j < terms.length; j++) {
+          var head = fuzzyMatch(sec.heading, terms[j]);
+          var body = fuzzyMatch(sec.text, terms[j]);
+          if (!head && !body) { ok = false; break; }
+          score += (head && (!body || head.score + 420 >= body.score) ? head.score + 420 : body.score);
+        }
+        if (ok) out.push({ sec: sec, score: score });
+      }
+      out.sort(function (a, b) { return b.score - a.score; });
+      var top = out.slice(0, 40);
+      if (!top.length) {
+        var empty = el("div", "book-search__empty", "没有找到匹配内容");
+        resultsEl.appendChild(empty);
+        activeIndex = -1;
+        return;
+      }
+      top.forEach(function (r, i) {
+        var a = el("a", "book-search__result" + (i === activeIndex ? " is-active" : ""));
+        a.href = r.sec.ch.file + "?highlight=" + encodeURIComponent(q);
+        var span1 = el("span", "book-search__result-chapter", "第 " + r.sec.ch.num + " 章");
+        var span2 = el("span", "book-search__result-heading", r.sec.heading || r.sec.ch.title);
+        var snippet = r.sec.text.length > 110 ? r.sec.text.slice(0, 110) + "…" : r.sec.text;
+        var span3 = el("span", "book-search__result-snippet", snippet);
+        a.appendChild(span1); a.appendChild(span2); a.appendChild(span3);
+        resultsEl.appendChild(a);
+      });
+      if (activeIndex < 0) activeIndex = 0;
+      renderActive();
+    }
+
+    function renderActive() {
+      var items = resultsEl.querySelectorAll(".book-search__result");
+      items.forEach(function (it, i) { it.classList.toggle("is-active", i === activeIndex); });
+      var cur = items[activeIndex];
+      if (cur) cur.scrollIntoView({ block: "nearest" });
+    }
+
+    function open() {
+      overlay.classList.add("is-open");
+      ensureIndex();
+      setTimeout(function () { input.focus(); }, 30);
+    }
+    function close() { overlay.classList.remove("is-open"); input.value = ""; while (resultsEl.firstChild) resultsEl.removeChild(resultsEl.firstChild); activeIndex = -1; }
+
+    [[].slice.call(overlay.querySelectorAll("[data-search-close]"))].forEach(function (list) {
+      list.forEach(function (b) { b.addEventListener("click", close); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey && (e.key === "k" || e.key === "K")) {
+        if (!overlay.classList.contains("is-open")) { e.preventDefault(); open(); }
+        return;
+      }
+      if (!overlay.classList.contains("is-open")) return;
+      if (e.key === "Escape") { e.preventDefault(); close(); return; }
+      if (e.key === "ArrowDown") { e.preventDefault(); activeIndex = Math.min(activeIndex + 1, resultsEl.querySelectorAll(".book-search__result").length - 1); renderActive(); return; }
+      if (e.key === "ArrowUp") { e.preventDefault(); activeIndex = Math.max(activeIndex - 1, 0); renderActive(); return; }
+      if (e.key === "Enter") {
+        var cur = resultsEl.querySelectorAll(".book-search__result")[activeIndex];
+        if (cur && cur.href) { location.href = cur.href; }
+      }
+    });
+    input.addEventListener("input", function () {
+      clearTimeout(debounce);
+      debounce = setTimeout(function () { runSearch(input.value); }, 120);
+    });
+    overlay.querySelector(".book-search__panel").addEventListener("click", function (e) { e.stopPropagation(); });
+    overlay.querySelector(".book-search__backdrop").addEventListener("click", close);
+
+    return { open: open, close: close };
+  }
+
+  function attachSearchButton(search) {
+    var header = document.querySelector(".book-header");
+    if (!header) return;
+    var btn = el("button", "book-header__button book-header__search");
+    btn.type = "button";
+    btn.setAttribute("aria-label", "搜索全书 (Ctrl+K)");
+    btn.innerHTML = SEARCH_ICON + '<span class="book-header__search-text">搜索</span><span class="book-header__search-kbd">Ctrl K</span>';
+    btn.addEventListener("click", search.open);
+    header.appendChild(btn);
+  }
+
   var idx = chapterIndex();
   var menu = buildHeader(idx);
+  var bookSearch = createSearch();
+  attachSearchButton(bookSearch);
+  setupGlossaryPopover();
+  applyHighlightFromURL();
   buildDrawer(idx, menu);
   buildDesktopLayout(idx);
   addChapterNav(idx);
