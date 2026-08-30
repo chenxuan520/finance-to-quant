@@ -33,11 +33,9 @@
         </section>
 
 
-        <section class="case-study reveal">
-          <span class="case-study__label">金融现场</span>
-          <h2>1. Zillow 的房价模型为什么买来一屋子麻烦</h2>
+        <p class="case-kicker reveal"><span class="case-study__label">金融现场</span></p>
+        <h2>1. Zillow 的房价模型为什么买来一屋子麻烦</h2>
 <p>Zillow 曾把自动估价能力推向直接买卖房屋的 Zillow Offers 业务:模型估价、公司出钱收房、简单翻修后再卖。听起来像把一个预测模型接上<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>,让算法亲自兑现自己的判断。<span class="num">2021 年</span>,公司却宣布收缩并关闭这项业务,大量房屋估价和转售结果不及预期。</p><p>问题不只是模型<span class="hl">“猜错房价”</span>。买房之后还会冒出持有成本、翻修、地区<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>、成交周期和集中采购能力;预测误差一旦乘上真实库存,就从屏幕上的均方误差变成仓库里的现金损失。模型对平均价格差一点,在高<span class="term">杠杆</span>、低流动性的业务里可能已经差很多。</p><p>金融机器学习最怕目标函数和赚钱目标错位。更准的价格预测不必然带来更高利润,因为仓位、成本、容量和尾部路径在模型之外。把模型接上真钱以前,必须沿着端到端链路问一句:预测改善的这一点,最后究竟落在哪一行损益表上?</p>
-        </section>
 
         <h2>2. 模型先服务于问题定义</h2>
 <p>做机器学习项目,很多人的肌肉记忆是先选模型、再找数据。在量化里,这个顺序是灾难的起点。这里的第一步是定义问题: 你到底要预测什么? 未来 <span class="num">1 日</span>收益、未来 <span class="num">20 日</span><span class="term">超额收益</span>、<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>排序、<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>、成交概率,还是风险暴露? 问题不同,数据、标签、损失函数和评价指标全都跟着变。</p><p>举例感受一下。目标是选股排序,你关心的就是 <a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">RankIC</a>、分层收益和组合<span class="term">超额收益</span>,而不是普通回归的 MSE;目标是判断明天这单能不能成交,你关心的是成交概率和拒单风险;目标是控制风险,预测误差的方向可能比收益预测本身更要紧。</p><p>很多失败的量化项目,从起点就走错了: 先挑一个酷模型,再满世界找数据喂它。更稳的顺序正好反过来: 金融问题、可交易假设、标签定义、数据口径、简单基线、复杂模型、组合和执行。模型在这条链上排在后面——不是它不重要,是它必须由前面的问题来定义。</p>

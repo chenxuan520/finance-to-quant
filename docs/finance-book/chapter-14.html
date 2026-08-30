@@ -33,11 +33,9 @@
         </section>
 
 
-        <section class="case-study reveal">
-          <span class="case-study__label">金融现场</span>
-          <h2>1. 一夜跌了 5%,账户为什么没少一分钱</h2>
+        <p class="case-kicker reveal"><span class="case-study__label">金融现场</span></p>
+        <h2>1. 一夜跌了 5%,账户为什么没少一分钱</h2>
 <p>某只<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>收盘 <span class="num">100 元</span>,第二天每股派发 <span class="num">5 元</span>现金,除息参考价相应变成约 <span class="num">95 元</span>。只看未复权 K 线,屏幕上像是隔夜暴跌 <span class="num">5%</span>;可股东同时收到 <span class="num">5 元</span>现金,在不考虑税费和市场波动时,总财富并没有凭空蒸发。</p><p>这类<span class="hl">“假断崖”</span>不只来自分红。拆股、送股、配股和合并都会改写每股价格的刻度。原始价格记录的是当时真实成交价,<a class="term term-link" href="glossary.html#g-复权价格" title="查看术语：复权价格">复权价格</a>试图把公司行动接回一条可比较的收益序列;两者都对,只是回答的问题不同。</p><p>许多惊艳<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>就死在这里:模型把除息缺口学成暴跌信号,或者用后复权价格模拟当日可成交价。数据清洗不是把曲线画得顺眼,而是明确每一列到底能不能拿去算收益、发订单和做归因。</p>
-        </section>
 
         <h2>2. 最新价不是公司真实价值</h2>
 <p>行情软件把哪个数字放得最大最显眼,哪个数字就最容易被误解——最新价就是这么个角色。先弄清它从哪来:交易所的<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>引擎按价格优先、时间优先的规则,把不断涌入的买单和卖单两两配对,每配出一对就产生一笔成交;最新价就是最近这一笔被撮合出来的价格。它既不是交易所给这家公司盖的官方估值章,也不是把公司<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>里里外外算一遍得到的精确价值。</p><p>既然是最后一笔成交,它的局限也很明显:那一笔可能只有一百股,背后可能是一笔情绪单、一次误操作,或者一条还没被消化的消息。算一笔账:某股全天成交额 <span class="num">2 亿元</span>,尾盘有人用市价单扫走卖一上的 <span class="num">100 手</span>,价格从 <span class="num">20.00 元</span>被打到 <span class="num">20.10 元</span>。这一单金额约 <span class="num">20 万元</span>,只占全天成交的万分之一,却把最新价抬高了 <span class="num">0.5%</span>——反算一下,20.10 除以 20.00 再减 1,正好 <span class="num">0.5%</span>。常有人以为最新价是全市场共识的体现,其实它只是边际上最后一笔的价格,有足够耐心的资金足以挪动它。</p><p>量化研究每天要吃进海量价格数据,入门的第一个纪律就是尊重价格的含义:价格是可观察的结果,不是因果解释。用程序员的话说,它是系统输出的日志,不是源代码。策略不能因为价格涨了,就自动推导<span class="hl">“公司变好了”</span>;也不能因为跌了,就自动宣布<span class="hl">“公司变差了”</span>。价格变化的背后,可能是<a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>,可能是资金流,可能是交易限制、情绪、指数调仓,也可能只是<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>被临时抽走了。看到日志先别急着下结论,这是读行情的第一课。</p>

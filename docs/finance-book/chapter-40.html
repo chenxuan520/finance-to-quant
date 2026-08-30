@@ -33,11 +33,9 @@
         </section>
 
 
-        <section class="case-study reveal">
-          <span class="case-study__label">金融现场</span>
-          <h2>1. 大盘没动,中性组合为什么一天亏掉很多</h2>
+        <p class="case-kicker reveal"><span class="case-study__label">金融现场</span></p>
+        <h2>1. 大盘没动,中性组合为什么一天亏掉很多</h2>
 <p>想象一个看似标准的中性组合:买入一篮子低估值<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>,卖空一篮子高估值股票,整体 <a class="term term-link" href="glossary.html#g-beta" title="查看术语：Beta">Beta</a> 接近零。某天指数几乎收平,高估值热门股却集体暴涨,低估值股票同时下跌。大盘方向没押错,多头和空头两边却一起亏。</p><p>Beta 中性只消掉了一个方向,没有消掉风格、行业、规模、<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>和拥挤。更糟时,亏损会触发<span class="term">保证金</span>和风险限额,迫使组合卖掉已经下跌的多头、买回已经上涨的空头,把账面偏离变成真实损失。</p><p>所以<span class="hl">“<a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>”</span>从来不是一个开关,而是一张暴露清单。量化系统要持续估计剩下的风险,还要模拟<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>突然<span class="term">反转</span>和空头无法回补的情景。指数没有动,不代表你的世界没有地震。</p>
-        </section>
 
         <h2>2. 市场中性想解决什么</h2>
 <p>先设想一个场景:你的选股模型其实不错,挑的股票长期跑赢同类。可大盘一跌,你的组合照样绿油油——因为覆巢之下,完卵很少。普通股票多头策略就是这样暴露在大盘风险里:市场涨,很多股票一起涨;市场跌,很多股票一起跌,你的选股手艺被大盘的巨浪完全盖住。市场中性策略要做的,就是把大盘方向的影响降下来,让组合收益更多来自相对选股。</p><p>最朴素的做法是:买入模型看好的股票,同时卖空模型看差的股票;或者用<span class="term">股指期货</span>空头,<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>多头组合的市场 Beta。这样如果大盘整体下跌,多头这边亏钱,空头或期货对冲那边赚钱,组合的净损失可能还小。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>但请注意分寸:市场中性通常只是对某个市场风险中性,不是对所有风险中性。行业、风格、流动性、个股、<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>、融资成本、模型失效,全都还在原地站着。它拆的是墙上最大的一颗钉子,不是把整面墙拆了。</p></div>

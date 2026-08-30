@@ -33,11 +33,9 @@
         </section>
 
 
-        <section class="case-study reveal">
-          <span class="case-study__label">金融现场</span>
-          <h2>1. 用今天的名单回到 2007 年,雷曼已经不见了</h2>
+        <p class="case-kicker reveal"><span class="case-study__label">金融现场</span></p>
+        <h2>1. 用今天的名单回到 2007 年,雷曼已经不见了</h2>
 <p>假设你下载今天仍在交易的一批大公司,把它们的历史价格拉回 <span class="num">2007 年</span>做选股。曲线大概率比真实经历漂亮,因为雷曼兄弟、贝尔斯登和许多后来消失的公司根本没有出现在你的起跑名单里。失败者被数据库安静地删掉,幸存者却带着完整历史回来参赛。</p><p>这就是<a class="term term-link" href="glossary.html#g-幸存者偏差" title="查看术语：幸存者偏差">幸存者偏差</a>最狡猾的地方:代码没有报错,数据也没有缺失,结果甚至非常稳定。问题出在<span class="hl">“谁有资格进入样本”</span>这一步使用了未来信息。你不是在 <span class="num">2007 年</span>选股,而是在今天知道结局后,让赢家回去重跑一次。</p><p>点时<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>池、退市收益和成分变更记录因此不是数据洁癖,而是时间机器的门锁。量化数据的第一原则不是越多越好,而是每一个历史时点只能知道当时真的能知道的事。</p>
-        </section>
 
         <h2>2. 量化数据不是只有 K 线</h2>
 <p>新手想象中的量化数据,往往就是一张 K 线表。实际上,行情数据只是最基础的一层:开盘价、最高价、最低价、收盘价、成交量、成交额、盘口和逐笔成交。往上还有<a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>数据:财报里的收入、利润、资产负债、现金流、<a class="term term-link" href="glossary.html#g-净资产收益率roe" title="查看术语：净资产收益率(ROE)">ROE</a>、毛<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>、负债率。再往上还有公告、分析师预测、基金持仓、指数成分、融资融券、期货持仓、期权<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>、新闻文本和宏观数据。数据食材琳琅满目,问题是怎么配菜。</p><p>配菜的最大麻烦是:这些数据的频率和发布时间完全不在一个节拍上。行情数据每天甚至每秒更新,财报按季度才披露一次,宏观数据按月或按季发布,分析师报告和新闻则是不规则地突然到达。把它们拼进同一张训练表时,必须时刻盯住一件事——在交易发生的那个时刻,这条数据到底是不是已经可见?</p><p>所以量化数据工程的核心,不是把表拼起来那种体力活,而是考古式的还原:恢复历史当时的信息状态。模型在 <span class="num">2020 年</span> <span class="num">4 月</span> <span class="num">10 日</span>做决定时,绝不能看到 <span class="num">2020 年</span> <span class="num">4 月</span> <span class="num">30 日</span>才发布的年报修正,也不能看到后来才确定的指数成分回填。模型可以笨,但不能作弊——作弊考出的高分,一文不值。</p>

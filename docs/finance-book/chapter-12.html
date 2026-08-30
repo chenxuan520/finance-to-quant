@@ -37,11 +37,9 @@
 
         <h2>1. 交易所、券商、登记结算与账户体系</h2>
 
-        <section class="case-study reveal">
-          <span class="case-study__label">金融现场</span>
-          <h3>1.1. 9 点 24 分 58 秒,那笔单为什么没有成交</h3>
+        <p class="case-kicker reveal"><span class="case-study__label">金融现场</span></p>
+        <h3>1.1. 9 点 24 分 58 秒,那笔单为什么没有成交</h3>
 <p>想象一个新手在<a class="term term-link" href="glossary.html#g-集合竞价" title="查看术语：集合竞价">集合竞价</a>结束前两秒点击买入。App 显示<span class="hl">“已提交”</span>,他以为自己锁定了开盘价;开盘后<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>直线上涨,账户里却一股没有。客服最终告诉他:指令到达券商柜台时竞价申报窗口已经切换,订单进入了下一阶段,价格又不再满足成交条件。</p><p>对用户来说只是一次点击,对系统来说却是一串状态:本地发起、网络传输、券商校验、交易所接收、<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>、成交回报、清算交收。<span class="hl">“已提交”</span>只证明第一段走完,不等于交易所已接收,更不等于成交。金融软件最危险的错觉,就是把界面上的一个词当成整条链路的终态。</p><p>量化实盘因此必须保存每个时间戳和状态码。研究里的一行 `buy()` 到生产环境会裂成很多事件,任何一步延迟或拒绝都会改变结果。<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>假设信号出现就按当时价格成交,等于把整条交易链删掉了。</p>
-        </section>
 
         <h3>1.2. 先分清三个账户概念</h3>
 <p>普通投资者最容易混的就是账户。打开券商 App,你看到的像是<span class="hl">“一个账户”</span>,钱和股票全在里面。但背后至少有几层记录,各记各的账。第一层是资金账户,记录你可用多少钱、冻结多少钱、成交后还剩多少钱;第二层是证券账户,记录你名下持有哪些股票、基金或<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>;第三层是券商系统里的交易账户,负责把你的委托、成交、费用和风控状态组织起来。</p><p>为什么非要分开记?因为<span class="hl">“有钱”</span>和<span class="hl">“有货”</span>是两回事。你能买股票,是因为资金账户里有可用资金;你能卖股票,是因为证券账户里有可卖持仓。把它们拆开,系统才能在委托报出的瞬间做一件关键的事:冻结。对应的资金或股票先被锁住,第二笔委托就不能再花同一笔钱、再卖同一份货——这和数据库里先加锁再扣减的写法,是同一个思路。</p><p>看个数字。账户里有 <span class="num">10 万元</span>可用资金,你以每股 <span class="num">10 元</span>挂单买入 <span class="num">5000 股</span>,委托金额 <span class="num">5 万元</span>。委托生效那一刻,这 <span class="num">5 万元</span>从可用变成冻结,可用资金只剩 <span class="num">5 万元</span>;此时再挂一笔 <span class="num">6 万元</span>的买单,可用资金盖不住,校验直接失败。等那 <span class="num">5000 股</span>成交,现金剩 <span class="num">5 万元</span>,总持仓 <span class="num">5000 股</span>;又因为 A 股普通股票有 <a class="term term-link" href="glossary.html#g-t1" title="查看术语：T+1">T+1</a> 规则,今天买入的股票通常明天才能卖出,所以这 <span class="num">5000 股</span>的可卖持仓今天是 0,明天才变成 5000。系统要区分总持仓和可卖持仓——名义上你拿着的,和现在规则允许你卖的,不是同一个数字。</p><p>量化系统里的账户状态,必须比普通界面更细:它要知道现金、冻结资金、可用资金、总持仓、可卖持仓、在途委托、部分成交、撤单状态。少一个字段,就像状态机少了一个状态——回测里看不出来,实盘里迟早下错单。常有人以为账户就是<span class="hl">“现金加持仓”</span>两个数,其实中间隔着一整排中间状态,哪一个被跳过,你的账本都可能和券商的对不上。</p>

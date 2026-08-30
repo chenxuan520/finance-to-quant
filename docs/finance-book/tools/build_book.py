@@ -5250,8 +5250,8 @@ def _fig_t02_yield_spread():
             <text x="494" y="328" fill="#f0c96a" font-size="13" font-weight="800">利差告诉你什么</text>
             <text x="494" y="354" fill="#bcc9dd" font-size="12">同期限的三只债,收益率差异就是市场对它们各自违约风险的定价</text>
             <text x="494" y="376" fill="#bcc9dd" font-size="12">利差拉大=钱更怕,利差收窄=钱愿还多</text>
-            <text x="494" y="398" fill="#bcc9dd" font-size="12">观察它的起点过非终点——你的机宽的“企业债 - 国债”利差比成立:别人出这个前你就站了</text>
-            <text x="450" y="482" text-anchor="middle" fill="#bcc9dd" font-size="12.5">债券的事宜不是涨是跌,实际收益结构一目了然:必利率 + 信用利差才是债的真价格</text>"""
+            <text x="494" y="398" fill="#bcc9dd" font-size="12">看利差的方向,而不是绝对水平:利差走阔=市场更怕,利差收窄=市场更愿意借钱</text>
+            <text x="450" y="482" text-anchor="middle" fill="#bcc9dd" font-size="12.5">借债的核心不是涨是跌,利差结构一目了然:基准利率 + 信用利差 = 债券的真实价格</text>"""
     return concept_figure(body, "0 0 900 500",
         "债券利差三层图: 同一期限的国债、AAA 债、普通企业债,市场上为不同信用风险评估出的利差",
         "国债利率是底线,利差是市场对那家公司信用风险的报价。利差拉开不是公司坏了,是怕它坏的人多了。")
@@ -6740,11 +6740,9 @@ def render_chapter(ch: dict) -> str:
                 case_label, display_title = split_case_section_title(title)
                 if case_label:
                     sections.append(f"""
-        <section class="case-study reveal">
-          <span class="case-study__label">{case_label}</span>
-          <h3>{ui}.{si}. {esc(display_title)}</h3>
+        <p class="case-kicker reveal"><span class="case-study__label">{case_label}</span></p>
+        <h3>{ui}.{si}. {esc(display_title)}</h3>
 {enrich_body(body.rstrip(), linked_glossary_targets)}
-        </section>
 """)
                 else:
                     sections.append(f"""
@@ -6759,11 +6757,9 @@ def render_chapter(ch: dict) -> str:
             case_label, display_title = split_case_section_title(title)
             if case_label:
                 sections.append(f"""
-        <section class="case-study reveal">
-          <span class="case-study__label">{case_label}</span>
-          <h2>{n}. {esc(display_title)}</h2>
+        <p class="case-kicker reveal"><span class="case-study__label">{case_label}</span></p>
+        <h2>{n}. {esc(display_title)}</h2>
 {enrich_body(body.rstrip(), linked_glossary_targets)}
-        </section>
 """)
             else:
                 sections.append(f"""
@@ -7489,6 +7485,8 @@ a:hover { text-decoration: underline; }
   font-weight: 850;
   letter-spacing: 0.08em;
 }
+.case-kicker { margin: 1.4rem 0 -0.55rem; }
+
 .case-study h2,
 .case-study h3 {
   margin-top: 0.65rem;

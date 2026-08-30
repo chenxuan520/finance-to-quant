@@ -37,11 +37,9 @@
 
         <h2>1. 做一个市场中性模拟盘</h2>
 
-        <section class="case-study reveal">
-          <span class="case-study__label">金融现场</span>
-          <h3>1.1. 模拟盘第三天,对冲账户先发来保证金提醒</h3>
+        <p class="case-kicker reveal"><span class="case-study__label">金融现场</span></p>
+        <h3>1.1. 模拟盘第三天,对冲账户先发来保证金提醒</h3>
 <p>一个<a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>模拟盘前两天运行完美,第三天多头上涨、期货<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>也亏损,账户同时出现两边现金压力。研究者第一反应是<span class="hl">“组合不是赚钱了吗”</span>,随后才发现<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>浮盈不能立刻替代期货<span class="term">保证金</span>,账面净值和可用现金不是同一个变量。</p><p><a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>常把所有资产塞进同一个无摩擦钱包,真实账户却分着现货、衍生品、<span class="term">保证金</span>和待交收资金。总资产为正,某个子账户仍可能先断粮;模型方向最终正确,也可能在资金调拨前被迫减仓。</p><p>模拟盘的意义就在于让这些小事故发生在真钱之前。每天不仅记录收益,还要记录可用资金、<span class="term">保证金</span>占用、<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>和对账差异。策略能赚钱只是入场券,现金能在正确时间出现在正确账户,系统才算真的会走路。</p>
-        </section>
 
         <h3>1.2. 先把账本结构画出来</h3>
 <p>目标一句话:搭一个教学版市场中性模拟。多头部分使用一个股票多<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>组合,对冲部分使用<span class="term">股指期货</span>或指数 <a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a> 的简化替代。每月调仓,每日估值,账本上逐日记录:股票多头收益、对冲收益、总收益、净暴露、回撤和成本。</p><p>先说一个降级方案。如果没有<span class="term">股指期货</span>数据,可以先用指数收益做纸面对冲:比如多头组合 <span class="num">100 万</span>,用<span class="term">中证 500</span> 指数收益的 <span class="num">-100 万</span>名义敞口近似对冲。这样不能模拟基差和<span class="term">保证金</span>,但能帮你把 <a class="term term-link" href="glossary.html#g-beta" title="查看术语：Beta">Beta</a> 对冲的想法先跑通——用工程师的话说,先写个内存版 mock 把接口逻辑调通,再接真实数据源。</p><p>项目边界必须写成文档:是否使用真实期货合约,是否考虑<span class="term">保证金</span>,是否考虑基差,对冲比例如何估计,调仓频率多少,成本如何扣。边界越清楚,结果越可解释;边界含糊的回测,只能输出含糊的结论。</p>
