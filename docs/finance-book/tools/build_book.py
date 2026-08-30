@@ -7485,7 +7485,22 @@ a:hover { text-decoration: underline; }
   font-weight: 850;
   letter-spacing: 0.08em;
 }
-.case-kicker { margin: 1.4rem 0 -0.55rem; }
+.chapter p.case-kicker {
+  margin: 3rem 0 0.9rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+}
+.chapter .case-kicker + h2 {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.chapter p.case-kicker:has(+ h3) {
+  margin: 2.2rem 0 0.8rem;
+  padding-top: 0;
+  border-top: 0;
+}
+.chapter .case-kicker + h3 { margin-top: 0; }
 
 .case-study h2,
 .case-study h3 {
