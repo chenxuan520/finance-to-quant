@@ -6561,9 +6561,28 @@ def enrich_body(
     """
     parts = re.split(r"(<p>[\s\S]*?</p>)", htmltext)
     out = []
+    in_callout = False
     if linked_glossary_targets is None:
         linked_glossary_targets = set()
     for seg in parts:
+        # 手稿里的 callout(title, body) 预先展开成 <div class="callout">…<p>body</p></div>,
+        # body 那层 <p> 不能再走“标志词再升级成 callout”的逻辑,否则一句“一句话记住”会变成二重嵌套。
+        if in_callout and seg.startswith("<p>") and seg.endswith("</p>"):
+            inner = seg[3:-4]
+            def _hl(m):
+                return f'<span class="hl">“{m.group(1)}”</span>'
+            new_inner = re.sub(r"“([^”<>]{2,18})”", _hl, inner)
+            new_inner = _enrich_terms_nums(new_inner, linked_glossary_targets)
+            out.append(f"<p>{new_inner}</p>")
+            continue
+        if "callout" in seg and "<div" in seg:
+            in_callout = True
+            out.append(seg)
+            continue
+        if in_callout and "</div>" in seg:
+            in_callout = False
+            out.append(seg)
+            continue
         if not (seg.startswith("<p>") and seg.endswith("</p>")) or any(tag in seg for tag in ("<pre", "<figure", "<table", "<svg", "<ol", "<ul", "code-walk")):
             out.append(seg)
             continue
