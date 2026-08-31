@@ -33,8 +33,7 @@
         </section>
 
 
-        <p class="case-kicker reveal"><span class="case-study__label">金融现场</span></p>
-        <h2>1. 把 3 月 31 日的财报放进 3 月 31 日交易</h2>
+        <h2 class="case-heading reveal"><span class="case-study__label">金融现场</span> 1. 把 3 月 31 日的财报放进 3 月 31 日交易</h2>
 <p>一位研究者用一季度净利润选股,把报表期末日期 <span class="num">3 月</span> <span class="num">31 日</span>当成数据可用日。<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>结果漂亮得惊人:模型总能提前买到业绩大增的公司。问题是,许多一季报要到四月甚至更晚才公开,<span class="num">3 月</span> <span class="num">31 日</span>收盘前的市场根本看不到那些数字。</p><p>代码只错了一列日期,却获得了预知未来的能力。财务数据至少有三个时间:它描述哪段经营期、公司何时公告、数据库何时收录或修订。把第一个时间当成第二个,模型就会在历史里作弊,而且作弊得非常像真正的<a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>能力。</p><p>可靠回测必须按公告时间对齐,还要给数据入库和下单留出延迟。凡是结果好得不合常理,第一检查项不该是调参数,而是问:这一刻的我,真的已经看见这条数据了吗?</p>
 
         <h2>2. 回测到底在模拟什么</h2>

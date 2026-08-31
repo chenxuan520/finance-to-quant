@@ -6740,8 +6740,7 @@ def render_chapter(ch: dict) -> str:
                 case_label, display_title = split_case_section_title(title)
                 if case_label:
                     sections.append(f"""
-        <p class="case-kicker reveal"><span class="case-study__label">{case_label}</span></p>
-        <h3>{ui}.{si}. {esc(display_title)}</h3>
+        <h3 class="case-heading reveal"><span class="case-study__label">{case_label}</span> {ui}.{si}. {esc(display_title)}</h3>
 {enrich_body(body.rstrip(), linked_glossary_targets)}
 """)
                 else:
@@ -6757,8 +6756,7 @@ def render_chapter(ch: dict) -> str:
             case_label, display_title = split_case_section_title(title)
             if case_label:
                 sections.append(f"""
-        <p class="case-kicker reveal"><span class="case-study__label">{case_label}</span></p>
-        <h2>{n}. {esc(display_title)}</h2>
+        <h2 class="case-heading reveal"><span class="case-study__label">{case_label}</span> {n}. {esc(display_title)}</h2>
 {enrich_body(body.rstrip(), linked_glossary_targets)}
 """)
             else:
@@ -7481,26 +7479,14 @@ a:hover { text-decoration: underline; }
   border-radius: 999px;
   background: rgba(240, 201, 106, 0.15);
   color: var(--primary);
-  font-size: 0.76rem;
+  font-size: 0.62em;
   font-weight: 850;
   letter-spacing: 0.08em;
+  vertical-align: 0.22em;
+  margin-right: 0.4rem;
 }
-.chapter p.case-kicker {
-  margin: 3rem 0 0.9rem;
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--line);
-}
-.chapter .case-kicker + h2 {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
-}
-.chapter p.case-kicker:has(+ h3) {
-  margin: 2.2rem 0 0.8rem;
-  padding-top: 0;
-  border-top: 0;
-}
-.chapter .case-kicker + h3 { margin-top: 0; }
+.chapter h2.case-heading,
+.chapter h3.case-heading { /* 标签进标题内,继承原 h2/h3 分隔规则,无需额外处理 */ }
 
 .case-study h2,
 .case-study h3 {
@@ -8267,7 +8253,9 @@ JS_TEMPLATE = r"""
     var entries = [];
     headings.forEach(function (heading, index) {
       if (heading.closest(".quiz")) return;
-      var text = heading.textContent.replace(/\s+/g, " ").trim();
+      var clone = heading.cloneNode(true);
+      clone.querySelectorAll(".case-study__label").forEach(function (s) { s.remove(); });
+      var text = clone.textContent.replace(/\s+/g, " ").trim();
       if (!text) return;
       var id = slugify(text, index);
       while (usedIds[id]) id = id + "-" + index;

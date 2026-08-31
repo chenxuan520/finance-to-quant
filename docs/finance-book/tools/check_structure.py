@@ -56,7 +56,7 @@ def check_file(path):
         problems.append("标签错位: " + "; ".join(parser.errors[:8]))
     if leftovers:
         problems.append("未闭合残留: " + ", ".join(leftovers[:8]))
-    nums = [int(x) for x in re.findall(r"<h2>(\d+)\.", html)]
+    nums = [int(x) for x in re.findall(r'<h2[^>]*>(?:<span class="case-study__label">[^<]*</span>\s*)?(\d+)\.', html)]
     if nums and nums != list(range(1, len(nums) + 1)):
         problems.append(f"h2 编号不连续: {nums}")
     return problems

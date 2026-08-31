@@ -114,7 +114,9 @@
     var entries = [];
     headings.forEach(function (heading, index) {
       if (heading.closest(".quiz")) return;
-      var text = heading.textContent.replace(/\s+/g, " ").trim();
+      var clone = heading.cloneNode(true);
+      clone.querySelectorAll(".case-study__label").forEach(function (s) { s.remove(); });
+      var text = clone.textContent.replace(/\s+/g, " ").trim();
       if (!text) return;
       var id = slugify(text, index);
       while (usedIds[id]) id = id + "-" + index;

@@ -463,26 +463,14 @@ a:hover { text-decoration: underline; }
   border-radius: 999px;
   background: rgba(240, 201, 106, 0.15);
   color: var(--primary);
-  font-size: 0.76rem;
+  font-size: 0.62em;
   font-weight: 850;
   letter-spacing: 0.08em;
+  vertical-align: 0.22em;
+  margin-right: 0.4rem;
 }
-.chapter p.case-kicker {
-  margin: 3rem 0 0.9rem;
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--line);
-}
-.chapter .case-kicker + h2 {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
-}
-.chapter p.case-kicker:has(+ h3) {
-  margin: 2.2rem 0 0.8rem;
-  padding-top: 0;
-  border-top: 0;
-}
-.chapter .case-kicker + h3 { margin-top: 0; }
+.chapter h2.case-heading,
+.chapter h3.case-heading { /* 标签进标题内,继承原 h2/h3 分隔规则,无需额外处理 */ }
 
 .case-study h2,
 .case-study h3 {

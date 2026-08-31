@@ -82,8 +82,8 @@ def main() -> int:
     rendered = 0
     rendered_pages = 0
     for path in sorted(ROOT.glob("chapter-*.html")):
-        # 从 2026-08-21 起,"金融现场/概念现场"顶行采用 case-kicker 布局,不再是 case-study 卡片
-        count = path.read_text(encoding="utf-8").count('class="case-kicker reveal"')
+        # "金融现场/概念现场"标签现已焊进 h2/h3 标题内(case-heading),不再单独成段
+        count = path.read_text(encoding="utf-8").count('case-heading reveal')
         rendered += count
         rendered_pages += bool(count)
     if rendered != len(records):

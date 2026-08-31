@@ -37,8 +37,7 @@
 
         <h2>1. 做一个市场中性模拟盘</h2>
 
-        <p class="case-kicker reveal"><span class="case-study__label">金融现场</span></p>
-        <h3>1.1. 模拟盘第三天,对冲账户先发来保证金提醒</h3>
+        <h3 class="case-heading reveal"><span class="case-study__label">金融现场</span> 1.1. 模拟盘第三天,对冲账户先发来保证金提醒</h3>
 <p>一个<a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>模拟盘前两天运行完美,第三天多头上涨、期货<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>也亏损,账户同时出现两边现金压力。研究者第一反应是<span class="hl">“组合不是赚钱了吗”</span>,随后才发现<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>浮盈不能立刻替代期货<span class="term">保证金</span>,账面净值和可用现金不是同一个变量。</p><p><a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>常把所有资产塞进同一个无摩擦钱包,真实账户却分着现货、衍生品、<span class="term">保证金</span>和待交收资金。总资产为正,某个子账户仍可能先断粮;模型方向最终正确,也可能在资金调拨前被迫减仓。</p><p>模拟盘的意义就在于让这些小事故发生在真钱之前。每天不仅记录收益,还要记录可用资金、<span class="term">保证金</span>占用、<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>和对账差异。策略能赚钱只是入场券,现金能在正确时间出现在正确账户,系统才算真的会走路。</p>
 
         <h3>1.2. 先把账本结构画出来</h3>
