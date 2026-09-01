@@ -553,6 +553,9 @@ code {
 .callout--warn { border-left-color: var(--danger); background: rgba(238, 136, 119, 0.09); }
 .callout--warn .callout__title { color: var(--danger); }
 .callout--tip { border-left-color: var(--accent); }
+.callout--tip .callout__title { color: var(--accent); }
+.callout--analogy { border-left-color: #a58fd8; background: rgba(165, 143, 216, 0.08); }
+.callout--analogy .callout__title { color: #c6b4f0; }
 
 /* 正文内短语级金色高亮("双引号"关键说法) */
 .hl {

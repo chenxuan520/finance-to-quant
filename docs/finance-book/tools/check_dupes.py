@@ -24,7 +24,7 @@ MARKER_PREFIXES = (
     "先记住一个反直觉的结论:",
     "这条记住:",
 )
-SIMILARITY_LIMIT = 0.85
+SIMILARITY_LIMIT = 0.72
 
 
 def _clean(text: str) -> str:
