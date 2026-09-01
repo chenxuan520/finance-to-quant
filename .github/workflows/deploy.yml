@@ -25,6 +25,8 @@ jobs:
         run: |
           python3 docs/finance-book/tools/check_structure.py
           python3 docs/finance-book/tools/check_links.py
+          python3 docs/finance-book/tools/check_cases.py
+          python3 docs/finance-book/tools/check_dupes.py
 
       - name: Deploy to GitHub Pages (gh-pages branch)
         uses: peaceiris/actions-gh-pages@v4
