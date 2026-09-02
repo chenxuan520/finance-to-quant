@@ -47,13 +47,13 @@
 
         <div class="figure figure--reading reveal">
           <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="换月事实:每个中长期头寸必须先处理好到期日">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">换月:远期合约的移仓周期</text>
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">换月:合约有寿命,你的永续仓位没有</text>
             <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
-            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">当前合约月一年只活六个月,你若是想一直持多仓,就得在到期前把策略移到远月合约</text>
-            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">换月日的价格差异就是你的'跨年cash-in'——跟你的方向或 strategy 不相关,但会影响你的累计收益</text>
-            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">换月日频率:股指期货一年12次,商品品种从几个月到 5-10 次——谈不上每个都是能量损耗,但得排序</text>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">一张期货合约只有几个月的命——你如果想一直拿着仓位,就得在到期前把它搬到远月合约上去</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">换月时近月和远月价格往往不一致——这一笔滚动成本会嵌进你的累计收益。方向没错也可能因为滚动规则亏钱</text>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">股指期货一年要换月 12 次,商品换月频次更乱——写进回测的换月规则,是策略的一部分</text>
           </svg>
-          <p class="figure__cap">永远不要不喜欢换月:&#x27;你自己持有的头寸&#x27;跨过换月日以每次代价最多的资产形式体现。</p>
+          <p class="figure__cap">换月不是行政安排,是影响你每一次回测结果的实际交易动作。你不选换月规则,规则就替你选。</p>
         </div>
         <h2>5. 趋势为什么可能存在</h2>
 <p>价格为什么要<span class="hl">“排队走一段”</span>,而不是消息一出就一步跳到终点?一个原因是基本面变化会被市场逐步吸收:供给持续减少、库存下降、需求超预期,商品价格往往不是一天反应完,而是走成一段上涨趋势。宏观利率、汇率和通胀的变化,也可能推动多个市场持续移动一段时间。</p><p>另一个原因来自行为和资金:投资者反应不足、止损盘追单、基金调仓、风险预算调整,都会让价格变化带上惯性。有意思的地方在于,趋势跟踪策略根本不需要知道这些原因是什么——它只需要识别一件事:价格已经形成了某种持续方向。就像冲浪手不需要精通流体力学,只要能认出浪来了。</p><p>但趋势不是天天有。更多时候,价格只是在原地来回震荡。趋势策略在震荡里会不断开仓、止损、反向、再止损全身淤青。它的收益常常来自少数几波大趋势,而不是每天稳定小赚——这是一门<span class="hl">“三年不开张,开张吃三年”</span>的生意,前提是你要活得过那三年。</p>

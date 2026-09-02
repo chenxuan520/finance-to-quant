@@ -244,31 +244,33 @@ neutral_nav.append(neutral_nav[-1] * (1 + neutral_ret))
           <p class="figure__cap">模拟盘第一周把回测里不会发生的事演了个遍:数据迟到、空信号、涨停买不进、滑点超标、账实错位。每条事故都要落成一条事先写好的处理规则,周末复盘把病历和药方一起留档——但一周只证明流程通了,证明不了策略有效。</p>
         </div>
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="回测四坑:幸存者偏差、未来泄漏、低事成本、过度拟合,都梁在第一天写回测">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回测第一天的四个数据坑:你踩过的四大不会被版</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="回测四坑:幸存者偏差、未来信息泄漏、低成本假设、过度拟合">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">回测第一天最容易踩的四个坑</text>
             <rect x="70" y="80" width="360" height="130" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
-            <text x="250" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">坑1:幸存者偏差</text>
-            <text x="250" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">取今日 SP500 成分股去测 2015-2019 年数据</text>
-            <text x="250" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">等于把当年退市股票自动剔除</text>
-            <text x="250" y="186" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">存活偏向导致回测很好看</text>
+            <text x="250" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">幸存者偏差</text>
+            <text x="250" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">拿今天的成分股名单</text>
+            <text x="250" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">去测十年前的历史——</text>
+            <text x="250" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">等于把退市股全踢出去了</text>
+            <text x="250" y="207" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">你看到的不是真实历史</text>
             <rect x="470" y="80" width="360" height="130" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
-            <text x="650" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">坑2:未来信息泄漏</text>
-            <text x="650" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">构造因子引用了今天收盘后才发布的报表</text>
-            <text x="650" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">也是变量时点(PIT)不同步</text>
-            <text x="650" y="186" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">处理时间线时不能苟同</text>
+            <text x="650" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">未来信息泄漏</text>
+            <text x="650" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">因子用了收盘后才发布的财报</text>
+            <text x="650" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">——那天交易时根本看不见它</text>
+            <text x="650" y="207" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">回测收益 = 虚假的承诺</text>
             <rect x="70" y="220" width="360" height="130" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
-            <text x="250" y="248" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">坑3:交易成本估低</text>
-            <text x="250" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">1 万元以下股票要加涨 3 万一计</text>
-            <text x="250" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">大笔多股换成小规模仓库还要考虑冲击成本</text>
-            <text x="250" y="326" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">小资金大单交换流动性会被打</text>
+            <text x="250" y="248" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">交易成本估低</text>
+            <text x="250" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">佣金 + 印花税 + 滑点 +</text>
+            <text x="250" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">大单对小盘股的冲击成本</text>
+            <text x="250" y="326" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">小成本假设 = 大坑</text>
             <rect x="470" y="220" width="360" height="130" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
-            <text x="650" y="248" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">坑4:过度拟合</text>
-            <text x="650" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">反复调参数直到 2018-2022 年表现最好</text>
-            <text x="650" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">等于是把这几年背诵下来,不是预测出行情</text>
-            <text x="650" y="326" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">样本外测试不能只算业绩指标,也要看容量</text>
-            <text x="450" y="372" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这四个坑每一个具体是怎么发生的,都放在本书关于回溯实例的第一章节里起来了——今天的遇见,是明天多写一行断言的依据</text>
+            <text x="650" y="248" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">过度拟合</text>
+            <text x="650" y="274" text-anchor="middle" fill="#bcc9dd" font-size="12">反复调参数直到 2018-2022</text>
+            <text x="650" y="296" text-anchor="middle" fill="#bcc9dd" font-size="12">收益最好——只是背下这几年,</text>
+            <text x="650" y="318" text-anchor="middle" fill="#bcc9dd" font-size="12">不是学会了规律</text>
+            <text x="650" y="339" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">样本外一眼就翻</text>
+            <text x="450" y="372" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这四个坑在回测章节里都有专节——今天在这里认出它们,明天就轮到你自己把它们写进断言里</text>
           </svg>
-          <p class="figure__cap">第一天写回测最容易缺的不是代码工整,是这四个认知坑——今天在上面避免,明天就是一个断言、一个校验、一个拉平板模式的写真。</p>
+          <p class="figure__cap">第一天写回测最容易忘的不是代码,是这四个认知坑:幸存者偏差会把赢家的历史当历史读、信息泄漏会把收盘后的报表当成盘中可见、低成本会像给收益涂美颜、过拟合会把历史背下来。每一个都够单独出一章——这本书早就分别讲过,这里只是给第一天提个醒。</p>
         </div>
         <h3>2.2. 信号文件为空</h3>
 <p>第二天,数据正常了。打开信号文件——空的。排查下来,是股票池过滤太严格:剔除停牌、剔除 ST、剔除低成交额、剔除缺失因子,几刀下来,剩不下几只股票了。</p><p>这不是技术小插曲,是策略级的抉择时刻:如果实盘里信号为空,系统该怎么办?保持原仓位?清仓收手?还是干脆停机?三个动作风险完全不同,而市场不会等你开会讨论。规则必须提前写好。</p><p>模拟盘第二课:任何异常输出都得有预案。空信号、极端信号、重复信号、数量太少——每一种都要有事先定义好的处理规则,临场拍脑袋的不是策略,是骰子。</p>

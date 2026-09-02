@@ -63,14 +63,14 @@
 <p>压力测试的思路很粗暴: 主动假设极端情景,看看组合扛不扛得住。比如大盘一天跌 <span class="num">8%</span>,小盘风格暴跌,流动性减半,某个行业跌停,<a class="term term-link" href="glossary.html#g-信用利差" title="查看术语：信用利差">信用利差</a>走阔,股债同时下跌。它不问<span class="hl">“这些事明天会不会发生”</span>,只问<span class="hl">“如果发生了,你能不能承受”</span>。</p><p>压力测试有两种常见做法。历史压力测试,拿过去真实的危机场景重放: 股灾、疫情初期、<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>快速上行、流动性冲击。假设压力测试,则根据当前组合的暴露定制情景: 你的组合重仓新能源,那就测试新能源行业大跌会怎样。</p><p>压力测试的价值在于提前暴露脆弱点。它预测不了危机什么时候来,但能告诉你哪里最可能断。知道断点之后,你就有了动作清单: 降低集中度、减少<span class="term">杠杆</span>、改执行计划,或者设置止损线。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="压力测试图:把最坏情景提前做好,不要等到那一天到来">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">压力测试:最坏的天气冷切到市场上了</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="压力测试图:把极端但合理的情景提前摆出来,看自己扛不扛得住">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">压力测试：把最坏情景先摆出来</text>
             <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
-            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">正常运行时没人知道自己来犊 2008 年的 30 浪级风暴,——压力测试的目的就是预演</text>
-            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">假设流动性完全消失、普通债券跌 10%、上证跌 20%、自己仓位是 1.5 倍</text>
-            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">把你的组合懟进去测:跌起来你能撑住吗?回头看起来这就是先见之明</text>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">正常运行里没人说得清 2008 这种 30 年一遇的风暴有多大——压力测试存在,就是不等到那一天再后悔</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">设想流动性突然消失、普通债券跌 10%、上证跌 20%、你又在用 1.5 倍杠杆</text>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">把你的组合丢进去测一把:跌得起,才配聊赚多少</text>
           </svg>
-          <p class="figure__cap">金融市场历史最美的颼言:&#x27;在地基位置不上农村房,你装多䟹都没有压力的门&#x27;——压力测试是那道门。</p>
+          <p class="figure__cap">投资里一句老牌话:没有准备的人,风暴来之前不会发公告。压力测试就是你的那双提前看的眼睛。</p>
         </div>
         <h2>7. 简单但很容易误用</h2>
 <p>止损,就是亏损达到某个阈值时减仓或退出。逻辑上它能防止单个错误无限扩大,实操上它也可能是台绞肉机: 一个波动很高的策略,止损太紧,会不断低卖高买、被市场反复洗出去;止损太松,又等于没装保险丝。</p><p>止损可以设在多个层级,而且各层级不能混用: 单票止损处理个股事件,组合止损处理整体回撤,策略止损处理模型失效,账户止损处理生存风险。一只股票出事和整个账户出事,该做的动作完全不一样。</p><p>量化里更常用的,其实是动态风险预算和降权机制,而不是机械地一把全卖。比如回撤扩大、IC 变差、波动上升时,逐步降低仓位;指标恢复之后,再逐步恢复。这种渐进式处理比一次性开关更稳,但前提是规则要写清楚,不能盘中拍脑袋。</p>

@@ -72,14 +72,14 @@
 <p>高频系统的速度快,所以错误也会扩散得快。一个重复下单 bug、一个风控开关配错、一个价格单位弄错,可能在极短时间内造成大量订单和巨大损失。普通系统出 bug 是<span class="hl">“哦,修一下”</span>;高频系统出 bug,是<span class="hl">“哦,发个公告”</span>。</p><p>骑士<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>事件常被拿来当警示案例:软件部署和交易系统错误,可以迅速造成严重亏损。所以高频系统必须配有严格发布流程、限额、实时监控、熔断、撤单能力和人工接管。这些不是锦上添花,是起飞前的襟翼检查——少了任何一项,飞机都不该离开地面。</p><p>这也是为什么说高频不是单纯的算法问题。它是工程、交易、风控、运维和合规共同支撑的一套系统。系统越自动、速度越快,约束就必须越强——马力越大的车,刹车越不能省。</p>
 
         <div class="figure figure--reading reveal">
-          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="闪电崩盘:毫秒倒市场行情会在几分种里��变成&#x27;新基准&#x27;">
-            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">高频故事等级:2010 年 5 月 6 日闪电崩盘</text>
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="闪电崩盘:程序之外的节制是对系统的最后一道保护">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">2010 年 5 月 6 日闪电崩盘</text>
             <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
-            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">几分钟内,标普500 跌 9% 又回涨——微不清的机械里发生了程序化交易事故</text>
-            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">流动性千分之一秒内消失,自动程序互相撞击,一次性砸进了最优质的公司也不复存</text>
-            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">高频词条凉:不是你程序写得不够好,是炒到毫秒级,你的系统会被别人的快速反手打破</text>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">短短几分钟,标普 500 暴泻近 9% 又猛烈拉回——敲进一个算法事故,不是市场本身出了系统性问题</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">流动性在毫秒级里瞬间归零——自动程序互相追尾,把优质公司都卷进跌幅</text>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">做市商该做的事,不是抢速度,而是别在遇到技术问题、仓位过头时还让程序继续跑</text>
           </svg>
-          <p class="figure__cap">这场事故的核心教训绝不是历史,而是今天:在你的 1% 仓位做多以后,你想要去同一时间做一次彻底的检查。</p>
+          <p class="figure__cap">这场几十年看不到的重大事件,演习给你的只有一句话:高频系统最核心的不是交易逻辑,是节制与关停的逻辑,跟汽车上刹车同一道理。</p>
         </div>
         <h2>10. 高频数据为什么难</h2>
 <p>高频数据的难,不在“多”,在<span class="hl">“较真”</span>。它量大、质量要求高、时间戳敏感:你要区分交易所时间、接收时间、落库时间,还要处理乱序、缺包、重复、延迟和不同数据源之间的差异。普通日频数据里无关紧要的脏点,到高频这里全都能毁掉结论。</p><p>逐笔和盘口数据还要逐字段理解含义:某些市场提供逐笔成交,某些只提供委托队列或快照;而快照不是完整订单簿,两次快照之间的变化可能完全被错过。用快照回测高频策略,很容易高估成交能力——就像拿每分钟拍一次的照片,去复盘一场百米冲刺。</p><p>所以高频研究的第一步不是建模型,而是数据重建:把订单簿的真实演化过程可信地还原出来。没有可信数据,任何高频回测都是在沙地上建楼——楼可以很漂亮,地址不行。</p>
