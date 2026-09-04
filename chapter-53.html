@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 53 章 · 全书复盘与自检: 从一条鱼到一个量化系统 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="按真实财富、金融权利、市场数据、研究验证、组合交易和人的纪律重走全书,再用判断题自检。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="53">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第八部分 · 职业、复盘与长期成长 · 第 53 章</p>
+        <h1>全书复盘与自检: 从一条鱼到一个量化系统</h1>
+        <p class="lead">走到这里,最容易发生的事是记住很多术语,却忘了它们之间的因果关系。这一章先把全书重新压成一条链:真实财富产生现金流,金融工具分配权利与风险,市场形成价格和数据,研究寻找可证伪的优势,系统把优势变成受约束的交易。随后用十个判断题检查这条链是否真的站稳。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线八</span>
+            <span>本部分第 3 / 4 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>做完第一个项目以后,怎样选择岗位、建设作品集并形成长期学习循环?</p>
+          <p class="chapter-context__outcome">读完后,你会把全书收束成一条个人路线,而不是停在零散知识和一次性项目。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>金融可以按真实财富、信用时间、资产权利、市场制度、数据、模型、回测、组合、实盘和人这十层来理解。</li>
+            <li>量化不是脱离金融的算法游戏,而是把金融假设一步步变成数据、模型、组合和交易系统。</li>
+            <li>金融和量化里的大多数判断都不是绝对句,要看条件、口径和风险来源。</li>
+            <li>看到看似确定的结论,要追问数据、成本、基准、交易制度和适用场景。</li>
+          </ul>
+        </section>
+
+
+        <h2>1. 从一条鱼到一个量化系统</h2>
+
+        <h3>1.1. 真实财富和生产力</h3>
+<p>最底层不是钱,而是<a class="term term-link" href="glossary.html#g-真实财富" title="查看术语：真实财富">真实财富</a>:鱼、粮食、房子、药品、机器、软件、知识、组织能力——人类真正在用的东西。钱只是帮忙交换、记账、储藏价值的工具,排在第二位。</p><p>做一个极简推演:社会的真实产出没有增加,只把纸币数量增加,结果不会是人人变富,而是更多名义货币追逐有限商品——<a class="term term-link" href="glossary.html#g-通胀" title="查看术语：通胀">通胀</a>。把这一条想明白,你就能免疫大多数幻觉:金融市场的数字上涨,不等于真实财富自动增长。</p><p>投资的终点也仍然落在生产力上。<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>、<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>、基金、期货,拆到最后都要连接到未来现金流、资源配置和风险承担。脱离真实经济的金融,只剩下大家互相转账,转不出新财富。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 460" role="img" aria-label="十层金字塔:自下而上依次是真实财富、信用时间、权利资产、市场制度、数据可见、因子模型、回测验证、组合风险、交易实盘、人纪律">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">全书十层复盘:越往上,越依赖下层垫着</text>
+            <!-- 十层金字塔,底层宽720,每层收60,层高32间距4,底 y=420 -->
+            <rect x="360" y="64" width="180" height="32" rx="4" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="85" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L10 · 人和纪律</text>
+            <rect x="330" y="100" width="240" height="32" rx="4" fill="rgba(122,167,240,0.10)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="121" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L9 · 交易执行实盘</text>
+            <rect x="300" y="136" width="300" height="32" rx="4" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="157" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L8 · 组合和风险</text>
+            <rect x="270" y="172" width="360" height="32" rx="4" fill="rgba(122,167,240,0.14)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="193" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L7 · 回测和验证</text>
+            <rect x="240" y="208" width="420" height="32" rx="4" fill="rgba(122,167,240,0.16)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="229" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L6 · 因子和模型</text>
+            <rect x="210" y="244" width="480" height="32" rx="4" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="265" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L5 · 数据和可见性</text>
+            <rect x="180" y="280" width="540" height="32" rx="4" fill="rgba(122,167,240,0.20)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="301" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L4 · 市场与交易制度</text>
+            <rect x="150" y="316" width="600" height="32" rx="4" fill="rgba(122,167,240,0.22)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="337" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L3 · 权利和资产</text>
+            <rect x="120" y="352" width="660" height="32" rx="4" fill="rgba(122,167,240,0.24)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="373" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">L2 · 信用和时间</text>
+            <rect x="90" y="388" width="720" height="32" rx="4" fill="rgba(240,201,106,0.16)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="409" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">L1 · 真实财富和生产力(地基)</text>
+            <!-- 右侧向上的依赖提示 -->
+            <line x1="845" y1="412" x2="845" y2="80" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#b1ly)"/>
+            <defs><marker id="b1ly" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
+            <text x="867" y="243" text-anchor="middle" transform="rotate(-90 867 243)" fill="#f0c96a" font-size="12.5" font-weight="800">越往上,越依赖下层垫着</text>
+            <!-- 底部两条向内的支撑线,构成金字塔底 -->
+            <line x1="90" y1="420" x2="450" y2="446" stroke="rgba(240,201,106,0.42)" stroke-width="2"/>
+            <line x1="810" y1="420" x2="450" y2="446" stroke="rgba(240,201,106,0.42)" stroke-width="2"/>
+            <circle cx="450" cy="446" r="4" fill="#f0c96a"/>
+          </svg>
+          <p class="figure__cap">把全书压成十层:真实财富和生产力是地基,上面依次垫着信用、资产、市场制度、数据、因子、回测、组合、实盘,最上面是人和纪律。层越往上越窄——它能站住,全靠下面九层垫着;下层有问题,上层加倍还。</p>
+        </div>
+        <h3>1.2. 信用和时间</h3>
+<p>金融要解决的核心问题之一,是跨时间调度资源:今天手里有闲钱的人,把钱借给未来能创造价值的人。中间靠什么运转?<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>、<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>和合同。债券、贷款、银行、央行,全都挂在这条线上。</p><p>利率是时间的价格,也同时是风险价格的一部分。未来的钱不等于今天的钱,因为中间隔着机会成本、通胀和不确定性。债券价格和收益率反着走,股票估值受<a class="term term-link" href="glossary.html#g-折现" title="查看术语：折现">折现</a>率影响——这些看似不相干的公式,根都扎在时间价值上。</p><p>银行干的事是把短期存款变成长贷,一边提高经济效率,一边制造期限错配;央行能影响<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>和短端利率,但没法直接印出真实生产率。信用既能推动增长,也会在看不见的地方积累脆弱性,这是同一枚硬币的两面。</p>
+
+        <h3>1.3. 权利和资产</h3>
+<p>中间一层是各种资产的身份证:股票是公司剩余收益权,债券是合同写死的固定索取权,基金是集合投资的份额,期货是未来价格的合约,期权是不对称的权利,<a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a> 是在交易所买卖的基金份额。每个资产都可以拆成四件套:现金流、权利、风险、价格。</p><p>以后看到任何金融产品——不管包装多花哨——先问四个问题:它承诺什么现金流?谁有权拿收益?谁承担风险?价格怎么形成?这四个问题问完,再大的营销词也会现原形。</p><p>不同资产怕的东西不一样:股票怕盈利和估值双杀,债券怕利率上行和信用违约,期货怕<span class="term">杠杆</span>和换月,期权怕<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>判断错和尾部风险,基金还要看管理人水平、费用和流动性。怕什么清楚,才知道该怎么管。</p>
+
+        <h3>1.4. 市场和交易制度</h3>
+<p>市场把纸面权利变成可以交易的价格。交易所管<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>和规则,券商管接入和服务,登记结算管权属和交收。你在软件上点一下买入,背后是账户、订单、清算、风控一整套系统在跑——那个按钮只是冰山露出水面的一角。</p><p>A 股那套具体制度——交易时间、<a class="term term-link" href="glossary.html#g-集合竞价" title="查看术语：集合竞价">集合竞价</a>、<a class="term term-link" href="glossary.html#g-连续竞价" title="查看术语：连续竞价">连续竞价</a>、涨跌幅、<a class="term term-link" href="glossary.html#g-t1" title="查看术语：T+1">T+1</a>、停牌、ST、退市、交易单位、费用——每一项都会真实地改变策略结果。<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>不尊重这些制度,收益必然失真;前面拆穿漂亮曲线的那一章,好几刀正砍在这里。</p><div class="callout callout--warn reveal"><span class="callout__title">提醒</span><p>订单簿还在提醒你:价格不是图表上的抽象点位。买一卖一的价差、盘口深度、排队顺序、<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>、<a class="term term-link" href="glossary.html#g-冲击成本" title="查看术语：冲击成本">冲击成本</a>,这些都决定你的策略到底能不能按想象中的价格成交。市场制度,就是量化从纸面走向实盘时撞上的第一道现实约束。</p></div>
+
+        <h3>1.5. 数据和可见性</h3>
+<p>量化研究靠数据喂养,但数据不是从水龙头里流出来的纯净水。行情、财务、公告、指数成分、宏观、期货、期权、文本——每一类都有自己的口径、发布时间、修正历史和缺失毛病,拿到手就用,等于闭上眼睛开车。</p><p>这一层最重要的原则只有四个字:点时可见。模型站在任何历史时点,只能使用当时已经公开的数据——财报按披露日走,指数成分按调整日走,宏观按公布日走,回测用的<a class="term term-link" href="glossary.html#g-复权价格" title="查看术语：复权价格">复权价格</a>和真实成交价格要分清。全部按时间线对齐,一条都不能含糊。</p><p>所以数据工程不是辅助杂活,它是研究可信度的地基。<a class="term term-link" href="glossary.html#g-未来函数" title="查看术语：未来函数">未来函数</a>、<a class="term term-link" href="glossary.html#g-幸存者偏差" title="查看术语：幸存者偏差">幸存者偏差</a>、成分回填、缺失值乱处理,任何一个都会把模型变成偷看答案的机器——考得分数越高,离真相越远。</p>
+
+        <h3>1.6. 因子和模型</h3>
+<p><a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>,是把一句投资判断翻译成可检验数字的工序。估值、质量、成长、<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>、<span class="term">反转</span>、流动性、波动、规模,都可以落成因子;模型则把多个因子或特征揉成预测分数,这就是第六层干的事。</p><p>机器学习在这一层有用,但它不能脱离金融问题飘着。横截面排序和时间序列预测是两回事,<a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">RankIC</a> 和分层收益比普通准确率更能说明问题,交易成本会吃掉微弱优势,分布漂移会让模型悄悄衰减。这些约束不属于课本,属于市场。</p><p>好模型的标准也不是复杂。可验证、可解释、可交易、可监控,四样齐全才是好模型。线性模型、树模型、深度学习都只是工具,工具值不值钱,看它放进策略系统之后,能不能提供净增量。</p>
+
+        <h3>1.7. 回测和验证</h3>
+<p>回测是在历史里排练,不是对未来的证明。一次好回测要同时做到:按当时可见的数据生成信号,按真实交易规则模拟成交,老老实实扣成本,逐笔记录交易,和基准比较,再做样本外验证。少一步,结论就要打折。</p><p>看到漂亮回测,先别鼓掌,按老顺序查错:股票池是否点时,成交价格有没有偷看,成本是否完整,涨跌停停牌处理没有,容量合不合理,参数是不是<a class="term term-link" href="glossary.html#g-过拟合" title="查看术语：过拟合">过拟合</a>,样本外有没有被污染。查完错的曲线,才有资格谈好不好。</p><p>验证的目标从来不是保住最漂亮的那条曲线,而是把不真实的收益一样样剔掉。修正之后还留在桌上的收益,才可能是真正值得继续研究的优势。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 452" role="img" aria-label="回测查错七刀:按顺序检查股票池是否点时、成交价有没有偷看、成本是否完整、涨跌停停牌处理、容量合理性、参数过拟合、样本外污染">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">看到漂亮曲线先别鼓掌:按老顺序查错,七刀砍完再谈好不好</text>
+            <text x="450" y="58" text-anchor="middle" fill="#8499bd" font-size="12.5">回测是在历史里排练,不是对未来的证明;查错顺序对应前面拆穿漂亮曲线的那几章</text>
+            <line x1="56" y1="106" x2="56" y2="394" stroke="rgba(122,167,240,0.28)" stroke-width="2" stroke-dasharray="5 5"/>
+            <rect x="28" y="80" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="106" r="13" fill="#101d33" stroke="#7aa7f0" stroke-width="1.5"/>
+            <text x="56" y="111" text-anchor="middle" fill="#7aa7f0" font-size="13" font-weight="800">1</text>
+            <text x="190" y="107" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="107">股票池是不是点时</tspan></text>
+            <text x="318" y="111" fill="#8499bd" font-size="12">按当时的成分名单,不许拿今天的名单回填历史</text>
+            <rect x="28" y="128" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="154" r="13" fill="#101d33" stroke="#7aa7f0" stroke-width="1.5"/>
+            <text x="56" y="159" text-anchor="middle" fill="#7aa7f0" font-size="13" font-weight="800">2</text>
+            <text x="190" y="155" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="155">成交价有没有偷看</tspan></text>
+            <text x="318" y="159" fill="#8499bd" font-size="12">信号日和成交日要错开,当天收盘价不许当天用</text>
+            <rect x="28" y="176" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="202" r="13" fill="#101d33" stroke="#7aa7f0" stroke-width="1.5"/>
+            <text x="56" y="207" text-anchor="middle" fill="#7aa7f0" font-size="13" font-weight="800">3</text>
+            <text x="190" y="203" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="203">成本是否完整</tspan></text>
+            <text x="318" y="207" fill="#8499bd" font-size="12">佣金、滑点、冲击缺一项,纸面收益就虚高一截</text>
+            <rect x="28" y="224" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="250" r="13" fill="#101d33" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="56" y="255" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">4</text>
+            <text x="190" y="251" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="251">涨跌停停牌处理没有</tspan></text>
+            <text x="318" y="255" fill="#8499bd" font-size="12">买不进、卖不出的日子,不许假装成交</text>
+            <rect x="28" y="272" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="298" r="13" fill="#101d33" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="56" y="303" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">5</text>
+            <text x="190" y="299" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="299">容量合不合理</tspan></text>
+            <text x="318" y="303" fill="#8499bd" font-size="12">小资金做出来的成绩,不能原样平移到大资金</text>
+            <rect x="28" y="320" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="346" r="13" fill="#101d33" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="56" y="351" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">6</text>
+            <text x="190" y="347" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="347">参数是不是过拟合</tspan></text>
+            <text x="318" y="351" fill="#8499bd" font-size="12">试了无数次留下的「最佳」,先打问号再上桌</text>
+            <rect x="28" y="368" width="844" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="56" cy="394" r="13" fill="#101d33" stroke="#e88" stroke-width="1.5"/>
+            <text x="56" y="399" text-anchor="middle" fill="#e88" font-size="13" font-weight="800">7</text>
+            <text x="190" y="395" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800"><tspan x="190" y="395">样本外有没有被污染</tspan></text>
+            <text x="318" y="399" fill="#8499bd" font-size="12">反复看测试集回头改策略,测试集就进了回路</text>
+            <text x="450" y="438" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">验证的目标不是保住最漂亮的曲线,是把不真实的收益一样样剔掉——剔完还留在桌上的,才可能是真优势</text>
+          </svg>
+          <p class="figure__cap">看到漂亮回测,先按老顺序查错:股票池是不是点时、成交价有没有偷看、成本是否完整、涨跌停停牌处理没有、容量合不合理、参数是不是过拟合、样本外有没有被污染。查完错的曲线,才有资格谈好不好。</p>
+        </div>
+        <h3>1.8. 组合和风险</h3>
+<p>预测分数不能直接当仓位用,中间隔着一整层组合优化:在预期收益、风险、成本、流动性和各方约束之间做取舍。行业、风格、个股集中度、<a class="term term-link" href="glossary.html#g-跟踪误差" title="查看术语：跟踪误差">跟踪误差</a>、换手、容量,每一项都要被管起来。</p><p>风险控制的本质,不是预测明天跌不跌,而是把错误限制在不致命的范围内。暴露、集中度、<a class="term term-link" href="glossary.html#g-var" title="查看术语：VaR">VaR</a>、<a class="term term-link" href="glossary.html#g-压力测试" title="查看术语：压力测试">压力测试</a>、止损、模型失效监控、数据监控、系统监控,加起来才构成完整的风险框架——单拿任何一个出来,都只是零件。</p><p>组合还要能解释自己赚的是哪份钱:市场 <a class="term term-link" href="glossary.html#g-beta" title="查看术语：Beta">Beta</a>、行业、风格、选股、<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>、执行,还是<span class="term">杠杆</span>?归因的意义就是给收益办一张明细发票,让赚的和冒的险都变得可见——看不见来源的收益,迟早连本带利还回去。</p>
+
+        <h3>1.9. 交易执行和实盘</h3>
+<p>实盘不是调用一个 buy 函数就完事。订单会被拒,会部分成交,会撤单失败,要排队,有滑点,会被涨跌停和停牌拦住;内部账本还必须和券商真实状态对得上。这一层全是工程师熟悉的脏活,也全是要命的活。</p><p>上线前按清单逐项过:数据、模型、回测一致性、订单、风控、日志、权限、盘后对账,一项一项钉死。模拟盘和小资金实盘是必经之路,不是走过场——它们存在的意义,就是让错误先发生在亏得起的地方。</p><p>原则一句话:越自动、越快、越带<span class="term">杠杆</span>,越需要强风控。高频和衍生品策略把这句话放大到极致。系统错误比模型错误亏得更快——模型错了是慢慢流血,系统错了可能是当场断气。</p>
+
+        <h3>1.10. 人和纪律</h3>
+<p>链条最后一层,是人。你会害怕亏损,会在上涨之后过度自信,会想借钱加仓,会在回撤里怀疑策略。量化可以减少临场主观,但消不掉人性——它只是把战场从盘中挪到了冷静时刻的规则制定上。</p><p>资金管理的顺序前面已经讲过:先分清生活钱和风险钱,再限制仓位和<span class="term">杠杆</span>,提前写好停用和加仓规则。一个策略能不能长期执行,最终取决于你能不能扛住它真实的坏阶段,而不是它最好的那段曲线。</p><p>从小岛的一条鱼到一整套量化系统,这十层概念翻来覆去说的其实是同一件事:金融是资源、时间、风险和信息的系统工程。别被任何单个名词迷住眼睛,要一直能看见整条链。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 465" role="img" aria-label="十层金字塔图:真实财富、信用、制度、数据、因子、组合、执行,塔顶是人的纪律">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">量化十层金字塔:底下坏一点,上面就动一片</text>
+            <path d="M 60 400 L 840 400 L 790 340 L 110 340 Z" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.4)"/>
+            <text x="450" y="378" text-anchor="middle" fill="#bcc9dd" font-size="13">① 真实财富与生产力 · ② 信用与时间 · ③ 权利与资产</text>
+            <path d="M 110 340 L 790 340 L 740 280 L 160 280 Z" fill="rgba(122,167,240,0.18)" stroke="rgba(122,167,240,0.45)"/>
+            <text x="450" y="318" text-anchor="middle" fill="#bcc9dd" font-size="13">④ 市场制度 · ⑤ 数据可见性</text>
+            <path d="M 160 280 L 740 280 L 690 220 L 210 220 Z" fill="rgba(122,167,240,0.25)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="450" y="258" text-anchor="middle" fill="#bcc9dd" font-size="13">⑥ 因子与模型 · ⑦ 回测与验证</text>
+            <path d="M 210 220 L 690 220 L 640 160 L 260 160 Z" fill="rgba(240,201,106,0.2)" stroke="rgba(240,201,106,0.5)"/>
+            <text x="450" y="198" text-anchor="middle" fill="#bcc9dd" font-size="13">⑧ 组合与风险 · ⑨ 交易与实盘</text>
+            <path d="M 260 160 L 640 160 L 590 100 L 310 100 Z" fill="rgba(238,136,119,0.2)" stroke="rgba(238,136,119,0.5)"/>
+            <text x="450" y="138" text-anchor="middle" fill="#bcc9dd" font-size="13">⑩ 人和纪律</text>
+            <path d="M 310 100 L 590 100 L 450 40 Z" fill="rgba(240,201,106,0.3)" stroke="#f0c96a"/>
+            <text x="450" y="76" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">你自己的决策</text>
+            <text x="450" y="438" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这不是组织架构图,是知识依赖图——底座塔基稍微不稳,上面那些数据、意外与模型都会跟着晃</text>
+          </svg>
+          <p class="figure__cap">这本书的全部内容可以画成一座十层金字塔。底下几层日暮存心,上面三层人人都盯屏幕。当你看到模型失效时,要检查的不是模型,是底下九层之一。“技术要求”的它本身没问题。”</p>
+        </div>
+        <h2>2. 用来检查你是不是真的理解了</h2>
+        <p>学到最后,我们来玩一个快问快答。下面十句话,每一句都像判断题,没学过的人秒答,学过的人容易答错,真正学懂的人会先停三秒再开口。你不用背标准答案,但每句话你要能讲清楚:它在什么情况下是对的,什么情况下是错的,为什么不能一拍脑袋就说“是”或“否”。能做到这一点,说明你对金融和量化的灰度,已经开始有感觉了。</p>
+
+        <h3>2.1. 钱越多,社会越富吗</h3>
+<p>不一定。一个社会是不是真的变富,要看真实的商品、服务和生产力有没有增加。如果只是货币数量变多,而真实产出原地不动,多出来的钱多半会去推高价格,每个人能买到的东西未必变多——名义数字好看,真实购买力没变。</p><p>当然,这绝不是说货币政策无关紧要。流动性的松紧会牵动信用扩张、需求强弱和资产价格,金融世界里热闹得很。但货币替代不了生产率;资产价格齐刷刷上涨,也不等于每个人的真实生活在同步改善。两件事别糊在一起。</p><p>面对这种说法,养成一个反射动作:先把名义数字和真实财富拆成两列再讨论。这是全书开篇小岛上的地基,也是后面看待一切宏观话题的起点。</p>
+
+        <h3>2.2. 债券一定比股票安全吗</h3>
+<p>也不一定。高质量的短<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>债券,平时波动确实比股票低,这是事实;但长期债券对利率敏感得惊人,市场利率一上台阶,价格就下台阶;低信用债会直接违约,归零不是传说;流动性差的债券,想在急用钱时变现,可能挂单一天无人问津。安全两个字,从来不能只看品种名字。</p><p>股票和债券的区别,不是<span class="hl">“危险”</span>对<span class="hl">“安全”</span>,而是两种不同结构的风险。股票的风险来自剩余收益的不确定性;债券的风险来自利率、信用、流动性和通胀。风险类型都不同,就不能拿一个<span class="hl">“更安全”</span>的标签一把盖住。</p><p>以后再听到有人说<span class="hl">“债券不会亏”</span>,记得反问四个问题:久期多长?发行人是谁?急用钱的时候能不能随时卖?它的收益率凭什么比别人高?——这四个问题问完,所谓<span class="hl">“安全”</span>基本就露出了本来面目。</p>
+
+        <h3>2.3. 指数基金一定适合所有人吗</h3>
+<p>还是不一定。宽基指数基金低成本、分散、透明,确实是很多普通长期投资者的好选择,这本书也推荐它。但请记住,买指数买的是整个市场的贝塔,市场一跌它也跌,回撤来了照样疼——指数基金绝不代表<span class="hl">“不会亏”</span>。</p><p>它适不适合你,取决于四件事:这笔钱的期限多长、你能承受多大风险、整体资产怎么配置、你在什么价格位置买。一个经典反例:短期要用的钱,哪怕买的是指数,也可能恰好赶在回撤里要用,被迫割肉。期限错配,是再好的品种也救不了的错。</p><p>《漫步华尔街》给普通人最重要的启发是:低成本指数化长期很有价值,而不是任何时候满仓任何指数都无风险。前者是经过检验的常识,后者是偷懒者的幻觉,别混成一句。</p>
+
+        <h3>2.4. 有效市场是不是说研究没意义</h3>
+<p>不是。有效市场说得直白点:公开的、简单的、人人都知道的信息,很难被任何一个人反复拿来赚钱。它不是在叫停研究,而是在提醒研究必须更严肃——你必须在那些不容易被看见、不容易被执行、不容易被承受的地方,才有一点机会。</p><p>市场当然会犯错,行为金融已经论证了很多遍。但从<span class="hl">“市场会犯错”</span>到<span class="hl">“你能把错误变成利润”</span>,中间隔着一条成本走廊:要有数据、要覆盖交易成本、要有工具、要耗得起时间、要扛得住过程中的风险。看见错误和赚到错误,是两件事。</p><p><a class="term term-link" href="glossary.html#g-有效市场假说" title="查看术语：有效市场假说">有效市场假说</a>留给你最有用的资产,是谦逊。看到一个诱人的机会,先问一句:如果真有这种好事,为什么别人没拿走?而不是立刻热血沸腾,以为自己发现了秘密。先怀疑、再验证,是研究者,反过来就是猎物。</p>
+
+        <h3>2.5. 回测好就能实盘吗</h3>
+<p>不能。回测是历史排练,实盘是正式演出,而正式演出多了太多回测里没有的即兴环节:数据延迟、滑点、部分成交、券商拒单、停牌、涨停买不进跌停卖不出,还有你自己的心慌手抖,以及系统说崩就崩。</p><p>因此一条好看的回测曲线,后面还排着一长串必答题:有没有未来函数?有没有幸存者偏差?成本估得够不够保守?策略容量撑不撑你的资金?样本外还灵不灵?参数稳不稳?这些全答完,还要再过模拟盘和小资金实盘两关,整个流程才勉强闭环。</p><p>把标准顺手改一下吧:真正能让你上实盘的,不是一条曲线,而是一套能处理异常的系统。曲线只是简历,系统才是身体,实盘只认后者。</p>
+
+        <h3>2.6. 机器学习模型越复杂越好吗</h3>
+<p>不是,在金融数据面前尤其不是。金融数据有三样特性专门克制复杂模型:噪声大、分布会漂移、样本之间还互相勾连。模型越复杂,越容易把噪声背成规律——也就是过拟合;同时,你更难看清它到底在暴露什么风险。</p><p>复杂模型唯一的通行证,是相对简单基线提供稳定的增量收益。增量化不出或说不清,复杂就没有价值;更糟糕的是,复杂还会给错误打掩护——同样的 bug,在三层网络里比在三条规则里难发现得多。</p><p>量化里机器学习的重点,从头到尾都不是模型炫技,而是把另外几件事做扎:预测目标怎么定义、数据口径对不对、样本外怎么验证、成本怎么算、组合怎么建、上线后怎么监控。这些做扎实的简单模型,长期比裸奔的复杂模型可靠得多。</p>
+
+        <h3>2.7. 高胜率策略一定好吗</h3>
+<p>不一定。胜率只是评价维度里的一个,而且是最会骗人的一个。高胜率可能来自<span class="hl">“小赚大亏”</span>的形态:十次赚小钱,一次亏大的就能抹光十次。卖期权式的策略平时收租收得欢,一次极端行情就可能把多年收益连本带利收走。</p><p>真要评价策略,至少得把五样东西摆在一起看:期望值、盈亏比、<a class="term term-link" href="glossary.html#g-最大回撤" title="查看术语：最大回撤">最大回撤</a>、尾部风险、用了多少<span class="term">杠杆</span>。只看胜率,相当于选车只看方向盘手感,不看刹车。</p><p>还有一层反直觉:很多优秀的趋势策略,胜率并不高,四成出头很正常,它们的盈利靠少数几波大趋势。亏的次数多但每次小,赢的次数少但每次大——所以,别把<span class="hl">“常常赚钱”</span>的舒服感,误认成稳健。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 396" role="img" aria-label="胜率错觉:策略甲胜率百分之九十,九笔各赚百分之一、一笔亏百分之十二,合计负百分之三;策略乙胜率百分之四十,四笔各赚百分之二、六笔各亏百分之零点五,合计正百分之五">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">胜率最会骗人:90% 胜率亏钱,40% 胜率赚钱</text>
+            <rect x="40" y="60" width="400" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="240" y="88" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800"><tspan x="240" y="88">策略甲·胜率90%</tspan></text>
+            <text x="240" y="112" text-anchor="middle" fill="#8499bd" font-size="11.5" font-weight="400"><tspan x="240" y="112">十次赚小钱,一次亏大的</tspan></text>
+            <rect x="73" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="108" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="143" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="178" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="213" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="248" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="283" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="318" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="353" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="388" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <text x="80" y="172" fill="#8499bd" font-size="11">10 笔账,绿赢红亏</text>
+            <text x="240" y="198" text-anchor="middle" fill="#e88" font-size="14" font-weight="800">9×(+1%) + 1×(−12%) = −3%</text>
+            <text x="240" y="232" text-anchor="middle" fill="#c9d4e8" font-size="11.5" font-weight="400"><tspan x="240" y="232">小赚大亏:卖期权式形态,一次极端行情收走多年</tspan></text>
+            <rect x="460" y="60" width="400" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="660" y="88" text-anchor="middle" fill="#8fb37a" font-size="15" font-weight="800"><tspan x="660" y="88">策略乙·胜率40%</tspan></text>
+            <text x="660" y="112" text-anchor="middle" fill="#8499bd" font-size="11.5" font-weight="400"><tspan x="660" y="112">亏的次数多但每次小,赢的次数少但每次大</tspan></text>
+            <rect x="493" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="528" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="563" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="598" y="126" width="28" height="26" rx="5" fill="#8fb37a"/>
+            <rect x="633" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <rect x="668" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <rect x="703" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <rect x="738" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <rect x="773" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <rect x="808" y="126" width="28" height="26" rx="5" fill="#e88"/>
+            <text x="500" y="172" fill="#8499bd" font-size="11">10 笔账,绿赢红亏</text>
+            <text x="660" y="198" text-anchor="middle" fill="#8fb37a" font-size="14" font-weight="800">4×(+2%) + 6×(−0.5%) = +5%</text>
+            <text x="660" y="232" text-anchor="middle" fill="#c9d4e8" font-size="11.5" font-weight="400"><tspan x="660" y="232">趋势策略常态:胜率四成出头,盈利靠少数几波大</tspan></text>
+            <text x="450" y="288" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800">评价策略至少摆五件套,缺一个维度结论都可能翻转</text>
+            <rect x="56" y="302" width="148" height="42" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="130" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="130" y="324">期望值</tspan></text>
+            <rect x="216" y="302" width="148" height="42" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="290" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="290" y="324">盈亏比</tspan></text>
+            <rect x="376" y="302" width="148" height="42" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="450" y="324">最大回撤</tspan></text>
+            <rect x="536" y="302" width="148" height="42" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="610" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="610" y="324">尾部风险</tspan></text>
+            <rect x="696" y="302" width="148" height="42" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="770" y="324" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="770" y="324">杠杆</tspan></text>
+            <text x="450" y="378" text-anchor="middle" fill="#c9d4e8" font-size="12.5">只看胜率,相当于选车只看方向盘手感,不看刹车</text>
+          </svg>
+          <p class="figure__cap">胜率 90% 的策略可以亏钱:九笔各 +1%、一笔 −12%,合计 −3%;胜率 40% 的趋势策略可以赚钱:四笔各 +2%、六笔各 −0.5%,合计 +5%。评价策略要把期望值、盈亏比、最大回撤、尾部风险和杠杆五件套摆在一起——只看胜率,等于选车不看刹车。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 475" role="img" aria-label="四道最易翻车判断题:钱多不一定富、债券不一定稳赢、胜率高不一定好、回测好不等于实盘">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">判断题里最容易翻车的四道</text>
+            <rect x="70" y="80" width="360" height="195" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="250" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">题A:钱多了,社会一定更富?</text>
+            <text x="250" y="140" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:多一个零就是财富加量</text>
+            <text x="250" y="168" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">✗</text>
+            <text x="250" y="200" text-anchor="middle" fill="#bcc9dd" font-size="12">钱只是调动真实财富的工具,</text>
+            <text x="250" y="228" text-anchor="middle" fill="#bcc9dd" font-size="12">池子不宽,水位再涨也只是表面热闹</text>
+            <rect x="470" y="80" width="360" height="195" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="650" y="108" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">题B:债券一定比股票安全?</text>
+            <text x="650" y="140" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:情歌一样稳的债比股票保险</text>
+            <text x="650" y="168" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">✗</text>
+            <text x="650" y="200" text-anchor="middle" fill="#bcc9dd" font-size="12">利率上涨时债价下跌,违约能蚀损的是票面,</text>
+            <text x="650" y="228" text-anchor="middle" fill="#bcc9dd" font-size="12">美债负责涨收益不负责保本金</text>
+            <rect x="70" y="290" width="360" height="120" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="250" y="318" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">题C:高胜率策略 = 好策略?</text>
+            <text x="250" y="346" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:稳赢的对</text>
+            <text x="250" y="374" text-anchor="middle" fill="#bcc9dd" font-size="12">正确的区别:期望值与回撤组合</text>
+            <text x="250" y="398" text-anchor="middle" fill="#bcc9dd" font-size="12">99 次小赚 vs 1 次大亏是高胜率低 EV</text>
+            <rect x="470" y="290" width="360" height="120" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="650" y="318" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">题D:回测曲线好 ⇒ 能实盘?</text>
+            <text x="650" y="346" text-anchor="middle" fill="#bcc9dd" font-size="12">错误直觉:谷仓曲线 = 能力</text>
+            <text x="650" y="374" text-anchor="middle" fill="#bcc9dd" font-size="12">史论速率不清仓生产、成本、样本外</text>
+            <text x="650" y="398" text-anchor="middle" fill="#bcc9dd" font-size="12">实盘跟排练完全不同</text>
+            <text x="450" y="450" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这四道题不是用来考的,是用来在你每一次要下手前重新对一次答案</text>
+          </svg>
+          <p class="figure__cap">把它们做对,比会做 100 道计算题更难——因为收益曲线是冷冰冰的,而直觉是热的。</p>
+        </div>
+        <h3>2.8. 市场中性是不是无风险</h3>
+<p>不是。中性两个字听上去像把风险清零了,其实它只是试图把大盘方向的暴露压到很低。剩下的风险一点不少:行业没配比好会暴露,风格有偏向会暴露,期货基差波动会暴露,融资利率会暴露,流动性会暴露,当然,模型本身也会出错。</p><p>再具体一点。多头那篮子可能偏偏跑输基准,空头<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>的<span class="term">股指期货</span>可能被基差来回割,融券可能借不到券,<span class="term">保证金</span>一催还可能触发压力。中性策略的收益曲线可以很漂亮,但这些问题的答案决定了它是因为聪明而美,还是因为暂时没出事而美。</p><p>以后看到<span class="hl">“中性”</span>两个字,标准动作是三问:<a class="term term-link" href="glossary.html#g-中性化" title="查看术语：中性化">中性化</a>了什么?还剩下哪些风险?对冲的成本是多少?三问答齐再继续看,答不齐就先放下。</p>
+
+        <h3>2.9. 个人量化最重要的是找到神奇因子吗</h3>
+<p>不是。对个人来说,最重要的事是建立一套可信的流程:数据、回测、成本、风险、报告、模拟盘、资金边界。把一个神奇因子放进一团乱麻的流程里,好因子也会被错误的执行糟蹋掉;流程立住了,普通的想法也能稳定产生学习价值。</p><p>再说一个开过几年盘的人就懂的事实:因子会失效,模型会衰减,市场会换韵脚。单个因子的半衰期有限,但流程的复利是无限的——流程能帮你在失效时发现问题、在出错时及时停止、在赔钱后持续迭代,而不是整个人跟着因子一起过期。</p><p>所以,与其到处角度刁钻地挖下一个神奇因子,不如先把流程磨到可信。流程对了,发现好因子是时间问题;流程不对,发现好因子是事故倒计时。</p>
+
+        <h3>2.10. 亏损一定说明策略错了吗</h3>
+<p>不一定。任何策略都有正常回撤,回撤是吃这碗饭的水土,不是生病的信号。判断的关键是:亏损有没有落在事前预期的范围内?它能不能被市场环境的变化、既定的风险暴露,或者上升的交易成本解释?能解释,多数时候就不必过度反应。</p><p>但另一个极端也要防:拿<span class="hl">“正常回撤”</span>当万能遮羞布。如果出现这些信号——数据异常、模型 IC 长期反向、成本突然升高、风险暴露越界、对账出错——那就不是回撤,是策略或系统真的病了。该直面的时候要直面。</p><p>所以答案是:不靠感觉判断,靠事先写好的停用和复盘规则判断,靠证据判断。亏损本身既不自动证明策略错了,也不自动证明你该死扛,它只是按响了门铃,规则来开门,逐条查因。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>金融可以按真实财富、信用时间、资产权利、市场制度、数据、模型、回测、组合、实盘和人这十层来理解。</li>
+            <li>量化不是脱离金融的算法游戏,而是把金融假设一步步变成数据、模型、组合和交易系统。</li>
+            <li>金融和量化里的大多数判断都不是绝对句,要看条件、口径和风险来源。</li>
+            <li>看到看似确定的结论,要追问数据、成本、基准、交易制度和适用场景。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.1.</strong> 真实财富和生产力</li>
+            <li><strong>1.2.</strong> 信用和时间</li>
+            <li><strong>1.3.</strong> 权利和资产</li>
+            <li><strong>1.4.</strong> 市场和交易制度</li>
+            <li><strong>1.5.</strong> 数据和可见性</li>
+            <li><strong>1.6.</strong> 因子和模型</li>
+            <li><strong>1.7.</strong> 回测和验证</li>
+            <li><strong>1.8.</strong> 组合和风险</li>
+            <li><strong>1.9.</strong> 交易执行和实盘</li>
+            <li><strong>1.10.</strong> 人和纪律</li>
+            <li><strong>2.1.</strong> 钱越多,社会越富吗</li>
+            <li><strong>2.2.</strong> 债券一定比股票安全吗</li>
+            <li><strong>2.3.</strong> 指数基金一定适合所有人吗</li>
+            <li><strong>2.4.</strong> 有效市场是不是说研究没意义</li>
+            <li><strong>2.5.</strong> 回测好就能实盘吗</li>
+            <li><strong>2.6.</strong> 机器学习模型越复杂越好吗</li>
+            <li><strong>2.7.</strong> 高胜率策略一定好吗</li>
+            <li><strong>2.8.</strong> 市场中性是不是无风险</li>
+            <li><strong>2.9.</strong> 个人量化最重要的是找到神奇因子吗</li>
+            <li><strong>2.10.</strong> 亏损一定说明策略错了吗</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么说钱不是金融学习的最底层?</summary>
+            <p>因为真实财富和生产力才是最终的地基,钱只是交换和记账的工具,钞票变多不等于财富变多。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>量化链条里数据为什么这么重要?</summary>
+            <p>数据决定模型在历史时点到底看见了什么;口径错了,回测和实盘会一起失真,再好的模型也被喂错料。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么大多数金融判断都不能说绝对话?</summary>
+            <p>因为资产、策略、市场的表现都依赖条件、期限、成本、风险和投资者目标,离开条件的结论常常只对一半。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>回测表现好,为什么还不能直接实盘?</summary>
+            <p>回测覆盖不了真实交易里的摩擦、系统异常、心理压力和未来可能出现的新市场状态,这些都要靠模拟盘和小实盘再验。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>结语: 你现在应该带走什么</h2>
+          <p>用最后一章收束金融直觉、量化方法和个人实践边界。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

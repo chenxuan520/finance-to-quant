@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 40 章 · 市场中性策略: 对冲大盘以后还剩什么 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="解释多空组合、Beta 对冲、股指期货、基差、融券和中性策略风险。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="40">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第六部分 · 策略如何变成产品 · 第 40 章</p>
+        <h1>市场中性策略: 对冲大盘以后还剩什么</h1>
+        <p class="lead">市场中性的广告词听起来很诱人:不管大盘涨跌,我只赚自己选股能力的钱。现实没这么省心。对冲能降低市场方向风险,但不能消灭所有风险:多头可能跑输空头,期货基差可能变化,融券可能借不到,交易成本可能上升,极端行情里相关性可能失效。这一章要做的,就是把“中性”两个字拆开,看看它到底中和掉了什么,又给你留下了什么。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线六</span>
+            <span>本部分第 3 / 8 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>不同量化策略赚的是什么钱,承担什么风险,最终怎样装进受约束的产品?</p>
+          <p class="chapter-context__outcome">读完后,你能按收益来源和风险结构比较策略,而不是只按历史年化排名。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>市场中性试图降低市场方向暴露,主要赚多头相对空头的选股收益——大盘只是被拆掉的变量,不是收益的来源。</li>
+            <li>对冲工具自带基差、成本、保证金和流动性风险:中性不等于无风险,只是风险换了100种姿势。</li>
+          </ul>
+        </section>
+
+
+        <h2 class="case-heading reveal"><span class="case-study__label">金融现场</span> 1. 大盘没动,中性组合为什么一天亏掉很多</h2>
+<p>想象一个看似标准的中性组合:买入一篮子低估值<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>,卖空一篮子高估值股票,整体 <a class="term term-link" href="glossary.html#g-beta" title="查看术语：Beta">Beta</a> 接近零。某天指数几乎收平,高估值热门股却集体暴涨,低估值股票同时下跌。大盘方向没押错,多头和空头两边却一起亏。</p><p>Beta 中性只消掉了一个方向,没有消掉风格、行业、规模、<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>和拥挤。更糟时,亏损会触发<span class="term">保证金</span>和风险限额,迫使组合卖掉已经下跌的多头、买回已经上涨的空头,把账面偏离变成真实损失。</p><p>所以<span class="hl">“<a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>”</span>从来不是一个开关,而是一张暴露清单。量化系统要持续估计剩下的风险,还要模拟<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>突然<span class="term">反转</span>和空头无法回补的情景。指数没有动,不代表你的世界没有地震。</p>
+
+        <h2>2. 市场中性想解决什么</h2>
+<p>先设想一个场景:你的选股模型其实不错,挑的股票长期跑赢同类。可大盘一跌,你的组合照样绿油油——因为覆巢之下,完卵很少。普通股票多头策略就是这样暴露在大盘风险里:市场涨,很多股票一起涨;市场跌,很多股票一起跌,你的选股手艺被大盘的巨浪完全盖住。市场中性策略要做的,就是把大盘方向的影响降下来,让组合收益更多来自相对选股。</p><p>最朴素的做法是:买入模型看好的股票,同时卖空模型看差的股票;或者用<span class="term">股指期货</span>空头,<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>多头组合的市场 Beta。这样如果大盘整体下跌,多头这边亏钱,空头或期货对冲那边赚钱,组合的净损失可能还小。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>但请注意分寸:市场中性通常只是对某个市场风险中性,不是对所有风险中性。行业、风格、流动性、个股、<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>、融资成本、模型失效,全都还在原地站着。它拆的是墙上最大的一颗钉子,不是把整面墙拆了。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="市场中性示意:多头买入等额、空头卖空,大盘方向被对冲,只留下选股超额">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">市场中性:买一篮子、卖空等额,抵掉大盘涨跌</text>
+            <!-- 多头柱 -->
+            <text x="200" y="76" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">多头:买入看好的股票</text>
+            <rect x="130" y="90" width="140" height="70" rx="6" fill="rgba(122,167,240,0.25)" stroke="#a8c6ff" stroke-width="2"/>
+            <text x="200" y="132" text-anchor="middle" fill="#eef4ff" font-size="14">+100 万</text>
+            <!-- 空头柱 -->
+            <text x="200" y="196" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">空头:卖空指数/看淡的股票</text>
+            <rect x="130" y="206" width="140" height="70" rx="6" fill="rgba(232,120,120,0.22)" stroke="#ffb4b4" stroke-width="2"/>
+            <text x="200" y="248" text-anchor="middle" fill="#eef4ff" font-size="14">-100 万</text>
+            <!-- 等号与结果 -->
+            <text x="330" y="185" text-anchor="middle" fill="#f0c96a" font-size="30" font-weight="800">=</text>
+            <rect x="380" y="95" width="470" height="180" rx="14" fill="rgba(18,29,49,0.5)" stroke="rgba(240,201,106,0.3)"/>
+            <text x="615" y="128" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">大盘涨跌被抵消</text>
+            <text x="410" y="162" fill="#c9d4e8" font-size="13.5">· 大盘涨 5%:多头 +5%、空头 -5%,方向对冲掉</text>
+            <text x="410" y="192" fill="#c9d4e8" font-size="13.5">· 剩下的,是你选股比指数强的那部分</text>
+            <text x="410" y="222" fill="#a8c6ff" font-size="13.5">· 赚的是“选股能力”,不赌大盘方向</text>
+            <text x="410" y="252" fill="#ffb4b4" font-size="12.5">· 但对冲有成本,基差、融券、极端行情仍是风险</text>
+          </svg>
+          <p class="figure__cap">市场中性用一手买、一手卖空,把“大盘涨不涨”这个最大的不确定性对冲掉,只留下你选股比别人强的那一小块收益。代价是对冲本身要花钱,也有失效的时候。</p>
+        </div>
+        <h2>3. Beta 对冲的直觉</h2>
+<p>Beta 这个词有自己的大白话翻译:组合对大盘的<span class="hl">“敏感系数”</span>。组合 Beta 约为 1,市场涨 <span class="num">1%</span>,组合大致也涨 <span class="num">1%</span>;Beta 约为 0,市场涨跌对组合影响就很小。市场中性策略常希望把组合 Beta 控制在接近 0——让大盘这个变量从收入公式里尽量消失。</p><p>拿笔算一下。假设你有 <span class="num">1000 万</span>股票多头,整体 Beta 接近 1。为了对冲市场风险,你卖出名义价值约 <span class="num">1000 万</span>的<span class="term">股指期货</span>。如果市场跌 <span class="num">5%</span>,股票多头大约亏 <span class="num">50 万</span>,<span class="term">股指期货</span>空头大约赚 <span class="num">50 万</span>,一来一回,大盘风险被抵消掉一部分。账本漂亮得像物理实验。</p><p>现实里这个实验从来不会这么完美。你的股票组合和期货对应的指数不完全一致,Beta 本身会变,期货价格和现货指数之间有基差,交易成本和<span class="term">保证金</span>也会来分一杯羹。理论上是完美抵消,工程上是<span class="hl">“大体抵消,尾差自负”</span>。</p><div class="callout callout--note reveal"><span class="callout__title">对冲是把浪压平,不是把门锁死</span><p>对冲之后,净值曲线上的浪确实矮了一截:大盘的涨跌大体被抵消,剩下的是选股手艺的小幅波动。但被压平的只是<span class="hl">“市场方向”</span>这一个变量——基差、成本、<span class="term">保证金</span>、排序失效,全都还在原地。中性产品的曲线更平,不是因为风险被锁进了保险箱,而是最大那块风险被换成了十几块小风险。平,是要天天维护的。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="两条净值曲线:纯多头大起大落(波动约16.7%),对冲后收窄到4.8%缓慢上行">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">对冲不是让收益变高,是让带子收窄</text>
+            <defs>
+              <marker id="d14a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker>
+            </defs>
+            <!-- 坐标轴 -->
+            <line x1="60" y1="320" x2="850" y2="320" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="60" y1="60" x2="60" y2="320" stroke="#46587a" stroke-width="1.5" marker-end="url(#d14a)"/>
+            <!-- 纯多头:大起大落带子 -->
+            <path d="M 60 290 L 140 250 L 200 280 L 300 190 L 380 240 L 460 160 L 540 220 L 620 120 L 700 180 L 790 90 L 850 140" fill="none" stroke="#ffb4b4" stroke-width="2.5"/>
+            <!-- 对冲后:窄带子缓慢上行 -->
+            <path d="M 60 300 L 140 285 L 200 292 L 300 262 L 380 268 L 460 240 L 540 248 L 620 222 L 700 228 L 790 205 L 850 212" fill="none" stroke="#7aa7f0" stroke-width="2.8"/>
+            <!-- 对比标注 -->
+            <text x="120" y="80" fill="#ffb4b4" font-size="13.5" font-weight="800">纯多头:大起大落</text>
+            <text x="120" y="100" fill="#bcc9dd" font-size="11.5">年化波动约 ±16%</text>
+            <text x="120" y="118" fill="#8499bd" font-size="11">赚多赚有,坐不住才是风险</text>
+            <text x="600" y="268" fill="#a8c6ff" font-size="13.5" font-weight="800">对冲后:带子收窄</text>
+            <text x="600" y="288" fill="#bcc9dd" font-size="11.5">年化波动压到 ±5% 上下</text>
+            <text x="600" y="306" fill="#8499bd" font-size="11">方向削平了,选股能力留下</text>
+            <!-- 对比数字卡 -->
+            <rect x="660" y="60" width="230" height="110" rx="12" fill="rgba(18,29,49,0.75)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="775" y="86" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">同一组持仓,同一时段内</text>
+            <text x="675" y="110" fill="#bcc9dd" font-size="12">纯多头  年化波动 16.7%</text>
+            <text x="675" y="132" fill="#bcc9dd" font-size="12">对冲后  年化波动  4.8%</text>
+            <text x="675" y="156" fill="#8499bd" font-size="11">代价:付出期指名义和保证金</text>
+            <text x="450" y="364" text-anchor="middle" fill="#c9d4e8" font-size="12.5">对冲的变化不在终点高不高,在路稳不稳——中性策略买的是"拿得住",不是"赚更多"</text>
+          </svg>
+          <p class="figure__cap">对冲做对的事是把波动带子收窄,不是把终点抬高。同一组持仓,纯多头一年 ±16.7% 的大起大落,对冲后收窄到 ±4.8%;代价是你要付期指名义和保证金。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 460" role="img" aria-label="Beta 对冲效果图:大盘浪线起伏明显,对冲后近似水平,屏蔽 Beta 只留 Alpha">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">Beta 对冲:把大盘的潮水拉平成溪流</text>
+            <line x1="80" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <line x1="80" y1="60" x2="80" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <text x="92" y="66" fill="#bcc9dd" font-size="12">净值</text>
+            <text x="820" y="318" fill="#bcc9dd" font-size="12">时间</text>
+            <path d="M 85 200 Q 200 260 330 240 Q 450 210 550 250 Q 650 285 810 230" fill="none" stroke="#ee8877" stroke-width="3"/>
+            <text x="220" y="260" fill="#ee8877" font-size="12" font-weight="800">裸仓做多(整轮波谷浪拍下来)</text>
+            <line x1="85" y1="170" x2="810" y2="170" stroke="#8fb37a" stroke-width="3.5"/>
+            <text x="220" y="162" fill="#8fb37a" font-size="12" font-weight="800">对冲后 + 股指期货做空(贴近水平)</text>
+            <rect x="100" y="360" width="740" height="85" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="124" y="386" fill="#f0c96a" font-size="13" font-weight="800">对冲的账</text>
+            <text x="124" y="414" fill="#bcc9dd" font-size="12">多头组合的收益 = α(选股的磨炼) + β(大盘的浪)——加上反向股指期货,β 被对冲,剩下的只有 α</text>
+            <text x="124" y="436" fill="#bcc9dd" font-size="12">代价是空头端的基差和资金成本——所以中性产品的收益,通常比纯多头低两三个百分点,但回撤也小一大截</text>
+          </svg>
+          <p class="figure__cap">中性策略不是神秘术,是用股指期货把大盘水位抽走,让每次涨跌的原因只剩“你选的股能不能跑赢平均”;代价是要付对冲成本,长期通常拿回 Alpha 减 2-3% 对冲费。</p>
+        </div>
+        <h2>4. 多头和空头的收益结构</h2>
+<p>很多人以为市场中性的收益来自<span class="hl">“大盘跌了就靠空头赚钱”</span>,错了。它真正想赚的是多头跑赢空头的那条缝:你买入高分股票,卖空低分股票,只要高分的比低分的强——涨得更多或跌得更少——多空组合就赚钱。</p><p>算两个小例子。大盘上涨的日子:多头组合涨 <span class="num">3%</span>,空头组合涨 <span class="num">1%</span>,两边规模相近,多空相对收益约 <span class="num">2%</span>。大盘下跌的日子:多头跌 <span class="num">4%</span>,空头跌 <span class="num">7%</span>,多头虽然亏钱,但空头赚得更多,组合依然可能赚钱。看出来了吗?涨跌方向不重要,<span class="hl">“谁比谁强”</span>才重要。</p><p>反过来也成立:如果高分股票跌得比低分股票还多,市场中性照样亏。它不靠市场方向吃饭,靠的是相对排序——排序错了,对冲做得再标准也救不了你。这就是这门手艺的核心:对冲负责拆掉大盘,选股负责在拆干净的桌面上赢钱。</p>
+
+        <h2>5. 股指期货对冲和基差</h2>
+<p>在 A 股市场做市场中性,最常用的对冲工具是<span class="term">股指期货</span>。但这里有个容易忽视的细节:<span class="term">股指期货</span>的价格不一定等于现货指数点位,两者的差距叫基差。期货价格高于现货指数叫<a class="term term-link" href="glossary.html#g-升水贴水" title="查看术语：升水/贴水">升水</a>,低于现货指数叫贴水,而这个差不是装饰品——它会实打实地影响你的对冲成本和收益。</p><p>举个机制上的直觉:如果期货长期贴水,你做空期货对冲时,在合约<a class="term term-link" href="glossary.html#g-展期" title="查看术语：展期">展期</a>的过程中可能付出成本、也可能获得收益,具体取决于价格路径和持仓方式。总之,基差的变化会让对冲的实际效果,偏离教科书里那个干净的<span class="hl">“大盘涨跌完全抵消”</span>。</p><p>所以市场中性产品的报告里,常会单列基差影响。一个策略选股很好,但基差成本很高,净收益照样被压扁。记住一句话:对冲工具不是免费的保险,它本身就是一个会波动、会消耗<span class="term">保证金</span>的交易品种——请保镖,是要付工资的。</p><div class="callout callout--note reveal"><span class="callout__title">对冲标的一旦选歪,勤快也变成白打扫</span><p>对冲能不能成,先看空头那头押的是什么。拿大盘蓝筹指数期货去对冲一篮子小盘股票,风一吹两边各走各的:股票跌得凶,期货纹丝不动。打扫的动作再标准,扫错了屋子也是白忙。所以做中性,第一步不是算对冲比例,而是检查多头和空头的<span class="hl">“血缘”</span>——两边长得越像,对冲越真。</p></div>
+
+        <h2>6. 融券做空的限制</h2>
+<p>教科书里的市场中性很潇洒:买入好股票,卖空差股票,双线作战。现实里,融券远没有这么自由:可融券的股票范围有限,券源可能不足,融券费率会变化,你好不容易借到的券,还可能被中途召回——就像租房子,房东随时可能说<span class="hl">“我要收回来自己用”</span>。</p><p>这意味着很多市场中性策略没法完全自由地构造空头组合。它们更多用<span class="term">股指期货</span>来对冲市场 Beta,而不是逐只卖空低分股票。这样做能对冲大盘,但有个代价:它无法完整表达你对个股层面的负面观点——你觉得某公司烂,但烂得没机会通过做空它赚钱。</p><p>个人投资者更要留个心眼:融券的门槛、成本、可借标的和强平风险,每一样都需要先弄明白。海外教材里那套 long-short equity,别直接往自己的 A 股账户上搬——人家的交易系统、券源市场和你的,根本不是同一个环境。</p>
+
+        <h2>7. 杠杆和保证金</h2>
+<p>问你个问题:<span class="num">1000 万</span>资金,买 <span class="num">1000 万</span>股票多头,再用期货空头对冲 <span class="num">1000 万</span>名义价值,这个账户风险大不大?很多人会答:净 Beta 接近 0,风险很小。错。净暴露不大,但总<span class="term">杠杆</span>不低——你实际上在两头同时持有大额头寸,任何一头出问题都要真金白银地扛。</p><p><span class="term">股指期货</span>是要交<span class="term">保证金</span>的。市场剧烈波动时,<span class="term">保证金</span>占用和追加<span class="term">保证金</span>的压力会跟着放大。最难受的局面是:多头在亏损,期货对冲却因为基差不利没赚到足够的钱,账户同时面对净值回撤和<span class="term">保证金</span>追缴——两头挨打的滋味,经历过一次就懂。</p><p>所以看市场中性不能只看净暴露,还要看总敞口、<span class="term">杠杆</span>、<span class="term">保证金</span>占用、流动性,以及极端情况下的现金需求。净敞口是门面,<span class="term">保证金</span>水位才是命门。</p>
+
+        <h2>8. 中性策略的收益指标</h2>
+<p>既然不跟大盘比涨跌,那拿什么衡量一只市场中性产品?通常看的是绝对收益、回撤、<a class="term term-link" href="glossary.html#g-夏普比率" title="查看术语：夏普比率">夏普</a>、波动、月度胜率和与股票市场的相关性。它的目标是:在控制住市场暴露之后,提供一条相对稳定的收益曲线。</p><p>但评价时要放回环境里看。大盘上涨时它涨得少,不一定差——本来就该把市场行情对冲掉;大盘下跌时它依然稳,反而可能说明对冲是真的有效。反过来,如果它和大盘高度同涨同跌,就要怀疑了:你买的中性,是不是只中在了名字上?</p><p>还有一层更重要:收益到底从哪来?是选股 <a class="term term-link" href="glossary.html#g-alpha" title="查看术语：Alpha">Alpha</a>、期货基差、行业暴露、风格暴露,还是偶然的<span class="term">杠杆</span>?没有归因,市场中性的“稳”可能只是暂时没遇到风险——就像一套从没上过生产环境的系统,测试通过率一直是 <span class="num">100%</span>。</p>
+
+        <h2>9. 什么时候市场中性会难受</h2>
+<p>第一种难受:模型排序失效,高分股票跑输低分股票,多空组合直接亏钱。第二种:风格极端<span class="term">反转</span>,比如长期有效的小盘或<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>暴露突然掉头。第三种:对冲成本上升,基差不利——保险本身变贵了。</p><p>第四种:流动性冲击。多头和空头都需要交易,市场流动性一变差,<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>上升,平仓都困难。第五种:监管或交易规则变化,影响<span class="term">股指期货</span>、融券或程序化交易——游戏规则的修改,从来不会提前征求策略的意见。</p><p>所以,市场中性虽然目标更稳,但绝不是低风险存款。它是一套结构复杂的交易机器,需要持续监控模型、对冲、成本、<span class="term">杠杆</span>和流动性——稳是精密维护出来的,不是天然长成的。</p>
+
+        <h2>10. 个人能不能做市场中性</h2>
+<p>先给结论:思想可以学,实盘要非常谨慎。个人完全可以用指数期货或 <a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a> 对冲一部分市场风险,或者在模拟盘里做多空<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>。但真实执行时,工具门槛、<span class="term">保证金</span>、融券、成本和风控要求都不算低,每一项都可能单独把你挡在门外。</p><p>更适合个人的练习,是先做纸面多空组合:每月在模拟环境里“买”高分组、“空”低分组,观察多空相对收益的变化,不急着实盘。这样你能验证一个关键问题:我的因子到底有没有相对排序能力?这一步不过关,后面所有对冲都是白搭。</p><p>如果未来真的上实盘,也要从小规模、低<span class="term">杠杆</span>、清晰止损和充分对账开始。市场中性一旦用上<span class="term">杠杆</span>和衍生品,错误会比普通买股票更快被放大——普通买股犯错像开车跑偏,带<span class="term">杠杆</span>的中性犯错像高速上爆胎,修正空间完全不同。</p>
+
+        <h2>11. 市场中性的核心问题</h2>
+<p>读懂市场中性,最后要回到三个问题。第一:你的多头为什么会跑赢空头?这需要因子和模型来证明。第二:你中和了哪些风险,还剩哪些风险?这需要风险模型和归因来回答。第三:扣掉对冲成本和交易成本之后,还剩多少?这需要真实的成本和容量估算。</p><p>如果这三个问题答不上来,市场中性就只是一个好听的名字。真正的市场中性不是没有风险,而是有意识地把不想承担的风险降下来,然后专注赚自己有优势的那部分收益——是主动设计,不是被动祈祷。</p><p>这也是量化思维的典型体现:不笼统地说看好或看空,而是把收益来源拆开,把风险来源拆开,再用工具把不想要的暴露尽量处理掉。拆得越清楚,赚的那部分钱越明白;不明白的部分,迟早会来找你结账。</p><div class="callout callout--note reveal"><span class="callout__title">中性策略的确定性,来自一整条链条</span><p>多头凭什么跑赢空头,用什么工具对冲、基差多贵,扣完成本和容量之后还剩多少——这三个问题是串成一条链的。排序不行,对冲只是把亏损锁得更准时;对冲失真,选股再好也会被成本吃掉;成本算错,前面两头全白搭。任何一环答不上来,<span class="hl">“中性”</span>就只是个名字,不是确定性。</p></div>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>市场中性试图降低市场方向暴露,主要赚多头相对空头的选股收益——大盘只是被拆掉的变量,不是收益的来源。</li>
+            <li>对冲工具自带基差、成本、保证金和流动性风险:中性不等于无风险,只是风险换了100种姿势。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 大盘没动,中性组合为什么一天亏掉很多</li>
+            <li><strong>2.</strong> 市场中性想解决什么</li>
+            <li><strong>3.</strong> Beta 对冲的直觉</li>
+            <li><strong>4.</strong> 多头和空头的收益结构</li>
+            <li><strong>5.</strong> 股指期货对冲和基差</li>
+            <li><strong>6.</strong> 融券做空的限制</li>
+            <li><strong>7.</strong> 杠杆和保证金</li>
+            <li><strong>8.</strong> 中性策略的收益指标</li>
+            <li><strong>9.</strong> 什么时候市场中性会难受</li>
+            <li><strong>10.</strong> 个人能不能做市场中性</li>
+            <li><strong>11.</strong> 市场中性的核心问题</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>市场中性主要想中和什么?</summary>
+            <p>主要是降低大盘方向 Beta,让组合收益更多来自相对选股能力,而不是跟着指数同涨同跌。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么股指期货对冲不完美?</summary>
+            <p>因为期货和现货指数之间有基差会变动,股票组合和指数不完全一致,Beta 会漂移,还要算保证金和交易成本。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>CTA 和期货趋势: 用规则交易商品、股指和利率</h2>
+          <p>讲清期货保证金、主力合约、换月、趋势跟踪、期限结构和 CTA 风险。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

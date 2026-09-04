@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 34 章 · 风险控制和组合监控: 什么时候该减仓、停用和复盘 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清暴露、集中度、VaR、压力测试、止损、模型失效和风险监控。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="34">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第五部分 · 量化研究如何产生可信结论 · 第 34 章</p>
+        <h1>风险控制和组合监控: 什么时候该减仓、停用和复盘</h1>
+        <p class="lead">量化系统最容易被误解成一台只管赚钱的机器。但真正成熟的系统,还要能回答一连串“如果”: 市场突然变了怎么办? 模型连续失效怎么办? 成交成本暴涨怎么办? 某个行业暴露过高怎么办? 风险控制不是保守派在旁边拖后腿,而是让策略有资格活到长期优势兑现的那套机制。这一章就把这套机制拆开看。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线五</span>
+            <span>本部分第 7 / 10 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>一个金融判断怎样变成可证伪假设,再经过数据、回测、模型和实盘约束?</p>
+          <p class="chapter-context__outcome">读完后,你能从问题出发完成研究闭环,而不是先找模型、再给结果编故事。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>风险控制不是预测每次下跌,而是限制异常状态下的损失扩张。</li>
+            <li>暴露、集中度、VaR、压力测试、止损和模型失效监控,各自回答不同的风险问题,谁也不能替代谁。</li>
+          </ul>
+        </section>
+
+
+        <h2 class="case-heading reveal"><span class="case-study__label">金融现场</span> 1. 一名交易员怎样让 233 年的银行消失</h2>
+<p><span class="num">1995 年</span>,英国巴林银行倒闭。把这家拥有两百多年历史的机构推下悬崖的,不是一场无法想象的天灾,而是新加坡交易员 Nick Leeson 长期隐藏亏损、继续加码,试图用下一笔交易把上一笔洞补回来。</p><p>更荒唐的是,他同时参与交易和部分后台控制,本该互相核对的前台与后台没有真正分开。亏损被塞进错误账户,总部看到的是利润和明星交易员,真实风险却在看不见的角落膨胀。等市场大幅波动,仓位终于压垮<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>,银行已经没有第二次纠错机会。</p><p>风险控制因此不是在报告里画一条 <a class="term term-link" href="glossary.html#g-var" title="查看术语：VaR">VaR</a> 曲线。权限分离、独立对账、限额、异常账户和强制升级同样是模型的一部分。一个系统若允许制造仓位的人同时决定怎样记录仓位,再漂亮的风险数字也只是自己给自己批的请假条。</p>
+
+        <h2>2. 风险控制不是预测明天会不会跌</h2>
+<p>很多人把风控理解成<span class="hl">“提前知道明天要跌”</span>。这不现实,风控没有水晶球。它真正做的是两件事: 限制坏情况发生时的损失范围,让系统在异常状态下停止扩大战果或扩大亏损。它不需要每次猜中市场,但必须在风险超出承受范围时,确确实实采取行动。</p><p>举个例子。策略连续亏损,不一定说明策略错了,也可能只是正常波动;但如果亏损的同时,成交成本异常、持仓暴露越界、数据缺失率上升、模型 <a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">IC</a> 反向——这几件事一起出现,就不是普通波动了,该暂停的暂停,该降权的降权。</p><p>风控的核心,是把<span class="hl">“我感觉不太对”</span>这种直觉,翻译成可监控的指标和明确的动作。哪个指标触发黄色预警,哪个指标触发暂停交易,谁有权限恢复,恢复之前要检查什么——这些全都要提前写清楚,不能等出事再开会讨论。</p>
+
+        <h2>3. 你到底押了什么</h2>
+<p>暴露,就是组合对某类风险的敏感程度。最常见的有四种: 市场暴露、行业暴露、风格暴露和个股暴露。你以为自己在勤勤恳恳做选股,组合却可能悄悄押了小市值、成长、低<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>,或者某个行业。</p><p>暴露监控要看两个口径: 绝对暴露和相对基准暴露。一个指数增强产品,如果相对基准超配某行业 <span class="num">8 个百分点</span>,这就是一次明明白白的行业押注。它可能带来收益,也可能带来回撤——关键不是押注本身对不对,而是你知不知道它存在。</p><p>很多策略出问题时,并不是模型一点预测能力都没有,而是某个暴露在极端环境里把损失放大了。风险系统要能及时告诉你: 今天这笔亏损,来自大盘、行业、风格、个股事件,还是交易执行。分不清来源,就没法对症下药。</p>
+
+        <h2>4. 一个点坏掉会不会拖垮全局</h2>
+<p>集中度衡量的是: 组合是不是过度依赖少数资产、行业、风格或交易。单只<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>仓位太高,一条负面公告就可能砸出大回撤;行业太集中,一个政策变化可能同时打击一大片持仓;策略收益集中在少数几笔交易,未来的可重复性就要打问号。</p><p>好消息是,集中度的指标一点都不复杂: 前十大持仓占比、最大个股权重、最大行业权重、单一<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>贡献、单一交易日收益贡献。指标虽土,能发现的问题一大堆。</p><p>还有一个容易骗人的地方: 量化组合常常持仓几百只,看起来非常分散。但如果这些股票在风险模型里高度同向——暴露在同一种风格上,集中度其实仍然很高。真正的集中度,看的是风险来源,不是股票数量。</p>
+
+        <h2>5. VaR 能说明什么,不能说明什么</h2>
+<p>VaR 是 Value at Risk,常翻译成在险价值。它想回答一个问题: 在某个置信水平下,未来一段时间可能亏多少钱。比如 <span class="num">1 日</span> <span class="num">95%</span> VaR 为 <span class="num">100 万</span>,意思是按模型估计,正常情况下 <span class="num">95%</span> 的日子,亏损不超过 <span class="num">100 万</span>。</p><p>VaR 的优点是沟通友好: 它把风险压成一个谁都能看懂的数字,风控、管理层、产品报告里都能用——<span class="hl">“可能亏多少”</span>一句话说清。但局限同样明显: 它依赖历史数据和分布假设,对极端尾部不够敏感;更要命的是,它不告诉你超过 VaR 之后,会亏得多惨。</p><p>所以 VaR 绝不能单独使用。一个策略平时波动很低,VaR 看起来很小,但如果藏着卖期权式的尾部风险,真正的危机来临时,损失会远超模型。看 VaR 的时候,必须同时看<a class="term term-link" href="glossary.html#g-压力测试" title="查看术语：压力测试">压力测试</a>、<a class="term term-link" href="glossary.html#g-最大回撤" title="查看术语：最大回撤">最大回撤</a>、尾部损失,还有策略本身的机制。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="VaR 的正反理解图:在壳子内你可以相信它,走出来就不行">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">VaR:一个有用的上限,但不是完整的防线</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">95% VaR = 3 万:意思是 95% 的壳子下,今天最多亏 3 万</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">另外 5%:完全没底。可能亏 5 万,也可能亏 50 万</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">用 VaR 有自查,但对冲组合、卖期权策略、低相关性组合应该在 VaR 之外再加压力测试</text>
+          </svg>
+          <p class="figure__cap">VaR 是风控的入门卷尺,但不是终局——95% 壳内准确,壳外失去了封顶。本章给你的提示是:VaR 之外,你还需要压力测试在场外兜底。</p>
+        </div>
+        <h2>6. 故意把坏天气拿出来看</h2>
+<p>压力测试的思路很粗暴: 主动假设极端情景,看看组合扛不扛得住。比如大盘一天跌 <span class="num">8%</span>,小盘风格暴跌,流动性减半,某个行业跌停,<a class="term term-link" href="glossary.html#g-信用利差" title="查看术语：信用利差">信用利差</a>走阔,股债同时下跌。它不问<span class="hl">“这些事明天会不会发生”</span>,只问<span class="hl">“如果发生了,你能不能承受”</span>。</p><p>压力测试有两种常见做法。历史压力测试,拿过去真实的危机场景重放: 股灾、疫情初期、<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>快速上行、流动性冲击。假设压力测试,则根据当前组合的暴露定制情景: 你的组合重仓新能源,那就测试新能源行业大跌会怎样。</p><p>压力测试的价值在于提前暴露脆弱点。它预测不了危机什么时候来,但能告诉你哪里最可能断。知道断点之后,你就有了动作清单: 降低集中度、减少<span class="term">杠杆</span>、改执行计划,或者设置止损线。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="压力测试图:把极端但合理的情景提前摆出来,看自己扛不扛得住">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">压力测试：把最坏情景先摆出来</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">正常运行里没人说得清 2008 这种 30 年一遇的风暴有多大——压力测试存在,就是不等到那一天再后悔</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">设想流动性突然消失、普通债券跌 10%、上证跌 20%、你又在用 1.5 倍杠杆</text>
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">把你的组合丢进去测一把:跌得起,才配聊赚多少</text>
+          </svg>
+          <p class="figure__cap">投资里一句老牌话:没有准备的人,风暴来之前不会发公告。压力测试就是你的那双提前看的眼睛。</p>
+        </div>
+        <h2>7. 简单但很容易误用</h2>
+<p>止损,就是亏损达到某个阈值时减仓或退出。逻辑上它能防止单个错误无限扩大,实操上它也可能是台绞肉机: 一个波动很高的策略,止损太紧,会不断低卖高买、被市场反复洗出去;止损太松,又等于没装保险丝。</p><p>止损可以设在多个层级,而且各层级不能混用: 单票止损处理个股事件,组合止损处理整体回撤,策略止损处理模型失效,账户止损处理生存风险。一只股票出事和整个账户出事,该做的动作完全不一样。</p><p>量化里更常用的,其实是动态风险预算和降权机制,而不是机械地一把全卖。比如回撤扩大、IC 变差、波动上升时,逐步降低仓位;指标恢复之后,再逐步恢复。这种渐进式处理比一次性开关更稳,但前提是规则要写清楚,不能盘中拍脑袋。</p>
+
+        <h2>8. 模型失效监控</h2>
+<p>模型失效不该等亏得很惨才发现,它通常有前兆。你可以监控预测分数和未来收益的关系: 滚动 IC、分层收益、多空收益、预测覆盖率、特征缺失率、预测分布漂移。这些指标持续异常,模型很可能正在失效。</p><p>还要学会区分两种<span class="hl">“不赚钱”</span>: 模型失效,还是市场环境不利。一个<a class="term term-link" href="glossary.html#g-价值因子" title="查看术语：价值因子">价值因子</a>在成长股行情里跑输,可能只是风格逆风,过阵子就回来;但如果价值因子内部排序都完全反过来了,那就要重点检查数据和模型本身了。一个是天气问题,一个是引擎问题,别搞混。</p><p>失效处理可以分级: 降低权重、暂停新开仓、只减不加、切换备用模型、要求人工复盘、重新训练、永久下线。特别要记住: 不要在没有复盘的情况下,因为短期亏损就随便重训——那等于拿噪声当信号,越训越乱。</p><div class="callout callout--note reveal"><span class="callout__title">比率要盯,但先分清天气和引擎</span><p>滚动 IC 掉头向下,先别急着重训,先问一句:是整个风格在逆风,还是我的排序真的反了?天气问题靠熬和降权,引擎问题靠停和修,两个动作做反了都很贵——把引擎病当天气,会越亏越自信;把天气当引擎病,会在黎明前亲手掐死策略。盯任何比率的正确姿势,是提前给它配好那句<span class="hl">“然后呢”</span>。</p></div>
+
+        <h2>9. 数据风险和系统风险</h2>
+<p>量化策略是用数据喂大的,数据出问题就是慢性中毒。行情延迟、复权错误、财报字段缺失、指数成分回填、供应商接口变化、时间戳错位,都会直接污染信号。数据错误往往比模型错误更隐蔽: 模型会照常输出,看起来一切正常,而结论已经错了。</p><p>系统风险则是工程侧的事故清单: 程序 bug、部署错误、网络断连、券商接口异常、重复下单、日志丢失、权限配置错误。骑士资本事件已经提醒过我们: 交易系统错误能在很短的时间内造成巨大损失。</p><p>所以,风控不能只盯市场行情。它还要盯数据质量、服务健康、订单状态、延迟、错误率、版本发布和权限变更。量化是金融和工程的结合体,风险也注定同时来自金融和工程两边。</p>
+
+        <h2>10. 风险限额和权限</h2>
+<p>风险限额,是提前写死在系统里的边界: 总仓位上限、单票上限、行业上限、<span class="term">杠杆</span>上限、日内亏损上限、订单金额上限、参与率上限、撤单率上限。限额的作用,是把抽象的风险变成系统能自动检查的规则。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>权限则决定关键时刻谁能动什么: 谁能改限额、谁能恢复交易、谁能手动下单、谁能关闭策略。权限设计之所以重要,是因为极端时刻人会紧张,临时口头决策容易出错。专业机构会要求留痕、复核和审批,就是给紧张时刻上保险。</p></div><p>个人做量化同样需要限额,别觉得规则只属于机构。比如单日最大亏损到 <span class="num">2%</span> 停止交易,单只股票不超过 <span class="num">10%</span>,单日成交额不超过账户 <span class="num">30%</span>,策略连续异常两天必须手动复盘。账户再小,也要养成制度习惯。</p>
+
+        <h2>11. 风险报告要能指导动作</h2>
+<p>好的风险报告不是指标堆砌大赛,而是帮人做决策。它要回答: 当前组合的风险在哪里,和昨天相比变了什么,哪些指标越了界,如果极端情景发生会亏多少,现在是否需要减仓、停用或人工复核。</p><p>报告可以分三层来写。第一层给结论: 正常、预警、越界;第二层给原因: 哪个暴露、哪个策略、哪个数据源或哪笔订单导致的;第三层给明细: 持仓、交易、指标和日志。不同角色看不同深度:用不到明细的人不必翻明细,做决策的人先读结论。</p><p>底线是: 一份风险报告如果只能在事后解释亏损,却不能提前暴露风险、触发动作,那它的价值就很有限。风控系统的目标,是让风险可见、可讨论、可执行——三个“可”,缺一不可。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="风险报告框架：敞口、超限清单、与动作三个层">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一份合格的风险报告只要三样东西</text>
+            <rect x="90" y="88" width="720" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="450" y="126" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">它先告诉你风险敞口在哪儿；然后告诉你超过限额的资产是哪些；</text>
+            <text x="450" y="158" text-anchor="middle" fill="#bcc9dd" font-size="13">最重要的——它得给出一个可执行的指令：现在减仓、还是继续观察、还是立即停止交易。</text>
+
+            <text x="450" y="254" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">纯统计报告没有价值：今天的 VaR 是 3%，那意味着你今天要做什么，才叫风险管理。</text>
+          </svg>
+          <p class="figure__cap">风控不是短期销量季度报表，是“今天就做成什么行动”——风险报告必须能糊你作出哪种动作，而不是一张漂亮图表。</p>
+        </div>
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>风险控制不是预测每次下跌,而是限制异常状态下的损失扩张。</li>
+            <li>暴露、集中度、VaR、压力测试、止损和模型失效监控,各自回答不同的风险问题,谁也不能替代谁。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 一名交易员怎样让 233 年的银行消失</li>
+            <li><strong>2.</strong> 风险控制不是预测明天会不会跌</li>
+            <li><strong>3.</strong> 你到底押了什么</li>
+            <li><strong>4.</strong> 一个点坏掉会不会拖垮全局</li>
+            <li><strong>5.</strong> VaR 能说明什么,不能说明什么</li>
+            <li><strong>6.</strong> 故意把坏天气拿出来看</li>
+            <li><strong>7.</strong> 简单但很容易误用</li>
+            <li><strong>8.</strong> 模型失效监控</li>
+            <li><strong>9.</strong> 数据风险和系统风险</li>
+            <li><strong>10.</strong> 风险限额和权限</li>
+            <li><strong>11.</strong> 风险报告要能指导动作</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>VaR 的主要局限是什么?</summary>
+            <p>它依赖模型和历史假设,又不能描述超过阈值之后的尾部损失,所以不能单独代表全部风险。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>压力测试为什么有用?</summary>
+            <p>它主动模拟极端情景,不问会不会发生,只问发生了你扛不扛得住,从而提前暴露组合可能断在哪里。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>一个量化项目的代码骨架: 从数据到报告怎么组织</h2>
+          <p>用工程视角讲清数据层、因子层、回测层、模型层、报告层和配置管理。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

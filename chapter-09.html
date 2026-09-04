@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 9 章 · 期权: 把不对称收益结构变成可交易产品 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清看涨、看跌、权利金、买方卖方、时间价值和卖期权风险。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="9">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第二部分 · 资产如何承载现金流与风险 · 第 9 章</p>
+        <h1>期权: 把不对称收益结构变成可交易产品</h1>
+        <p class="lead">期权大概是新手被名字吓住率最高的工具。先用一句话把它降服:期权买方买的,是一种未来的选择权;卖方收了钱,就要承担相应的义务。它和保险是亲戚:你交一笔小钱,把不想要的风险推给别人。期权最重要的知识点不是方向,而是收益和亏损的不对称——一边亏损有限,一边可能亏到看不见底。看懂这种不对称,你才不会被“胜率高”“稳健票息”“低成本博上涨”这些话术顺手带走。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线二</span>
+            <span>本部分第 5 / 7 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?</p>
+          <p class="chapter-context__outcome">读完后,你能先拆现金流、权利、期限和最坏情况,再讨论价格涨跌。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>期权买方买的是权利,卖方收权利金之后承担的是义务。</li>
+            <li>期权收益结构天生不对称:买方亏损有限,卖方可能承担尾部风险。</li>
+          </ul>
+        </section>
+
+
+        <h2 class="case-heading reveal"><span class="case-study__label">金融现场</span> 1. GameStop 的期权怎样把小火苗吹成火墙</h2>
+<p><span class="num">2021 年</span> <span class="num">1 月</span>,GameStop 成了全球市场的直播间。大量散户买入<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>和短期限看涨期权,高空头比例又让做空者不断回补。股价在很短时间里数倍上涨,社交媒体上的每一张成交截图都像往火里再扔一把木柴。</p><p>期权在其中扮演的是放大器,却不是唯一解释。<a class="term term-link" href="glossary.html#g-做市商" title="查看术语：做市商">做市商</a>卖出看涨期权后,通常会随着 Delta 上升买入股票<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>;股价越涨,部分对冲需求越大。与此同时,空头回补、散户追涨、交易限制和<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>变化一起作用,形成一条谁也无法用单个指标讲完的反馈链。</p><p>这个案例最适合用来理解 Gamma:风险不是静止的一格仓位,而是价格移动时仓位会逼着你继续交易。量化模型若只按开仓那一刻计算 Delta,却不模拟路径中的再对冲,就像只看火柴点燃前的温度,然后断言整栋楼不会热。</p>
+
+        <h2>2. 先从一张买房选择权说起</h2>
+<p>从一个你大概率关心过的场景开始。假设你看中一套房,现在价格一百万元。你不确定三个月后到底要不要买,可又怕这期间房价涨上去。怎么办?你和房主约定:你今天付两万元,三个月内你有权按一百万元买下这套房;如果三个月后你不想买了,可以放弃,但两万元不退。</p><p>这两万元,就是期权里的权利金。你买到的不是房子本身,而是一个未来选择权。推演一下两种结局:三个月后房价涨到一百二十万元,你仍然可以按一百万元买,这份权利就很值钱;三个月后房价跌到九十万元,你不会按一百万元买,直接放弃权利,最多亏掉那两万元权利金。</p><div class="callout callout--note reveal"><span class="callout__title">权利金是“给不确定性付房租”</span><p><span class="num">2 万元</span>你买的不是 <span class="num">100 万</span>房子,是三个月内能按 <span class="num">100 万</span>入场的权利—— 权利金不是成本,是在 这一段时间里市场给不确定性的租金; 到期日 标的的合约越有波动,权利金 越高,原因是越不可预测的东西、越值钱 . 这份不满足的地方先跟这股名字叫 <span class="hl">“你不确定大概是要付这个价格的”</span>.价格不是成本.</p></div><p>你可能会问:房主为什么肯签?他的账本也算得平。房价跌了,两万元白拿,聊补一点损失;房价小涨小跌,两万元安稳落袋;房价真大涨,他虽然只能按一百万元出手,但本来就做好了按这个价成交的准备。顺便看清权利金的本质:它是<span class="hl">“不确定性”</span>这种商品的定价——你花两万元,把<span class="hl">“涨价踏空”</span>的风险外包给了房主。</p><p>期权,就是这种结构的标准化版本。买方付权利金,获得未来在某个条件下买入或卖出的权利;卖方收权利金,同时背上一个义务:只要买方行权,他必须履约。一边花钱买<span class="hl">“可以”</span>,一边收钱保证<span class="hl">“一定”</span>——记住这句话,后面所有的不对称都从这里长出来。</p>
+
+        <h2>3. 看涨期权和看跌期权</h2>
+<p>期权世界分两个门派。看涨期权,先理解成未来按约定价格买入的权利。比如行权价一百元的看涨期权,意思是到期时你有权按一百元买入标的。标的涨到一百二十元,这个权利有价值——市价一百二的东西,你能按一百拿走;标的跌到八十元,你可以不买,权利作废,仅此而已。</p><p>看跌期权正好反过来:未来按约定价格卖出的权利。比如行权价一百元的看跌期权,到期时你有权按一百元卖出标的。标的跌到八十元,你可以按一百元卖给别人,这个权利有价值;标的涨到一百二十元,你放弃权利就行——谁愿意放着市价一百二不卖,非要按一百出手呢。</p><p>记一个拆合同的动作:拿到一张期权,先问<span class="hl">“持有者有权做什么”</span>——有权买入,就是看涨;有权卖出,就是看跌;再问<span class="hl">“这个权利在哪种行情下值钱”</span>。方向判断只是最后一步。也别把看跌期权当成诅咒:手里捏着股票的人买一张看跌,是给持仓上了一份保底保险,跟看空是两码事。</p><p>所以看涨不只是<span class="hl">“看多”</span>两个字的情绪表达,看跌也不只是<span class="hl">“看空”</span>。它们都是带价格、期限和权利义务的合同:方向只是其中一个字段,行权价、到期日、权利金,一个字段都不能少。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 285" role="img" aria-label="期权到期收益图:看涨和看跌期权买方的最大亏损都是权利金,收益随价格朝有利方向放大">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">期权到期收益:亏损有底,盈利放大</text>
+            <!-- 看涨期权 -->
+            <text x="230" y="60" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">买入看涨期权</text>
+            <line x1="80" y1="240" x2="400" y2="240" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="240" y1="90" x2="240" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="398" y="262" text-anchor="end" fill="#8499bd" font-size="12">到期股价</text>
+            <text x="150" y="256" text-anchor="middle" fill="#8499bd" font-size="12">行权价 K</text>
+            <path d="M 100 210 L 240 210 L 380 110" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <line x1="100" y1="210" x2="240" y2="210" stroke="#ffb4b4" stroke-width="3"/>
+            <text x="150" y="200" text-anchor="middle" fill="#ffb4b4" font-size="12">亏损=权利金(有底)</text>
+            <text x="350" y="98" text-anchor="middle" fill="#a8c6ff" font-size="12">涨越多赚越多</text>
+            <!-- 看跌期权 -->
+            <text x="670" y="60" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">买入看跌期权</text>
+            <line x1="520" y1="240" x2="840" y2="240" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="680" y1="90" x2="680" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="838" y="262" text-anchor="end" fill="#8499bd" font-size="12">到期股价</text>
+            <text x="700" y="256" text-anchor="middle" fill="#8499bd" font-size="12">行权价 K</text>
+            <path d="M 540 110 L 680 210 L 820 210" fill="none" stroke="#f0c96a" stroke-width="3"/>
+            <line x1="680" y1="210" x2="820" y2="210" stroke="#ffb4b4" stroke-width="3"/>
+            <text x="760" y="200" text-anchor="middle" fill="#ffb4b4" font-size="12">亏损=权利金(有底)</text>
+            <text x="575" y="98" text-anchor="middle" fill="#f0c96a" font-size="12">跌越多赚越多</text>
+          </svg>
+          <p class="figure__cap">期权买方最多亏掉权利金(收益曲线下方有一条水平底),但价格朝有利方向走时收益会放大。这种不对称结构,是期权和直接买卖股票最大的不同。</p>
+        </div>
+        <h2>4. 买方亏损有限,卖方风险更复杂</h2>
+<p>期权买方最大的好处,一句话讲完:亏损有限。你买看涨期权,如果标的大跌,你最多亏掉权利金;你买看跌期权,如果标的大涨,你最多也亏掉权利金。最坏的结果,在你掏出权利金的那一刻就封了顶。</p><p>卖方则是另一本账。他收了权利金,就得承担履约义务。卖出看涨期权时,如果标的暴涨,卖方可能要按低价把标的卖给买方,亏损可能很大;卖出看跌期权时,如果标的暴跌,卖方可能要按高价接下标的,亏损也可能很大。权利金是确定的小收入,义务是不确定的大窟窿。</p><p>把卖方的账算具体。你卖出一张行权价一百元的看涨,收五元权利金。标的涨到一百三十元:你要按一百元交出市价一百三的东西,亏三十元,扣掉权利金净亏二十五;涨到一百五十元,净亏四十五,理论上没有顶。卖出看跌同理:标的跌到六十元,你按一百元接下,亏四十,扣五元净亏三十五;极端情况标的一文不值,净亏九十五。买方的亏损是封了口的信封,卖方的亏损是没封底的井。</p><p>这就是为什么很多<span class="hl">“卖期权”</span>策略看起来胜率很高,但你不能简单把它理解成低风险。它可能平时一笔一笔收小钱,收得你心旷神怡,然后极端行情里一次亏掉大钱。胜率描述的是频率,从来描述不了幅度。</p><div class="callout callout--warn reveal"><span class="callout__title">胜率漂亮 是最危险的指标</span><p>卖出一张行权价 <span class="num">100 元</span>的看涨期权,收 <span class="num">5 元</span>权利金—— <span class="num">90%</span> 的概率你赢,每次赢 <span class="num">5 元</span>; <span class="num">10%</span> 的概率你输,一次就亏 <span class="num">45 元</span>。 看起来赢面大, 而意义上是 0-当前任何策略下很容易陷入<span class="hl">“胜率极高、期望值全负”</span>的循环,关键在于选对在的位置,一个行号是你的唯一基准才叫打的价值.</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 350" role="img" aria-label="看涨期权买卖双方到期损益镜像图:行权价 10 元、权利金 0.5 元,盈亏平衡点 10.5 元;买方亏损有限盈利不封顶,卖方盈利有限亏损不见底,两条曲线关于零轴镜像">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">看涨期权:买方和卖方,同一条曲线的两面镜子</text>
+            <text x="450" y="56" text-anchor="middle" fill="#8499bd" font-size="12.5">例:行权价 K = 10 元,权利金 0.5 元/股 → 股价涨过 10.5 元,买方才真正开始赚钱</text>
+            <defs><marker id="c5x" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#46587a"/></marker></defs>
+            <line x1="100" y1="190" x2="800" y2="190" stroke="#46587a" stroke-width="1.5" marker-end="url(#c5x)"/>
+            <line x1="100" y1="60" x2="100" y2="300" stroke="#46587a" stroke-width="1.5"/>
+            <text x="796" y="212" text-anchor="end" fill="#8499bd" font-size="12">到期股价</text>
+            <text x="88" y="64" text-anchor="end" fill="#8499bd" font-size="12">盈亏</text>
+            <text x="92" y="89" text-anchor="end" fill="#8499bd" font-size="11">+1.5</text>
+            <text x="92" y="159" text-anchor="end" fill="#8499bd" font-size="11">+0.5</text>
+            <text x="92" y="194" text-anchor="end" fill="#8499bd" font-size="11">0</text>
+            <text x="92" y="229" text-anchor="end" fill="#8499bd" font-size="11">-0.5</text>
+            <line x1="104" y1="155" x2="798" y2="155" stroke="rgba(122,167,240,0.14)" stroke-width="1"/>
+            <line x1="104" y1="225" x2="798" y2="225" stroke="rgba(122,167,240,0.14)" stroke-width="1"/>
+            <line x1="340" y1="70" x2="340" y2="310" stroke="rgba(122,167,240,0.35)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <text x="340" y="330" text-anchor="middle" fill="#c9d4e8" font-size="12">行权价 K = 10</text>
+            <line x1="440" y1="70" x2="440" y2="310" stroke="rgba(240,201,106,0.5)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <text x="440" y="330" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">盈亏平衡点 10.5</text>
+            <path d="M 140 225 L 340 225 L 740 85" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <path d="M 140 155 L 340 155 L 740 295" fill="none" stroke="#ffb4b4" stroke-width="3" stroke-dasharray="7 5"/>
+            <circle cx="440" cy="190" r="4.5" fill="#f0c96a"/>
+            <circle cx="740" cy="85" r="4" fill="#a8c6ff"/>
+            <circle cx="740" cy="295" r="4" fill="#ffb4b4"/>
+            <text x="752" y="89" fill="#a8c6ff" font-size="12" font-weight="800">+1.5</text>
+            <text x="752" y="299" fill="#ffb4b4" font-size="12" font-weight="800">-1.5</text>
+            <text x="612" y="70" text-anchor="end" fill="#a8c6ff" font-size="12" font-weight="800">买方(实线):盈利不封顶</text>
+            <text x="612" y="302" text-anchor="end" fill="#ffb4b4" font-size="12" font-weight="800">卖方(虚线):亏损不见底</text>
+            <text x="212" y="246" text-anchor="middle" fill="#a8c6ff" font-size="12">买方最坏:-0.5 权利金(有底)</text>
+            <text x="212" y="136" text-anchor="middle" fill="#ffb4b4" font-size="12">卖方最好:+0.5 权利金(有顶)</text>
+            <text x="450" y="348" text-anchor="middle" fill="#c9d4e8" font-size="12.5">两条线关于 0 轴严格镜像:买方赚的每一分都是卖方亏的——期权是零和的风险转移,不是一起赚钱的地方</text>
+          </svg>
+          <p class="figure__cap">买方最多亏掉权利金 0.5 元(亏损有底),价格涨过平衡点 10.5 元后赚多少没有顶;卖方镜像相反:最多赚 0.5 元,亏损理论上看不到底。所以卖方收的「保费」,本质是替别人扛尾部风险的价格。</p>
+        </div>
+        <h2>5. 内在价值和时间价值</h2>
+<p>期权的价格通常可以拆成两部分:内在价值和时间价值。内在价值最好懂——如果现在立刻行权,这份权利值多少钱,一算是多少就是多少。它是期权的<span class="hl">“现货成色”</span>,不掺一点对未来的想象。</p><p>算一下就清楚。比如一只股票现在一百二十元,你手里有一张行权价一百元的看涨期权:立刻行权,按一百元买入、再按市价卖出,内在价值大约二十元。反过来,如果股票现在只有八十元,行权价一百元的看涨期权没有内在价值——没人会愿意花一百元去买市价八十元的东西。</p><p>把一张真实报价拆开看。假如这张看涨期权在市场上卖二十五元:二十元是内在价值,多出来的五元就是时间价值。之后股票如果原地不动,这五元会像冰块一样一天天化掉;到期那天,时间价值归零,期权只剩内在价值这具骨架。所以买期权像租着房子赌方向:方向之外,你每天都在为时间付租金。</p><div class="callout callout--tip reveal"><span class="callout__title">期权越到期时间价值按小时融化</span><p>一个月到期的期权按日收; 直到到期日 当天—— 每天都很明显地萎缩 这也不是失事,是按修的的盈亏。 对多空策略,时间价值是一个对手都在你身边;时间不是免费的,是每一天都在变成本钱的东西。  用期权当天购入的成本先乘上一段,就问得充分发挥作用的那部分承受上涨的力量,而没必要让它在价格再一夜蒸发完又</p></div><p>没有内在价值,不代表期权一文不值。只要还没到期,未来标的仍可能涨到有利位置,这份可能性本身也值钱,它叫时间价值。留意时间价值的脾气:越接近到期,如果标的价格一直没动到有利位置,时间价值通常会流失。买期权的人经常输在这里:方向其实没看错太多,但时间不够了——哨声响了,比赛结束。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="期权权利金拆解图:内在价值 + 时间价值,到期日靠近时间价值压缩">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一块期权的权利金,要拆成两半:内在价值 + 时间价值</text>
+            <rect x="80" y="90" width="360" height="110" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="260" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">内在价值</text>
+            <text x="260" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">选择行使立即能得的差额(看涨 = 标的价格 − 行权价)</text>
+            <text x="260" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">价格还没走到那块,就是 0;过去那块就是那一块现的价值</text>
+            <rect x="460" y="90" width="360" height="110" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="640" y="118" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">时间价值</text>
+            <text x="640" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">除了内在价值之外的多出来分:“以后可能会走的是值多少”的事</text>
+            <text x="640" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">时间越长,越愿有人在为它付钱</text>
+            <text x="450" y="238" text-anchor="middle" fill="#bcc9dd" font-size="12.5">期权权利金 = 内在价值 + 时间价值;贴近到期日时时间价值会加速缩小——这是“卖方的机会”所在</text>
+            <rect x="80" y="270" width="360" height="110" rx="10" fill="rgba(238,136,119,0.12)" stroke="rgba(238,136,119,0.4)"/>
+            <text x="104" y="296" fill="#ee8877" font-size="13" font-weight="800">价内(In-the-money):看涨例子</text>
+            <text x="104" y="320" fill="#bcc9dd" font-size="12">标的 12 元、行权价 10 元 → 内在价值 = 2 元</text>
+            <text x="104" y="342" fill="#bcc9dd" font-size="12">内在价值 = max(0, 标的 − 行权价)</text>
+            <rect x="460" y="270" width="360" height="110" rx="10" fill="rgba(143,179,122,0.12)" stroke="rgba(143,179,122,0.4)"/>
+            <text x="484" y="296" fill="#8fb37a" font-size="13" font-weight="800">价外(Out-of-money):看涨例子</text>
+            <text x="484" y="320" fill="#bcc9dd" font-size="12">标的 8 元、行权价 10 元 → 内在价值 = 0</text>
+            <text x="484" y="342" fill="#bcc9dd" font-size="12">权利金 0.5 元全部是时间价值——多少钱是买方愿交给卖方的“以后有可能”的钱</text>
+            <text x="450" y="406" text-anchor="middle" fill="#bcc9dd" font-size="12.5">买价外期权不是买现在,是买时间的可能性。所以它的代价斯克急剧衰减——到期月比还剩 3 个月,那些权利金烧得越快</text>
+          </svg>
+          <p class="figure__cap">买期权不是买股票股票,它当期价值维中甚&#x27;未来可能演变发生的事&#x27;——卖方那块,就是它最大的消耗品: 时间衰减。你买期权,本质是在买时间的可能性。</p>
+        </div>
+        <h2>6. 波动率为什么重要</h2>
+<p>股票<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>主要看方向,期权不同:它特别关心<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>。波动率可以先理解成标的价格上下摆动的幅度。为什么它这么要紧?因为买方手里握着选择权:标的越可能大幅波动,这份选择权越有用,期权也就越有价值。</p><p>用两组数字看个透。还是行权价一百元的看涨。情形甲:股票到期要么一百零五、要么九十五,期权的行权价值是五元或零。情形乙:股票要么一百三、要么七十,行权价值变成三十元或零。注意坏结局:两种情形下都是零,买方大不了不行权。波动放大,只把好结局从五元养到三十元,坏结局原地不动——这份不对称,就是波动率值钱的根。</p><p>想极端一点就明白了。如果一只股票未来几乎不动,那看涨和看跌期权都不太值钱——权利再好,用不上也是闲的。可如果一只股票未来可能大涨也可能大跌,买方手里的选择权立刻身价倍增。</p><p>所以期权交易很多时候不是单纯交易方向,而是在交易波动率。有人买期权,不一定因为一定看涨,而是认为未来会大幅波动、赌市场低估了这个幅度;有人卖期权,也不一定因为看空,而是在赌未来波动不会超过市场预期。方向是一个维度的判断,波动率是另一个维度的生意。</p>
+
+        <h2>7. 一个到期收益小表</h2>
+<p>光听概念太空,直接算账。假设你花五元买入一张行权价一百元的看涨期权。到期时,如果标的价格是八十元,你不会行权,亏五元权利金;如果标的价格是一百元,行权不行权都没多赚,还是亏五元权利金;如果标的价格涨到一百二十元,你可以按一百元买入价值一百二十元的标的,权利价值二十元,扣掉五元权利金,净赚十五元。</p><p>把这张小表补几行。到期价八十元,净亏五;一百元,净亏五;一百零五元,不亏不赚——这就是盈亏平衡点;一百一十元,净赚五;一百二十元,净赚十五。再站到桌子对面看卖方的账:正五、正五、零、负五、负十五,恰好是买方数字翻一个负号。一张合约两本账,镜像得严丝合缝。</p><p>这个例子戳破一个新手最常见的误会:买看涨期权,不是标的上涨就一定赚钱。标的要涨过行权价和权利金成本之和,你才真正开始盈利——这个门槛叫盈亏平衡点,每一笔期权交易落笔之前,都该先把它算出来。</p><div class="callout callout--warn reveal"><span class="callout__title">期权的“不是白赚”到底有什么意思</span><p>行权价 <span class="num">100 元</span>,权利金 <span class="num">5 元</span>——涨到 <span class="num">105 元</span>行权,每手才拿回 <span class="num">0 元</span>左右(只收回权利金),等于白忙。 只有把标的的成本写清楚: 涨到一百零六你才开始赚钱,标的涨到一百三十五元你才穿越成本.这个例子让我们明白 ‘没有内在价值’不=它的市场意义被低估.它的潜存价值是针对它可选择性本身,以及未来市场可能给予这个权利的确认, 对不起规则是正或负,便宜永远写不进去.“,只知道成本存在,不知道计算的人永远做不了期权.,只有能把盈亏平衡点算出来的人,才谈得上有意参与期权投资,</p></div><p>看跌期权也完全同理。买入看跌期权时,标的跌得越多越有利;但如果跌幅不够,盖不住权利金成本,该亏照样亏。天下没有白送的<span class="term">杠杆</span>,期权的每一分便宜,都明码标价写在这张表里。</p>
+
+        <h2>8. 期权风险怎样进入量化</h2>
+<p>到了量化世界,期权有一整套专属的研究对象:波动率、偏度、期限结构、希腊值、成交量、持仓量和做市价差。所谓希腊值,就是期权价格对标的价格、波动率、时间、<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>等变量的敏感度——名字来自希腊字母,直觉上可以理解成仪表盘上一排 indicator,分别告诉你价格对哪个输入最过敏。</p><p>最常用的三盏灯先混个脸熟:对标的价格的敏感度常叫 Delta,对波动率的叫 Vega,对时间流逝的叫 Theta。方向突变看 Delta,波动放大看 Vega,临近到期盯 Theta。不必背名词,但要知道哪盏灯会因为什么而亮——期权价格从来不只被涨跌牵着走。</p><p>期权策略特别容易在<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>里显得岁月静好,卖期权策略尤其如此。因为大部分时间市场不会极端波动,卖方会一笔一笔地收权利金,资金曲线平滑得像在存钱。可真正的风险全躲在少数极端时刻。所以一个严肃的回测必须做<a class="term term-link" href="glossary.html#g-压力测试" title="查看术语：压力测试">压力测试</a>:看看极端跳空、波动率飙升、流动性消失的时候,那条平滑曲线会被拉成什么形状。</p><p>对个人来说,先理解期权结构比急着交易更重要。给你一条硬标准:能徒手画出买看涨、卖看涨、买看跌、卖看跌这四条到期收益线,再来谈策略;画不出来,就不应该碰复杂的期权产品。市场的补考费,一向比纸笔贵得多。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>期权买方买的是权利,卖方收权利金之后承担的是义务。</li>
+            <li>期权收益结构天生不对称:买方亏损有限,卖方可能承担尾部风险。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> GameStop 的期权怎样把小火苗吹成火墙</li>
+            <li><strong>2.</strong> 先从一张买房选择权说起</li>
+            <li><strong>3.</strong> 看涨期权和看跌期权</li>
+            <li><strong>4.</strong> 买方亏损有限,卖方风险更复杂</li>
+            <li><strong>5.</strong> 内在价值和时间价值</li>
+            <li><strong>6.</strong> 波动率为什么重要</li>
+            <li><strong>7.</strong> 一个到期收益小表</li>
+            <li><strong>8.</strong> 期权风险怎样进入量化</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>买入看涨期权,是不是标的上涨就一定赚钱?</summary>
+            <p>不一定。标的需要涨过行权价和权利金成本,买方才真正盈利——盈亏平衡点之下,涨了也可能白涨。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>卖期权为什么不能只看胜率?</summary>
+            <p>因为卖方可能平时一直小赚,极端行情一次大亏。胜率说的是频率,覆盖不了幅度。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>跨资产入门: 外汇、商品与 REITs</h2>
+          <p>先用现金流、供需和计价货币理解外汇、商品与不动产份额,再建立跨资产研究的共同语言。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

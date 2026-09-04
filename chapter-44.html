@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 44 章 · 读懂量化产品: 净值、报告与合同 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="从净值、费用、回撤和归因走到基金月报、招募书、定期报告与结构化产品确认书。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="44">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第六部分 · 策略如何变成产品 · 第 44 章</p>
+        <h1>读懂量化产品: 净值、报告与合同</h1>
+        <p class="lead">策略研究回答的是一套方法可能怎样赚钱,产品文件回答的则是投资者实际买到了什么。费后净值、申赎限制、封闭期、规模和合同条款都会改变最终体验。这一章从产品指标走到月报和法律文件,训练一种稳定顺序:不听话术,先找基准、费用、流动性、风险和最坏情况。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线六</span>
+            <span>本部分第 7 / 8 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>不同量化策略赚的是什么钱,承担什么风险,最终怎样装进受约束的产品?</p>
+          <p class="chapter-context__outcome">读完后,你能按收益来源和风险结构比较策略,而不是只按历史年化排名。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>看量化产品要把产品定位、基准、费用、申赎、回撤、归因和规模放在一起看,缺任何一块都可能看走眼。</li>
+            <li>历史收益只是线索不是结论:必须结合样本长度、市场环境、风险和费用一起判断。</li>
+            <li>读产品报告,先确认策略类型和基准,再依次看净值、风险、持仓、归因、费用和申赎——顺序错了,结论容易错。</li>
+            <li>收益必须和回撤、波动、样本长度、规模变化放在一起看,只看排名,等于只看电影的最后一帧。</li>
+            <li>合同黑字大于一切口头承诺;销售指不出文件页码就等于没说。</li>
+          </ul>
+        </section>
+
+
+        <h2>1. 净值、费用、封闭期和业绩归因</h2>
+
+        <h3 class="case-heading reveal"><span class="case-study__label">金融现场</span> 1.1. 麦道夫的曲线为什么平滑得像一条假直线</h3>
+<p>伯纳德·麦道夫长期向投资者展示异常稳定的回报:市场大涨大跌,他的曲线却像装了减震器。许多人把这种平滑当成顶级风控,再加上声望、关系和神秘策略,反而不愿追问收益究竟从哪里来。</p><p>骗局最终暴露后,最刺眼的问题不是没人见过风险指标,而是常识被漂亮结果压住了。托管、交易记录、审计独立性和策略容量之间存在大量说不通的地方;只要愿意沿着资金和交易链路核对,那条过于完美的净值本身就该是警报。</p><p>读量化产品时,低回撤不是免检证。越平滑的曲线,越要问估值频率、<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>、是否使用模型价格、谁保管资产、谁核对交易。产品分析的第一步不是计算更多比率,而是确认这条曲线真的来自可以兑现的资产。</p>
+
+        <h3>1.2. 先看产品到底承诺什么</h3>
+<p>挑产品和接需求一样,第一件事不是看演示多炫,而是先读懂需求文档。看量化产品的第一步不是看历史收益,而是看产品类型和基准:它是指数增强、<a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>、CTA、多策略,还是量化选股?追求绝对收益,还是追求相对某个指数的超额?能不能用衍生品、能不能加<span class="term">杠杆</span>、能不能做空?</p><p>类型不同,评价标准完全不同。如果产品叫中证 1000 指数增强,你不能拿银行理财的稳定性去要求它,也不能只看绝对涨跌——它的风险核心是中证 1000 市场风险再加主动增强的偏离。如果产品叫市场中性,那就盯着一件事看:它是否真的控制住了市场 <a class="term term-link" href="glossary.html#g-beta" title="查看术语：Beta">Beta</a>,还是只“中”在了名字上。</p><p>这些答案都写在合同和产品说明书里:投资范围、投资比例、风险等级、开放安排、费用和估值方式。很多投资者亏钱之后才发现,产品本来就允许较大回撤——边界一直在那里,只是买之前没人读。养成习惯:先读边界,再谈收益。</p>
+
+        <h3>1.3. 净值和收益披露</h3>
+<p>净值是基金的<span class="hl">“单价”</span>:单位净值表示每份基金份额对应的资产价值,乘上你持有的份额,就是你的持有市值。小心两个口径:累计净值比单位净值更能反映历史分红的影响;若要严格比较长期总回报,还要确认是否采用分红再投资或复权净值口径——比较之前先对齐口径,不然比的不是收益,是算术。</p><p>量化产品通常按日、按周或按月披露净值,具体频率取决于产品类型和合同。私募产品的披露频率可能低于公募,估值和确认也可能有延迟。所以你手机App上看到的那个数字,不是实时账户余额,而是按规则估值出来的结果——它更像定期发布的服务监控报表,不像实时大盘。</p><p>看净值曲线,别只盯着最终高度。还要看:回撤有多深、回撤持续了多久、上涨是不是集中在少数阶段、和基准相比如何、市场下跌时表现是否符合产品定位。净值曲线是一份体验记录,不是一份未来承诺——它忠实地记下了过去多难受,却没承诺以后不难受。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 300" role="img" aria-label="基金净值示意:毛收益曲线在上,扣掉各项费用后的净值曲线在下,差额是费用">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">你买到的不是模型,是扣费后的一条净值曲线</text>
+            <line x1="70" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="70" y1="55" x2="70" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="52" y="65" fill="#8499bd" font-size="13">净值</text>
+            <!-- 毛收益线 -->
+            <path d="M 70 225 Q 300 175 520 140 T 830 85" fill="none" stroke="#8499bd" stroke-width="2.5" stroke-dasharray="7 5"/>
+            <text x="640" y="108" fill="#8499bd" font-size="13.5">策略毛收益(宣传里常展示这条)</text>
+            <!-- 净收益线,被费用压低 -->
+            <path d="M 70 225 Q 300 195 520 170 T 830 130" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <text x="610" y="150" fill="#a8c6ff" font-size="13.5">你到手的净值(扣费后)</text>
+            <!-- 费用差 -->
+            <line x1="830" y1="85" x2="830" y2="130" stroke="#ffb4b4" stroke-width="2"/>
+            <text x="822" y="76" text-anchor="end" fill="#ffb4b4" font-size="12.5">管理费+业绩报酬+申赎</text>
+            <text x="450" y="288" text-anchor="middle" fill="#c9d4e8" font-size="13">还要看封闭期能不能赎、净值多久披露一次、回撤时能不能扛得住</text>
+          </svg>
+          <p class="figure__cap">买量化产品,真正到你手里的是“扣费后”那条净值曲线,不是宣传页上的毛收益。管理费、业绩报酬、申赎费、封闭期,每一项都在你和策略收益之间。</p>
+        </div>
+        <h3>1.4. 费用结构会吃掉收益</h3>
+<p>餐馆菜单上的价格不是你要付的全部,量化产品也一样。常见费用包括管理费、托管费、销售服务费、申购赎回费、交易费用,私募或专户还可能有业绩报酬。这些费用从产品资产里或投资者申赎时扣除,最终全部体现在你的实际收益上。</p><p>业绩报酬这一项尤其要逐字看清。它可能按高水位法计提——大意是只有净值超过历史高点之后,才对新增的那部分收益提取报酬;但计提周期、计提基准多长多高,各产品不同,具体条款要以合同为准。同是<span class="hl">“二八分成”</span>,细节不同,落进口的厚度差很多。</p><p>还有一层隐形的:同样一个策略,费前收益和费后收益差别可能很大;高换手策略还会在基金内部产生大量交易成本,这些成本不一定在管理费里显眼列出,却会默默反映到净值上。看费率别只看宣传页写的那几个数,净值曲线早就帮你把总账算好了——问题是你读不读得出来。</p><div class="callout callout--note reveal"><span class="callout__title">费用这一页,不许扫一眼就过</span><p>宣传页上的费率只是明账,还有一本暗账:高换手策略在基金内部天天交交易费,这笔钱不一定印在费率表里,却天天从净值里扣。两个名义费率相同的产品,<a class="term term-link" href="glossary.html#g-换手率" title="查看术语：换手率">换手率</a>差一倍,费后收益可能差出一大截。问费用别只问<span class="hl">“几个点”</span>,要问<span class="hl">“这个策略一年的总摩擦成本大概什么量级”</span>——答不出量级的销售,多半自己也没算过。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 360" role="img" aria-label="基金费用的两层结构:合同可见费四项,隐性摩擦两块,长期费用吞噬累计收益牢不可破">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">基金费用的两层:看得见的收费和看不见的成本</text>
+            <rect x="70" y="80" width="360" height="130" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="250" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">看得见的四笔(写在合同里)</text>
+            <text x="250" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">认购费/申购费 0.15%-1.5%</text>
+            <text x="250" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">赎回费 0%-1.5%(持有时间越长越低)</text>
+            <text x="250" y="180" text-anchor="middle" fill="#bcc9dd" font-size="12">管理费 0.2%-1.5%/年</text>
+            <text x="250" y="202" text-anchor="middle" fill="#bcc9dd" font-size="12">托管费 0.05%-0.25%/年</text>
+            <rect x="470" y="80" width="360" height="130" rx="10" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="650" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">看不见的两块(从你的收益里悄悄拿走)</text>
+            <text x="650" y="136" text-anchor="middle" fill="#bcc9dd" font-size="12">交易佣金 + 手续费—自己开仓时付交易对手</text>
+            <text x="650" y="158" text-anchor="middle" fill="#bcc9dd" font-size="12">冲击成本/滑点—大单买小票会移动价格</text>
+            <text x="650" y="180" text-anchor="middle" fill="#bcc9dd" font-size="12">换手率越高,这两块越重</text>
+            <text x="650" y="202" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">总量能占到管理费的 30%-100%</text>
+            <rect x="80" y="240" width="760" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="104" y="268" fill="#f0c96a" font-size="13" font-weight="800">长期持有的累计影响</text>
+            <text x="104" y="294" fill="#bcc9dd" font-size="12">假设基金年化 8%:总费用率是 1%,十年后是 2.16 倍;费用率 3%,十年后只有 1.85 倍——一年差 2%,十年差掉 15% 的累计财富</text>
+            <text x="104" y="318" fill="#bcc9dd" font-size="12">这就是“一年看收益,十年看费用”—— 一年差 2% 的总费用率,十年后累计财富差 15%。</text>
+          </svg>
+          <p class="figure__cap">决定你十年后收益的,不只是年化这几个点,还有每年被悄悄加收的总费用率。签任何基金和 ETF 之前,把它的总费用率读明白再决定要不要买。</p>
+        </div>
+        <h3>1.5. 申购、赎回和封闭期</h3>
+<p>买之前先想清楚一个问题:这笔钱,最快什么时候能拿回来?开放式产品允许在开放日申购赎回,但不是任何时候都能立刻进出。私募产品常有封闭期、开放日、赎回确认期和到账延迟。封闭期内不能赎回或赎回受限,这不是刁难,是白纸黑字的流动性约束。</p><p>封闭期其实有它的道理。对管理人来说,稳定的资金有利于策略执行,避免短期赎回逼他在不合适的价位卖出持仓;对投资者来说,封闭期意味着你要提前确认:这笔钱,这段时间真的用不到。期限错配在这里的代价,是措手不及。</p><p>还要知道极端剧本:产品可能出现巨额赎回、暂停申赎或估值调整。所以流动性风险不只存在于底层资产,产品结构本身也有。底层资产天天能交易,不代表你的钱天天能出来——这是两层门。</p>
+
+        <h3>1.6. 最大回撤和客户体验</h3>
+<p>销售材料最爱讲<span class="term">年化收益</span>,投资者真正日夜承受的却是回撤。做个思想实验:一个产品历史年化 <span class="num">20%</span>,<a class="term term-link" href="glossary.html#g-最大回撤" title="查看术语：最大回撤">最大回撤</a> <span class="num">25%</span>——净值从高点往下跌四分之一的过程中,你拿得住吗?拿不住,这个产品即使长期很好,也不适合你。收益是别人的历史,回撤才是你的日子。</p><p>回撤不只是深度,还包括时间。净值从 1.5 跌到 1.2,是 <span class="num">20%</span> 的回撤;如果之后一年都回不到高点,这一年里的每一天都是煎熬。很多赎回恰恰发生在策略最难受的阶段,结果投资者实际拿到的收益,低于产品本身的长期收益——产品的故事讲完了,你提前退场了。</p><p>所以买产品之前,先问自己四个问题:我能接受多大回撤?能等多久?这笔钱影不影响生活?我理解这个策略为什么会亏吗?四个答案有一个含糊,就别因为历史收益漂亮而重仓——看不懂的下跌,没人熬得住。</p><div class="callout callout--note reveal"><span class="callout__title">回撤不是历史数字,是你未来的日历</span><p><span class="num">25%</span> 的回撤写在报告里是一行字,真落到你头上是另一种东西:从某个高点起,可能连着几百个交易日净值都在水下,每一天你都要重新回答一遍<span class="hl">“要不要赎”</span>。买产品之前,把它历史上最深、最长的那段回撤在日历上比划一下,问自己:那段日子里这笔钱用不用得到?慌不慌?答不上来,就把仓位降到答得上来的尺寸。</p></div>
+
+        <h3>1.7. 业绩归因报告怎么看</h3>
+<p>归因报告就是产品的<span class="hl">“体检报告”</span>:专业产品会拆解收益来源——来自市场 Beta、行业配置、风格暴露、选股、期货<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>、交易执行,还是现金管理。归因的价值在于,它能帮你判断产品是不是按承诺的方式在赚钱,还是偷偷换了配方。</p><p>举两个该警惕的画面。一个市场中性产品,收益主要来自大盘上涨——那它的<span class="hl">“中性程度”</span>要打问号,你付了<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>的钱,买到了一份指数。一个指数增强产品,超额主要来自重仓某个行业——那它的选股 <a class="term term-link" href="glossary.html#g-alpha" title="查看术语：Alpha">Alpha</a> 可能被夸大,你看到的增强,其实是一次押注中奖。</p><p>归因也能解释亏损:亏的是模型短期失效、风格逆风、基差扩大、交易成本上升,还是风险暴露越界?不同病因对应不同药方——前几种可能属于策略的正常成本,最后一种则是管理纪律出了问题。会看归因,你就不再只是盯净值干着急的旁观者。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="超额归因堆积柱:产品甲超额+2.1%拆成选股+1.8、行业偏离+0.6、风格暴露+0.4、时点-0.2、成本-0.5;对照产品乙超额+2.3%但行业独占+1.9,选股只有+0.3">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">超额从哪来:五段加总,必须严丝合缝对上总超额</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">产品甲:组合 +12.1% − 基准 +10.0% = 超额 +2.1% —— 拆开看谁贡献的;负段向下扣,直到净线</text>
+            <rect x="120" y="224" width="140" height="126" fill="rgba(143,179,122,0.45)" stroke="rgba(143,179,122,0.7)"/>
+            <rect x="120" y="182" width="140" height="42" fill="rgba(240,201,106,0.45)" stroke="rgba(240,201,106,0.6)"/>
+            <rect x="120" y="154" width="140" height="28" fill="rgba(122,167,240,0.45)" stroke="rgba(122,167,240,0.6)"/>
+            <rect x="120" y="140" width="140" height="14" fill="rgba(232,120,120,0.45)" stroke="rgba(232,136,136,0.6)"/>
+            <rect x="120" y="105" width="140" height="35" fill="rgba(232,120,120,0.45)" stroke="rgba(232,136,136,0.6)"/>
+            <line x1="120" y1="203" x2="260" y2="203" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="112" y="207" text-anchor="end" fill="#f0c96a" font-size="12.5" font-weight="800">合计 +2.1%</text>
+            <text x="190" y="372" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">产品甲:来源均衡</text>
+            <line x1="262" y1="287" x2="292" y2="287" stroke="#46587a" stroke-width="1"/>
+            <text x="300" y="291" fill="#eef4f8" font-size="11.5">选股 +1.8%(真正想要的 Alpha)</text>
+            <line x1="262" y1="203" x2="292" y2="203" stroke="#46587a" stroke-width="1"/>
+            <text x="300" y="207" fill="#eef4f8" font-size="11.5">行业偏离 +0.6%(超配 / 低配)</text>
+            <line x1="262" y1="168" x2="292" y2="168" stroke="#46587a" stroke-width="1"/>
+            <text x="300" y="172" fill="#eef4f8" font-size="11.5">风格暴露 +0.4%(大小盘 / 价值成长)</text>
+            <line x1="262" y1="147" x2="292" y2="147" stroke="#46587a" stroke-width="1"/>
+            <text x="300" y="151" fill="#ffb4b4" font-size="11.5">交易执行(时点)−0.2%</text>
+            <line x1="262" y1="122" x2="292" y2="122" stroke="#46587a" stroke-width="1"/>
+            <text x="300" y="126" fill="#ffb4b4" font-size="11.5">摩擦成本 −0.5%(佣金·印花税·滑点)</text>
+            <text x="595" y="250" text-anchor="middle" fill="#8499bd" font-size="16" font-weight="800">vs</text>
+            <rect x="640" y="329" width="70" height="21" fill="rgba(143,179,122,0.45)" stroke="rgba(143,179,122,0.7)"/>
+            <rect x="640" y="315" width="70" height="14" fill="rgba(122,167,240,0.45)" stroke="rgba(122,167,240,0.6)"/>
+            <rect x="640" y="182" width="70" height="133" fill="rgba(240,201,106,0.50)" stroke="rgba(240,201,106,0.65)"/>
+            <rect x="640" y="175" width="70" height="7" fill="rgba(232,120,120,0.45)" stroke="rgba(232,136,136,0.6)"/>
+            <line x1="640" y1="189" x2="710" y2="189" stroke="#f0c96a" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="675" y="372" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">产品乙:押注中奖</text>
+            <text x="728" y="196" fill="#f0c96a" font-size="12.5" font-weight="800">这只超额 +2.3%</text>
+            <text x="728" y="218" fill="#bcc9dd" font-size="11.5">行业独占 +1.9%</text>
+            <text x="728" y="240" fill="#bcc9dd" font-size="11.5">选股仅 +0.3%</text>
+            <text x="728" y="268" fill="#ffb4b4" font-size="12" font-weight="800">→ 是押注,不是增强</text>
+            <text x="450" y="400" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="600"><tspan x="450" y="400">归因报告就是体检:判断它是不是按承诺的方式在赚钱——超额高不高其次,来源对不对才要紧</tspan></text>
+          </svg>
+          <p class="figure__cap">把总超额拆成五段:选股 +1.8%、行业偏离 +0.6%、风格暴露 +0.4%、时点 −0.2%、摩擦成本 −0.5%,加起来必须正好等于 +2.1%。对照右边那只:超额 +2.3% 看着更高,可行业偏离独占 +1.9%——那不是增强,是一次押注中奖。</p>
+        </div>
+        <h3>1.8. 历史业绩的陷阱</h3>
+<p><span class="hl">“历史业绩不代表未来”</span>,这句话不是免责声明里的废话,是评委们的血泪心得。产品历史可能刚好经历了有利的市场环境;你看到的列表还可能只展示了存续下来的产品——那些清盘的、表现差的,早就悄悄从货架上撤掉了。这叫<a class="term term-link" href="glossary.html#g-幸存者偏差" title="查看术语：幸存者偏差">幸存者偏差</a>:你只看到了活到今天的选手。</p><p>还要警惕短样本高年化:一个产品运行 <span class="num">3 个月</span>赚了 <span class="num">8%</span>,年化一下仿佛很高,但样本太短,根本没经历过一个完整市场周期。也要警惕只展示最好阶段、不展示回撤和停滞期的材料——精修过的履历,谁都能光华四射。</p><p>更合理的姿势是:把历史业绩当线索,而不是当结论。结合策略逻辑、团队稳定性、风险控制、规模变化、费用、市场环境和样本长度,一起判断。单看一条曲线就下单,相当于单看简历就发 offer——爽是爽,后果自负。</p>
+
+        <h3>1.9. 规模变化会影响策略</h3>
+<p>量化产品有个反直觉的特点:钱多了,策略反而可能变难做。小资金可以灵活进出小盘股,大资金会受到容量限制:成交冲击变大、持仓被迫更分散、换手受限,<span class="term">超额收益</span>难免被摊薄。同一套手艺,十倍的料不一定炒得出十倍的味。</p><p>这就是有些产品会限购甚至封盘的原因。管理人如果无限制扩大规模,短期管理费确实多收,长期却可能损害策略表现。负责任的管理人会在容量和商业规模之间做取舍——愿意把钱挡在门外的动作,反而值得多看一眼。</p><p>投资者看产品时,要主动查三件事:当前规模多少、历史上规模怎么变的、策略容量有多大。记住:过去小规模时创下的业绩,不一定能在大规模下复制——那些曲线的美丽,部分可能属于<span class="hl">“轻量级时代”</span>。</p>
+
+        <h3>1.10. 选择产品不是选择最高收益</h3>
+<p>如果你挑产品的方法是按历史收益排序、买第一名——那大概率买错了。选择产品的起点是匹配目标:想长期配置权益,宽基指数或指数增强可能合适;想降低和<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>市场的相关性,可以研究市场中性或 CTA;需要短期流动性,封闭期又长、波动又大的产品从一开始就该排除。</p><p>同类产品内部,也要全面比较:费用、回撤、超额稳定性、团队、规模、透明度和风控。最高的历史收益,往往伴随更高的风险或更有利的样本,单独把它作为选择依据,就像只按最高时速选车——法拉利很快,但你可能只是想通勤。</p><p>最后,买产品也要讲分散:不要把全部资金押在同一个管理人、同一种策略、同一个市场风格上。买量化产品同样需要资产配置思维——你给别人做组合配置挑产品,你自己手上的产品,也该先被配成一个组合。</p>
+
+        <h3>1.11. 普通投资者的检查清单</h3>
+<p>买量化产品之前,至少问自己十个问题:产品策略是什么?基准是什么?费用多少?能否加<span class="term">杠杆</span>、用衍生品?最大历史回撤多少?开放和封闭怎么安排?当前规模多大?收益来源能否解释?风险报告透明吗?我能不能承受它最坏的阶段?</p><p>如果销售材料说不清这些问题,别急着买;如果你自己看不懂这些产品,也别因为别人赚钱就跟。金融产品不是软件会员——会员买错了退订就行,产品买错了没有撤销键,亏损也不会因为<span class="hl">“我不懂”</span>而退款。</p><p>对计算机背景的读者,再给一个顺手的类比:看产品就像评审一套系统设计——你要弄清接口、约束、失败模式、监控指标和运维责任。只看宣传首页,就像只看官网首页估算系统可靠性——页面越动人,你越该去翻它的应急预案。</p>
+
+        <h2>2. 第一次读基金月报和产品报告</h2>
+        <p>很多人买基金或量化产品,决策依据只有一个:近一年收益排第几。这就像买车只看百公里加速,其他全凭销售张罗。其实月报和产品报告里藏着多得多的信息:它在和什么基准比,这段时间为什么赚或亏,持仓集中在哪,回撤多大,费用怎么收,规模有没有变。这一章教你把这份报告一页页拆开读——学会读报告,比听谁推荐都靠谱。</p>
+
+        <h3>2.1. 先看产品名称和策略类型</h3>
+<p>报告第一页通常是「身份页」:产品名称、策略类型、管理人、托管人、成立日期、规模和风险等级。先别急着翻收益,先确认它到底是什么。是股票多头、指数增强、市场中性、CTA、<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>,还是多策略?这个问题不解决,后面的数字全是白看。</p><p>策略类型决定你用什么眼光打量它:指数增强,盯<span class="term">超额收益</span>和<a class="term term-link" href="glossary.html#g-跟踪误差" title="查看术语：跟踪误差">跟踪误差</a>;市场中性,看绝对收益和市场相关性;CTA,看多品种趋势和回撤;债券产品,看<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>和<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>风险。每种策略,有每种策略的考卷。</p><p>拿错考卷的比赛没有意义:拿市场中性产品和<span class="term">沪深 300</span> 比涨幅,或者拿股票多头和货币基金比稳定性,都是错位比较——一个是让举重选手比百米,一个是让长跑选手比跳高。</p>
+
+        <h3>2.2. 看净值曲线和基准曲线</h3>
+<p>一份报告只有一条净值曲线,算合格吗?不够。净值曲线展示产品价值的变化,基准曲线展示参照对象的表现,两条必须叠在一起看:产品是跟着市场水涨船高,还是真的走出了自己的超额?</p><p>两条线一比,事情就有意思了。产品涨 <span class="num">10%</span>、基准涨 <span class="num">20%</span>——绝对赚钱,但相对落后;产品跌 <span class="num">5%</span>、基准跌 <span class="num">20%</span>——账户是亏的,但防守漂亮。你要先弄清产品在和谁比,否则「赚」和「赔」两个字的含金量完全不同。</p><p>看曲线还要穿透终点:中间有没有深回撤?有没有很长时间不创新高?有没有某一段突然大幅偏离基准?终点只是结果,路径才是持有者的真实体验——你要每天坐在那条线上,不是只坐最后一格。</p>
+
+        <h3>2.3. 看收益指标</h3>
+<p>月报的收益栏目通常摆一排:近一个月、近三个月、今年以来、成立以来。先看哪根?短期收益容易被市场环境带节奏,长期收益更能看出策略的稳定性——但长期也可能掺着早期小规模或特殊环境的「水分」,不是越长越金贵。</p><p><span class="term">年化收益</span>尤其要配样本长度看。成立三个月跑出惊人年化,参考意义有限——三个月够发生什么?不够。成立多年、穿越过几轮市场冷热的产品,数字才更有说服力。年化是把时间拉平的外推,样本短,外推就是画大饼。</p><p>最后别忘看<span class="term">超额收益</span>。绝对收益只是第一层答卷;如果是指数增强,相对基准多赚多少,才是它真正的考题。</p>
+
+        <h3>2.4. 看风险指标</h3>
+<p>接下来的栏目最容易让人犯怵:最大回撤、<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>、<a class="term term-link" href="glossary.html#g-夏普比率" title="查看术语：夏普比率">夏普比率</a>、卡玛比率、跟踪误差、<a class="term term-link" href="glossary.html#g-信息比率" title="查看术语：信息比率">信息比率</a>。别被名词墙吓住,它们都在回答两件朴素的事:赚钱的过程稳不稳?相对基准跑偏多少?</p><p>最大回撤尤其值得停下来。产品净值历史最高到过 1.5,后来跌到 1.2,回撤就是 <span class="num">20%</span>。现在闭眼想象一下:如果这是你的账户,真钱真情绪,从峰值眼睁睁亏掉两成,你能不能拿得住?拿不住,这个产品于你而言风险就是超标的,和别人怎么评价它无关。</p><p>风险指标还要结合策略类型读。CTA 的回撤形态和股票指数增强长得不一样;市场中性波动应相对低一些,读出来高了要警觉;股票多头则必须接受更高的市场波动——这是它的出厂属性。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="基金月报风险指标:最大回撤、波动率、夏普比率、卡玛比率、跟踪误差、信息比率;最大回撤算例为净值从峰值1.5跌到1.2,回撤等于(1.5减1.2)除以1.5等于百分之二十">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">月报风险指标别光看:峰值 1.5 跌到 1.2,回撤自己算一遍</text>
+            <rect x="40" y="64" width="430" height="240" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="255" y="92" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800"><tspan x="255" y="92">最大回撤=(峰值−谷底)÷峰值</tspan></text>
+            <path d="M 80 158 L 170 134 L 350 226 L 425 188" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>
+            <line x1="80" y1="134" x2="425" y2="134" stroke="#f0c96a" stroke-width="1.2" stroke-dasharray="5 4"/>
+            <circle cx="170" cy="134" r="5" fill="#f0c96a"/>
+            <text x="170" y="120" text-anchor="middle" fill="#f0c96a" font-size="12.5" font-weight="800">净值最高 1.5</text>
+            <circle cx="350" cy="226" r="5" fill="#e88"/>
+            <text x="350" y="252" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800">后来跌到 1.2</text>
+            <path d="M 170 144 L 170 217" stroke="#e88" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <text x="150" y="182" text-anchor="end" fill="#ffb4b4" font-size="11.5">亏掉 0.3</text>
+            <text x="255" y="284" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">(1.5 − 1.2) ÷ 1.5 = 回撤 20%</text>
+            <rect x="490" y="64" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="579" y="87" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="579" y="87">最大回撤</tspan></text>
+            <text x="579" y="110" text-anchor="middle" fill="#bcc9dd" font-size="10.5">从峰值摔下</text>
+            <text x="579" y="127" text-anchor="middle" fill="#bcc9dd" font-size="10.5">那一下有多疼</text>
+            <rect x="681" y="64" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="770" y="87" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="770" y="87">波动率</tspan></text>
+            <text x="770" y="110" text-anchor="middle" fill="#bcc9dd" font-size="10.5">赚钱的路上</text>
+            <text x="770" y="127" text-anchor="middle" fill="#bcc9dd" font-size="10.5">有多颠簸</text>
+            <rect x="490" y="148" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="579" y="171" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="579" y="171">夏普比率</tspan></text>
+            <text x="579" y="194" text-anchor="middle" fill="#bcc9dd" font-size="10.5">每份波动</text>
+            <text x="579" y="211" text-anchor="middle" fill="#bcc9dd" font-size="10.5">换多少收益</text>
+            <rect x="681" y="148" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="770" y="171" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="770" y="171">卡玛比率</tspan></text>
+            <text x="770" y="194" text-anchor="middle" fill="#bcc9dd" font-size="10.5">每份回撤</text>
+            <text x="770" y="211" text-anchor="middle" fill="#bcc9dd" font-size="10.5">换多少年化</text>
+            <rect x="490" y="232" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="579" y="255" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="579" y="255">跟踪误差</tspan></text>
+            <text x="579" y="278" text-anchor="middle" fill="#bcc9dd" font-size="10.5">偏离基准</text>
+            <text x="579" y="295" text-anchor="middle" fill="#bcc9dd" font-size="10.5">有多远</text>
+            <rect x="681" y="232" width="179" height="74" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="770" y="255" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800"><tspan x="770" y="255">信息比率</tspan></text>
+            <text x="770" y="278" text-anchor="middle" fill="#bcc9dd" font-size="10.5">每单位偏离</text>
+            <text x="770" y="295" text-anchor="middle" fill="#bcc9dd" font-size="10.5">换多少超额</text>
+            <rect x="40" y="322" width="400" height="62" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="240" y="346" text-anchor="middle" fill="#c9d4e8" font-size="12">按策略类型读:CTA 的回撤形态和指增长得不一样</text>
+            <text x="240" y="368" text-anchor="middle" fill="#c9d4e8" font-size="12">市场中性波动应相对低——读出来高了要警觉</text>
+            <rect x="460" y="322" width="400" height="62" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="660" y="346" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">闭眼想象:这是你的账户,从峰值眼睁睁亏两成</text>
+            <text x="660" y="368" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">拿不住,这个产品的风险对你就超标</text>
+          </svg>
+          <p class="figure__cap">风险指标都在回答两件朴素的事:赚钱的过程稳不稳,相对基准跑偏多少。最大回撤要亲手算——净值从 1.5 跌到 1.2,回撤就是 (1.5−1.2)÷1.5 = 20%;再闭眼想想:真钱从峰值亏两成,你拿不拿得住。</p>
+        </div>
+        <h3>2.5. 看持仓和暴露</h3>
+<p>收益和风险都是「结果」,持仓才是「行为」。公募基金通常披露前十大持仓和行业配置,私募披露可能更有限。能看到持仓时,先看两件事:集中度和行业暴露。前十大持仓占比很高,意味着产品的命运很大程度押在少数几个判断上。</p><p>行业配置说的是产品的口味偏哪。一个嘴上喊「均衡」的产品,如果长期重仓单一行业,风险和宣传就不是一回事。指数增强产品还要看行业相对基准偏离多少——偏离本身就是它押的注。</p><p>有些报告还会披露风格暴露:市值、价值、成长、<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量</a>、波动。读不懂这些词也没关系,先存一句话在脑子里:这些暴露会影响产品表现。以后在归因和对比里遇到,再回头补。</p>
+
+        <h3>2.6. 看归因解释</h3>
+<p>好的月报会主动交代本期收益的来源:市场上涨贡献多少,行业配置贡献多少,选股贡献多少,期货基差影响多少,交易成本影响多少。一句话,钱是坐着哪趟车来的,要能说清。</p><p>亏钱更要说清。是市场本身整体下跌,是风格逆风,是模型阶段性失效,还是对冲成本上升?解释不代表一定正确,但敢于解释,本身比沉默透明。</p><p>特别警惕一种话术抽搐:赚钱时全是能力,亏钱时全是市场。真正可信的管理人,在坏月份也会出来讲清楚问题在哪。只能顺风、不会逆风的归因,不是归因,是宣传。</p>
+
+        <h3>2.7. 看规模变化</h3>
+<p>规模是很多人忽略、其实很要紧的一栏。规模快速上升,可能给策略带来容量压力——钱多了,原来的机会装不下;规模快速下降,可能是赎回潮,也可能反过来逼着管理人卖出持仓。两头都会改变产品的「体质」。</p><div class="callout callout--note reveal"><span class="callout__title">关键</span><p>对量化小盘策略,规模尤其关键。原本能从容交易的小机会,资金体量太大之后就不够用,<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>和冲击双双上升。策略没变,收益率却不一样了——因为策略和环境之间的比例变了。</p></div><p>读月报时把规模和业绩放一起看:过去的收益是在多大体量下拿到的?如果现在规模大得多,不要随便用历史收益外推未来——一条小船和一支船队,不能用同一份航海日志预测。</p>
+
+        <h3>2.8. 看费用和申赎</h3>
+<p>费用是从你收益里直接扣的真金白银,不能不数。管理费、托管费、销售费、申赎费、业绩报酬,逐项看。私募产品尤其要看业绩报酬如何计提,是否有高水位——条款长在合同里,但扣的是你口袋里的钱。</p><p>申赎安排决定你的流动性自主性:开放日多久一次?赎回多久确认?有没有封闭期?有没有赎回费?出现巨额赎回怎么处理?这五句话,下单前都该有答案。</p><p>最忌讳的一类错配是钱期错配:这笔钱半年后就要用,就别买一年封闭或流动性差的产品。产品收益再高,也拗不过你的资金用途——钱有自己的时间表,产品也有自己的时间表,两张表得对齐。</p>
+
+        <h3>2.9. 看风险提示</h3>
+<p>风险提示不是写着糊墙的小字。市场风险、流动性风险、信用风险、衍生品风险、模型风险、操作风险、管理人风险——每一条都是真实世界里发生过的事故类型。</p><p>如果产品能用期货、期权、融资融券或其他衍生品,风险提示的权重还要上调。衍生品是放大器:可能放大收益,也可能放大亏损和流动性压力。工具本身没有方向,但放大的事没有小事。</p><p>读风险提示时不要以「法律模板」的眼神扫过。正确姿势是把每条都过一遍脑子:如果这个风险真的发生,我的账户会怎样?我能不能承受?不追问到「我」字,白读。</p>
+
+        <h3>2.10. 写一页自己的产品笔记</h3>
+<p>读完月报,合上书之前多做一件事:写一页自己的产品笔记。内容不用复杂,包括产品类型、基准、收益、回撤、费用、持仓、主要风险、你看不懂的地方,以及——最关键的一条——是否适合你自己的资金用途。</p><p>为什么要落到笔头?因为只看不写,信息很容易被销售话术接管;一旦要用自己的话写,问题会一个个浮出来:基准不清楚、费用没看懂、回撤其实不能承受、持仓和自己已有资产高度重合。每一行问题,都是真金白银省下来的学费。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>记住一句话:投资不是集邮,不是收集产品名字。投资是把产品安放进自己的资产配置和风险承受力里。笔记写到这里,这一章才算真的读完。</p></div>
+
+        <h2>3. 招募书、定期报告和确认书先看哪五行</h2>
+        <p>销售的话术天花乱坠,合同的黑字白纸冷静得多。这一章讲一件整个金融市场最实用的小事:拿到一份产品文件,先看哪几行。三分钟能解决的事,为什么大多数人还是闭眼签字?因为没人教过顺序。报名文件分三层——招募说明书是一次性体检,定期报告是季度复查,确认书是结构化产品的生死状——每一层都给你一张“先看这几行”的短清单。读完以后你再面对任何一页宣传材料,手会自动先翻文件。</p>
+
+        <h3 class="case-heading reveal"><span class="case-study__label">金融现场</span> 3.1. 销售说“本金问题不大”,文件写的是另一种结局</h3>
+<p>一位投资者在银行会议室里听完介绍:高票息、历史上很少出事、指数稍微跌一点也不怕。他记住了<span class="hl">“像固收”</span>,签字后才在确认书里看到敲入、敲出和到期结算条款。几个月后市场穿过敲入线,那句口头比喻不再参与计算,合同里的公式开始接管账户。</p><p>金融销售最擅长把路径压成一个收益数字,文件却会把每条岔路写出来。宣传页上的年化票息只描述某些情景,不等于所有情景下的回报;<span class="hl">“历史上很少发生”</span>也不等于合同承诺不会发生。真正买到的产品,永远是公式允许发生的全部结局。</p><p>读文件的目标不是和销售争辩,而是把最坏路径亲手画出来:什么条件触发,何时观察,本金怎样结算,能不能提前退出。只要这棵 if-else 树还画不出来,你听懂的就只是故事,不是产品。</p>
+
+        <h3>3.2. 一切口头的承诺都不算数</h3>
+<div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>先立一个原则,不用记住任何法律条文就够用了:在中国,任何金融产品,只有写进合同、招募书、确认书的内容才算数。理财经理嘴里的“保本”“内部渠道”“过往回报”，只要没出现在文件里,法律意义等于零。这一条被写进监管规定反复重申,每年因“销售说的和合同不一致”引发的投资纠纷,最后都以文件为准判。</p></div><p>所以你的标准动作只有一句:把那句最动听的承诺,指给我看写在第几页。销售指得出来,你核对条款字眼和他说的是不是一回事;指不出来、说<span class="hl">“这是行业惯例”</span><span class="hl">“你放心”</span>的,立刻后撤。这个动作用不着懂金融,只需要一点点在客户面前不怕翻脸的礼貌——你的钱,你有权看条件。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 390" role="img" aria-label="产品文件三层图:招募书地基、定期报告体检、确认书生死状,各写一行对应你要顶的指标">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">产品文件三层:合同是地基,报告是例行体检</text>
+            <!-- 三层 -->
+            <rect x="90" y="80" width="720" height="70" rx="10" fill="rgba(122,167,240,0.15)" stroke="#7aa7f0"/>
+            <text x="120" y="108" fill="#a8c6ff" font-size="14" font-weight="800">第一层 地基(一次性)</text>
+            <text x="120" y="132" fill="#bcc9dd" font-size="12">基金招募书 / 产品说明书——写清楚能买什么、什么价可以买、什么价必须止损</text>
+            <rect x="90" y="170" width="720" height="70" rx="10" fill="rgba(240,201,106,0.12)" stroke="#f0c96a"/>
+            <text x="120" y="198" fill="#f0c96a" font-size="14" font-weight="800">第二层 体检(每季度)</text>
+            <text x="120" y="222" fill="#bcc9dd" font-size="12">定期报告:超额收益、份额变化、重仓集中度——超过三层信号都在这份文件里</text>
+            <rect x="90" y="260" width="720" height="70" rx="10" fill="rgba(238,136,119,0.12)" stroke="#ee8877"/>
+            <text x="120" y="288" fill="#ffb4b4" font-size="14" font-weight="800">第三层 生死状(结构化)</text>
+            <text x="120" y="312" fill="#bcc9dd" font-size="12">确认书:敲出/敲入/票息/观察频率/期限——这五个数决定你到底买了什么中间可以的结局</text>
+            <text x="450" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12.5">所有事项权重都在文档里,任何“销售说”的话却都不成立</text>
+          </svg>
+          <p class="figure__cap">产品文件分列三层:地基是一次性体检(招募书),例行体检是季报,生死状是结构化条款清单。每层你只看自己负责的指标。黑字永远压倒言语。</p>
+        </div>
+        <h3>3.3. 招募说明书先翻五处</h3>
+<p>基金招募书普遍两百页往上,但决定你要不要买的,压缩到五处。①投资范围:允许买什么、比例多少,条款里写着<span class="hl">“可投资其他金融工具”</span>这类开放性口子要警惕。②申购赎回条款:开放日怎么算、有没有封闭期、最低赎回额多少,以及那句关键的<span class="hl">“管理人有权暂停赎回”</span>——有这一条,就意味着极端行情下可能封门。③风险控制安排:预警线、止损线、清盘线,分别触及净值多少。</p><p>④费率结构:认购费、申购费、赎回费、管理费、托管费、销售服务费一一记下,主动偏股基金的总持有成本常见每年 <span class="num">2%</span> 上下,指数基金只有 <span class="num">0.2%</span><span class="num">-0.6%</span>——十年复利下来,这条差距就是十几个百分点的总收益差。⑤基金经理和历史上的离职记录:换帅频繁的产品,过往业绩基本没法当参照。五处合起来花不了二十分钟,这二十分钟省下的坑,往往比精心挑选几个月基金还多。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 415" role="img" aria-label="招募说明书五处必看:投资范围、申购赎回、风控线、费率、基金经理">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">招募书先看这五行,不看宣传册</text>
+            <rect x="80" y="80" width="740" height="48" rx="8" fill="rgba(122,167,240,0.15)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="104" y="110" fill="#a8c6ff" font-size="13" font-weight="800">① 投资范围:能买什么、比例多少、有没有“可投其他工具”的活口</text>
+            <rect x="80" y="138" width="740" height="48" rx="8" fill="rgba(240,201,106,0.12)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="104" y="168" fill="#f0c96a" font-size="13" font-weight="800">② 申购赎回:开放日、最低赎回额、管理人是否有权暂停赎回</text>
+            <rect x="80" y="196" width="740" height="48" rx="8" fill="rgba(143,179,122,0.15)" stroke="rgba(143,179,122,0.5)"/>
+            <text x="104" y="226" fill="#b5d3a0" font-size="13" font-weight="800">③ 风控线:预警线、止损线、清盘线分别设在净值多少</text>
+            <rect x="80" y="254" width="740" height="48" rx="8" fill="rgba(238,136,119,0.12)" stroke="rgba(238,136,119,0.4)"/>
+            <text x="104" y="284" fill="#ffb4b4" font-size="13" font-weight="800">④ 费率结构:申购/赎回/管理/托管/销售服务费,合计一年要被吃掉多少</text>
+            <rect x="80" y="312" width="740" height="48" rx="8" fill="rgba(132,153,189,0.12)" stroke="rgba(132,153,189,0.4)"/>
+            <text x="104" y="342" fill="#bcc9dd" font-size="13">⑤ 基金经理:从业年限、在任多久、之前的代表作业绩</text>
+            <text x="450" y="392" text-anchor="middle" fill="#bcc9dd" font-size="12.5">读完这五处再决定要不要看宣传图——顺序不能反</text>
+          </svg>
+          <p class="figure__cap">两百页招募书里,能决定一款产品能不能买的,就是五处的条款。不用苦算数据,也不用看完所有报表——把这五处看透,你已跑赢大多数被广告糊弄的人。</p>
+        </div>
+        <h3>3.4. 定期报告只看三个数</h3>
+<p>产品跑起来了,招募书就翻篇了,轮到季报年报。先别看首页那些漂亮话,直接找三个数。第一个:净值增长率与业绩比较基准的差——超额是正是负,比绝对涨跌重要;第二个:份额变动,规模是不是在稳定扩张或缩水,突然巨额赎回通常不是好兆头;第三个:前十大重仓股和换手率——持仓集中度告诉你它有多敢赌,换手率告诉你它有多爱折腾。</p><p>三个数之外翻一眼基金经理报告里的措辞变化:如果开始解释<span class="hl">“市场风格不利”</span><span class="hl">“短期波动”</span>，但过去四个季度主结构没变,说明他还守纪律;如果换来都是新故事、回避指标,八成在化妆。读定期报告的核心不是找惊喜,是找<span class="hl">“这还是不是我当初买的那只基金”</span>——风格漂移是排名表上看不见、但赎回单里最先疼的毛病。</p>
+
+        <h3>3.5. 雪球确认书逐词拆</h3>
+<p><a class="term term-link" href="glossary.html#g-结构化产品" title="查看术语：结构化产品">结构化产品</a>的交易确认书,比招募书薄得多,但每个字都是钱。拿最常见的雪球结构举例,确认书上有六个词必须逐字看:敲出价(常见为期初价的 <span class="num">100%</span><span class="num">-105%</span>)、敲入价(如 <span class="num">70%</span><span class="num">-80%</span>)、票息率、观察日频率、期限,以及自动赎回条款的触发方式。这五个数合起来就是你买的是什么东西的全部定义——任何销售不解释清楚这五个词,就还没懂你买的是什么。</p><p>先把四条命在纸上画出来:涨过敲出价,提前敲出,拿满期票息走人;没敲出也没敲入,到期拿票息;敲入没敲出,到期按标的跌幅赔;敲入又敲出,拿回本金加回调收益。每一条命对应一种市场路径,结构化产品的本质就是把这个路径依赖表换了个壳卖给你。前文雪球产品的两节推演已经拆到最小颗粒度,这里你只要会对照确认书读一遍,不掉进<span class="hl">“以为买的是固收”</span>这个坑就赢了大多数人。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 920 330" role="img" aria-label="雪球确认书五关键词:敲出价、敲入价、票息率、观察频率、期限,五框匀排">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">雪球确认书的五个词</text>
+            <!-- 五个框 -->
+            <rect x="40" y="90" width="150" height="130" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="115" y="118" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">① 敲出价</text>
+            <text x="115" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">涨的门槛</text>
+            <text x="115" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">期初 × 100-105%</text>
+            <rect x="210" y="90" width="150" height="130" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="285" y="118" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">② 敲入价</text>
+            <text x="285" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">跌的陷阱</text>
+            <text x="285" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">期初 × 70-80%</text>
+            <rect x="380" y="90" width="150" height="130" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="455" y="118" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">③ 票息率</text>
+            <text x="455" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">承诺的年票息</text>
+            <text x="455" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">15%-20%是拉客价</text>
+            <rect x="550" y="90" width="150" height="130" rx="10" fill="rgba(143,179,122,0.15)" stroke="#8fb37a"/>
+            <text x="625" y="118" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">④ 观察频率</text>
+            <text x="625" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">每日 / 每月</text>
+            <text x="625" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">错颗粒度会错估概率</text>
+            <rect x="720" y="90" width="150" height="130" rx="10" fill="rgba(132,153,189,0.15)" stroke="#8499bd"/>
+            <text x="795" y="118" text-anchor="middle" fill="#bcc9dd" font-size="13" font-weight="800">⑤ 期限</text>
+            <text x="795" y="144" text-anchor="middle" fill="#bcc9dd" font-size="11">有多长</text>
+            <text x="795" y="166" text-anchor="middle" fill="#bcc9dd" font-size="11">长期票息更高但风险更长</text>
+            <text x="450" y="266" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">这五个数拼起来就是你买的东西;丢了任何一个,你都不知买的是什么</text>
+            <text x="450" y="300" text-anchor="middle" fill="#bcc9dd" font-size="12.5">回程资金账:敲入触发后,票息补不回敲入的下跌;前文已把四条命拆解过了</text>
+          </svg>
+          <p class="figure__cap">雪球这类结构化产品的阅读绝不复杂:只要五处数字你能在确认书里找到,你就知道买了什么。腿不净判读不叫节省工夫,叫按运气发牌。</p>
+        </div>
+        <h3>3.6. 别买读三遍还读不懂的产品</h3>
+<p>把上面三份文件加在一起,你已经有了一整套肌肉记忆。但最后一条纪律比所有技巧都值钱:凡是读了三遍还说不清<span class="hl">“钱到底从哪来”</span>的产品,就不买。这不是保守,这是能力圈原则在金融里最朴素的用法——你的钱是你对家庭<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>的责任,对一个你看不懂现金流结构的产品支付信任,等于在没有仪表的飞机上让别人教你按按钮。</p><p>看清的还是看不懂的,各自都有对应的动作。看清的:把关键条款记进自己的账本(可按项目工程骨架章节的目录结构,建一个 products/ 文件夹分门别类归档);看不懂的:进黑名单,无论收益怎么诱人都别碰——回头你只会感谢那条原则一次,但常常就是那一次,决定了所有其他的事有没有机会继续发生。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>看量化产品要把产品定位、基准、费用、申赎、回撤、归因和规模放在一起看,缺任何一块都可能看走眼。</li>
+            <li>历史收益只是线索不是结论:必须结合样本长度、市场环境、风险和费用一起判断。</li>
+            <li>读产品报告,先确认策略类型和基准,再依次看净值、风险、持仓、归因、费用和申赎——顺序错了,结论容易错。</li>
+            <li>收益必须和回撤、波动、样本长度、规模变化放在一起看,只看排名,等于只看电影的最后一帧。</li>
+            <li>合同黑字大于一切口头承诺;销售指不出文件页码就等于没说。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.1.</strong> 麦道夫的曲线为什么平滑得像一条假直线</li>
+            <li><strong>1.2.</strong> 先看产品到底承诺什么</li>
+            <li><strong>1.3.</strong> 净值和收益披露</li>
+            <li><strong>1.4.</strong> 费用结构会吃掉收益</li>
+            <li><strong>1.5.</strong> 申购、赎回和封闭期</li>
+            <li><strong>1.6.</strong> 最大回撤和客户体验</li>
+            <li><strong>1.7.</strong> 业绩归因报告怎么看</li>
+            <li><strong>1.8.</strong> 历史业绩的陷阱</li>
+            <li><strong>1.9.</strong> 规模变化会影响策略</li>
+            <li><strong>1.10.</strong> 选择产品不是选择最高收益</li>
+            <li><strong>1.11.</strong> 普通投资者的检查清单</li>
+            <li><strong>2.1.</strong> 先看产品名称和策略类型</li>
+            <li><strong>2.2.</strong> 看净值曲线和基准曲线</li>
+            <li><strong>2.3.</strong> 看收益指标</li>
+            <li><strong>2.4.</strong> 看风险指标</li>
+            <li><strong>2.5.</strong> 看持仓和暴露</li>
+            <li><strong>2.6.</strong> 看归因解释</li>
+            <li><strong>2.7.</strong> 看规模变化</li>
+            <li><strong>2.8.</strong> 看费用和申赎</li>
+            <li><strong>2.9.</strong> 看风险提示</li>
+            <li><strong>2.10.</strong> 写一页自己的产品笔记</li>
+            <li><strong>3.1.</strong> 销售说“本金问题不大”,文件写的是另一种结局</li>
+            <li><strong>3.2.</strong> 一切口头的承诺都不算数</li>
+            <li><strong>3.3.</strong> 招募说明书先翻五处</li>
+            <li><strong>3.4.</strong> 定期报告只看三个数</li>
+            <li><strong>3.5.</strong> 雪球确认书逐词拆</li>
+            <li><strong>3.6.</strong> 别买读三遍还读不懂的产品</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么买量化产品前要先看基准?</summary>
+            <p>基准决定收益的评价口径:不先对齐基准,你无法判断产品是靠市场上涨抬起来的,还是靠管理能力赚来的。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>封闭期对投资者意味着什么?</summary>
+            <p>意味着资金在一段时间内不能自由赎回或赎回受限,买之前必须确认这段时间你真的用不到这笔钱。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么读月报先看产品类型?</summary>
+            <p>因为每种策略有自己的评价标准:不先确认类型,就不知道拿它和什么比、用什么指标要求它,后面所有数字都失去坐标。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>净值曲线为什么要和基准一起看?</summary>
+            <p>单看净值分不清「水涨船高」和「自己划得快」;两条线对比,才能分离市场本身的涨跌和产品相对基准的超额。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>合同哪一条比销售的承诺效力高?</summary>
+            <p>全部。金融产品的法律事实只有文件写明的那部分,口头表述不构成合同。让销售把每条承诺指到具体条款上,你的工作就从“信人”变成“核对字”。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>基金 A 类 C 类份额差在哪儿?</summary>
+            <p>费率结构不同:A 类收申购费适合长持,C 类不收申购费但抬销售服务费适合短持。读费率表时先问自己打算持有多久,再选类。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>监管、合规和伦理: 技术能力不能越过市场规则</h2>
+          <p>讲清程序化交易监管、内幕信息、市场操纵、数据合规、模型留痕和个人交易边界。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

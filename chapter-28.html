@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 28 章 · 从问题到因子: 把投资判断变成可检验假设 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="解释量化里常说的因子、信号、暴露、IC、分层回测和因子失效。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="28">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第五部分 · 量化研究如何产生可信结论 · 第 28 章</p>
+        <h1>从问题到因子: 把投资判断变成可检验假设</h1>
+        <p class="lead">量化研究不该从下载数据或挑模型开始,而该从一个足够小、能够被证伪的金融问题开始。因子只是把问题写成一列可重复计算的数字。这一章先问收益可能来自现金流、风险补偿、行为偏差还是市场摩擦,再把解释变成信号,用 IC、分层回测和失效条件检查它。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线五</span>
+            <span>本部分第 1 / 10 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>一个金融判断怎样变成可证伪假设,再经过数据、回测、模型和实盘约束?</p>
+          <p class="chapter-context__outcome">读完后,你能从问题出发完成研究闭环,而不是先找模型、再给结果编故事。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>因子是把投资判断变成一列有口径、可排序、可检验的数据。</li>
+            <li>IC、RankIC 和分层回测用于检验因子是否对未来收益有排序信息。</li>
+          </ul>
+        </section>
+
+
+        <h2 class="case-heading reveal"><span class="case-study__label">金融现场</span> 1. 便宜的股票可以让你难受三年</h2>
+<p>2018 到 <span class="num">2020 年</span>前后,许多传统价值策略经历了一段漫长的难熬期。昂贵的成长公司越涨越贵,低估值公司却迟迟不动;每隔几个月都有人宣布<span class="hl">“价值投资已经死亡”</span>。对<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>研究者来说,最折磨人的不是一天大跌,而是逻辑似乎没坏、账户却连续多年被市场嘲笑。</p><p>后来风格发生<span class="term">反转</span>,部分价值组合重新占优。这个过程并不能证明<a class="term term-link" href="glossary.html#g-价值因子" title="查看术语：价值因子">价值因子</a>永远有效,却揭示了因子收益的真实形状:如果一项溢价毫不痛苦、人人都能坚持,竞争早就会把它挤没。所谓风险补偿,常常就是你必须先承受一段足以让人放弃的经历。</p><p>因此把投资判断变成因子时,要在开跑前写下失效条件。是连续三年跑输就算错,还是估值与未来现金流的关系消失才算错?没有预先定义,研究者会在亏损时随意改故事,盈利时又把运气包装成机制。</p>
+
+        <h2>2. 因子不是魔法,是一列有口径的数据</h2>
+<p>在动手造因子之前,先看看这条路的天花板有多高。有个叫詹姆斯·西蒙斯的数学家,年轻时是顶尖的几何学家,拿过数学大奖,还给美国政府破译过密码。40 多岁时他离开学术界,创立了文艺复兴科技公司,办公室里招来的不是西装革履的交易员,而是一群数学家、物理学家和计算机科学家。他们做的事情,本质上就是本章要讲的事:把海量市场数据变成一列列数字,再用统计和模型,从中找出微弱但稳定的规律。</p><p>他们交出的成绩单是金融史上最夸张的那张:旗舰产品<span class="hl">“大奖章”</span>基金,从 1988 到 <span class="num">2018 年</span>,在扣掉高得离谱的费用之后,<span class="term">年化收益</span>仍约 <span class="num">39%</span>,扣费前更是高达约 <span class="num">66%</span>。更反直觉的细节是,据公开资料,他们单笔交易的胜率大概只有 <span class="num">50.75%</span>——和抛硬币几乎没区别。秘诀不是每次都猜对,而是把那一点点微弱的优势,靠海量交易次数和严格风控,滚成惊人的复利。这就是量化的灵魂:不追求算准明天,只追求长期站在概率这一边。而这一切的起点却朴素得惊人——把一个投资想法,变成一列可以检验的数字。这列数字,就是因子。</p><p>来亲手翻译一句试试。你说<span class="hl">“便宜的<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>未来表现可能更好”</span>——这话说给人听没问题,可量化系统听不懂<span class="hl">“便宜”</span>这种形容词,你得给它数字:<a class="term term-link" href="glossary.html#g-市盈率pe" title="查看术语：市盈率(PE)">市盈率</a> <span class="term">PE</span>、<a class="term term-link" href="glossary.html#g-市净率pb" title="查看术语：市净率(PB)">市净率</a> <span class="term">PB</span>、企业价值倍数 EV/EBITDA,或者它们的倒数。选定口径之后,每只股票每天都有了一个确定的数,这一列数,就是你的估值因子。</p><p>再翻译两句。<span class="hl">“最近涨得强的股票可能继续强”</span>——可以译成过去 <span class="num">20 个交易日</span>收益率、过去 <span class="num">60 日</span>收益率,或者剔除最近几天<span class="term">反转</span>影响之后的<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量因子</a>。<span class="hl">“质量好的公司更稳”</span>——可以用 <a class="term term-link" href="glossary.html#g-净资产收益率roe" title="查看术语：净资产收益率(ROE)">ROE</a>、毛<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>、负债率、现金流质量这些指标拼出一个质量因子。看到没有,投资界的每一句朴素判断,背后都能站出一列数据。</p><p>所以因子不是一张别人发给你的固定清单,而是一种把投资直觉数据化的方法。而数据化的关键永远是口径:用什么数据?在哪个时间点可见?缺失值和极端值怎么处理?每天怎么更新?适用于哪些股票?口径含糊的因子,翻译过来就是一句话都说不清的<span class="hl">“投资感觉”</span>,没法检验,更没法信任。</p>
+
+        <h2>3. 因子、信号和特征有什么区别</h2>
+<p>在量化圈子里,因子、信号、特征这三个词经常被混着用,不同公司甚至有不同习惯,新人听得云里雾里。入门阶段可以按这样一套分工来记:特征,是喂给模型的原始或加工变量;因子,通常带着金融解释,能描述某种收益来源或风险暴露;信号,则更靠近交易决策,告诉你现在该不该买卖、给多少仓位。</p><p>拿一个具体例子串起来看。过去 <span class="num">20 日</span>收益率,扔进模型时它是个特征。如果你认为它代表<span class="term">动量</span>效应——涨的还会再涨——它就成了动量因子。等模型把它和几十个其他变量揉在一起,输出一个股票预期收益分数,这个分数就是选股信号。同一个数字,在流水线的不同位置换了三个身份。</p><p>较真这三个词不是为了咬文嚼字,而是防止一个思维错误:把所有数字都当成 <a class="term term-link" href="glossary.html#g-alpha" title="查看术语：Alpha">Alpha</a>。一个变量可能只是风险暴露,带上它不等于有正向收益预测;一个特征可能在模型里确实有用,却给不出清晰的经济解释;一个交易信号可能短期很灵,但容量小到装不下多少资金。身份不同,信任等级就该不同。</p>
+
+        <h2>4. 常见因子家族</h2>
+<p>股票量化里的因子虽多,大致能归成几个家族,先把户口本认全。估值因子看股票贵不贵:<span class="term">PB</span>、<span class="term">PE</span>、股息率。质量因子看公司经营得好不好:<span class="term">ROE</span>、毛利率、现金流。成长因子看收入和利润的增长速度。动量因子跟着过去的价格趋势走。<span class="term">反转</span>因子赌短期涨跌过度后的回摆。规模因子看市值大小。<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>因子盯成交额、<a class="term term-link" href="glossary.html#g-换手率" title="查看术语：换手率">换手率</a>和买卖价差。七个家族,各有脾气。</p><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>但请立刻记住:这些因子没有一个是天天发工资的印钞机。价值因子可能连续多年跑输大盘;动量因子会在市场急转弯时大亏一笔;小市值因子受监管政策和流动性的影响起伏很大;高股息因子往往集中在低成长行业。因子本质上是一组风险和行为模式的刻画,它们兑现收益的方式从不温柔准时。</p></div><p>所以成熟的量化研究员,问出<span class="hl">“哪个因子收益最高”</span>之后,紧接着还有一串问题:它和现有因子的相关性高不高?换手高不高?容量有多大?暴露明显落在哪些行业?计算时有没有用到未来数据?扣掉成本后还剩多少?能答完这一串,才算真正了解一个因子——收益数字只是它的简历,履历背调才是录取依据。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 290" role="img" aria-label="因子分层回测柱状图:按因子值把股票分成5组,从第1组到第5组未来收益单调递增">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">分层回测:把股票按因子值分成5组,看收益是否单调</text>
+            <line x1="90" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="90" y1="60" x2="90" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="60" y="70" fill="#8499bd" font-size="13">未来收益</text>
+            <!-- 5根柱子,单调递增 -->
+            <rect x="150" y="200" width="90" height="50" fill="#e88" opacity="0.75"/>
+            <text x="195" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第1组(因子最低)</text>
+            <rect x="290" y="175" width="90" height="75" fill="#c98b6a" opacity="0.8"/>
+            <text x="335" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第2组</text>
+            <rect x="430" y="150" width="90" height="100" fill="#b0a06a" opacity="0.8"/>
+            <text x="475" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第3组</text>
+            <rect x="570" y="120" width="90" height="130" fill="#8fb37a" opacity="0.85"/>
+            <text x="615" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第4组</text>
+            <rect x="710" y="90" width="90" height="160" fill="#a8c6ff" opacity="0.9"/>
+            <text x="755" y="270" text-anchor="middle" fill="#8499bd" font-size="12">第5组(因子最高)</text>
+            <path d="M 195 195 L 335 170 L 475 145 L 615 115 L 755 85" fill="none" stroke="#eef4f8" stroke-width="2" stroke-dasharray="6 5"/>
+            <text x="600" y="70" fill="#eef4ff" font-size="13">收益随分组单调上升 → 因子可能有效</text>
+          </svg>
+          <p class="figure__cap">把股票按因子值排序、平均分成几组,再看每组之后的平均收益。如果从低到高单调递增(或递减),说明这个因子可能真的携带信息,而不是随机噪声。</p>
+        </div>
+        <h2>5. 同一天把股票排队</h2>
+<p>大量股票因子是在<span class="hl">“横截面”</span>上使用的。横截面这个词听着学术,动作却很形象:在同一天,把所有可投资股票拉到操场上,按某个因子值排成一队。比如今天全市场 4000 只股票,你按 <span class="term">PB</span> 从低到高排队,最便宜的站队首,最贵的站队尾。排完这支队,再谈怎么用。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>注意横截面排序和时间序列预测是两回事。它不预测大盘明天涨还是跌,它预测的是在同一锅里,哪几只股票相对更好。指数增强和<a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>策略最爱的就是这种相对收益:同一个市场环境下,多买排名靠前的,少买或者卖空排名靠后的——大盘涨你跟着涨,但你涨得比它多一点就行。</p></div><p>这也解释了你实习时为什么天天和<span class="hl">“矩阵”</span>打交道:行是日期,列是股票,每个格子里是一个因子值。一张巨大的表横在眼前,研究员每天的工作就是追问:这张矩阵里,到底有没有稳定的横截面排序信息?有,则留;没有,则扔。简单粗暴,但很诚实。</p>
+
+        <h2>6. 因子排序和未来收益是否同向</h2>
+<p>排好了队,自然要问:排得对不对?<a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">IC</a> 就是给排队质量打分的指标。IC 是 Information Coefficient 的缩写,常见做法是计算因子值和未来收益之间的相关系数:今天得分高的股票,未来一段时间收益也更高,IC 就是正的;要是高分股反而普遍表现更差,IC 就是负的。正负之间,就是这个因子靠不靠谱的第一印象。</p><p>举个极简的例子感受一下。今天你按某因子给 5 只股票打分,明天高分股票普遍涨得多、低分股票涨得少甚至下跌,那这一天的 IC 就比较高。业内的做法是把成百上千个交易日的 IC 连成一条序列,再看它的平均值、稳定性和波动——单看一天的 IC 意义不大,长期的平均表现才开始说明问题。</p><div class="callout callout--note reveal"><span class="callout__title">动手算一遍 RankIC 到底是什么</span><p><span class="hl">“动量因子”</span>按过去 <span class="num">20 天</span>收益排出 A>B>C>D>E 五只股。下周实际收益排出 A>E>B>D>C。把因子名次和收益名次对齐:因子名次 (1,2,3,4,5),收益名次 (1,3,5,4,2),差值 d = (0,-1,-2,0,3),平方和刚好 14。塞进 Spearman 公式:ρ = 1 − 6×14 ÷ (5×24) ≈ 0.30——这就是这一天的 <span class="term">RankIC</span>。不算高,但方向对了:高分股整体更靠前。用 5 只股票在 Excel 里自己复算一遍,十五分钟就能把<span class="hl">“IC 是相关系数”</span>这句话从名词变成手感。</p></div><p>实战中更常用 <span class="term">RankIC</span>,也就是用排名算相关性,而不是用原始数值。原因很实际:因子值里常有极端值捣乱,排名的抗干扰能力更强。另外千万别觉得 IC 要大才有用——股票横截面的噪声极强,一个长期平均 <span class="term">RankIC</span> 只有 0.03 的因子,如果稳定、成本低、容量大,一样可能有商业价值。在这个行业,微弱但稳定,胜过耀眼但抽风。
+                <div class="figure reveal">
+                          <div data-lab="ic"></div>
+                          <p class="figure__cap">IC 实验台:拖动相关性强度 ρ,看散点从雾变成斜线——这就是书里说的<span class="hl">“因子排序和未来收益同向”</span>。</p>
+                        </div>
+                </p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 385" role="img" aria-label="IC 曲线图:因子排序与未来收益的相关性起伏,需要看一年摊平后才能判断有没有资产质量">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">IC:每颗因子技能摆一条？检验一切是否“态一致”</text>
+            <!-- 排序 VS 下月收益坐标;正相关散开 -->
+            <rect x="80" y="80" width="380" height="300" rx="10" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="270" y="106" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">IC 的秒定义</text>
+            <text x="270" y="132" text-anchor="middle" fill="#bcc9dd" font-size="12">因子按分数给全市场若干股排队;</text>
+            <text x="270" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">看上个月谁最后;</text>
+            <text x="270" y="176" text-anchor="middle" fill="#bcc9dd" font-size="12">计算两个名次表的相关系数</text>
+            <text x="270" y="206" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">IC = {-1 ~ +1 的相关数}</text>
+            <text x="270" y="234" text-anchor="middle" fill="#bcc9dd" font-size="12">+ 表示分数高能涨(买高分好)</text>
+            <text x="270" y="256" text-anchor="middle" fill="#bcc9dd" font-size="12">- 表示分数高能跌(低分好)</text>
+            <text x="270" y="278" text-anchor="middle" fill="#bcc9dd" font-size="12">0 表示因子不预测未来</text>
+            <text x="270" y="308" text-anchor="middle" fill="#8499bd" font-size="12">行业经验:稳定的 IC 在 0.03~0.05 尤属珍贵</text>
+            <!-- 右边 曲线 -->
+            <text x="630" y="90" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">IC 为什么要滚一个季度到一年</text>
+            <line x1="500" y1="330" x2="820" y2="330" stroke="#8499bd" stroke-width="2"/>
+            <line x1="500" y1="130" x2="500" y2="330" stroke="#8499bd" stroke-width="2"/>
+            <path d="M 505 210 Q 560 200 620 220 Q 680 240 740 200 Q 790 170 820 190" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <line x1="505" y1="235" x2="820" y2="235" stroke="#f0c96a" stroke-width="2" stroke-dasharray="8 6"/>
+            <text x="820" y="232" fill="#f0c96a" font-size="12">均值的均值</text>
+            <text x="820" y="330" fill="#bcc9dd" font-size="12">月份</text>
+            <text x="510" y="140" fill="#bcc9dd" font-size="12">IC(+)/-</text>
+            <text x="650" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12">任何单月可能都正,但趋势摆动围绕“均值的均值”上下;真正信号看 IC 摊平后的水平是否稳定轩抬高位</text>
+          </svg>
+          <p class="figure__cap">IC 是量化界的成绩单——波动大是常态,稳定上斜才是真迹。单月出来一个 0.2 不能保证是真因子,一年的平均 IC 0.03-0.05 才能写进策略池。</p>
+        </div>
+        <h2>7. 高分组是不是真的更好</h2>
+<p>IC 给了一个相关系数,但你的直觉更想看真章:如果真按这个因子下注,能赚吗?<a class="term term-link" href="glossary.html#g-分层回测" title="查看术语：分层回测">分层回测</a>就把这件事演给你看。做法是:按因子值把股票分成几组,常见五组或十组,第一组装因子最高的,最后一组装最低的,然后看各组未来一段时间的真实收益。因子要是有效,通常希望高分组长期跑赢低分组。</p><p>举个例子。把股票按股息率从高到低分成五组,每月调仓一次,跑出几年数据,如果最高股息组的长期收益持续高过最低股息组——而且不是靠某几年极端行情撑起来的——那这个因子八成有点真东西。但别急着收工,还得看多空收益、回撤、换手、行业暴露和市值暴露,确认赚的不是<span class="hl">“碰巧重仓了某个行业”</span>的钱。</p><p>分层回测的价值,在于它比干巴巴的 IC 直观:IC 告诉你排序的相关性,分层收益告诉你照着买会得到一条什么样的净值路径。当然它也不是免死金牌,交易成本、涨跌停约束、停牌、容量限制和数据偏差,都能让纸面上漂亮的多空曲线在实盘里走形。直观归直观,检验归检验。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 330" role="img" aria-label="分层回测柱状图:按股息率把股票分五组,未来一年平均收益从第1组+5.1%单调降到第5组+2.1%,多空差约+3.0个百分点/年">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">分层回测:按股息率分 5 组,未来收益是否单调</text>
+            <text x="450" y="57" text-anchor="middle" fill="#8499bd" font-size="12">口径沿用本节:第 1 组装股息率最高的股票、第 5 组装最低的,每月调仓、连跑数年取平均</text>
+            <line x1="90" y1="60" x2="90" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="90" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="32" y="74" fill="#8499bd" font-size="11">年均收益↑</text>
+            <rect x="130" y="97" width="90" height="153" fill="rgba(240,201,106,0.45)" stroke="#f0c96a" stroke-width="1.5"/>
+            <text x="175" y="81" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">+5.1%</text>
+            <text x="175" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 1 组</text>
+            <text x="175" y="291" text-anchor="middle" fill="#8499bd" font-size="11">股息率最高</text>
+            <rect x="270" y="130" width="90" height="120" fill="rgba(122,167,240,0.42)"/>
+            <text x="315" y="114" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+4.0%</text>
+            <text x="315" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 2 组</text>
+            <rect x="410" y="151" width="90" height="99" fill="rgba(122,167,240,0.34)"/>
+            <text x="455" y="135" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+3.3%</text>
+            <text x="455" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 3 组</text>
+            <rect x="550" y="166" width="90" height="84" fill="rgba(122,167,240,0.27)"/>
+            <text x="595" y="150" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">+2.8%</text>
+            <text x="595" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 4 组</text>
+            <rect x="690" y="187" width="90" height="63" fill="rgba(232,120,120,0.22)" stroke="#e88" stroke-width="1.5"/>
+            <text x="735" y="171" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">+2.1%</text>
+            <text x="735" y="272" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">第 5 组</text>
+            <text x="735" y="291" text-anchor="middle" fill="#8499bd" font-size="11">股息率最低</text>
+            <path d="M 175 97 L 315 130 L 455 151 L 595 166 L 735 187" fill="none" stroke="#eef4f8" stroke-width="2" stroke-dasharray="6 5"/>
+            <text x="706" y="76" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800">单调递减 = 因子值越大,未来收益越好</text>
+            <text x="706" y="96" text-anchor="middle" fill="#f0c96a" font-size="11.5" font-weight="800">多空差 +5.1% - 2.1% ≈ +3.0 个百分点/年</text>
+            <text x="450" y="316" text-anchor="middle" fill="#ffb4b4" font-size="12.5">反过来,要是第 3 组反超第 1 组、顺序乱跳——先怀疑运气和行业暴露,别急着下注;单调才算有用</text>
+          </svg>
+          <p class="figure__cap">把股票按股息率排队分五组、每月调仓跑上几年:高分组 +5.1% 一路降到低分组 +2.1%,单调才算有用——说明因子分数和未来收益同向。顺序一旦乱跳,先怀疑运气或行业暴露,别急着下注。</p>
+        </div>
+        <h2>8. 别把别人的风险当成自己的能力</h2>
+<p>这是因子研究里最容易自我感动的一个坑。你发现某个指标选出的股票收益很高,兴奋得不行,仔细一看:选出来几乎全是小市值股票。那它赚的很可能不是你这个指标的钱,而是小市值风格的钱——你只是站在别人的风口上,误以为自己会飞。</p><p><a class="term term-link" href="glossary.html#g-中性化" title="查看术语：中性化">中性化</a>就是把不想蹭的暴露剥离掉,让因子裸泳给你看。常见做法有行业中性、市值中性、风格中性。比如在每个行业内部单独排序,行业涨跌就干扰不到因子选股;或者用回归把市值暴露从因子值里抽走,剩下那部分如果还能预测收益,才算你有真本事。</p><p>但也别把中性化当成越多越好。剥得太狠,可能连因子真实的收益来源一起剥没了,剩下一个干干净净但毫无预测力的空壳。关键是想清楚自己要赚什么钱:如果你对外宣称做的是选股 Alpha,就不能主要靠押行业和押市值;如果你本来就想做风格轮动,那风格暴露本身就是策略的一部分,不用剥,大方承认就好。</p>
+
+        <h2>9. 因子为什么会失效</h2>
+<p>因子不是永动机,它哪天躺平了,通常逃不出四种死因。第一,它本来就是噪声,只是历史上碰巧表现好——<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>里的明星,数据挖掘的幽灵。第二,市场结构变了,过去支撑它的机制不再成立。第三,用的人太多,收益被蜂拥的交易挤没了。第四,交易成本上升或流动性变差,纸面收益根本落不了地。</p><p>除了彻底死亡,还有一种更磨人的情况:周期性失效。价值因子可能在成长股的大行情里难受好几年,动量因子会在市场急转弯时突然崩给你看,低波因子会在风险偏好暴涨的牛市里跑输得让人怀疑人生。这不一定说明因子永久死了,但你的资金能不能扛到它复活,是个现实问题——长期信仰,短期要命。</p><p>所以判断失效绝不能只看一个月亏损就掀桌子。先查一串东西:亏损是不是超出了历史分布的正常范围?市场环境变没变?因子的拥挤度是不是在上升?交易成本是不是变高了?数据口径是不是出了毛病?组合约束是不是放大了某类风险?失效诊断是功夫活,它和当初发现因子一样,都是研究的一部分。</p>
+
+        <h2>10. 好因子需要同时过四关</h2>
+<p>不要先学四关,先看一个因子走完四关的全程——就拿最普通的<span class="hl">“低估值”</span>因子:过去<span class="num">12个月</span>,<span class="term">PB</span> 最低的 <span class="num">10%</span> 股票,是不是比最高的 <span class="num">10%</span> 涨得多?</p><p>第一关:这个因子有没有经济解释?有。<span class="term">PB</span> 低的公司要么是经营出了问题、市场给它扔了石头,要么是真的被市场错估了——前者是风险补偿,后者是行为偏差,两者加起来给你超额的动机。这一关过了。</p><p>第二关:统计能不能证明。把 <span class="num">2010-2024 年</span>的数据拿过来做分层回测:低 <span class="term">PB</span> 组合年化 <span class="num">12.5%</span>,高 <span class="term">PB</span> 组合年化 <span class="num">8.2%</span>,年化超额 <span class="num">4 个百分点</span>,月均 IC 约 0.04。但这里面有统计周期问题:2015-2018 蓝筹全市场风格是价值的地基成型期,低<span class="term">PB</span>表现都不会太差;可到了 2019-2021 成长风格主导时,这个组合明显跑输了。这就是<span class="hl">“它能长期赚”</span>和<span class="hl">“它每年都赚”</span>的根本区别——统计只证明长期来看有效。</p><p>第三关:交易能不能落地。低 <span class="term">PB</span> 组合容易踩两类股:一是银行、地产、煤炭这些老牌周期公司,经营不难,但多亏大事件停牌;换手上,<span class="hl">“低<span class="term">PB</span>→更低<span class="term">PB</span>”</span>的变化快导致换手偏高。一年调仓 <span class="num">12 次</span>(季调),按单边 <span class="num">0.12%</span> 成本算,年化约 <span class="num">2.4%</span>——这对一个组合里最便宜的组合已经很凶,直接决定了你的调仓频率上限。</p><p>第四关:这个因子和你组合里已有的因子,是不是在说同一件事?如果你已经有低波动因子,跟低 <span class="term">PB</span> 就是两个连着的同一件事——它们的相关性约 0.6,这只意味着你花了两个位置费讲同一个观点。它能给你的增量超额可能只有 <span class="num">0.5%</span>;但同时它提供了额外的故事支撑——<span class="hl">“市场不喜欢被冷落的股票”</span>,就这样也算通过了。</p><p>所以四关再加一句话:任何一个对今天看过的 factor 都是特殊条件!它们可能是'真正低估值',也可能是'多匕劣处理的下跌'。在你把它写完一章的故事之前,别先计收它。</p>
+
+        <h2>11. 个人如何做第一个因子研究</h2>
+<p>理论铺垫够了,该挽袖子了。个人入门的第一个因子研究,用最简单的日频因子就够:选一个股票池,比如<span class="term">沪深 300</span> 或<span class="term">中证 500</span> 成分股;选一个<a class="term term-link" href="glossary.html#g-再平衡" title="查看术语：再平衡">再平衡</a>频率,比如每月一次调仓;选一个朴素因子,比如过去 <span class="num">20 日</span>收益率或 <span class="term">PB</span>;然后把时点数据、排序、分组、调仓、扣成本这一整套流程走通。</p><div class="callout callout--warn reveal"><span class="callout__title">郑重提醒</span><p>郑重提醒:别一上来就上深度学习,先把最朴素的流程做对。数据日期不能错位,停牌的股票不能随便成交,未来的财报不能提前用,指数成分不能用现在的名单回填历史,交易费用要老老实实扣,涨跌停要正确处理。这套流程的严谨程度,比你模型的名字响亮程度重要一百倍——流程错了,模型越聪明,自欺越高效。</p></div><p>走完第一遍,你应该能交出一份像样的研究报告:因子定义、数据来源、股票池、回测区间、调仓频率、IC、分层收益、换手、成本、<a class="term term-link" href="glossary.html#g-最大回撤" title="查看术语：最大回撤">最大回撤</a>、失效阶段和可能的解释。每一项都有出处,每一个数字都经得起追问。做到这一步,恭喜你,才算真正站到了量化研究的大门口。</p>
+                <p>光说不练假把式。本书 <code>examples/</code> 目录里有四个零依赖、纯 Python 标准库的教学脚本,这一章对应的是 <code>ex01_factors.py</code>,核心函数长这样:</p>
+                <figure class="code-walk reveal">
+                  <figcaption class="code-walk__file">examples/ex01_factors.py</figcaption>
+                  <pre class="code-walk__code"><code>def factors_at(stocks, t):
+    # 只用 [0, t] 内可见的数据——这是纪律,不是习惯。                    <b class="cw-tag">1</b>
+    value, momentum, low_vol, quality = [], [], [], []
+    for s in stocks:
+        value.append((s, book_like(s, t) / s.prices[t]))          <b class="cw-tag">2</b>
+        momentum.append((s, s.prices[t] / s.prices[t - 60] - 1))
+        low_vol.append((s, -vol_60(s, t)))
+        quality.append((s, s.quality))
+    zs = [zscore(x) for x in (value, momentum, low_vol, quality)]  <b class="cw-tag">3</b>
+    return {c: sum(z[c] for z in zs) / 4 for c in zs[0]}           <b class="cw-tag">4</b></code></pre>
+                  <ol class="code-walk__notes">
+                    <li><strong>函数签名先锁数据边界</strong>:只取 <code>[0, t]</code> 区间。写因子代码,第一件事不是写公式,而是声明“我在 t 时刻到底能看到什么”——以后每加一列数据,都被这个 <code>t</code> 管着。</li>
+                    <li><strong>四个方向不同的东西先各自打分</strong>:“底子/价格”越高越便宜、动量越大越强、波动越小越稳、质量越高越好。同一行只能看到它们各自的得分,别急着相加。</li>
+                    <li><strong>zscore 是度量统一</strong>:四个因子单位完全不同,直接相加等于拿米、斤、摄氏度比大小。减去均值、除以标准差,先拉到同一量纲——前文因子合成示例里“四个分数怎么拧成一个”,拧的就是这一步。</li>
+                    <li><strong>等权 1/4 是刻意朴素</strong>:第一版别优化权重。先看等权合成是否仍有排序信息(本章的 IC、分层),再谈怎么配权——样本内调出来的“最优权重”,十有八九是噪声。</li>
+                  </ol>
+                </figure>
+                <p>跑一遍 `python3 ex01_factors.py`,你会看到五组分层收益是否单调、四个单因子 IC 各是多少。注意一个诚实的提醒:这是合成数据上的教学,真实世界里 IC 能稳定站在 0.03-0.05 已经可以拿来用了,别被示例里的好数字惯坏了眼睛。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>因子是把投资判断变成一列有口径、可排序、可检验的数据。</li>
+            <li>IC、RankIC 和分层回测用于检验因子是否对未来收益有排序信息。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 便宜的股票可以让你难受三年</li>
+            <li><strong>2.</strong> 因子不是魔法,是一列有口径的数据</li>
+            <li><strong>3.</strong> 因子、信号和特征有什么区别</li>
+            <li><strong>4.</strong> 常见因子家族</li>
+            <li><strong>5.</strong> 同一天把股票排队</li>
+            <li><strong>6.</strong> 因子排序和未来收益是否同向</li>
+            <li><strong>7.</strong> 高分组是不是真的更好</li>
+            <li><strong>8.</strong> 别把别人的风险当成自己的能力</li>
+            <li><strong>9.</strong> 因子为什么会失效</li>
+            <li><strong>10.</strong> 好因子需要同时过四关</li>
+            <li><strong>11.</strong> 个人如何做第一个因子研究</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>因子为什么不能只理解成“能赚钱的数字”?</summary>
+            <p>因为因子也可能只是风险暴露、解释变量或历史噪声,必须检验它的预测能力、交易成本和风险来源,才能确认是不是有真金白银。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>RankIC 大致衡量什么?</summary>
+            <p>它衡量因子排序和未来收益排序之间是否同向;用的是排名相关,比直接用原始数值相关更抗极端值的干扰。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>数据、标签和样本切分: 量化模型从哪里学</h2>
+          <p>讲清行情、财务、另类数据、标签定义、点时数据和训练验证切分。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+    <script src="assets/labs.js"></script>
+  </body>
+</html>

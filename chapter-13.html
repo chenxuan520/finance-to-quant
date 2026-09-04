@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 13 章 · 股票怎样上市、交易与退市 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="沿着股票的一生理解注册制、IPO、打新、交易时间、涨跌幅、T+1、费用、ST 与退市。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="13">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第三部分 · 市场如何形成价格与数据 · 第 13 章</p>
+        <h1>股票怎样上市、交易与退市</h1>
+        <p class="lead">一只股票能够出现在交易软件里,先要完成发行与上市;能够被买卖,还要服从具体市场的交易规则;失去上市条件时,又会进入风险警示和退市通道。这一章沿着股票从出生到退出的生命周期,把 A 股回测最容易写错的制度约束放回真实市场。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线三</span>
+            <span>本部分第 2 / 8 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>一项金融权利怎样上市、成交、留下数据,又该怎样评价它的收益和风险?</p>
+          <p class="chapter-context__outcome">读完后,你能把交易界面上的数字还原为制度、现金流和可研究的数据口径。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>注册制核心:审核只查披露,市场自行付费;上市不再是监管的质量背书。</li>
+            <li>询价机制取代 23 倍 PE 指导价,一级与二级价差收窄,破发是制度设计自然结果。</li>
+            <li>A 股由不同交易所、板块和品种组成,交易规则不能只背一个统一版本。</li>
+            <li>集合竞价、连续竞价、涨跌幅、T+1、停牌和费用,都会影响真实成交结果。</li>
+          </ul>
+        </section>
+
+
+        <h2>1. 一只股票从出生到摘牌的路径</h2>
+
+        <h3 class="case-heading reveal"><span class="case-study__label">金融现场</span> 1.1. 48.62 元的第一天,为什么成了很多人的漫长一课</h3>
+<p><span class="num">2007 年</span> <span class="num">11 月</span>,中国石油登陆 A 股,上市首日盘中价格一度站上 <span class="num">48 元</span>。能源巨头、稀缺资产、人人看好的国民公司,所有标签叠在一起,让不少投资者把<span class="hl">“伟大公司”</span>直接翻译成<span class="hl">“伟大买点”</span>。随后股价长期下行,那一天成了 A 股估值史上最著名的记忆之一。</p><p>这不是说公司毫无价值,而是发行、市场情绪和二级定价可以在同一天把未来透支得太远。新股头顶的光环来自企业故事、稀缺供给和牛市资金,却不会替买入者保证回报。上市只解决<span class="hl">“能不能交易”</span>,从不回答<span class="hl">“这个价格值不值”</span>。</p><p>今天研究 <span class="term">IPO</span> 和打新,仍要把这三个问题分开:公司质量、发行定价、上市后的交易拥挤。任何一项都可能很好,另外两项却让投资结果很差。<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>出生那天最热闹,也往往是预期最贵的一天。</p>
+
+        <h3 class="case-heading reveal"><span class="case-study__label">概念现场</span> 1.2. 拍卖会上喊价最高的人,为什么最容易买贵</h3>
+<p>桌上放着一只装满硬币的玻璃罐,一群人各自估总额,出价最高者拿走。大家的估计可能围着真值上下分布,可最后赢的人往往不是最懂,而是误差恰好最乐观的那个。胜利本身筛选出了最大的高估,这叫赢者诅咒。</p><p>油田竞拍、土地拍卖、公司并购和热门新股里都有同一张脸。参与者越多、标的越难估,最高报价离真实价值越可能过远。买家后来发现项目回报不够,未必是运营突然变差,也可能是赢下它那一刻就已经把乐观付过了头。</p><p>研究 <span class="term">IPO</span> 和竞价交易时,不能把<span class="hl">“抢到”</span>自动记成好结果。模型需要估计价值分布、竞争人数、报价误差和安全边际,再决定是否参与。真正成熟的策略允许自己经常空手而归,因为有些胜利的奖品,就是替所有落选者支付最高学费。</p>
+
+        <h3>1.3. 从“帮你把关”到“只查披露”</h3>
+<p>三代审批逻辑的分水岭出现在 <span class="num">2023 年</span> <span class="num">4 月</span>。审批制年代,上市指标按省份分配,拼关系;核准制时代,发行审核委员会实质判断——看你是不是一家好公司;注册制下,审核只问一件事:信息披露是否真实准确完整。企业质量好坏、商业模式靠不靠谱,监管不说,交还给市场——监管守住<span class="hl">“没人说谎”</span>,市场负责<span class="hl">“出价投票”</span>。这条分界线的左边是核准制,右边是注册制。</p><p>这个变化对散户的含义极重:上市不再是一张质量保证书。核准时代,过会本身就被市场理解为一次资质背书,新股上市首日几乎必涨；注册制时代,监管只做形式审查,质量交由询价的公司自身机构来判断,上市破发成了本来就正常的概率事件。你在<a class="term term-link" href="glossary.html#g-二级市场" title="查看术语：二级市场">二级市场</a>看到一只新股,要先默认它还没被任何人判定为<span class="hl">“好公司”</span>。</p><p>配套规则同步翻篇:主板新股上市后前五个交易日不设涨跌幅限制,第六日起恢复 <span class="num">10%</span> 限制;创业板、科创板前五日同样不设限,日常波动放宽到 <span class="num">20%</span>。打新时代津津乐道的<span class="hl">“连板日历”</span>,基本就此作古。</p>
+
+        <h3>1.4. 询价取代了指导价</h3>
+<p>核准时代,新股发行价有一条不成文的事实上限 <span class="num">23 倍</span>左右<a class="term term-link" href="glossary.html#g-市盈率pe" title="查看术语：市盈率(PE)">市盈率</a>,远低于二级同行平均估值,白菜般的差价几乎是给中签者派送的制度红利。注册制下这条封顶取消,定价靠网下机构投资者询价:主承销商向基金公司、保险资管、券商自营、私募等类专业机构问价——愿意按多少钱买、愿意买多少股——然后按规则剔除异常高价,加权平均后定出发行价。</p><p>询价机制里有一个反直觉的自称稳定器:报价机构如果报得离谱,就可能被主承销商从配售名单里剔除,于是乱报高价的动机被削掉;同时发行价定得过高,上市就破发,承销商的声誉和后续业务都要受损。价格在这两头夹逼之间,向二级市场的参照估值收敛,一级和二级之间的制度性差价被大幅抹平。</p><p>这正是破发概率上升的真正原因:发行价贴近市场价,价差红利没了,打新的收益结构就从<span class="hl">“无风险”</span>变成<span class="hl">“正常的投资风险”</span>。你今后看到破发新闻,别先骂上市公司骗钱,先问一句:它发行时的价格,离二级水平有多近。</p>
+
+        <h3>1.5. 从制度红包到智力活动</h3>
+<p>打新的经济本质是锁死配售差价。核准制 + <span class="num">23 倍</span> <span class="term">PE</span> 封顶时代,上市首日的平均涨幅多年稳定在 <span class="num">40%</span> 左右,破发率接近零——这是制度送出的无成本红包,市场唯一要做的事是把市值凑齐去抽。<span class="num">2018-2021 年</span>,主板新股的平均中签率约万分之几,顶格申购年化打新收益能到几个百分点——免费彩票。</p><p>注册制后,红包退化为技术。创业板和科创板新股破发率在 <span class="num">2022 年</span>高点时期一度超过三成;<span class="num">2023-2024 年</span>逐渐稳定在一到两成。主板仍然相对安全,但平均收益率从核准时代的三位数百分比降到个位数。这意味着打新这项曾经的<span class="hl">“低技能套利”</span>变成了需要估读估值、判断市场情绪、测算资金机会成本的正常投资活动——和你后面所有章节训练的技能是同一套的用的。</p><p>还要单独说一句 A 股特色规则:<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>账户打新的资金是要算成本的——如果融资申购,上市第一天不封板你就同时挨券息和破发双头咬。免费彩票已经变成了<span class="hl">“要负成本来猜测”</span>,你把它当成当年那种白拿的好日子,会被两边收费夹击。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 340" role="img" aria-label="打新制度对比图:左列核准制时代隐形上限23倍PE、首日涨跌44%、破发率近零;右列注册制询价,破发率10%以上">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">打新经济学:从制度红包到技术活</text>
+            <!-- 两根柱子:核准 vs 注册 -->
+            <rect x="120" y="90" width="240" height="170" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="240" y="118" text-anchor="middle" fill="#b5d3a0" font-size="16" font-weight="800">核准制时代</text>
+            <text x="240" y="146" text-anchor="middle" fill="#bcc9dd" font-size="13">23 倍 PE 隐形上限</text>
+            <text x="240" y="170" text-anchor="middle" fill="#bcc9dd" font-size="13">首日涨跌 ≤ 44%</text>
+            <text x="240" y="198" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">破发率 ≈ 0</text>
+            <text x="240" y="228" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">两只门缝的免费彩票</text>
+            <rect x="540" y="90" width="240" height="170" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="660" y="118" text-anchor="middle" fill="#ffb4b4" font-size="16" font-weight="800">注册制时代(2023.4 起)</text>
+            <text x="660" y="146" text-anchor="middle" fill="#bcc9dd" font-size="13">询价制,贴近二级价</text>
+            <text x="660" y="170" text-anchor="middle" fill="#bcc9dd" font-size="13">前五日不设涨跌幅</text>
+            <text x="660" y="198" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">破发率 10-20%+</text>
+            <text x="660" y="228" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">要读招股书的技术活</text>
+            <path d="M 370 170 Q 450 130 530 170" fill="none" stroke="#8499bd" stroke-width="3" stroke-dasharray="8 6"/>
+            <text x="450" y="120" text-anchor="middle" fill="#8499bd" font-size="12">制度差价消失了</text>
+            <text x="450" y="308" text-anchor="middle" fill="#bcc9dd" font-size="12.5">免费彩票变调研题之后,你的本钱路线和机会成本才受到正视</text>
+          </svg>
+          <p class="figure__cap">核准制下打新是制度红包,注册制把红包收回变成技术活。这不是制度变坏了,定价权交回市场了——免费午餐一收摊,你赚不赚钱只能靠自己读东西。</p>
+        </div>
+        <h3>1.6. 屏幕上突然消失的按钮</h3>
+<p>A 股特有的停牌史比成熟市场厚得多。<span class="num">1990 年</span>代上市以后,公司想临时应对重大事项就可以停牌,<span class="num">2015 年</span>股灾高峰 1400 多家公司同日停牌——约占 1/3。长期停牌常被用来规避下跌、等待重组甚至躲避卖压。2018 以后监管出重拳,明确长期停牌必须有严格事由和期限,平均停牌天数至今显著压缩,但那扇之前被用烂的门,被你交易系统记得久远。</p><p>停牌期间,你并没有被锁住股价——而是被锁住了交易能力:市场中间发生了什么,你无法应对;复牌那一刻,你只能被动接受跳空的新价。这就是为什么长期停牌必须在风险核算里算负分,因为它在你最需要<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>的时候恰好取走了流动性。量化<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>里剔除长期停牌股,不是样本洁癖,是对死亡数据的本能反应——一段停牌时间连续,对未来判断几乎无信息含量。</p>
+
+        <h3>1.7. 戴帽、*ST 与强制退出的三条路</h3>
+<p>一只股被<span class="hl">“戴帽”</span>只有三种门:财务指标门上——连续亏损、净资产为负、营收低于 <span class="num">1 亿元</span>;交易指标门上——连续二十个交易日收盘价低于 <span class="num">1 元</span>面值,或总市值低于 <span class="num">3 亿元</span>;重大违法门上——财务造假、欺诈发行被行政处罚或刑事定罪。规则写得很细,但本质就是一句话:持续伤失上市公司资格的、<a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>或交易活跃度的,该走就走。</p><p>不同的帽子还有明确区别:ST 是其他风险警示(净资产或经营异常),*ST 是退市风险警示(财务困境),风险警示板涨跌幅收窄到 <span class="num">5%</span>(主板)或 <span class="num">20%</span>(创业板),交易警报一直响到摘帽或摘牌。散户必须懂:戴帽不是罚站一会儿就能退板,是新常态——注册制+退市常态化配套,供给端和出清端最后合拢。</p><p>历史上 A 股最热闹的<span class="hl">“壳公司神话”</span>根源:上市难—退市更少,壳有重组价值,坏人敢于理直气壮的。注册制后壳价格一泻千里;2019 到 <span class="num">2024 年</span>年均退市数量是此前十年的几倍。劣币驱逐良币的格雷欣法则在这里被反过来改写:劣等股不再享有<span class="hl">“反正不退市”</span>的隐性托底,正面驱劣的过程正在各活跃市场上演。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 350" role="img" aria-label="退市三条门示意图:财务指标、交易指标、重大违法,注册制后门都打开了">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">退市三条触发门:财务、交易、重大违法</text>
+            <rect x="60" y="90" width="240" height="185" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="180" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">财务指标门</text>
+            <text x="180" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">连续两年亏损 + 营收 &lt; 1 亿</text>
+            <text x="180" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">净资产为负</text>
+            <text x="180" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">先看真是小账</text>
+            <text x="180" y="224" text-anchor="middle" fill="#8499bd" font-size="11">扣非后的业绩才算数</text>
+            <text x="180" y="252" text-anchor="middle" fill="#8499bd" font-size="11">“脱胎换骨”前科要退市</text>
+            <rect x="330" y="90" width="240" height="185" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="450" y="118" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">交易指标门</text>
+            <text x="450" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">连续 20 个交易日收盘价 &lt; 1 元</text>
+            <text x="450" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">总市值 &lt; 3 亿元</text>
+            <text x="450" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">“市场用脚投票”这条最直接</text>
+            <text x="450" y="224" text-anchor="middle" fill="#8499bd" font-size="11">2023-2024 年最后的主流退市入口</text>
+            <rect x="600" y="90" width="240" height="185" rx="10" fill="rgba(143,179,122,0.15)" stroke="#8fb37a"/>
+            <text x="720" y="118" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">重大违法门</text>
+            <text x="720" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">财务造假主业务收入金额大</text>
+            <text x="720" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">欺诈发行被追刑责</text>
+            <text x="720" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">一眼就踢出沒商议</text>
+            <text x="720" y="224" text-anchor="middle" fill="#8499bd" font-size="11">触发即停牌 → 终止上市</text>
+            <text x="450" y="316" text-anchor="middle" fill="#bcc9dd" font-size="12.5">三条门加起来的结果:2019-2024 年年均退市数是注册制前的几倍——“上市就不是质保铭牌,上市也不是永生”</text>
+          </svg>
+          <p class="figure__cap">戴帽不是结束、退市才是一致结果。注册制把“进来”的门放宽,必须把“出去”的门也打开——这就是我为什么要盯涨跌幅红线为什么警惕。</p>
+        </div>
+        <h3>1.8. 发行与退市是同一部机器的两半</h3>
+<p>把注册制想成一只打开的门扇,把退市常态化想成另一只打开的门扇——只有两只门都推开了,<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>市场完成了从<span class="hl">“批文”</span>变成<span class="hl">“通道”</span>的 reposition。只进不出,股票数量像池塘淤积,风险定价永远只能是行政指导的歪曲;只出不进,市场会变成存量贫血的屠宰场。两头一起打开,市场才第一次具备了<span class="hl">“优胜劣汏”</span>的真实功能。</p><p>套到你自己的交易规则上:正因为注册制+退市,筛选股票的必要性和价值都显著上升——上市不再是质量保证,戴帽清算不再是罕见事故;<span class="hl">“这是上市公司”</span>必须翻译成<span class="hl">“这家公司披露的能否让我买单”</span>的自我审视。这是一个很朴素但极难做到的习惯迁移:一代投资者是靠<span class="hl">“监管背着他们审过”</span>就学炒股的,新时代的监管不再背着审,你只有自己完成审。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 360" role="img" aria-label="上市与退市两扇门夹着二级市场水池:发行端注册制门宽、退市端指标红线下沉,两门同开水才会錯转">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">一只门的上市和另一只门的退市</text>
+            <!-- 左:上市门 -->
+            <path d="M 80 300 L 80 130 Q 200 100 320 130 L 320 300 Z" fill="rgba(122,167,240,0.12)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="200" y="150" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">发行端(进门)</text>
+            <text x="200" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">注册制:审核只查披露</text>
+            <text x="200" y="200" text-anchor="middle" fill="#bcc9dd" font-size="12">监管不再实质把关</text>
+            <text x="200" y="228" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">门变宽:更多公司能进</text>
+            <!-- 右:退市门 -->
+            <path d="M 580 300 L 580 130 Q 700 100 820 130 L 820 300 Z" fill="rgba(238,136,119,0.12)" stroke="#ee8877" stroke-width="2"/>
+            <text x="700" y="150" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">退市端(出门)</text>
+            <text x="700" y="178" text-anchor="middle" fill="#bcc9dd" font-size="12">交易指标:面值1元/市值3亿红线</text>
+            <text x="700" y="200" text-anchor="middle" fill="#bcc9dd" font-size="12">财务违法指标:连年亏损/造假</text>
+            <text x="700" y="228" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">门变宽:壳价值丢多</text>
+            <!-- 中间的池 -->
+            <ellipse cx="450" cy="215" rx="95" ry="55" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="210" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">二级市场水池</text>
+            <text x="450" y="232" text-anchor="middle" fill="#bcc9dd" font-size="12">进得出才健康</text>
+            <!-- 循环箭头 -->
+            <path d="M 320 215 Q 355 210 355 215" fill="none" stroke="#8499bd" stroke-width="3" marker-end="url(#arrowP)"/>
+            <path d="M 545 215 Q 580 210 580 215" fill="none" stroke="#8499bd" stroke-width="3" marker-end="url(#arrowP)"/>
+            <defs><marker id="arrowP" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8499bd"/></marker></defs>
+            <text x="450" y="328" text-anchor="middle" fill="#8499bd" font-size="12.5">美国一年退几百家,中国个位数时代刚结束;两扇门一起拉开,水洼才会流转</text>
+          </svg>
+          <p class="figure__cap">注册制打开了进水口,退市常态化打开了出水口。只有进没有出,水池变渊;只出不进,市场变成存量屠宰场。两头都活络,市场才完成天然的汰换。</p>
+        </div>
+        <h2>2. 时间、涨跌幅、T+1 和费用</h2>
+        <p>很多人第一次看股票,会以为市场像一个全天不打烊的网店: 想买就买,想卖就卖,价格随便填,成交之后钱和股票立刻都能接着用。A 股完全不是这样。它有固定的交易时间,过了点的委托只能排队;有集合竞价和连续竞价两套机制,开盘价和盘中价由不同规则生成;有涨跌幅限制,价格每天一开盘就被框进一个区间;有 T+1,今天买入的股票通常明天才允许离场;有停牌和退市风险,流动性可能毫无征兆地消失;还有佣金、印花税、过户费等一串费用,收益到手之前先被刮掉一层。这些规则不只是开户时的常识问答,更是量化回测能不能接近真实市场的第一道门槛——门都进错了,门里面的风景再美也是想象。</p>
+
+        <h3>2.1. A 股不是一个完全统一的市场</h3>
+<p>我们平时说<span class="hl">“A 股”</span>,口气像在指一个整齐划一的大商场。更准确地说,A 股是一组在中国境内交易所挂牌、以人民币计价、面向境内投资者为主的股票和相关证券市场。里面有上海证券交易所、深圳证券交易所、北京证券交易所,也有主板、科创板、创业板、北交所等不同板块——更像一座城市群,而不是一栋楼。</p><p>机制上为什么要分这么多板块?因为上市公司的风险差异太大:成熟大企业和初创科技公司,盈利稳定性、信息披露能力、价格波动幅度都不在一个量级,用同一把尺子限制它们并不合理。于是市场做了一次风险分层:不同板块搭配不同的上市门槛、投资者门槛和交易规则,让不同风险偏好的资金各归其位。用工程的话说,这不是一份全局配置,而是一组按环境覆盖的配置文件——先匹配环境,再谈参数。</p><p>拿涨跌幅这个参数对比一下。只用常见的简化教学数字,具体以交易所当时规则为准:主板普通股票常见 <span class="num">10%</span>,创业板、科创板股票常见 <span class="num">20%</span>,北交所常见 <span class="num">30%</span>。同样一只 <span class="num">10 元</span>的股票,放进三套规则里,当日涨停价分别是 <span class="num">11 元</span>、<span class="num">12 元</span>和 <span class="num">13 元</span>,跌停价分别是 <span class="num">9 元</span>、<span class="num">8 元</span>和 <span class="num">7 元</span>。如果你的代码把涨跌幅写死成 0.1,一只 <span class="num">20%</span> 涨停的股票就可能被你当成脏数据过滤掉——规则背错版本,比不背更糟。</p><p>麻烦还不止涨跌幅:上市前几天是否设限、申报价格的上下限、最小价格变动单位、投资者门槛,都可能不同。还有 <a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a>、<a class="term term-link" href="glossary.html#g-可转债" title="查看术语：可转债">可转债</a>、<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>、基金、期权这些品种,虽然也在交易所里交易,但规则和普通股票不能混为一谈。常有人以为<span class="hl">“A 股嘛,不都是 10 个点涨跌幅”</span>,其实 <span class="num">20%</span>、<span class="num">30%</span> 的品种在行情软件里一抓一大把。所以,小白先记一个原则: 不要把 A 股当成一条规则走天下的市场。你买的是什么品种,在哪个交易所,属于哪个板块,处于什么状态,决定了它适用哪些交易限制——翻译到代码里就是:先查规则表,再下单。</p>
+
+        <h3>2.2. 交易日和交易时间</h3>
+<p>先问你一个简单问题:今天是周六,你的回测系统在周六下了一笔单——它算什么?答案是算一个 bug。A 股不是每天都交易。周末通常不交易,法定节假日也会休市,有时还会因为节假日调休形成连续休市。一个最简单也最常见的回测错误,就是拿自然日当交易日,把周六周日也当成可以买卖的日子。</p><p>普通 A 股股票的交易日里,通常上午和下午各有一段交易时间。开盘前有<a class="term term-link" href="glossary.html#g-集合竞价" title="查看术语：集合竞价">集合竞价</a>,盘中有<a class="term term-link" href="glossary.html#g-连续竞价" title="查看术语：连续竞价">连续竞价</a>,收盘前也可能有收盘集合竞价。为什么要这样分段?因为经过一夜的消息积累,开盘时刻多空分歧最大,把所有申报先收集起来一次性定价,比零碎地逐笔<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>更能形成有代表性的开盘价;收盘同理。分段不是仪式感,是在资金最集中的时刻做集中定价。</p><p>把时间轴摆出来算一算。常见的安排是:9:15 到 9:25 开盘集合竞价,其中 9:20 之后一般不可撤单;9:30 到 11:30 上午连续竞价,整 <span class="num">120 分钟</span>;13:00 到 14:57 下午连续竞价,共 <span class="num">117 分钟</span>;14:57 到 15:00 收盘集合竞价。全天连续竞价合计 <span class="num">237 分钟</span>,算上两端集合竞价约 <span class="num">250 分钟</span>,也就 4 个多小时。具体时间安排要以交易所当时规则为准,但你要先理解机制:订单只能在规则允许的时间段里进入相应流程——过了窗口,挂单就只能排队或作废。</p><p>对投资者来说,这意味着你晚上看到新闻,不能立刻在交易所成交;你中午休市时下单,也要等市场恢复后才可能进入撮合。常有人以为隔夜挂的单正在交易所里排队占位置,其实休市期间委托停在券商手里,要等下一个交易时段才被报进场。对量化来说,这意味着数据要按交易日历对齐,策略信号要知道自己在什么时点产生,订单要知道能不能在那个时点提交。时间错了位,再准的信号也是对着关门的店铺按铃。</p>
+
+        <h3>2.3. 开盘价不是第一笔随便成交出来的</h3>
+<p>开盘价是怎么来的?不少人的想象是<span class="hl">“开盘后第一笔随便成交出来的”</span>。不对。集合竞价可以理解为:先把一段时间内的买单和卖单收集起来,然后按照规则一次性确定一个成交价格。这个价格要尽可能让成交量最大,并满足交易所规定的其他条件。它不是谁最早喊价谁就一定成交,也不是简单取一个平均数。</p><p>机制上,它像一次<span class="hl">“全体撮合”</span>:截止时刻一到,系统定格全部有效申报,把每个候选价格下能成交的数量算出来,选出成交量最大的那个价格,再按规则处理并列价格的情况。细节里有两点要记牢:高于成交价的买单和低于成交价的卖单全部成交,等于成交价的申报按时间顺序部分成交;所有人按同一个开盘价结算,先来后到只在同价位排队时才有意义。这和你熟悉的连续竞价逐笔配对,是两套不同的算法。</p><p>举个很小的例子。有人愿意 <span class="num">10.10 元</span>买 <span class="num">100 股</span>,有人愿意 <span class="num">10.05 元</span>买 <span class="num">100 股</span>;卖方有人愿意 <span class="num">10.00 元</span>卖 <span class="num">100 股</span>,有人愿意 <span class="num">10.08 元</span>卖 <span class="num">100 股</span>。逐个候选价格算成交量:开在 10.00,两笔买单共 <span class="num">200 股</span>都够格,卖单只有 10.00 那一笔 <span class="num">100 股</span>,成交 100;开在 10.05,买方仍是 <span class="num">200 股</span>,卖方 10.08 那笔退出,剩 <span class="num">100 股</span>,还是成交 100;开在 10.10,买方只剩一笔 <span class="num">100 股</span>,卖方两笔共 <span class="num">200 股</span>,依旧成交 100。最大成交量就是 <span class="num">100 股</span>,开盘价由规则在这些合格价格中进一步确定。一锤落定,开盘价就这么诞生——它不是第一笔随便碰出来的,是全体申报算出来的。</p><p>小白常犯的误解是: 我挂了涨停价买,就一定能买到。实际上,价格只是优先级的一部分,还要看可成交数量和排队规则。热门股票开盘一字涨停时,无数买单都排在最高允许价格上,但卖单很少——排在后面的人,把委托价顶到天花板也买不到。常有人以为集合竞价时段里想撤随时能撤,其实 9:20 之后通常不接受撤单,临时动摇的人连<span class="hl">“撤回键”</span>都被没收了。</p>
+
+        <h3>2.4. 价格优先和时间优先</h3>
+<p>集合竞价结束,战斗进入连续竞价——盘中主要交易时段。买单和卖单不断进入系统,只要价格能够匹配,就按规则成交。最核心的直觉是八个字:价格优先、时间优先。买方报价越高,越有优先权;卖方报价越低,越有优先权。同样价格下,先提交的订单排在前面。</p><p>假设某股票卖一价是 <span class="num">10.01 元</span>,卖一数量 <span class="num">500 股</span>。你提交 <span class="num">10.01 元</span>买 <span class="num">100 股</span>,如果前面没有更多同价买单阻挡,就可能成交。你提交 <span class="num">10.00 元</span>买 <span class="num">100 股</span>,因为没有卖方愿意 <span class="num">10.00 元</span>卖给你,订单会挂在买盘里等待。你提交 <span class="num">10.20 元</span>买 <span class="num">100 股</span>,也不代表一定以 <span class="num">10.20 元</span>成交——如果当前最优卖价是 <span class="num">10.01 元</span>,通常会先按更优的卖方价格成交。高出价是你的诚意,不是成交价。</p><p>把数量加大一点,你能亲眼看到<span class="hl">“吃掉盘口”</span>的过程。假设卖一 <span class="num">10.01 元</span>挂 <span class="num">500 股</span>,卖二 <span class="num">10.02 元</span>挂 <span class="num">300 股</span>,你一口气限价买入 <span class="num">600 股</span>:先按 <span class="num">10.01 元</span>成交 <span class="num">500 股</span>,花 <span class="num">5005 元</span>;再按 <span class="num">10.02 元</span>成交 <span class="num">100 股</span>,花 <span class="num">1002 元</span>。合计 <span class="num">600 股</span>,共花 <span class="num">6007 元</span>,成交均价约 <span class="num">10.012 元</span>——比你下单时看到的卖一价贵了一点。买得越多,均价离卖一越远,这就是盘口深度和价格冲击最朴素的样子。</p><p>这就是行情软件里为什么要看买一、卖一、盘口数量和逐笔成交:最后成交价不是一个抽象数字,而是订单簿里买卖力量碰到一起的结果。常有人以为限价单报多高就按多高成交,其实买入限价只是你给成交划的天花板,对手方价格更优时,按对方价格成交。量化策略如果只用日收盘价模拟成交,就会活活忽略排队、盘口深度和价格冲击——回测里的<span class="hl">“完美成交”</span>,实盘里很多根本不存在。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 305" role="img" aria-label="订单簿示意:卖盘从卖一到卖三价格递增,买盘从买一到买三价格递减,中间是买卖价差">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">订单簿:买卖双方在这里排队,价格优先、时间优先</text>
+            <!-- 卖盘(上,红) -->
+            <text x="250" y="70" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">卖盘(想卖的人)</text>
+            <rect x="150" y="80" width="200" height="26" rx="4" fill="rgba(232,120,120,0.28)"/><text x="160" y="99" fill="#eef4ff" font-size="13">卖三  10.03  ×  800</text>
+            <rect x="150" y="110" width="200" height="26" rx="4" fill="rgba(232,120,120,0.22)"/><text x="160" y="129" fill="#eef4ff" font-size="13">卖二  10.02  ×  500</text>
+            <rect x="150" y="140" width="200" height="26" rx="4" fill="rgba(232,120,120,0.16)"/><text x="160" y="159" fill="#eef4ff" font-size="13">卖一  10.01  ×  300</text>
+            <!-- 价差 -->
+            <line x1="150" y1="176" x2="350" y2="176" stroke="#f0c96a" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <text x="370" y="181" fill="#f0c96a" font-size="12">← 买一卖一之间是价差</text>
+            <!-- 买盘(下,绿) -->
+            <rect x="150" y="186" width="200" height="26" rx="4" fill="rgba(122,167,240,0.16)"/><text x="160" y="205" fill="#eef4ff" font-size="13">买一  10.00  ×  400</text>
+            <rect x="150" y="216" width="200" height="26" rx="4" fill="rgba(122,167,240,0.22)"/><text x="160" y="235" fill="#eef4ff" font-size="13">买二   9.99  ×  600</text>
+            <rect x="150" y="246" width="200" height="26" rx="4" fill="rgba(122,167,240,0.28)"/><text x="160" y="265" fill="#eef4ff" font-size="13">买三   9.98  ×  900</text>
+            <text x="250" y="292" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">买盘(想买的人)</text>
+            <!-- 右侧说明 -->
+            <text x="470" y="110" fill="#eef4ff" font-size="14" font-weight="800">成交怎么发生?</text>
+            <text x="470" y="140" fill="#c9d4e8" font-size="13">你出 10.01 买 → 立刻和卖一成交</text>
+            <text x="470" y="168" fill="#c9d4e8" font-size="13">你出 10.00 买 → 排进买一等着</text>
+            <text x="470" y="196" fill="#c9d4e8" font-size="13">同价看谁先挂,先到先成交</text>
+            <text x="470" y="230" fill="#8499bd" font-size="12.5">挂涨停价也未必买到:卖盘太少</text>
+            <text x="470" y="254" fill="#8499bd" font-size="12.5">时,后面排队的人只能干等</text>
+          </svg>
+          <p class="figure__cap">屏幕上的“买一卖一”来自订单簿。所有人的买卖意愿在这里按价格和时间排队,成交价就是买卖力量碰在一起的结果。只用收盘价回测,会忽略排队和盘口深度。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 280" role="img" aria-label="订单簿双列排布图:买单从高到低排列、卖单从低到高排列,价格优先同价时间优先">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">盘口簿:买几档卖几档,谁排在前面</text>
+            <text x="200" y="76" fill="#eef4f8" font-size="14" font-weight="800">买单(从优到次)</text>
+            <rect x="60" y="86" width="280" height="44" rx="6" fill="rgba(143,179,122,0.32)" stroke="#8fb37a"/>
+            <text x="80" y="114" fill="#b5d3a0" font-size="13" font-weight="800">买1: 10.50 元 × 5000 股</text>
+            <rect x="60" y="134" width="280" height="44" rx="6" fill="rgba(143,179,122,0.18)" stroke="#8fb37a"/>
+            <text x="80" y="162" fill="#8fb37a" font-size="13">买2: 10.49 元 × 2000 股</text>
+            <rect x="60" y="182" width="280" height="44" rx="6" fill="rgba(143,179,122,0.1)" stroke="#8fb37a"/>
+            <text x="80" y="210" fill="#8fb37a" font-size="13">买3: 10.48 元 × 9000 股</text>
+            <text x="200" y="244" fill="#8499bd" font-size="11.5">价高者排前——出价力最强的先成交</text>
+            <text x="640" y="76" fill="#eef4f8" font-size="14" font-weight="800">卖单(从优到次)</text>
+            <rect x="560" y="86" width="280" height="44" rx="6" fill="rgba(238,136,119,0.32)" stroke="#ee8877"/>
+            <text x="580" y="114" fill="#ffb4b4" font-size="13" font-weight="800">卖1: 10.51 元 × 1000 股</text>
+            <rect x="560" y="134" width="280" height="44" rx="6" fill="rgba(238,136,119,0.18)" stroke="#ee8877"/>
+            <text x="580" y="162" fill="#ee8877" font-size="13">卖2: 10.52 元 × 3000 股</text>
+            <rect x="560" y="182" width="280" height="44" rx="6" fill="rgba(238,136,119,0.1)" stroke="#ee8877"/>
+            <text x="580" y="210" fill="#ee8877" font-size="13">卖3: 10.55 元 × 2500 股</text>
+            <text x="640" y="244" fill="#8499bd" font-size="11.5">价低者排前</text>
+            <text x="450" y="118" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">撮合规则钳</text>
+            <text x="450" y="148" text-anchor="middle" fill="#bcc9dd" font-size="12">买1 价 ≥ 卖1 价?</text>
+            <text x="450" y="170" text-anchor="middle" fill="#bcc9dd" font-size="12">是 → 配对成交(以先斩到的价格为准)</text>
+            <text x="450" y="192" text-anchor="middle" fill="#bcc9dd" font-size="12">否 → 一起待着,价差就自己保留</text>
+            <text x="450" y="222" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">同价?先到的先成交(时间优先)</text>
+            <text x="450" y="250" text-anchor="middle" fill="#8499bd" font-size="12">你下单后只是进入这条队伍,不一定立刻成交;流动性浅的股,两个买1卖1差的可能超过你想象的宽度</text>
+          </svg>
+          <p class="figure__cap">盘口的两条队伍:买的一边价高者优先,卖的一边价低者优先。你下的单子只是被系统挂在某个格子上排队,“我喊到了这个价”还远远不等于“我就能成交”。</p>
+        </div>
+        <h3>2.5. 它限制价格,不保证风险消失</h3>
+<p>A 股很多股票有日涨跌幅限制。普通股票常见的是上一交易日收盘价上下一个比例范围,但不同板块、ST 股票、新股上市初期、退市整理、北交所股票等规则可能不同。这里最重要的不是背一个固定数字,而是知道:涨跌幅限制要按日期、市场、板块和证券状态判断。背错版本,比不背更糟。</p><p>涨跌停价是怎么来的?机制很直白:拿上一交易日收盘价乘上规则给定的比例,再处理到最小报价单位上。用简化数字走一遍:昨收 <span class="num">20.00 元</span>,按 <span class="num">10%</span> 计算,涨停价 <span class="num">22.00 元</span>,跌停价 <span class="num">18.00 元</span>,今天所有申报和成交都只能落在 18.00 到 22.00 之间,越界的委托直接无效。这个区间还藏着一个常被忽略的数:从跌停到涨停,当日最大振幅是 4 除以 20,也就是 <span class="num">20%</span>——栏杆每天一开盘就焊好,但笼子里的腾挪空间并不小。</p><p>再算一笔让人清醒的账。常有人以为有了 <span class="num">10%</span> 的限制,单日最多亏 <span class="num">10%</span>,其实账不是这样算的:如果你在涨停价 <span class="num">22.00 元</span>追进去,当天股价掉头砸到跌停 <span class="num">18.00 元</span>,你的浮亏是 4 除以 22,约 <span class="num">18.2%</span>,远大于 <span class="num">10%</span>。要是次日继续跌停,亏损还会叠加,而且跌停时买盘稀少,你想卖也未必排得上。涨跌幅限制按住的是申报和成交的价格,不是按住风险本身——笼子关住了报价,关不住恐慌。</p><p>涨跌幅限制的作用,是限制当日交易价格的申报范围和成交范围,不是给投资者发安全垫。股票今天跌停,明天还可能继续跌;今天涨停,你不一定买得到。价格被限制住了,流动性风险反而会更突出。量化回测必须处理这个问题。策略不能假设跌停时还能按跌停价卖出全部持仓,也不能假设涨停时还能随便买入。很多纸面收益漂亮的策略,一旦加入涨跌停不可成交、排队和<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>,结果会明显变差——丑小鸭变不回天鹅,因为原来的天鹅是 P 出来的。</p>
+
+        <h3>2.6. 今天买的股票通常今天不能卖</h3>
+<p>A 股普通股票有一个非常重要的规则: 当天买入的股票,通常要到下一个交易日才能卖出。这就是常说的 <a class="term term-link" href="glossary.html#g-t1" title="查看术语：T+1">T+1</a>。T 是交易日,不是自然日。如果周五买入,下一个交易日可能是下周一——中间的周末不算交易日,你的股票只能原地<span class="hl">“冷冻”</span>两天。这条规则为什么存在?机制上看,成交之后还有清算所的轧差和证券交收要走,当日买入的股票要等交收环节落定才真正安稳入账,再卖出等于转手一笔手续没办完的头寸;制度上看,它也压住了当日反复倒手的过度投机。</p><p>但这里有一个特别容易混的地方。你如果昨天已经持有 <span class="num">1000 股</span>,今天又买入 <span class="num">500 股</span>,今天盘中通常可以卖出的是原来那 <span class="num">1000 股</span>可卖持仓,不是今天新买的 <span class="num">500 股</span>。很多人看到自己做成了<span class="hl">“日内买卖”</span>,其实卖的是旧仓,不是把今天新买的股票当天卖掉——账本能分清,人脑未必分得清。</p><p>还是这 <span class="num">1500 股</span>,看看浮盈怎么被锁住。假设新买 <span class="num">500 股</span>的成本价是每股 <span class="num">10 元</span>,午后股价冲到 <span class="num">10.8 元</span>,这 <span class="num">500 股</span>浮盈 0.8 乘以 500,共 <span class="num">400 元</span>——看得见,摸不着,因为今天不能卖。结果第二天股票低开到 <span class="num">9.9 元</span>,<span class="num">400 元</span>浮盈一夜蒸发,还倒亏 0.1 乘以 500,共 <span class="num">50 元</span>。同一只股票、同一个判断,在 <span class="term">T+0</span> 市场里的止盈动作,在这里变成被动持有过夜,隔夜风险一分不少地落在你头上。</p><p>反直觉的是,T+1 悄悄改写了短线交易的行为结构:盘中浮盈无法兑现,看到账户红着也只能干等;当天发现买错,止损键等于被焊住,只能眼睁睁看到收盘。这对量化很关键。回测系统必须区分总持仓和可卖持仓:总持仓表示你名义上持有多少,可卖持仓表示现在规则允许你卖多少。如果策略上午买入、下午发现信号变坏就卖出,回测里允许卖,实盘里不允许卖,那整个策略逻辑就是假的——你赚到的每一分,都来自一个物理上不可能发生的操作。</p>
+
+        <h3>2.7. 最小交易单位和价格单位</h3>
+<p>真实市场不能让你随便买 <span class="num">1.37 股</span>股票。普通 A 股买入通常以一手为基本单位,一手是 <span class="num">100 股</span>;卖出时可能允许处理不足一手的零股,但规则和系统限制要看具体场景。价格也有最小变动单位,常见的是 <span class="num">0.01 元</span>,不是你想报 <span class="num">10.000001 元</span>就能报——报价精度也是被制度管着的。为什么要设这些单位?因为标准化才能高效:固定规格的申报单元让撮合、清算、登记都按同一尺寸处理,省掉无穷无尽的零碎核对——和工程里固定块大小、内存按字节对齐,是同一个道理。</p><p>这件事听起来很小,但会直接咬到仓位。假设你的策略想把 <span class="num">10000 元</span>平均分到 7 只股票里,每只约 <span class="num">1428 元</span>。如果某只股票 <span class="num">83 元</span>一股,一手 <span class="num">8300 元</span>,你根本买不了一手。回测如果允许买 <span class="num">17.2 股</span>,就会显得资金利用率很高;实盘却完全无法执行——策略在云里跑得飞起,订单在交易所门口被拦下。</p><p>再算一笔能成交的。另一只股票每股 <span class="num">8.3 元</span>,一手 <span class="num">830 元</span>;分到的预算是 <span class="num">1428 元</span>,1428 除以 830 只有 1.72,最多买 <span class="num">1 手</span>,花掉 <span class="num">830 元</span>,剩下 <span class="num">598 元</span>闲置,这笔资金的实际利用率是 830 除以 1428,约 <span class="num">58%</span>。也就是说,哪怕信号完美、方向全对,单这一只股票,就有约四成资金被<span class="hl">“一手 <span class="num">100 股</span>”</span>的取整规则拦在场外。小资金组合里,这种取整损耗会一层一层吃掉回测里的理论收益。</p><p>常有人以为手里 <span class="num">150 股</span>中的那 <span class="num">50 股</span>零头永远卖不掉,其实卖出申报通常允许一次性处理不足一手的零股,被严格限制的主要是买入必须<a class="term term-link" href="glossary.html#g-整手" title="查看术语：整手">整手</a>。所以,下单前要做取整。数量要符合交易单位,价格要符合最小报价单位,金额要满足资金和费用约束。组合回测里越是小资金,这些整数约束越明显。个人做量化尤其要重视:机构几亿资金买一手的误差很小,个人几万元资金买一手的误差可能很大,大到足以改变排序和结论。</p>
+
+        <h3>2.8. 纸面收益到手之前会被扣掉一层</h3>
+<p>买卖股票不是免费的。普通股票交易常见费用包括券商<a class="term term-link" href="glossary.html#g-佣金" title="查看术语：佣金">佣金</a>、<a class="term term-link" href="glossary.html#g-印花税" title="查看术语：印花税">印花税</a>、<a class="term term-link" href="glossary.html#g-过户费" title="查看术语：过户费">过户费</a>等。印花税通常在卖出股票时收取,佣金买卖都可能收,过户费按规则收取。不同券商费率可能不同,不同品种费用也不同。ETF、债券、可转债、期权的费用结构和普通股票不完全一样——换品种,先换脑子里的费率表。</p><p>拿一笔完整交易把账走一遍。假设佣金万 3、单笔最低 <span class="num">5 元</span>,印花税卖出时收 <span class="num">0.05%</span>,过户费按成交金额的 <span class="num">0.001%</span> 双边收取,均为常见教学口径,具体以券商和当时规则为准。你以 <span class="num">12000 元</span>买入:佣金名义 <span class="num">3.6 元</span>,不足最低标准按 <span class="num">5 元</span>收,过户费 <span class="num">0.12 元</span>,实际付出 <span class="num">12005.12 元</span>。之后以 <span class="num">13000 元</span>卖出:佣金名义 <span class="num">3.9 元</span>,仍按 <span class="num">5 元</span>收,印花税 <span class="num">6.5 元</span>,过户费 <span class="num">0.13 元</span>,实际到手 <span class="num">12988.37 元</span>。账面差价赚 <span class="num">1000 元</span>,真正落袋 <span class="num">983.25 元</span>——中间 <span class="num">16.75 元</span>,先被这条流水线拿走了。</p><p>费用为什么重要?因为很多量化策略单次预期收益很薄。上面那笔交易如果平进平出,按 <span class="num">12000 元</span>原样卖出,卖出费用是佣金 <span class="num">5 元</span>、印花税 <span class="num">6 元</span>、过户费 <span class="num">0.12 元</span>,到手 <span class="num">11988.88 元</span>——方向没看错一分钱,照样亏 <span class="num">16.24 元</span>,约为本金的 <span class="num">0.135%</span>。比如一个策略平均每次交易赚 <span class="num">0.3%</span>,如果买入卖出加起来成本接近 <span class="num">0.15%</span>,还能剩下一半;如果再加滑点和<a class="term term-link" href="glossary.html#g-冲击成本" title="查看术语：冲击成本">冲击成本</a>,可能就没多少了。高换手策略尤其怕成本,因为它不是偶尔付一次,而是每一次都付——像开着计费器绕圈,里程越长,车费越狠。</p><p>常有人以为<span class="hl">“佣金万 3”</span>就是每万元固定 <span class="num">3 元</span>,其实<span class="hl">“最低 <span class="num">5 元</span>”</span>这一条会让小额交易实际费率跳档:<span class="num">1 万元</span>买入,名义佣金 <span class="num">3 元</span>,实收 <span class="num">5 元</span>,实际费率变成万 5。所以,小白可以先记住一句话: 收益曲线里看到的是毛收益还是扣费后收益,差别很大。量化报告如果只展示不含费用的回测,不能说明策略真的能赚钱。至少要写清楚佣金、印花税、过户费、滑点、成交比例和冲击成本假设。不敢亮出成本假设的回测,约等于不敢素颜的自拍。</p>
+
+        <h3>2.9. 停牌、ST 和退市风险</h3>
+<p>股票不是永远都能交易的。公司有重大事项、异常波动、监管要求或其他原因时,可能停牌。停牌期间你不能按正常方式买卖,价格也不会连续更新。对持有人来说,停牌意味着流动性暂时消失;对策略来说,停牌意味着你不能假设每天都能调仓——有时候,门关了就是关了。</p><p>ST 股票表示公司存在特别风险提示。它不等于一定退市,但说明财务状况、经营状况或其他方面出现了需要重点提醒的问题。ST 股票的涨跌幅和交易限制可能和普通股票不同,投资者也要面对更高的信息和退市风险。名字前面多了两个字母,质地和风险已经是另一个世界。</p><p><a class="term term-link" href="glossary.html#g-幸存者偏差" title="查看术语：幸存者偏差">幸存者偏差</a>可以用一组简化数字感受。假设十年前你的样本本该有 120 只股票:100 只活到今天,十年平均累计涨幅 <span class="num">12%</span>;另外 20 只期间退市,平均让投资者亏 <span class="num">60%</span>。只看活着的 100 只,策略好像稳赚 <span class="num">12%</span>;把退市的加回来,全样本平均收益是 100 个 <span class="num">12%</span> 减去 20 个 <span class="num">60%</span>,再摊到 120 只上:1200 减 1200,正好是 0。漏掉失败样本,等于把最惨的结局从统计里整批删掉——像只采访活下来的老兵,总结出来的战争经验总是偏向好看的一边。</p><p>常有人以为股票名字里的 ST 就是<span class="hl">“退市倒计时”</span>,其实它只是风险提示,整改达标后也可能被撤销;反过来,没戴 ST 帽子也不代表高枕无忧。机制上更要警惕另一面:历史数据库如果只保留现在还上市的股票,样本从一开始就被<span class="hl">“未来是否存活”</span>这个信息筛过一遍,这是一种埋得很深的前视偏差。一个策略只在幸存股票上回测,会把真实世界里最糟糕的结果悄悄拿掉,收益自然好看。</p>
+
+        <h3>2.10. 交易系统不能只会发订单</h3>
+<p>一个靠谱的交易系统在发出订单之前,要自问一连串问题。今天是不是交易日?现在是不是允许申报的时间?这只证券是否停牌?价格是否超出涨跌幅或申报限制?数量是否符合交易单位?账户资金够不够?持仓是否可卖?这笔交易会不会触发产品或账户风控限制?问完这一圈,订单才配出门。</p><p>这一串检查在工程上有个名字:fail-fast,越早把问题拦下,代价越小。顺序也有讲究:先查不依赖账户的静态状态——交易日历、停牌标记、价格笼子;再查账户级的资金和可卖持仓;最后才过产品级、组合级的风控和合规。任何一道闸门不通过,订单就地打回,绝不带病出门。这些检查看起来像程序里一排普通的 if 语句,但背后是实打实的市场制度。</p><p>用数字看一次拒单污染账本的过程。账户里有 <span class="num">20000 元</span>,某股票昨收 <span class="num">10.00 元</span>,按 <span class="num">10%</span> 的简化假设,涨停价 <span class="num">11.00 元</span>。你误填 <span class="num">11.50 元</span>买入 <span class="num">1000 股</span>,申报价超出涨停,券商拒单,一分钱没花。但如果系统没处理<span class="hl">“废单”</span>这个状态,内部账本已按 <span class="num">11500 元</span>扣款,显示可用只剩 <span class="num">8500 元</span>。接下来一笔 <span class="num">9000 元</span>的合法委托,会被自家系统以<span class="hl">“资金不足”</span>误拒——一个被拒的订单,污染了后面所有的决策。</p><p>常有人以为这些检查是券商柜台的事,策略系统只管发单就行,其实券商的拒单保护了市场,保护不了你的内部账本——脏状态会顺着下一个信号继续繁殖。所以,量化实盘不是把模型输出直接变成买卖。中间必须经过交易日历、证券状态、价格边界、数量取整、资金持仓、费用估计、风控规则和订单状态管理。第一个能稳定运行的量化系统,往往不是预测最强的系统,而是最少犯低级交易规则错误的系统。先不摔跤,再谈赛跑。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>注册制核心:审核只查披露,市场自行付费;上市不再是监管的质量背书。</li>
+            <li>询价机制取代 23 倍 PE 指导价,一级与二级价差收窄,破发是制度设计自然结果。</li>
+            <li>A 股由不同交易所、板块和品种组成,交易规则不能只背一个统一版本。</li>
+            <li>集合竞价、连续竞价、涨跌幅、T+1、停牌和费用,都会影响真实成交结果。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.1.</strong> 48.62 元的第一天,为什么成了很多人的漫长一课</li>
+            <li><strong>1.2.</strong> 拍卖会上喊价最高的人,为什么最容易买贵</li>
+            <li><strong>1.3.</strong> 从“帮你把关”到“只查披露”</li>
+            <li><strong>1.4.</strong> 询价取代了指导价</li>
+            <li><strong>1.5.</strong> 从制度红包到智力活动</li>
+            <li><strong>1.6.</strong> 屏幕上突然消失的按钮</li>
+            <li><strong>1.7.</strong> 戴帽、*ST 与强制退出的三条路</li>
+            <li><strong>1.8.</strong> 发行与退市是同一部机器的两半</li>
+            <li><strong>2.1.</strong> A 股不是一个完全统一的市场</li>
+            <li><strong>2.2.</strong> 交易日和交易时间</li>
+            <li><strong>2.3.</strong> 开盘价不是第一笔随便成交出来的</li>
+            <li><strong>2.4.</strong> 价格优先和时间优先</li>
+            <li><strong>2.5.</strong> 它限制价格,不保证风险消失</li>
+            <li><strong>2.6.</strong> 今天买的股票通常今天不能卖</li>
+            <li><strong>2.7.</strong> 最小交易单位和价格单位</li>
+            <li><strong>2.8.</strong> 纸面收益到手之前会被扣掉一层</li>
+            <li><strong>2.9.</strong> 停牌、ST 和退市风险</li>
+            <li><strong>2.10.</strong> 交易系统不能只会发订单</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>注册制以后新股为什么常常破发?</summary>
+            <p>询价制把发行价推到贴近二级水平,剔除门口的制度性差价——一二级之间红包消失,等于新股也把风险重新市场价格化。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>ST 和 *ST 有什么区别?</summary>
+            <p>ST = 其他风险警示,经营或净资产异况;*ST = 退市风险警示,财务其实已经出事。两个板分别有 5% (主板) 和 20% (创业板) 的涨跌幅,警告正在走向何处。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么说 A 股不是一条规则走天下?</summary>
+            <p>因为不同交易所、板块、品种和证券状态,可能对应不同的涨跌幅、申报、交易单位和投资者门槛。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>今天买入的股票为什么通常不能今天卖?</summary>
+            <p>普通 A 股股票适用 T+1: 今天新买的部分,通常下一个交易日才变成可卖持仓。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>行情、K 线、成交量和复权: 先看懂屏幕上的数字</h2>
+          <p>解释股票软件里最常见的价格、成交量、K 线、盘口和复权概念。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

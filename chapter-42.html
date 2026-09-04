@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 42 章 · 套利和相对价值: 看起来确定的价差为什么也会亏 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="讲清 ETF 套利、期现套利、可转债套利、配对交易和相对价值中的隐藏风险。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="42">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第六部分 · 策略如何变成产品 · 第 42 章</p>
+        <h1>套利和相对价值: 看起来确定的价差为什么也会亏</h1>
+        <p class="lead">“套利”这个词很容易让人误会成白捡钱:同一个东西,这边便宜那边贵,买低卖高,稳赚不赔。现实是,严格意义上的无风险套利极少,而且一旦出现,会被速度快、成本低、资金大的参与者几秒钟内挤掉。普通人和多数机构口中的套利,更多是相对价值交易:两个价格关系看起来偏离了,你赌它回归。它可能赚钱,但绝不等于没有风险。这一章就把“看起来确定”的钱,拆开给你看风险藏在哪。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线六</span>
+            <span>本部分第 5 / 8 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>不同量化策略赚的是什么钱,承担什么风险,最终怎样装进受约束的产品?</p>
+          <p class="chapter-context__outcome">读完后,你能按收益来源和风险结构比较策略,而不是只按历史年化排名。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>严格无风险套利极少,多数“套利”实际是有风险的相对价值交易,别被名字赦免了风险意识。</li>
+            <li>ETF、期现、可转债、配对和统计套利,全都绕不开成本、流动性、执行和关系失效这四道坎。</li>
+          </ul>
+        </section>
+
+
+        <h2 class="case-heading reveal"><span class="case-study__label">金融现场</span> 1. 两只代表同一家公司股票,价差为什么几年不肯回家</h2>
+<p>Royal Dutch 和 Shell 曾以双重上市结构存在,两边<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>分享约定比例的同一组经济利益。按教科书直觉,换算后的价格应该紧紧贴住;现实里,两边却能长期出现显著偏离。LTCM 等套利者曾押注这种价差终将收敛。</p><p>逻辑未必错,路径却能要命。不同市场的投资者偏好、税制、指数资金和<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>,都可能让价差比资金期限活得更久。加上<span class="term">杠杆</span>后,偏离继续扩大就会带来追加<span class="term">保证金</span>,最终迫使交易者在<span class="hl">“理论最便宜”</span>的时刻认输。</p><p>这正是相对价值最残酷的一句判词:最终回归不等于你能活到回归。模型除了估计均值和偏离,还必须估计资金能等多久、两条腿能否同时成交,以及关系永久改变时怎样离场。</p>
+
+        <h2>2. 无风险套利为什么少见</h2>
+<p>先看看严格无风险套利需要同时满足多少条件:同一现金流在不同地方价格不一致;你能同时买低卖高;交易成本、融资成本、时间差、对手方风险和执行风险,统统吃不掉那个价差。这些条件在真实市场里很难同时成立——少一条,<span class="hl">“无风险”</span>三个字就塌了。</p><p>举个例子。同一只 <a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a> <a class="term term-link" href="glossary.html#g-二级市场" title="查看术语：二级市场">二级市场</a>价格比净值高 <span class="num">0.3%</span>,看起来就是白送的钱。但你要先付一串账单:申赎门槛、成分股交易成本、现金替代、涨跌停、停牌、买卖价差和时间差。账单合计完,<span class="num">0.3%</span> 可能还不够付账——你以为看到的是利润,其实是成本表的封面。</p><p>所以,听到<span class="hl">“套利”</span>时先问一句:这是严格锁定收益,还是赌价差回归?如果是后者,它就是一个有风险策略,需要像其他策略一样看回撤、<span class="term">杠杆</span>、流动性和极端情景。名字带<span class="hl">“套利”</span>两个字,不代表风险就给你免了单。</p>
+
+        <h2>3. ETF 套利的直觉</h2>
+<p>ETF 的精妙之处在于它有两个价格:二级市场上大家买卖出来的交易价格,和按底层资产算出来的基金净值。正常情况下两者应该接近。如果 ETF 价格明显高于净值,理论上可以申购 ETF 再卖出;如果明显低于净值,理论上可以买入 ETF 再赎回底层资产。一句话:哪个便宜买哪个,再拿到对面市场卖掉。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>但请特别注意“理论上”三个字。ETF 申赎通常有最小单位,动不动就是一篮子股票或现金替代,普通个人往往根本进不了<a class="term term-link" href="glossary.html#g-一级市场" title="查看术语：一级市场">一级市场</a>申赎的门。即便是机构,也要面对成分股停牌、涨跌停、流动性不足、价格波动和操作时间差。理想中两笔交易无缝衔接,现实中每一步都可能卡壳。</p></div><p>跨境 ETF 就更绕了:底层市场和 A 股的交易时间可能不同,汇率会变,海外市场休市时 A 股这边的 ETF 还在照常交易,折溢价可能长期挂在那里。看到折价或溢价,不代表你一定能把它无风险拿走——有些价差是机会,有些只是两条永远对不上的表。</p>
+
+        <h2>4. 期现套利和基差</h2>
+<p>期现套利盯的是一对兄弟:期货价格和现货价格。理论上,期货价格受现货价格、<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>、分红、仓储、融资、交割成本等因素牵引,不会随便乱跑。如果期货价格偏离了理论区间,就可以做多一边、做空另一边,等<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>收敛时收钱。</p><p><span class="term">股指期货</span>的期现套利听起来像开卷考试:期货太贵,就卖期货、买股票篮子;期货太便宜,就买期货、卖股票篮子。真上手才知道是闭卷:股票篮子的复制误差、交易成本、成分股停牌、涨跌停、<span class="term">保证金</span>、融资成本,每一项都会咬走一块结果。</p><p>商品期货的期现就更重资产了:涉及仓储、运输、品质、交割地点、仓单和产业链。纸面上的期现价差,未必能被普通交易者直接交割套利——你是否有仓库、有运力、有交割资质,决定了你只能交易价差方向,还是能完成真实的套利闭环。多数人,其实只是在对价差下注。</p>
+
+        <h2>5. 可转债套利</h2>
+<p><a class="term term-link" href="glossary.html#g-可转债" title="查看术语：可转债">可转债</a>是一种很<span class="hl">“人格分裂”</span>的证券:它同时有<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>属性和股票期权属性,可以按约定转换成正股。所以它的价格被一堆因素同时拉扯:正股价格、转股价、利率、<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>风险、<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>、条款和流动性。可转债套利常关注转股价值、溢价率、债底和正股之间的关系。</p><p>套利直觉很直白:可转债相对正股太贵或太便宜时,做相对价值交易。但真实操作里全是绊脚石:正股可能无法融券做空,可转债流动性可能不足,条款可能突然触发强赎或下修,信用风险可能变化——每一个都可能在你持仓期间单方面改写游戏。</p><p>可转债对个人特别有吸引力:门槛相对低,波动有时还不小。但它绝不是低风险债券。高价转债、临近强赎、低评级、流动性差的转债,都可能让新手吃闷亏——看名字里带“债”就以为稳,是这里最贵的误会。</p>
+
+        <h2>6. 配对交易</h2>
+<p>配对交易的剧本很像观察一对多年的舞伴:找两只历史上关系很强的资产,当它们的价差偏离时,买入便宜的一边、卖出贵的一边,赌价差回归。常见组合有同一行业两家公司、同一公司不同上市地股票、同类 ETF 或相近商品合约。</p><p>它最大的危险是:历史关系可能失效。两家公司以前走势相近,不代表未来仍相近——一个公司<a class="term term-link" href="glossary.html#g-基本面" title="查看术语：基本面">基本面</a>恶化,另一个没有;一个股票流动性枯竭,另一个正常;一边市场监管规则变了,价差可能就再也不回归了。舞伴可以跳十年默契,也可能从此各跳各的。</p><p>还有个更隐蔽的坑:统计上看着显著的价差,可能只是共同趋势造成的假关系——两只股票都被大盘带着走,它们的<span class="hl">“亲密无间”</span>只是错觉。所以做配对交易要看经济联系、协整或其他稳定关系、交易成本、做空可行性和止损规则,绝不能只凭两条线过去贴得近。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 305" role="img" aria-label="相对价值套利示意:两个资产价格张开价差后又收敛,价差最大时下注、收敛时获利">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">相对价值套利:赌两个价格的价差会收敛回来</text>
+            <line x1="70" y1="250" x2="850" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <line x1="70" y1="55" x2="70" y2="250" stroke="#46587a" stroke-width="1.5"/>
+            <text x="848" y="272" text-anchor="end" fill="#8499bd" font-size="13">时间</text>
+            <text x="52" y="65" fill="#8499bd" font-size="13">价格</text>
+            <!-- 两条本应同步的价格线,中间张开又收回 -->
+            <path d="M 90 180 C 250 120 320 100 430 95 C 540 100 650 150 830 150" fill="none" stroke="#a8c6ff" stroke-width="2.5"/>
+            <path d="M 90 190 C 250 185 320 190 430 175 C 540 165 650 155 830 152" fill="none" stroke="#f0c96a" stroke-width="2.5"/>
+            <text x="250" y="95" fill="#a8c6ff" font-size="13">资产 A</text>
+            <text x="250" y="205" fill="#f0c96a" font-size="13">资产 B</text>
+            <!-- 价差最大处 -->
+            <line x1="430" y1="95" x2="430" y2="175" stroke="#ffb4b4" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <text x="440" y="138" fill="#ffb4b4" font-size="12.5">价差拉大 → 此时下注:买低卖高</text>
+            <!-- 收敛处 -->
+            <circle cx="830" cy="151" r="5" fill="#eef4ff"/>
+            <text x="815" y="138" text-anchor="end" fill="#eef4ff" font-size="12.5">价差收敛 → 平仓获利</text>
+            <text x="450" y="292" text-anchor="middle" fill="#8499bd" font-size="12.5">赌的是“价差回归”;但如果价差不收敛反而继续扩大,加上杠杆就可能被拖垮(想想 LTCM)</text>
+          </svg>
+          <p class="figure__cap">多数“套利”不是白捡钱,而是赌两个本该同步的价格,在价差拉大后会重新收敛。赌对了赚价差,但价差也可能继续扩大——这正是相对价值交易的真实风险。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="配对交易:两条贴着走的价差线,价差拉到阈值时开多A空B,回归时同时平仓">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">配对交易:两条腿一买一空,赌价差回归</text>
+            <defs>
+              <marker id="d15a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker>
+            </defs>
+            <!-- 双坐标系 -->
+            <line x1="70" y1="260" x2="830" y2="260" stroke="#46587a" stroke-width="1.5"/>
+            <!-- A 腿:低(蓝色) -->
+            <path d="M 70 236 L 150 226 L 230 232 L 310 240 L 390 244 L 470 240 L 550 246 L 630 238 L 710 242 L 830 240" fill="none" stroke="#7aa7f0" stroke-width="2.5"/>
+            <text x="80" y="216" fill="#a8c6ff" font-size="13">A 市场(被低估)</text>
+            <!-- B 腿:高(金色) -->
+            <path d="M 70 96 L 150 106 L 230 100 L 310 92 L 390 88 L 470 92 L 550 86 L 630 94 L 710 90 L 830 92" fill="none" stroke="#f0c96a" stroke-width="2.5"/>
+            <text x="80" y="80" fill="#f0c96a" font-size="13">B 市场(被高估)</text>
+            <!-- 价差带 -->
+            <path d="M 70 136 L 150 136 L 230 136 L 310 136 L 390 136 L 470 136 L 550 136 L 630 136 L 710 136 L 830 136" fill="none" stroke="#8499bd" stroke-width="1" stroke-dasharray="4 4"/>
+            <text x="840" y="130" fill="#8499bd" font-size="11" text-anchor="end">价差均值线</text>
+            <!-- 开仓区间打标 -->
+            <line x1="240" y1="105" x2="240" y2="250" stroke="#e88" stroke-width="2" stroke-dasharray="5 4"/>
+            <text x="240" y="96" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">① 价差扩到阈值</text>
+            <text x="240" y="278" text-anchor="middle" fill="#bcc9dd" font-size="11">开:多 A / 空 B</text>
+            <!-- 平仓 -->
+            <line x1="700" y1="96" x2="700" y2="246" stroke="#8fb37a" stroke-width="2" stroke-dasharray="5 4"/>
+            <text x="700" y="88" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">② 价差回归</text>
+            <text x="700" y="268" text-anchor="middle" fill="#bcc9dd" font-size="11">收:两腿同时平</text>
+            <!-- 数字例 -->
+            <rect x="490" y="290" width="320" height="80" rx="10" fill="rgba(18,29,49,0.75)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="505" y="314" fill="#eef4f8" font-size="12.5" font-weight="800">示意一笔账:</text>
+            <text x="505" y="336" fill="#bcc9dd" font-size="12">开仓 A=100 / B=102;收仓 A=100.5 / B=100.5</text>
+            <text x="505" y="356" fill="#bcc9dd" font-size="12">两腿各赚 +0.5 / +1.5?错了——多A赚 0.5,空B赚 1.5,各算各的</text>
+            <text x="450" y="402" text-anchor="middle" fill="#c9d4e8" font-size="12.5">指望的不是某一边涨,是两边重新贴合——方向赢不赢不影响你,大小盘风格切换才是你的风险</text>
+          </svg>
+          <p class="figure__cap">配对交易永远两腿各算各的:开多被低估的 A、同时空等额的被高估的 B,赌的是它们重新贴合。赚的不是谁涨,是价差回归;方向涨不涨跟你没关系,风格切换才是你的风险。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 365" role="img" aria-label="配对交易图:跟踪同行两股的价差,拉到异常区间就做空高开买低收,恢复正常就收手">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">配对交易:两只同行的股,只赌价差收敛</text>
+            <line x1="80" y1="300" x2="820" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <line x1="80" y1="60" x2="80" y2="300" stroke="#8499bd" stroke-width="2"/>
+            <text x="92" y="66" fill="#bcc9dd" font-size="12">价格</text>
+            <text x="820" y="318" fill="#bcc9dd" font-size="12">时间</text>
+            <path d="M 85 100 Q 200 120 320 110 Q 450 100 590 130 Q 700 150 815 120" fill="none" stroke="#a8c6ff" stroke-width="3"/>
+            <text x="830" y="125" fill="#a8c6ff" font-size="12">股 A(银行)</text>
+            <path d="M 85 140 Q 210 170 330 150 Q 460 140 600 170 Q 710 190 815 150" fill="none" stroke="#ee8877" stroke-width="3"/>
+            <text x="830" y="155" fill="#ee8877" font-size="12">股 B(银行)</text>
+            <ellipse cx="240" cy="145" rx="50" ry="40" fill="none" stroke="#f0c96a" stroke-width="3" stroke-dasharray="6 4"/>
+            <text x="240" y="212" text-anchor="middle" fill="#f0c96a" font-size="12" font-weight="800">价差异常拉开:做空 A,买入 B</text>
+            <ellipse cx="560" cy="150" rx="50" ry="40" fill="none" stroke="#8fb37a" stroke-width="3" stroke-dasharray="6 4"/>
+            <text x="560" y="217" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">价差收敛至正常:平仓</text>
+            <text x="450" y="338" text-anchor="middle" fill="#bcc9dd" font-size="12.5">同行业两只股价长期高度正相关。只有当价差拉到历史均值±2σ之外才出手;回到区间内就收工——赌的是相关性回归,不是股票涨跌</text>
+          </svg>
+          <p class="figure__cap">统计学套利的原型:同行业的股票走势通常同步;当价差落到历史正常区间外,就有价值修复的机会。你赚的是价差回归的那一块,不是牛熊方向。</p>
+        </div>
+        <h2>7. 统计套利</h2>
+<p>统计套利是一大类策略的统称,它不要求每笔交易都确定赚钱,而是寄希望于大量小优势交易合起来有正期望。多<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a><a class="term term-link" href="glossary.html#g-市场中性" title="查看术语：市场中性">市场中性</a>、短期<span class="term">反转</span>、配对交易、价差回归,都可能被归进这个筐。它的商业模式有点像开保险公司:单单的赔付不确定,拼的是大数定律站不站在你这边。</p><p>统计套利最怕两件事。第一,历史统计关系失效——过去成立的规律,未来悄悄失效。第二,小优势被成本吃掉:一个每天看起来有 <span class="num">0.03%</span> 边际收益的信号,<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>和费用稍微高一点,就直接变亏损。这种策略的毛利润本来就薄,成本表就是生死簿。</p><p>因此统计套利必须配上大量样本、严格成本、样本外验证和风险控制四件套。看到过去胜率高就放心,是这里最常见的死法:少数几次极端损失,完全可能抵消很多次小盈利——前面赢了一整年,最后一个月全还回去,还倒贴。</p><div class="callout callout--note reveal"><span class="callout__title">一丁点拥挤,反身性就来敲门</span><p>价差为什么会回归?往往是因为一群套利者在买低卖高,把它推回去。可当太多钱挤进同一个价差,事情就变味了:你不再是修正价格的力量之一,你就是价格本身。赚钱时大家一起快进,回撤时大家一起夺门——本来赚均值回归的钱,最后被自己人挤出了新的偏离。研究时你盯着地图,一进场,你就成了地形。</p></div>
+
+        <h2>8. 融资和杠杆风险</h2>
+<p>套利收益通常很薄,想做出漂亮的收益率,机构常常加<span class="term">杠杆</span>。<span class="term">杠杆</span>会同时放大两件事:价差回归时的收益,和价差继续扩大时的损失。很多相对价值灾难的死因,用一句话就能概括:“价差最终确实回归了,但账户没等到那天。”</p><p>推演一下这个过程:你做多便宜资产、做空贵资产,价差短期不收敛、反而继续扩大,两边头寸一起亏,<span class="term">保证金</span>和融资压力同时上涨。即使你的长期判断最终被证明完全正确,短期的现金流也可能先把你逼出场。市场不跟你比谁对,跟你比谁活得久。</p><p>这其实是套利和价值投资共同的难点:方向对,不等于路径扛得住。资金期限、<span class="term">杠杆</span>、止损、对手方和流动性,共同决定你能不能活着等到理论兑现。遗嘱里写<span class="hl">“我当时是对的”</span>,一分钱都不值。</p>
+
+        <h2>9. 流动性是套利的生命线</h2>
+<p>套利需要同时处理两边甚至多边资产,只要其中一边流动性突然消失,策略就会当场暴露在裸风险里。画面感一点:你卖出了期货,却买不到足够的现货篮子;或者你买了 ETF,可底层成分股停牌,赎回流程卡住——只剩一条腿的交易,不叫套利,叫单方面豪赌。</p><p>更要命的是,危机时流动性会变差,价差也会同时扩大。平时看着稳稳当当的价差,在所有人一起撤退时会突然变得很危险。如果套利<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>假设<span class="hl">“永远能按历史价差进出”</span>,那它会严重低估真实风险——相当于做<a class="term term-link" href="glossary.html#g-压力测试" title="查看术语：压力测试">压力测试</a>时,假设大楼永不着火。</p><p>所以套利回测要认真加入流动性过滤、参与率限制、停牌涨跌停处理和极端价差压力测试。越是薄利策略,越要把退出问题想在进场前面——进得去、出不来,再美好的价差与你无关。</p><div class="callout callout--note reveal"><span class="callout__title">价差对冲的走位规则:两腿同进同出</span><p>先买便宜的一边,等成交了再想办法做空贵的一边——听起来稳妥,其实是把套利临时改成裸奔:只成交一条腿的每一秒,你都在承担单方向风险。换仓、移仓、平仓时同理,先动哪条腿都要提前想好。机构为此花钱买同步报单和算法腿保护;个人至少要知道一件事:做不到同时,就别碰那些需要<span class="hl">“同时”</span>才成立的生意。</p></div>
+
+        <h2>10. 个人如何看套利机会</h2>
+<p>个人看到一个套利机会,第一反应不该是兴奋,而该是掏出两张表。第一张是成本表:显性费用多少,买卖价差多少,是否要融资或融券,资金占用多久,最小交易单位是多少,有没有申赎门槛,税费和规则怎么算。价差减去这张表,才是你的真实机会。</p><p>第二张是风险表:哪一边可能成交不了,价格关系为什么应该回归,不回归怎么办,最大可能亏损多少,会不会被强平,有没有规则变化或条款触发的达摩克利斯之剑。两张表都列得出来、看得下去,才轮到谈下单。</p><p>其实个人更适合把套利当学习对象,而不是一开始就重仓实盘。你可以用历史数据复盘 ETF 折溢价、可转债溢价率、期货基差,借它们理解市场结构,这本身就值回票价。真正下场之前,必须确认一件事:整个闭环,你真的能执行完。</p>
+
+        <h2>11. 相对价值的核心问题</h2>
+<p>相对价值交易做到最后,都要老老实实回答三个问题。第一,为什么这两个价格之间应该有关系?第二,现在偏离到什么程度,够不够覆盖成本和风险?第三,如果关系不回归,你怎么退出?</p><p>拿这三个问题当过筛子,很多<span class="hl">“机会”</span>立刻现形:如果理由只是两条线过去一起走,那依据很弱;如果价差只够覆盖一半成本,那机会根本不存在;如果没有退出规则,那你不是在做套利,是在祈祷。</p><p>量化里的套利精神,不是迷信价差必然回归,而是严肃地把价格关系、交易成本、流动性和风险闭环放进同一个框架里算总账。真正专业的套利,首先是一门风险管理的生意——利润只是说对话的奖品,活下来才是奖品本身。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>严格无风险套利极少,多数“套利”实际是有风险的相对价值交易,别被名字赦免了风险意识。</li>
+            <li>ETF、期现、可转债、配对和统计套利,全都绕不开成本、流动性、执行和关系失效这四道坎。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 两只代表同一家公司股票,价差为什么几年不肯回家</li>
+            <li><strong>2.</strong> 无风险套利为什么少见</li>
+            <li><strong>3.</strong> ETF 套利的直觉</li>
+            <li><strong>4.</strong> 期现套利和基差</li>
+            <li><strong>5.</strong> 可转债套利</li>
+            <li><strong>6.</strong> 配对交易</li>
+            <li><strong>7.</strong> 统计套利</li>
+            <li><strong>8.</strong> 融资和杠杆风险</li>
+            <li><strong>9.</strong> 流动性是套利的生命线</li>
+            <li><strong>10.</strong> 个人如何看套利机会</li>
+            <li><strong>11.</strong> 相对价值的核心问题</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>为什么多数套利不是无风险套利?</summary>
+            <p>因为交易成本、时间差、流动性、融资、做空限制、停牌和执行风险都在场,任何一个都可能吃掉价差。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>ETF 折溢价为什么个人很难无风险拿走?</summary>
+            <p>因为个人通常无法低成本参与一级市场申赎,还要面对成分股处理、现金替代、时间差和交易成本,账单常常比价差厚。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>高频交易和市场微观结构: 毫秒里的价格、排队和风险</h2>
+          <p>解释订单簿、买卖价差、排队位置、做市、延迟、撤单和高频交易的真实门槛。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

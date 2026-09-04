@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 4 章 · 金融系统与市场: 钱、风险和证券如何流动 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="把金融系统的参与者、资金与风险流向,和证券发行、交易、清算、交收放进同一张地图。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="4">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第一部分 · 金融为什么存在 · 第 4 章</p>
+        <h1>金融系统与市场: 钱、风险和证券如何流动</h1>
+        <p class="lead">货币和信用解决了跨时间调动资源的问题,但现代金融不是两个人之间的一张借条,而是一张由居民、企业、银行、基金、交易所和监管者共同组成的网络。这一章先看钱和风险怎样在网络中流动,再看一项权利怎样从一级市场发行,进入二级市场交易。地图搭好以后,后面的股票、债券和衍生品才各有位置。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线一</span>
+            <span>本部分第 5 / 5 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>真实财富有限,为什么人类还需要货币、信用、银行和市场?</p>
+          <p class="chapter-context__outcome">读完后,你能沿着资源、时间和风险解释金融系统,不再把金融理解成一堆产品名词。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>金融系统是一张网络,不只是买方和卖方两个人。</li>
+            <li>风险不会凭空消失,只会被转移、拆分、延后或隐藏。</li>
+            <li>一级市场是证券发行融资,二级市场是存量证券换手交易。</li>
+            <li>成交之后还有清算、交收、登记和托管。</li>
+          </ul>
+        </section>
+
+
+        <h2>1. 谁把钱给谁,谁承担风险</h2>
+
+        <h3 class="case-heading reveal"><span class="case-study__label">金融现场</span> 1.1. 1907 年,华尔街把钥匙交给了一个老人</h3>
+<p><span class="num">1907 年</span>秋天,纽约的信托公司接连遭到挤兑。储户在门外排队,银行彼此不肯拆借,交易所里的<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>被迫抛售。那时美国还没有今天意义上的<a class="term term-link" href="glossary.html#g-中央银行" title="查看术语：中央银行">中央银行</a>,整个金融系统只能等一个七十岁的银行家 J. P. Morgan 把各家掌柜叫进自己的图书室,逐家盘账、筹钱、决定先救谁。</p><p>最戏剧性的一幕是:传说 Morgan 把人关在屋里,没有凑够救市资金就不开门。这个故事真正重要的不是一个大亨多有权势,而是当时的系统居然缺少一个稳定的<a class="term term-link" href="glossary.html#g-最后贷款人" title="查看术语：最后贷款人">最后贷款人</a>。每家机构单看都可能有资产,可所有人同时只要现金时,资产卖不掉,整张网络就会一起窒息。</p><p>数年后美联储诞生,背后就有这场恐慌留下的阴影。对量化和风险系统来说,它也提供了一张永不过时的图:机构是节点,借贷和抵押品是边,平时分散的风险会沿着连接传播。只看单个资产的<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>,看不见网络同时断电的那一刻。</p>
+
+        <h3>1.2. 先看四类人</h3>
+<p>金融系统看着庞杂,最基本的角色只分四类。第一类资金盈余方:暂时钱多、不急着用的人或机构——居民存款、企业账上的现金、养老金、保险资金。第二类资金需求方:正缺钱的人或机构——要扩产的企业、要修路的政府、要按揭买房的居民。</p><p>第三类金融中介,专门帮钱从盈余方流向需求方:银行、券商、基金公司、保险公司、信托公司、期货公司,都在这一队。第四类是基础设施和监管者:央行、证监会、交易所、登记结算机构、托管机构。它们不直接用钱生钱,负责的是规则、账户、清算、监督和整个系统的稳定。</p><p>为什么是这四类?推演一下:钱要流动,先有一出一进两方;两方互不相识,得有中介<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>增信;撮合要让人放心,又得有人记账、立规矩、盯违规。每一笔资金流动都必须踩过这四个格子,一个也省不掉。拿你自己的钱走一遍:你把 <span class="num">10 万</span>存进银行,你是盈余方,银行是中介;银行把 <span class="num">8 万</span>贷给要扩产的企业,企业是需求方;背后定规则、盯风险的,是央行那批配套机构。</p><p>用一个城市打比方:盈余方是有水的人,需求方是等水的工厂和家庭,金融中介是管道和水厂,基础设施和监管者就是水表、阀门、水质检测和应急抢修队。一座城市离不开谁,这张金融网就离不开谁。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="四类角色资金作坊:盈余方把 10 万存进银行,中介放出 8 万贷给扩产企业,需求方到手开工;底下基础设施和监管者托底;侧面一笔违约账:靠谱约 1%、不靠谱约 10%,分不清只能按 5.5% 定价;中介卡上附油价 5000 涨到 6000 时期货赚回 1 亿、成本仍 5 亿的对冲例">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">四类人:一笔存款要踩的四个格子</text>
+            <text x="450" y="54" text-anchor="middle" fill="#8499bd" font-size="12.5">钱要流动:先有一出一进两方,再要中介撮合增信,还得有人记账立规矩——四个格子一个也省不掉</text>
+            <rect x="24" y="72" width="266" height="192" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="157" y="100" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800"><tspan x="157" y="100">资金盈余方</tspan></text>
+            <text x="157" y="124" text-anchor="middle" fill="#8499bd" font-size="11.5">第一类:钱多,暂时不用</text>
+            <text x="157" y="152" text-anchor="middle" fill="#bcc9dd" font-size="12.5">居民存款 · 养老金</text>
+            <text x="157" y="174" text-anchor="middle" fill="#bcc9dd" font-size="12.5">保险资金 · 企业闲钱</text>
+            <text x="157" y="206" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">你存 10 万进银行</text>
+            <text x="157" y="232" text-anchor="middle" fill="#c9d4e8" font-size="11.5">要安稳,也想钱不躺平</text>
+            <rect x="322" y="72" width="266" height="192" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="455" y="100" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800"><tspan x="455" y="100">金融中介</tspan></text>
+            <text x="455" y="124" text-anchor="middle" fill="#8499bd" font-size="11.5">第三类:帮钱搬家、撮合增信</text>
+            <text x="455" y="152" text-anchor="middle" fill="#bcc9dd" font-size="12.5">银行 · 券商 · 基金公司</text>
+            <text x="455" y="174" text-anchor="middle" fill="#bcc9dd" font-size="12.5">保险 · 信托 · 期货公司</text>
+            <text x="455" y="206" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">收进 10 万,贷出 8 万</text>
+            <text x="455" y="232" text-anchor="middle" fill="#c9d4e8" font-size="11.5">期货还帮企业搬风险:</text>
+            <text x="455" y="252" text-anchor="middle" fill="#8499bd" font-size="11">油价 5000→6000:期货赚回 1 亿,成本仍 5 亿</text>
+            <rect x="620" y="72" width="266" height="192" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="753" y="100" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800"><tspan x="753" y="100">资金需求方</tspan></text>
+            <text x="753" y="124" text-anchor="middle" fill="#8499bd" font-size="11.5">第二类:缺钱,要办正事</text>
+            <text x="753" y="152" text-anchor="middle" fill="#bcc9dd" font-size="12.5">要扩产的企业</text>
+            <text x="753" y="174" text-anchor="middle" fill="#bcc9dd" font-size="12.5">修路政府 · 按揭家庭</text>
+            <text x="753" y="206" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">企业:到手 8 万</text>
+            <text x="753" y="232" text-anchor="middle" fill="#c9d4e8" font-size="11.5">承诺未来还本付息</text>
+            <path d="M 291 158 L 318 158" fill="none" stroke="#a8c6ff" stroke-width="3" marker-end="url(#hr2a)"/>
+            <text x="306" y="146" text-anchor="middle" fill="#a8c6ff" font-size="11">存款</text>
+            <path d="M 589 158 L 616 158" fill="none" stroke="#a8c6ff" stroke-width="3" marker-end="url(#hr2a)"/>
+            <text x="604" y="146" text-anchor="middle" fill="#a8c6ff" font-size="11">贷款</text>
+            <line x1="157" y1="264" x2="157" y2="288" stroke="rgba(122,167,240,0.28)" stroke-width="1.5" stroke-dasharray="3 5"/>
+            <line x1="455" y1="264" x2="455" y2="288" stroke="rgba(122,167,240,0.28)" stroke-width="1.5" stroke-dasharray="3 5"/>
+            <line x1="753" y1="264" x2="753" y2="288" stroke="rgba(122,167,240,0.28)" stroke-width="1.5" stroke-dasharray="3 5"/>
+            <rect x="24" y="292" width="854" height="76" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="220" y="316" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800"><tspan x="220" y="316">第四格:基础设施和监管者</tspan></text>
+            <text x="220" y="340" text-anchor="middle" fill="#c9d4e8" font-size="12">央行 · 证监会 · 交易所 · 登记结算 · 托管</text>
+            <text x="220" y="360" text-anchor="middle" fill="#8499bd" font-size="11">不直接用钱生钱:管规则、账户、清算、稳定</text>
+            <line x1="470" y1="306" x2="470" y2="354" stroke="rgba(122,167,240,0.18)"/>
+            <text x="674" y="314" text-anchor="middle" fill="#8499bd" font-size="11.5">没人立规矩会怎样?拿违约概率算笔账:</text>
+            <text x="674" y="337" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800">靠谱约 1% · 不靠谱约 10% → 只能按 5.5% 定价</text>
+            <text x="674" y="359" text-anchor="middle" fill="#8499bd" font-size="11">贵到把靠谱的人吓跑——制度是在给信任压价</text>
+            <text x="450" y="398" text-anchor="middle" fill="#c9d4e8" font-size="12.5">推演一遍:一出一进两方 → 中介撮合增信 → 记账立规矩——每一笔资金流动都踩过这四格</text>
+            <defs><marker id="hr2a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a8c6ff"/></marker></defs>
+          </svg>
+          <p class="figure__cap">你存的 10 万、银行贷出的 8 万,走的是这四格:一出一进两方,中介撮合增信,底下基础设施和监管立规矩。旁边那笔违约账(靠谱约 1%、不靠谱约 10%、只能按平均 5.5% 定价)提醒:立规矩不是形式,是在给信任压价。</p>
+        </div>
+        <h3>1.3. 钱不是直接从一个人手里飞到另一个人手里</h3>
+<p>你点下<span class="hl">“买入基金”</span>,钱可不是嗖地一下飞进某只股票。真实路径长得多:钱先进基金账户,基金管理人按合同挑股票或<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>,资产由托管人保管,交易经券商送进交易所,成交后由登记结算机构完成资金和证券的交收。你以为是一步,后台其实已经走了五六步。</p><p>链条里为什么硬要塞一个托管人?推演一下:假如钱和证券都放在管理人自己账上,他既管投资又管保管,亏了可以瞒报,动了可以挪用,你根本无从查证。把保管这一职劈出去,交给独立的托管人——管理人下指令,托管人复核执行,两本账每天互相对。多出来的这道工序,买的是<span class="hl">“没人能卷钱跑路”</span>。</p><p>换成银行理财,链条又换了走法:银行或理财公司先募集大家的钱,再投向债券、非标资产、存款、基金等一篮子东西。你能看到的只有一个漂亮的产品名,看不到的是名字背后那一摞资产和一沓合同。每多一层转手,还原真实投向的难度就多一层。</p><p>所以看金融产品,光读包装是远远不够的。要养成连珠炮提问的习惯:我的钱最终去了哪里?买了什么资产?谁在管理?谁负责托管?亏了算谁的?什么时候能赎回?这六问比产品名字本身重要得多——名字是广告,这六问才是说明书。</p><div class="callout callout--tip reveal"><span class="callout__title">宣传语是情绪,六问是事实</span><p>拆开任何一只产品的宣传页，收益率、回撤、管理人名校背景全是别人想让你看见的。真正需要你回答的六句：钱最后流向什么资产？谁在动它？放在哪家托管？费用从哪边扣？最坏情况是什么样？出问题我能找谁？答完这六句，宣传页上的每一个亮点你都能判断该不该信。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 290" role="img" aria-label="金融系统资金流示意:资金从盈余方经中介流向需求方,收益和风险反向流回">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">钱和风险怎么在金融系统里流动</text>
+            <!-- 左:资金盈余方 -->
+            <rect x="40" y="90" width="170" height="130" rx="14" fill="rgba(122,167,240,0.12)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="125" y="128" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">有钱的人</text>
+            <text x="125" y="156" text-anchor="middle" fill="#c9d4e8" font-size="13">储户、投资者</text>
+            <text x="125" y="182" text-anchor="middle" fill="#c9d4e8" font-size="13">想让钱增值</text>
+            <!-- 中:金融中介 -->
+            <rect x="330" y="72" width="240" height="166" rx="16" fill="rgba(240,201,106,0.12)" stroke="#f0c96a" stroke-width="2"/>
+            <text x="450" y="104" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">金融中介与市场</text>
+            <text x="450" y="132" text-anchor="middle" fill="#c9d4e8" font-size="12.5">银行 · 券商 · 基金</text>
+            <text x="450" y="156" text-anchor="middle" fill="#c9d4e8" font-size="12.5">交易所 · 托管</text>
+            <text x="450" y="180" text-anchor="middle" fill="#c9d4e8" font-size="12.5">撮合 · 定价 · 监管</text>
+            <text x="450" y="212" text-anchor="middle" fill="#8499bd" font-size="12">把钱和风险重新分配</text>
+            <!-- 右:资金需求方 -->
+            <rect x="690" y="90" width="170" height="130" rx="14" fill="rgba(122,167,240,0.12)" stroke="#7aa7f0" stroke-width="2"/>
+            <text x="775" y="128" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">缺钱的人</text>
+            <text x="775" y="156" text-anchor="middle" fill="#c9d4e8" font-size="13">企业、政府</text>
+            <text x="775" y="182" text-anchor="middle" fill="#c9d4e8" font-size="13">想融资办事</text>
+            <!-- 箭头:资金右流,收益权左流 -->
+            <path d="M 214 130 L 326 130" fill="none" stroke="#a8c6ff" stroke-width="3" marker-end="url(#mfa)"/>
+            <text x="270" y="120" text-anchor="middle" fill="#a8c6ff" font-size="12">资金</text>
+            <path d="M 570 130 L 686 130" fill="none" stroke="#a8c6ff" stroke-width="3" marker-end="url(#mfa)"/>
+            <text x="628" y="120" text-anchor="middle" fill="#a8c6ff" font-size="12">资金</text>
+            <path d="M 686 200 L 570 200" fill="none" stroke="#f0c96a" stroke-width="3" marker-end="url(#mfb)"/>
+            <path d="M 326 200 L 214 200" fill="none" stroke="#f0c96a" stroke-width="3" marker-end="url(#mfb)"/>
+            <text x="450" y="272" text-anchor="middle" fill="#c9d4e8" font-size="13">钱从盈余方流向需求方;股权、债权和利息等“收益和风险”反向流回</text>
+            <defs>
+              <marker id="mfa" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a8c6ff"/></marker>
+              <marker id="mfb" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker>
+            </defs>
+          </svg>
+          <p class="figure__cap">金融系统的核心就是这张图:把有钱但暂时不用的人,和缺钱但能创造价值的人对接起来。中间的银行、券商、基金、交易所负责撮合、定价、托管和分配风险。</p>
+        </div>
+        <h3>1.4. 风险不会消失,只会转移或隐藏</h3>
+<p>金融最爱说的词之一是<span class="hl">“风险管理”</span>,但先泼一盆冷水:管理风险不等于消灭风险。看个具体场景:航空公司最怕油价疯涨,于是买一份<span class="hl">“将来能按今天约定价买油”</span>的合约,也就是燃油期货。油价真涨时,期货这头赚的钱,刚好抵掉买油多掏的钱——航空公司把油价风险甩出去了,但注意,风险没死,只是搬到了期货市场里对手的肩上。<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>的本质就是这么一笔方向相反的交易:用一边的盈利,抵消另一边的亏损。</p><p>把这笔账完整算一遍。假设公司一年用油 <span class="num">10 万</span>吨,今天油价 <span class="num">5000 元</span>一吨,它按这个价锁定。油价涨到 <span class="num">6000 元</span>:买油每吨多掏 <span class="num">1000 元</span>,<span class="num">10 万</span>吨多掏 <span class="num">1 亿</span>;期货每吨赚 <span class="num">1000 元</span>,正好赚回 <span class="num">1 亿</span>,用油成本还是 <span class="num">5 亿</span>。油价跌到 <span class="num">4000 元</span>:买油省 <span class="num">1 亿</span>,期货亏 <span class="num">1 亿</span>,成本依然是 <span class="num">5 亿</span>。涨也 <span class="num">5 亿</span>,跌也 <span class="num">5 亿</span>——对冲锁死的是成本,不是<span class="hl">“包赚”</span>。</p><p>最常见的误读跟着就来:看到期货账户亏了 <span class="num">1 亿</span>,就喊<span class="hl">“对冲失败”</span>。错。期货亏钱的另一面,是买油实打实省了 <span class="num">1 亿</span>,两本账必须合并看——只盯一边,就像只记出账不记进账。对冲的目标不是让期货账户赚钱,是让总成本可预测。</p><div class="callout callout--warn reveal"><span class="callout__title">对冲的账永远要两本一起算</span><p>期货账户亏了 <span class="num">1 亿</span>，别急着喊<span class="hl">“对冲失败”</span>——那往往意味着现货这头你因为油价上涨而多掏了 <span class="num">1 亿</span>，一亏一赚合起来是平，这就是对冲的目的。把两边拆开看的评价就像只称一边称，先合起来算，再讨论是不是失败。</p></div><p>另一招叫分散。银行把成千上万笔贷款打包,基金把几十上百只股票装进一个组合,保险公司把很多人的风险汇进一个资金池——每一件单拎出来都吓人,摊开了就不那么疼。道理没错,但天花板也在那儿:分散不是消失。极端行情下,相关性会一起飙升,平时看着八竿子打不着的资产,会约好似的同跌。</p><p>金融工程最危险的时刻,不是风险变大了,而是风险看起来不见了。拆小、换名、延后、藏进别人看不见的角落——包装一精美,连卖的人自己都信了。记住一条朴素的守恒律:风险只会被移动,不会被删除。</p>
+
+        <h3>1.5. 为什么需要审计、披露和监管</h3>
+<p>金融市场里,永远有人比你更知道底细。借钱的人比贷款人更清楚自己还不还得上;公司管理层比外部股东更清楚公司真实经营;基金经理比买基金的你更清楚自己到底怎么操作。这不是人品问题,是位置问题——它的学名叫信息不对称。</p><p>信息不对称会生出两个经典麻烦。第一个叫逆向选择:讲台上的人越主动,你越要小心——越是危险的借款人越想借到钱,越差的项目越想融到资。第二个叫道德风险:钱一旦到手,管理人就可能做对自己有利、对出资人不利的事。防第一个难在进门之前,防第二个难在进门之后。</p><p>逆向选择为什么是个恶性循环?推演一遍。来借钱的两类人:靠谱的违约概率约 <span class="num">1%</span>,不靠谱的约 <span class="num">10%</span>,起初各占一半。银行分不清谁是谁,只能按平均约 <span class="num">5.5%</span> 的坏账损失定<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>。靠谱的人一算太贵,不借了——他一走,池子里坏人浓度更高,利率只能再抬,又一批靠谱的人退出。价格一路赶走好货,只留下烂货。</p><div class="callout callout--note reveal"><span class="callout__title">中间价的残酷在于它谁也不准确</span><p>不知道好坏，市场只能报一个对两类人都不公平的利率——对诚实的偏高，对会赖的偏低，于是好客户先被这个价格吓跑。这不是银行的失误，是信息不对称本身的成本；所以想见到合理的利率，得先把<span class="hl">“谁更可能还钱”</span>制度化地讲清楚，审计和评级干的就是这件事。</p></div><p>所以金融系统里那一堆<span class="hl">“繁文缛节”</span>——审计、信息披露、评级、抵押、托管、估值、投资者适当性、监管——全都不是形式主义。它们的存在只有一个目的:让互相不认识的陌生人,能以更低的成本建立起<span class="hl">“我信你”</span>。信任越便宜,市场越大;这堆制度,就是在给信任压价。</p><p>但也别走到另一个极端,把审计报告和评级当成<span class="hl">“保证书”</span>。这些工具能把信息不对称压低,不能把风险清零——会计师会犯错,评级会滞后,抵押品会跌价。剩下的判断,永远是你自己的功课。</p>
+
+        <h3>1.6. 为什么一个地方出事会传到别处</h3>
+<p>一家小店倒闭,伤的只有店主和少数债主,这叫个体风险,市场喝杯茶就消化了。但如果成百上千家机构犯了同一种错——借了类似的钱、买了类似的资产、用了类似的<span class="term">杠杆</span>,情况就完全不同:一次价格下跌,可能点燃一连串鞭炮。</p><p>把鞭炮的引线看清楚。资产价格下跌,加<span class="term">杠杆</span>的机构<span class="term">保证金</span>就不够了——先解释这个词:用借来的钱买资产,得先交一笔押金作担保,这是<span class="term">保证金</span>;资产一跌、押金亏得不够了,对方就催你再补钱,这叫追加<span class="term">保证金</span>。为了筹钱,机构被迫甩卖资产;甩卖把价格砸得更低;更低的价格又触发更多<span class="term">保证金</span>追缴。跌势制造跌势,局部感冒拖成系统肺炎——这就是反馈回路。</p><p><span class="term">杠杆</span>的杀伤力,算一遍就懂。你自有 <span class="num">100 万</span>,再借 <span class="num">400 万</span>,买下 <span class="num">500 万</span>的资产。资产跌 <span class="num">10%</span>,剩 <span class="num">450 万</span>——卖光还掉 <span class="num">400 万</span>借款,自己只剩 <span class="num">50 万</span>,本金腰斩。跌 <span class="num">20%</span>,剩 <span class="num">400 万</span>,还完借款,你清零出局。资产价格只动了两成,你的本金波动却是十成。<span class="term">杠杆</span>不创造方向,只是放大器:判断对了放大收益,判断错了加速清零。</p><div class="callout callout--warn reveal"><span class="callout__title">把最坏情景写下来，再加杠杆</span><p>资产跌 <span class="num">20%</span>，<span class="num">5 倍</span><span class="term">杠杆</span>下你清零出局——这不是极端案例，是每天都会重播的算术。<span class="term">杠杆</span>不改变方向判断，只放大结果。所以在真正加<span class="term">杠杆</span>之前，先把这条线写下来：跌多少我会出局？这个数写不出来，你就还不配碰它。</p></div><p>别以为系统性风险只属于传统机构,量化同样没能免疫。很多产品用着相似的<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>——因子先粗略理解成挑股票时盯的某个指标,比如<span class="hl">“便不便宜”</span><span class="hl">“涨势强不强”</span>,第四部分会专门讲——用着相似的风控规则、相似的交易纪律。平时你看我我看你,彼此挺分散;压力一来,大家同时执行同一个动作:卖出同一类资产。拥挤的双手同时伸向同一扇窄门,踩踏就这样发生。把同一个策略换十个产品名字买十份,也不叫分散——底层是同一类因子、同一套风控,你其实是把同一个赌注下了十遍。</p>
+
+        <h3>1.7. 这张地图和量化有什么关系</h3>
+<p>量化新手常有个错觉:给我一张价格表,我就能跑模型。但价格是有人在某个市场里、按某种机制真金白银成交出来的。你得先知道:数据来自哪个市场,成交走什么机制,信息由谁披露,资金由谁托管,产品被什么规则管着。跳过这些直接建模,等于不看地图就发车。</p><p>拿几类常用数据举例。用基金净值,你得知道它是怎么估出来的;用财务数据,你得知道它是哪天披露的、当时的人能不能看到;用成交量,你得知道那天股票有没有停牌、有没有涨跌停;用融资融券数据,你得知道交易规则和券源限制。每一列数据的背后,都站着一整套制度。</p><p>举个典型的坑:一只股票因重大事项停牌一个月,行情表上它的成交量天天是零。不懂制度的模型会把这串零学成一个信号——<span class="hl">“极度冷门,无人问津”</span>。其实人家只是按规定停牌,和供需冷热毫无关系。数据里每一个异常值背后,可能站着一条制度,而不是一个规律。</p><p>无视制度背景直接建模,就像不看接口文档就硬调依赖:平时能跑,版本一更新全线报错。这就是我们把金融系统地图列为量化前置知识的原因:没这张地图,模型很容易把制度差异、数据口径、交易限制误认成<span class="hl">“可预测规律”</span>——<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>里赚得欢,一上实盘,才发现自己学的是地图,不是地形。</p>
+
+        <h2>2. 公司拿钱与投资者换手</h2>
+        <p>很多人第一次买股票,心里默认:我在软件里点了买入,钱就进了这家上市公司的账户。多数时候,根本不是这回事。公司“发行证券拿钱”和你“在软件里买卖证券”,是发生在两个不同舞台上的两件事。这一章就把一级市场、二级市场、成交、清算、交收、托管一次讲清——它们分得越清,你以后对“一笔交易”的理解就越接近真实世界。我们也会跟着一笔钱走一遍:从下单到记账,它究竟要过多少道手。</p>
+
+        <h3>2.1. 证券第一次被卖出去</h3>
+<p>一家公司想扩张,需要钱——建新产线、抢新市场,样样花钱。钱从哪来?无非两条路:找别人借,或者发证券。找银行是借钱;而发行股票、发行债券这类<span class="hl">“新证券第一次被卖给投资者”</span>的地方,就叫<a class="term term-link" href="glossary.html#g-一级市场" title="查看术语：一级市场">一级市场</a>。</p><p>一级市场最大的特征是:钱会真正流进发行人口袋。公司首次公开发行股票——就是新闻里天天说的 <span class="term">IPO</span>——投资者花出去的钱,买的是新发行的股份,变成公司账上可支配的资金。公司发行债券也类似:投资者把钱借给公司,公司承诺未来付息还本。一级市场,是证券<span class="hl">“出生”</span>的地方。</p><p>发行的账,算一遍:公司新发 <span class="num">1 亿</span>股,每股定价 <span class="num">10 元</span>,投资者合计掏出 <span class="num">10 亿</span>;扣掉保荐、承销、审计这批发行费用,公司真正到手约 <span class="num">9 亿</span>多。注意这笔钱的去向:它进了公司账户,变成产线、研发和市场。在一级市场里,你的钱是“嫁”给了公司,而不是和另一位股民换手。</p><p>但这里绝不是摆个摊就能卖货。券商要担任保荐人和承销商,会计师要审财务,律师要看法律文件,交易所和监管机构要核对有没有踩规则。为什么兴师动众?因为新证券第一次见人,没有历史价格可参考,买方判断值不值钱的唯一依据,就是公司交出来的材料;出生证打假,后面整条链都得跟着倒霉。所以一级市场的信息披露和合规要求,重得很。</p>
+
+        <h3>2.2. 已经发行的证券在投资者之间换手</h3>
+<p>公司上市之后,你打开交易软件买它的股票——注意,这时你多半身处<a class="term term-link" href="glossary.html#g-二级市场" title="查看术语：二级市场">二级市场</a>。二级市场的一个反直觉事实是:你买入付的钱,一般付给的是卖给你股票的那个投资者,上市公司一分没收到。你买的,是别人手里的存量。</p><p>再看得细一点:一家公司总股本 <span class="num">10 亿</span>股,今天真正成交的可能只有几百万股。可就这几百万股撮合出的 <span class="num">10 元</span>报价,会把 <span class="num">10 亿</span>股全数按 <span class="num">10 元</span>重新标价——少数股票的成交价,当天给全体持股定了身价。你账户里显示的那个浮盈浮亏,就是这么被边际价格标出来的。</p><div class="callout callout--note reveal"><span class="callout__title">边际成交给所有人定价</span><p>今天真正易手的只有 <span class="num">500 万</span>股，但这一笔成交价被全部 <span class="num">10 亿</span>股拿去参考，你账面浮盈浮动的原因不是有人真的卖空了你的股票，是因为<span class="hl">“最近一次成交价”</span>被所有人当成价格的锚。这就是 K 线显示的市值是全体重估的结果，不是当日真实出货量的总和。</p></div><p><span class="hl">“那公司岂不吃亏,二级市场岂不多余?”</span>恰恰相反。试想没有二级市场:投资者买了股票就退不出来,那他们在一级市场认购新股时,必然要求更高的风险补偿,公司融资马上变难。能帮老股东随时退出的市场,才会让新钱敢进来。</p><p>二级市场真正的作用,是让存量证券被持续交易、持续定价、持续转移风险。它像一个大型二手市场,但这个二手市场的价格会倒灌回一手生活:公司再融资、股权激励、对外并购、市场声誉、投资者信心,全都看它的脸色行事。</p><div class="callout callout--tip reveal"><span class="callout__title">钱进谁口袋，就是哪个市场</span><p><span class="term">IPO</span> 时你的钱进了公司账户，为公司发展添了燃料，这是一级市场 你在 App 里买一股，钱进了卖方投资者的账户，这是二级市场 同样是<span class="hl">“买股票”</span>，前者是融资，后者是换手——这两件事的经济含义完全不一样，把他们混为一谈你就看不懂企业当年为什么市值更高还增发。</p></div>
+
+        <h3>2.3. 成交不是终点,后面还有清算和交收</h3>
+<p>你点了买入,屏幕上跳出<span class="hl">“已成交”</span>——完事了吗?对你是图标变绿,对系统才是上半场结束。成交,只是说买卖双方在某个价格和数量上达成一致。接下来,后台要开始算账:这笔、那笔,全天成千上万笔——谁该付多少钱,谁该收多少证券。这个算账过程,叫清算。</p><p>为什么要先算账?看三笔交易:甲卖给乙 <span class="num">1 万</span>股,乙卖给丙 <span class="num">1 万</span>股,丙又卖给甲 <span class="num">5000 股</span>。笔笔都搬,得过户三次;先清算轧一轧:甲净卖 <span class="num">5000 股</span>,乙一买一卖正好扯平,丙净买 <span class="num">5000 股</span>,最后只需甲向丙过户一次。成千上万笔交易压成少数几个净额,资金和证券的搬运量骤减——这就是清算存在的理由。</p><div class="callout callout--tip reveal"><span class="callout__title">轧差是金融里最朴素也最重要的一个动作</span><p>甲卖乙 <span class="num">1 万</span>股、乙卖丙 <span class="num">1 万</span>股、丙卖甲 <span class="num">5000 股</span>——囤着逐笔过户要 <span class="num">3 次</span>，清算只搬 <span class="num">1 次</span>，因为大家的净头寸被轧平。默认净额结算不是技巧，是基础设施——没有中央对手方清算的市场，<a class="term term-link" href="glossary.html#g-换手率" title="查看术语：换手率">换手率</a>的所有假设都不然。做交易策略，你也要问自己：你的对手风险假设是不是隐含的已经完成对了？</p></div><p>算完账还要真正搬家:资金从买方划给卖方,证券从卖方过户给买方。这一步叫交收。交收完成,你的账户才正式更新持仓和余额。而证券到底记在谁名下,由登记结算体系统一维护;基金和机构的资产,还有托管人专门保管、核对。一环都不能少。</p><p>这些词听起来像后台琐事,但做量化的人必须当真。一套交易系统只知道<span class="hl">“我想买一万股”</span>是远远不够的,它还得知道:订单到底成交没有?成交了多少?资金哪天扣?证券哪天能卖?费用怎么记账?券商的记录和我自己的记录对不对得上?这些问题的答案,分分毫毫都是真的钱。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 365" role="img" aria-label="成交、清算、交收三步流程图:T 日撮合合同成立,T+1 轧算划拨,此刻才算持有">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">成交只是承诺,交收才算完成</text>
+            <rect x="60" y="80" width="230" height="130" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="175" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">T 日 · 撮合成交</text>
+            <text x="175" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">交易所确认:谁买谁卖</text>
+            <text x="175" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">双方价格锁定</text>
+            <text x="175" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">合同成立,钱货未动</text>
+            <rect x="335" y="80" width="230" height="130" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">T+1 日 · 清算</text>
+            <text x="450" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">中国结算做净额轧算</text>
+            <text x="450" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">算清每户净该收/付多少</text>
+            <text x="450" y="184" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">证券、资金都在划拨途中</text>
+            <rect x="610" y="80" width="230" height="130" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="725" y="108" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">T+1 日 · 交收</text>
+            <text x="725" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">股票划到买方证券账户</text>
+            <text x="725" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">现金划到卖方资金账户</text>
+            <text x="725" y="184" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">此刻才算真正持有</text>
+            <line x1="292" y1="145" x2="333" y2="145" stroke="#8499bd" stroke-width="3" marker-end="url(#arrR1)"/>
+            <line x1="567" y1="145" x2="608" y2="145" stroke="#8499bd" stroke-width="3" marker-end="url(#arrR1)"/>
+            <defs><marker id="arrR1" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8499bd"/></marker></defs>
+            <rect x="60" y="240" width="780" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="84" y="268" fill="#f0c96a" font-size="13" font-weight="800">为什么先过账的规则不可逆</text>
+            <text x="84" y="294" fill="#bcc9dd" font-size="12">交易所要求券商先冻结资金与证券再挂单,是把“打白条”的风险挡在交易系统之外;A 股之所以 T+1,是要给中央对手方留出清算窗口</text>
+            <text x="84" y="318" fill="#bcc9dd" font-size="12">看懂这三步,后面讲停牌、交割日期、甚至国债期货的交割规则,全都是这一条逻辑的延伸</text>
+          </svg>
+          <p class="figure__cap">成交只是合同锁价,清算是按净额算账,交收才是真正把钱和票过户。A 股 T+1 的本质,是让中央对手方有一天时间核对完账本。</p>
+        </div>
+        <h3>2.4. 券商、交易所、登记结算、托管分别做什么</h3>
+<div class="callout callout--note reveal"><span class="callout__title">关键</span><p>这条链上有四家关键机构,职责常被搞混,挨个对号入座。先看券商:它是投资者进入市场的通道。开户找它,委托报给它,它先检查你的资金、持仓、权限和风控,再把合规的订单送进交易所。你软件上的每一个按钮,背后都是券商的系统在跑。</p></div><p>再看交易所:它负责制定交易规则、接收订单、撮合买卖、监控异常交易。给交易所去两根错误的想象:它不是你的银行账户,也不是上市公司的财务科。它更像一个规则化的撮合系统——一台只认规则、不认人情的大机器。</p><p>成交之后的活,交给另外两家。登记结算机构负责清算、交收和证券权属登记;托管人负责保管基金或机构资产,核对估值和资金划转。整条链上没有人彼此相识,交易却能做到可信——靠的就是这几道<span class="hl">“各管一段、互相核对”</span>的分工。</p><p>为什么管投资的和管资产的非要分开?想想财务室的规矩:会计管账,出纳管钱,两个人互相核对,谁想挪用都过不了对方那关。基金层面也一样:管理人管<span class="hl">“怎么投”</span>,托管人管<span class="hl">“东西还在不在”</span>。顺带记住:你的股票也不是躺在券商的机房里,权属由登记结算体系统一记账——券商是通道,不是仓库。</p>
+
+        <h3>2.5. 一个完整买入流程</h3>
+<p>把上面所有角色串成一条流水线,跟一笔买单走一遍。第一步,你在券商 App 输入买入指令。第二步,券商检查:资金够不够?权限有没有?价格合不合规?第三步,订单进入交易所。第四步,交易所按<span class="hl">“价格优先、时间优先”</span>的规则撮合。第五步,成交回报返回券商,再到你的账户。第六步,清算和交收系统完成资金和证券的真正变动。六步走完,交易才算闭环。</p><p>拿一笔单子手算:你委托买入 <span class="num">1 万</span>股、每股 <span class="num">10 元</span>,券商先冻结约 <span class="num">10 万</span>资金。撮合下来只成交 <span class="num">6000 股</span>,扣走约 <span class="num">6 万</span>;剩下 <span class="num">4000 股</span>,你要么继续排队,要么撤单,撤了那约 <span class="num">4 万</span>才解冻。在可用余额恢复原样之前,这笔钱哪儿也去不了——<span class="hl">“状态”</span>和<span class="hl">“冻结”</span>这两个词,背后都是具体的银子。</p><div class="callout callout--note reveal"><span class="callout__title">下单那一刻，你的钱已经不是你的了</span><p>委托买入 <span class="num">1 万</span>股 × <span class="num">10 元</span>，券商先冻结 <span class="num">10 万</span>——成交 <span class="num">6000 股</span>后，<span class="num">6 万</span>变成股票，<span class="num">4 万</span>还在冻结状态，既不能动用也不能买别的东西。这就是为什么<span class="hl">“可用资金”</span>和<span class="hl">“总资产”</span>要靠两个不一样的数字列出来——冻结状态中的钱不是你的可用资源。</p></div><p>普通投资者只看见界面变了两秒,量化交易系统却要把每一环都接住:订单可能被拒绝,可能只成交一部分,可能要撤单,成交回报可能延迟,券商账户和内部账目可能对不上。现实里没有<span class="hl">“理想网络”</span>,每一步都有它的失败模式。</p><p>所以一套像样的交易系统,一定有两个基本功:订单状态机和每日对账。订单从<span class="hl">“已提交”</span>到<span class="hl">“部分成交”</span>再到<span class="hl">“全部成交”</span>或<span class="hl">“已撤销”</span>,状态机把每种流转管得明明白白;收市后,券商记录和内部记录逐笔核对。它绝不能写完一句 buy(symbol, amount) 就宣布收工。</p>
+
+        <h3>2.6. 金融系统地图怎样帮助建模</h3>
+<p>很多回测里的<span class="hl">“印钞机”</span>,死因不是方向看错,而是不懂市场结构。举两个最常见的穿帮:策略假设当天买入当天就能卖出普通 A 股——可 A 股有 <a class="term term-link" href="glossary.html#g-t1" title="查看术语：T+1">T+1</a> 约束,今天买的最快明天才能卖;策略假设成交后资金立刻可无限复用——可真实账户里还有交收和冻结,钱不是瞬间解锁的。回测里畅通无阻,实盘里步步受限。</p><p>拿 T+1 演练一遍:你在回测里写“盘中涨幅突破 <span class="num">3%</span> 就追入,回落 <span class="num">1%</span> 就离场”,历史曲线很美。实盘第一天:上午追进去,下午跳水,你想执行<span class="hl">“回落 <span class="num">1%</span> 离场”</span>——卖不出去,今天买入的股票今天被锁死,只能扛到明天,隔夜涨跌全数吞下。回测里那个机灵的止损,在真实规则里根本不存在。</p><p>量化开发同样逃不开工程细节:券商接口怎么对接,订单状态怎么追踪,成交回报怎么解析,每日账目怎么核对,托管数据怎么同步。实话讲,很多实盘事故,模型方向没错——错的是订单、账户、清算、数据同步这些<span class="hl">“水管”</span>爆了。</p><div class="callout callout--warn reveal"><span class="callout__title">亏钱的往往不是模型，是“管道”</span><p>方向对、模型对，最后却亏钱——很多情况下模型没问题，坏在订单没发对、资金对不上、数据没同步、托管接口出了状况。研究策略时把这个问题写进你的检查清单：上实盘前一天，先核对所有交易执行、资金状态、风控报错是不是真的在预期的轨道上跑，而不是凭感觉觉得没问题。</p></div><p>这一章不是逼你背后台黑话,而是建立一种肌肉记忆:交易是一条链,不是一个按钮。链上的每一环,都可能是利润的漏点,也可能是风险的老巢。写策略之前多问一句:这条链上的每一环,在我的回测里走了没有?</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>金融系统是一张网络,不只是买方和卖方两个人。</li>
+            <li>风险不会凭空消失,只会被转移、拆分、延后或隐藏。</li>
+            <li>一级市场是证券发行融资,二级市场是存量证券换手交易。</li>
+            <li>成交之后还有清算、交收、登记和托管。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.1.</strong> 1907 年,华尔街把钥匙交给了一个老人</li>
+            <li><strong>1.2.</strong> 先看四类人</li>
+            <li><strong>1.3.</strong> 钱不是直接从一个人手里飞到另一个人手里</li>
+            <li><strong>1.4.</strong> 风险不会消失,只会转移或隐藏</li>
+            <li><strong>1.5.</strong> 为什么需要审计、披露和监管</li>
+            <li><strong>1.6.</strong> 为什么一个地方出事会传到别处</li>
+            <li><strong>1.7.</strong> 这张地图和量化有什么关系</li>
+            <li><strong>2.1.</strong> 证券第一次被卖出去</li>
+            <li><strong>2.2.</strong> 已经发行的证券在投资者之间换手</li>
+            <li><strong>2.3.</strong> 成交不是终点,后面还有清算和交收</li>
+            <li><strong>2.4.</strong> 券商、交易所、登记结算、托管分别做什么</li>
+            <li><strong>2.5.</strong> 一个完整买入流程</li>
+            <li><strong>2.6.</strong> 金融系统地图怎样帮助建模</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>金融系统里最基本的四类角色是什么?</summary>
+            <p>资金盈余方(有钱暂时不用的)、资金需求方(缺钱要用的)、金融中介(帮钱搬家的)、基础设施和监管者(定规则守系统的)。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>买了“风险管理”的产品,风险就消失了吗?</summary>
+            <p>没有。风险只会被转移、分散、拆分、延后或藏进角落——它换了位置或名字,并没有被删除。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>你在二级市场买股票,钱通常直接进上市公司账户吗?</summary>
+            <p>通常不进。你的钱付给了卖给你股票的投资者;公司的钱,早在发行环节就拿到了。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>成交和交收有什么区别?</summary>
+            <p>成交只是价格和数量撮合成了一笔约定;交收才是按清算结果,钱和证券真正划账过户。中间隔着一整套后台流程。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一步</span>
+          <h2>进入第二部分 · 资产如何承载现金流与风险</h2>
+          <p>股票、债券和衍生品为什么有价值,它们把什么权利和风险交给了你?</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

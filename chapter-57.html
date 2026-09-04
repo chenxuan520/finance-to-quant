@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 57 章 · 最终检查表: 研究、交易和实盘前先读 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="集中核对金融常识、数据时间线、回测假设、组合约束、交易成本、模拟盘和停止规则。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="57">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">附录 · 随时回来查 · 第 57 章</p>
+        <h1>最终检查表: 研究、交易和实盘前先读</h1>
+        <p class="lead">附录最后不再增加新知识,只保留三道门禁:进入量化前是否理解基本金融机制,开始项目时是否做到数据与实验可信,把系统推向交易前是否知道最坏情况和停止方式。每次研究、买产品或准备实盘时,都可以从这里重新检查。</p>
+
+        <section class="chapter-context chapter-context--appendix">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">工具箱</span>
+            <span>本部分第 3 / 3 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>哪些内容不必顺序阅读,但研究前值得反复核对?</p>
+          <p class="chapter-context__outcome">术语、公式和最终检查表集中在这里,不再打断正文的收束。 工具型内容,需要时回来查。</p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>进入量化前,金融基础必须落到现金流、权利、风险、价格和交易制度上。</li>
+            <li>能读懂产品报告、收益风险指标和 A 股交易规则,才有资格判断量化回测是否真实。</li>
+            <li>量化项目的最低标准是流程可信: 数据、时间、股票池、交易规则、成本、因子、模型、组合、报告和模拟盘都要过关。</li>
+            <li>复杂模型不能替代基础检查;很多假收益来自地基错误,不是模型不够高级。</li>
+            <li>每次研究前先缩小问题,每次交易前先想最坏情况。</li>
+          </ul>
+        </section>
+
+
+        <h2>1. 金融小白到量化前必须真正懂的事</h2>
+
+        <h3>1.1. 能解释钱和财富的区别</h3>
+<p>第一项基本功:你能说清钱不是财富本身。<a class="term term-link" href="glossary.html#g-真实财富" title="查看术语：真实财富">真实财富</a>是商品、服务和生产能力;钱只是交换和计量的工具。货币数量增加,并不必然让社会变富——如果鱼、房子、药这些真实产出没有变多,多印出来的钱多半只是去推高价格,而不是凭空长出新的财富。</p><p>这个问题听着太基础,但它像暗线一样贯穿后面的一切:你怎么看<a class="term term-link" href="glossary.html#g-通胀" title="查看术语：通胀">通胀</a>,怎么看央行放水,怎么看资产价格上涨,怎么看泡沫,全取决于你想没想通这一层。如果你直觉里还把账户数字上涨直接等同于财富增加,那你在看金融市场时,会比别人多一层顽固的误解——而且是看不见的那种。</p><p>自测方式很简单:找个没学过金融的朋友,用开篇小岛捕鱼、鱼票、渔网的故事,把<a class="term term-link" href="glossary.html#g-储蓄" title="查看术语：储蓄">储蓄</a>、投资和<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>讲给他听。你能讲得他点头,说明这块地基是实的;讲着讲着自己卡壳了,那就回去重读开头几章。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 492" role="img" aria-label="两列对照表:左列金融直觉8件事(钱和财富、银行脆弱、股票债券、基金ETF、A股规则、收益风险、有效市场、资金边界),右列量化纪律10件事(数据、时间线、股票池、交易规则、成本、因子、基线、约束、复现、模拟盘),中间一扇门">
+            <text x="450" y="30" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">动手写代码前,先过完这 18 道关</text>
+            <defs><marker id="ky" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f0c96a"/></marker></defs>
+            <text x="201" y="60" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">金融直觉 · 8 件事</text>
+            <text x="706" y="60" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">量化纪律 · 10 件事</text>
+            <rect x="28" y="78" width="346" height="40" rx="10" fill="rgba(18,29,49,0.55)" stroke="rgba(122,167,240,0.22)"/>
+            <circle cx="46" cy="98" r="4.5" fill="#7aa7f0"/>
+            <text x="60" y="103" fill="#eef4f8" font-size="13.5" font-weight="700">钱和财富的区别  <tspan fill="#8499bd" font-size="11.5" font-weight="400">票子 ≠ 产出</tspan></text>
+            <rect x="28" y="122" width="346" height="40" rx="10" fill="rgba(18,29,49,0.55)" stroke="rgba(122,167,240,0.22)"/>
+            <circle cx="46" cy="142" r="4.5" fill="#7aa7f0"/>
+            <text x="60" y="147" fill="#eef4f8" font-size="13.5" font-weight="700">银行有用又脆弱  <tspan fill="#8499bd" font-size="11.5" font-weight="400">挤兑是信心病</tspan></text>
+            <rect x="28" y="166" width="346" height="40" rx="10" fill="rgba(18,29,49,0.55)" stroke="rgba(122,167,240,0.22)"/>
+            <circle cx="46" cy="186" r="4.5" fill="#7aa7f0"/>
+            <text x="60" y="191" fill="#eef4f8" font-size="13.5" font-weight="700">区分股票和债券  <tspan fill="#8499bd" font-size="11.5" font-weight="400">股东排债主后</tspan></text>
+            <rect x="28" y="210" width="346" height="40" rx="10" fill="rgba(18,29,49,0.55)" stroke="rgba(122,167,240,0.22)"/>
+            <circle cx="46" cy="230" r="4.5" fill="#7aa7f0"/>
+            <text x="60" y="235" fill="#eef4f8" font-size="13.5" font-weight="700">基金和 ETF 结构  <tspan fill="#8499bd" font-size="11.5" font-weight="400">一篮子打包卖</tspan></text>
+            <rect x="28" y="254" width="346" height="40" rx="10" fill="rgba(18,29,49,0.55)" stroke="rgba(122,167,240,0.22)"/>
+            <circle cx="46" cy="274" r="4.5" fill="#7aa7f0"/>
+            <text x="60" y="279" fill="#eef4f8" font-size="13.5" font-weight="700">A 股交易规则  <tspan fill="#8499bd" font-size="11.5" font-weight="400">T+1 与涨跌停</tspan></text>
+            <rect x="28" y="298" width="346" height="40" rx="10" fill="rgba(18,29,49,0.55)" stroke="rgba(122,167,240,0.22)"/>
+            <circle cx="46" cy="318" r="4.5" fill="#7aa7f0"/>
+            <text x="60" y="323" fill="#eef4f8" font-size="13.5" font-weight="700">收益和风险指标  <tspan fill="#8499bd" font-size="11.5" font-weight="400">回撤 · 夏普口径</tspan></text>
+            <rect x="28" y="342" width="346" height="40" rx="10" fill="rgba(18,29,49,0.55)" stroke="rgba(122,167,240,0.22)"/>
+            <circle cx="46" cy="362" r="4.5" fill="#7aa7f0"/>
+            <text x="60" y="367" fill="#eef4f8" font-size="13.5" font-weight="700">有效市场与行为偏差  <tspan fill="#8499bd" font-size="11.5" font-weight="400">便宜不会白捡</tspan></text>
+            <rect x="28" y="386" width="346" height="40" rx="10" fill="rgba(18,29,49,0.55)" stroke="rgba(122,167,240,0.22)"/>
+            <circle cx="46" cy="406" r="4.5" fill="#7aa7f0"/>
+            <text x="60" y="411" fill="#eef4f8" font-size="13.5" font-weight="700">自己的资金边界  <tspan fill="#8499bd" font-size="11.5" font-weight="400">亏光也不心疼</tspan></text>
+            <rect x="540" y="76" width="332" height="32" rx="9" fill="rgba(18,29,49,0.55)" stroke="rgba(240,201,106,0.25)"/>
+            <circle cx="558" cy="92" r="4.5" fill="#f0c96a"/>
+            <text x="572" y="96" fill="#eef4f8" font-size="13" font-weight="700">数据必须可追溯  <tspan fill="#8499bd" font-size="11.5" font-weight="400">来路留得住</tspan></text>
+            <rect x="540" y="112" width="332" height="32" rx="9" fill="rgba(18,29,49,0.55)" stroke="rgba(240,201,106,0.25)"/>
+            <circle cx="558" cy="128" r="4.5" fill="#f0c96a"/>
+            <text x="572" y="132" fill="#eef4f8" font-size="13" font-weight="700">时间线必须正确  <tspan fill="#8499bd" font-size="11.5" font-weight="400">按公告日对齐</tspan></text>
+            <rect x="540" y="148" width="332" height="32" rx="9" fill="rgba(18,29,49,0.55)" stroke="rgba(240,201,106,0.25)"/>
+            <circle cx="558" cy="164" r="4.5" fill="#f0c96a"/>
+            <text x="572" y="168" fill="#eef4f8" font-size="13" font-weight="700">股票池必须点时  <tspan fill="#8499bd" font-size="11.5" font-weight="400">成分随日期变</tspan></text>
+            <rect x="540" y="184" width="332" height="32" rx="9" fill="rgba(18,29,49,0.55)" stroke="rgba(240,201,106,0.25)"/>
+            <circle cx="558" cy="200" r="4.5" fill="#f0c96a"/>
+            <text x="572" y="204" fill="#eef4f8" font-size="13" font-weight="700">交易规则进回测  <tspan fill="#8499bd" font-size="11.5" font-weight="400">涨停撮合不掉</tspan></text>
+            <rect x="540" y="220" width="332" height="32" rx="9" fill="rgba(18,29,49,0.55)" stroke="rgba(240,201,106,0.25)"/>
+            <circle cx="558" cy="236" r="4.5" fill="#f0c96a"/>
+            <text x="572" y="240" fill="#eef4f8" font-size="13" font-weight="700">成本做敏感性  <tspan fill="#8499bd" font-size="11.5" font-weight="400">佣金·滑点·冲击</tspan></text>
+            <rect x="540" y="256" width="332" height="32" rx="9" fill="rgba(18,29,49,0.55)" stroke="rgba(240,201,106,0.25)"/>
+            <circle cx="558" cy="272" r="4.5" fill="#f0c96a"/>
+            <text x="572" y="276" fill="#eef4f8" font-size="13" font-weight="700">因子有单独报告  <tspan fill="#8499bd" font-size="11.5" font-weight="400">不过堂不合成</tspan></text>
+            <rect x="540" y="292" width="332" height="32" rx="9" fill="rgba(18,29,49,0.55)" stroke="rgba(240,201,106,0.25)"/>
+            <circle cx="558" cy="308" r="4.5" fill="#f0c96a"/>
+            <text x="572" y="312" fill="#eef4f8" font-size="13" font-weight="700">模型必须有基线  <tspan fill="#8499bd" font-size="11.5" font-weight="400">先赢过等权持有</tspan></text>
+            <rect x="540" y="328" width="332" height="32" rx="9" fill="rgba(18,29,49,0.55)" stroke="rgba(240,201,106,0.25)"/>
+            <circle cx="558" cy="344" r="4.5" fill="#f0c96a"/>
+            <text x="572" y="348" fill="#eef4f8" font-size="13" font-weight="700">组合必须有约束  <tspan fill="#8499bd" font-size="11.5" font-weight="400">单票·行业上限</tspan></text>
+            <rect x="540" y="364" width="332" height="32" rx="9" fill="rgba(18,29,49,0.55)" stroke="rgba(240,201,106,0.25)"/>
+            <circle cx="558" cy="380" r="4.5" fill="#f0c96a"/>
+            <text x="572" y="384" fill="#eef4f8" font-size="13" font-weight="700">报告必须能复现  <tspan fill="#8499bd" font-size="11.5" font-weight="400">同配置同结果</tspan></text>
+            <rect x="540" y="400" width="332" height="32" rx="9" fill="rgba(18,29,49,0.55)" stroke="rgba(240,201,106,0.25)"/>
+            <circle cx="558" cy="416" r="4.5" fill="#f0c96a"/>
+            <text x="572" y="420" fill="#eef4f8" font-size="13" font-weight="700">模拟盘先于实盘  <tspan fill="#8499bd" font-size="11.5" font-weight="400">免费犯错阶段</tspan></text>
+            <!-- 中间的门:两边是钥匙,门后才是代码 -->
+            <path d="M 418 300 L 418 216 A 32 34 0 0 1 482 216 L 482 300 Z" fill="rgba(240,201,106,0.08)" stroke="rgba(240,201,106,0.55)" stroke-width="2"/>
+            <circle cx="450" cy="250" r="7" fill="#f0c96a"/>
+            <rect x="447" y="255" width="6" height="22" rx="2" fill="#f0c96a"/>
+            <path d="M 384 254 L 412 254" stroke="#f0c96a" stroke-width="2" fill="none" marker-end="url(#ky)"/>
+            <path d="M 530 254 L 488 254" stroke="#f0c96a" stroke-width="2" fill="none" marker-end="url(#ky)"/>
+            <text x="450" y="196" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">两列就是两把钥匙</text>
+            <text x="450" y="326" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800">8 + 10 = 18 关,一关不能跳</text>
+            <text x="450" y="470" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">门后才是代码:左边看懂世界,右边管住自己</text>
+          </svg>
+          <p class="figure__cap">动手写代码之前要真正过的 18 道关:左边 8 件是看懂金融世界的直觉,右边 10 件是量化工程的纪律,对应本书前面每一章的地基。两列合在一起是钥匙,门打开之后,才轮得到代码上场。</p>
+        </div>
+        <h3>1.2. 能解释银行为什么既有用又脆弱</h3>
+<p>银行不是一台更大的保险柜。它的本质是<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>和期限转换系统:用大白话说,它把千家万户随时可能要取走的短期存款,变成企业十年八年才还得上的长期贷款,经济因此能提前投资、提前建设。但硬币的另一面是:这个结构天然害怕大家同时来取钱——挤兑和<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>风险,是银行这门生意从娘胎里带出来的弱点。</p><p>你还应该能随手画清银行的<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>。最容易绕晕的一点:贷款是银行的资产(别人欠它的钱),存款反而是银行的负债(它欠你的)。储户总觉得存在银行的钱随用随取,可银行手里大把资产是几年后才能收回的长期贷款,这中间的时间差,就是脆弱性的藏身之处。</p><p>如果你能一口气解释清楚:银行为什么需要自有资本垫底、为什么要交存款准备金、为什么央行被称作<a class="term term-link" href="glossary.html#g-最后贷款人" title="查看术语：最后贷款人">最后贷款人</a>、为什么还有<a class="term term-link" href="glossary.html#g-存款保险" title="查看术语：存款保险">存款保险</a>这一层——说明银行这块地基,你的基本是稳的。</p>
+
+        <h3>1.3. 能区分股票和债券</h3>
+<p>第三项:不用查书,就能说清<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>和<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>的权利差别。股票是剩余收益权——公司赚的钱付完所有该付的,剩下的才归股东,不确定性更高,但也只有股东能分享公司长期成长的甜头。债券是合同索取权——欠债按合同还本付息,排队靠前,但收益上限写得明明白白。</p><p>两者的风险来源也不一样,别用一个“稳”字糊弄过去。股票的风险主要来自盈利、估值、流动性和市场情绪四条线;债券的风险主要来自<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>、信用、流动性和通胀另外四条线。问一只债券稳不稳,先看看它的<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>、发行人和市场利率环境。</p><p>合格线是:你能解释为什么市场利率上升时,手里那张旧债的价格会下跌;也能解释为什么股票的估值会随<a class="term term-link" href="glossary.html#g-折现" title="查看术语：折现">折现</a>率变化而挪动。这两条能说通,说明你已经开始把各类资产的定价逻辑连成一张网,而不是背了一筐彼此无关的名词。</p>
+
+        <h3>1.4. 能看懂基金和 ETF 的基本结构</h3>
+<p>一提到基金,你不能只会背<span class="hl">“专家理财”</span>。基金是集合投资载体:管理人负责投、托管人负责看钱、份额代表你的一份、净值是计价单位、费用怎么收、申赎什么规则——这几样缺一个都说不完整。<a class="term term-link" href="glossary.html#g-etf" title="查看术语：ETF">ETF</a> 则是在交易所挂牌交易的基金份额,它身上同时存在两个价格:一个是净值,一个是市场<a class="term term-link" href="glossary.html#g-撮合" title="查看术语：撮合">撮合</a>出来的交易价格。</p><p>再进一步:拿到一份基金月报,你能而不是晕。产品类型是什么,业绩基准是什么,净值怎么走,回撤多大,费用多少,重仓什么,收益归因为哪路,规模多大,风险提示写了什么——都应该扫一圈。千万别只看那个最显眼的<span class="hl">“近一年收益排名”</span>,那是最没用的信息之一。</p><p>自测一下:你能解释 ETF 为什么会出现折价或溢价吗?能解释为什么流动性差的 ETF 买一卖一,隐形成本真不低吗?这两题答得上来,说明你已经越过<span class="hl">“背产品名字”</span>的阶段,开始理解产品结构了。</p>
+
+        <h3>1.5. 能说清 A 股交易规则</h3>
+<p>A 股不是想什么时候买卖就什么时候买卖的自由市场。它有一整套制度:交易日历、<a class="term term-link" href="glossary.html#g-集合竞价" title="查看术语：集合竞价">集合竞价</a>、<a class="term term-link" href="glossary.html#g-连续竞价" title="查看术语：连续竞价">连续竞价</a>、涨跌幅限制、<a class="term term-link" href="glossary.html#g-t1" title="查看术语：T+1">T+1</a> 交收、停牌、ST 标识、退市规则、交易单位和各项费用。每一项都不是摆设,都会真实地决定你的单子能不能成交、何时成交、花多少钱成交。</p><p>你应该张口就能解释这几件事:今天买的股票,为什么通常今天不能卖?涨停板上的股票,为什么不一定能买到;跌停板上的,为什么不一定卖得掉?卖出股票时,税费从哪里扣、资金什么时候才真正可用?这些问题听着琐碎,件件都是真金白银的规则。</p><p>而且这些规则不是只影响手动炒股的人——它们直接进入<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>引擎。一个不懂 T+1 和涨跌停的量化回测,很可能在历史上买入了根本买不到的涨停股、卖出了根本卖不脱的跌停股,留下的不过是一条漂亮的幻觉曲线。规则不懂,回测白做。</p>
+
+        <h3>1.6. 能解释收益和风险指标</h3>
+<p>这一项是纯动手题:给你一个价格序列,你能手算简单收益率;你能讲清复利的意思;你知道<span class="term">年化收益</span>率是把过去的收益折算成年化口径,不是对未来的承诺;你能用大白话说,<a class="term term-link" href="glossary.html#g-波动率" title="查看术语：波动率">波动率</a>量的是一路上有多颠簸,<a class="term term-link" href="glossary.html#g-最大回撤" title="查看术语：最大回撤">最大回撤</a>量的是从最高点摔下来的那一下有多疼。</p><p>同时,别把指标当圣旨。<a class="term term-link" href="glossary.html#g-夏普比率" title="查看术语：夏普比率">夏普比率</a>不是万能裁判,高<span class="term">夏普</span>可能藏着尾部风险——平时稳得毫无波澜,一出事就是大事。<a class="term term-link" href="glossary.html#g-信息比率" title="查看术语：信息比率">信息比率</a>专门看相对基准那部分超额的质量。胜率高更不代表赚钱:胜率、盈亏比、成本,缺一个维度,结论都可能翻转。</p><p>自我检验的场景:给你看一条漂亮收益曲线,你脱口而出的是<span class="hl">“哇多少倍”</span>,还是一连串追问——基准是什么?最大回撤多少?扣没扣成本?样本多长?这收益来自承担了什么风险?能主动这么问,你就已经不是那个只看收益数字的新手了。</p>
+
+        <h3>1.7. 能解释有效市场和行为偏差</h3>
+<p><a class="term term-link" href="glossary.html#g-有效市场假说" title="查看术语：有效市场假说">有效市场假说</a>经常被误读成<span class="hl">“价格永远正确”</span>,其实不是。它真正想提醒你的是:公开信息早已摆在那里,想捡人尽皆知的钱反复赚,非常难。随机游走也不是说价格变动毫无原因,而是说推动价格的往往是新信息,而新信息在到来之前没人能预料。两个概念都是在给你的预期降温,不是给市场封圣。</p><p>行为偏差是另一面:人会过度自信、追涨杀跌、对亏损格外痛苦、把成本价当锚。这些都是真实存在的,而且有大量证据。但要提醒一句:知道别人有偏差,不等于你能靠这个免费赚钱——从<span class="hl">“市场会犯错”</span>到<span class="hl">“你能把错误换成利润”</span>,中间隔着数据、成本、工具、时间和风险承受力。</p><p>理解了这一节,你对任何策略都会自然多一分谦逊。遇到任何号称的优势,你都该问一句:这优势从哪来?为什么没被别人抢走?并且接受一个残酷事实:一旦优势被发现和模仿,竞争就会不断侵蚀它的收益。</p>
+
+        <h3>1.8. 能管住自己的资金边界</h3>
+<p>金融基础不只装在脑子里,还包括划在钱包上的红线:什么钱坚决不能拿去冒险。日常生活要用的钱、应急保命的钱、短期明确要花的钱,一分都不该进高波动策略。红线之外的钱,才叫可投资资金——这是所有策略讨论的大前提。</p><p>现在就拿笔,看能不能写出自己的五个边界数字和规则:最大可承受亏损是多少、单个策略仓位上限是多少、用不用<span class="term">杠杆</span>、触到什么条件必须停止、隔多久复盘一次。写得越具体越好,别用<span class="hl">“看情况”</span>三个字糊弄自己。</p><p>这五个问题答不上来,哪怕你代码写得再溜、模型训得再花,也还没准备好碰实盘。技术决定你能走多远,边界决定你会不会翻车——翻过一次车的人,多数不是技术不行,而是边界没有。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 400" role="img" aria-label="最终清单双列:金融直觉说人话,工程纪律写代码式约束">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">最终清单的两列:能说明白才算懂</text>
+            <rect x="70" y="80" width="360" height="265" rx="12" fill="rgba(122,167,240,0.18)" stroke="#7aa7f0"/>
+            <text x="250" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">金融直觉列</text>
+            <text x="250" y="138" text-anchor="middle" fill="#bcc9dd" font-size="12">钱和财富的区别</text>
+            <text x="250" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">银行为什么又脆弱又有用</text>
+            <text x="250" y="194" text-anchor="middle" fill="#bcc9dd" font-size="12">股票与债券的风险结构差异</text>
+            <text x="250" y="222" text-anchor="middle" fill="#bcc9dd" font-size="12">基金与 ETF 的基本结构</text>
+            <text x="250" y="250" text-anchor="middle" fill="#bcc9dd" font-size="12">收益风险指标到底反映什么</text>
+            <text x="250" y="278" text-anchor="middle" fill="#bcc9dd" font-size="12">有效市场与行为偏差的关系</text>
+            <text x="250" y="310" text-anchor="middle" fill="#8499bd" font-size="12">口舌讲不明白的就是没掌握</text>
+            <rect x="470" y="80" width="360" height="265" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="650" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">工程纪律列</text>
+            <text x="650" y="138" text-anchor="middle" fill="#bcc9dd" font-size="12">股票池必须点时确定</text>
+            <text x="650" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">回测必须包含真实成本</text>
+            <text x="650" y="194" text-anchor="middle" fill="#bcc9dd" font-size="12">因子必须单独出具报告</text>
+            <text x="650" y="222" text-anchor="middle" fill="#bcc9dd" font-size="12">模型必须和田农药基线对比</text>
+            <text x="650" y="250" text-anchor="middle" fill="#bcc9dd" font-size="12">组合必须有明确的约束</text>
+            <text x="650" y="278" text-anchor="middle" fill="#bcc9dd" font-size="12">报告必须能被复现</text>
+            <text x="650" y="310" text-anchor="middle" fill="#8499bd" font-size="12">没写出来的不允许操作</text>
+            <text x="450" y="378" text-anchor="middle" fill="#bcc9dd" font-size="12.5">能写下来就是能证明,能说服小白就是能讲透——从这个列开始一步步推进到最后的仓位和决策</text>
+          </svg>
+          <p class="figure__cap">毕业考试不是背定义,是把它们写给你不看行不辿;工程侧同理:把规则说得出来才算真的理解,讲得出来就要拿模拟盘认证。</p>
+        </div>
+        <h2>2. 做量化项目前必须真正做到的事</h2>
+        <p>会 Python、会机器学习、能画出漂亮净值曲线,不等于能做量化——这可能是全书里最想刻在你脑门上的一句话。真正的最低标准不在模型名单上,而在流程是不是可信。下面这份清单,每一条都不是装饰用的繁文缛节,而是帮你挡住一个最常见的灾难:把错误的结果当成了自己的投资能力。动手做项目之前,对照着逐条过一遍。</p>
+
+        <h3>2.1. 数据必须可追溯</h3>
+<p>先做个小测试:随便挑一个<a class="term term-link" href="glossary.html#g-因子" title="查看术语：因子">因子</a>值异常的数据点,你能不能一层层追回到原始下载文件和处理脚本?如果不能,你的数据体系就没过关。合格的标准是:每个字段你都知道来自哪里、什么时候下载的、是什么口径、做没做复权、是不是当时时点、日后会不会被修正。</p><p>最怕的场面是:数据躺在某个临时 CSV 里,来历不明;有一半是手工从网页复制粘贴的;用的接口说不清出处;下载完还被人随手改过几行。这样的数据养出来的回测,长得再漂亮也不敢信。数据可追溯,是量化项目的第一条底线,排在模型之前。</p><p>这条底线的最低配置是四句话:原始数据绝不下手改,处理脚本能一键重复执行,数据检查自动跑,发现异常有日志可查。把它当工程纪律,而不是可有可无的好习惯。</p>
+
+        <h3>2.2. 时间线必须正确</h3>
+<p>时间线是量化里最阴的坑:模型在一月份的时候,“看”到了三月份才披露的数据,回测曲线立刻眉飞色舞。所以每个特征都过一道关:做出交易决策的那一刻,这条数据当时真的可见吗?财报必须按公告日对齐,宏观数据按公布日,指数成分按生效日,行情按真实交易时点——凡是晚于决策时点的信息,一律不许进入模型。</p><p>为什么对时间线如此草木皆兵?因为它最容易制造出最漂亮的假收益,行话叫<a class="term term-link" href="glossary.html#g-未来函数" title="查看术语：未来函数">未来函数</a>。模型一旦偷看未来,回测就是在开卷考试,之后你在上面做的所有机器学习、所有参数优化,全都是对着假分数用功。</p><p>最低标准是:每张数据表都标清楚可用日期,每个标签样本都落在特征之后,回测里信号生成和成交发生的时间分得清清楚楚。一条不满足,整条曲线作废。</p>
+
+        <h3>2.3. 股票池必须点时</h3>
+<p>回测到历史上的某一天,你能用的资产,只能是当时真实存在、当时可以交易、当时确实属于你股票池的那些。把一路活到今天的股票名单回填到十年前,或者拿现在的指数成分股去回测历史,都是打底就歪了。<span class="hl">“点时”</span>这个词的意思就是:站在那个时间点上,只允许看到那一时点真实的样子。</p><p>股票池一旦搞错,会同时带来两类偏差:<a class="term term-link" href="glossary.html#g-幸存者偏差" title="查看术语：幸存者偏差">幸存者偏差</a>——悄悄把后来退市、爆雷的失败者从历史里删掉;成分回填偏差——用今天的名单冒充历史的名单。两类偏差的共同效果是:策略在回测里显得格外稳健,因为最伤人的样本都被你误删了。</p><p>最低标准是:退市股票的样本完整保留,按历史真实成分调仓,再白纸黑字写清 ST、停牌、次新股和低流动性股票的过滤规则。做不到这一条,后面的因子和模型都没意义。</p>
+
+        <h3>2.4. 交易规则必须进入回测</h3>
+<p>不同品种的交易规则,会直接决定你的信号在现实中能不能变成成交。A 股有 T+1、涨跌停、停牌、交易单位、费用和固定交易时段;期货有<span class="term">保证金</span>、主力换月、涨跌停和夜盘;ETF 有折溢价,还有买卖价差。规则不看清楚,回测就活在平行宇宙里。</p><p>忽略规则的回测会长什么样?它会在历史上买入当时根本买不到的涨停股,卖出当时根本卖不掉的跌停股,甚至允许自己当天买进当天卖出。这些在代码里只是几行没写的判断,落到账上就是永远无法兑现的收益——这种回测结果,四个字评价:不能实盘。</p><p>最低标准是:交易日历对齐真实日历,每笔成交发生在什么时点写清楚,涨停、跌停、停牌遇到信号时怎么处理有明确规则,费用和<a class="term term-link" href="glossary.html#g-滑点" title="查看术语：滑点">滑点</a>按保守假设估计。这条过了,回测才勉强算得上真实世界的彩排。</p>
+
+        <h3>2.5. 成本必须做敏感性</h3>
+<p>交易成本不是报表末尾一个小数点几的附注,它是一张开支清单:<a class="term term-link" href="glossary.html#g-佣金" title="查看术语：佣金">佣金</a>、<a class="term term-link" href="glossary.html#g-印花税" title="查看术语：印花税">印花税</a>、<a class="term term-link" href="glossary.html#g-过户费" title="查看术语：过户费">过户费</a>、买卖价差、滑点、市场冲击、融资成本、融券成本、合约<a class="term term-link" href="glossary.html#g-展期" title="查看术语：展期">展期</a>,每一项都在啃你的净收益。把它们漏掉或压低,策略的利润常常是纸面上的。</p><p>这里有一个很实用的试金石:把成本假设翻一倍,策略就从赚钱变成亏钱,说明它的边际薄得像纸。这种策略你可以继续研究、继续改进,但千万别把它当强策略对外宣称——一点成本假设的误差就足以让它现出原形。</p><p>最低标准:同一份报告里,并列展示无成本、正常成本、两倍成本、三倍成本下的结果。一条曲线扛住几倍成本还剩多少收益,是策略成色的第一道公开检验。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 424" role="img" aria-label="交易成本九项清单:佣金、印花税、过户费、买卖价差、滑点、市场冲击、融资成本、融券成本、合约展期;敏感性最低标准是同一份报告并列展示无成本、一倍、两倍、三倍成本下的结果">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">成本不是报表末尾的小数点,是一张九项开支清单</text>
+            <rect x="40" y="64" width="296" height="268" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="188" y="92" text-anchor="middle" fill="#a8c6ff" font-size="13.5" font-weight="800"><tspan x="188" y="92">每一项都在啃净收益</tspan></text>
+            <rect x="58" y="110" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="98" y="144" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="98" y="144">佣金</tspan></text>
+            <rect x="150" y="110" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="190" y="144" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="190" y="144">印花税</tspan></text>
+            <rect x="242" y="110" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="282" y="144" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="282" y="144">过户费</tspan></text>
+            <rect x="58" y="180" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="98" y="214" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="98" y="214">买卖价差</tspan></text>
+            <rect x="150" y="180" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="190" y="214" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="190" y="214">滑点</tspan></text>
+            <rect x="242" y="180" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="282" y="214" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="282" y="214">市场冲击</tspan></text>
+            <rect x="58" y="250" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="98" y="284" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="98" y="284">融资成本</tspan></text>
+            <rect x="150" y="250" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="190" y="284" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="190" y="284">融券成本</tspan></text>
+            <rect x="242" y="250" width="80" height="56" rx="9" fill="rgba(122,167,240,0.08)" stroke="rgba(122,167,240,0.22)"/>
+            <text x="282" y="284" text-anchor="middle" fill="#eef4f8" font-size="12.5" font-weight="800"><tspan x="282" y="284">合约展期</tspan></text>
+            <rect x="360" y="64" width="500" height="268" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="610" y="92" text-anchor="middle" fill="#f0c96a" font-size="13.5" font-weight="800"><tspan x="610" y="92">最低标准:同一报告摆四档成本(示意)</tspan></text>
+            <text x="382" y="132" fill="#c9d4e8" font-size="12.5">无成本</text>
+            <rect x="556" y="116" width="264" height="20" rx="10" fill="rgba(122,167,240,0.12)"/>
+            <rect x="556" y="116" width="250" height="20" rx="10" fill="#7aa7f0"/>
+            <text x="820" y="132" fill="#eef4f8" font-size="12.5" font-weight="800">12%</text>
+            <text x="382" y="178" fill="#c9d4e8" font-size="12.5">1× 正常成本</text>
+            <rect x="556" y="162" width="264" height="20" rx="10" fill="rgba(122,167,240,0.12)"/>
+            <rect x="556" y="162" width="167" height="20" rx="10" fill="#a8c6ff"/>
+            <text x="737" y="178" fill="#eef4f8" font-size="12.5" font-weight="800">8%</text>
+            <text x="382" y="224" fill="#c9d4e8" font-size="12.5">2× 成本</text>
+            <rect x="556" y="208" width="264" height="20" rx="10" fill="rgba(122,167,240,0.12)"/>
+            <rect x="556" y="208" width="83" height="20" rx="10" fill="#f0c96a"/>
+            <text x="653" y="224" fill="#eef4f8" font-size="12.5" font-weight="800">4%</text>
+            <text x="382" y="270" fill="#c9d4e8" font-size="12.5">3× 成本</text>
+            <rect x="556" y="254" width="264" height="20" rx="10" fill="rgba(122,167,240,0.12)"/>
+            <rect x="556" y="254" width="11" height="20" rx="10" fill="#e88"/>
+            <text x="582" y="270" fill="#eef4f8" font-size="12.5" font-weight="800">0.5%</text>
+            <text x="610" y="308" text-anchor="middle" fill="#8499bd" font-size="11.5">刻度 0 ── 12%;数字仅示意,换成你自己策略的实测四档再来排</text>
+            <rect x="60" y="352" width="780" height="56" rx="12" fill="rgba(232,136,136,0.07)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="450" y="376" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">试金石:成本假设翻一倍,策略就由盈转亏 → 边际薄得像纸,可以继续研究,别当强策略宣称</text>
+            <text x="450" y="398" text-anchor="middle" fill="#c9d4e8" font-size="12.5">一条曲线扛住几倍成本还剩多少收益,是策略成色的第一道公开检验</text>
+          </svg>
+          <p class="figure__cap">成本清单有九项:佣金、印花税、过户费、买卖价差、滑点、市场冲击、融资成本、融券成本、合约展期,每一项都在啃净收益。最低标准是同一份报告并列摆出无成本、一倍、两倍、三倍成本四档结果——成本翻一倍就由盈转亏的策略,边际薄得像纸。</p>
+        </div>
+        <h3>2.6. 因子必须有单独报告</h3>
+<p>开工前容易犯的错:把几十个因子一次性喂给模型,然后只看最终的净值曲线来决定去留。这就像进餐厅只尝混合大锅菜,永远不知道是哪种食材在起作用、哪种已经变质。每个重要因子,都应该先拆开单独体检:覆盖率、<a class="term term-link" href="glossary.html#g-ic" title="查看术语：IC">IC</a>、<span class="term">RankIC</span>、分层收益、<a class="term term-link" href="glossary.html#g-换手率" title="查看术语：换手率">换手率</a>、行业暴露和市值暴露,一项一项看。</p><p>单因子报告的意义,是在你叠上复杂模型之前,先确认这些输入本身有基本含义。缺了这一环节,再高级的模型也可能只是在高速搅拌噪声——数字在动,但没有任何一条对应真实世界。</p><p>最低标准是:每个核心因子都能拿出一份档案——定义是什么、方向是正是负、数据口径是哪种、历史统计表现如何、什么阶段失效过。没有档案的因子,不许进模型。</p>
+
+        <h3>2.7. 模型必须有基线</h3>
+<p>每一次想用复杂模型,先给它配几个简单对手:等权持有、指数买入躺平、单一因子、线性模型、浅层树模型,都可以当基线。道理很朴素:没有参照物,你就不知道这个复杂模型到底新增了什么价值。就像一个新框架的性能,不和旧版 benchmark 比过,就只能说<span class="hl">“跑得挺快”</span>,说不出快了多少。</p><p>想象这个场景:深度学习模型千辛万苦,比一个简单的<a class="term term-link" href="glossary.html#g-动量因子" title="查看术语：动量因子">动量因子</a>只好一点点,但交易成本更高、解释更难、样本外表现更飘。这种模型值不值得上?答案明摆着:未必。复杂本身不产生价值,只有复杂带来的增量才值钱。</p><p>最低标准是:任何复杂模型都必须报告相对简单基线的三样增量——增量收益、增量风险、增量成本。三样都经得起看,才配谈上线。</p>
+
+        <h3>2.8. 组合必须有约束</h3>
+<p>模型吐出来的预测分数,只是<span class="hl">“看好程度”</span>,不能直接翻译为仓位。分数到仓位之间,必须隔着一层组合约束:单只股票的上限、行业的偏离限制、风格暴露控制、现金保留比例、换手率约束、流动性过滤，还有整体风险预算。这层约束,是预测和账户之间的安全带。</p><p>不系安全带会怎样?组合可能一头扎进少数几只票、满仓押一个行业,或者买入一批流动性很差的资产——在回测里,这些都假装成交顺滑;到了实盘,就是想买买不到、想卖卖不掉,回撤远比报告长。回测越好看,现实越危险。</p><p>最低标准是:报告里能直接查到持仓数量、最大单票占比、行业分布、换手率、成交额参与率和相对基准的暴露。组合看不见,风险就看不见。</p>
+
+        <h3>2.9. 报告必须能复现</h3>
+<p>一份像样的策略报告,应该能由代码一键重新生成:图表、指标、所用配置、数据版本号,全部能追溯。反过来,手工截图、复制粘贴出来的报告,几乎注定在生产过程中混进不一致——图是一周前的,表是昨天的,结论又是今天下午拍脑袋改的。</p><p>可复现的好处是双向的。对自己,一个月后回来,你还能看懂当时到底做了什么,而不是对着一堆截图考古;对别人,审查者可以照着重跑一遍,验证你的结果不是玄学。没有可复制性,报告只是一篇散文。</p><p>最低标准是:一条命令或一个脚本,就能重新生成主要报告,而且报告本身包含配置信息和数据版本。做到这条,你的研究才算从<span class="hl">“笔记本里的草稿”</span>升级为<span class="hl">“可交付的作品”</span>。</p>
+
+        <h3>2.10. 模拟盘必须先于实盘</h3>
+<p>历史回测再真实,验证的也是历史;模拟盘验证的是真实时间里的流程。今天的数据有没有按时到?信号有没有照常生成?生成的订单合不合理?没成交的单子怎么办?收盘之后对账对不对?这些问题,回测里全是理想假设,只有在模拟盘里才会原形毕露。</p><p>如果跳过模拟盘,故事几乎可以剧透:数据延迟、空信号、订单异常、对账差异,这些问题你迟早会遇到,只是它们将第一次出现在你的真实资金上。在模拟环境里踩坑,学费是咖啡钱;在实盘里踩,学费是真金白银。</p><p>最低标准是:模拟盘连续运行一段时间,留下完整日志、定期报告、异常记录和对应的修复记录。这些材料齐备之后,再谈那句激动人心的:上小资金实盘。</p>
+
+        <h2>3. 以后每次研究前先读这张纸</h2>
+        <p>书的最后一页,留一张可以反复用的纸。以后每当你准备动工一个新策略、想买一个新产品、要训一个新模型、刚跑完一次回测,或者心里痒着要把模拟盘推上实盘——先停下来,把这一章从头到尾读一遍。它不讲任何新概念,只负责帮你把手刹再拉紧几分钟:确认刹稳了,车才好开走。很多亏损事后看根本不是因为不懂高深理论,而是忘了那些最基本的问题——这张纸就是帮你不忘的。</p>
+
+        <h3>3.1. 研究前先问问题是否足够小</h3>
+<p>第一个检查点:你的研究问题够不够小。不要一上来就问<span class="hl">“我能不能预测股市”</span>——这个问题大到无法检验,也没有任何行动含义。把它压小:限定到某个市场、某个频率、某类资产、某个信号、某个基准。比如:在<span class="term">沪深 300</span> 成分股范围内,低估值因子按月调仓,能不能带来<span class="term">超额收益</span>。压到这个颗粒度,才算能开工。</p><p>小的好处在于,问题越小,你越容易回答那三件后勤问题:数据需要什么样的?回测要怎么写?结果该怎么解释?大问题最害人之处,是它允许你用宏大词汇把细节糊弄过去;小问题恰恰相反,它会逼着你直面每一个口径——而研究的对错,几乎都藏在口径里。</p><p>启动前一秒,做个口语测试:能不能用一句话说清自己的研究问题?说不利落,就先别碰代码。动手写代码解决不了<span class="hl">“不知道自己要研究什么”</span>,只会让你错得更有效率。</p>
+                <div class="table-wrap">
+                  <table>
+                    <tbody>
+                      <tr><th>研究问题一句话</th><td>我想检验: ________ 在 ________ 股票池/资产中,以 ________ 频率是否能带来 ________。</td></tr>
+                      <tr><th>基准</th><td>我要比较的基准是: ________。</td></tr>
+                      <tr><th>成功标准</th><td>通过标准是: 超额收益 ________, 最大回撤 ________, 成本后仍为 ________。</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>这三行空格填不出来,说明你的问题还没缩小到可研究的状态,那就继续缩小,而不是开跑。<span class="hl">“先试试看”</span>这四个字,听起来灵活,做起来就是用忙碌掩住没想清楚。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 470" role="img" aria-label="六问检查牌:问题足够小、最坏情况知道、当时可见、成本算过、能随时停止、能复盘写三行;六关都过才准开始">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">研究动手前,先刷六道闸</text>
+            <line x1="118" y1="86" x2="118" y2="396" stroke="rgba(240,201,106,0.35)" stroke-width="2"/>
+            <rect x="78" y="58" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="86" r="16" fill="#f0c96a"/>
+            <text x="118" y="92" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="83" fill="#eef4f8" font-size="15.5" font-weight="800">问题足够小?</text>
+            <text x="150" y="105" fill="#bcc9dd" font-size="12.5">一句话说清:哪个池子 · 哪个因子 · 哪个频率</text>
+            <text x="812" y="90" text-anchor="end" fill="#8499bd" font-size="12">第 1 闸</text>
+            <rect x="78" y="120" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="148" r="16" fill="#f0c96a"/>
+            <text x="118" y="154" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="145" fill="#eef4f8" font-size="15.5" font-weight="800">最坏情况知道?</text>
+            <text x="150" y="167" fill="#bcc9dd" font-size="12.5">先想「全亏光那天」长什么样,再谈收益</text>
+            <text x="812" y="152" text-anchor="end" fill="#8499bd" font-size="12">第 2 闸</text>
+            <rect x="78" y="182" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="210" r="16" fill="#f0c96a"/>
+            <text x="118" y="216" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="207" fill="#eef4f8" font-size="15.5" font-weight="800">当时可见?</text>
+            <text x="150" y="229" fill="#bcc9dd" font-size="12.5">从下单到成交,不能让代码看到未来</text>
+            <text x="812" y="214" text-anchor="end" fill="#8499bd" font-size="12">第 3 闸</text>
+            <rect x="78" y="244" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="272" r="16" fill="#f0c96a"/>
+            <text x="118" y="278" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="269" fill="#eef4f8" font-size="15.5" font-weight="800">成本算过?</text>
+            <text x="150" y="291" fill="#bcc9dd" font-size="12.5">佣金 · 印花税 · 滑点 · 冲击:先算成本再看收益</text>
+            <text x="812" y="276" text-anchor="end" fill="#8499bd" font-size="12">第 4 闸</text>
+            <rect x="78" y="306" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="334" r="16" fill="#f0c96a"/>
+            <text x="118" y="340" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="331" fill="#eef4f8" font-size="15.5" font-weight="800">能随时停止?</text>
+            <text x="150" y="353" fill="#bcc9dd" font-size="12.5">停止线开工前写死:数据坏停 · 对不上账停</text>
+            <text x="812" y="338" text-anchor="end" fill="#8499bd" font-size="12">第 5 闸</text>
+            <rect x="78" y="368" width="754" height="56" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <circle cx="118" cy="396" r="16" fill="#f0c96a"/>
+            <text x="118" y="402" text-anchor="middle" fill="#101420" font-size="17" font-weight="900">?</text>
+            <text x="150" y="393" fill="#eef4f8" font-size="15.5" font-weight="800">能复盘写三行?</text>
+            <text x="150" y="415" fill="#bcc9dd" font-size="12.5">数据版本 · 参数 · 成交记录,环环说清</text>
+            <text x="812" y="400" text-anchor="end" fill="#8499bd" font-size="12">第 6 闸</text>
+            <text x="450" y="452" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">六关都过,才准开始</text>
+          </svg>
+          <p class="figure__cap">每次研究、交易、回测、实盘之前,先把这六张牌从上到下刷一遍:问题要小到一句话说清,先想最坏那一天,每个字段按当时可见性对齐,先算成本再看收益,停止线提前写死,资料留到能复盘——六关都过,才准开始。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 450" role="img" aria-label="启动前六问图:研究三问、回测两问、实盘一问">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">附录这张纸不是讲知识,是上手前要问到位的口语化检查</text>
+            <rect x="60" y="80" width="780" height="120" rx="10" fill="rgba(122,167,240,0.15)" stroke="rgba(122,167,240,0.5)"/>
+            <text x="84" y="108" fill="#a8c6ff" font-size="14" font-weight="800">研究前(动理念)</text>
+            <text x="84" y="134" fill="#bcc9dd" font-size="12">① 这个问题是不是小到一周之内能给个答案?</text>
+            <text x="84" y="158" fill="#bcc9dd" font-size="12">② 最坏情况是亏钱 -2% 还是 -10% 或 -50%?</text>
+            <text x="84" y="182" fill="#bcc9dd" font-size="12">③ 这一次的核算成本,是不是认真算过印花税和滑点?</text>
+            <rect x="60" y="220" width="780" height="100" rx="10" fill="rgba(240,201,106,0.12)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="84" y="248" fill="#f0c96a" font-size="14" font-weight="800">回测前(动机器)</text>
+            <text x="84" y="274" fill="#bcc9dd" font-size="12">④ 在那个历史时点,我到底有没有看到要用到的数据?</text>
+            <text x="84" y="298" fill="#bcc9dd" font-size="12">⑤ 这套代码跟我后面模拟盘运行的是不是同一套?</text>
+            <rect x="60" y="340" width="780" height="90" rx="10" fill="rgba(238,136,119,0.12)" stroke="rgba(238,136,119,0.4)"/>
+            <text x="84" y="368" fill="#ffb4b4" font-size="14" font-weight="800">实盘前(动钱包)</text>
+            <text x="84" y="394" fill="#bcc9dd" font-size="12">⑥ 策略疯起来(或者静下来)我能不能马上停,且机身和弹药都还在手里?</text>
+          </svg>
+          <p class="figure__cap">这张纸不是给你背下来的,是给你每次动手前要问到位的——六问里有任意一问答不出来,就先不要下手。</p>
+        </div>
+        <h3>3.2. 交易前先问最坏情况</h3>
+<p>第二个检查点:下单之前,不许先算能赚多少,先算错了会怎样。这一笔可能亏多少钱?亏了能不能卖得出去?会不会需要追加<span class="term">保证金</span>?会不会动到生活费?会不会触发强制平仓?这一串问题,才是每一次交易的真正入场券。</p><p>算最坏情况不是为了把自己吓住,而是为了校准仓位。结论可能很直白:最坏情况我承受不住——那不用讨论,就是仓位太大,或者这个工具根本不适合你。仓位从来不是靠胆子定的,是靠可承受的最坏结局倒推出来的。</p><p>市场里有个常见误会:人们是被一次方向判断错给毁掉的。实际上,毁掉绝大多数人的不是一次错误,而是他们从没给错误留过空间——全仓而无冗余,错一次就没下一场了。</p>
+                <div class="table-wrap">
+                  <table>
+                    <tbody>
+                      <tr><th>最大可亏金额</th><td>本项目最多允许亏: ________ 元。</td></tr>
+                      <tr><th>最坏成交情景</th><td>如果跌停/停牌/流动性枯竭,我预计退出需要: ________ 天。</td></tr>
+                      <tr><th>仓位上限</th><td>单策略仓位不超过总资产: ________%。</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>别小看这张表的分量,它自带一个试金石:只要<span class="hl">“最大可亏金额”</span>填下去的瞬间你心慌了一下,那就说明现在的仓位太大了——心慌是边界在报警,听它的。</p>
+
+        <h3>3.3. 回测前先问当时是否可见</h3>
+<p>第三个检查点:每一个数据字段,都要过一次安检——在你做出交易决策的那一刻,这个数据真的已经可见了吗?价格、财报、公告、指数成分、宏观数据、分析师预测,统统按真实的发布时间对齐,一个也不许例外。</p><p>碰上答不清可见性的字段,处理原则没有中间态:先别把它放进模型。用得不明不白,比不用更糟——因为你不知道它身上是不是就带着未来函数,而它一旦带毒,将会在回测里给你发一朵大红花。</p><p>这条规则听起来是小动作,但它挡住的假回测,比任何复杂方法论挡住的都多。它简单到只有一步,因此也特别容易被跳过;被跳过一次的代价,前面整整一本书都在展示。</p>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>字段</th><th>数据日期</th><th>可见日期</th><th>用于哪天决策</th></tr></thead>
+                    <tbody>
+                      <tr><td>价格/成交量</td><td>________</td><td>________</td><td>________</td></tr>
+                      <tr><td>财报/公告</td><td>________</td><td>________</td><td>________</td></tr>
+                      <tr><td>指数成分</td><td>________</td><td>________</td><td>________</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>填表时只认一条死规矩:可见日期必须早于决策日期,晚一点都不行。哪一格填得含糊,就把对应字段先从模型里拿出来——模型可以少一点特征,不能多一份毒药。</p>
+
+        <h3>3.4. 看收益前先看成本</h3>
+<p>第四个检查点:先算成本,再看收益。成本不是结尾顺手补上的小数,而是策略本身的一部分。佣金、印花税、滑点、市场冲击、<a class="term term-link" href="glossary.html#g-基差" title="查看术语：基差">基差</a>、融资成本、融券成本,这些项目排开,每一项都在干同一件事:把毛收益一栏一栏地啃成净收益。</p><p>警惕一类报告:策略只有在<span class="hl">“成本压得足够低”</span>的假设下才赚钱。这种结果说明,它的优势薄得连成本假设的误差都扛不住——那不叫稳定优势,只是一种对费用的敏感表态。成本敏感性检查不能放在收益曲线后面当附录,永远要并排摆在一起看。</p><p>真正算得上好的策略,是能讲清楚成本付完之后为什么还剩收益的那一个。讲的是机制,不是运气;扣的是现实,不是想象。</p>
+                <div class="table-wrap">
+                  <table>
+                    <tbody>
+                      <tr><th>买入成本假设</th><td>佣金 ________ + 滑点 ________ + 冲击 ________。</td></tr>
+                      <tr><th>卖出成本假设</th><td>佣金 ________ + 印花税 ________ + 滑点 ________ + 冲击 ________。</td></tr>
+                      <tr><th>敏感性</th><td>我要测试 0 倍、1 倍、2 倍、3 倍成本后的结果。</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>这条及格线画得很低:报告里只要没写明成本假设,那这个策略就还停留在幻觉阶段——谈的是毛收益,信的是理想国,离可以讨论实盘还差着一整个成本清单。</p>
+
+        <h3>3.5. 实盘前先问能否停止</h3>
+<p>第五个检查点,也是上线前最后一道闸:你知道自己什么时候必须停吗?具体写下来:数据坏了,停;对账对不上,停;订单出现异常,停;亏损超过预设上限,停;模型指标长期反向,停。没有这套停止规则,自动化就不是效率工具,而是一台可以全天候放大错误的机器。</p><p>别把<span class="hl">“停止”</span>当成承认失败。停止是系统的自我保护动作,和烟雾报警器响一个性质——不是大楼失败了,是大楼的防护还在工作。真正的失败只剩一种:明明所有指标都在报警,系统还在继续交易,最后用真金白银向世界证明,自己确实没有风控。</p><p>所以上线前的自问只有一句:我能不能说清怎么停?说不清,就还不该开始。这与勇气和智慧都无关,只与顺序有关——先是退出方案,然后才谈入场。</p>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>触发条件</th><th>动作</th><th>恢复条件</th></tr></thead>
+                    <tbody>
+                      <tr><td>数据缺失/异常超过 ________</td><td>停止生成新单</td><td>数据检查连续 ________ 次通过</td></tr>
+                      <tr><td>对账不一致</td><td>暂停交易</td><td>差异解释并修复</td></tr>
+                      <tr><td>回撤超过 ________</td><td>降仓/停用</td><td>完成复盘并人工确认</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>停止规则必须在还没赚钱也没亏钱的时候写好,这一点没有商量。等到亏损已经发生再去补写,你写出来的通常不是规则,是情绪——而情绪化的规则,往往是用来合理化下一次冲动的。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 440" role="img" aria-label="实盘前停止规则表:数据缺失或异常超阈值就停止生成新单、数据检查连续通过才恢复;对账不一致就暂停交易、差异解释清楚并修复后恢复;回撤超过预设上限就降仓或停用、完成复盘并人工确认后恢复">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">上线前最后一道闸:三行停止规则,写下来才算数</text>
+            <text x="220" y="72" text-anchor="middle" fill="#ffb4b4" font-size="13" font-weight="800">触发条件(开工前写死)</text>
+            <text x="515" y="72" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">触发后动作</text>
+            <text x="730" y="72" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">恢复条件</text>
+            <rect x="60" y="90" width="320" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="220" y="125" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800"><tspan x="220" y="125">①数据缺失/异常超阈值</tspan></text>
+            <text x="395" y="130" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">→</text>
+            <rect x="420" y="90" width="190" height="58" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="515" y="125" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800"><tspan x="515" y="125">停止生成新单</tspan></text>
+            <text x="625" y="130" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">→</text>
+            <rect x="650" y="90" width="210" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="730" y="125" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="400"><tspan x="730" y="125">数据检查连续通过才恢复</tspan></text>
+            <rect x="60" y="158" width="320" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="220" y="193" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800"><tspan x="220" y="193">②对账对不上(不一致)</tspan></text>
+            <text x="395" y="198" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">→</text>
+            <rect x="420" y="158" width="190" height="58" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="515" y="193" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800"><tspan x="515" y="193">暂停交易</tspan></text>
+            <text x="625" y="198" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">→</text>
+            <rect x="650" y="158" width="210" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="730" y="193" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="400"><tspan x="730" y="193">差异解释清楚并修复</tspan></text>
+            <rect x="60" y="226" width="320" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="220" y="261" text-anchor="middle" fill="#eef4f8" font-size="13" font-weight="800"><tspan x="220" y="261">③回撤超过预设上限</tspan></text>
+            <text x="395" y="266" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">→</text>
+            <rect x="420" y="226" width="190" height="58" rx="10" fill="rgba(240,201,106,0.07)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="515" y="261" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800"><tspan x="515" y="261">降仓或停用</tspan></text>
+            <text x="625" y="266" text-anchor="middle" fill="#a8c6ff" font-size="16" font-weight="800">→</text>
+            <rect x="650" y="226" width="210" height="58" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="730" y="261" text-anchor="middle" fill="#c9d4e8" font-size="12" font-weight="400"><tspan x="730" y="261">完成复盘并人工确认</tspan></text>
+            <text x="60" y="322" fill="#8499bd" font-size="12.5">正文还点名两个扳机:</text>
+            <rect x="200" y="300" width="310" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="355" y="321" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800"><tspan x="355" y="321">订单出现异常→停</tspan></text>
+            <rect x="530" y="300" width="310" height="40" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,136,136,0.45)"/>
+            <text x="685" y="321" text-anchor="middle" fill="#ffb4b4" font-size="12.5" font-weight="800"><tspan x="685" y="321">模型指标长期反向→停</tspan></text>
+            <rect x="60" y="358" width="800" height="66" rx="12" fill="rgba(240,201,106,0.06)" stroke="rgba(240,201,106,0.42)"/>
+            <text x="450" y="384" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">停止规则必须在还没赚钱也没亏钱的时候写好——等亏了再补写的,通常是情绪,不是规则</text>
+            <text x="450" y="408" text-anchor="middle" fill="#c9d4e8" font-size="12.5">别把停止当失败:它和烟雾报警器响一个性质,说明防护还在工作</text>
+          </svg>
+          <p class="figure__cap">上线前把停止规则写成三行表:触发条件、触发后动作、恢复条件——数据异常停止生成新单,对账不一致暂停交易,回撤超上限降仓或停用;另外订单异常、模型指标长期反向也得停。规则要在没赚钱也没亏钱时写好,亏着补写出来的通常是情绪。</p>
+        </div>
+        <h3>3.6. 最后问自己是否能复盘</h3>
+<p>最后一个检查点在每个项目、每笔交易结束之时:你能不能完整地讲清楚发生了什么?当时用的是哪个版本的数据、哪个版本的模型、哪一组参数?订单实际怎么成交的?成本一共付了多少?赚的部分从哪来?亏的部分又从哪去?一环一环,都说得出来吗?</p><p>为什么不能复盘就等于白做?因为不复盘就没法进步。一笔讲不清来源的盈利,本质上只是运气打卡上班;一笔讲不清来源的亏损,更可惜——学费照样交了,课却根本没上。市场收学费痛快,但从不负责讲课。</p><p>说句公道话:金融市场不会因为你态度认真就奖励你,它没那么温情。但认真的复盘有一个确定的效果——同样的错误,别人错三次,你只错一次。长期看,这就是复利。</p>
+                <div class="table-wrap">
+                  <table>
+                    <tbody>
+                      <tr><th>复盘材料路径</th><td>配置: ________; 数据版本: ________; 交易记录: ________; 报告: ________。</td></tr>
+                      <tr><th>收益来源</th><td>市场/行业/风格/选股/基差/执行: ________。</td></tr>
+                      <tr><th>下一步</th><td>继续/降权/停用/重做数据/重做模型: ________。</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>表里的路径必须是真实存在的路径,当场能打开的那种。只要配置、数据版本、交易记录有任何一样找不着,这次实验就进了不可审计名单——不可审计的盈利与亏损,都不计入能力的增长。</p>
+
+        <h3>3.7. 这张纸怎么用</h3>
+<p>纸上得来终觉浅,这张纸也一样:只在心里默答,等于没答。正确用法是把空格真正填进去——填到你的研究笔记或者项目 README 里,成为留档。并且,每次改策略都要更新它:研究问题、数据、成本、停止规则,哪一样变了,旧答案就自动作废,不能再代表新策略。</p><p>它还可以反过来用,去检查别人的报告。拿到任何一份策略报告,就照着这张纸逐条问:有没有一句话研究问题?有没有写清决策时点?成本假设列出来了吗?停止规则有没有?复盘材料齐不齐?对照答案打分——缺一项,可信度降一档,立场就这么简单。</p><p>最后澄清一个误解:这张纸不是为了拖慢你的研究,而是帮你避免在错误的方向上跑太远。每次开工花十分钟填表,最坏的结果是浪费了十分钟;最好的结果,是替你省几个月错误方向的回测,或者挡下一次本不该发生的实盘亏损。十分钟对几个月,这个交换,每次做都是赚的。</p><div class="callout callout--note reveal"><span class="callout__title">结论兜底:给自己打一次 12 分制</span><p>把这张纸当自检表用:里面一共列了 12 个题项(6 道研究前的判断 + 6 道执行期的硬规则)。每道你用你自己的项目能写得出来的答案记 1 分——落笔能写就算 1,只会在心里想不算。判分:<4 分,回去从金融主线的概念章重读;4-8 分,可以把模拟盘流程搭起来但不准上实盘;9 分以上,你才算过这章——但还要再过一章:三个月内你的流程是否养出来了审计日志和对账习惯。答不出来不丢人,丢人的是你跳过它,直接自信地下任一次判断。</p></div>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>进入量化前,金融基础必须落到现金流、权利、风险、价格和交易制度上。</li>
+            <li>能读懂产品报告、收益风险指标和 A 股交易规则,才有资格判断量化回测是否真实。</li>
+            <li>量化项目的最低标准是流程可信: 数据、时间、股票池、交易规则、成本、因子、模型、组合、报告和模拟盘都要过关。</li>
+            <li>复杂模型不能替代基础检查;很多假收益来自地基错误,不是模型不够高级。</li>
+            <li>每次研究前先缩小问题,每次交易前先想最坏情况。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.1.</strong> 能解释钱和财富的区别</li>
+            <li><strong>1.2.</strong> 能解释银行为什么既有用又脆弱</li>
+            <li><strong>1.3.</strong> 能区分股票和债券</li>
+            <li><strong>1.4.</strong> 能看懂基金和 ETF 的基本结构</li>
+            <li><strong>1.5.</strong> 能说清 A 股交易规则</li>
+            <li><strong>1.6.</strong> 能解释收益和风险指标</li>
+            <li><strong>1.7.</strong> 能解释有效市场和行为偏差</li>
+            <li><strong>1.8.</strong> 能管住自己的资金边界</li>
+            <li><strong>2.1.</strong> 数据必须可追溯</li>
+            <li><strong>2.2.</strong> 时间线必须正确</li>
+            <li><strong>2.3.</strong> 股票池必须点时</li>
+            <li><strong>2.4.</strong> 交易规则必须进入回测</li>
+            <li><strong>2.5.</strong> 成本必须做敏感性</li>
+            <li><strong>2.6.</strong> 因子必须有单独报告</li>
+            <li><strong>2.7.</strong> 模型必须有基线</li>
+            <li><strong>2.8.</strong> 组合必须有约束</li>
+            <li><strong>2.9.</strong> 报告必须能复现</li>
+            <li><strong>2.10.</strong> 模拟盘必须先于实盘</li>
+            <li><strong>3.1.</strong> 研究前先问问题是否足够小</li>
+            <li><strong>3.2.</strong> 交易前先问最坏情况</li>
+            <li><strong>3.3.</strong> 回测前先问当时是否可见</li>
+            <li><strong>3.4.</strong> 看收益前先看成本</li>
+            <li><strong>3.5.</strong> 实盘前先问能否停止</li>
+            <li><strong>3.6.</strong> 最后问自己是否能复盘</li>
+            <li><strong>3.7.</strong> 这张纸怎么用</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>金融小白为什么先得想通钱和财富的区别?</summary>
+            <p>因为这层想通与否,决定你能不能被通胀、资产价格上涨和经济增长这类话题一会儿绕晕一会儿吓着——钱变多不等于真实财富变多。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>A 股交易规则凭什么算量化基础?</summary>
+            <p>因为 T+1、涨跌停、停牌、费用和交易单位都会直接影响模型能不能成交、以什么价格成交;不懂规则的回测只是幻觉。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>为什么把数据可追溯列为第一条底线?</summary>
+            <p>因为任何异常的结果都必须能追回到原始数据和处理脚本;追不回去,就永远分不清这是真信号还是脏数据。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>复杂模型为什么一定要配简单基线?</summary>
+            <p>没有基线作参照,就不知道复杂模型到底增加了什么,也无从判断多付的复杂度成本值不值。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>研究问题为什么一定要压小?</summary>
+            <p>小问题边界清晰,数据需求、交易规则和结果解读都能逐一检查;大问题只会用大词盖住细节,错了都查不出来。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>实盘之前为什么必须先想清楚怎么停?</summary>
+            <p>因为在异常状态下继续交易,自动化会放大错误;停止规则是保护系统和本金的安全带,说不清怎么停就不该开始。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">读到这里</span>
+          <h2>工具箱到此结束</h2>
+          <p>回到全书目录,按你的问题重新进入对应部分;这本书不要求一次记住所有内容。</p>
+          <a class="xref" href="index.html">返回全书路线图 →</a>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>

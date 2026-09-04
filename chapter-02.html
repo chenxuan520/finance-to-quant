@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 2 章 · 信用、利率和债: 借钱为什么要付利息 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="从借鱼讲到信用、利率、贷款、债券和违约风险。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="2">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">第一部分 · 金融为什么存在 · 第 2 章</p>
+        <h1>信用、利率和债: 借钱为什么要付利息</h1>
+        <p class="lead">前两章讲了真实财富和钱,这一章讲金融的另一条主动脉:信用。信用不是一句“我人品好”的空话,它的硬核定义是——今天拿走资源,未来履行承诺。只要承诺在未来,风险就甩不掉;只要有风险和等待,利率就会冒出来。弄懂这条线,债券、贷款、房贷、国债这些名词,全都能从“借一条鱼”这件小事里长出来。你还会亲手把“利率涨、老债跌”这笔账算一遍,不再靠背口诀。</p>
+
+        <section class="chapter-context chapter-context--main">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">主线一</span>
+            <span>本部分第 3 / 5 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>真实财富有限,为什么人类还需要货币、信用、银行和市场?</p>
+          <p class="chapter-context__outcome">读完后,你能沿着资源、时间和风险解释金融系统,不再把金融理解成一堆产品名词。 </p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>信用是今天获得资源、未来履行承诺。</li>
+            <li>利息补偿三样东西:等待、违约风险和流动性不便。</li>
+          </ul>
+        </section>
+
+
+        <h2 class="case-heading reveal"><span class="case-study__label">金融现场</span> 1. 国家借的钱怎么也会变成坏账</h2>
+<p><span class="num">2001 年</span>末的阿根廷街头,银行门口排满了想取钱的人。政府债务越滚越大,外汇越来越少,最后不仅限制提款,还暂停偿付大笔主权债务。<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>合同上的本金和利息一个字没少,可当付款日真的到来,纸上的承诺并没有自动变成钱。</p><p>这场危机把<span class="hl">“<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>”</span>两个字撕开给人看:借款人是不是国家并不改变债务的结构。收入撑不起利息、旧债只能靠新债续、市场又不愿继续借时,违约就会从一道概率题变成现金流事实。<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>高也未必是礼物,它可能只是市场给危险贴出的价格。</p><p>量化研究债券时,不能只把票息塞进收益公式。至少还要加入违约概率、回收率、汇率和<a class="term term-link" href="glossary.html#g-流动性" title="查看术语：流动性">流动性</a>四个变量。屏幕上那条异常高的收益率,有时不是等待你捡走的便宜,而是市场在问:如果承诺只兑现一半,你还愿不愿意买?</p>
+
+        <h2>2. 庞氏骗局,新钱填旧账</h2>
+<p>小明在镇上开了个「宝藏理财」,承诺月息 <span class="num">30%</span>。人们把钱送给他,头几个月他真的兑现——拿后来者的本金来付先来者的利息。没有生意,没有资产,只有一块招牌和一台永动机:新钱的速度必须永远快过兑付的速度。等镇上最后一个人的积蓄也进来了,现金流断掉,小明人间蒸发。这就是庞氏骗局,<span class="num">1919 年</span>查尔斯·庞兹在波士顿用「邮票回邮券」的嘴子,半年时间卷走几百万美元(相当于今天过亿)。一百多年过去,它的变种换了无数身衣服——高息资金盘、虚拟货币挖矿保息、传销式理财产品——骨架从没变过:用一个根本不存在的现金流,给旧投资者付新投资者的钱。</p><p>它和正常借贷的差别在哪,一算下来就很清楚:正常借款有资产得你看得见(渔网计、厂房、员工),利息是真产生出来的;庞氏没有资产端,账目的「收益」纯粹属于出纳科目。再往下一条,看现金流的来源:真生意赚的钱来自销售、租金、服务;庞氏赚的只来自身后那个人掏出的本金。检查这两个指标,基本能过滤掉九成九的骗局——凡是收益率高得离谱却讲不清钱从哪来,答案往往只有一个:从你后来的邻居们的包里来。</p><p>中国也不缺这件衣服。<span class="num">2015 年</span>的 e租宝把 90 多万人卷进来,累计 700 多亿元,用一个虚假的「融资租赁」故事做门面,实际九成项目是假的。<span class="num">2018 年</span>后你看到的宽道 P2P 暴雷潮,大半都是同一个配方:到回款项必须按月匀速兑付,后端靠不断拉新,只要新增量减速,雪崩就开始。直到有一天你发现,庞氏早已不是个别诈骗案,而是一种系统性风险——当资产价格本身增长乏力,「承诺高息+自然兑付」的组合就是社会上随时会长出来的怪菰。本书后面所有讲<span class="hl">“回报来源”</span>的篇幅,都是在教你做一件事:问一句<span class="hl">“谁在后面兑付我”</span>。</p>
+
+        <h2>3. 借鱼这件事到底发生了什么</h2>
+<p>回到小岛。阿岛有了网,每天抓三条鱼,吃一条、存两条,日子过得从容。小渔也想编网,可他没有存鱼——按老规矩,明天不下海就饿肚子,网永远停在想象里。于是阿岛借给小渔一条鱼,小渔承诺:以后还两条。</p><p>把时间轴铺开算一遍。借款前:阿岛日抓三条,小渔日抓一条,全岛一天四条。借款当天:阿岛的存鱼从两条减到一条,小渔拿这条鱼顶住饥饿,空出一整天编网。网成之后:小渔日抓三条,很快连本带息还上两条,此后每天净多两条,全岛日产出从四条升到六条。注意这五成的增长不是借贷变出来的,是网变出来的——借贷只是让网提前出生。</p><p>先盯紧一个容易看漏的事实:这笔借贷没有让岛上立刻多出一条鱼。鱼只是从阿岛手里挪到了小渔手里。真正发生改变的是时间——阿岛放弃了今天吃这条鱼的权利,换回来的是小渔<span class="hl">“未来还两条”</span>的一张承诺。所以信用的本质,是资源的跨时间调度。</p><p>还有一个隐藏问题:阿岛凭什么敢借?岛上没有法院,他靠三样东西——看得见的计划(编网这件事本身说得通)、知根知底的关系(赖账就在全岛混不下去),以及失败的承受力(真亏了,也就少一天存粮)。现代金融把这三样换了名字:尽职调查、征信记录、风险预算——换汤不换药,还是先回答<span class="hl">“凭什么信你”</span>。</p><p>这笔信用值不值,全看未来兑现得怎样。好结局:小渔靠这条鱼撑住一天,把网编成了,以后每天多抓鱼,还两条绰绰有余——信用帮小岛提高了生产力。坏结局:小渔把鱼吃了,啥也没编成,明天两手空空,还鱼就成了难题。同一条借出去的鱼,通向两种完全不同的未来。</p>
+
+        <h2>4. 利息不是凭空冒出来的</h2>
+<p>小渔为什么得还两条,而不是借一条还一条?别急着给阿岛扣<span class="hl">“精明”</span>的帽子。多出来的那一条,对应的是三笔实实在在的账。</p><p>第一笔是等待。今天这条鱼,阿岛本可以今天吃掉,或者拿去换别的;借出去,他就失去了这段时间使用它的机会。第二笔是风险。小渔的网可能编砸,也可能网成了运气不好抓不到鱼,甚至干脆赖账——这些都要有人扛。第三笔是不方便。鱼的产权暂时不在阿岛手里,万一他自己中途急用,也只能干瞪眼。</p><p>给<span class="hl">“风险”</span>那笔记个具体数。假设阿岛做十笔一样的买卖,每笔借出一条,凭经验会有一笔赖账。十笔都按借一还一,放出十条、只收回九条,倒贴一条。想不亏,每笔至少得约定还九分之十条,约合百分之十一的利息——这十一个点是把注定收不回的那笔账,平摊到九个守信的人头上。赖账率翻倍,利息还得更高。利率表上冷冰冰的数字,拆开全是概率。</p><p>利息,就是对这三件事的打包补偿。一般规律也顺着一个方向走:等得越久、对方越可能还不上、中途越难把钱拿回来,利息就越高。反过来,借款人信誉好、期限短、借条随时能转手,利息就可以低下去。利率的每一分高低,背后都是这三样东西在定价。</p><div class="callout callout--note reveal"><span class="callout__title">利率其实是违约概率在借钱上的价格</span><p>放 10 笔贷,其中 1 笔回不来,如果前 9 笔的利息要覆盖那 1 笔的损失,利率就必须比<span class="hl">“无风险利率”</span>高出一截。利差、信用评级、抵押品要求的本质,都是在对<span class="hl">“能不能按时还回来”</span>这次违约概率做一次集体报价。</p></div><div class="callout callout--tip reveal"><span class="callout__title">回到利息的两个本源</span><p>钱的时间价格(你今天拿不到,我补你)跟违约风险补偿(你可能拿不回来)相加,才是你实际付出的利率。以后看到任何一个利率数字,先拆开问:这个时间成本是多少、这个风险补偿是多少——你立刻就能判断它高得还是便宜得有理。</p></div>
+
+        <h2>5. 好债和坏债的区别</h2>
+<p>一提<span class="hl">“借钱”</span>,很多人本能皱眉,觉得债就是坏事。岛上换个例子你就明白了:小渔借鱼去编网、去造船、去修码头、去学更先进的捕鱼术——只要未来的产出真提高了,还债的现金流就从地里长出来了。这是好债:债压着,产出也涨着。</p><p>把好债坏债写成一行算式:拿项目回报跟借款利率比大小。借钱的利率是百分之六,项目稳稳带来百分之十,中间四个点的落差,就是项目替你赚出的净利;项目若只有百分之三,借来的钱每放一年多亏三个点,窟窿越挖越深。项目回报减借款利率,差为正,债是<span class="term">杠杆</span>;差为负,债是绞索。下次听到任何举债的故事,先在心里算这一行减法。</p><div class="callout callout--warn reveal"><span class="callout__title">先问回报,再问利率</span><p>项目预期回报率 <span class="num">10%</span>、利率 <span class="num">5%</span>,差为正,债是<span class="term">杠杆</span>;回报率 <span class="num">3%</span>、利率 <span class="num">5%</span>,差为负,债是绞索。两个判断都要成立,最关键的是<span class="hl">“回报率”</span>这一行的数据必须自己核过,才不算自欺欺人的高收益诱惑。</p></div><p>反例是借鱼办宴会。当晚全岛吃得欢声笑语,第二天一看:鱼没了,产出没多一两,债务却躺在账上。现代社会每天都在重播这两出戏:企业借钱建厂、做研发、提效率,项目成功后用未来的收入还本付息,这是前一出;企业借钱填旧窟窿、炒资产、硬撑亏损业务,没有新增现金流,债务只会像滚雪球,这是后一出。</p><p>所以分析任何债务,别只问<span class="hl">“借了多少”</span>,更要问<span class="hl">“钱拿去干了什么”</span>。同样是负债,生产性债务和消耗性债务的含义天差地别——前者背后站着未来的现金流,后者背后只有一张越来越重的欠条。</p>
+
+        <h2>6. 债券就是标准化借条</h2>
+<p>阿岛和小渔的口头约定,如果写在纸上,把借多少、何时还、还多少、还不上怎么办一条条注明,这张纸就是借条。现代金融市场里的债券,你可以直接理解成:一张标准化、还能转手套现的借条。</p><p><span class="hl">“标准化”</span>三个字听着平淡,却是债券能交易的命门。假如每张借条的金额、期限、利息算法全都不一样,接手的人得从头啃条款,两张借条也没法比价——这就像没有统一接口的代码,每个调用方都得写定制适配。统一成面值、票息、期限都规整的格式之后,比价、转手、报价全顺了,流动性就是被<span class="hl">“标准”</span>造出来的。</p><p>举个最小的例子。一家公司发行债券:你今天借给它一百元,它每年付你五元,三年后把一百元本金还给你。这串现金流上每笔钱都有名字——那五元叫票息;三年后还本金的动作叫到期偿还。你买下的不是一张纸,是一串白纸黑字写好的未来现金流。</p><p>把这串现金流一笔记一笔写下:第一年收五元,第二年收五元,第三年收最后五元加一百元本金,三年共收一百一十五元,多出的十五元就是这张纸三年里替你挣的。注意每个金额和日期都是合同写死的——正是这份<span class="hl">“写死”</span>,埋下了后面价格随利率波动的伏笔。</p><p>债券为什么能拿到市场上交易?因为别人也会想买这串现金流。你中途急用钱,可以把债券卖给另一个投资者。卖多少钱成交,取决于两件事:市场眼下要求多高的回报,以及大家判断这家公司靠不靠谱。同一张债券,在不同市场温度下,价格可以完全不同。</p>
+
+        <h2>7. 为什么利率上升,老债会跌</h2>
+<p>第一次学债券的人,十有八九会在同一个地方卡壳:利率涨,我手里的老债凭什么跌?别背结论,我们用最小的数字亲手算一遍。</p><p>假设一张债一年后确定能拿回一百零五元。如果市场上大家满足于百分之五的回报,那你今天付一百元买它完全合理——一百元放进去,一年后刚好变成一百零五元。买卖两讫,谁都不亏。</p><p>现在市场变了:新出来的投资机会都能给到百分之十。同样一年后拿一百零五元,今天还值一百元吗?不值了。因为你今天拿一百元去别处,一年后能拿一百一十元,怎么会有一百元的预算分给这张老债?想让买家动心,老债只能降价——降到大约九十五点四五元,买家今天的投入折算下来才同样有百分之十。</p><div class="callout callout--tip reveal"><span class="callout__title">老债为什么会跌,跟信用无关</span><p>现在市面上能给 <span class="num">10%</span> 的新机会来了,手里那张确定一年后还 <span class="num">105 元</span>的老债,今天只值 105 ÷ 1.10 ≈ <span class="num">95.45 元</span>。你什么都没做错,但价格就是跌了——因为<a class="term term-link" href="glossary.html#g-折现" title="查看术语：折现">折现</a>的分母变了。这是债券价格对利率反向的核心机制。</p></div><p>这个数字别刷过去,亲手验算一遍:一百零五除以一点一,得九十五点四五四五,循环下去;抹掉零头就是九十五点四五。反过来乘:九十五点四五乘以一点一,约等于一百零五。写成公式一句话:今天的价,等于未来的钱除以<span class="hl">“一加折现率”</span>。</p><p>再拆一个常见误区:<span class="hl">“价格跌了怕什么,我持有到期不就行了?”</span>现金流确实不变,到期照样拿回一百零五。但机会成本已经变了:同样的钱今天能买到百分之十回报的资产,你手里这张只剩百分之五。账面没亏,选择上已经亏了——这就是做债的人说的<span class="hl">“浮亏也是亏”</span>,亏的是本可以更好的选择。</p><p>记住这条铁律:债券价格和市场利率通常反着走。未来现金流被合同写死,市场要求的回报越高,今天的价格只能越低。刚才那个“把一年后的 <span class="num">105 元</span>换算成今天值多少钱”的动作,有个专门的名字,叫折现;换算时用的回报率(比如这里的 <span class="num">10%</span>),叫折现率。一句话背下来:折现就是给未来的钱打折、算回今天——钱越远、越不确定、大家要求回报越高,折就打得越狠。这个逻辑会一路跟着你:<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>估值、房价、一切长期资产,都被折现率拽着走。
+                    <div class="figure reveal">
+                              <div data-lab="compound"></div>
+                              <p class="figure__cap">复利实验台:本金、利率、年数、<a class="term term-link" href="glossary.html#g-通胀" title="查看术语：通胀">通胀</a>全可调——通胀那条滑杆一推,你就知道为什么<span class="hl">“钱不投就贬值”</span>。</p>
+                            </div>
+                    </p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 360" role="img" aria-label="信用利率估值传导链:借一条还两条的信用账,市场利率从 5% 升到 10%,一年后 105 元的债折现 105÷1.1=95.45 元,老债从 100 元跌到 95.45 元">
+            <text x="450" y="32" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">信用 → 利率 → 估值:同一条传导链走一遍</text>
+            <text x="450" y="56" text-anchor="middle" fill="#8499bd" font-size="12.5">先有人肯今天借出,再看市场要多少回报,最后才知道未来的钱折回今天值多少</text>
+            <defs><marker id="e01a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8499bd"/></marker></defs>
+            <rect x="30" y="76" width="260" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="160" y="106" text-anchor="middle" fill="#f0c96a" font-size="15.5" font-weight="800">信用:有人今天肯借</text>
+            <text x="160" y="140" text-anchor="middle" fill="#c9d4e8" font-size="12">借 1 条 → 还 2 条</text>
+            <text x="160" y="166" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">利息 = 1 条鱼</text>
+            <text x="160" y="198" text-anchor="middle" fill="#8499bd" font-size="11.5" font-weight="600"><tspan x="160" y="198">利息补三样:等待·风险·不方便</tspan></text>
+            <line x1="50" y1="220" x2="270" y2="220" stroke="rgba(122,167,240,0.18)"/>
+            <text x="160" y="248" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800"><tspan x="160" y="248">没信用:利率再高也没人付</tspan></text>
+            <rect x="320" y="76" width="260" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="450" y="106" text-anchor="middle" fill="#a8c6ff" font-size="15.5" font-weight="800">利率:多借要付利息</text>
+            <text x="450" y="140" text-anchor="middle" fill="#c9d4e8" font-size="12">市场要求的回报</text>
+            <text x="450" y="166" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">5% → 10%</text>
+            <text x="450" y="198" text-anchor="middle" fill="#8499bd" font-size="11.5" font-weight="600"><tspan x="450" y="198">折现率=市场当下要求的回报</tspan></text>
+            <line x1="340" y1="220" x2="560" y2="220" stroke="rgba(122,167,240,0.18)"/>
+            <text x="450" y="248" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800"><tspan x="450" y="248">利率升→未来的钱更不值钱</tspan></text>
+            <rect x="610" y="76" width="260" height="200" rx="12" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.28)"/>
+            <text x="740" y="106" text-anchor="middle" fill="#a8c6ff" font-size="15.5" font-weight="800">估值:把未来折回今天</text>
+            <text x="740" y="140" text-anchor="middle" fill="#c9d4e8" font-size="12">105 ÷ 1.1 = 95.45 元</text>
+            <text x="740" y="166" text-anchor="middle" fill="#f0c96a" font-size="16" font-weight="800">1 年后拿 105 元</text>
+            <text x="740" y="198" text-anchor="middle" fill="#8499bd" font-size="11.5" font-weight="600"><tspan x="740" y="198">今天的价=未来的钱÷(1+折现率)</tspan></text>
+            <line x1="630" y1="220" x2="850" y2="220" stroke="rgba(122,167,240,0.18)"/>
+            <text x="740" y="248" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800"><tspan x="740" y="248">没折现:未来1元≠今天1元</tspan></text>
+            <path d="M 292 176 L 316 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e01a)"/>
+            <path d="M 582 176 L 606 176" stroke="#8499bd" stroke-width="2.5" fill="none" marker-end="url(#e01a)"/>
+            <text x="450" y="310" text-anchor="middle" fill="#eef4f8" font-size="13.5" font-weight="800">传导一遍:利率从 5% 到 10%,同一张 105 元的债,今天只值 95.45 元(100 → 95.45)</text>
+            <text x="450" y="336" text-anchor="middle" fill="#c9d4e8" font-size="12.5">债券价格与市场利率反着走;股票、房子,一切长期资产都被这根折现率拽着走</text>
+          </svg>
+          <p class="figure__cap">链条走一遍:信用是有人肯今天借鱼(借 1 还 2),利率是多借要付的价(5%→10%),估值是把未来的钱折回今天(105÷1.1=95.45)。利率一升,同一张 105 元的债从 100 元掉到 95.45 元——折现率拽着所有长期资产。</p>
+        </div>
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 460" role="img" aria-label="利率与债价相关结构图: 利率上行,旧债价格随着久期放大下跌,久期越长越敏感">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">利率每变动 1 个百分点,久期 10 年的债券价格大约反向变动 10%</text>
+            <line x1="180" y1="245" x2="720" y2="245" stroke="#8499bd" stroke-width="6"/>
+            <polygon points="450,250 430,275 470,275" fill="#8499bd"/>
+            <rect x="230" y="130" width="190" height="80" rx="10" fill="rgba(238,136,119,0.22)" stroke="#ee8877"/>
+            <text x="325" y="158" text-anchor="middle" fill="#ffb4b4" font-size="14" font-weight="800">利率上行</text>
+            <text x="325" y="182" text-anchor="middle" fill="#bcc9dd" font-size="12">旧债的现值下跌</text>
+            <rect x="480" y="150" width="190" height="80" rx="10" fill="rgba(143,179,122,0.22)" stroke="#8fb37a"/>
+            <text x="575" y="178" text-anchor="middle" fill="#b5d3a0" font-size="14" font-weight="800">利率下行</text>
+            <text x="575" y="202" text-anchor="middle" fill="#bcc9dd" font-size="12">旧债的现值上涨</text>
+            <rect x="70" y="320" width="760" height="120" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="94" y="348" fill="#f0c96a" font-size="13" font-weight="800">为什么久期决定敏感度</text>
+            <text x="94" y="372" fill="#bcc9dd" font-size="12">久期是债券对利率的敏感度:久期 10 年的债券,利率每上行 0.1 个百分点,价格大致下跌约 1%;久期 3 年的短期债,利率每上行 0.1 个百分点,价格大致下跌约 0.3%</text>
+            <text x="94" y="396" fill="#bcc9dd" font-size="12">这就是 2022-2023 年美联储加息期间,长期美债ETF出现历史最大回撤的原因;同一时间段,短期债券基金几乎不动</text>
+            <text x="94" y="420" fill="#bcc9dd" font-size="12">弄清这把尺怎么样运动:在加息预期强烈时,多做长期债意味着实控加杠杆地押在利率上</text>
+          </svg>
+          <p class="figure__cap">久期是债券对利率的杠杆。长短期债两者的利率风险结构完全不可横比,加息周期一旦启动,长债变成杠杆者,短债近乎稳定。</p>
+        </div>
+        <h2>8. 国债、公司债和信用利差</h2>
+<p>欠债的名单拉出来,信用并不平等。国债通常被认为信用风险较低——背后有税收和货币体系撑着。公司债就要看公司的经营脸色了:可能赚钱,可能亏损,极端时直接违约不还。</p><p>市场怎么给这种差别标价?看数字。同样三年期,国债收益率百分之三,某家公司债收益率百分之六,中间多出来的三个百分点,一大块就是市场向这家公司索要的信用补偿。这个差价有名字:<a class="term term-link" href="glossary.html#g-信用利差" title="查看术语：信用利差">信用利差</a>。说白了,就是<span class="hl">“你比国家更可能赖账,那就多付我利息”</span>。</p><p>把利差换算成真金白银。同样借一百万元,国债一年利息三万,那家公司一年六万——每年多掏的三万,就是市场为<span class="hl">“这家公司可能还不上”</span>收的保险费。规模放大到百亿级的发债盘子,利差每走一个百分点,就是一年一个亿的成本差。</p><div class="callout callout--warn reveal"><span class="callout__title">利差不是收入,是保险单</span><p>国债 <span class="num">3%</span>、同类公司债 <span class="num">6%</span>,那三个点的差距是市场替你承担违约风险的报酬。利差走扩,不是哪一家公司出了事,而是市场对整个链条的红灯亮起——读固收指标,先盯的就是利差走扩/收窄的方向。</p></div><p>利差还会呼吸。信用利差扩大,通常意味着市场开始担心违约或流动性、纷纷要求更高补偿;利差收窄,说明市场的心又大了,愿意重新承担信用风险。它像债券市场的体温计,做债券量化、信用策略、宏观策略的人,天天盯着这条线。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 500" role="img" aria-label="债券利差三层图: 同一期限的国债、AAA 债、普通企业债,市场上为不同信用风险评估出的利差">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">同一期限 10 年期,三层债券各自开价不一样</text>
+            <rect x="70" y="90" width="360" height="190" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="250" y="118" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">① 国债(一般认为最安全)</text>
+            <text x="250" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">人们称之为“无风险利率”</text>
+            <text x="250" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">10 年期收益率 ≈ 2.4%</text>
+            <text x="250" y="196" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">利差基准 = 0</text>
+            <text x="250" y="226" text-anchor="middle" fill="#8499bd" font-size="12">其他所有债券都从这里出发</text>
+            <rect x="470" y="90" width="360" height="190" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="650" y="118" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">② 央企或 AAA 级公司债</text>
+            <text x="650" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">有大股东背书,违约概率很小</text>
+            <text x="650" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">10 年期收益率 ≈ 3.0%</text>
+            <text x="650" y="196" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">利差 +0.6 个百分点</text>
+            <text x="650" y="226" text-anchor="middle" fill="#8499bd" font-size="12">高等级利差只多一点点</text>
+            <rect x="70" y="300" width="360" height="150" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="250" y="328" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 普通企业债/地产债</text>
+            <text x="250" y="356" text-anchor="middle" fill="#bcc9dd" font-size="12">收益率常常在 6-10%,甚至更高</text>
+            <text x="250" y="380" text-anchor="middle" fill="#bcc9dd" font-size="12">利差常常 + 3.5 到 +7.5 个百分点,甚或更宽</text>
+            <text x="250" y="408" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">利差突然拉大 = 危险信号</text>
+            <text x="250" y="432" text-anchor="middle" fill="#8499bd" font-size="12">2022 年地产债利差曾拉到 +10% 以上</text>
+            <rect x="470" y="300" width="360" height="150" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="494" y="328" fill="#f0c96a" font-size="13" font-weight="800">利差告诉你什么</text>
+            <text x="494" y="354" fill="#bcc9dd" font-size="12">同期限的三只债,收益率差异就是市场对它们各自违约风险的定价</text>
+            <text x="494" y="376" fill="#bcc9dd" font-size="12">利差拉大=钱更怕,利差收窄=钱愿还多</text>
+            <text x="494" y="398" fill="#bcc9dd" font-size="12">看利差的方向,而不是绝对水平:利差走阔=市场更怕,利差收窄=市场更愿意借钱</text>
+            <text x="450" y="482" text-anchor="middle" fill="#bcc9dd" font-size="12.5">借债的核心不是涨是跌,利差结构一目了然:基准利率 + 信用利差 = 债券的真实价格</text>
+          </svg>
+          <p class="figure__cap">国债利率是底线,利差是市场对那家公司信用风险的报价。利差拉开不是公司坏了,是怕它坏的人多了。</p>
+        </div>
+        <h2>9. 利率和信用怎样变成量化变量</h2>
+<p>很多人觉得债券四平八稳,不像股票那么刺激,离量化很远。恰恰相反,债券市场是量化研究的重地:利率曲线、信用利差、<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>、凸性、违约概率、流动性,每一项都能落成数据、喂给模型。</p><p>就算你只做股票,也绕不开利率。上一节刚算过:利率上升,未来现金流折回今天就缩水,那些利润大头在很远的未来的成长股,估值首当其冲;利率下降,债券价格抬升,股票估值也常被托一把。但注意,这些都不是按一下就出结果的机械规则——盈利和风险偏好的变化,随时能盖过利率的声音。</p><p>也给<a class="term term-link" href="glossary.html#g-回测" title="查看术语：回测">回测</a>提个醒:如果样本期里利率整体一路向下,任何<span class="hl">“未来现金流占比高”</span>的组合都天然坐在顺风车上。回测曲线漂亮,可能不是策略聪明,只是水位一直在涨。把利率路径拆开看一眼,是债券乃至股票策略的基本卫生。</p><p>所以这一章算不上债券从业者专属,它教的是金融里使用率最高的一条心法:未来承诺如何变成今天价格。把这条线随身带着,后面无论讲资产定价还是量化模型,你都会反复用到它。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>信用是今天获得资源、未来履行承诺。</li>
+            <li>利息补偿三样东西:等待、违约风险和流动性不便。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 国家借的钱怎么也会变成坏账</li>
+            <li><strong>2.</strong> 庞氏骗局,新钱填旧账</li>
+            <li><strong>3.</strong> 借鱼这件事到底发生了什么</li>
+            <li><strong>4.</strong> 利息不是凭空冒出来的</li>
+            <li><strong>5.</strong> 好债和坏债的区别</li>
+            <li><strong>6.</strong> 债券就是标准化借条</li>
+            <li><strong>7.</strong> 为什么利率上升,老债会跌</li>
+            <li><strong>8.</strong> 国债、公司债和信用利差</li>
+            <li><strong>9.</strong> 利率和信用怎样变成量化变量</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>借钱为什么要付利息?</summary>
+            <p>因为出借人付出了三样:等待的时间、对方可能赖账的违约风险,以及中途自己急用钱却取不回的流动性不便——利息是对这三样的补偿。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>债券为什么像标准化借条?</summary>
+            <p>它把本金、利息、期限、偿付方式一条条写清,还做成标准格式,可以在市场上转手卖给别的投资者。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>银行和央行: 钱不是都躺在保险柜里</h2>
+          <p>讲清银行资产负债表、贷款创造存款、挤兑、央行和货币政策传导。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+    <script src="assets/labs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第 26 章 · 保险: 把扛不住的灾难摊给几千人 | 从金融零基础到量化研究者</title>
+    <meta name="description" content="从同船共济讲清保险的大数逻辑、精算定价、三差利润、逆向选择、偿付能力和保险资金的投资约束。" />
+    <link rel="icon" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="assets/book.css" />
+  </head>
+  <body data-chapter="26">
+    <main class="chapter">
+      <div class="chapter__inner">
+        <p class="chapter__eyebrow">专题篇 · 个人金融的安全底盘 · 第 26 章</p>
+        <h1>保险: 把扛不住的灾难摊给几千人</h1>
+        <p class="lead">前面讲了银行、债券、基金、衍生品,现在补上金融版图里经常被误会的一块:保险。它不像股票那样谈赚钱,谈的是另一种交易——你把一个自己扛不住的小概率灾难,换成一笔确定付得出的小钱。这一章把保险这门生意拆开:凭什么几千人凑钱就能把灾难摊平,精算师怎么给风险定价,保险公司靠什么赚钱,为什么它天生招骂又越来越重要,保单里哪些条款最值钱。读完你再看任何一份保单,第一眼找的不是保额,是它到底替你扛了什么。</p>
+
+        <section class="chapter-context chapter-context--special">
+          <div class="chapter-context__meta">
+            <span class="chapter-context__badge">专题选读</span>
+            <span>本部分第 1 / 2 章</span>
+          </div>
+          <p><strong>本部分的问题:</strong>在研究收益之前,个人怎样先守住不能承受的风险?</p>
+          <p class="chapter-context__outcome">这一篇不阻塞量化主线;它把保险、社保、养老金和家庭配置放回个人现金流。 可独立选读,不影响后续量化主线。</p>
+        </section>
+
+        <section class="objectives reveal">
+          <h2>读完这一章,你会明白</h2>
+          <ul>
+            <li>保险的本质:用确定的小成本,换小概率大灾难的豁免;不买不对称,就是裸奔。</li>
+            <li>大数定律要求数量够多、风险相互独立、概率可估;缺独立性的“保险”是集中赌博。</li>
+          </ul>
+        </section>
+
+
+        <h2>1. 先把灾难写进一家合股公司</h2>
+<p>还是回小岛。岛上有条谁都知道的规矩:出海的人里,偶尔会有翻船的。船翻了,家就塌了——不是穷一阵子,是孩子断粮、老人断药的那种塌。这个风险,单个渔民自己扛不住,存十年鱼干也不够填一次翻船的窟窿。</p><p>后来岛民想出一个办法:一百个渔民,每人每年往公共仓里放两条鱼,谁家翻了船,公共仓一次性赔给他家两百条,够撑两年。如果一百人里每年大约翻两条船,一年赔出去四百条,收进来两百条——不够。那就每人放五条,收五百条,赔四百条,剩一百条当年终结余。保险最原始的样子,就是这么一家<span class="hl">“翻船合股公司”</span>。</p><div class="callout callout--warn reveal"><span class="callout__title">注意</span><p>注意这笔交易的两端分别换来了什么。渔民这一端:用一个确定的小损失(每年五条鱼),换掉了一个小概率的大灾难(翻船返贫)。公共仓这一端:把一百个“要么零要么两百”的大起大落,汇成了一个“大概赔四百条”的数字——单个看随机,合起来看接近确定。保险里没有谁能消灭灾难,有的只是把灾难从一个人头上搬开、摊薄到一群人头上。</p></div><div class="callout callout--tip reveal"><span class="callout__title">记住</span><p>这就是保险的定义,记住这一句就够本:保险是把“小概率、大损失、扛不住”的风险,换成“确定、小额、付得起”的成本。凡是拿这个句式对不上的“保险”,比如号称稳赚不赔的、存钱还送保障的,十有八九不是保险,是披着保险皮的理财产品。</p></div><div class="callout callout--note reveal"><span class="callout__title">判断险种的照妖镜</span><p>问自己:出事了它赔多少,不出事我损失多少?如果<span class="hl">“不出事”</span>时还有返还、分红、收益,那你买的大概率是理财加一点点保险——先看清楚这两部分各自的价钱,别混着签。</p></div>
+
+        <h2>2. 保险公司为什么敢接你的灾难</h2>
+<p>渔民敢交五条鱼,是因为相信公共仓赔得起。公共仓凭什么叫这个板?凭的是一条数学定理:大数定律。一个人的船翻不翻,谁也猜不准;一万个人的船今年翻几条,却猜得出奇地准。参与的人越多,实际出险率越向理论概率收敛——单个不可预测,整体高度可预测。</p><p>手算一下这个收敛有多快。假设单人每年翻船概率百分之一,只卖一份保单,保险公司面对的是一个<span class="hl">“要么收保险费、要么赔两百条”</span>的轮盘赌。卖一万份呢?期望赔付一百人次,用正态近似算,实际赔付在一万人次上下波动的幅度,大约是一百的平方根上下十倍以内——一百上下浮动几百条鱼,人均摊到每个客户头上,只是零点几的误差。人越多,人均风险越小,报价就能越低,这是保险业的规模逻辑。</p><p>所以保险公司最爱的客户画像不是<span class="hl">“绝对安全的人”</span>,而是<span class="hl">“尽量多、互相独立、概率可估的人”</span>。三个条件缺一个都难受:数量少,大数定律不灵;风险不独立(比如同一栋楼的火险),一场火全楼一起赔,等于又回到了一个人扛灾难;概率不可估(比如新型风险),精算师连锚都没有,只能靠拍脑袋加安全垫。</p><p>这里埋一个后面要展开的伏笔:<span class="num">2008 年</span> CDS 出大事,根子就是有人把<span class="hl">“不独立”</span>当成<span class="hl">“独立”</span>卖了。给一万栋分散全国的房卖火险是大数游戏;给一万栋同一街区、还是木房子的楼卖火险,是一份披着保险外衣的集中赌博。判断任何一个保险类产品,先问这一万笔风险是不是真的互相独立。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 440" role="img" aria-label="风险汇聚池图:一百个渔民每人五条的确定缴费汇入公共仓,翻船家庭一次获赔两百条,账本显示收五百赔四百,结余是安全边际">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">风险汇聚池:每人交确定的 5 条,翻船拿保底 200</text>
+            <!-- 左:100个渔民 -->
+            <text x="180" y="80" text-anchor="middle" fill="#a8c6ff" font-size="13" font-weight="800">100 个渔民,各交</text>
+            <g fill="#7aa7f0">
+              <circle cx="100" cy="120" r="12"/><circle cx="150" cy="120" r="12"/><circle cx="200" cy="120" r="12"/><circle cx="250" cy="120" r="12"/>
+              <circle cx="100" cy="160" r="12"/><circle cx="150" cy="160" r="12"/><circle cx="200" cy="160" r="12"/><circle cx="250" cy="160" r="12"/>
+              <circle cx="100" cy="200" r="12"/><circle cx="150" cy="200" r="12"/><circle cx="200" cy="200" r="12"/><circle cx="250" cy="200" r="12"/>
+            </g>
+            <text x="180" y="240" text-anchor="middle" fill="#bcc9dd" font-size="12">每年 5 条鱼(确定的小损失)</text>
+            <!-- 汇聚箭头 -->
+            <path d="M 300 150 Q 370 150 400 175" fill="none" stroke="#8499bd" stroke-width="3" marker-end="url(#arrowN)"/>
+            <!-- 中:公共仓 -->
+            <rect x="400" y="130" width="140" height="90" rx="10" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+            <text x="470" y="162" text-anchor="middle" fill="#f0c96a" font-size="14" font-weight="800">公共仓</text>
+            <text x="470" y="184" text-anchor="middle" fill="#bcc9dd" font-size="12">收 500 条/年</text>
+            <text x="470" y="203" text-anchor="middle" fill="#bcc9dd" font-size="12">大数定律:出险≈2 条船</text>
+            <!-- 下:翻转宿 -->
+            <path d="M 540 205 Q 620 250 660 240" fill="none" stroke="#8fb37a" stroke-width="3" marker-end="url(#arrowN)"/>
+            <rect x="640" y="200" width="200" height="70" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="740" y="228" text-anchor="middle" fill="#b5d3a0" font-size="13" font-weight="800">谁家翻了船</text>
+            <text x="740" y="250" text-anchor="middle" fill="#bcc9dd" font-size="12">一次赔 200 条(扛两年难关)</text>
+            <!-- 账本 -->
+            <rect x="60" y="290" width="780" height="90" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
+            <text x="84" y="318" fill="#f0c96a" font-size="13" font-weight="800">全年账本</text>
+            <text x="84" y="342" fill="#bcc9dd" font-size="12">进:100 人 × 5 = 500 条;出:2 人翻船 × 200 条 = 400 条;结余 100 条是安全边际</text>
+            <text x="84" y="364" fill="#bcc9dd" font-size="12">若某年翻了 5 条船赔 1000 条,缺口 500 条就要预警信号——那叫偿付能力压力</text>
+            <defs><marker id="arrowN" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8499bd"/></marker></defs>
+            <text x="450" y="412" text-anchor="middle" fill="#8499bd" font-size="12.5">保险不消灭灾难,只是把“一人塌天”改写成“众人凑手”</text>
+          </svg>
+          <p class="figure__cap">保险原始模型:一百个渔民每年各交确定的 5 条鱼,谁家翻船就从公共仓领 200 条。大数定律让收赔两端都可预算——500 进、约 400 出,多出来的 100 条就是保险公司的生存缝隙。</p>
+        </div>
+        <h2>3. 保险公司靠什么赚钱</h2>
+<p>保险公司的利润来源,行话叫<span class="hl">“三差”</span>:死差、费差、利差。听名字唬人,拆开特别朴素:实际赔付比预期少,赚的差价叫死差(广义叫<span class="hl">“差益”</span>,赔付类统称);实际运营费用比预算低,省的叫费差;收来的保费拿去投资,实际收益比定价时承诺假设的高,多出来的叫利差。三个口袋,两个口袋装经营水平,一个口袋装投资水平。</p><p>手算一个利差口袋的规模感受。一张定价按百分之二点五假设收益率的保单,收了客户一百亿保费,平均要在账上趴二十年。如果投资实际做到百分之四点五,每年多出来的二个百分点就是两亿,二十年复利滚下来是六七十亿的额外利润——这就是<span class="hl">“利差”</span>为什么成为寿险公司最大的口袋。反过来说,如果<a class="term term-link" href="glossary.html#g-利率" title="查看术语：利率">利率</a>一路下行、实际收益掉到百分之二以下,同一张保单就从印钞机变成抽血泵,行业管这个叫利差损。</p><p>理解了三差,你一个外行人也能看懂保险股。看死差费差,是看它的<span class="hl">“手艺”</span>:核保严不严、定价准不准、费用控得住控不住——这类利润稳,估值溢价高。看利差,是看它对利率的敞口:长债配比高、假设保守的公司,利率下行期抗揍;靠激进假设抢保单的公司,利率一转头就挨打。保险研究员天天拆的<span class="hl">“内含价值”</span>,核心就是在给这三个口袋分别<a class="term term-link" href="glossary.html#g-折现" title="查看术语：折现">折现</a>。</p><div class="callout callout--note reveal"><span class="callout__title">利差损,保险业的慢性病</span><p><span class="num">90 年</span>代国内寿险公司卖过大量预定利率百分之八以上的保单,后来利率一路下行,这批保单成了整个行业消化了十几年的利差损包袱。记住这个句式:凡是签长期合同的金融行业——保险、养老金、长期存款——最怕的都是利率大方向走反。</p></div>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 350" role="img" aria-label="三差三口袋图:死差靠赔付低于预期、费差靠费用结余、利差靠投资收益超过假设利率,利差部分标为利率口袋,注明利率下行会变成利差损">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">三差三口袋:保险公司的利润来自哪里</text>
+            <!-- 三口袋扇形排部 -->
+            <rect x="60" y="90" width="240" height="150" rx="12" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="180" y="120" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">死差(表损差)</text>
+            <text x="180" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">预计赔 100 例</text>
+            <text x="180" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">实际只赔 90 例</text>
+            <text x="180" y="196" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">差价 = 承保利润</text>
+            <text x="180" y="220" text-anchor="middle" fill="#8499bd" font-size="11">手艺口袋:长期寿险圭臬</text>
+            <rect x="330" y="90" width="240" height="150" rx="12" fill="rgba(240,201,106,0.2)" stroke="#f0c96a"/>
+            <text x="450" y="120" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">费差</text>
+            <text x="450" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">预算费用 1 亿</text>
+            <text x="450" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">实际花 8000 万</text>
+            <text x="450" y="196" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">节约 = 运营利润</text>
+            <text x="450" y="220" text-anchor="middle" fill="#8499bd" font-size="11">治理口袋:各公司经营分水岭</text>
+            <rect x="600" y="90" width="240" height="150" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="720" y="120" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">利差</text>
+            <text x="720" y="146" text-anchor="middle" fill="#bcc9dd" font-size="12">合同约定 2.5%</text>
+            <text x="720" y="168" text-anchor="middle" fill="#bcc9dd" font-size="12">实际投资 4.5%</text>
+            <text x="720" y="196" text-anchor="middle" fill="#8fb37a" font-size="13" font-weight="800">差额 = 投资利润(久期长×规模大=大头)</text>
+            <text x="720" y="220" text-anchor="middle" fill="#8499bd" font-size="11">利率口袋:利率下行期变利差损</text>
+            <!-- 底部竖线 -->
+            <text x="450" y="288" text-anchor="middle" fill="#bcc9dd" font-size="13">利率长期下行时,口袋三会从利润反转成亏损 —— 这是日本 90 年代与中国 2020 年代共同的保险剧本</text>
+            <text x="450" y="316" text-anchor="middle" fill="#8499bd" font-size="12.5">记住:死差和费差管“技术”,利差管“行情”;真正决定一家保险公司四十年的,是它敢不敢把利率假设定得保守</text>
+          </svg>
+          <p class="figure__cap">保险公司的利润有三口:死差靠赔得比预想得少,费差靠花得比预算少,利差靠投资赚得比定价假设多。长险里大头是利差——所以利率长期下行,口袋三会从利润反转成利差损,输入一个行业轮回。</p>
+        </div>
+        <h2>4. 先定价,再卖货的行业</h2>
+<p>别的行业是先有成本再定价,保险业反着来:东西(赔付)还没发生,价格就得先报出去。这给定价提出了变态要求——你得在产品卖光、事故还没怎么发生的时候,就把未来几十年的赔付率猜个八九不离十。干这活的人叫精算师,他们的主力工具,是各种各样的<span class="hl">“发生率表”</span>。</p><p>最经典的是生命表:一张全国分年龄的死亡概率表。比如查到三十岁男性明年死亡概率约千分之一,那么纯保障成本就是每千元保额一块钱;四十岁是千分之二,五十岁接近千分之五,六十岁突破百分之一——保费随年龄陡增,不是保险公司黑心,是发生率曲线本来就长这样。重疾险、车险同理,背后都是一张<span class="hl">“某类人某事件发生率”</span>的大表。</p><p>在这张表上,精算师还要叠三层东西。第一层费用:销售<a class="term term-link" href="glossary.html#g-佣金" title="查看术语：佣金">佣金</a>、门店、系统,摊进保费,行业惯例占到三成上下;第二层利润边际:股东要回报;第三层安全垫:发生率表是历史数据,未来可能更糟,得留缓冲。所以最终保费大致等于<span class="hl">“纯风险成本放大两三倍”</span>。下次听到<span class="hl">“保险暴利”</span>,先想想这三层各占多少——很多产品的贵,贵在第一层的渠道费,而不是风险本身。</p><p>这套<span class="hl">“先定价后卖货”</span>的模式有个脆弱点:定价参数一旦系统性猜错,错误会锁在合同里几十年,想调价都没门。车险一年一签、好调;终身寿险一签几十年,调无可调。所以你买到的长期险价格偏高,有一部分合理成分——保险公司是在替自己未来几十年的<span class="hl">“猜错风险”</span>收保险费。</p>
+
+        <h2>5. 逆向选择与道德风险</h2>
+<p>保险这门生意有两个天生的敌人,都长在人性上。第一个叫逆向选择:谁最想买保险?恰恰是风险最高的人。身体亮红灯的人最积极买重疾险,车况差爱飙车的人最爱买全险。如果保险公司按平均风险定价,低风险的人嫌贵退出,留下的全是高风险客户,赔付率爆表,只能再涨价——恶性循环最后市场萎缩,这就是经济学里的柠檬市场。</p><p>对抗逆向选择的武器,全部指向同一目标:把客户按风险分开。体检、健康告知、职业分类、既往症免责、等待期——这些让你觉得麻烦的环节,本质上都是“筛”字诀,防止高风险的人混进低风险的池子。另一个方向是团体险:把一整个公司的人打包投保,健康的人也被迫进来,摊平了池子,逆向选择就失灵了。这就是为什么五险一金要强制参保——自愿原则下,年轻人会等到生病再买,池子当场崩溃。</p><p>第二个敌人叫道德风险:买了保险之后,人的行为会变。有了全险,停车就不那么小心;有了<a class="term term-link" href="glossary.html#g-存款保险" title="查看术语：存款保险">存款保险</a>,银行冒险就更大胆;知道会被救助,金融机构就敢加更大的<span class="term">杠杆</span>。保险改变激励,激励改变行为,行为推高赔付——这个词听着像骂人,其实是中性的机制描述。</p><p>对抗道德风险的工具箱也很整齐:免赔额让你自己也疼一下;共付比例让你每笔医疗费都掏一部分;无赔款优待用价格奖励小心的人;保额不超过实际损失,防止<span class="hl">“烧了旧房换新房”</span>的诱惑。你在任何保单里看到免赔、自付比例、逐年折扣,都别只当坑看——那是这套系统为了不散架,不得不装的平衡轮。</p><div class="callout callout--note reveal"><span class="callout__title">看懂这两个词,就看懂了一半金融监管</span><p>存款保险防挤兑,却纵容银行冒险,所以要搭配<a class="term term-link" href="glossary.html#g-资本充足率" title="查看术语：资本充足率">资本充足率</a>;政府救助防系统性崩盘,却纵容大而不能倒,所以要搭配处罚和股东清零。金融制度设计的大量纠结,说穿了都是在<span class="hl">“防住系统性风险”</span>和<span class="hl">“不喂大道德风险”</span>之间走钢丝。</p></div>
+
+        <h2>6. 保险公司自己的救生衣</h2>
+<p>银行有资本充足率,保险公司对应的叫偿付能力充足率,逻辑一模一样:你的<a class="term term-link" href="glossary.html#g-资本" title="查看术语：资本">资本</a>金,得够扛住<span class="hl">“所有保单同时来兑”</span>的最坏剧本。监管按风险大小给每项资产、每张保单算出一个最低资本要求,保险公司的实际资本除以最低资本,就是这个比率。国内<span class="hl">“偿二代”</span>体系下,百分之一百是及格线,百分之一百五以上算稳健,低于及格线就会被限制业务、勒令增资。</p><p>为什么要盯这么紧?因为保险公司的<a class="term term-link" href="glossary.html#g-资产负债表" title="查看术语：资产负债表">资产负债表</a>,比银行还<span class="hl">“头重脚轻”</span>:收来的保费是马上到手的真金白银,对应的赔付承诺却要在未来几十年随机兑现。这种负债结构意味着,只要定价模型错一点、投资踩雷多一点,窟窿会滚很多年才发现——发现时往往已经是天文数字。偿付能力监管的目的,就是逼它在窟窿还小的时候现形。</p><p>这套逻辑跟前面讲的银行一脉相通:金融中介的生死线,从来不是<span class="hl">“平时赚多少”</span>,而是<span class="hl">“极端情形下资本够不够扛”</span>。银行业的对应剧本是挤兑加坏账双杀,保险业的对应剧本是巨灾加利差损双杀——比如一场大地震叠加利率下行。看金融公司,别翻利润表找增长,先翻资本充足指标找活命的余量。</p>
+
+        <div class="figure figure--reading reveal">
+          <svg class="chapter-diagram" viewBox="0 0 900 420" role="img" aria-label="偿付能力公式与门槛图:实际资本除以最低资本,临界值 50%、100%、150%">
+            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">偿付能力充足率:保险公司的救生衣气压表</text>
+            <rect x="90" y="80" width="330" height="110" rx="10" fill="rgba(122,167,240,0.2)" stroke="#7aa7f0"/>
+            <text x="255" y="108" text-anchor="middle" fill="#a8c6ff" font-size="15" font-weight="800">分子:实际资本</text>
+            <text x="255" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">经审计认可的净资产 + 认可资产价值</text>
+            <text x="255" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">减掉风险折价以上,这就是缓冲底</text>
+            <text x="255" y="182" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">它是垫子,垫在风险之前</text>
+            <rect x="480" y="80" width="330" height="110" rx="10" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
+            <text x="645" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">分母:最低资本</text>
+            <text x="645" y="134" text-anchor="middle" fill="#bcc9dd" font-size="12">监管按你的保单风险、资产风险算出的最低要求</text>
+            <text x="645" y="156" text-anchor="middle" fill="#bcc9dd" font-size="12">风险越大 → 分母越高 → 充足率越低</text>
+            <text x="645" y="182" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">它是风险大小,不是风险的绝对开销</text>
+            <text x="450" y="224" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">充足率 = 实际资本 / 最低资本</text>
+            <rect x="90" y="252" width="220" height="110" rx="10" fill="rgba(143,179,122,0.2)" stroke="#8fb37a"/>
+            <text x="200" y="280" text-anchor="middle" fill="#b5d3a0" font-size="15" font-weight="800">&gt;150%</text>
+            <text x="200" y="304" text-anchor="middle" fill="#bcc9dd" font-size="12">监管信任的监督级别</text>
+            <text x="200" y="328" text-anchor="middle" fill="#8fb37a" font-size="12">允许加大分红和新产品</text>
+            <rect x="340" y="252" width="220" height="110" rx="10" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
+            <text x="450" y="280" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">100% - 150%</text>
+            <text x="450" y="304" text-anchor="middle" fill="#bcc9dd" font-size="12">监管介入预警：限制新业务</text>
+            <text x="450" y="328" text-anchor="middle" fill="#bcc9dd" font-size="12">行业被看作"有风险"</text>
+            <rect x="590" y="252" width="220" height="110" rx="10" fill="rgba(238,136,119,0.2)" stroke="#ee8877"/>
+            <text x="700" y="280" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">&lt;100%</text>
+            <text x="700" y="304" text-anchor="middle" fill="#bcc9dd" font-size="12">监管可以直接接管</text>
+            <text x="700" y="328" text-anchor="middle" fill="#ee8877" font-size="12">公司被视为有问题</text>
+            <text x="450" y="398" text-anchor="middle" fill="#bcc9dd" font-size="12.5">看充足率别只记百分比,要看“与 100% 的距离”;距离越小,你买的保险听起来越安心,但承受突然赔款的工作能力越糟</text>
+          </svg>
+          <p class="figure__cap">偿付能力充足率就是保险公司的资本密度表:低于 100% 监管有权接管,150% 以上是舒服区。买长期险前一眼这栏,高于看条款的遗漏收集。</p>
+        </div>
+        <h2>7. 债市最大的金主之一</h2>
+<p>保险公司收来的保费没赔出去之前,得拿去投资。这笔钱有多大?国内保险业资金运用余额已超过三十万亿,全球保险公司合计是债市最大的一类机构投资者。你不是直接持有<a class="term term-link" href="glossary.html#g-债券" title="查看术语：债券">债券</a>,但你的保单背后,站着一大堆长期国债、高等级<a class="term term-link" href="glossary.html#g-信用" title="查看术语：信用">信用</a>债和不动产。</p><p>这笔钱的投法被自己的负债结构死死焊住。寿险负债<a class="term term-link" href="glossary.html#g-久期" title="查看术语：久期">久期</a>动辄十几年,最理想的资产就是久期匹配的长期债券——收利息的节奏对上赔付的节奏,利率涨跌两边<a class="term term-link" href="glossary.html#g-对冲" title="查看术语：对冲">对冲</a>,资产负债表就不晃。长期国债收益率,某种意义上就是寿险公司的<span class="hl">“收益率地板”</span>:地板往下掉,它要么加风险(买<a class="term term-link" href="glossary.html#g-股票" title="查看术语：股票">股票</a>、不动产拉收益),要么受着(利差损)。所以<span class="hl">“险资举牌”</span><span class="hl">“险资入市”</span>的新闻,别当成利好起哄,先想起它是被自己的负债逼的。</p><p>对量化读者有一个直接的用处:保险资金是市场上最典型的一类<span class="hl">“久期需求型买方”</span>。每年开门红收完保费,配置压力集中释放,长债利率容易被它买下去;反之偿付能力吃紧、权益波动太大时,它又会阶段性抛债。机构行为是利率曲线的重要驱动之一——前文央行与利率专题讲过曲线由央行之手和市场预期决定,而市场预期里,就坐着保险、银行、理财这几个大买家的钱包。</p>
+
+        <h2>8. 先把五件事找出来</h2>
+<p>说点最实用的。任何一张保单拿到手,先别听收益演示,按顺序找五样东西:保障责任(出了什么事才赔)、责任免除(出了什么事不赔)、等待期(买了多久内出险不赔)、现金价值表(中途退出拿回多少)、缴费期与保障期(交多久、保多久)。这五样找齐,骗局基本无处藏身。</p><p>重点说最反直觉的一项:现金价值。长期险头几年退保,拿回的钱往往只有已交保费的三四成——不是保险公司扣得黑,是你首年保费的一大半变成了佣金、费用和当年的纯风险成本,已经花掉了。这告诉我们一个朴素结论:保险是长期合同,买前想清楚,退保有代价;拿长期险当短期理财使,是这个市场上最贵的误会之一。</p><p>免赔额、报销范围、续保条件同理,全部写在条款里而不在销售嘴里。一个成熟买家对销售话术的标准动作是:你说的这句,指给我看条款第几条。法律上保护你的是黑纸白字的合同,不是讲解时的笑脸。这条原则不只适用于保险——买基金看招募说明书,买雪球看交易确认书,逻辑一样:任何金融产品,口头承诺一文不值,合同条款一字千金。</p><div class="callout callout--note reveal"><span class="callout__title">五件事之外的最后一眼</span><p>签字前再看一眼这家公司的综合偿付能力充足率和风险综合评级(监管每季度公布)。保单再好听,兑付能力是地基;给长期合同挑一个财务健康的对手方,和买债券先看信用,是同一件事。</p></div>
+
+        <h2>9. 为什么保险名声不好,却越来越重要</h2>
+<p>坦白讲,保险在国内的名声长期不好,投诉率稳居金融行业前列。病根不在保险原理,在销售模式:靠人海战术卖产品,佣金前置一把梭——首年佣金可以占到首年保费的三四成,销售的全部动力在<span class="hl">“签单”</span>而不在<span class="hl">“合适”</span>。于是有了大量错配:给月光族卖终身寿险,给老人卖缴费十年的产品,把保障包装成理财。买的是人情,退的时候才发现合同不认人情。</p><p>但另一面同样真实:越是收入和财富往上走的社会,对保险的需求越大。逻辑很简单——穷的时候最大的风险是没钱,有点积蓄之后最大的风险变成<span class="hl">“攒下的钱被一场病、一次意外一把清零”</span>。越有钱,越输不起。重疾险、医疗险、定期寿险这三样,年收入几十万的家庭的配置需求,比月入三千时真切得多——因为风险敞口第一次大到自己存不出来。</p><p>制度层面也在往这边走。车险综合改革把费用水分往下挤,互联网渠道把佣金压薄,监管把销售过程全程录音录像,行业从<span class="hl">“拉人头”</span>转向<span class="hl">“活续期”</span>——销售不再只能赚首年快钱,客户不退保才有尾佣,激励慢慢掰正。名声的修复靠的不是广告,是激励机制重新对准客户的长期利益。这个道理在金融各行业通用:想判断一个销售导向的行业靠不靠谱,先看卖东西的人靠什么拿提成。</p>
+
+        <h2>10. 保险是你一切对冲的原型</h2>
+<p>把整章压缩成一条脉络:保险起源于一群人分摊灾难的现实需要,能成立靠的是大数定律,能赚钱靠的是三差,能定价靠的是精算,需要被监管盯死是因为它先收钱后兑现。这套<span class="hl">“以确定的小成本换小概率大灾难”</span>的结构,不只活在保险公司里——往后学期权,看跌期权就是股价的保险单;学 CDS,那是公司债的保险单;学止损纪律,那是你在给自己的组合买一份自制的、最便宜的保险。</p><p>所以保险思想值得单独内化,而不是只当生活知识:第一,对冲从来有成本,保费、权利金、止损砍仓时的兑现损失,都是<span class="hl">“确定的小钱”</span>;第二,首先问抗不抗得住,再问收益率,这是资产配置和风控共同的第一性问题;第三,出售保险——卖 covered call、卖看跌、发雪球——赚的是权利金,扛的是尾部,这笔交易到底划不划算,取决于你对尾部发生率的估计比对手方准不准。</p><p>带着这三条回看全书,很多章节会重新连起来:分散化是<span class="hl">“自己当自己保险公司”</span>的原始版,准备金和偿付能力是同一件救生衣在不同行业的叫法,期权定价里的 Black-Scholes,本质上是给<span class="hl">“保险单”</span>算了张发生率表。金融产品的名字一直在变,底层的风险交易结构就那么几副——见过了保险,你就见过了最古老、也最能讲清道理的那一副。</p>
+
+
+        <section class="summary reveal">
+          <h2>小结</h2>
+          <p>这一章的正文不是让你记住几个孤立名词,而是要把它们放回同一条因果链里。读完后,先用自己的话复述下面几条判断,再顺着“小节回看”检查是否能解释每一步。</p>
+          <ul>
+            <li>保险的本质:用确定的小成本,换小概率大灾难的豁免;不买不对称,就是裸奔。</li>
+            <li>大数定律要求数量够多、风险相互独立、概率可估;缺独立性的“保险”是集中赌博。</li>
+          </ul>
+          <h3>小节回看</h3>
+          <ul>
+            <li><strong>1.</strong> 先把灾难写进一家合股公司</li>
+            <li><strong>2.</strong> 保险公司为什么敢接你的灾难</li>
+            <li><strong>3.</strong> 保险公司靠什么赚钱</li>
+            <li><strong>4.</strong> 先定价,再卖货的行业</li>
+            <li><strong>5.</strong> 逆向选择与道德风险</li>
+            <li><strong>6.</strong> 保险公司自己的救生衣</li>
+            <li><strong>7.</strong> 债市最大的金主之一</li>
+            <li><strong>8.</strong> 先把五件事找出来</li>
+            <li><strong>9.</strong> 为什么保险名声不好,却越来越重要</li>
+            <li><strong>10.</strong> 保险是你一切对冲的原型</li>
+          </ul>
+        </section>
+        <section class="quiz reveal">
+          <h2>自测</h2>
+          <details class="quiz__item">
+            <summary>一个人能不能靠自己存钱替代保险?</summary>
+            <p>对大灾难不行。保险的价值恰在小概率大损失:出事前攒不齐,出事时一把清零。储蓄替代的是频繁小额损失,替代不了尾部风险。</p>
+          </details>
+          <details class="quiz__item">
+            <summary>保险公司三大利润来源是什么?</summary>
+            <p>死差(实际赔付低于预期)、费差(实际费用低于预算)、利差(实际投资收益高于定价假设),其中利差通常是长期险最大的口袋。</p>
+          </details>
+        </section>
+
+        <section class="chapter-handoff">
+          <span class="chapter-handoff__label">下一章为什么接在这里</span>
+          <h2>社保、养老金与家庭资产配置</h2>
+          <p>从五险一金、养老三支柱走到应急资金、长期账户和家庭资产分桶。</p>
+        </section>
+
+      </div>
+    </main>
+    <script src="assets/book.js"></script>
+  </body>
+</html>
