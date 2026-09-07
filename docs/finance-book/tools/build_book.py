@@ -1998,7 +1998,8 @@ def _fig_d15_pair_trading():
             <!-- 数字例 -->
             <rect x="490" y="290" width="320" height="80" rx="10" fill="rgba(18,29,49,0.75)" stroke="rgba(122,167,240,0.28)"/>
             <text x="505" y="314" fill="#eef4f8" font-size="12.5" font-weight="800">示意一笔账:</text>
-            <text x="505" y="336" fill="#bcc9dd" font-size="12">开仓 A=100 / B=102;收仓 A=100.5 / B=100.5</text>
+            <text x="505" y="336" fill="#bcc9dd" font-size="12">开仓: 多 A=100 / 空 B=102</text>
+            <text x="505" y="364" fill="#bcc9dd" font-size="12">收仓: A=100.5 / B=100.5 —— 多 A 赚 0.5, 空 B 赚 1.5, 价差变浅</text>
             <text x="505" y="356" fill="#bcc9dd" font-size="12">两腿各赚 +0.5 / +1.5?错了——多A赚 0.5,空B赚 1.5,各算各的</text>
             <text x="450" y="402" text-anchor="middle" fill="#c9d4e8" font-size="12.5">指望的不是某一边涨,是两边重新贴合——方向赢不赢不影响你,大小盘风格切换才是你的风险</text>"""
     return concept_figure(body, "0 0 900 420",
@@ -2042,9 +2043,9 @@ def _fig_d17_three_tables():
             <text x="638" y="240" fill="#8499bd" font-size="11">净利被存货/应收/折旧吃掉</text>
             <!-- 三表互指 -->
             <path d="M 300 178 L 322 178" stroke="#7aa7f0" stroke-width="2" fill="none" marker-end="url(#d17a)"/>
-            <text x="311" y="168" text-anchor="middle" fill="#8499bd" font-size="10.5">净利进净资产</text>
+            <text x="311" y="168" text-anchor="middle" fill="#8499bd" font-size="10.5">净利计入净资产</text>
             <path d="M 590 178 L 612 178" stroke="#f0c96a" stroke-width="2" fill="none" marker-end="url(#d17g)"/>
-            <text x="601" y="168" text-anchor="middle" fill="#8499bd" font-size="10.5">现金对上末数</text>
+            <text x="601" y="168" text-anchor="middle" fill="#8499bd" font-size="10.5">现金对上总账末数</text>
             <text x="450" y="312" text-anchor="middle" fill="#c9d4e8" font-size="13">利润表问"赚了吗",资产负债表问"有啥、欠啥",现金流量表问"钱真到手了吗"</text>
             <text x="450" y="336" text-anchor="middle" fill="#ffb4b4" font-size="12.5">三张表数字对不上 = 有个地方在造假或藏雷;对得上,是真的还是假的,要进一步看经营现金流</text>"""
     return concept_figure(body, "0 0 900 360",
@@ -3328,7 +3329,7 @@ def _fig_j6_snowball():
             <!-- 命 B:提前敲出 -->
             <polyline points="70,190 180,150 300,118 340,110" fill="none" stroke="#7aa7f0" stroke-width="3"/>
             <circle cx="340" cy="110" r="6" fill="#7aa7f0"/>
-            <text x="360" y="88" fill="#a8c6ff" font-size="12" font-weight="700">命 2:第 6 个月敲出,提前结束,拿 6 个月票息≈7.5%</text>
+            <text x="450" y="148" text-anchor="middle" fill="#eeee66" font-size="13" fill-opacity="0.55">命 2:第 6 个月敲出,提前结束,拿 6 个月票息≈7.5%</text>
             <!-- 命 C:先敲入再敲出 -->
             <polyline points="70,190 200,238 260,252 380,238 520,150 640,116 700,110" fill="none" stroke="#c9a7f5" stroke-width="3"/>
             <circle cx="260" cy="252" r="5" fill="#c9a7f5"/>
@@ -3336,7 +3337,7 @@ def _fig_j6_snowball():
             <text x="420" y="300" fill="#d8c1f7" font-size="12" font-weight="700">命 3:先敲入、后敲出——捡回票息,虚惊一场</text>
             <!-- 命 D:敲入未敲出 -->
             <polyline points="70,190 220,246 300,252 430,286 600,300 830,312" fill="none" stroke="#e87878" stroke-width="3"/>
-            <text x="560" y="340" fill="#ffb4b4" font-size="12" font-weight="700">命 4:敲入后没爬回——按到期跌幅赔本金,票息一分没有</text>
+            <text x="560" y="300" fill="#ffb4b4" font-size="12" font-weight="700">命 4:敲入后没爬回——按到期跌幅赔本金,票息一分没有</text>
             <!-- 底部注解 -->
             <text x="450" y="392" text-anchor="middle" fill="#8499bd" font-size="13">你拿到的高票息,是替券商卖出了一张"障碍看跌期权"的权利金——命 4 发生时,你在替整个市场接盘。</text>"""
     return concept_figure(body, "0 0 900 420",
@@ -3350,22 +3351,22 @@ def _fig_j9_spine():
             <!-- 四步竖排 -->
             <rect x="60" y="64" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(122,167,240,0.5)"/>
             <text x="80" y="92" fill="#a8c6ff" font-size="15" font-weight="800">① 叙事</text>
-            <text x="80" y="118" fill="#bcc9dd" font-size="12.5">一个故事把价格抬离现金流的锚:球茎、南海股票、.com、算法稳定币</text>
+            <text x="80" y="118" fill="#bcc9dd" font-size="12.5">叙事先把价格抬离锚——球茎、南海、.com、稳定币</text>
             <path d="M 225 136 L 225 156" stroke="#41506b" stroke-width="2" fill="none"/>
             <path d="M 218 150 L 225 160 L 232 150 Z" fill="#41506b"/>
             <rect x="60" y="160" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(240,201,106,0.5)"/>
             <text x="80" y="188" fill="#f0c96a" font-size="15" font-weight="800">② 杠杆</text>
-            <text x="80" y="214" fill="#bcc9dd" font-size="12.5">短债长资:无保证金远期、分期认购、10 倍孖展、两融配资、90 天养 3 年</text>
+            <text x="80" y="214" fill="#bcc9dd" font-size="12.5">短债养长资——无保证金远期、分期认购、10 倍杠杆、两融/90天养3年</text>
             <path d="M 225 232 L 225 252" stroke="#41506b" stroke-width="2" fill="none"/>
             <path d="M 218 246 L 225 256 L 232 246 Z" fill="#41506b"/>
             <rect x="60" y="256" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(232,120,120,0.5)"/>
             <text x="80" y="284" fill="#ffb4b4" font-size="15" font-weight="800">③ 点火</text>
-            <text x="80" y="310" fill="#bcc9dd" font-size="12.5">利率上行或外部冲击,不对称性引爆:加息 525bp、储备耗光、千亿赎回</text>
+            <text x="80" y="310" fill="#bcc9dd" font-size="12.5">加息或外伤引爆——525bp 加息、储备没耗完、千亿赎回</text>
             <path d="M 225 328 L 225 348" stroke="#41506b" stroke-width="2" fill="none"/>
             <path d="M 218 342 L 225 352 L 232 342 Z" fill="#41506b"/>
             <rect x="60" y="352" width="330" height="72" rx="10" fill="rgba(18,29,49,0.70)" stroke="rgba(143,183,122,0.5)"/>
             <text x="80" y="380" fill="#b8d6a3" font-size="15" font-weight="800">④ 清算:规则被重写</text>
-            <text x="80" y="406" fill="#bcc9dd" font-size="12.5">期权化撕约、银行休假、废除金本位、熔断、无限 QE、周末 48 小时联姻</text>
+            <text x="80" y="406" fill="#bcc9dd" font-size="12.5">规则重写——期权化、银行休假、废金本位、熔断、无限 QE</text>
             <!-- 右侧:12 场危机时间线 -->
             <text x="640" y="70" text-anchor="middle" fill="#eef4f8" font-size="14" font-weight="800">同一张脸,换了十二次妆</text>
             <line x1="470" y1="96" x2="470" y2="410" stroke="#41506b" stroke-width="2"/>
@@ -4180,21 +4181,21 @@ def _fig_r36_account():
             <text x="190" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">可用 = 今天能下单动用的</text>
             <text x="190" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">可取 = 能从证券转回银行卡的</text>
             <text x="190" y="216" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">三个别混为一谈</text>
-            <text x="190" y="244" text-anchor="middle" fill="#8499bd" font-size="12">差额是还在途的钱:刚才挂单、在途道来未走峻</text>
+            <text x="190" y="244" text-anchor="middle" fill="#8499bd" font-size="12">差额通常是刚才挂单的钱——还没到账</text>
             <rect x="340" y="80" width="240" height="200" rx="12" fill="rgba(240,201,106,0.15)" stroke="#f0c96a"/>
             <text x="460" y="108" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">② 成本价 VS 当前价</text>
             <text x="460" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">成本价是你当时买的均价</text>
             <text x="460" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">当前价是今天最新的全市场成交</text>
             <text x="460" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">两者之差是浮盈浮亏</text>
-            <text x="460" y="216" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">把成本价看成心理也会错</text>
-            <text x="460" y="244" text-anchor="middle" fill="#8499bd" font-size="12">所谓“套着”是错觉而已——持仓未来下一步到哪里,不能以成交价格为判断标准</text>
+            <text x="460" y="216" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">“套着”是心理错觉</text>
+            <text x="460" y="244" text-anchor="middle" fill="#8499bd" font-size="12">套着只是错觉——下一步多少钱,跟成本没有多大关系</text>
             <rect x="610" y="80" width="240" height="200" rx="12" fill="rgba(238,136,119,0.15)" stroke="#ee8877"/>
             <text x="730" y="108" text-anchor="middle" fill="#ffb4b4" font-size="15" font-weight="800">③ 今日收益 VS 累计收益</text>
             <text x="730" y="144" text-anchor="middle" fill="#bcc9dd" font-size="12">今日收益只今天的变动</text>
             <text x="730" y="166" text-anchor="middle" fill="#bcc9dd" font-size="12">累计收益是总盈亏的总额</text>
             <text x="730" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">两个数字不要混看就好</text>
             <text x="730" y="216" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">同样当日涨零点零、累计收益可以是高点落半里</text>
-            <text x="730" y="244" text-anchor="middle" fill="#8499bd" font-size="12">分两个表看才不会把今天惘因为当天暴跌说明起点壤里</text>
+            <text x="730" y="244" text-anchor="middle" fill="#8499bd" font-size="12">分开看:今日涨跌别急看成绩</text>
             <text x="450" y="322" text-anchor="middle" fill="#bcc9dd" font-size="12.5">除此三框之外:成交额、换手率、震幅,都是辅助理解今天市场活跃程度的旁证——你也可以拒絕它们扰晄交易成本与费用</text>"""
     return concept_figure(body, "0 0 900 360",
         "账户创世纪首页阅读规范:总资产/可用/可取、成本价/当前价、今日收益/累计收益",
@@ -4471,7 +4472,7 @@ def _fig_r20_factor_ic():
             <text x="820" y="232" fill="#f0c96a" font-size="12">均值的均值</text>
             <text x="820" y="330" fill="#bcc9dd" font-size="12">月份</text>
             <text x="510" y="140" fill="#bcc9dd" font-size="12">IC(+)/-</text>
-            <text x="650" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12">任何单月可能都正,但趋势摆动围绕“均值的均值”上下;真正信号看 IC 摊平后的水平是否稳定轩抬高位</text>"""
+            <text x="450" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12">单月 IC 波动大很正常;真正信号看滚动窗口内 IC 的均值水平是否稳定偏高</text>"""
     return concept_figure(body, "0 0 900 385",
         "IC 曲线图:因子排序与未来收益的相关性起伏,需要看一年摊平后才能判断有没有资产质量",
         "IC 是量化界的成绩单——波动大是常态,稳定上斜才是真迹。单月出来一个 0.2 不能保证是真因子,一年的平均 IC 0.03-0.05 才能写进策略池。")
@@ -4575,7 +4576,7 @@ def _fig_r10_run():
             <text x="725" y="206" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">按小时-日日落实,分钟里有生死</text>
             <rect x="60" y="260" width="780" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
             <text x="84" y="288" fill="#f0c96a" font-size="13" font-weight="800">这就是 2008 年雷曼的死法</text>
-            <text x="84" y="314" fill="#bcc9dd" font-size="12">雷曼需要的“明天开运”资金是靠回购融资。回购对手一旦在它身上加码新折扣率、或要求追加抵押,雷曼的钱立刻不够付到期的账单——结果 48 小时就场倒闭</text>
+            <text x="84" y="314" fill="#bcc9dd" font-size="12">雷曼的“明天开运”资金全靠回购——对手一旦提高折扣率或要求追加抵押,雷曼立刻付不出到期账单,48 小时内倒闭</text>
             <text x="84" y="338" fill="#bcc9dd" font-size="12">存款保险是零售预防挤兑的疫苗;批发机构挤兑至今靠壮机构互相“不要廷同时逼债”这种非正式愿望,脆弱得多</text>"""
     return concept_figure(body, "0 0 900 385",
         "挤兑三级速度图:零售几天几月、同业几小时、批发回购分钟级,雷曼 48 小时倒闭",
@@ -4599,7 +4600,7 @@ def _fig_r11_corridor():
             <text x="560" y="168" fill="#a8c6ff" font-size="12">市场利率(Shibor/同业存单利率)</text>
             <!-- 说明 -->
             <rect x="80" y="330" width="740" height="70" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(132,153,189,0.4)"/>
-            <text x="104" y="354" fill="#bcc9dd" font-size="12">走廊比点数重要:上限是让市场知道利率再贵也不超过这条线,下限是让市场知道钱再便宜央行也不让它跌穿。两层线一变,市场利率自然就会容许在中间游荡</text>
+            <text x="104" y="354" fill="#bcc9dd" font-size="12">限价把市场利率夹在两条虚线里;利率降,虚线同时往下;利率上,虚线同时往上</text>
             <text x="104" y="378" fill="#bcc9dd" font-size="12">美联储加息 = 整条走廊上移;QE/缩表 = 央行直接买/卖资产把走廊内的市场利率压缩到底,两种是不同工具</text>"""
     return concept_figure(body, "0 0 900 420",
         "利率走廊图:上下限两条虚线夹着政策利率,市场利率在其中游荡,人民银行用走廊来控制资金价格",
@@ -4693,7 +4694,7 @@ def _fig_r14_bidask():
             <text x="450" y="170" text-anchor="middle" fill="#bcc9dd" font-size="12">是 → 配对成交(以先斩到的价格为准)</text>
             <text x="450" y="192" text-anchor="middle" fill="#bcc9dd" font-size="12">否 → 一起待着,价差就自己保留</text>
             <text x="450" y="222" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">同价?先到的先成交(时间优先)</text>
-            <text x="450" y="250" text-anchor="middle" fill="#8499bd" font-size="12">你下单后只是进入这条队伍,不一定立刻成交;流动性浅的股,两个买1卖1差的可能超过你想象的宽度</text>"""
+            <text x="450" y="250" text-anchor="middle" fill="#8499bd" font-size="12">你下单只是排到队伍尾部;浅流动性股票两档价差可能比想象大</text>"""
     return concept_figure(body, "0 0 900 280",
         "订单簿双列排布图:买单从高到低排列、卖单从低到高排列,价格优先同价时间优先",
         "盘口的两条队伍:买的一边价高者优先,卖的一边价低者优先。你下的单子只是被系统挂在某个格子上排队,“我喊到了这个价”还远远不等于“我就能成交”。")
@@ -4872,7 +4873,8 @@ def _fig_r08_demographic():
             <text x="730" y="172" text-anchor="middle" fill="#ee8877" font-size="13" font-weight="800">债券、现金、保险需求上升</text>
             <rect x="80" y="260" width="760" height="100" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(132,153,189,0.4)"/>
             <text x="104" y="288" fill="#f0c96a" font-size="14" font-weight="800">两大长期后果</text>
-            <text x="104" y="314" fill="#bcc9dd" font-size="12">利率中枢被压低:庞大储蓄人群争抢固定收益资产,长期债价被持续买高;养老金权益仓位减轻:大量退休人口同时抛售股票换生活费,股市长期承压</text>
+            <text x="104" y="314" fill="#bcc9dd" font-size="12">利率中枢被压低:庞大储蓄人群争抢固定收益资产,长期债价被持续买高</text>
+            <text x="104" y="338" fill="#bcc9dd" font-size="12">养老金权益仓位减轻:大量退休人口同时抛售股票换生活费,股市长期承压</text>
             <text x="104" y="336" fill="#bcc9dd" font-size="12">看利率下行别只怪央行——人口结构本身就是汪洋里那股最深的水流</text>"""
     return concept_figure(body, "0 0 900 385",
         "人口周期三阶段图:红利→拐点→老龄化,资产偏好从股票房产转向债券现金保险",
@@ -5252,7 +5254,7 @@ def _fig_t02_yield_spread():
             <text x="494" y="328" fill="#f0c96a" font-size="13" font-weight="800">利差告诉你什么</text>
             <text x="494" y="354" fill="#bcc9dd" font-size="12">同期限的三只债,收益率差异就是市场对它们各自违约风险的定价</text>
             <text x="494" y="376" fill="#bcc9dd" font-size="12">利差拉大=钱更怕,利差收窄=钱愿还多</text>
-            <text x="494" y="398" fill="#bcc9dd" font-size="12">看利差的方向,而不是绝对水平:利差走阔=市场更怕,利差收窄=市场更愿意借钱</text>
+            <text x="494" y="398" fill="#bcc9dd" font-size="12">看趋势变化方向,别炒绝对水平</text>
             <text x="450" y="482" text-anchor="middle" fill="#bcc9dd" font-size="12.5">借债的核心不是涨是跌,利差结构一目了然:基准利率 + 信用利差 = 债券的真实价格</text>"""
     return concept_figure(body, "0 0 900 500",
         "债券利差三层图: 同一期限的国债、AAA 债、普通企业债,市场上为不同信用风险评估出的利差",
@@ -5272,9 +5274,9 @@ def _fig_t02_rate_bond():
             <text x="575" y="202" text-anchor="middle" fill="#bcc9dd" font-size="12">旧债的现值上涨</text>
             <rect x="70" y="320" width="760" height="120" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
             <text x="94" y="348" fill="#f0c96a" font-size="13" font-weight="800">为什么久期决定敏感度</text>
-            <text x="94" y="372" fill="#bcc9dd" font-size="12">久期是债券对利率的敏感度:久期 10 年的债券,利率每上行 0.1 个百分点,价格大致下跌约 1%;久期 3 年的短期债,利率每上行 0.1 个百分点,价格大致下跌约 0.3%</text>
-            <text x="94" y="396" fill="#bcc9dd" font-size="12">这就是 2022-2023 年美联储加息期间,长期美债ETF出现历史最大回撤的原因;同一时间段,短期债券基金几乎不动</text>
-            <text x="94" y="420" fill="#bcc9dd" font-size="12">弄清这把尺怎么样运动:在加息预期强烈时,多做长期债意味着实控加杠杆地押在利率上</text>"""
+            <text x="94" y="368" fill="#bcc9dd" font-size="12">久期是敏感度:10 年期久期债券,利率每上 0.1 点,价约跌 1%;3 年期短债只跌约 0.3%</text>
+            <text x="94" y="392" fill="#bcc9dd" font-size="12">这就是 2022-2023 年美联储加息期间,长期美债ETF出现历史最大回撤的原因;同一时间段,短期债券基金几乎不动</text>
+            <text x="94" y="418" fill="#bcc9dd" font-size="12">背后的原因就是久期放大——在加息预期强烈时,再做长债等于用久期换成杠杆加压</text>"""
     return concept_figure(body, "0 0 900 460",
         "利率与债价相关结构图: 利率上行,旧债价格随着久期放大下跌,久期越长越敏感",
         "久期是债券对利率的杠杆。长短期债两者的利率风险结构完全不可横比,加息周期一旦启动,长债变成杠杆者,短债近乎稳定。")
@@ -5324,7 +5326,7 @@ def _fig_t07_nav():
             <rect x="410" y="100" width="160" height="200" fill="rgba(238,136,119,0.25)" stroke="#ee8877"/>
             <text x="490" y="120" text-anchor="middle" fill="#bcc9dd" font-size="12" font-weight="800">总负债 10 亿</text>
             <text x="490" y="240" text-anchor="middle" fill="#ffb4b4" font-size="12" font-weight="800">应付费用 / 应付款</text>
-            <text x="650" y="200" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">净值 = (总资产−总负债) ÷ 份额</text>
+            <text x="650" y="200" text-anchor="middle" fill="#f0c96a" font-size="17" font-weight="800">(总资产−总负债) ÷ 份额</text>
             <text x="450" y="350" text-anchor="middle" fill="#bcc9dd" font-size="12.5">假设基金有 5 亿份额:100 − 10 = 90 亿,÷ 5 亿 = 每份 18 元——这才是你今天看到的净值入账逻辑</text>
             <text x="450" y="378" text-anchor="middle" fill="#bcc9dd" font-size="12.5">净值每天在涨/在跌,不是“基金管理人多给了你一毛钱”,是它手里这些资产每天重新被系统估值一次</text>"""
     return concept_figure(body, "0 0 900 400",
@@ -5367,10 +5369,10 @@ def _fig_t08_basis():
             <text x="92" y="70" fill="#bcc9dd" font-size="12">价格</text>
             <text x="820" y="318" fill="#bcc9dd" font-size="12">到期月越远</text>
             <path d="M 100 270 Q 250 250 400 220 Q 550 190 810 150" fill="none" stroke="#7aa7f0" stroke-width="3"/>
-            <text x="820" y="152" fill="#7aa7f0" font-size="12" font-weight="800">Contango(远月高)</text>
+            <text x="450" y="152" text-anchor="middle" fill="#7aa7f0" font-size="12" font-weight="800">Contango(远月高)</text>
             <text x="180" y="220" fill="#bcc9dd" font-size="12">库存高、持有成本低</text>
             <path d="M 100 150 Q 250 170 400 200 Q 550 230 810 260" fill="none" stroke="#ee8877" stroke-width="3"/>
-            <text x="820" y="264" fill="#ee8877" font-size="12" font-weight="800">Backwardation(远月低)</text>
+            <text x="450" y="360" text-anchor="middle" fill="#ee8877" font-size="12" font-weight="800">Backwardation(远月低)</text>
             <text x="180" y="140" fill="#bcc9dd" font-size="12">库存紧、现货紧俏</text>
             <text x="450" y="336" text-anchor="middle" fill="#bcc9dd" font-size="12.5">正常的商品期货曲线上浮 → Contango,短期供给压力大这时反而坠是 Backwardation——基差 = 现货价 − 期货价,这笔“负数”就是 CTA 策略的主要开门费</text>
             <text x="450" y="360" text-anchor="middle" fill="#bcc9dd" font-size="12.5">基差从 Contango 转到 Backwardation 往往有色回事,“你什么都没做,市场决定不平他”,这样的一瞥很值钱</text>"""
@@ -5396,7 +5398,7 @@ def _fig_t08_swap():
             <text x="450" y="288" text-anchor="middle" fill="#bcc9dd" font-size="12.5">本金完全不动,只交换利息之差——它看起来优雅的地方是为机构定制而设计的:你可以只调'利息的期限结构',而不动本金</text>
             <rect x="70" y="318" width="760" height="80" rx="10" fill="rgba(18,29,49,0.7)" stroke="rgba(240,201,106,0.45)"/>
             <text x="94" y="344" fill="#f0c96a" font-size="13" font-weight="800">为什么重要</text>
-            <text x="94" y="368" fill="#bcc9dd" font-size="12">银行更常见:它持有的是固定利率资产、却要向储户按浮动利率付息,通过利率互换把两边的错配抵消掉——这是现货系统里的一个最富的平衡工程</text>
+            <text x="94" y="368" fill="#bcc9dd" font-size="12">银行最常用:资产固定利率、负债浮动利率——利率互换把两端错配抵消掉</text>
             <text x="94" y="390" fill="#bcc9dd" font-size="12">全球名义本金达数百万亿美元,历史上最大的利率风险控制工具</text>"""
     return concept_figure(body, "0 0 900 420",
         "利率互换现金流示意: 甲付固定利息乙付浮动利息,双方只交换“两者之差”,本金不变",
@@ -5422,7 +5424,7 @@ def _fig_t09_greeks():
             <rect x="460" y="270" width="360" height="110" rx="10" fill="rgba(143,179,122,0.12)" stroke="rgba(143,179,122,0.4)"/>
             <text x="484" y="296" fill="#8fb37a" font-size="13" font-weight="800">价外(Out-of-money):看涨例子</text>
             <text x="484" y="320" fill="#bcc9dd" font-size="12">标的 8 元、行权价 10 元 → 内在价值 = 0</text>
-            <text x="484" y="342" fill="#bcc9dd" font-size="12">权利金 0.5 元全部是时间价值——多少钱是买方愿交给卖方的“以后有可能”的钱</text>
+            <text x="484" y="342" fill="#bcc9dd" font-size="12">权利金 0.5 元全是时间价值——买方为“到期前还有机会”付的保费</text>
             <text x="450" y="406" text-anchor="middle" fill="#bcc9dd" font-size="12.5">买价外期权不是买现在,是买时间的可能性。所以它的代价斯克急剧衰减——到期月比还剩 3 个月,那些权利金烧得越快</text>"""
     return concept_figure(body, "0 0 900 420",
         "期权权利金拆解图:内在价值 + 时间价值,到期日靠近时间价值压缩",
@@ -5505,7 +5507,7 @@ def _fig_t07_index_enhance():
             <path d="M 120 290 L 260 240 L 400 210 L 540 170 L 700 130 L 810 110" fill="none" stroke="#7aa7f0" stroke-width="3"/>
             <text x="820" y="108" fill="#7aa7f0" font-size="13" font-weight="800">指数本身(β)</text>
             <path d="M 120 280 L 260 225 L 400 188 L 540 142 L 700 102 L 810 78" fill="none" stroke="#f0c96a" stroke-width="3.5"/>
-            <text x="820" y="76" fill="#f0c96a" font-size="13" font-weight="800">指数增强产品(β+α)</text>
+            <text x="450" y="76" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">指数增强产品(β+α)</text>
             <path d="M 810 112 L 810 82" stroke="#8fb37a" stroke-width="2"/>
             <text x="760" y="98" fill="#8fb37a" font-size="11.5" text-anchor="end">超额: 多出来的那也许是 5-8%</text>
             <text x="450" y="338" text-anchor="middle" fill="#bcc9dd" font-size="12.5">指数增强不是甩开指数,是“把指数的 β 完全收着,再在顶部加一个小的选股超额”;本金是别人的,超额才是自己的活儿</text>
@@ -5615,10 +5617,10 @@ def _fig_t18_divers():
             <text x="810" y="338" fill="#bcc9dd" font-size="12">股票数量或资产类别数量</text>
             <!-- 同资产增加 -->
             <path d="M 120 180 Q 260 190 450 200 Q 650 208 800 210" fill="none" stroke="#ee8877" stroke-width="3"/>
-            <text x="820" y="212" fill="#ee8877" font-size="12" font-weight="800">同行业買更多股票 → 波动率几乎不动</text>
+            <text x="450" y="212" text-anchor="middle" fill="#ee8877" font-size="12" font-weight="800">同行业买更多股票 → 波动率几乎不动</text>
             <!-- 多元资产类 -->
             <path d="M 120 180 Q 260 250 450 290 Q 650 305 800 312" fill="none" stroke="#8fb37a" stroke-width="3"/>
-            <text x="820" y="314" fill="#8fb37a" font-size="12" font-weight="800">股票 + 债券 + 黄金 + 商品 → 波动率真的下滑</text>
+            <text x="450" y="364" text-anchor="middle" fill="#8fb37a" font-size="12" font-weight="800">股 + 债 + 黄金 + 商品 → 波动率真的下滑</text>
             <text x="250" y="130" fill="#f0c96a" font-size="14" font-weight="800">分散化不是"买更多",是"买不相关的"</text>
             <text x="250" y="158" fill="#bcc9dd" font-size="12">到顶的那条红线:同个行业 100 只股 = 共享同一个 β = 波动率总会在同一意义徘徊</text>
             <text x="250" y="180" fill="#bcc9dd" font-size="12">到顶的那条绿线:跨资产 6 种 ≠ 降低了风险的东西才真的帮你压波动</text>"""
