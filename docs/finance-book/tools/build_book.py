@@ -5356,7 +5356,7 @@ def _fig_t07_publ_priv():
             <text x="710" y="164" text-anchor="middle" fill="#bcc9dd" font-size="12">可以用多种杠杆、做空、衍生品</text>
             <text x="710" y="188" text-anchor="middle" fill="#bcc9dd" font-size="12">报酬双 2/20:3% 管理 + 20% 超额</text>
             <text x="710" y="218" text-anchor="middle" fill="#f0c96a" font-size="13" font-weight="800">行为多而重,能力和资金门槛也高</text>
-            <text x="450" y="358" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这三类彼此不一样——不,不能见"能赚钱的"就乱买,先问能不能看懂:起购门槛、披露密度、监管口径,这三条永远比“对冲”和“量化”这两个字酷不酷重要</text>"""
+            <text x="450" y="358" text-anchor="middle" fill="#bcc9dd" font-size="12.5">这三类彼此不一样——不能见“能赚钱的”就乱买,先问能不能看懂:起购门槛、披露密度、监管口径,这三条永远比“对冲”和“量化”这两个字酷不酷重要</text>"""
     return concept_figure(body, "0 0 900 405",
         "公募/私募/对冲基金类别比较:门槛、披露密度、监管标准的区别看起来很简单,实际决定了你能不能接受它",
         "三类产品象限各不相同:公募是超市,私募是会员店,对冲基金是咖啡屋菜单——看清楚自己能不能承担披露和决策缺口。")
