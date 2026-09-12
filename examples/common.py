@@ -27,6 +27,7 @@ class Stock:
         self.drift = drift            # 每日真实期望收益
         self.base_vol = base_vol      # 日波动率
         self.prices = [price0]
+        self.opens = [price0]
 
 
 def load_universe(n_stocks=120, n_days=760, seed=42):
@@ -40,6 +41,7 @@ def load_universe(n_stocks=120, n_days=760, seed=42):
     四条规律都真实存在,但每一条都埋在噪声里,这正是因子研究的日常。
     """
     rng = random.Random(seed)
+    opening_rng = random.Random(seed + 1)          # 独立开盘噪声,不改变原有收盘序列
     stocks = []
     for i in range(n_stocks):
         quality = rng.uniform(-1.0, 1.0)
@@ -52,6 +54,7 @@ def load_universe(n_stocks=120, n_days=760, seed=42):
         market *= 1 + rng.gauss(0.0002, 0.010)      # 大盘共同涨落(年化约 +5%)
         for s in stocks:
             fundamental = s.prices[0] * math.exp(s.drift * t)
+            s.opens.append(fundamental * market * math.exp(opening_rng.gauss(0, s.base_vol)))
             noise = rng.gauss(0, s.base_vol)
             s.prices.append(fundamental * market * math.exp(noise))
 
@@ -123,9 +126,9 @@ def _tracking_error(nav, bench):
 # ---------------------------------------------------------------- 交易成本
 
 def apply_cost(turnover_value, cost_bps=13):
-    """双边成本,默认万 13(佣金+印花税+滑点的教学口径,见指数增强实战章节)。
+    """每笔成交按单边万 13 收费,买卖均收(佣金+税费+滑点的教学假设)。
 
-    turnover_value: 本次调仓买入+卖出的名义总额(相对净值 1.0 的比例)。
-    返回应扣除的净值比例。
+    turnover_value: 成交金额,或买入+卖出成交额相对净值的比例。
+    返回同一单位的成本;完整卖旧买新约为净值的万 26,不能再乘一次 2。
     """
     return turnover_value * cost_bps / 10000

@@ -4450,31 +4450,31 @@ def _fig_r19_buckets():
 
 
 def _fig_r20_factor_ic():
-    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">IC:每颗因子技能摆一条？检验一切是否“态一致”</text>
+    body = """            <text x="450" y="34" text-anchor="middle" fill="#eef4f8" font-size="19" font-weight="800">RankIC:因子排序与未来收益排序是否同向</text>
             <!-- 排序 VS 下月收益坐标;正相关散开 -->
             <rect x="80" y="80" width="380" height="300" rx="10" fill="rgba(122,167,240,0.12)" stroke="rgba(122,167,240,0.5)"/>
-            <text x="270" y="106" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">IC 的秒定义</text>
-            <text x="270" y="132" text-anchor="middle" fill="#bcc9dd" font-size="12">因子按分数给全市场若干股排队;</text>
-            <text x="270" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">看上个月谁最后;</text>
+            <text x="270" y="106" text-anchor="middle" fill="#a8c6ff" font-size="14" font-weight="800">本例用排名相关来衡量</text>
+            <text x="270" y="132" text-anchor="middle" fill="#bcc9dd" font-size="12">当月按可见因子给股票排序;</text>
+            <text x="270" y="154" text-anchor="middle" fill="#bcc9dd" font-size="12">持有期结束后,按实现收益再排序;</text>
             <text x="270" y="176" text-anchor="middle" fill="#bcc9dd" font-size="12">计算两个名次表的相关系数</text>
-            <text x="270" y="206" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">IC = {-1 ~ +1 的相关数}</text>
-            <text x="270" y="234" text-anchor="middle" fill="#bcc9dd" font-size="12">+ 表示分数高能涨(买高分好)</text>
-            <text x="270" y="256" text-anchor="middle" fill="#bcc9dd" font-size="12">- 表示分数高能跌(低分好)</text>
-            <text x="270" y="278" text-anchor="middle" fill="#bcc9dd" font-size="12">0 表示因子不预测未来</text>
-            <text x="270" y="308" text-anchor="middle" fill="#8499bd" font-size="12">行业经验:稳定的 IC 在 0.03~0.05 尤属珍贵</text>
+            <text x="270" y="206" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">RankIC ∈ [-1, 1]</text>
+            <text x="270" y="234" text-anchor="middle" fill="#bcc9dd" font-size="12">正值:高分股未来收益倾向更高</text>
+            <text x="270" y="256" text-anchor="middle" fill="#bcc9dd" font-size="12">负值:高分股未来收益倾向更低</text>
+            <text x="270" y="278" text-anchor="middle" fill="#bcc9dd" font-size="12">零值:本期没有排名相关性</text>
+            <text x="270" y="308" text-anchor="middle" fill="#8499bd" font-size="12">相关性不是涨跌保证,也不是可交易证明</text>
             <!-- 右边 曲线 -->
-            <text x="630" y="90" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">IC 为什么要滚一个季度到一年</text>
+            <text x="660" y="90" text-anchor="middle" fill="#f0c96a" font-size="15" font-weight="800">多期 RankIC 会波动(示意)</text>
             <line x1="500" y1="330" x2="820" y2="330" stroke="#8499bd" stroke-width="2"/>
             <line x1="500" y1="130" x2="500" y2="330" stroke="#8499bd" stroke-width="2"/>
             <path d="M 505 210 Q 560 200 620 220 Q 680 240 740 200 Q 790 170 820 190" fill="none" stroke="#a8c6ff" stroke-width="3"/>
             <line x1="505" y1="235" x2="820" y2="235" stroke="#f0c96a" stroke-width="2" stroke-dasharray="8 6"/>
-            <text x="820" y="232" fill="#f0c96a" font-size="12">均值的均值</text>
+            <text x="812" y="232" text-anchor="end" fill="#f0c96a" font-size="12">零相关</text>
             <text x="820" y="330" fill="#bcc9dd" font-size="12">月份</text>
-            <text x="510" y="140" fill="#bcc9dd" font-size="12">IC(+)/-</text>
-            <text x="450" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12">单月 IC 波动大很正常;真正信号看滚动窗口内 IC 的均值水平是否稳定偏高</text>"""
+            <text x="510" y="140" fill="#bcc9dd" font-size="12">RankIC</text>
+            <text x="450" y="362" text-anchor="middle" fill="#bcc9dd" font-size="12">观察多期均值、波动和样本外表现,再结合成本与风险暴露判断</text>"""
     return concept_figure(body, "0 0 900 385",
-        "IC 曲线图:因子排序与未来收益的相关性起伏,需要看一年摊平后才能判断有没有资产质量",
-        "IC 是量化界的成绩单——波动大是常态,稳定上斜才是真迹。单月出来一个 0.2 不能保证是真因子,一年的平均 IC 0.03-0.05 才能写进策略池。")
+        "RankIC 示意图:比较当期因子排序和后续实现收益排序,并观察多期相关性的波动;虚线表示零相关",
+        "先给因子排队,等持有期结束再核对收益排名,不能把过去的收益当成未来答案。单期相关性只是一次观察;多期均值、样本外表现、成本和风险暴露都需要检验,曲线向上或某个数值达标都不是入选策略的充分条件。")
 
 
 def _fig_r22_greek():

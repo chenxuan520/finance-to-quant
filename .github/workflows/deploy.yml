@@ -28,6 +28,11 @@ jobs:
           python3 docs/finance-book/tools/check_cases.py
           python3 docs/finance-book/tools/check_dupes.py
 
+      - name: Validate example accounting
+        run: |
+          python3 -m unittest discover -s examples -p 'test_*.py' -v
+          python3 examples/run_all.py
+
       - name: Deploy to GitHub Pages (gh-pages branch)
         uses: peaceiris/actions-gh-pages@v4
         with:

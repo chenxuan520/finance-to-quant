@@ -133,8 +133,8 @@
       var W = 600, H = 300, pad = 40;
       chart.appendChild(line(pad, H / 2, W - pad, H / 2, "#46587a"));
       chart.appendChild(line(W / 2, 20, W / 2, H - 24, "#46587a"));
-      chart.appendChild(txt(W - pad, H / 2 - 8, "下月收益 →", "#8b9cb4", "end", 11));
-      chart.appendChild(txt(W / 2 + 10, 22, "因子分 →", "#8b9cb4", "start", 11));
+      chart.appendChild(txt(W - pad, H / 2 - 8, "因子分 →", "#8b9cb4", "end", 11));
+      chart.appendChild(txt(W / 2 + 10, 22, "下月收益 ↑", "#8b9cb4", "start", 11));
       pts.forEach(function (p) {
         var cx = W / 2 + p[0] * (W / 2 - pad - 4);
         var cy = H / 2 - p[1] * (H / 2 - 40);
@@ -144,14 +144,9 @@
         dot.setAttribute("fill", p[1] > 0 ? "rgba(240,201,106,0.65)" : "rgba(122,167,240,0.65)");
         chart.appendChild(dot);
       });
-      var ic = rho;
       out.innerHTML =
-        "<div class='lab__row'><span>IC ≈ ρ = </span><strong class='" + (ic > 0.05 ? "lab__accent" : "") + "'>" + ic.toFixed(2) + "</strong></div>" +
-        "<div class='lab__row lab__hint'><span>" +
-        (ic > 0.3 ? "这么强的 IC,真实市场基本只在教科书里存在" :
-         ic > 0.05 ? "已经比多数实盘因子强了——能稳定站 0.03-0.05 就可拿去用" :
-         ic > -0.05 ? "跟纯噪声没啥区别,换一个因子吧" :
-         "负相关……把排序倒过来用,就变成了正因子") + "</span></div>";
+        "<div class='lab__row'><span>设定相关性 ρ = </span><strong class='" + (rho > 0.05 ? "lab__accent" : "") + "'>" + rho.toFixed(2) + "</strong></div>" +
+        "<div class='lab__row lab__hint'><span>ρ 是生成参数,这 120 个点算出的样本 IC 会有波动;能否用于策略还要看多期表现、成本和风险。</span></div>";
     }
     cC._input.addEventListener("input", render);
     render();
@@ -161,17 +156,17 @@
   function buildCost(root) {
     var cG = slider("年化毛收益 g", 5, 30, 1, 15, " %");
     var cT = slider("双边换手倍数", 1, 30, 1, 10, " 倍/年");
-    var cC = slider("双边成本率 c", 0.02, 0.3, 0.01, 0.13, " %");
+    var cC = slider("每边成交成本率 c", 0.02, 0.3, 0.01, 0.13, " %");
     var out = el("div", "lab__out");
     var chart = svgWrap(600, 220);
     root.appendChild(el("div", "lab__title", "成本敏感性:同样的策略,成本翻几倍,你还赚钱吗"));
     root.appendChild(cG); root.appendChild(cT); root.appendChild(cC);
     root.appendChild(chart); root.appendChild(out);
-    root.appendChild(tip("净收益 ≈ 毛收益 - 换手×成本。把换手推到 20 倍,成本再推到 0.2%,看金条还剩多少——这是对冲/高频/量化回测都要写的敏感性测试,书上叫“照妖镜”。"));
+    root.appendChild(tip("双边换手 = 全年买入与卖出成交额之和 ÷ 平均净值;每边费率分别作用于买入和卖出金额。完整卖旧买新一次约为 2 倍换手,每边 0.13% 对应约 0.26% 成本。净收益 ≈ 毛收益 - 双边换手×每边费率,不再额外乘 2。这是净值大致不变时的简化估算。"));
 
     function render() {
       var g = +cG._input.value, t = +cT._input.value, c = +cC._input.value;
-      var drag = t * c;      // 简化: 每年拖拽损失 = 双边换手倍数 × 双边成本率
+      var drag = t * c;      // 简化: 每年成本损失 = 买卖成交额合计的换手倍数 × 每边费率
       var net = g - drag;
       while (chart.firstChild) chart.removeChild(chart.firstChild);
       var W = 600, H = 220, pad = 40, maxV = Math.max(g, 30);
